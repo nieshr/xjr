@@ -194,7 +194,7 @@ function move()
 			        <div class="submenu" style="left:-347px;">
 			            <div class="mj_menu_news_bg">
 			                <div class="mj_menu_news_main">
-			                    <div class="mj_menu_news_li2">
+			                    <div class="mj_menu_news_li2" style="width:99px;">
 			                        <div class="mj_menu_li_txt">
 			                        <#if site_link_list??>
 			                            <#list site_link_list as link>
@@ -205,10 +205,28 @@ function move()
 			                        </#if>
 			                        </div>
 			                    </div>
-				                <div class="mj_menu_news_img2">
-					                <img src="${bar.iconUri!'' }" /><br />
-					                <font> ${bar.title} </font>
+				                <div class="mj_menu_news_li2" style="width:99px;">
+				                    <div class="mj_menu_li_txt">
+					                <#if site_link_list??>
+                                        <#list site_link_list as link>
+                                            <#if link_index gt 5 && link_index lt 12>                    
+                                                <a href="${link.linkUri}" target="_blank" title="">${link.title}</a><br />
+                                            </#if>
+                                        </#list>
+                                    </#if>
+                                    </div>
 				                </div>
+				                <div class="mj_menu_news_li2" style="width:99px;">
+				                     <div class="mj_menu_li_txt">
+                                     <#if site_link_list??>
+                                        <#list site_link_list as link>
+                                            <#if link_index gt 11 && link_index lt 18>                    
+                                                <a href="${link.linkUri}" target="_blank" title="">${link.title}</a><br />
+                                            </#if>
+                                        </#list>
+                                     </#if>
+                                     </div>
+                                </div>
 			                    <div style="clear:both; height:0px; overflow:hidden;"></div>
 			                </div>
 			            </div>
