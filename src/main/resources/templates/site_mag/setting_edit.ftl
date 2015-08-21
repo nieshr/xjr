@@ -144,7 +144,7 @@ $(function () {
                 <ul>
                     <li><a href="javascript:;" onclick="tabs(this);" class="selected">网站基本信息</a></li>
                     <li><a href="javascript:;" onclick="tabs(this);">功能权限设置</a></li>
-                    <li><a href="javascript:;" onclick="tabs(this);">网站奖励设置</a></li>
+                    <#--  <li><a href="javascript:;" onclick="tabs(this);">网站奖励设置</a></li> -->
                     <li><a href="javascript:;" onclick="tabs(this);">注册用户协议</a></li>
                 </ul>
             </div>
@@ -304,7 +304,7 @@ $(function () {
             </dd>
         </dl>
         <!--add 2015-7-28 17:46:12 mdj-->
-        <dl>
+     <#--   <dl>
             <dt>底部图标1</dt>
             <dd>
                 <input id="logo1ImgUrl" name="bottomLogoUri1" type="text" datatype="*0-255" value="<#if setting??>${setting.bottomLogoUri1!""}</#if>" class="input normal upload-path">
@@ -352,10 +352,11 @@ $(function () {
                 <span class="Validform_checktip"></span>
             </dd>
         </dl>
+        -->
         <!--add 2015-7-28 17:46:12 mdj-->
     </div>
     <div class="tab-content" style="display: none;">
-        <dl>
+  <#--      <dl>
             <dt>开启触屏网站</dt>
             <dd>
                 <div class="rule-multi-radio">
@@ -387,7 +388,8 @@ $(function () {
                     </span>
                 </div>
             </dd>
-        </dl>
+        </dl> 
+        -->
         <dl>
             <dt>开启管理员日志</dt>
             <dd>
@@ -402,7 +404,7 @@ $(function () {
             </dd>
         </dl>
     </div> 
-    <div class="tab-content" style="display: none;">
+  <#--  <div class="tab-content" style="display: none;">
         <dl>
             <dt>注册成功奖励粮草</dt>
             <dd>
@@ -432,6 +434,7 @@ $(function () {
             </dd>
         </dl>
     </div>    
+    -->
     <div class="tab-content" style="display: none;">
         <dl>
             <dt>用户注册协议</dt>

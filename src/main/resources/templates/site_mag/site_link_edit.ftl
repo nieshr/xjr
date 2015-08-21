@@ -44,10 +44,10 @@ $(function () {
 </div>
 <div class="tab-content" style="display: block;">
     <dl>
-        <dt>友情链接名称</dt>
+        <dt>快速通道名称</dt>
         <dd>
             <input name="title" type="text" value="<#if site_link??>${site_link.title!""}</#if>" class="input normal" ajaxurl="/Verwalter/sitelink/check<#if site_link??>?id=${site_link.id}</#if>" datatype="s" sucmsg=" ">
-            <span class="Validform_checktip">*友情链接名称</span>
+            <span class="Validform_checktip">*外部链接名称</span>
         </dd>
     </dl>
     <dl>

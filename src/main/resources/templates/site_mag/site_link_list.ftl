@@ -66,7 +66,7 @@ var theForm = document.forms['form1'];
   <tbody>
   <tr class="odd_bg">
     <th width="8%">选择</th>
-    <th align="center">友情链接名称</th>
+    <th align="center">快速通道名称</th>
     <th align="center" width="25%">跳转地址</th>
     <th width="8%">前台显示</th>
     <th width="8%">排序</th>

@@ -72,7 +72,7 @@ $(function () {
         </dd>
     </dl>
     <dl>
-        <dt>图标</dt>
+        <dt>图片</dt>
         <dd>
             <input id="txtImgUrl" name="iconUri" type="text" value="<#if navi_bar_item??>${navi_bar_item.iconUri!""}</#if>" class="input normal upload-path">
             <div class="upload-box upload-img"></div>
@@ -83,7 +83,7 @@ $(function () {
                     </li>
                 </ul>
             </div>
-            <span class="Validform_checktip">*图标为25px*25px</span>
+            <span class="Validform_checktip">*图片为277px*110px</span>
         </dd>
     </dl>
     <dl>
@@ -106,7 +106,7 @@ $(function () {
             </div>
         </dd>
     </dl>
-    <dl>
+ <#--   <dl>
         <dt>触屏版使用</dt>
         <dd>
             <div class="rule-multi-radio">
@@ -119,13 +119,15 @@ $(function () {
             </div>
         </dd>
     </dl>
+    
     <dl>
         <dt>排序数字</dt>
         <dd>
             <input name="sortId" type="text" value="<#if navi_bar_item??>${navi_bar_item.sortId!""}<#else>99</#if>" class="input txt100" datatype="n" sucmsg=" ">
             <span class="Validform_checktip">*数字，越小越向前</span>
         </dd>
-    </dl>
+    </dl>-->
+    <input name="sortId" type="hidden" value="99" class="input txt100" datatype="n" sucmsg=" ">
 </div>
     
     
