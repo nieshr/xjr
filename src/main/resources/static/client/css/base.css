@@ -86,4 +86,17 @@ div{ margin:0 auto;}
 .footer .footer_2 .footer_2_1 span{ font-weight:bold;}
 .footer .footer_2 .footer_2_2{text-align:center; line-height:30px; height:30px;}
 
+/*QQ*/
+*{margin:0;padding:0;list-style-type:none;}
+a,img{border:0;}
+body{font:12px/180% Arial, Helvetica, sans-serif, "宋体";}
+/* suspend */
+.suspend{width:40px;height:198px;position:fixed;top:200px;right:0;overflow:hidden;z-index:9999;}
+.suspend dl{width:90px;height:198px;border-radius:25px 0 0 25px;padding-left:40px;box-shadow:0 0 5px #e4e8ec;}
+.suspend dl dt{width:40px;height:198px;background:url(/client/images/QQ.png);position:absolute;top:0;left:0;cursor:pointer;}
+.suspend dl dd.suspendQQ{width:90px;height:126px;background:#ffffff;}
+.suspend dl dd.suspendQQ a{width:90px;height:126px;display:block;background:url(/client/images/QQ.png) -40px 0;overflow:hidden;}
+.suspend dl dd.suspendTel{width:90px;height:112px;background:#ffffff;border-top:1px solid #e4e8ec;}
+.suspend dl dd.suspendTel a{width:90px;height:112px;display:block;background:url(/client/images/QQ.png) -40px -127px;overflow:hidden;}
+* html .suspend{position:absolute;left:expression(eval(document.documentElement.scrollRight));top:expression(eval(document.documentElement.scrollTop+200))}
 

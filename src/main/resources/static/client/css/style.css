@@ -2,7 +2,7 @@
 /* CSS Document */
 .content{ width:1200px; display:block; overflow:hidden; margin-top:30px;  }
 .content .content_1{ width:217px; float:left; display:block; overflow:hidden; }
-.content .content_2{ width:953px; margin-left:30px; float:left; display:block; overflow:hidden;}
+.content .content_2{ width:953px; margin-left:30px; float:left; display:block; overflow:hidden;min-height:500px;}
 .content .content_1 .content_1_1{ width:217px; height:15px; background:url(../images/icon_2.png) no-repeat; float:left;}
 .content .content_1 .content_1_3{ width:217px; height:15px; background:url(../images/icon_3.png) no-repeat; float:left;}
 .content .content_1 .content_1_2{width:217px; background:#1d73be; display:block; overflow:hidden; _margin-top:-2px; float:left;}
@@ -11,6 +11,7 @@
 .content .content_1 .content_1_2 ul .li_su b{ font-size:14px;}
 .content .content_1 .content_1_2 ul li{ margin-left:35px; *+margin-left:30px;}
 .content .content_1 .content_1_2 ul li a{ color:#fff; font-size:14px;    line-height:30px; padding-left:30px; background:url(../images/icon_5.png) no-repeat 10px 6px; margin-left:20px; text-indent:10px;}
+.content .content_1 .content_1_2 ul li a:hover{ color:#fda32a;} 
 .content .content_1 .content_1_2 ul .li_nav{ color:#fda32a; width:167px;   line-height:30px;  background:url(../images/icon_4.png) no-repeat 10px 6px; margin-left:20px;text-indent:10px;}
 .content .content_2 ul .li_su{ _height:20px; border-bottom:1px solid #dddddd; height:30px; line-height:20px;}
 .content .content_2 ul .li_su strong{ font-size:18px; display:block; float:left; width:300px;}
@@ -34,9 +35,9 @@
 .content .content_1 .content_1_L ul li{ width:217px;   border-bottom:1px solid #fff; text-align:center; line-height:30px; float:left; padding-top:10px;}
 .content .content_1 .content_1_L ul li a{ width:217px; color:#FFF;}
 .content .content_1 .content_1_L ul li a strong{ font-size:18px;}
+.content .content_1 .content_1_L ul li a strong:hover {color:#fda32a;text-decoration:none;}
 .content .content_1 .content_1_L ul li a b{font-size:14px;}
 .content .content_1 .content_1_L ul li .lv{color:#fda32a;}
-
 
 .pagelist{color: #666;}
 .pagelist .default{margin-top: 20px; width: 953px; text-align: right;}

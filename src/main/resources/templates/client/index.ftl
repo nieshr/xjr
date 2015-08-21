@@ -44,10 +44,10 @@
 				      <img src="${item.imgUrl!"/client/images/t01f0cfa9b4ca48760d.jpg"}" />
 				      <span>
 				         <label>
-				             <#if item.content?length lt 150>
+				             <#if item.content?length lt 95>
 				                 ${item.content!'' }
 				             <#else>
-				                 ${item.content[0..147]}...     
+				                 ${item.content[0..94]}...     
 				             </#if>
 				         </label>
 				         <a href="/info/service/content/${item.id}?mid=10" title="">【查看全部】</a>
@@ -83,7 +83,7 @@
 	        <ul>
 	        <#if knowledge_page??>
                <#list knowledge_page.content as item>
-                  <#if item_index lt 6> 
+                  <#if item_index lt 5> 
 	                 <li><a href="/info/content/${item.id!''}?mid=${item.menuId!''}" title="">${item.title!''}</a></li>
 	              </#if>
 	           </#list>
@@ -92,12 +92,12 @@
 	      </div>
     </div>
     <div class="content_center content_right">
-        <div class="content_center_1"><strong>快速通道</strong><b>Links</b><a href="#" title="">更多>></a></div>
+        <div class="content_center_1"><strong>快速通道</strong><b>Links</b><#--<a href="#" title="">更多>></a>--></div>
         <div class="content_center_2 content_center_botton">
 	        <ul>
 	            <#if site_link_list??>
 	                <#list site_link_list as link>
-	                    <#if link_index lt 6>                    
+	                    <#if link_index lt 12>                    
 	                        <li><a href="${link.linkUri}" target="_blank" title="">${link.title}</a></li>  
 	                    </#if>
 	                </#list>
@@ -106,18 +106,25 @@
         </div>
     </div>
     <div class="content_right">
-      <div class="content_center_1"><strong>联系我们 
-
-</strong><b>Contact Us</b></div>
+      <div class="content_center_1"><strong>联系我们 </strong><b>Contact Us</b></div>
       <div class="content_center_2">
         <ul>
           <li>联系电话：<span>${site.telephone!'' }</span></li>
           <li>详细地址：<span>${site.address!'' }</span></li>
-       <#--   <li>公司邮箱：<span>12345678@163.com</span></a> -->
+          <li>公司邮箱：<span>${site.adminEmail!'' }</span></li>
           <li>公司传真：<span>${site.fax!'' }</span></li>
           <li>客服QQ：<span>                        
-                        ${site.qq1!'' } 
-                    </span>                 
+                        ${site.qq1!'' } &nbsp;&nbsp;
+                    </span>     
+                    <span>                        
+                        ${site.qq2!'' } &nbsp;&nbsp;
+                    </span>    
+                    <span>                        
+                        ${site.qq3!'' } &nbsp;&nbsp;
+                    </span>    
+                    <span>                        
+                        ${site.qq4!'' } 
+                    </span>                
           </li>
         </ul>
       </div>
