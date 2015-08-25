@@ -34,6 +34,15 @@
 		         <h2>${info.title!'' }</h2>
 		         <p>&nbsp;</p>
 		         <p>${info.content!'' }</p>
+		         <p>&nbsp;</p>
+		         <p>
+		             <#if prev_info??>
+		             <b style="float:left;"><a href="/info/content/${prev_info.id}?mid=${prev_info.menuId}">上一篇：${prev_info.title}</a></b>
+		             </#if>
+		             <#if next_info??>
+		             <b style="float:right;"><a href="/info/content/${next_info.id}?mid=${next_info.menuId}">下一篇：${next_info.title}</a></b>
+		             </#if>
+		         </p>
   </div>
 </div>
 <!--底部-->
