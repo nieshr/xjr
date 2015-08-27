@@ -80,8 +80,11 @@ var theForm = document.forms['form1'];
                 <td class="comment">
                   <div class="title">
                     <span class="note">
-                        <i>${consult.username!""}</i>
-                        <i>${consult.consultTime!""}</i>
+                        <i>姓名：${consult.username!"无"}</i>
+                        <i>电话：${consult.mobile!"无"}</i>
+                        <i>email：${consult.email!"无"}</i>
+                        <i>qq：${consult.qq!"无"}</i>
+                        <i>时间：${consult.consultTime!"无"}</i>
                         <i class="reply">
                             <a href="/Verwalter/user/consult/edit?id=${consult.id}&statusId=${statusId!""}">回复</a>
                         </i>
