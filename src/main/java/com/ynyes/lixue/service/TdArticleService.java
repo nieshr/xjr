@@ -251,8 +251,8 @@ public class TdArticleService {
                 Direction.DESC, "id"));
 
         return repository
-                .findByTitleContainingIgnoreCaseAndStatusId(
-                        keywords,0L, pageRequest);
+                .findByTitleContainingIgnoreCaseAndStatusIdAndMenuIdOrBriefContainingIgnoreCaseAndStatusIdAndMenuId(
+                        keywords, 0L,12L,keywords, 0L,12L, pageRequest);
     }
     
     /**

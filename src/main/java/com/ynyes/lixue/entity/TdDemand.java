@@ -55,7 +55,11 @@ public class TdDemand {
     
     //课程id
   	@Column
-  	private String courseId;
+  	private Long courseId;
+  	
+    //备注
+  	@Column
+  	private String remarkInfo;
     	
 	
 	public String getQq() {
@@ -74,11 +78,11 @@ public class TdDemand {
 		this.courseName = courseName;
 	}
 
-	public String getCourseId() {
+	public Long getCourseId() {
 		return courseId;
 	}
 
-	public void setCourseId(String courseId) {
+	public void setCourseId(Long courseId) {
 		this.courseId = courseId;
 	}
 
@@ -137,5 +141,14 @@ public class TdDemand {
 	public void setStatusId(Long statusId) {
 		this.statusId = statusId;
 	}
+
+	public String getRemarkInfo() {
+		return remarkInfo;
+	}
+
+	public void setRemarkInfo(String remarkInfo) {
+		this.remarkInfo = remarkInfo;
+	}
+	
     
 }

@@ -54,9 +54,9 @@
 
         //确认订单
         function OrderConfirm() {
-            var dialog = $.dialog.confirm('确认订单后将无法修改金额，确认要继续吗？', function () {
+            var dialog = $.dialog.confirm('确认要继续吗？', function () {
                 var orderNumber = $.trim($("#spanOrderNumber").text());
-                var postData = { "orderNumber": orderNumber, "type": "orderConfirm" };
+                var postData = { "id": id, "type": "orderConfirm" };
                 //发送AJAX请求
                 sendAjaxUrl(dialog, postData, "/Verwalter/order/param/edit");
                 return false;
@@ -100,9 +100,9 @@
         
         //确认完成
         function OrderComplete() {
-             var dialog = $.dialog.confirm('确认该订单已完成？', function () {
-                var orderNumber = $.trim($("#spanOrderNumber").text());
-                var postData = { "orderNumber": orderNumber, "type": "orderFinish" };
+             var dialog = $.dialog.confirm('确认已完成？', function () {
+                var id = $.trim($("#spanOrderNumber").text());
+                var postData = { "id": id, "type": "orderFinish" };
                 //发送AJAX请求
                 sendAjaxUrl(dialog, postData, "/Verwalter/order/param/edit");
                 return false;
@@ -113,7 +113,7 @@
         function OrderCancel() {
             var dialog = $.dialog({
                 title: '取消订单',
-                content: '操作提示信息：<br />1、该订单为线上订单，请先确定购买者是否真的不需要继续支付；<br />2、取消的订单，将不在购买流程中显示，您可以到取消的订单中查阅；<br />3、请单击相应按钮继续下一步操作！',
+                content: '确认取消吗？',
                 min: false,
                 max: false,
                 lock: true,
@@ -121,8 +121,8 @@
                 button: [{
                     name: '直接取消',
                     callback: function () {
-                        var orderNumber = $.trim($("#spanOrderNumber").text());
-                        var postData = { "orderNumber": orderNumber, "type": "orderCancel" };
+                        var id = $.trim($("#spanOrderNumber").text());
+                        var postData = { "id": id, "type": "orderCancel" };
                         //发送AJAX请求
                         sendAjaxUrl(dialog, postData, "/Verwalter/order/param/edit");
                         return false;
@@ -191,81 +191,6 @@
                 height: 320
             });
         }
-        //修改订单备注
-        function EditOrderRemark() {
-            var dialog = $.dialog({
-                title: '订单备注',
-                content: '<textarea id="orderRemark" name="txtOrderRemark" rows="2" cols="20" class="input">${order.remarkInfo!''}</textarea>',
-                min: false,
-                max: false,
-                lock: true,
-                ok: function () {
-                    var remark = $("#orderRemark", parent.document).val();
-                    if (remark == "") {
-                        $.dialog.alert('对不起，请输入订单备注内容！', function () { }, dialog);
-                        return false;
-                    }
-                    var orderNumber = $.trim($("#spanOrderNumber").text());
-                    var postData = { "orderNumber": orderNumber, "type": "editMark", "data": remark };
-                    //发送AJAX请求
-                    sendAjaxUrl(dialog, postData, "/Verwalter/order/param/edit");
-                    return false;
-                },
-                cancel: true
-            });
-        }
-        //修改商品总金额
-        function EditRealAmount() {
-            var pop = $.dialog.prompt('请修改商品总金额',
-            function (val) {
-                if (!checkIsMoney(val)) {
-                    $.dialog.alert('对不起，请输入正确的配送金额！', function () { }, pop);
-                    return false;
-                }
-                var orderNumber = $.trim($("#spanOrderNumber").text());
-                var postData = { "orderNumber": orderNumber, "type": "editTotalGoodsPrice", "data": val };
-                //发送AJAX请求
-                sendAjaxUrl(pop, postData, "/Verwalter/order/param/edit");
-                return false;
-            },
-            $.trim($("#spanRealAmountValue").text())
-        );
-        }
-        //修改配送费用
-        function EditExpressFee() {
-            var pop = $.dialog.prompt('请修改配送费用',
-            function (val) {
-                if (!checkIsMoney(val)) {
-                    $.dialog.alert('对不起，请输入正确的配送金额！', function () { }, pop);
-                    return false;
-                }
-                var orderNumber = $.trim($("#spanOrderNumber").text());
-                var postData = { "orderNumber": orderNumber, "type": "editDeliveryPrice", "data": val };
-                //发送AJAX请求
-                sendAjaxUrl(pop, postData, "/Verwalter/order/param/edit");
-                return false;
-            },
-            $.trim($("#spanExpressFeeValue").text())
-        );
-        }
-        //修改手续费用
-        function EditPaymentFee() {
-            var pop = $.dialog.prompt('请修改支付手续费用',
-            function (val) {
-                if (!checkIsMoney(val)) {
-                    $.dialog.alert('对不起，请输入正确的手续费用！', function () { }, pop);
-                    return false;
-                }
-                var orderNumber = $.trim($("#spanOrderNumber").text());
-                var postData = { "orderNumber": orderNumber, "type": "editPayPrice", "data": val };
-                //发送AJAX请求
-                sendAjaxUrl(pop, postData, "/Verwalter/order/param/edit");
-                return false;
-            },
-            $.trim($("#spanPaymentFeeValue").text())
-        );
-        }
-
         //=================================工具类的JS函数====================================
         //检查是否货币格式
         function checkIsMoney(val) {
@@ -314,223 +239,40 @@
     <div class="content-tab-wrap">
         <div id="floatHead" class="content-tab" style="position: static; top: 52px;">
             <div class="content-tab-ul-wrap">
-                <ul>
-                    <li>
-                        <a href="javascript:;" onclick="tabs(this);" class="selected">订单详细信息</a></li>
-                </ul>
+
             </div>
         </div>
     </div>
-    <div class="tab-content">
+    <div class="tab-content">   
+    <span style="display:none;" id="spanOrderNumber">${course.id!'' }</span> 
         <dl>
-            <dd style="margin-left: 50px; text-align: center;">
-                <div class="order-flow" style="width: 850px">                  
-                    <#if order.statusId == 3>
-                        <div class="order-flow-left">
-                            <a class="order-flow-input"></a>
-                            <span>
-                                <p class="name">订单已生成</p>
-                                <p>${order.orderTime!""}</p>
-                            </span>
-                        </div>
-                        <div class="order-flow-wait">
-                            <a class="order-flow-input"></a>
-                            <span>
-                                <p class="name">待发货</p>
-                            </span>
-                        </div>
-                        <div class="order-flow-wait">
-                            <a class="order-flow-input"></a>
-                            <span>
-                                <p class="name">待收货</p>
-                            </span>
-                        </div>
-                        <div class="order-flow-right-wait">
-                            <a class="order-flow-input"></a>
-                            <span>
-                                <p class="name">未完成</p>
-                                <p></p>
-                            </span>
-                        </div>
-                    <#elseif order.statusId == 4>
-                        <div class="order-flow-left">
-                            <a class="order-flow-input"></a>
-                            <span>
-                                <p class="name">订单已生成</p>
-                                <p>${order.orderTime!""}</p>
-                            </span>
-                        </div>
-                        <div class="order-flow-arrive">
-                            <a class="order-flow-input"></a>
-                            <span>
-                                <p class="name">已发货</p>
-                                <p>${order.sendTime!''}</p>
-                            </span>
-                        </div>
-                        <div class="order-flow-wait">
-                            <a class="order-flow-input"></a>
-                            <span>
-                                <p class="name">待收货</p>
-                            </span>
-                        </div>
-                        <div class="order-flow-right-wait">
-                            <a class="order-flow-input"></a>
-                            <span>
-                                <p class="name">未完成</p>
-                                <p></p>
-                            </span>
-                        </div>
-               <#--     <#elseif order.statusId == 5>
-                        <#if order.isOnlinePay>
-                            <div class="order-flow-left">
-                                <a class="order-flow-input"></a>
-                                <span>
-                                    <p class="name">订单已生成</p>
-                                    <p>${order.orderTime!""}</p>
-                                </span>
-                            </div>
-                            <div class="order-flow-arrive">
-                                <a class="order-flow-input"></a>
-                                <span>
-                                    <p class="name">已付款</p>
-                                    <p>${order.payTime!""}</p>
-                                </span>
-                            </div>
-                            <div class="order-flow-arrive">
-                                <a class="order-flow-input"></a>
-                                <span>
-                                    <p class="name">已发货</p>
-                                    <p>${order.sendTime!''}</p>
-                                </span>
-                            </div>
-                            <div class="order-flow-arrive">
-                                <a class="order-flow-input"></a>
-                                <span>
-                                    <p class="name">已收货</p>
-                                    <p>${order.receiveTime!''}</p>
-                                </span>
-                            </div>
-                            <div class="order-flow-right-wait">
-                                <a class="order-flow-input"></a>
-                                <span>
-                                    <p class="name">未完成</p>
-                                </span>
-                            </div>
-                        <#else>
-                            <div class="order-flow-left">
-                                <a class="order-flow-input"></a>
-                                <span>
-                                    <p class="name">订单已生成</p>
-                                    <p>${order.orderTime!""}</p>
-                                </span>
-                            </div>
-                            <div class="order-flow-arrive">
-                                <a class="order-flow-input"></a>
-                                <span>
-                                    <p class="name">已送餐</p>
-                                    <p>${order.receiveTime!""}</p>
-                                </span>
-                            </div>
-                            <div class="order-flow-right-wait">
-                                <a class="order-flow-input"></a>
-                                <span>
-                                    <p class="name">未完成</p>
-                                    <p></p>
-                                </span>
-                            </div>
-                        </#if>
-                    -->    
-                    <#elseif order.statusId == 6>                       
-                            <div class="order-flow-left">
-                                <a class="order-flow-input"></a>
-                                <span>
-                                    <p class="name">订单已生成</p>
-                                    <p>${order.orderTime!""}</p>
-                                </span>
-                            </div>
-                            <div class="order-flow-arrive">
-                                <a class="order-flow-input"></a>
-                                <span>
-                                    <p class="name">已确认</p>
-                                    <p>${order.checkTime!""}</p>
-                                </span>
-                            </div>
-                            <div class="order-flow-right-arrive">
-                                <a class="order-flow-input"></a>
-                                <span>
-                                    <p class="name">已完成</p>
-                                    <p>${order.finishTime!''}</p>
-                                </span>
-                            </div>          
-                    <#elseif order.statusId == 7>
-                        <div class="order-flow-left">
-                            <a class="order-flow-input"></a>
-                            <span>
-                                <p class="name">订单已生成</p>
-                                <p>${order.orderTime!""}</p>
-                            </span>
-                        </div>
-                        <div class="order-flow-right-arrive">
-                            <a class="order-flow-input"></a>
-                            <span>
-                                <p class="name">已取消</p>
-                                <p>${order.cancelTime!''}</p>
-                            </span>
-                        </div>
-                    </#if>
-                </div>
-            </dd>
-        </dl>
-       
-        <dl>
-            <dt>商品列表</dt>
+            <dt>课程</dt>
             <dd>
-                <table border="0" cellspacing="0" cellpadding="0" class="border-table" width="98%">
+                <table border="0" cellspacing="0" cellpadding="0" class="border-table" width="50%">
                     <thead>
                         <tr>
-                            <th width="12%">
-                                菜品ID
+                            <th width="8%">
+                                课程ID
                             </th>
-                            <th>
-                                菜品名称
-                            </th>
-                            <th width="12%">
-                                单价    
-                            </th>
-                            <th width="10%">
-                                数量
-                            </th>
-                            <th width="12%">
-                                金额合计
-                            </th>
+                            <th width="15%">
+                                课程名称
+                            </th>                          
                         </tr>
                     </thead>
-                    <tbody>
-                        
-                        <#if order.orderGoodsList??>
-                            <#list order.orderGoodsList as goods>
-                                <tr class="td_c">
-                                    <td>${goods.goodsId!""}</td>
-                                    <td style="text-align: left; white-space: normal;">
-                                        ${goods.goodsTitle!""} 
-                                        ${goods.goodsColor!""}
-                                        ${goods.goodsCapacity!""}
-                                        ${goods.goodsVersion!""}
-                                        ${goods.goodsSaleType!""}
-                                    </td>
-                                    <td>${goods.price?string("#.00")}</td>
-                                    <td>${goods.quantity!""}</td>
-                                    <td>${(goods.price*goods.quantity)?string("#.00")}</td>
-                                </tr>
-                            </#list>
-                        </#if>
+                    <tbody>                       
+                        <tr class="td_c">
+                            <td>${course.courseId!""}</td>
+                            <td style="text-align: center; white-space: normal;">
+                                ${course.courseName!""} 
+                            </td>                                    
+                        </tr>
                     </tbody> 
                 </table> 
             </dd> 
         </dl>
         
         <dl>
-            <dt>订单统计</dt>
+            <dt>预约客户信息</dt>
             <dd>
                 <table border="0" cellspacing="0" cellpadding="0" class="border-table" width="98%">
                     <tbody>
@@ -538,180 +280,79 @@
                     
                     <tr>
                         <th width="20%">
-                            菜品总金额
+                            姓名
                         </th>
                         <td>
                             <div class="position">
                                 <span id="spanRealAmountValue">
-                                    <#if order.totalGoodsPrice??>${order.totalGoodsPrice?string("0.00")}</#if>
-                                </span> 元
-                                <#if order.statusId==1 || order.statusId==2 && order.isOnlinePay>
-                                <input name="btnEditRealAmount" type="button" id="btnEditRealAmount" class="ibtn" value="调价">
-                                </#if>
+                                    ${course.name!""} 
+                                </span> 
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            配送费用
+                           联系电话
                         </th>
                         <td>
                             <div class="position">
-                                <span id="spanExpressFeeValue"><#if order.deliverTypeFee??>${order.deliverTypeFee?string("0.00")}</#if></span> 元
-                                <#if order.statusId==1 || order.statusId==2 && order.isOnlinePay>
-                                <input type="button" id="btnEditExpressFee" class="ibtn" value="调价">
-                                </#if>
+                                <span id="spanExpressFeeValue">
+                                     ${course.mobile!""} 
+                                </span> 
                             </div>
                         </td>
                     </tr>
-                    <#--
+                
                     <tr>
                         <th>
-                            支付手续费
+         QQ
                         </th>
                         <td>
                             <div class="position">
-                                <span id="spanPaymentFeeValue"><#if order.payTypeFee??>${order.payTypeFee?string("0.00")}</#if></span> 元
-                                <#if order.statusId==1 || order.statusId==2 && order.isOnlinePay>
-                                <input type="button" id="btnEditPaymentFee" class="ibtn" value="调价">
-                                </#if>
+                                <span id="spanPaymentFeeValue">
+                                 ${course.qq!""} 
+                                </span> 
+
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            可获取积分总计
+                           邮箱
                         </th>
                         <td>
                             <div class="position">
-                                ${order.points!"0"}分
+                                ${course.mail!""} 
                             </div>
                         </td>
-                    </tr>
-                    -->
+                    </tr>            
                     <tr>
                         <th>
-                            订单总金额
+                           预约时间
                         </th>
                         <td>
-                            ${order.totalPrice?string("0.00")}元</td>
-                    </tr>
+                            <div class="position">
+                                ${course.time!""} 
+                            </div>
+                        </td>
+                    </tr>       
                 </tbody>
                 </table>
             </dd>
-        </dl>
-        
+        </dl>    
         <dl>
-            <dt>送餐地址</dt>
+            <dt>备注</dt>
             <dd>
-                <table border="0" cellspacing="0" cellpadding="0" class="border-table" width="98%">
-                <tbody>
-                    <tr>
-                        <th width="20%">
-                           送餐地址
-                        </th>
-                        <td>
-                            <span id="spanArea"></span> 
-                            <span id="spanAddress">${order.deliveryAddress!""}</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            送餐时间
-                        </th>
-                        <td>
-                            <span></span> 
-                            <span><#if order.appointmentTime??>${order.appointmentTime?string("HH:mm")}</#if></span>
-                        </td>
-                    </tr>
-                </tbody>
-                </table>
-            </dd>
-        </dl>
-        
-        <#--
-        <dl>
-            <dt>收货信息</dt>
-            <dd>
+                
                 <table border="0" cellspacing="0" cellpadding="0" class="border-table" width="98%">
                     <tbody>
-                    <tr>
-                        <th width="20%">
-                            收件人
-                        </th>
-                        <td>
-                            <div class="position">
-                                <span id="spanAcceptName">${order.shippingName!""}</span>
-                                <#if order.statusId lt 4>
-                                <input name="btnEditAcceptInfo" type="button" id="btnEditAcceptInfo" class="ibtn" value="修改">
-                                </#if>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            发货地址
-                        </th>
-                        <td>
-                            <span id="spanArea"></span> 
-                            <span id="spanAddress">${order.shippingAddress!""}</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            邮政编码
-                        </th>
-                        <td><span id="spanPostCode">${order.postalCode!""}</span></td>
-                    </tr>
-                    <tr>
-                        <th>
-                            电话
-                        </th>
-                        <td><span id="spanMobile">${order.shippingPhone!""}</span></td>
-                    </tr>
-                    <tr>
-                        <th>
-                            是否索要发票
-                        </th>
-                        
-                        <td>
-                            <span id="spanInvoice"><#if order.isNeedInvoice?? && order.isNeedInvoice>是<#else>否</#if></span>
-                        </td>
-                        </tr>
-                        <tr>
-                        <th>发票抬头</th>
-                        <td>
-                            <span id="spanInvoice">${order.invoiceTitle!""}</span>
-                        </td>
-                        
-                    </tr>
-                </tbody></table>
-            </dd>
-        </dl>
-        -->
-        
-        <dl>
-            <dt>送餐详情</dt>
-            <dd>
-                <table border="0" cellspacing="0" cellpadding="0" class="border-table" width="98%">
-                    <tbody><tr>
-                        <th width="20%">
-                            联系电话
-                        </th>
-                        <td>${order.shippingPhone!""}</td>
-                    </tr>
-                    <tr>
-                        <th>
-                            送餐方式
-                        </th>
-                        <td>${order.deliverTypeTitle!""}</td>
-                    </tr>
+                    
                     
                     <tr>
-                        <th>
+                        <th  width="20%">
                             用户留言
                         </th>
-                        <td>${order.userRemarkInfo!""}</td>
+                        <td>${course.content!""}</td>
                     </tr>
                     <tr>
                         <th valign="top">
@@ -719,7 +360,7 @@
                         </th>
                         <td>
                             <div class="position">
-                                <div>${order.remarkInfo!""}</div>
+                                <div>${course.remarkInfo!""}</div>
                                 <input name="btnEditRemark" type="button" id="btnEditRemark" class="ibtn" value="修改" style="margin-top: -3px;">
                             </div>
                         </td>
@@ -733,27 +374,9 @@
     <!--工具栏-->
     <div class="page-footer">
         <div class="btn-list">
-            <#if order.statusId==1>
-                <input type="button" id="btnConfirm" value="确认订单" class="btn">
+            <#if course.statusId==1>
+                <input type="button" id="btnOrderComplete" value="确认处理" class="btn">
                 <input type="button" id="btnCancel" value="取消订单" class="btn green">
-            <#elseif order.statusId==2>
-                <#if order.isOnlinePay>
-                    <input type="button" id="btnPayment" value="确认付款" class="btn">
-                    <input type="button" id="btnCancel" value="取消订单" class="btn green">
-                <#else>
-                    <input type="button" id="btnHDFKPayment" value="确认付款" class="btn">
-                </#if>
-            <#elseif order.statusId==3>
-                <input type="button" id="btnOrderExpress" value="确认发货" class="btn"> 
-                <input type="button" id="btnCancel" value="取消订单" class="btn green">             
-            <#elseif order.statusId==4>
-                <input type="button" id="btnOrderReceive" value="确认送餐" class="btn">
-                <input type="button" id="btnCancel" value="取消订单" class="btn green">
-            <#elseif order.statusId==5>
-                <input type="button" id="btnOrderComplete" value="确认完成" class="btn">
-            </#if>
-            <#if order.statusId != 7>
-                <input type="button" id= "btnPrint" value="打印订单" class="btn violet">
             </#if>
             <input type="button" value="返回上一页" class="btn yellow" onclick="javascript:history.back(-1);">
         </div>

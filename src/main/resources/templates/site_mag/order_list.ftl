@@ -94,22 +94,25 @@ function __doPostBack(eventTarget, eventArgument) {
         <th width="8%">
             选择
         </th>
-        <th align="left">
+        <th width="12%">
             课程
         </th>
-        <th align="left" width="12%">
+        <th  width="12%">
             姓名
         </th>
-        <th align="left" width="10%">
+        <th width="8%">
             联系电话
+        </th>
+        <th width="8%">
+    QQ
+        </th>
+        <th width="8%">
+            邮箱
         </th>
         <th width="8%">
             状态
         </th>
-        <th width="10%">
-            邮箱
-        </th>
-        <th align="left" width="16%">
+        <th width="16%">
             预约时间
         </th>
         <th width="8%">
@@ -126,32 +129,32 @@ function __doPostBack(eventTarget, eventArgument) {
                     </span>
                     <input type="hidden" name="listId" id="listId" value="${order.id}">
                 </td>
-                <td>
+                <td align="center">
                     <a href="/Verwalter/order/edit?id=${order.id}&statusId=${statusId!'0'}">${order.courseName!""}</a></td>
-                <td>${order.name!""}</td>
-             <#--   <td>${order.payTypeTitle!""}</td> -->
-                <td>${order.mobile!""}</td>
+                <td align="center">${order.name!""}</td>
+                <td align="center">${order.mobile!""}</td>
+                <td align="center">${order.qq!""}</td>
+                <td align="center">${order.mail}</td>
                 <td align="center">
                     <#if order.statusId??>
                         <#if 1==order.statusId>
                             <span>待确认</span>
                         <#elseif 2==order.statusId>
-                            <span>待付款订单</span>
+                            <span>待付款</span>
                         <#elseif 3==order.statusId>
-                            <span>待发货订单</span>
+                            <span>待发货</span>
                         <#elseif 4==order.statusId>
-                            <span>待送餐订单</span>
+                            <span>待送餐</span>
                         <#elseif 5==order.statusId>
-                            <span>待评价订单</span>
+                            <span>待评价</span>
                         <#elseif 6==order.statusId>
-                            <span>已完成订单</span>
+                            <span>已处理</span>
                         <#elseif 7==order.statusId>
-                            <span>已取消订单</span>
+                            <span>已取消</span>
                         </#if>
                     </#if>
-                </td>
-                <td align="center" width="10%">￥<font color="#C30000">${order.mail}</font></td>
-                <td>${order.time?string("yyyy-MM-dd HH:mm:ss")}</td>
+                </td>                
+                <td align="center">${order.time?string("yyyy-MM-dd HH:mm:ss")}</td>
                 <td align="center">
                     <a href="/Verwalter/order/edit?id=${order.id}&statusId=${statusId!"0"}">详细</a>
                 </td>

@@ -12,6 +12,39 @@
 
 <script type="text/javascript" src="/client/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="/client/js/info-list.js"></script> 
+<script>
+//搜索翻页 zhangji
+function searchPage(keywords,eventTarget, eventArgument)
+{ 
+    $('html,body').animate({scrollTop:146},400);
+    $.ajax({
+        type:"post",
+        url:"/search",
+        data:{"keywords":keywords,
+              "__EVENTTARGET":eventTarget,
+              "__EVENTARGUMENT":eventArgument},
+        success:function(data){             
+            $(".right_content").html(data);
+        }       
+    });
+}
+//搜索跳页 zhangji
+function searchPageJump(keywords,eventTarget)
+{ 
+    $('html,body').animate({scrollTop:146},400);
+    var eventArgument = $("#jump-page").val() - 1;
+    $.ajax({
+        type:"post",
+        url:"/search",
+        data:{"keywords":keywords,
+              "__EVENTTARGET":eventTarget,
+              "__EVENTARGUMENT":eventArgument},
+        success:function(data){             
+            $(".right_content").html(data);
+        }       
+    });
+}
+</script>
 </head>
 <body>
 <!--header-->
@@ -25,36 +58,7 @@
     
     <!--right_content-->
     <div class="right_content">
-        <div class="right_title">
-    <a>首页&nbsp;&gt;&nbsp;</a>   
-    <a>课程设置</a>
-    <a><#if info_name??> > ${info_name.title!'' }</#if></a>
-</div>    
-<div class="right_crouse">
-    <#if course_page??>
-        <#list course_page.content as item> 
-            <dl class="crouse">
-                <dt><img src="${item.imgUrl!''}" /></dt>
-                <dd>
-                    <a href="javascript:courseTake(${item.id },${item.menuId })">${item.title!''}</a>
-                    <#if item.content?length lt 400>
-                        <p>${item.content!''}</p>
-                    <#else>
-                        <p>${item.content[0..400] }...</p>
-                    </#if>
-                </dd>
-            </dl>
-        </#list>
-    </#if>        
-</div>
-<!--内容底部-->
-<#assign PAGE_DATA=course_page />
-<#if catId??>
-    <#include "/client/list_footer.ftl" />
-<#else>
-    <#include "/client/list_footer_index.ftl" />
-</#if>            
- <!--内容底部 end-->       
+       <#include "/client/search_result_detail.ftl" /> 
          
     </div>
 

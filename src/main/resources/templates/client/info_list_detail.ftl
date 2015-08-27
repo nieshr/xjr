@@ -52,7 +52,7 @@
     });
     </script> 
     <div class="crouse_title">
-        <p style="margin-top:20px;">您选择的是 :${coursetake!""}课程，请详细填写下方联系方式预约报名。</p>
+        <p style="margin-top:20px;">您选择的是 :<b style="color:#ef0000;">&nbsp;${coursetake!""}&nbsp;</b>课程，请详细填写下方联系方式预约报名。</p>
     </div>
     <form action="/info/submit" id="form1" method="post">
     <input type="hidden" name="courseId" value=${courseId}>

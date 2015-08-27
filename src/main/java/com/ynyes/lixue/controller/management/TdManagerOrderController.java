@@ -322,7 +322,7 @@ public class TdManagerOrderController {
         map.addAttribute("statusId", statusId);
         if (null != id)
         {
-            map.addAttribute("order", tdOrderService.findOne(id));
+            map.addAttribute("course", tdDemandService.findOne(id));
         }
         return "/site_mag/order_edit";
     }
@@ -569,7 +569,7 @@ public class TdManagerOrderController {
     
     @RequestMapping(value="/param/edit", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> paramEdit(String orderNumber,
+    public Map<String, Object> paramEdit(Long id,
                         String type,
                         String data,
                         String name,
@@ -592,153 +592,32 @@ public class TdManagerOrderController {
             return res;
         }
         
-        if (null != orderNumber && !orderNumber.isEmpty() && null != type && !type.isEmpty())
-        {
-            TdOrder order = tdOrderService.findByOrderNumber(orderNumber);
-            
+        if (null != id  && null != type && !type.isEmpty())
+        {           
+            TdDemand demand = tdDemandService.findOne(id);
             // 修改备注
             if (type.equalsIgnoreCase("editMark"))
             {
-                order.setRemarkInfo(data);
+                demand.setRemarkInfo(data);
             }
-            // 修改商品总金额
-            else if (type.equalsIgnoreCase("editTotalGoodsPrice"))
-            {
-                double goodsPrice = Double.parseDouble(data);
-                order.setTotalGoodsPrice(goodsPrice);
-                order.setTotalPrice(goodsPrice + order.getPayTypeFee() + order.getDeliverTypeFee());
-            }
-            // 修改配送费用
-            else if (type.equalsIgnoreCase("editDeliveryPrice"))
-            {
-                double deliveryPrice = Double.parseDouble(data);
-                order.setDeliverTypeFee(deliveryPrice);
-                order.setTotalPrice(deliveryPrice + order.getPayTypeFee() + order.getTotalGoodsPrice());
-            }
-            // 修改支付手续费
-            else if (type.equalsIgnoreCase("editPayPrice"))
-            {
-                double payPrice = Double.parseDouble(data);
-                order.setPayTypeFee(payPrice);
-                order.setTotalPrice(payPrice + order.getTotalGoodsPrice() + order.getDeliverTypeFee());
-            }
-            // 修改联系方式
-            else if (type.equalsIgnoreCase("editContact"))
-            {
-                order.setShippingName(name);
-                order.setShippingAddress(address);
-                order.setShippingPhone(mobile);
-                order.setPostalCode(postal);
-            }
-            // 确认订单
-            else if (type.equalsIgnoreCase("orderConfirm"))
-            {
-                if (order.getStatusId().equals(1L))
-                {
-                    order.setStatusId(2L);
-                    order.setCheckTime(new Date());
-                }
-            }
-            // 确认付款
-            else if (type.equalsIgnoreCase("orderPay"))
-            {
-                if (order.getStatusId().equals(2L))
-                {
-                    // 需付尾款
-                    if (null != order.getTotalLeftPrice() && order.getTotalLeftPrice() > 0)
-                    {
-                        order.setStatusId(3L);
-                    }
-                    // 不需付尾款，直接跳到可到店服务
-                    else
-                    {
-                        order.setStatusId(4L);
-                    }
-
-                    order.setPayTime(new Date());
-                }
-            }
-            // 确认付尾款
-            else if (type.equalsIgnoreCase("orderPayLeft"))
-            {
-                if (order.getStatusId().equals(3L))
-                {
-                    order.setStatusId(4L);
-                    order.setPayLeftTime(new Date());
-                }
-            }
-            // 确认已服务
-            else if (type.equalsIgnoreCase("orderService"))
-            {
-                if (order.getStatusId().equals(4L))
-                {
-                    order.setStatusId(5L);
-                    order.setServiceTime(new Date());
-                }
-            }
-            // 货到付款确认付款
-            else if (type.equalsIgnoreCase("orderPayOffline"))
-            {
-                if (order.getStatusId().equals(2L)
-                        && !order.getIsOnlinePay())
-                {
-                    order.setStatusId(5L);
-                    order.setPayTime(new Date());
-                }
-            }
-            // 确认发货
-            else if (type.equalsIgnoreCase("orderDelivery"))
-            {
-                if (order.getStatusId().equals(3L))
-                {
-                    order.setDeliverTypeId(deliverTypeId);
-                    order.setExpressNumber(expressNumber);
-                    order.setStatusId(4L);
-                    order.setSendTime(new Date());
-                    
-                    TdUser tdUser = tdUserService.findByUsername(order.getUsername());
-                    
-                    if (null != tdUser)
-                    {
-                        SMSUtil.send(tdUser.getMobile(), "28744",
-                                new String[] { order.getUsername(),
-                                        order.getOrderNumber()});
-                    }
-                }
-            }
-            // 确认收货
-            else if (type.equalsIgnoreCase("orderReceive"))
-            {
-                if (order.getStatusId().equals(4L))
-                {
-                    order.setStatusId(5L);
-                    order.setReceiveTime(new Date());
-                }
-            }
+ 
             // 确认完成
             else if (type.equalsIgnoreCase("orderFinish"))
             {
-                if (order.getStatusId().equals(5L))
-                {
-                    order.setStatusId(6L);
-                    order.setFinishTime(new Date());
-                    
-                    tdUserService.addTotalSpend(order.getUsername(), order.getTotalPrice());
-                }
+                	demand.setStatusId(6L);
             }
             // 确认取消
             else if (type.equalsIgnoreCase("orderCancel"))
             {
-                if (order.getStatusId().equals(1L) ||
-                        order.getStatusId().equals(2L))
+                if (demand.getStatusId().equals(1L) ||
+                		demand.getStatusId().equals(2L))
                 {
-                    order.setStatusId(7L);
-                    order.setCancelTime(new Date());
+                	demand.setStatusId(7L);
                 }
             }
             
-            tdOrderService.save(order);
-            tdManagerLogService.addLog("edit", "修改订单", req);
+            tdDemandService.save(demand);
+            tdManagerLogService.addLog("edit", "修改课程预约", req);
             
             res.put("code", 0);
             res.put("message", "修改成功!");
