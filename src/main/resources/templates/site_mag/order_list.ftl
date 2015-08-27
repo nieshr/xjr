@@ -100,11 +100,6 @@ function __doPostBack(eventTarget, eventArgument) {
         <th align="left" width="12%">
             姓名
         </th>
-  <#--
-        <th align="left" width="10%">
-            支付方式
-        </th>
-        -->
         <th align="left" width="10%">
             联系电话
         </th>
