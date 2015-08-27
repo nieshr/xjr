@@ -3,113 +3,41 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"/>
-<title>相关常识</title>
-<script type="text/javascript" src="/client/js/jquery-1.9.1.min.js"></script>
-<link rel="stylesheet" type="text/css" href="/client/css/base.css"/>
-<link rel="stylesheet" type="text/css" href="/client/css/style.css"/>
-<script>
-//选择栏目 zhangji
-function selectCat(mid,catId)
-{ 
-	$(".menu_list").removeClass("li_nav");
-	$("#list"+catId).addClass("li_nav");
-	
-    $.ajax({
-        type:"post",
-        url:"/info/list/select",
-        data:{"mid":mid,"catId":catId},
-        success:function(data){            	
-            $("#info_list_detail").html(data);
-        }       
-    });
-}
-</script>
-<script>
-//翻页 zhangji
-function page(mid,catId,eventTarget, eventArgument)
-{ 
-    $(".menu_list").removeClass("li_nav");
-    $("#list"+catId).addClass("li_nav");
-    
-    $.ajax({
-        type:"post",
-        url:"/info/list/select",
-        data:{"mid":mid,
-        	  "catId":catId,
-        	  "__EVENTTARGET":eventTarget,
-        	  "__EVENTARGUMENT":eventArgument},
-        success:function(data){             
-            $("#info_list_detail").html(data);
-        }       
-    });
-}
-//[全部]分类翻页
-function page2(mid,eventTarget, eventArgument)
-{   
-    $.ajax({
-        type:"post",
-        url:"/info/list/select",
-        data:{"mid":mid,
-              "__EVENTTARGET":eventTarget,
-              "__EVENTARGUMENT":eventArgument},
-        success:function(data){             
-            $("#info_list_detail").html(data);
-        }       
-    });
-}
-</script>
+<title><#if site??>${site.seoTitle!''}-</#if>${menu_name!''}</title>
+<meta name="keywords" content="${site.seoKeywords!''}">
+<meta name="description" content="${site.seoDescription!''}">
+<meta name="copyright" content="${site.copyright!''}" />
+<link href="/client/css/base.css" rel="stylesheet" type="text/css" />
+<link href="/client/css/news_body.css" rel="stylesheet" type="text/css" />
+<link href="/client/css/news_center.css" rel="stylesheet" type="text/css" />
+<link href="/client/css/teacher.css" rel="stylesheet" type="text/css" />
+<link href="/client/css/teacher_center.css" rel="stylesheet" type="text/css" />
+<link href="/client/css/course.css" rel="stylesheet" type="text/css" />
+<link href="/client/css/join_us.css" rel="stylesheet" type="text/css" />
 
+<script type="text/javascript" src="/client/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/client/js/info-list.js"></script> 
 </head>
 
 <body>
-<form name="form1" method="post" action="/info/list/8" id="form1">
-<div>
-<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="${__EVENTTARGET!""}">
-<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="${__EVENTARGUMENT!""}">
-<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="${__VIEWSTATE!""}" >
-</div>
+<!--header-->
+<#include "/client/common_header.ftl" />
+<!--header_end -->
 
-<script type="text/javascript">
-var theForm = document.forms['form1'];
-    if (!theForm) {
-        theForm = document.form1;
-    }
-    function __doPostBack(eventTarget, eventArgument) {
-        if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
-            theForm.__EVENTTARGET.value = eventTarget;
-            theForm.__EVENTARGUMENT.value = eventArgument;
-            theForm.submit();
-        }
-    }
-</script>
-<#include "/client/commen_header.ftl" />
-<!--内容-->
-<div class="wrapper content">
-    <div class="content_1">
-        <div class="content_1_1"></div>
-        <div class="content_1_2">
-	       <ul>
-		        <li class="li_su"><strong>${menu_name }</strong><br /><b>${menu_sub_name }</b></li>
-		        <li ><a class="menu_list" id="list0" href="javascript:selectCat(${menu_id},0);" title="">全部</a></li>
-		        <#if info_category_list??>
-		            <#list info_category_list as item>
-		                <li>		                    
-		                     <a class="menu_list" id="list${item.id}" href="javascript:selectCat(${item.menuId},${item.id});" title="">${item.title!'' }</a>
-		                </li>
-		            </#list>
-		        </#if>   
-	       </ul>
-        </div>
-        <div class="content_1_3"></div>
+<!--main-->
+<div class="main">
+	<!--left_content-->
+	   <#include "/client/common_menu.ftl" />  
+    
+    <!--right_content-->
+    <div class="right_content">
+    	<#include "/client/info_list_detail.ftl" />  
     </div>
-	<div class="content_2" id="info_list_detail">
-         <#include "/client/info_list_detail.ftl" />
-	</div>
+
 </div>
-<!--底部-->
-<div class="footer">
-    <#include "/client/commen_footer.ftl" />
-</div>
-</form>
+<!--footer-->
+<#include "/client/common_footer.ftl" />
+<!--footer_end-->
+
 </body>
 </html>
