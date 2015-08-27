@@ -61,6 +61,11 @@ public class TdUserConsult {
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date replyTime;
     
+    // 回复时间
+    @Column
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private Date commentTime;
+    
     // 咨询的商品ID
     @Column
     private Long goodsId;
@@ -80,8 +85,52 @@ public class TdUserConsult {
     // 排序号
     @Column
     private Long sortId;
+    
+    // 电话
+    @Column
+    private String mobile;
+    
+    // 邮箱
+    @Column
+    private String email;
+    
+    // qq
+    @Column
+    private String qq;
 
-    public Long getId() {
+    public Date getCommentTime() {
+		return commentTime;
+	}
+
+	public void setCommentTime(Date commentTime) {
+		this.commentTime = commentTime;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getQq() {
+		return qq;
+	}
+
+	public void setQq(String qq) {
+		this.qq = qq;
+	}
+
+	public Long getId() {
         return id;
     }
 

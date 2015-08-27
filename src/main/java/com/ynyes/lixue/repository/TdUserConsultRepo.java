@@ -20,6 +20,7 @@ public interface TdUserConsultRepo extends
 		PagingAndSortingRepository<TdUserConsult, Long>,
 		JpaSpecificationExecutor<TdUserConsult> 
 {
+	
     Page<TdUserConsult> findByStatusIdOrderBySortIdAsc(Long statusId, Pageable page);
     
     Page<TdUserConsult> findByStatusIdOrderByIdDesc(Long statusId, Pageable page);

@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ynyes.lixue.entity.TdUser;
 import com.ynyes.lixue.entity.TdUserConsult;
 import com.ynyes.lixue.repository.TdUserConsultRepo;
 
@@ -83,6 +84,7 @@ public class TdUserConsultService {
      * @param ids
      * @return
      */
+    
     public List<TdUserConsult> findAll(Iterable<Long> ids)
     {
         return (List<TdUserConsult>) repository.findAll(ids);
