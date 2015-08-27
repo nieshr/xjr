@@ -46,7 +46,16 @@
 .crouse dd p{ margin-top:20px;}
 
 
-
+/*massage*/
+.message{width:880px; display:block; overflow:hidden; float:right; margin-top:20px;}
+.message dd{ margin-top:30px; width:933px; float:left;}
+.message input{ width:300px; height:40px; border:#cccccc 1px solid; float:left;}
+.message span{ display:block; width:60px; float:left;}
+.message_box textarea{ width:400px; height:200px; float:left;}
+.message_box span{ float:left; }
+.message_box a{ float:left; margin-left:10px; margin-top:188px;}
+.message_btn { float:left; margin-left:60px;}
+.message_btn input{ width:60px; height:40px; border-radius:4px; line-height:40px; text-align:center; color:white; background-color:#008e45;}
 
 
 

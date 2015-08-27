@@ -16,7 +16,9 @@
 <link href="/client/css/join_us.css" rel="stylesheet" type="text/css" />
 
 <script type="text/javascript" src="/client/js/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="/client/js/info-list.js"></script> 
+<script type="text/javascript" src="/client/js/info-list.js"></script>
+<script src="/client/js/Validform_v5.3.2_min.js"></script>
+
 </head>
 <body>
 <!--header-->

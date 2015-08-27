@@ -25,6 +25,18 @@ function selectCat(mid,catId)
         }       
     });
 }
+//点击文章进入课程报名     ->mdj 2015-8-27 09:59:45<-
+function courseTake(id,mid)
+{
+	$.ajax({
+        type:"post",
+        url:"/info/coursechoose",
+        data:{"id":id,"mid":mid},
+        success:function(data){       	
+            $(".right_content").html(data);
+        }       
+    });
+}
 
 //翻页 zhangji
 function page(mid,catId,eventTarget, eventArgument)
