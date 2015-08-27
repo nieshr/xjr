@@ -37,15 +37,51 @@ public class TdDemand {
 	@Column
 	private String mail;
 	
-	//联系方式
+	//联系方式:电话
 	@Column
 	private String mobile;
+	
+	//联系方式：qq
+	@Column
+	private String qq;
+	
+	//课程名称
+	@Column
+	private String courseName;
 	
     // 显示状态
     @Column
     private Long statusId;
+    
+    //课程id
+  	@Column
+  	private String courseId;
     	
 	
+	public String getQq() {
+		return qq;
+	}
+
+	public void setQq(String qq) {
+		this.qq = qq;
+	}
+
+	public String getCourseName() {
+		return courseName;
+	}
+
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
+	}
+
+	public String getCourseId() {
+		return courseId;
+	}
+
+	public void setCourseId(String courseId) {
+		this.courseId = courseId;
+	}
+
 	public Long getId() {
 		return id;
 	}

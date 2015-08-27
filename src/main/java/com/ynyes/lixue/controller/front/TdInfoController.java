@@ -1,21 +1,29 @@
 package com.ynyes.lixue.controller.front;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.neo4j.cypher.internal.compiler.v2_1.perty.printToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ynyes.lixue.entity.TdArticle;
 import com.ynyes.lixue.entity.TdArticleCategory;
+import com.ynyes.lixue.entity.TdDemand;
 import com.ynyes.lixue.entity.TdNavigationMenu;
 import com.ynyes.lixue.service.TdArticleCategoryService;
 import com.ynyes.lixue.service.TdArticleService;
 import com.ynyes.lixue.service.TdCommonService;
+import com.ynyes.lixue.service.TdDemandService;
 import com.ynyes.lixue.service.TdNavigationMenuService;
 import com.ynyes.lixue.service.TdUserRecentVisitService;
 import com.ynyes.lixue.util.ClientConstant;
@@ -42,6 +50,9 @@ public class TdInfoController {
 	
 	@Autowired
     private TdUserRecentVisitService tdUserRecentVisitService;
+	
+	@Autowired
+	private TdDemandService tdDemandService;
     
 	@RequestMapping("/list/{mid}")
     public String infoList(@PathVariable Long mid, 
@@ -427,5 +438,52 @@ public class TdInfoController {
         map.addAttribute("latest_info_page", tdArticleService.findByMenuIdAndIsEnableOrderByIdDesc(mid, 0, ClientConstant.pageSize));
         
         return "/client/info_entry_content";
+    }
+	
+	/**
+	 * 
+	 * 课程报名
+	 * @param id
+	 * @param mid
+	 * @param map
+	 * @param req
+	 * @return
+	 */
+	@RequestMapping("/coursechoose")
+	public String coursechoose( Long id,Long mid, ModelMap map, HttpServletRequest req)
+	{
+		TdArticle article = tdArticleService.findOne(id);
+		map.addAttribute("coursetake",article.getTitle());
+		map.addAttribute("menu_name", "课程设置");
+		map.addAttribute("courseId",id);
+		map.addAttribute("courseMid",mid);
+		return "/client/info_list_detail";
+	}
+	
+	@RequestMapping("/submit")
+	@ResponseBody
+    public Map<String, Object> setConsult(TdDemand userDemand, HttpServletRequest req)
+    {
+		Map<String, Object> res = new HashMap<String, Object>();
+    	res.put("code", 1);
+    	if (userDemand.getName() == null || userDemand.getName().equals(""))
+    	{
+			res.put("message", "用户名不能为空");
+			return res;
+		}
+    	else if (userDemand.getContent() ==null|| userDemand.getContent().equals(""))
+    	{
+			res.put("message", "留言内容不能为空");
+			return res;
+		}
+    	else if (userDemand.getMobile().equals(""))
+    	{
+			res.put("message", "手机号不能为空");
+			return res;
+		}
+    	userDemand.setTime(new Date());
+    	tdDemandService.save(userDemand);
+    	res.put("code", 0);
+    	return res;
     }
 }
