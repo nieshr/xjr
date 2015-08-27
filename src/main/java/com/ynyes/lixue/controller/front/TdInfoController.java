@@ -471,16 +471,17 @@ public class TdInfoController {
 			res.put("message", "用户名不能为空");
 			return res;
 		}
-    	else if (userDemand.getContent() ==null|| userDemand.getContent().equals(""))
-    	{
-			res.put("message", "留言内容不能为空");
-			return res;
-		}
     	else if (userDemand.getMobile().equals(""))
     	{
 			res.put("message", "手机号不能为空");
 			return res;
 		}
+    	else if (userDemand.getContent() ==null|| userDemand.getContent().equals(""))
+    	{
+			res.put("message", "留言内容不能为空");
+			return res;
+		}
+    	
     	userDemand.setTime(new Date());
     	tdDemandService.save(userDemand);
     	res.put("code", 0);
