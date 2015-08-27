@@ -20,7 +20,6 @@
 <script src="/client/js/Validform_v5.3.2_min.js"></script>
 
 </head>
-
 <body>
 <!--header-->
 <#include "/client/common_header.ftl" />

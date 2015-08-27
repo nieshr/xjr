@@ -6,10 +6,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ynyes.lixue.entity.TdArticle;
+import com.ynyes.lixue.entity.TdGoods;
 import com.ynyes.lixue.repository.TdArticleRepo;
 
 /**
@@ -229,6 +232,27 @@ public class TdArticleService {
         }
         
         return repository.findByChannelIdAndCategoryIdOrderBySortIdAsc(channelId, catId);
+    }
+    
+    /**
+     * 搜索课程
+     * @author Zhangji
+     * @param keywords
+     * @param page
+     * @param size
+     * @return
+     */
+    public Page<TdArticle> searchArticle(String keywords, int page, int size) {
+        if (null == keywords) {
+            return null;
+        }
+
+        PageRequest pageRequest = new PageRequest(page, size, new Sort(
+                Direction.DESC, "id"));
+
+        return repository
+                .findByTitleContainingIgnoreCaseAndStatusId(
+                        keywords,0L, pageRequest);
     }
     
     /**
