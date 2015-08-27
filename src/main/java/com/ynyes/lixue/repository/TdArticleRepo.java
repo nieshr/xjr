@@ -47,5 +47,9 @@ public interface TdArticleRepo extends
     List<TdArticle> findByChannelIdAndCategoryIdOrderBySortIdAsc(Long channeldId, Long catId);
     Page<TdArticle> findByChannelIdOrderBySortIdAsc(Long channeldId, Pageable page);
     
+    //搜索课程 zhangji
+    Page<TdArticle> findByTitleContainingIgnoreCaseAndStatusId(
+    		String keywords,Long statusId, Pageable page);
+    
     int countByCategoryId(Long catId);
 }

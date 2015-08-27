@@ -2,14 +2,16 @@
     <img class="logo" src="${site.logoUri!'' }"/>
     <form>
     <div class="search">
-        <input class="search_text" type="" value="请输入课程" />
-        <input style=" width:51px; height:41px; background-color:#008e45; color:white; font-size:14px;" type="button" value="搜索" />
+        <form action="/search" method="get">
+	        <input type="text" class="search_text" name="keywords" value="${keywords!keywords_list[0].title}" />
+	        <input type="submit"  style="width:51px; height:41px; background-color:#008e45; color:white; font-size:14px;" value="搜索" />
+        </form>
     </div>
     </form>
     <div class="share">
         <div class="share_icon">
 			<!-- JiaThis Button BEGIN -->
-			<div class="jiathis_style"><span class="jiathis_txt">分享到：</span>
+			<div class="jiathis_style"><span class="jiathis_txt"></span>
 			<a class="jiathis_button_qzone"></a>
 			<a class="jiathis_button_tsina"></a>
 			<a class="jiathis_button_tqq"></a>

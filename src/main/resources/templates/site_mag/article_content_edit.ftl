@@ -39,6 +39,20 @@
                 flashurl: "/mag/js/swfupload.swf"
             });
         });
+        //批量上传 zhangji
+        $(".upload-show360").each(function () {
+            $(this).InitSWFUpload_show360({ 
+                btntext: "批量上传", 
+                btnwidth: 66, 
+                single: false, 
+                water: true, 
+                thumbnail: true, 
+                filesize: "5120", 
+                sendurl: "/Verwalter/upload", 
+                flashurl: "/mag/js/swfupload.swf", 
+                filetypes: "*.jpg;*.jpge;*.png;*.gif;" 
+            });
+        });
 
         //（缩略图）
         var txtPic = $("#txtImgUrl").val();
@@ -203,6 +217,33 @@
     </div>
     
     <div class="tab-content" style="display: none;">
+        <#-- 批量上传 zhangji-->
+        <#if mid = 11>
+        <dl id="div_show360_container">
+            <dt>展示图片</dt>
+            <dd>
+                <div class="upload-box upload-show360"></div>
+                <div class="photo-list_show360">
+                    <ul>
+                        <#if goods?? && goods.showPictures??>
+                            <#list goods.showPictures?split(",") as uri>
+                                <#if uri != "">
+                                <li>
+                                    <input type="hidden" name="hid_photo_name_show360" value="0|${uri!""}|${uri!""}">
+                                    <div class="img-box">
+                                        <img src="${uri!""}" bigsrc="${uri!""}">
+                                    </div>
+                                    <a href="javascript:;" onclick="delImg(this);">删除</a>
+                                </li>
+                                </#if>
+                            </#list>
+                        </#if>
+                    </ul>
+                </div>
+            </dd>
+        </dl>
+        </#if>
+        <#-- 批量上传 zhangji  end-->
         <dl>
             <dt>调用别名</dt>
             <dd>

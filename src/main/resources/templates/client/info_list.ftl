@@ -18,7 +18,6 @@
 <script type="text/javascript" src="/client/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="/client/js/info-list.js"></script> 
 </head>
-
 <body>
 <!--header-->
 <#include "/client/common_header.ftl" />

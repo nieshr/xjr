@@ -36,10 +36,13 @@
         <dl class="teacher_img">
             <dt><a>教师风采</a></dt>
             <dd>
-                <img src="/client/img/u=2530504814,3168526383&fm=21&gp=0.jpg" />
-                <img src="/client/img/u=2530504814,3168526383&fm=21&gp=0.jpg" />
-                <img src="/client/img/u=2530504814,3168526383&fm=21&gp=0.jpg" />
-                <img src="/client/img/u=2530504814,3168526383&fm=21&gp=0.jpg" />
+                <#if info.showPictures??>
+	                <#list info.showPictures?split(",") as uri>
+	                    <#if ""!=uri && uri_index < 4>
+                            <img src="${uri!''}" />
+                        </#if>
+                    </#list>
+                </#if>                        
             </dd>
         </dl>  
         <dl class="teacher_intro">

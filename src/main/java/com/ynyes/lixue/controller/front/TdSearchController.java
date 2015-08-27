@@ -78,29 +78,13 @@ public class TdSearchController {
                 tdKeywordsService.save(key);
             }
             
-            map.addAttribute("goods_page", tdGoodsService.searchGoods(keywords.trim(), page, ClientConstant.pageSize));
+            map.addAttribute("course_page", tdArticleService.searchArticle(keywords.trim(), page, ClientConstant.pageSize));    
         }
         
-        // 商城资讯
-        List<TdArticleCategory> articleCatList = tdArticleCategoryService
-                .findByMenuId(10L);
-
-        if (null != articleCatList && articleCatList.size() > 0) {
-            Long articleCatId = articleCatList.get(0).getId();
-
-            map.addAttribute("news_page", tdArticleService
-                    .findByMenuIdAndCategoryIdAndIsEnableOrderByIdDesc(10L,
-                            articleCatId, 0, ClientConstant.pageSize));
-        }
-        
+        List<TdArticleCategory> catList = tdArticleCategoryService.findByMenuId(12L);
+        map.addAttribute("info_category_list", catList); //栏目的列表 zhangji     
         map.addAttribute("pageId", page);
-        map.addAttribute("keywords", keywords);
-        
-        // 热卖推荐
-        map.addAttribute("hot_sale_list", tdGoodsService.findByIsRecommendTypeTrueAndIsOnSaleTrueOrderByIdDesc(0, 10).getContent());   
-        
-        // 销量排行
-        map.addAttribute("most_sold_list", tdGoodsService.findByIsOnSaleTrueOrderBySoldNumberDesc(0, 10).getContent());   
+        map.addAttribute("keywords", keywords);          
         
         return "/client/search_result";
     }

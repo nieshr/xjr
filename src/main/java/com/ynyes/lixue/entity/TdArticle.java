@@ -94,6 +94,10 @@ public class TdArticle {
     @Column
     private String seoDescription;
     
+    // 轮播展示图片，多张图片以,隔开 zhangji
+    @Column
+    private String showPictures;
+    
     // 发布时间
     @Column
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
@@ -262,7 +266,15 @@ public class TdArticle {
         this.seoDescription = seoDescription;
     }
 
-    public Date getCreateTime() {
+    public String getShowPictures() {
+		return showPictures;
+	}
+
+	public void setShowPictures(String showPictures) {
+		this.showPictures = showPictures;
+	}
+
+	public Date getCreateTime() {
         return createTime;
     }
 

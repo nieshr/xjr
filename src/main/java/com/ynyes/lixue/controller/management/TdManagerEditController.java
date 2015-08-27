@@ -235,7 +235,8 @@ public class TdManagerEditController {
     }
     
     @RequestMapping(value="/article/save", method = RequestMethod.POST)
-    public String save(TdArticle article, 
+    public String save(TdArticle article,
+    	    String[] hid_photo_name_show360,
             String __EVENTTARGET,
             String __EVENTARGUMENT,
             String __VIEWSTATE,
@@ -245,6 +246,10 @@ public class TdManagerEditController {
         if (null == username) {
             return "redirect:/Verwalter/login";
         }
+        
+        String uris = parsePicUris(hid_photo_name_show360);
+
+        article.setShowPictures(uris);
         
         String logType = null;
         if (null == article.getId())
@@ -264,6 +269,31 @@ public class TdManagerEditController {
                 + "&__EVENTTARGET=" + __EVENTTARGET
                 + "&__EVENTARGUMENT=" + __EVENTARGUMENT
                 + "&__VIEWSTATE=" + __VIEWSTATE;
+    }
+    /**
+     * 图片地址字符串整理，多张图片用,隔开,从goods搬过来
+     * @author Zhangji
+     * @param params
+     * @return
+     */
+    private String parsePicUris(String[] uris) {
+        if (null == uris || 0 == uris.length) {
+            return null;
+        }
+
+        String res = "";
+
+        for (String item : uris) {
+            String uri = item.substring(item.indexOf("|") + 1,
+                    item.indexOf("|", 2));
+
+            if (null != uri) {
+                res += uri;
+                res += ",";
+            }
+        }
+
+        return res;
     }
     
 }
