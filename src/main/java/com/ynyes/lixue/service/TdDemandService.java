@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ynyes.lixue.entity.TdDemand;
+import com.ynyes.lixue.entity.TdOrder;
 import com.ynyes.lixue.repository.TdDemandRepo;
 
 
@@ -34,6 +35,24 @@ public class TdDemandService {
 		
 		return (List<TdDemand>) repository.findAll();		
 	}
+	
+    public List<TdDemand> findByStatusId(Long statusId){
+    	return repository.findByStatusId(statusId);
+    }
+
+    public Page<TdDemand> findByStatusIdOrderByIdDesc(long statusId, int page, int size)
+    {
+        PageRequest pageRequest = new PageRequest(page, size);
+        
+        return repository.findByStatusIdOrderByIdDesc(statusId, pageRequest);
+    }
+    
+    public Page<TdDemand> findAllOrderByIdDesc(int page, int size)
+    {
+        PageRequest pageRequest = new PageRequest(page, size, new Sort(Direction.DESC, "id"));
+        
+        return repository.findAll(pageRequest);
+    }
 	
 	//筛选statusId为1L的
     public List<TdDemand> findByStatusIdAndIsShowable()

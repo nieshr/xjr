@@ -19,12 +19,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ynyes.lixue.entity.TdDeliveryType;
+import com.ynyes.lixue.entity.TdDemand;
 import com.ynyes.lixue.entity.TdDiySite;
 import com.ynyes.lixue.entity.TdOrder;
 import com.ynyes.lixue.entity.TdPayType;
 import com.ynyes.lixue.entity.TdUser;
 import com.ynyes.lixue.service.TdArticleService;
 import com.ynyes.lixue.service.TdDeliveryTypeService;
+import com.ynyes.lixue.service.TdDemandService;
 import com.ynyes.lixue.service.TdDiySiteService;
 import com.ynyes.lixue.service.TdGoodsService;
 import com.ynyes.lixue.service.TdManagerLogService;
@@ -72,234 +74,237 @@ public class TdManagerOrderController {
     @Autowired
     TdManagerLogService tdManagerLogService;
     
+    @Autowired
+    TdDemandService tdDemandService;
+    
     // 订单设置
-    @RequestMapping(value="/setting/{type}/list")
-    public String setting(@PathVariable String type, 
-                          Integer page,
-                          Integer size,
-                          String keywords,
-                          String __EVENTTARGET,
-                          String __EVENTARGUMENT,
-                          String __VIEWSTATE,
-                          Long[] listId,
-                          Integer[] listChkId,
-                          Long[] listSortId,
-                          ModelMap map,
-                          HttpServletRequest req){
-        String username = (String) req.getSession().getAttribute("manager");
-        if (null == username) {
-            return "redirect:/Verwalter/login";
-        }
-        
-        if (null != __EVENTTARGET)
-        {
-            if (__EVENTTARGET.equalsIgnoreCase("btnDelete"))
-            {
-                btnDelete(type, listId, listChkId);
-                
-                if (type.equalsIgnoreCase("pay"))
-                {
-                    tdManagerLogService.addLog("delete", "删除支付方式", req);
-                }
-                else if (type.equalsIgnoreCase("delivery"))
-                {
-                    tdManagerLogService.addLog("delete", "删除配送方式", req);
-                }
-                else if (type.equalsIgnoreCase("diysite"))
-                {
-                    tdManagerLogService.addLog("delete", "删除自提点", req);
-                }
-            }
-            else if (__EVENTTARGET.equalsIgnoreCase("btnSave"))
-            {
-                btnSave(type, listId, listSortId);
-                
-                if (type.equalsIgnoreCase("pay"))
-                {
-                    tdManagerLogService.addLog("edit", "修改支付方式", req);
-                }
-                else if (type.equalsIgnoreCase("delivery"))
-                {
-                    tdManagerLogService.addLog("edit", "修改配送方式", req);
-                }
-                else if (type.equalsIgnoreCase("diysite"))
-                {
-                    tdManagerLogService.addLog("edit", "修改自提点", req);
-                }
-            }
-            else if (__EVENTTARGET.equalsIgnoreCase("btnPage"))
-            {
-                if (null != __EVENTARGUMENT)
-                {
-                    page = Integer.parseInt(__EVENTARGUMENT);
-                } 
-            }
-        }
-        
-        if (null == page || page < 0)
-        {
-            page = 0;
-        }
-        
-        if (null == size || size <= 0)
-        {
-            size = SiteMagConstant.pageSize;;
-        }
-        
-        map.addAttribute("page", page);
-        map.addAttribute("size", size);
-        map.addAttribute("keywords", keywords);
-        map.addAttribute("__EVENTTARGET", __EVENTTARGET);
-        map.addAttribute("__EVENTARGUMENT", __EVENTARGUMENT);
-        map.addAttribute("__VIEWSTATE", __VIEWSTATE);
-                
-        if (null != type)
-        {
-            if (type.equalsIgnoreCase("pay")) // 支付方式
-            {
-                if (null == keywords)
-                {
-                    map.addAttribute("pay_type_page", 
-                            tdPayTypeService.findAllOrderBySortIdAsc(page, size));
-                }
-                else
-                {
-                    map.addAttribute("pay_type_page", 
-                            tdPayTypeService.searchAllOrderBySortIdAsc(keywords, page, size));
-                }
-                
-                return "/site_mag/pay_type_list";
-            }
-            else if (type.equalsIgnoreCase("delivery")) // 配送方式
-            {
-                if (null == keywords)
-                {
-                    map.addAttribute("delivery_type_page", 
-                            tdDeliveryTypeService.findAllOrderBySortIdAsc(page, size));
-                }
-                else
-                {
-                    map.addAttribute("delivery_type_page", 
-                            tdDeliveryTypeService.searchAllOrderBySortIdAsc(keywords, page, size));
-                }
-                
-                return "/site_mag/delivery_type_list";
-            }
-            else if (type.equalsIgnoreCase("diysite")) // 配送方式
-            {
-                if (null == keywords)
-                {
-                    map.addAttribute("diy_site_page", 
-                            tdDiySiteService.findAllOrderBySortIdAsc(page, size));
-                }
-                else
-                {
-                    map.addAttribute("diy_site_page", 
-                            tdDiySiteService.searchAllOrderBySortIdAsc(keywords, page, size));
-                }
-                
-                return "/site_mag/diy_site_list";
-            }
-        }
-        
-        return "/site_mag/pay_type_list";
-    }
-    
-    // 订单设置编辑
-    @RequestMapping(value="/setting/{type}/edit")
-    public String edit(@PathVariable String type, 
-                        Long id,
-                        String __VIEWSTATE,
-                        ModelMap map,
-                        HttpServletRequest req){
-        String username = (String) req.getSession().getAttribute("manager");
-        if (null == username)
-        {
-            return "redirect:/Verwalter/login";
-        }
-        
-        map.addAttribute("__VIEWSTATE", __VIEWSTATE);
-        
-        if (null != type)
-        {
-            if (type.equalsIgnoreCase("pay")) // 支付方式
-            {
-                if (null != id)
-                {
-                    map.addAttribute("pay_type", tdPayTypeService.findOne(id));
-                }
-                
-                return "/site_mag/pay_type_edit";
-            }
-            else if (type.equalsIgnoreCase("delivery")) // 配送方式
-            {
-                if (null != id)
-                {
-                    map.addAttribute("delivery_type", tdDeliveryTypeService.findOne(id));
-                }
-                
-                return "/site_mag/delivery_type_edit";
-            }
-            else if (type.equalsIgnoreCase("diysite")) // 自提点
-            {
-                if (null != id)
-                {
-                    map.addAttribute("diy_site", tdDiySiteService.findOne(id));
-                }
-                
-                return "/site_mag/diy_site_edit";
-            }
-        }
-        
-        return "/site_mag/pay_type_edit";
-    }
-    
-    // 订单设置编辑
-    @RequestMapping(value = "/setting/diysite/check", method = RequestMethod.POST)
-    @ResponseBody
-    public Map<String, String> validateForm(String param, Long id) {
-        Map<String, String> res = new HashMap<String, String>();
-
-        res.put("status", "n");
-
-        if (null == param || param.isEmpty()) {
-            res.put("info", "该字段不能为空");
-            return res;
-        }
-        
-        TdUser tdUser = tdUserService.findByUsername(param);
-        
-        if (null == id) // 新增
-        {
-            if (null != tdUser) {
-                res.put("info", "该登录名不能使用");
-                return res;
-            }
-        } 
-        else // 修改，查找除当前ID的所有
-        {
-            TdDiySite dSite = tdDiySiteService.findOne(id);
-            
-            if (null == dSite)
-            {
-                if (null != tdUser && tdUser.getRoleId() == 2L) {
-                    res.put("info", "该登录名不能使用");
-                    return res;
-                }
-            }
-            else
-            {
-                if (null != tdUser && tdUser.getUsername() != dSite.getUsername() && tdUser.getRoleId()!=2L) {
-                    res.put("info", "该登录名不能使用");
-                    return res;
-                }
-            }
-        }
-
-        res.put("status", "y");
-
-        return res;
-    }
+//    @RequestMapping(value="/setting/{type}/list")
+//    public String setting(@PathVariable String type, 
+//                          Integer page,
+//                          Integer size,
+//                          String keywords,
+//                          String __EVENTTARGET,
+//                          String __EVENTARGUMENT,
+//                          String __VIEWSTATE,
+//                          Long[] listId,
+//                          Integer[] listChkId,
+//                          Long[] listSortId,
+//                          ModelMap map,
+//                          HttpServletRequest req){
+//        String username = (String) req.getSession().getAttribute("manager");
+//        if (null == username) {
+//            return "redirect:/Verwalter/login";
+//        }
+//        
+//        if (null != __EVENTTARGET)
+//        {
+//            if (__EVENTTARGET.equalsIgnoreCase("btnDelete"))
+//            {
+//                btnDelete(type, listId, listChkId);
+//                
+//                if (type.equalsIgnoreCase("pay"))
+//                {
+//                    tdManagerLogService.addLog("delete", "删除支付方式", req);
+//                }
+//                else if (type.equalsIgnoreCase("delivery"))
+//                {
+//                    tdManagerLogService.addLog("delete", "删除配送方式", req);
+//                }
+//                else if (type.equalsIgnoreCase("diysite"))
+//                {
+//                    tdManagerLogService.addLog("delete", "删除自提点", req);
+//                }
+//            }
+//            else if (__EVENTTARGET.equalsIgnoreCase("btnSave"))
+//            {
+//                btnSave(type, listId, listSortId);
+//                
+//                if (type.equalsIgnoreCase("pay"))
+//                {
+//                    tdManagerLogService.addLog("edit", "修改支付方式", req);
+//                }
+//                else if (type.equalsIgnoreCase("delivery"))
+//                {
+//                    tdManagerLogService.addLog("edit", "修改配送方式", req);
+//                }
+//                else if (type.equalsIgnoreCase("diysite"))
+//                {
+//                    tdManagerLogService.addLog("edit", "修改自提点", req);
+//                }
+//            }
+//            else if (__EVENTTARGET.equalsIgnoreCase("btnPage"))
+//            {
+//                if (null != __EVENTARGUMENT)
+//                {
+//                    page = Integer.parseInt(__EVENTARGUMENT);
+//                } 
+//            }
+//        }
+//        
+//        if (null == page || page < 0)
+//        {
+//            page = 0;
+//        }
+//        
+//        if (null == size || size <= 0)
+//        {
+//            size = SiteMagConstant.pageSize;;
+//        }
+//        
+//        map.addAttribute("page", page);
+//        map.addAttribute("size", size);
+//        map.addAttribute("keywords", keywords);
+//        map.addAttribute("__EVENTTARGET", __EVENTTARGET);
+//        map.addAttribute("__EVENTARGUMENT", __EVENTARGUMENT);
+//        map.addAttribute("__VIEWSTATE", __VIEWSTATE);
+//                
+//        if (null != type)
+//        {
+//            if (type.equalsIgnoreCase("pay")) // 支付方式
+//            {
+//                if (null == keywords)
+//                {
+//                    map.addAttribute("pay_type_page", 
+//                            tdPayTypeService.findAllOrderBySortIdAsc(page, size));
+//                }
+//                else
+//                {
+//                    map.addAttribute("pay_type_page", 
+//                            tdPayTypeService.searchAllOrderBySortIdAsc(keywords, page, size));
+//                }
+//                
+//                return "/site_mag/pay_type_list";
+//            }
+//            else if (type.equalsIgnoreCase("delivery")) // 配送方式
+//            {
+//                if (null == keywords)
+//                {
+//                    map.addAttribute("delivery_type_page", 
+//                            tdDeliveryTypeService.findAllOrderBySortIdAsc(page, size));
+//                }
+//                else
+//                {
+//                    map.addAttribute("delivery_type_page", 
+//                            tdDeliveryTypeService.searchAllOrderBySortIdAsc(keywords, page, size));
+//                }
+//                
+//                return "/site_mag/delivery_type_list";
+//            }
+//            else if (type.equalsIgnoreCase("diysite")) // 配送方式
+//            {
+//                if (null == keywords)
+//                {
+//                    map.addAttribute("diy_site_page", 
+//                            tdDiySiteService.findAllOrderBySortIdAsc(page, size));
+//                }
+//                else
+//                {
+//                    map.addAttribute("diy_site_page", 
+//                            tdDiySiteService.searchAllOrderBySortIdAsc(keywords, page, size));
+//                }
+//                
+//                return "/site_mag/diy_site_list";
+//            }
+//        }
+//        
+//        return "/site_mag/pay_type_list";
+//    }
+//    
+//    // 订单设置编辑
+//    @RequestMapping(value="/setting/{type}/edit")
+//    public String edit(@PathVariable String type, 
+//                        Long id,
+//                        String __VIEWSTATE,
+//                        ModelMap map,
+//                        HttpServletRequest req){
+//        String username = (String) req.getSession().getAttribute("manager");
+//        if (null == username)
+//        {
+//            return "redirect:/Verwalter/login";
+//        }
+//        
+//        map.addAttribute("__VIEWSTATE", __VIEWSTATE);
+//        
+//        if (null != type)
+//        {
+//            if (type.equalsIgnoreCase("pay")) // 支付方式
+//            {
+//                if (null != id)
+//                {
+//                    map.addAttribute("pay_type", tdPayTypeService.findOne(id));
+//                }
+//                
+//                return "/site_mag/pay_type_edit";
+//            }
+//            else if (type.equalsIgnoreCase("delivery")) // 配送方式
+//            {
+//                if (null != id)
+//                {
+//                    map.addAttribute("delivery_type", tdDeliveryTypeService.findOne(id));
+//                }
+//                
+//                return "/site_mag/delivery_type_edit";
+//            }
+//            else if (type.equalsIgnoreCase("diysite")) // 自提点
+//            {
+//                if (null != id)
+//                {
+//                    map.addAttribute("diy_site", tdDiySiteService.findOne(id));
+//                }
+//                
+//                return "/site_mag/diy_site_edit";
+//            }
+//        }
+//        
+//        return "/site_mag/pay_type_edit";
+//    }
+//    
+//    // 订单设置编辑
+//    @RequestMapping(value = "/setting/diysite/check", method = RequestMethod.POST)
+//    @ResponseBody
+//    public Map<String, String> validateForm(String param, Long id) {
+//        Map<String, String> res = new HashMap<String, String>();
+//
+//        res.put("status", "n");
+//
+//        if (null == param || param.isEmpty()) {
+//            res.put("info", "该字段不能为空");
+//            return res;
+//        }
+//        
+//        TdUser tdUser = tdUserService.findByUsername(param);
+//        
+//        if (null == id) // 新增
+//        {
+//            if (null != tdUser) {
+//                res.put("info", "该登录名不能使用");
+//                return res;
+//            }
+//        } 
+//        else // 修改，查找除当前ID的所有
+//        {
+//            TdDiySite dSite = tdDiySiteService.findOne(id);
+//            
+//            if (null == dSite)
+//            {
+//                if (null != tdUser && tdUser.getRoleId() == 2L) {
+//                    res.put("info", "该登录名不能使用");
+//                    return res;
+//                }
+//            }
+//            else
+//            {
+//                if (null != tdUser && tdUser.getUsername() != dSite.getUsername() && tdUser.getRoleId()!=2L) {
+//                    res.put("info", "该登录名不能使用");
+//                    return res;
+//                }
+//            }
+//        }
+//
+//        res.put("status", "y");
+//
+//        return res;
+//    }
     
     @RequestMapping(value="/edit")
     public String orderEdit(Long id,
@@ -407,20 +412,15 @@ public class TdManagerOrderController {
         {
             if (statusId.equals(0L)) // 判断为全部订单
             {
-            	List<TdOrder> list = tdOrderService.findAll();
-            	for (int i = 0; i < list.size(); i++) {
-            		price += list.get(i).getTotalPrice();
-            	}
-                map.addAttribute("order_page", tdOrderService.findAllOrderByIdDesc(page, size));
+            	List<TdDemand> list = tdDemandService.findAll();
+                map.addAttribute("course_page", tdDemandService.findAllOrderByIdDesc(page, size));
             }
             else
             {
             	//判断为状态订单（1:待确认 2:待付款 3:待发货 4:待收货 5: 待评价 6: 已完成 7: 已取消8: 支付取消(失败)）
-            	List<TdOrder> orderList = tdOrderService.findByStatusId(statusId);
-            	for (int i = 0; i < orderList.size(); i++) {
-            		price += orderList.get(i).getTotalPrice();
-            	}
-                map.addAttribute("order_page", tdOrderService.findByStatusIdOrderByIdDesc(statusId, page, size));
+            	List<TdDemand> courseList = tdDemandService.findByStatusId(statusId);
+
+                map.addAttribute("course_page", tdDemandService.findByStatusIdOrderByIdDesc(statusId, page, size));
             }
         }
         

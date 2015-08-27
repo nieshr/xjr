@@ -482,6 +482,7 @@ public class TdInfoController {
 			return res;
 		}
     	userDemand.setTime(new Date());
+    	userDemand.setStatusId(1L);     //zhangji
     	tdDemandService.save(userDemand);
     	res.put("code", 0);
     	return res;
