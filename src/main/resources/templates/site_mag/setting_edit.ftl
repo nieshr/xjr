@@ -176,7 +176,7 @@ $(function () {
             </dd>
         </dl>
         <dl>
-            <dt>微信二维码</dt>
+            <dt>二维码</dt>
             <dd>
                 <input id="wxImgUrl" name="wxQrCode" type="text" datatype="*0-255" value="<#if setting??>${setting.wxQrCode!""}</#if>" class="input normal upload-path">
                 <div class="upload-box upload-img"></div>
@@ -184,6 +184,7 @@ $(function () {
                 <div class="photo-list thumb_wxImgUrl_show"></div>
             </dd>
         </dl>
+           <#--
         <dl>
             <dt>微博二维码</dt>
             <dd>
@@ -193,7 +194,7 @@ $(function () {
                 <div class="photo-list thumb_iOsImgUrl_show"></div>
             </dd>
         </dl>
-        <#--
+     
         <dl>
             <dt>安卓App二维码</dt>
             <dd>
@@ -303,6 +304,20 @@ $(function () {
                 <span class="Validform_checktip">支持HTML</span>
             </dd>
         </dl>
+        <dl>
+            <dt>经度</dt>
+            <dd>
+                <input name="longitude" type="text" value="<#if setting??>${setting.longitude!""}</#if>" class="input normal" datatype="*0-100" sucmsg=" ">
+                <span class="Validform_checktip"></span>
+            </dd>
+        </dl>
+        <dl>
+            <dt>纬度</dt>
+            <dd>
+                <input name="latitude" type="text" value="<#if setting??>${setting.latitude!""}</#if>" class="input normal" datatype="*0-100" sucmsg=" ">
+                <span class="Validform_checktip"></span>
+            </dd>
+        </dl>  
         <!--add 2015-7-28 17:46:12 mdj-->
      <#--   <dl>
             <dt>底部图标1</dt>
@@ -411,7 +426,7 @@ $(function () {
                 <input name="registerSuccessPoints" type="text" value="<#if setting??>${setting.registerSuccessPoints!"50"}<#else>50</#if>" class="input normal" datatype="n" sucmsg=" ">
                 <span class="Validform_checktip"></span>
             </dd>
-        </dl>
+        </dl>  
         <dl>
             <dt>分享注册奖励粮草</dt>
             <dd>

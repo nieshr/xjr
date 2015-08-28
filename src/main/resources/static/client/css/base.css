@@ -98,3 +98,27 @@ body{ background-color:white;}
 .call_btn p{ color:white;}
 .call_tel{ margin-top:16px; margin-bottom:16px; *+padding-bottom:16px;}
 .call_tel span{width:280px;  float:left; display:block;}
+
+
+/*悬浮广告*/
+
+.adv{ width:200px; height:400px; border-radius:10px; background-color:#f5f5f5; position:fixed; left:86%; top:186px;border:1px #acd7c1 solid;z-index:999;}
+.adv_01{ width:200px; height:160px; border-bottom:1px #ccc solid;}
+.adv_01 dt{width:200px; display:block; overflow:hidden;}
+.adv_01 dt img{ width:103px; height:103px; margin-left:52px;}
+.adv_01 dd{width:200px; display:block; overflow:hidden; text-align:center; margin-top:20px;}
+.adv_01 dd a{line-height:30px; font-size:14px;  color:#67c22e;}
+
+
+.adv_02{width:200px; height:120px; border-bottom:1px #ccc solid;}
+.adv_02 a{width:200px; display:block; text-align:center;font-size:14px;  color:#67c22e; margin-top:20px;}
+.adv_02 p{width:200px; text-align:center; font-size:14px;  color:#67c22e;margin-top:20px;}
+.adv_02 input{width:66px; height:26px; text-align:center; line-height:26px; background:url(../images/adv_line.png);font-size:14px;  color:white;margin-top:20px; margin-left:68px;  border:none; }
+
+
+.adv_03{width:200px; display:block; overflow:hidden;}
+.adv_03 dt{ width:84px; height:84px; float:left;}
+.adv_03 dt a{width:84px; display:block; text-align:center;font-size:14px;  color:#67c22e; margin-top:16px;}
+.adv_03 dt p{width:84px; display:block; text-align:center;font-size:14px;  color:#67c22e; margin-top:16px;}
+.adv_03 dd{ float:right; margin-top:5px; margin-right:5px;}
+.adv_03 dd img{ height:84px; width:84px;}

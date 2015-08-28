@@ -169,6 +169,14 @@ public class TdSetting {
     // 底部Logo图片3跳转
     @Column
     private String bottomLogoLink3;
+    
+    //经度 zhangji
+    @Column
+    private String longitude;
+    
+    //纬度zhangji
+    @Column
+    private String latitude;
 
     public Long getId() {
         return id;
@@ -482,4 +490,21 @@ public class TdSetting {
 	public void setBottomLogoLink3(String bottomLogoLink3) {
 		this.bottomLogoLink3 = bottomLogoLink3;
 	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+	
 }

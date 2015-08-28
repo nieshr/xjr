@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"/>
-<title><#if site??>${site.seoTitle!''}-</#if>合作加盟</title>
+<title><#if site??>${site.seoTitle!''}-</#if>${menu_name!''}</title>
 <meta name="keywords" content="${site.seoKeywords!''}">
 <meta name="description" content="${site.seoDescription!''}">
 <meta name="copyright" content="${site.copyright!''}" />
@@ -14,33 +14,42 @@
 <link href="/client/css/teacher_center.css" rel="stylesheet" type="text/css" />
 <link href="/client/css/course.css" rel="stylesheet" type="text/css" />
 <link href="/client/css/join_us.css" rel="stylesheet" type="text/css" />
-<link href="/client/css/cooperation.css" rel="stylesheet" type="text/css" />
 
 <script type="text/javascript" src="/client/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="/client/js/info-list.js"></script>
 <script src="/client/js/Validform_v5.3.2_min.js"></script>
+
+<style type="text/css">
+    body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+</style>
+
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=sloQ0GqMsUdlG0SLcOVrO49F"></script>
 <script type="text/javascript">
-    $(document).ready(function(){
-        
-        //初始化表单验证
-        $("#form1").Validform({
-            tiptype: 3,
-            ajaxPost:true,
-            callback: function(data) {
-                if (data.code==0)
-                {
-                    alert("提交成功");
-                    window.location.reload();
-                }
-                else
-                {
-                    alert(data.message);
-                }
-            }
-        });
-       $("#Validform_msg").hide();
-    });
-    </script>
+$(document).ready(function(){
+        loadMap(${site.longitude!'102.718072'}, ${site.latitude!'25.048034'});
+});
+
+function loadMap(x, y)
+{
+    // 百度地图API功能
+    /*
+    var map = new BMap.Map("allmap");    // 创建Map实例
+    map.centerAndZoom(new BMap.Point(x, y), 16);  // 初始化地图,设置中心点坐标和地图级别
+    
+    map.setCurrentCity("昆明");          // 设置地图显示的城市 此项是必须设置的
+    
+    map.addOverlay(new BMap.Marker(new BMap.Point(x, y)); // 创建点
+    */
+    
+    var map = new BMap.Map("allmap");
+    var point = new BMap.Point(x, y);
+    map.centerAndZoom(point, 16);
+    map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+    map.addControl(new BMap.MapTypeControl());   //添加地图类型控件
+    var marker = new BMap.Marker(new BMap.Point(x, y)); // 创建点
+    map.addOverlay(marker);
+}
+</script>
 </head>
 <body>
 <!--header-->
@@ -49,12 +58,14 @@
 
 <!--main-->
 <div class="main">
-	<!--left_content-->
-	   <#include "/client/common_menu.ftl" />  
+    <!--left_content-->
+       <#include "/client/common_menu.ftl" />  
     
     <!--right_content-->
     <div class="right_content">
-    	<#include "/client/cooperation_detail.ftl" />  
+         <div id="allmap" style="height:650;width:800;">  
+            
+         </div>
     </div>
 
 </div>

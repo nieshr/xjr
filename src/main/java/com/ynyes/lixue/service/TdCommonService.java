@@ -183,9 +183,13 @@ public class TdCommonService {
         List<TdArticleCategory> newsArticle = tdArticleCategoryService.findByMenuId(8L);
         map.addAttribute("news_list", newsArticle);
         
-        //相关常识
-        List<TdArticleCategory> knowledgeArticle = tdArticleCategoryService.findByMenuId(11L);
-        map.addAttribute("konwledge_list", knowledgeArticle);
+        // 金牌课程
+        map.addAttribute("course_page1", tdArticleService                   		
+        		.findByMenuIdAndRecommendIdOrderBySortIdAsc(12L,1L, 0, ClientConstant.pageSize));
+        
+        // 热门课程
+        map.addAttribute("course_page2", tdArticleService                   		
+        		.findByMenuIdAndRecommendIdOrderBySortIdAsc(12L,2L, 0, ClientConstant.pageSize));   
         
         //功能信息
         List<TdArticleCategory> infoList = tdArticleCategoryService

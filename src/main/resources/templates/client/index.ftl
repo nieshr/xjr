@@ -1,4 +1,3 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -9,6 +8,9 @@
 <meta name="copyright" content="${site.copyright!''}" />
 <link href="/client/css/base.css" rel="stylesheet" type="text/css" />
 <link href="/client/css/main.css" rel="stylesheet" type="text/css" />
+<script src="/client/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/client/js/pageSwitch.js"></script>
+
 </head>
 
 <body>
@@ -17,7 +19,84 @@
 <!--header_end -->
 
 <!--banner-->
-<div class="banner">
+<!--效果html开始-->
+<div id="wrap">
+    <div id="imgs" style="width:${adtype.width}px;height:${adtype.height}px;">
+       <#if big_scroll_ad_list??>
+            <#list big_scroll_ad_list as item>
+                <#if item_index lt 9>
+                    <div><a href="${item.linkUri!''}" <#if item.typeIsNewWindow?? && item.typeIsNewWindow>target="_blank"</#if>><img src="${item.fileUri!''}" /></a></div>
+                </#if>
+            </#list>
+        </#if>     
+    </div>
+    <div id="navs">
+    <a href="javascript:;" class="active"></a>
+    <a href="javascript:;"></a>
+    <a href="javascript:;"></a>
+    <a href="javascript:;"></a>
+    <a href="javascript:;"></a>
+    <a href="javascript:;"></a>
+    <a href="javascript:;"></a>
+    <a href="javascript:;"></a>
+    <a href="javascript:;"></a>
+    </div>
+    <input type="hidden" id="tssel" value="${adtype.mark!''}"/>
+   
+</div>
+<script type="text/javascript" src="js/pageSwitch.js"></script>
+<script>
+var reg=location.search.match(/ts=([^&]*)/),
+    ts=reg&&reg[1]||'${adtype.effect!''}',
+    a=new pageSwitch('imgs',{
+    duration:1000,
+    start:0,
+    direction:1,
+    loop:true,
+    ease:/flip(?!Paper)/.test(ts)?'bounce':'ease',
+    transition:ts,
+    mouse:true,
+    mousewheel:false,
+    autoplay:true,         //bool 是否自动播放幻灯 新增
+    interval:3000,    
+    arrowkey:true
+}),
+navs=document.getElementById('navs').getElementsByTagName('a');
+
+a.on('before',function(m,n){
+    navs[m].className='';
+    navs[n].className='active';
+});
+
+if(/^(?:scroll3d|flip)/.test(ts)){
+    document.getElementById('imgs').className='visible';
+}
+
+document.getElementById('tssel').onchange=function(){
+    location.href='?ts='+this.value;
+}
+
+
+var options=document.getElementById('tssel').options,
+    i=0,op;
+while(op=options[i++]){
+    if(op.value===ts){
+        op.selected=true;
+        break;
+    }
+}
+
+i=0;
+for(;i<navs.length;i++){
+    !function(i){
+        navs[i].onclick=function(){
+            a.slide(i);
+        }
+    }(i);
+}
+</script>
+<!--效果html结束-->
+    <#-- 原版
     <img src="/client/img/20150207064229425.jpg" />
     <ul class="banner_btn">
         <li><a></a></li>
@@ -25,15 +104,15 @@
         <li><a></a></li>
         <li><a></a></li>
     </ul>
-    
+    -->
 </div>
 
 <!--content-->
 <div class="content">
 <!--best-->
     <div class="best">
-        <div class="best_title"><a>金牌课程</a><p>更多&gt;&gt;</p></div>
-        <#if course_page0??>
+        <div class="best_title"><a>金牌课程</a><p><a style=" background:none; font-size:12px; color:#999;" href="/info/list/12">更多&gt;&gt;</a></p></div>
+        <#if course_page1??>
             <#list course_page1.content as item>
                 <#if item_index lt 4>
 			        <dl class="best_box">
@@ -43,7 +122,8 @@
 			                    <span>${item.title!''}</span>
 			                    <p>${item.brief!''}</p>
 			                </a>
-			                <input type="button" value="课程详情" />
+			                <input  type="button" value="立即申请" 
+			                      onclick="javascript:window.location.href='/info/coursechoose/content/${item.id}?mid=12'"/>
 			            </dd>
 			        </dl>
 			    </#if>    
@@ -53,7 +133,7 @@
 <!--crouse-->
     <div class="course_box">
     <dl class="course_01">
-        <dt><a>热门课程</a><p>更多&gt;&gt;</p></dt>
+        <dt><a>热门课程</a><p><a style=" background:none; font-size:12px; color:#999;" href="/info/list/12">更多&gt;&gt;</a></p></dt>
         <#if course_page0??>
 	        <#list course_page0.content as item>
 	            <#if item_index lt 10>
@@ -63,7 +143,7 @@
         </#if>     
     </dl>
     <dl class="course_02">
-        <dt><a>开展课程</a><p>更多&gt;&gt;</p></dt>        
+        <dt><a>开展课程</a><p><a style=" background:none; font-size:12px; color:#999;" href="/info/list/12">更多&gt;&gt;</a></p></dt>        
             <#if course_category_list??>
                 <#list course_category_list as list>
                     <#if list_index = 0>
@@ -73,8 +153,8 @@
 	                            <#list course_category_page0.content as item>
 	                                <#if item_index lt 3 >
 		                                <p>${item.title!''}</p>
-							            <a>详情</a>
-							            <input type="button" value="立即报名" />
+							            <a href="/info/list/12">详情</a>
+							            <input type="button" value="立即报名" onclick="javascript:window.location.href='/info/coursechoose/content/${item.id}?mid=12'" />
 							        </#if>
 							    </#list>
 							</#if>            
@@ -88,7 +168,7 @@
                                     <#if item_index lt 3 >
                                         <p>${item.title!''}</p>
                                         <a>详情</a>
-                                        <input type="button" value="立即报名" />
+                                        <input type="button" value="立即报名" onclick="javascript:window.location.href='/info/coursechoose/content/${item.id}?mid=12'"/>
                                     </#if>
                                 </#list>
                             </#if>            
@@ -102,7 +182,7 @@
         <#if course_list??>
             <#list course_list as list>
                 <#if list_index lt 10>
-                    <dd><a>${list.title!''}</a></dd>
+                    <dd><a href="/info/coursechoose/content/${list.id}?mid=12">${list.title!''}</a></dd>
                 </#if>
             </#list>
         </#if>        
@@ -165,11 +245,11 @@
     </div>
     <div class="news_02">
         <dl class="news_box">
-            <dt><a style=" background-image:url(/client/images/index_news.png);color:white;">招聘信息</a><a >交通指南</a></dt>
+            <dt><a style=" background-image:url(/client/images/index_news.png);color:white;">招聘信息</a><a href="/info/map">交通指南</a></dt>
             <#if join_list??>
                 <#list join_list as item>
                     <#if item_index lt 7>
-                        <dd><a title="${item.brief!''}">${item.title!''}</a><p>${item.updateTime?string("yyyy-MM-dd") }</p></dd>
+                        <dd><a href="/info/list/13" title="${item.brief!''}">${item.title!''}</a><p>${item.updateTime?string("yyyy-MM-dd") }</p></dd>
                     </#if>
                 </#list>
             </#if>   
@@ -180,10 +260,10 @@
 
 <!--active-->
 <div class="active">
-    <div class="active_title"><a>学校风采</a><p>更多&gt;&gt;</p></div>
-     <#if about_page??>
+      <#if about_page??>
          <#list about_page.content as item>
              <#if item_index = 2>
+             <div class="active_title"><a>学校风采</a><p><a style=" background:none; font-size:12px; color:#999;" href="/info/entry/content/${item.id!''}?mid=10">更多&gt;&gt;</a></p></div>
                   <#if item.showPictures??>
                   <#list item.showPictures?split(",") as uri>
                       <#if ""!=uri && uri_index < 4>
@@ -201,13 +281,13 @@
 <!--index_tea-->
 <div class="index_teacher">
     <div class="teacher">
-        <div class="teacher_title"><a>教师简介</a><p>更多&gt;&gt;</p></div>
+        <div class="teacher_title"><a>教师简介</a><p><a style=" background:none; font-size:12px; color:#999;" href="/info/list/11">更多&gt;&gt;</a></p></div>
         <#if teacher_page??>
             <#list teacher_page.content as item>
                 <#if item_index lt 4>
 			        <dl class="teacher_box">
-			            <dt><img src="${item.imgUrl!''}" /></dt> 
-			            <dd><a>${item.title!''}</a></dd>
+			            <dt><a href="/info/list/content/${item.id}?mid=11"><img src="${item.imgUrl!''}" /></a></dt> 
+			            <dd><a href="/info/list/content/${item.id}?mid=11">${item.title!''}</a></dd>
 			        </dl> 
                     </#if>
                 </#list>
@@ -215,17 +295,14 @@
     </div>
     
      <dl class="school_03">
-        <dt><a>报考指南</a><p>更多&gt;&gt;</p></dt>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
+        <dt><a>资格培训</a><p><a style=" background:none; font-size:12px; color:#999;" href="/info/list/12">更多&gt;&gt;</a></p></dt>
+           <#if course_category_page2??>
+                <#list course_category_page2.content as item>
+                    <#if item_index lt 9 >
+                        <dd><a>${item.title!''}</a></dd>
+                    </#if>
+                </#list>
+            </#if>   
     </dl>
 </div>
 
@@ -233,89 +310,81 @@
 <div class="last">
     <ul class="last_nav">
         <li style="background-color:#008e45;"><a  href="#" title="">首页</a></li>
-        <li><a  href="#" title="">课程标题</a></li>
-        <li><a  href="#" title="">课程标题</a></li>
-        <li><a  href="#" title="">课程标题</a></li>  
-        <li><a  href="#" title="">课程标题</a></li>
-        <li><a  href="#" title="">课程标题</a></li>
-        <li><a  href="#" title="">课程标题</a></li>
-        <li><a  href="#" title="">课程标题</a></li>
+            <#if course_category_list??>
+                <#list course_category_list as item>
+                    <#if item_index lt 7 >        
+                        <li><a  href="/info/list/12?catId=${item.id!''}" title="">${item.title!''}</a></li>
+                    </#if>
+                </#list>
+            </#if>       
     </ul>
 
      <dl class="school_04">
-        <dt><a>招生简章</a><p>更多&gt;&gt;</p></dt>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
+        <dt><#if course_category_list??>
+                 <#list course_category_list as item>
+                     <#if item_index = 0>
+                         <a>${item.title!''}</a>
+                     </#if>
+                 </#list>
+             </#if>             
+            <p><a style=" background:none; font-size:12px; color:#999;" href="/info/list/12">更多&gt;&gt;</a></p></dt>
+            <#if course_category_page0??>
+                <#list course_category_page0.content as item>
+                    <#if item_index lt 9 >
+                        <dd><a>${item.title!''}</a></dd>
+                    </#if>
+                </#list>
+            </#if>           
     </dl>
      <dl class="school_04">
-        <dt><a>招生简章</a><p>更多&gt;&gt;</p></dt>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
+        <dt><#if course_category_list??>
+                 <#list course_category_list as item>
+                     <#if item_index = 1>
+                         <a>${item.title!''}</a>
+                     </#if>
+                 </#list>
+             </#if>     
+            <p><a style=" background:none; font-size:12px; color:#999;" href="/info/list/12">更多&gt;&gt;</a></p></dt>
+            <#if course_category_page1??>
+                <#list course_category_page1.content as item>
+                    <#if item_index lt 9 >
+                        <dd><a>${item.title!''}</a></dd>
+                    </#if>
+                </#list>
+            </#if>       
     </dl>
 
  <dl class="school_04">
-        <dt><a>招生简章</a><p>更多&gt;&gt;</p></dt>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
+        <dt><#if course_category_list??>
+                 <#list course_category_list as item>
+                     <#if item_index = 2>
+                         <a>${item.title!''}</a>
+                     </#if>
+                 </#list>
+             </#if>
+            <p><a style=" background:none; font-size:12px; color:#999;" href="/info/list/12">更多&gt;&gt;</a></p></dt>
+            <#if course_category_page2??>
+                <#list course_category_page2.content as item>
+                    <#if item_index lt 9 >
+                        <dd><a>${item.title!''}</a></dd>
+                    </#if>
+                </#list>
+            </#if>       
     </dl>
 
  <dl class="school_04">
         <dt><a>资料下载</a><p>更多&gt;&gt;</p></dt>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
-        <dd><a>国家职业资格证</a></dd>
+        <#if download_list??>
+            <#list download_list as item>
+                <#if item_index lt 9>        
+                    <dd><a href="/download/data?name=${item.imgUrl!''}" title="${brief!''}">${item.title!''}</a></dd>
+                </#if>
+            </#list>
+        </#if>       
     </dl>
 </div>
 
 </div>
-
-<div class="adv">
-    <dl class="adv_01">
-        <dt><img src="/client/images/adv_icon.png" /></dt>
-        <dd><a>QQ在线咨询</a><img src="/client/images/about_qq_27.png" /></dd>
-    </dl>
-    <div class="adv_02">
-        <a>客服在线咨询</a>
-        <p>123-123-1532</p>
-        <input type="button" value="立即报名" />
-    </div>
-    <dl class="adv_03">
-        <dt><a>二维码</a><p>扫码加入</p></dt>
-        <dd><img src="/client/images/index_mark.png"/></dd>
-    </dl>
-</div>
-
 <!--footer-->
 <#include "/client/common_footer.ftl" />
 <!--footer_end-->

@@ -101,7 +101,7 @@ public class TdInfoController {
 	    {
 	        if (null == catId || 0 == catId)
 	        {
-  //            catId = catList.get(0).getId();   //.get(0)表示 取catList表的第0个 zhangji
+                catId = catList.get(0).getId();   //.get(0)表示 取catList表的第0个 zhangji
 	        	
 	        	//课程设置设为5条信息一页 zhangji
 	        	if(menu.getTitle().equals("课程设置"))
@@ -488,4 +488,64 @@ public class TdInfoController {
     	res.put("code", 0);
     	return res;
     }
+	
+	@RequestMapping("/coursechoose/content/{id}")
+    public String coursechooseContent(@PathVariable Long id, Long mid, ModelMap map, HttpServletRequest req){
+        
+	    tdCommonService.setHeader(map, req);
+	    
+        if (null == id || null == mid)
+        {
+            return "/client/error_404";
+        }             
+        
+        TdNavigationMenu menu = tdNavigationMenuService.findOne(mid);
+        
+        map.addAttribute("menu_name", "课程设置");      
+	    map.addAttribute("menu_id", menu.getId()); //菜单id zhangji
+	    map.addAttribute("menu_sub_name", menu.getName());//英文名称 zhangji
+        
+	    TdArticle tdArticle = tdArticleService.findOne(id);
+	    map.addAttribute("coursetake",tdArticle.getTitle());
+	    map.addAttribute("courseId",id);
+        //找出栏目名称 zhangji
+        Long catId = tdArticle.getCategoryId();
+        map.addAttribute("info_name",tdArticleCategoryService.findOne(catId) );
+        
+        //列表信息 zhangji
+        map.addAttribute("info_page", tdArticleService
+                .findByMenuIdAndCategoryIdAndIsEnableOrderByIdAsc(mid,
+                        catId, 0, ClientConstant.pageSize));
+        
+	    
+        List<TdArticleCategory> catList = tdArticleCategoryService.findByMenuId(mid);
+      
+        map.addAttribute("info_category_list", catList);
+        map.addAttribute("mid", mid);
+        
+        
+        //找出栏目名称 zhangji
+        map.addAttribute("info_name",tdArticleCategoryService.findOne(catId) );
+        
+        if (null != tdArticle)
+        {
+            map.addAttribute("info", tdArticle);
+            map.addAttribute("prev_info", tdArticleService.findPrevOne(id, tdArticle.getCategoryId(), tdArticle.getMenuId()));
+            map.addAttribute("next_info", tdArticleService.findNextOne(id, tdArticle.getCategoryId(), tdArticle.getMenuId()));
+        }
+        
+        // 最近添加
+        map.addAttribute("latest_info_page", tdArticleService.findByMenuIdAndIsEnableOrderByIdDesc(mid, 0, ClientConstant.pageSize));
+        
+        return "/client/info_list";
+    }
+	@RequestMapping("/map")
+    public String map(ModelMap map, HttpServletRequest req){
+        
+	    tdCommonService.setHeader(map, req);
+	    map.addAttribute("menu_name", "交通指南");
+	    map.addAttribute("menu_sub_name", "Map");//英文名称 zhangji
+	    map.addAttribute("message", "地图导航");
+	    return "/client/map";
+	}
 }

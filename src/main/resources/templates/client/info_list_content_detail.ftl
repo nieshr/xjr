@@ -26,7 +26,7 @@
 
     <div class="news_page_right_body">
         <#if next_info??>
-            <a href="/info/list/content/${next_info.id}?mid=${next_info.menuId}">上一篇：${next_info.title}</a>
+            <a href="/info/list/content/${next_info.id}?mid=${next_info.menuId}">下一篇：${next_info.title}</a>
         </#if>
     </div>  
 

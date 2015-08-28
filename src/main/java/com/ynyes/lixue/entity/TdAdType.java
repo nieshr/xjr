@@ -60,11 +60,15 @@ public class TdAdType {
     
     // 高度
     @Column
-    private Long heigth;
+    private Long height;
     
     // 备注
     @Column
     private String mark;
+    
+    //效果 zhangji
+    @Column
+    private String effect;    
 
     public Long getId() {
         return id;
@@ -138,12 +142,12 @@ public class TdAdType {
         this.width = width;
     }
 
-    public Long getHeigth() {
-        return heigth;
+    public Long getHeight() {
+        return height;
     }
 
-    public void setHeigth(Long heigth) {
-        this.heigth = heigth;
+    public void setHeight(Long height) {
+        this.height = height;
     }
 
     public String getMark() {
@@ -153,4 +157,13 @@ public class TdAdType {
     public void setMark(String mark) {
         this.mark = mark;
     }
+
+	public String getEffect() {
+		return effect;
+	}
+
+	public void setEffect(String effect) {
+		this.effect = effect;
+	}
+    
 }

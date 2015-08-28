@@ -35,7 +35,7 @@
         <dd class="message_box">
             <span>留言 ： </span>
             <textarea name="content" cols="" rows=""></textarea>
-            <a>可输入200字</a>
+            <a style="width:150px;">可输入200字</a>
         </dd>
         <dd class="message_btn">
             <input type="submit" value="报名"/>

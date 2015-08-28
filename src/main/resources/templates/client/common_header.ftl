@@ -2,8 +2,9 @@
     <img class="logo" src="${site.logoUri!'' }"/>
     <div class="search">
         <form action="/search" method="get">
-	        <input type="text" class="search_text" name="keywords" value="${keywords!keywords_list[0].title}" />
-	        <input type="submit"  style="width:51px; height:41px; background-color:#008e45; color:white; font-size:14px;" value="搜索" />
+	        <input id="search-text" type="text" class="search_text" name="keywords" value="${keywords!keywords_list[0].title}"  onfocus="this.value='';" onblur="if(this.value==''){this.value='${keywords!keywords_list[0].title}'}"/>
+	        <input type="submit"  style="width:51px; height:41px; background-color:#008e45; color:white; font-size:14px;" value="搜索"
+	               />
         </form>
     </div>
     <div class="share">
@@ -50,4 +51,19 @@
         </#if>
     </ul>
     </div>
+</div>
+<div class="adv">
+    <dl class="adv_01">
+        <dt><a href="http://wpa.qq.com/msgrd?v=3&uin=${site.qq1!'' }&site=qq&menu=yes" title="${site.qq1!'' }"><img src="/client/images/adv_icon.png" /></a></dt>
+        <dd><a href="http://wpa.qq.com/msgrd?v=3&uin=${site.qq1!'' }&site=qq&menu=yes" title="${site.qq1!'' }">QQ在线咨询</a><img src="/client/images/about_qq_27.png" /></dd>
+    </dl>
+    <div class="adv_02">
+        <p>客服在线咨询</p>
+        <p>${site.telephone!''}</p>
+        <input type="button" value="立即报名" onclick="javascript:window.location.href='/info/list/12'" />
+    </div>
+    <dl class="adv_03">
+        <dt><a>二维码</a><p>扫码加入</p></dt>
+        <dd><img src="${site.wxQrCode!''}"/></dd>
+    </dl>
 </div>

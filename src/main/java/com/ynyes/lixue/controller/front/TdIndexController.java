@@ -84,13 +84,15 @@ public class TdIndexController {
         //课程信息
         List<TdArticleCategory> courseInfoList = tdArticleCategoryService
                 .findByMenuId(12L);
-        map.addAttribute("course_category_list",courseInfoList); 
+        map.addAttribute("course_category_list",courseInfoList);        
         
-        //前2个课程分类的内容
+        //前几个课程分类的内容    
         map.addAttribute("course_category_page0",tdArticleService
         		.findByCategoryId(courseInfoList.get(0).getId(), 0, ClientConstant.pageSize));        
         map.addAttribute("course_category_page1",tdArticleService
         		.findByCategoryId(courseInfoList.get(1).getId(), 0, ClientConstant.pageSize)); 
+        map.addAttribute("course_category_page2",tdArticleService
+        		.findByCategoryId(courseInfoList.get(2).getId(), 0, ClientConstant.pageSize)); 
         
         //新闻
         map.addAttribute("news_list", tdArticleService                   		
@@ -100,13 +102,10 @@ public class TdIndexController {
         map.addAttribute("join_list", tdArticleService                   		
         		.findByMenuIdOrderByCreateTime(13L));   
         
-        
-        
-        
-        
-        // 相关常识
-        map.addAttribute("knowledge_page", tdArticleService                   		
-        		.findByMenuIdAndIsEnableOrderByIdDesc(11L, 0, ClientConstant.pageSize));              
+
+        //下载
+        map.addAttribute("download_list", tdArticleService                   		
+        		.findByMenuIdOrderByCreateTime(83L));   
         
         //学校信息
         List<TdArticleCategory> infoList = tdArticleCategoryService
@@ -141,6 +140,15 @@ public class TdIndexController {
             }
         }
         
+        // 首页大图轮播广告
+        TdAdType adType = tdAdTypeService.findByTitle("首页轮播大图广告");
+        map.addAttribute("adtype", adType);   //zhangji
+        
+        
+        if (null != adType) {
+            map.addAttribute("big_scroll_ad_list", tdAdService
+                    .findByTypeIdAndIsValidTrueOrderBySortIdAsc(adType.getId()));
+        }
         
         // 一级分类
         List<TdProductCategory> topCatList = tdProductCategoryService

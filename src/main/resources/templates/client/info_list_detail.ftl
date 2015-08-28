@@ -1,3 +1,5 @@
+
+
 <div class="right_title">
     <a>首页&nbsp;&gt;&nbsp;</a>   
     <a>${menu_name }</a>
@@ -59,11 +61,11 @@
     <input type="hidden" name="courseName" value=${coursetake}>
     <dl class="message">
         <dd>
-            <span>姓名 ： </span>
+            <span><b style="color:#ef0000;">*</b>姓名 ： </span>
             <input name="name" type="" value=""/>
         </dd>
         <dd>
-            <span>电话 ： </span>
+            <span><b style="color:#ef0000;">*</b>电话 ： </span>
             <input name="mobile" type="" value=""/>
         </dd>
         <dd>
@@ -75,7 +77,7 @@
             <input name="qq" type="" value=""/>
         </dd>
         <dd class="message_box">
-            <span>留言 ： </span>
+            <span><b style="color:#ef0000;">*</b>留言 ： </span>
             <textarea name="content" cols="" rows=""></textarea>
             <a>可输入200字</a>
         </dd>
@@ -105,6 +107,7 @@
     </div>
     </#if>
 <#elseif menu_name="招贤纳才">
+    <#if info_name.title = "人才招聘">
     <div class="name">招贤纳才</div>
         <#if info_page??>
             <#list info_page.content as item>
@@ -114,12 +117,10 @@
 			    </dl>
 			</#list>
 		</#if>
-
-<!-- mdj 2015-8-27 10:14:03 -->
-<#elseif nemu_name="课程报名">
-    
-    
-    <!-- mdj 2015-8-27 10:14:03 end-->
+    <#else>
+        ${site.address!'' }
+         <a href="/info/map">查看地图</a>
+    </#if>    
 </#if>
 
 <!--内容底部-->

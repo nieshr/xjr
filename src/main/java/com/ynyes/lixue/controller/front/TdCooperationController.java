@@ -40,9 +40,10 @@ public class TdCooperationController {
 		Long mid = 12L;
 		TdNavigationMenu menu = tdNavigationMenuService.findOne(mid);
 	    
-	    map.addAttribute("menu_name", menu.getTitle());
-	    map.addAttribute("menu_id", menu.getId()); //菜单id zhangji
-	    map.addAttribute("menu_sub_name", menu.getName());//英文名称 zhangji
+	    map.addAttribute("menu_name", "合作加盟");
+	    map.addAttribute("menu_id", 63); //菜单id zhangji
+	    map.addAttribute("menu_sub_name", "Cooperation");//英文名称 zhangji
+	    map.addAttribute("message", "留言板");
 		
 		
 	    if (page == null)
