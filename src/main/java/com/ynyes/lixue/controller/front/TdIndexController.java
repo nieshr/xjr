@@ -65,37 +65,82 @@ public class TdIndexController {
         
         tdCommonService.setHeader(map, req);              
         
-        // 新闻中心
-        map.addAttribute("news_page", tdArticleService                   		
-        		.findByMenuIdAndIsEnableOrderByIdDesc(8L, 0, ClientConstant.pageSize));
+        // 普通课程
+        map.addAttribute("course_page0", tdArticleService                   		
+        		.findByMenuIdAndRecommendIdOrderBySortIdAsc(12L,0L, 0, ClientConstant.pageSize));
+        
+        // 金牌课程
+        map.addAttribute("course_page1", tdArticleService                   		
+        		.findByMenuIdAndRecommendIdOrderBySortIdAsc(12L,1L, 0, ClientConstant.pageSize));
+        
+        // 热门课程
+        map.addAttribute("course_page2", tdArticleService                   		
+        		.findByMenuIdAndRecommendIdOrderBySortIdAsc(12L,2L, 0, ClientConstant.pageSize));   
+        
+        //最新课程
+        map.addAttribute("course_list", tdArticleService                   		
+        		.findByMenuIdOrderByCreateTime(12L));   
+      
+        //课程信息
+        List<TdArticleCategory> courseInfoList = tdArticleCategoryService
+                .findByMenuId(12L);
+        map.addAttribute("course_category_list",courseInfoList); 
+        
+        //前2个课程分类的内容
+        map.addAttribute("course_category_page0",tdArticleService
+        		.findByCategoryId(courseInfoList.get(0).getId(), 0, ClientConstant.pageSize));        
+        map.addAttribute("course_category_page1",tdArticleService
+        		.findByCategoryId(courseInfoList.get(1).getId(), 0, ClientConstant.pageSize)); 
+        
+        //新闻
+        map.addAttribute("news_list", tdArticleService                   		
+        		.findByMenuIdOrderByCreateTime(8L));   
+        
+        //招聘信息
+        map.addAttribute("join_list", tdArticleService                   		
+        		.findByMenuIdOrderByCreateTime(13L));   
+        
+        
+        
+        
         
         // 相关常识
         map.addAttribute("knowledge_page", tdArticleService                   		
         		.findByMenuIdAndIsEnableOrderByIdDesc(11L, 0, ClientConstant.pageSize));              
         
-        //功能信息
+        //学校信息
         List<TdArticleCategory> infoList = tdArticleCategoryService
                 .findByMenuId(10L);
 
         if (null != infoList && infoList.size() > 0) {
             for (TdArticleCategory tdCat : infoList)
             {
-                if (null != tdCat.getTitle() && tdCat.getTitle().equals("公司简介"))
+                if (null != tdCat.getTitle() && tdCat.getTitle().equals("关于我们"))
                 {
-                    map.addAttribute("profile_page", tdArticleService
+                    map.addAttribute("about_page", tdArticleService
                             .findByMenuIdAndCategoryIdAndIsEnableOrderByIdAsc(10L,
                                     tdCat.getId(), 0, ClientConstant.pageSize));
                     
                 }
-                if (null != tdCat.getTitle() && tdCat.getTitle().equals("服务项目"))
-                {
-                    map.addAttribute("service_page", tdArticleService
-                            .findByMenuIdAndCategoryIdAndIsEnableOrderByIdAsc(10L,
-                                    tdCat.getId(), 0, ClientConstant.pageSize));
-                 
-                }             
             }
         }
+        //名师精英
+        List<TdArticleCategory> teacherList = tdArticleCategoryService
+                .findByMenuId(11L);
+
+        if (null != teacherList && teacherList.size() > 0) {
+            for (TdArticleCategory tdCat : teacherList)
+            {
+                if (null != tdCat.getTitle() && tdCat.getTitle().equals("名师精英"))
+                {
+                    map.addAttribute("teacher_page", tdArticleService
+                            .findByMenuIdAndCategoryId(11L,
+                                    tdCat.getId(), 0, ClientConstant.pageSize));
+                    
+                }
+            }
+        }
+        
         
         // 一级分类
         List<TdProductCategory> topCatList = tdProductCategoryService

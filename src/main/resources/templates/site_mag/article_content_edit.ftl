@@ -154,20 +154,36 @@
                 </div>
             </dd>
         </dl>
+        <#--
         <dl>
             <dt>推荐类型</dt>
             <dd>
                 <div class="rule-multi-checkbox multi-checkbox">
                     <span id="cblItem" style="display: none;">
-                        <input id="cblItem_0" type="checkbox" name="recommendId"><label for="cblItem_0">允许评论</label>
-                        <input id="cblItem_1" type="checkbox" name="recommendId"><label for="cblItem_1">置顶</label>
-                        <input id="cblItem_2" type="checkbox" name="recommendId"><label for="cblItem_2">推荐</label>
+                        <input id="cblItem_0" type="checkbox" name="recommendId"><label for="cblItem_0">普通课程</label>
+                        <input id="cblItem_1" type="checkbox" name="recommendId"><label for="cblItem_1">金牌课程</label>
+                        <input id="cblItem_2" type="checkbox" name="recommendId"><label for="cblItem_2">推荐课程</label>
                         <input id="cblItem_3" type="checkbox" name="recommendId"><label for="cblItem_3">热门</label>
                         <input id="cblItem_4" type="checkbox" name="recommendId"><label for="cblItem_4">幻灯片</label>
                     </span>
                 </div>
             </dd>
         </dl>
+        -->
+        <#if mid=12>
+        <dl>
+            <dt>推荐类型</dt>
+            <dd>
+                <div class="rule-multi-radio multi-radio">
+                    <span id="rblRecommendId" style="display: none;">
+                        <input type="radio" name="recommendId" value="0" <#if !article?? || article?? && article.recommendId?? && article.recommendId==0>checked="checked"</#if> ><label>普通课程</label>
+                        <input type="radio" name="recommendId" value="1" <#if article?? && article.recommendId?? && article.recommendId==1>checked="checked"</#if>><label>金牌课程</label>
+                        <input type="radio" name="recommendId" value="2" <#if article?? && article.recommendId?? && article.recommendId==2>checked="checked"</#if>><label>热门课程</label>
+                    </span>
+                </div>
+            </dd>
+        </dl>
+        </#if>
         <dl>
             <dt>内容标题</dt>
             <dd>
@@ -218,7 +234,7 @@
     
     <div class="tab-content" style="display: none;">
         <#-- 批量上传 zhangji-->
-        <#if mid = 11>
+        <#if mid = 11 || mid = 10>
         <dl id="div_show360_container">
             <dt>展示图片</dt>
             <dd>

@@ -8,7 +8,7 @@
         <#if user_consult_page??>
             <#list user_consult_page.content as item>
                 <a>${item.username} ：${item.content}</a>
-                <p>A : ${item.reply}</p>
+                <#if item.reply??> <p>A : ${item.reply}</p> </#if>
             </#list>
         </#if>
     </div>

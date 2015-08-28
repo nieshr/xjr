@@ -114,7 +114,7 @@ public class TdSearchController {
         return "/client/search_result";
     }
     
-    @RequestMapping(value="/search/page", method = RequestMethod.GET)
+    @RequestMapping(value="/search/page")
     public String searchPage(String keywords,
     		String __EVENTTARGET,
             String __EVENTARGUMENT,
