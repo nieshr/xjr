@@ -54,7 +54,10 @@
     });
     </script> 
     <div class="crouse_title">
-        <p style="margin-top:20px;">您选择的是 :<b style="color:#ef0000;">&nbsp;${coursetake!""}&nbsp;</b>课程，请详细填写下方联系方式预约报名。</p>
+        <p style="margin-top:20px;">您选择的是 :<b style="color:#ef0000;">&nbsp;${coursetake!""}&nbsp;</b>课程</p>
+        <p style="margin-top:20px;">${info.content!'' }</p>
+        <p style="margin-top:20px;"> 请详细填写下方联系方式预约报名。</p>
+                      
     </div>
     <form action="/info/submit" id="form1" method="post">
     <input type="hidden" name="courseId" value=${courseId}>
@@ -95,10 +98,10 @@
 		            <dt><img src="${item.imgUrl!''}" /></dt>
 		            <dd>
 		                <a href="javascript:courseTake(${item.id },${item.menuId })">${item.title!''}</a>
-		                <#if item.content?length lt 400>
-		                    <p>${item.content!''}</p>
+		                <#if item.brief?length lt 400>
+		                    <p>${item.brief!''}</p>
 		                <#else>
-		                    <p>${item.content[0..400] }...</p>
+		                    <p>${item.brief[0..400] }...</p>
 		                </#if>
 		            </dd>
 		        </dl>
@@ -118,13 +121,27 @@
 			</#list>
 		</#if>
     <#else>
-        ${site.address!'' }
-         <a href="/info/map">查看地图</a>
+         <h2 style="margin-top:7%;">学校地址：${site.address!'' }    
+                                   <a href="/info/map" style="  padding: 1%;
+                                                                margin-left:30%;
+								                                background-color: #008e45;
+								                                font-size:0.7em;
+								                                color: white;
+								                                border: none;">查看地图</a>
+         </h2>
+         <#if info_page??>
+             <#list info_page.content as item>
+                <dl class="news_box">
+                    <dt><a>${item.title!''}</a></dt>
+                    <dd>${item.content!''}</dd>
+                </dl>
+            </#list>
+        </#if>     
     </#if>    
 </#if>
 
 <!--内容底部-->
-<#if coursetake??>
+<#if coursetake?? || info_name.title = "交通指南">
 <#else>
 <#assign PAGE_DATA=info_page />
 <#if catId??>

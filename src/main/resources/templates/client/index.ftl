@@ -137,7 +137,7 @@ for(;i<navs.length;i++){
         <#if course_page0??>
 	        <#list course_page0.content as item>
 	            <#if item_index lt 10>
-	                <dd><a>${item.title!''}</a></dd>
+	                <dd><a href="/info/coursechoose/content/${item.id}?mid=12">${item.title!''}</a></dd>
 	            </#if>    
 	        </#list>
         </#if>     
@@ -153,7 +153,7 @@ for(;i<navs.length;i++){
 	                            <#list course_category_page0.content as item>
 	                                <#if item_index lt 3 >
 		                                <p>${item.title!''}</p>
-							            <a href="/info/list/12">详情</a>
+							            <#--<a href="/info/list/12">详情</a>-->
 							            <input type="button" value="立即报名" onclick="javascript:window.location.href='/info/coursechoose/content/${item.id}?mid=12'" />
 							        </#if>
 							    </#list>
@@ -245,11 +245,11 @@ for(;i<navs.length;i++){
     </div>
     <div class="news_02">
         <dl class="news_box">
-            <dt><a style=" background-image:url(/client/images/index_news.png);color:white;">招聘信息</a><a href="/info/map">交通指南</a></dt>
+            <dt><a style=" background-image:url(/client/images/index_news.png);color:white;">招聘信息</a><a href="/info/list/13?catId=49">交通指南</a></dt>
             <#if join_list??>
                 <#list join_list as item>
                     <#if item_index lt 7>
-                        <dd><a href="/info/list/13" title="${item.brief!''}">${item.title!''}</a><p>${item.updateTime?string("yyyy-MM-dd") }</p></dd>
+                        <dd><a href="/info/list/13?catId=48" title="${item.brief!''}">${item.title!''}</a><p>${item.updateTime?string("yyyy-MM-dd") }</p></dd>
                     </#if>
                 </#list>
             </#if>   
@@ -299,7 +299,7 @@ for(;i<navs.length;i++){
            <#if course_category_page2??>
                 <#list course_category_page2.content as item>
                     <#if item_index lt 9 >
-                        <dd><a>${item.title!''}</a></dd>
+                        <dd><a href="/info/coursechoose/content/${item.id}?mid=12">${item.title!''}</a></dd>
                     </#if>
                 </#list>
             </#if>   
@@ -331,7 +331,7 @@ for(;i<navs.length;i++){
             <#if course_category_page0??>
                 <#list course_category_page0.content as item>
                     <#if item_index lt 9 >
-                        <dd><a>${item.title!''}</a></dd>
+                        <dd><a href="/info/coursechoose/content/${item.id}?mid=12">${item.title!''}</a></dd>
                     </#if>
                 </#list>
             </#if>           
@@ -348,7 +348,7 @@ for(;i<navs.length;i++){
             <#if course_category_page1??>
                 <#list course_category_page1.content as item>
                     <#if item_index lt 9 >
-                        <dd><a>${item.title!''}</a></dd>
+                        <dd><a href="/info/coursechoose/content/${item.id}?mid=12">${item.title!''}</a></dd>
                     </#if>
                 </#list>
             </#if>       
@@ -366,7 +366,7 @@ for(;i<navs.length;i++){
             <#if course_category_page2??>
                 <#list course_category_page2.content as item>
                     <#if item_index lt 9 >
-                        <dd><a>${item.title!''}</a></dd>
+                        <dd><a href="/info/coursechoose/content/${item.id}?mid=12">${item.title!''}</a></dd>
                     </#if>
                 </#list>
             </#if>       

@@ -101,7 +101,7 @@ public class TdInfoController {
 	    {
 	        if (null == catId || 0 == catId)
 	        {
-                catId = catList.get(0).getId();   //.get(0)表示 取catList表的第0个 zhangji
+            //    catId = catList.get(0).getId();   //.get(0)表示 取catList表的第0个 zhangji
 	        	
 	        	//课程设置设为5条信息一页 zhangji
 	        	if(menu.getTitle().equals("课程设置"))
@@ -125,6 +125,12 @@ public class TdInfoController {
 	        	}
 	        }	
 	    }
+	    
+        if(13 == mid && null == catId)
+        {
+        	catId = catList.get(0).getId();   //.get(0)表示 取catList表的第0个 zhangji
+        }
+        	
 	    
 	    map.addAttribute("info_name",tdArticleCategoryService.findOne(catId) );   //找出栏目名称 zhangji
 	    map.addAttribute("catId", catId);
@@ -457,6 +463,7 @@ public class TdInfoController {
 		map.addAttribute("menu_name", "课程设置");
 		map.addAttribute("courseId",id);
 		map.addAttribute("courseMid",mid);
+		map.addAttribute("info", article);
 		return "/client/info_list_detail";
 	}
 	
@@ -546,6 +553,7 @@ public class TdInfoController {
 	    map.addAttribute("menu_name", "交通指南");
 	    map.addAttribute("menu_sub_name", "Map");//英文名称 zhangji
 	    map.addAttribute("message", "地图导航");
+	    map.addAttribute("back", "退出");
 	    return "/client/map";
 	}
 }

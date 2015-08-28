@@ -14,10 +14,15 @@
                 </#list>
             </#if> 
             <#if message??>
-                <dd  class="menu_list leftbar_color">
+                <dd  class="menu_list ">
                     <a title="请留言">${message!'' }</a>
                 </dd>
-            </#if> 
+            </#if>
+            <#if back??>
+                <dd  class="menu_list leftbar_color">
+                    <a href="/info/list/13?caiId=49" title="返回">${back!'' }</a>
+                </dd>
+            </#if>  
     </dl>
     
     <dl class="course">

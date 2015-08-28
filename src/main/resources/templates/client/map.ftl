@@ -23,7 +23,7 @@
     body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
 </style>
 
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=sloQ0GqMsUdlG0SLcOVrO49F"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ieC9fBD7CuIHdlTtHIRexz9T"></script>
 <script type="text/javascript">
 $(document).ready(function(){
         loadMap(${site.longitude!'102.718072'}, ${site.latitude!'25.048034'});
@@ -63,7 +63,7 @@ function loadMap(x, y)
     
     <!--right_content-->
     <div class="right_content">
-         <div id="allmap" style="height:650;width:800;">  
+         <div id="allmap" style="height:650px;width:800px;">  
             
          </div>
     </div>
