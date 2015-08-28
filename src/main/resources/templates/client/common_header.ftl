@@ -63,7 +63,7 @@
         <input type="button" value="立即报名" onclick="javascript:window.location.href='/info/list/12'" />
     </div>
     <dl class="adv_03">
-        <dt><a>二维码</a><p>扫码加入</p></dt>
+        <dt><p>二维码</p><p>扫码加入</p></dt>
         <dd><img src="${site.wxQrCode!''}"/></dd>
     </dl>
 </div>
