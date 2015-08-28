@@ -48,12 +48,3 @@
 
 
 
-
-
-
-/*翻页*/
-.page{ float:right; margin-top:50px;}
-.page input{ width:30px; height:30px;; line-height:24px; text-align:center; float:left; margin:0 4px;}
-.page .page_text{ width:30px; height:28px;}
-.page .block{ width:60px; height:30px;}
-.page a{ display:block; margin-top:6px; float:left;}

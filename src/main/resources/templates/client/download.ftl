@@ -2,9 +2,27 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>无标题文档</title>
+<title>资料下载</title>
 <link href="client/css/base.css" rel="stylesheet" type="text/css" />
 <link href="client/css/download.css" rel="stylesheet" type="text/css" />
+<script src="/client/js/jquery-1.9.1.min.js"></script>
+
+<script type="text/javascript">
+function changePage(page)
+{
+    $.ajax({
+        type:"get",
+        url:"/download",
+        data:{"page":page},
+        success:function(data){
+            $(".right_content").html(data);
+        },
+        error:function(e){
+        alert(e);
+        }
+    });
+}
+</script>
 </head>
 
 <body>
@@ -15,88 +33,13 @@
 <!--main-->
 <div class="main">
     <!--left_content-->
-    <div class="left_content">
-    <dl class="leftbar">
-            <dt><a>DOWNLOAD</a><p>资料下载</p></dt>
-        
-        </dl>
-    
-    <dl class="course">
-      <dt><a>开展课程</a><p>更多&gt;&gt;</p></dt>
-        <dd><a>学校简介</a></dd>
-        <dd><a>学校简介</a></dd>
-        <dd><a>学校简介</a></dd>
-        <dd><a>学校简介</a></dd>
-        <dd><a>学校简介</a></dd>
-        <dd><a>学校简介</a></dd>
-        <dd><a>学校简介</a></dd>
-        <dd><a>学校简介</a></dd>
-        <dd><a>学校简介</a></dd>
-        <dd><a>学校简介</a></dd>
-    </dl>
-    <dl class="call">
-        <dt><a>开展课程</a><p>更多&gt;&gt;</p></dt>
-        <dd class="call_text01">
-            <a>学校简介:</a>
-            <input type="" value="" />
-        </dd>
-        <dd class="call_text01">
-            <a>学校简介:</a>
-            <input type="" value="" />
-        </dd>
-        <dd class="call_btn">
-            <p>立即联系</p>
-        </dd>
-        <dd class="call_tel">
-            <span>报名热线：400-0011-652</span>
-            <span>咨询老师：刘老师</span>
-            <span>点击咨询：<img src="images/about_qq_27.png" />&nbsp;QQ交谈</span>
-        </dd>
-    </dl>
-    </div>
-    
+    <#include "/client/common_menu.ftl" />
     <!--right_content-->
     <div class="right_content">
-        <div class="right_title">
-        <a>首页&nbsp;&gt;&nbsp;</a>
-        <a>资料下载</a>
-        </div>
- 
-    <div class="right_crouse">
-    <#if load_data_page??>
-    <#list load_data_page.content as item>
-        <dl class="crouse">
-            <dd><a>${item.title!''}</a><p>${item.content!''}</p>
-            <input type="button" onclick="javascript:window.location.href='/download/data?name=${item.imgUrl}'" value="立即下载" /> 
-            </dd>
-        </dl>
-     </#list>
-     </#if>
-      <div class="page">
-        <input type="button" value="1" />
-        <input type="button" value="2" />
-        <input type="button" value="3" />
-        <input class="block" type="button" value="上一页" />
-        <input class="block" type="button" value="下一页" />
-        <input class="page_text" type="" value="1" />
-        <input class="block" type="button" value="确定" />
-        
-        <a>共3页</a>
-        </div>
+        <#include "/client/download_content.ftl" />
+    </div>
     
 </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
 <!--footer-->
 <#include "/client/common_footer.ftl" />
 <!--footer_end-->

@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ynyes.lixue.entity.TdNavigationMenu;
 import com.ynyes.lixue.service.TdArticleService;
 import com.ynyes.lixue.service.TdCommonService;
+import com.ynyes.lixue.service.TdNavigationMenuService;
 import com.ynyes.lixue.util.SiteMagConstant;
 
 @Controller
@@ -28,18 +30,32 @@ public class TdDataLoadController {
 	@Autowired
 	private TdArticleService tdArticleService;
 	
-	String filepath = "src\\main\\resources\\static\\";
+	@Autowired
+	private TdNavigationMenuService tdNavigationMenuService;
+	
+	String filepath = SiteMagConstant.imagePath;
 	@RequestMapping("/download")
 	public String  down(HttpServletRequest req,ModelMap map,Integer page)
 	{
 		tdCommonService.setHeader(map, req);
-		if(page == null)
+		
+		Long mid = 12L;
+		TdNavigationMenu menu = tdNavigationMenuService.findOne(mid);
+	    
+	    map.addAttribute("menu_name", menu.getTitle());
+	    map.addAttribute("menu_id", menu.getId()); //菜单id zhangji
+	    map.addAttribute("menu_sub_name", menu.getName());//英文名称 zhangji
+		
+		
+		
+		if(page != null)
 		{
-			map.addAttribute("load_data_page",tdArticleService.findByMenuId(83L, 0, 10));
+			map.addAttribute("load_data_page",tdArticleService.findByMenuId(83L, page, 1));
+			return "/client/download_content";
 		}
 		else
 		{
-			map.addAttribute("load_data_page",tdArticleService.findByMenuId(83L, page, 10));
+			map.addAttribute("load_data_page",tdArticleService.findByMenuId(83L, 0, 1));
 		}
 		
 		return "/client/download";
@@ -57,7 +73,7 @@ public class TdDataLoadController {
         
         OutputStream os = resp.getOutputStream();  
         
-        File file = new File(filepath + name);
+        File file = new File(filepath +"/" + name);
         
         if (file.exists())
         {
