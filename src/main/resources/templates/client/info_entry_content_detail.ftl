@@ -9,3 +9,12 @@
     <img src="${info.imgUrl!'' }"/>
     <p>${info.content!'' }</p>
 </div>
+<div class = "none">
+              <#if info.showPictures??>
+                  <#list info.showPictures?split(",") as uri>
+                      <#if ""!=uri && uri_index < 4>
+                          <img class = "cover" src="${uri!''}" style="margin-top:2%;"/><br />
+                      </#if>
+                  </#list>
+              </#if>  
+          </div>

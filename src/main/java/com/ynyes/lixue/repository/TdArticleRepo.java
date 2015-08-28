@@ -22,9 +22,12 @@ public interface TdArticleRepo extends
 {
     // 通过父类型查找
     List<TdArticle> findByMenuIdOrderBySortIdAsc(Long menuId);
+    List<TdArticle> findByMenuIdOrderByCreateTimeDesc(Long menuId); //zhangji
+    
     Page<TdArticle> findByMenuIdOrderBySortIdAsc(Long menuId, Pageable page);
     
     Page<TdArticle> findByMenuIdAndStatusIdOrderByIdDesc(Long menuId, Long statusId, Pageable page);
+    Page<TdArticle> findByMenuIdAndRecommendIdOrderBySortIdAsc(Long menuId, Long recommendId, Pageable page); //zhangji
     
     Page<TdArticle> findByMenuIdAndStatusIdOrderByIdAsc(Long menuId, Long statusId, Pageable page);//顺序查找 zhangji
     

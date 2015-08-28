@@ -19,7 +19,7 @@ function searchPage(keywords,eventTarget, eventArgument)
     $('html,body').animate({scrollTop:146},400);
     $.ajax({
         type:"post",
-        url:"/search",
+        url:"/search/page",
         data:{"keywords":keywords,
               "__EVENTTARGET":eventTarget,
               "__EVENTARGUMENT":eventArgument},
@@ -35,7 +35,7 @@ function searchPageJump(keywords,eventTarget)
     var eventArgument = $("#jump-page").val() - 1;
     $.ajax({
         type:"post",
-        url:"/search",
+        url:"/search/page",
         data:{"keywords":keywords,
               "__EVENTTARGET":eventTarget,
               "__EVENTARGUMENT":eventArgument},

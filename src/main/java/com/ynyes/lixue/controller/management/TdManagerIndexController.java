@@ -1,25 +1,38 @@
 package com.ynyes.lixue.controller.management;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.swing.event.ChangeEvent;
-import javax.swing.text.ChangedCharSetException;
 
+import org.apache.solr.common.params.CommonParams.EchoParamStyle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ynyes.lixue.entity.TdDemand;
 import com.ynyes.lixue.entity.TdManager;
 import com.ynyes.lixue.entity.TdManagerRole;
 import com.ynyes.lixue.entity.TdNavigationMenu;
+import com.ynyes.lixue.entity.TdOrder;
 import com.ynyes.lixue.entity.TdSetting;
+import com.ynyes.lixue.entity.TdUserComment;
+import com.ynyes.lixue.entity.TdUserConsult;
+import com.ynyes.lixue.entity.TdUserSuggestion;
+import com.ynyes.lixue.service.TdDemandService;
 import com.ynyes.lixue.service.TdManagerRoleService;
 import com.ynyes.lixue.service.TdManagerService;
 import com.ynyes.lixue.service.TdNavigationMenuService;
+import com.ynyes.lixue.service.TdOrderService;
 import com.ynyes.lixue.service.TdSettingService;
+import com.ynyes.lixue.service.TdUserCommentService;
+import com.ynyes.lixue.service.TdUserConsultService;
+import com.ynyes.lixue.service.TdUserSuggestionService;
 
 /**
  * 后台首页控制器
@@ -37,6 +50,21 @@ public class TdManagerIndexController {
 
     @Autowired
     TdSettingService tdSettingService;
+    
+    @Autowired
+    TdOrderService tdOrderService;
+    
+    @Autowired
+    TdUserCommentService tdUserCommentService;
+    
+    @Autowired
+    TdUserConsultService tdUserConsultService;
+    
+    @Autowired
+    TdUserSuggestionService tdUserSuggestionService;
+    
+    @Autowired
+    TdDemandService tdDemandService;
     
     @Autowired
     TdManagerRoleService tdManagerRoleService;
@@ -215,7 +243,7 @@ public class TdManagerIndexController {
 
             map.addAttribute("root_menu_list", rootMenuList);
         }
-        
+                            
         return "/site_mag/frame";
     }
     
@@ -234,6 +262,72 @@ public class TdManagerIndexController {
     	return list;
     } 
     
+    /**
+	 * @author lc
+	 * @注释：自动提醒数据验证
+	 */
+	@RequestMapping(value = "/Verwalter/automaticRemind", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> automaticRemind(String alipayuser_id, String type, String code,
+			Boolean isSave, HttpServletRequest req) {
+		Map<String, Object> res = new HashMap<String, Object>();
+		res.put("code", 1);
+		String username = (String) req.getSession().getAttribute("manager");
+        if (null == username) {
+        	res.put("msg", "请登陆！");
+            return res;
+        }
+        
+        //新订单数量查询
+        List<TdOrder> tdOrdersnew = tdOrderService.findByStatusId(2L);
+        if (null != tdOrdersnew) {
+        	res.put("ordernumber", tdOrdersnew.size());
+		}else{
+			res.put("ordernumber", 0);
+		}        
+        
+        //支付订单数量查询
+        List<TdOrder> tdOrderspay = tdOrderService.findByStatusId(3L);
+        List<TdOrder> tdOrderspayleft = tdOrderService.findByStatusId(4L);
+        if (null != tdOrderspay && null == tdOrderspayleft) {
+        	res.put("ordernumberpay", tdOrderspay.size());
+		}else if (null != tdOrderspay && null != tdOrderspayleft) {
+			res.put("ordernumberpay", tdOrderspay.size()+tdOrderspayleft.size());
+		}else{
+			res.put("ordernumberpay", 0);
+		} 
+//               
+//        //咨询查询
+//        List<TdUserConsult> tdUserConsults = tdUserConsultService.findAll();
+//        if (null != tdUserConsults) {
+//			res.put("consults", tdUserConsults.size());
+//		}else{
+//			res.put("consults", 0);
+//		}
+//        //评论查询
+//        List<TdUserComment> tdUserComments = tdUserCommentService.findAll();
+//        if (null != tdUserComments) {
+//			res.put("comments", tdUserComments.size());
+//		}else{
+//			res.put("comments", 0);
+//		}
+        //投诉查询
+        List<TdUserSuggestion> tdUserSuggestions = tdUserSuggestionService.findAll();
+        if (null != tdUserSuggestions) {
+			res.put("suggestions", tdUserSuggestions.size());
+		}else{
+			res.put("suggestions", 0);
+		}
+        //还想团查询
+        List<TdDemand> tdDemands = tdDemandService.findAll();
+        if (null != tdDemands) {
+			res.put("demands", tdDemands.size());
+		}else{
+			res.put("demands", 0);
+		}
+        res.put("code", 0);
+		return res;
+	}
     @RequestMapping(value = "/Verwalter/center")
     public String center(ModelMap map, HttpServletRequest req) {
         String username = (String) req.getSession().getAttribute("manager");

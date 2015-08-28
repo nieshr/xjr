@@ -74,6 +74,29 @@
             });
         }
 
+        //修改订单备注
+        function EditOrderRemark() {
+            var dialog = $.dialog({
+                title: '订单备注',
+                content: '<textarea id="orderRemark" name="txtOrderRemark" rows="2" cols="20" class="input">${course.remarkInfo!''}</textarea>',
+                min: false,
+                max: false,
+                lock: true,
+                ok: function () {
+                    var remark = $("#orderRemark", parent.document).val();
+                    if (remark == "") {
+                        $.dialog.alert('对不起，请输入订单备注内容！', function () { }, dialog);
+                        return false;
+                    }
+                    var id = $.trim($("#spanOrderNumber").text());
+                    var postData = { "id": id, "type": "editMark", "data": remark };
+                    //发送AJAX请求
+                    sendAjaxUrl(dialog, postData, "/Verwalter/order/param/edit");
+                    return false;
+                },
+                cancel: true
+            });
+        }
         //确认货到付款已付款
         function OrderHDFKPayment() {
             var dialog = $.dialog.confirm('操作提示信息：<br />1、该订单使用货到付款方式，确定后，将完成订单；<br />确认要继续吗？', function () {

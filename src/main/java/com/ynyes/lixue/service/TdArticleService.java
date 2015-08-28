@@ -45,6 +45,22 @@ public class TdArticleService {
     }
     
     /**
+     * 根据时间倒序
+     * @author Zhangji
+     * @param menuId
+     * @return
+     */
+    public List<TdArticle> findByMenuIdOrderByCreateTime(Long menuId)
+    {
+        if (null == menuId)
+        {
+            return null;
+        }
+        
+        return repository.findByMenuIdOrderByCreateTimeDesc(menuId);
+    }
+    
+    /**
      * 通过菜单ID查找
      * @param menuId
      * @param page
@@ -61,6 +77,19 @@ public class TdArticleService {
         PageRequest pageRequest = new PageRequest(page, size);
         
         return repository.findByMenuIdOrderBySortIdAsc(menuId, pageRequest);
+    }
+    
+    //根据Recommend
+    public Page<TdArticle> findByMenuIdAndRecommendIdOrderBySortIdAsc(Long menuId,Long recommendId, int page, int size)
+    {
+    	 if (null == menuId)
+         {
+             return null;
+         }
+         
+         PageRequest pageRequest = new PageRequest(page, size);
+         
+         return repository.findByMenuIdAndRecommendIdOrderBySortIdAsc(menuId,recommendId, pageRequest);
     }
     
     public Page<TdArticle> findByMenuIdAndIsEnableOrderByIdDesc(Long menuId, int page, int size)
