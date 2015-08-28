@@ -35,7 +35,7 @@
         //初始化上传控件
         $(".upload-img").each(function () {
             $(this).InitSWFUpload({ 
-                sendurl: "/Verwalter/upload", 
+                sendurl: "/client/upload", 
                 flashurl: "/mag/js/swfupload.swf"
             });
         });

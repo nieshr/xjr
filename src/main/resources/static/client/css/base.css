@@ -62,6 +62,12 @@ body{ background-color:white;}
 .footer_box_04{float:left;width:1200px; text-align:center; margin:10px 0px;}
 .footer_box_05{float:left;width:1200px;  text-align:center; margin:10px 0px;}
 
+/*page*/
+.page{float:right; height:30px;margin-top:20px;margin-right:12px;}
+.disabled { color: #999; background: #fff; }
+.current { color: #fff; background: #EA5D0E; border-color: #EA5D0E; }
+.default { margin: 0; padding: 0;}
+.default a{margin-right:5px;}
 
 /*通用右边栏*/
 .main{ width:1200px; display:block; overflow:hidden;}
