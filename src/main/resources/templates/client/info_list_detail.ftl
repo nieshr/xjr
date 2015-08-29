@@ -141,7 +141,7 @@
 </#if>
 
 <!--内容底部-->
-<#if coursetake?? || info_name.title = "交通指南">
+<#if coursetake?? || (info_name?? && info_name.title?? && info_name.title == "交通指南")>
 <#else>
 <#assign PAGE_DATA=info_page />
 <#if catId??>
