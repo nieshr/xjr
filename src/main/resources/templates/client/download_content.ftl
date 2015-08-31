@@ -7,7 +7,17 @@
         <#list load_data_page.content as item>
             <dl class="crouse">
                 <dd><a>${item.title!''}</a><p>${item.content!''}</p>
-                <input type="button" onclick="javascript:window.location.href='/download/data?name=${item.imgUrl}'" value="立即下载" /> 
+                <a href="/download/data?name=${item.imgUrl}" style="  background-color: #008e45;
+																	  width: 60px;
+																	  height: 30px;
+																	  color: white;
+																	  border: none;
+																	  float: right;
+																	  margin-top: 20px;
+																	  font-size:10px;
+																	  line-height:30px;
+																	  text-align:center;
+																	  margin-right: 30px;">立即下载</a> 
                 </dd>
             </dl>
          </#list>

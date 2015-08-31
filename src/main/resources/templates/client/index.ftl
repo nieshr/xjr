@@ -118,12 +118,20 @@ for(;i<navs.length;i++){
 			        <dl class="best_box">
 			            <dt><img src="${item.imgUrl!''}" /></dt>
 			            <dd>
-			                <a class="best_text">
+			                <span class="best_text">
 			                    <span>${item.title!''}</span>
 			                    <p>${item.brief!''}</p>
-			                </a>
-			                <input  type="button" value="立即申请" 
-			                      onclick="javascript:window.location.href='/info/coursechoose/content/${item.id}?mid=12'"/>
+			                </span>
+                              <a href="/info/coursechoose/content/${item.id}?mid=12" style="  float: right;
+                                                                            height: 30px;
+                                                                            width: 64px;
+                                                                            background: url(/client/images/index_btn_line.png);
+                                                                            border: none;
+                                                                            line-height: 30px;
+                                                                            text-align:center;
+                                                                            margin-right:7px;
+                                                                            color: white;"
+                                                                            title="${item.title!''}">立即报名</a>
 			            </dd>
 			        </dl>
 			    </#if>    

@@ -60,7 +60,16 @@
     <div class="adv_02">
         <p>客服在线咨询</p>
         <p>${site.telephone!''}</p>
-        <input type="button" value="立即报名" onclick="javascript:window.location.href='/info/list/12'" />
+        <a href="/info/list/12" style="width: 66px;
+									  height: 26px;
+									  text-align: center;
+									  line-height: 26px;
+									  background: url(/client/images/adv_line.png);
+									  font-size: 14px;
+									  color: white;
+									  margin-top: 20px;
+									  margin-left: 68px;
+									  border: none;">立即报名</a>
     </div>
     <dl class="adv_03">
         <dt><p>二维码</p><p>扫码加入</p></dt>
