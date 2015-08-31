@@ -142,8 +142,8 @@ for(;i<navs.length;i++){
     <div class="course_box">
     <dl class="course_01">
         <dt><a>热门课程</a><p><a style=" background:none; font-size:12px; color:#999;" href="/info/list/12">更多&gt;&gt;</a></p></dt>
-        <#if course_page0??>
-	        <#list course_page0.content as item>
+        <#if course_page2??>
+	        <#list course_page2.content as item>
 	            <#if item_index lt 10>
 	                <dd><a href="/info/coursechoose/content/${item.id}?mid=12">${item.title!''}</a></dd>
 	            </#if>    

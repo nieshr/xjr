@@ -241,8 +241,8 @@
                 <div class="upload-box upload-show360"></div>
                 <div class="photo-list_show360">
                     <ul>
-                        <#if goods?? && goods.showPictures??>
-                            <#list goods.showPictures?split(",") as uri>
+                        <#if article?? && article.showPictures??>
+                            <#list article.showPictures?split(",") as uri>
                                 <#if uri != "">
                                 <li>
                                     <input type="hidden" name="hid_photo_name_show360" value="0|${uri!""}|${uri!""}">
