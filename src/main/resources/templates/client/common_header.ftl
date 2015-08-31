@@ -46,7 +46,7 @@
     <ul class="nav">
         <#if navi_item_list??>
             <#list navi_item_list as bar>
-                <a  href="${bar.linkUri}" title=""><li>${bar.title!''}</li></a>
+                <li><a  href="${bar.linkUri}" title="">${bar.title!''}</a></li>
             </#list>
         </#if>
     </ul>
