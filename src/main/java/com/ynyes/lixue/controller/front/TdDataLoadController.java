@@ -55,7 +55,7 @@ public class TdDataLoadController {
 		}
 		else
 		{
-			map.addAttribute("load_data_page",tdArticleService.findByMenuId(83L, 0, 1));
+			map.addAttribute("load_data_page",tdArticleService.findByMenuId(83L, 0, SiteMagConstant.pageSize));
 		}
 		
 		return "/client/download";

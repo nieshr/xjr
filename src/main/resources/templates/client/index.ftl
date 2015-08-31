@@ -30,7 +30,7 @@
             </#list>
         </#if>     
     </div>
-    <div id="navs">
+    <#--<div id="navs">
     <a href="javascript:;" class="active"></a>
     <a href="javascript:;"></a>
     <a href="javascript:;"></a>
@@ -40,11 +40,11 @@
     <a href="javascript:;"></a>
     <a href="javascript:;"></a>
     <a href="javascript:;"></a>
-    </div>
+    </div>-->
     <input type="hidden" id="tssel" value="${adtype.mark!''}"/>
    
 </div>
-<script type="text/javascript" src="js/pageSwitch.js"></script>
+<script type="text/javascript" src="/client/js/pageSwitch.js"></script>
 <script>
 var reg=location.search.match(/ts=([^&]*)/),
     ts=reg&&reg[1]||'${adtype.effect!''}',
@@ -153,8 +153,15 @@ for(;i<navs.length;i++){
 	                            <#list course_category_page0.content as item>
 	                                <#if item_index lt 3 >
 		                                <p>${item.title!''}</p>
-							            <#--<a href="/info/list/12">详情</a>-->
-							            <input type="button" value="立即报名" onclick="javascript:window.location.href='/info/coursechoose/content/${item.id}?mid=12'" />
+							            <a href="/info/coursechoose/content/${item.id}?mid=12">详情</a>
+							            <a href="/info/coursechoose/content/${item.id}?mid=12" style="  float: right;
+																									  height: 30px;
+																									  width: 64px;
+																									  background: url(/client/images/index_btn_line.png);
+																									  border: none;
+																									  line-height: 30px;
+																									  text-align:center;
+																									  color: white;">立即报名</a>
 							        </#if>
 							    </#list>
 							</#if>            
@@ -167,8 +174,15 @@ for(;i<navs.length;i++){
                                 <#list course_category_page1.content as item>
                                     <#if item_index lt 3 >
                                         <p>${item.title!''}</p>
-                                        <a>详情</a>
-                                        <input type="button" value="立即报名" onclick="javascript:window.location.href='/info/coursechoose/content/${item.id}?mid=12'"/>
+                                        <a href="/info/coursechoose/content/${item.id}?mid=12">详情</a>
+                                                                                <a href="/info/coursechoose/content/${item.id}?mid=12" style="  float: right;
+                                                                                                      height: 30px;
+                                                                                                      width: 64px;
+                                                                                                      background: url(/client/images/index_btn_line.png);
+                                                                                                      border: none;
+                                                                                                      line-height: 30px;
+                                                                                                      text-align:center;
+                                                                                                      color: white;">立即报名</a>
                                     </#if>
                                 </#list>
                             </#if>            
@@ -214,13 +228,13 @@ for(;i<navs.length;i++){
              <#list about_page.content as item>
                  <#if item_index = 1>
                      <dt><a>${item.title!''}</a><p><a style=" background:none; font-size:12px; color:#999;" href="/info/entry/content/${item.id!''}?mid=10">更多&gt;&gt;</a></p></dt>
-                     <dd><a>
-                         <#if item.content?length lt 95>
+                     <dd>
+                         <#if item.content?length lt 195>
 			                <p>${item.content!'' }</p>
 			             <#else>
-			                <p>${item.content[0..94]}...</p>     
+			                <p>${item.content[0..194]}...</p>     
 			             </#if> 
-			             </a>
+			            
 			         </dd>
                 </#if>
             </#list>
@@ -377,7 +391,15 @@ for(;i<navs.length;i++){
         <#if download_list??>
             <#list download_list as item>
                 <#if item_index lt 9>        
-                    <dd><a href="/download/data?name=${item.imgUrl!''}" title="${brief!''}">${item.title!''}</a></dd>
+                    <dd><a href="/download/data?name=${item.imgUrl!''}" title="${brief!''}">${item.title!''}</a>
+                        <a style="  float: right;
+									  height: 30px;
+									  width: 64px;
+									  background: url(/client/images/index_btn_line.png);
+									  border: none;
+									  line-height: 30px;
+									  color: white;">立即下载</a>
+                    </dd>
                 </#if>
             </#list>
         </#if>       

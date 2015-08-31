@@ -8,12 +8,6 @@
 <meta name="description" content="${site.seoDescription!''}">
 <meta name="copyright" content="${site.copyright!''}" />
 <link href="/client/css/base.css" rel="stylesheet" type="text/css" />
-<link href="/client/css/news_body.css" rel="stylesheet" type="text/css" />
-<link href="/client/css/news_center.css" rel="stylesheet" type="text/css" />
-<link href="/client/css/teacher.css" rel="stylesheet" type="text/css" />
-<link href="/client/css/teacher_center.css" rel="stylesheet" type="text/css" />
-<link href="/client/css/course.css" rel="stylesheet" type="text/css" />
-<link href="/client/css/join_us.css" rel="stylesheet" type="text/css" />
 <link href="/client/css/cooperation.css" rel="stylesheet" type="text/css" />
 
 <script type="text/javascript" src="/client/js/jquery-1.9.1.min.js"></script>
@@ -41,6 +35,23 @@
        $("#Validform_msg").hide();
     });
     </script>
+    
+    <script type="text/javascript">
+function changePage(page)
+{
+    $.ajax({
+        type:"get",
+        url:"/cooperation",
+        data:{"page":page},
+        success:function(data){
+            $(".right_content").html(data);
+        },
+        error:function(e){
+        alert(e);
+        }
+    });
+}
+</script>
 </head>
 <body>
 <!--header-->

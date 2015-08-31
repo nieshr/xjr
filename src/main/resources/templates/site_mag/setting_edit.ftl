@@ -308,7 +308,7 @@ $(function () {
             <dt>经度</dt>
             <dd>
                 <input name="longitude" type="text" value="<#if setting??>${setting.longitude!""}</#if>" class="input normal" datatype="*0-100" sucmsg=" ">
-                <span class="Validform_checktip"></span>
+                <span class="Validform_checktip"><a href="http://api.map.baidu.com/lbsapi/getpoint/index.html" target=_blank>点击查找坐标</a></span>
             </dd>
         </dl>
         <dl>

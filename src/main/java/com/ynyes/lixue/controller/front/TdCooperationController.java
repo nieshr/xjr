@@ -19,6 +19,7 @@ import com.ynyes.lixue.entity.TdUserConsult;
 import com.ynyes.lixue.service.TdCommonService;
 import com.ynyes.lixue.service.TdNavigationMenuService;
 import com.ynyes.lixue.service.TdUserConsultService;
+import com.ynyes.lixue.util.SiteMagConstant;
 
 @Controller
 public class TdCooperationController {
@@ -45,21 +46,30 @@ public class TdCooperationController {
 	    map.addAttribute("menu_sub_name", "Cooperation");//英文名称 zhangji
 	    map.addAttribute("message", "留言板");
 		
+		if(page != null)
+		{
+			map.addAttribute("user_consult_page",tdUserConsultService.findByStatusIdOrderByIdDesc(1L, page, 10));
+			return "/client/cooperation_detail";
+		}
+		else
+		{
+			map.addAttribute("user_consult_page",tdUserConsultService.findByStatusIdOrderByIdDesc(1L, 0, 10));
+		}
 		
-	    if (page == null)
-        {
-        	Page<TdUserConsult> userConsult =  tdUserConsultService.findByStatusIdOrderByIdDesc(1L, 0, 6);
-            if (userConsult != null)
-            {
-    			map.addAttribute("user_consult_page",userConsult);
-    		}        
-            return "/client/cooperation";
-		}
-        Page<TdUserConsult> userConsult =  tdUserConsultService.findByStatusIdOrderByIdDesc(1L, page, 6);
-        if (userConsult != null)
-        {
-			map.addAttribute("user_consult_page",userConsult);
-		}
+//	    if (page == null)
+//        {
+//        	Page<TdUserConsult> userConsult =  tdUserConsultService.findByStatusIdOrderByIdDesc(1L, 0, 6);
+//            if (userConsult != null)
+//            {
+//    			map.addAttribute("user_consult_page",userConsult);
+//    		}        
+//            return "/client/cooperation";
+//		}
+//        Page<TdUserConsult> userConsult =  tdUserConsultService.findByStatusIdOrderByIdDesc(1L, page, 6);
+//        if (userConsult != null)
+//        {
+//			map.addAttribute("user_consult_page",userConsult);
+//		}
 		return "/client/cooperation";
 	}
 	
@@ -81,13 +91,18 @@ public class TdCooperationController {
 			res.put("message", "手机号不能为空");
 			return res;
 		}
+    	else if (userConsult.getMobile().length() != 11 &userConsult.getMobile().length() != 8)
+    	{
+			res.put("message", "请填写正确格式的号码");
+			return res;
+		}
     	else if (userConsult.getContent() ==null|| userConsult.getContent().equals(""))
     	{
 			res.put("message", "留言内容不能为空");
 			return res;
 		}
     	
-    	userConsult.setCommentTime(new Date());
+    	userConsult.setConsultTime(new Date());
     	userConsult.setStatusId(0L);
     	tdUserConsultService.save(userConsult);
     	res.put("code", 0);

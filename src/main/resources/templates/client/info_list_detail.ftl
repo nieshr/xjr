@@ -114,10 +114,10 @@
     <div class="name">招贤纳才</div>
         <#if info_page??>
             <#list info_page.content as item>
-			    <dl class="news_box">
-			        <dt><a>${item.title!''}</a></dt>
-			        <dd>${item.content!''}</dd>
-			    </dl>
+			    <div class="joinus_content">
+			        <h3>${item.title!''}</h3>
+			        <div class="joinus_content2">${item.content!''}</div>
+			    </div>
 			</#list>
 		</#if>
     <#else>

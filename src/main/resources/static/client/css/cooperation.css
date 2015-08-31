@@ -38,8 +38,8 @@
 .right_title{ width:880px; height:40px; border-bottom:1px #acd7c1 solid; line-height:40px;}
 
 .right_crouse{ margin-top:10px; width:880px; display:block; overflow:hidden; float:left;  }
-.right_crouse a{width:880px; display:block; overflow:hidden; float:left; margin-top:20px;}
-.right_crouse p{width:880px; display:block; overflow:hidden; margin-top:10px;float:left;}
+.right_crouse .crouse_title a{width:880px; display:block; overflow:hidden; float:left; margin-top:20px;}
+.right_crouse .crouse_title p{width:880px; display:block; overflow:hidden; margin-top:10px;float:left;}
 
 
 /*massage*/
@@ -54,10 +54,17 @@
 .message_btn input{ width:60px; height:40px; border-radius:4px; line-height:40px; text-align:center; color:white; background-color:#008e45;}
 
 
+.right_crouse .crouse_title{width:880px;display:block;overflow:hidden;float:left;}
 
 
-
-
+/*page*/
+.page_info{float:right; height:30px;margin-top:20px;}
+.page_info span{float:left;margin:0 5px;}
+.page_info a{float:left;margin:0 5px;}
+.disabled { color: #999; background: #fff; float:left;}
+.current { color: #fff; background: #EA5D0E; border-color: #EA5D0E;float:left; }
+.default { margin: 0; padding: 0;}
+.default a{margin-right:5px;float:left;}
 
 /*翻页*/
 .page{ float:right; margin-top:50px;}
