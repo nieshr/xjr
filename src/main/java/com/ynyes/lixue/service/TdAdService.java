@@ -98,6 +98,11 @@ public class TdAdService {
         return (List<TdAd>) repository.findAll();
     }
     
+    public List<TdAd> findByTypeIdOrderBySortIdAsc(Long typeId)
+    {
+    	return repository.findByTypeIdAndIsEnableTrueOrderBySortIdAsc(typeId);
+    }
+    
     public List<TdAd> findByTypeIdAndIsValidTrueOrderBySortIdAsc(Long typeId)
     {
         return repository.findByTypeIdAndStartTimeBeforeAndEndTimeAfterAndIsEnableTrueOrderBySortIdAsc(typeId, new Date(), new Date());

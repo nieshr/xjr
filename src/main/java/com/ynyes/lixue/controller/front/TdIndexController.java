@@ -99,8 +99,33 @@ public class TdIndexController {
         		.findByMenuIdOrderByCreateTime(8L));   
         
         //招聘信息
-        map.addAttribute("join_list", tdArticleService                   		
-        		.findByMenuIdOrderByCreateTime(13L));   
+//        /////////
+//        map.addAttribute("join_list", tdArticleService                   		
+//        		.findByMenuIdOrderByCreateTime(13L));   
+//        /////////
+        List<TdArticleCategory> joinList = tdArticleCategoryService
+                .findByMenuId(13L);
+
+        if (null != joinList && joinList.size() > 0) {
+            for (TdArticleCategory tdCat : joinList)
+            {
+                if (null != tdCat.getTitle() && tdCat.getTitle().equals("人才招聘"))
+                {
+                    map.addAttribute("join_page", tdArticleService
+                            .findByMenuIdAndCategoryIdAndIsEnableOrderByIdAsc(13L,
+                                    tdCat.getId(), 0, ClientConstant.pageSize));
+                    
+                }
+                if (null != tdCat.getTitle() && tdCat.getTitle().equals("交通指南"))
+                {
+                    map.addAttribute("map_page", tdArticleService
+                            .findByMenuIdAndCategoryIdAndIsEnableOrderByIdAsc(13L,
+                                    tdCat.getId(), 0, ClientConstant.pageSize));
+                    
+                }
+            }
+        }
+        
         
 
         //下载
@@ -147,7 +172,7 @@ public class TdIndexController {
         
         if (null != adType) {
             map.addAttribute("big_scroll_ad_list", tdAdService
-                    .findByTypeIdAndIsValidTrueOrderBySortIdAsc(adType.getId()));
+                    .findByTypeIdOrderBySortIdAsc(adType.getId()));
         }
         
         // 一级分类

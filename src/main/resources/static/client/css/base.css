@@ -128,3 +128,6 @@ body{ background-color:white;}
 .adv_03 dt p{width:84px; display:block; text-align:center;font-size:14px;  color:#67c22e; margin-top:16px;}
 .adv_03 dd{ float:right; margin-top:5px; margin-right:5px;}
 .adv_03 dd img{ height:84px; width:84px;}
+
+.hide{display:none;}
+.map-and-join{background-image:url(/client/images/index_news.png);color:white;}

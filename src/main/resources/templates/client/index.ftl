@@ -11,6 +11,27 @@
 <link href="/client/css/main.css" rel="stylesheet" type="text/css" />
 <script src="/client/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="/client/js/pageSwitch.js"></script>
+<script>
+function joinMap()
+{
+	$(".box-info").addClass("hide");
+	$(".box-map").removeClass("hide");
+	
+	$(".map-title").addClass("map-and-join");
+	$(".join-title").removeClass("map-and-join");
+	
+}
+function mapJoin()
+{
+    $(".box-map").addClass("hide");
+    $(".box-info").removeClass("hide");
+    
+    $(".join-title").addClass("map-and-join");
+    $(".map-title").removeClass("map-and-join");
+    
+}
+	
+</script>
 
 </head>
 
@@ -31,7 +52,7 @@
             </#list>
         </#if>     
     </div>
-    <#--<div id="navs">
+    <div id="navs">
     <a href="javascript:;" class="active"></a>
     <a href="javascript:;"></a>
     <a href="javascript:;"></a>
@@ -41,7 +62,7 @@
     <a href="javascript:;"></a>
     <a href="javascript:;"></a>
     <a href="javascript:;"></a>
-    </div>-->
+    </div>
     <input type="hidden" id="tssel" value="${adtype.mark!''}"/>
    
 </div>
@@ -77,7 +98,7 @@ document.getElementById('tssel').onchange=function(){
     location.href='?ts='+this.value;
 }
 
-
+/*
 var options=document.getElementById('tssel').options,
     i=0,op;
 while(op=options[i++]){
@@ -86,7 +107,7 @@ while(op=options[i++]){
         break;
     }
 }
-
+*/
 i=0;
 for(;i<navs.length;i++){
     !function(i){
@@ -268,14 +289,43 @@ for(;i<navs.length;i++){
     </div>
     <div class="news_02">
         <dl class="news_box">
-            <dt><a style=" background-image:url(/client/images/index_news.png);color:white;">招聘信息</a><a href="/info/list/13?catId=49">交通指南</a></dt>
-            <#if join_list??>
-                <#list join_list as item>
+            <dt><a class="join-title map-and-join" href="javascript:;" onclick="javascript:mapJoin();">招聘信息</a>
+                <a class="map-title" href="javascript:;" onclick="javascript:joinMap();">交通指南</a></dt>
+            <span id = "box-info" class="box-info"> 
+            <#if join_page??>
+                <#list join_page.content as item>
                     <#if item_index lt 7>
                         <dd><a href="/info/list/13?catId=48" title="${item.brief!''}">${item.title!''}</a><p>${item.updateTime?string("yyyy-MM-dd") }</p></dd>
                     </#if>
                 </#list>
-            </#if>   
+            </#if>
+            </span>
+            <span id = "box-map" class="box-map hide">
+                 
+	                 <h2 style="margin-top:7%;margin-left:20px;">学校地址：${site.address!'' }    
+	                                   <a href="/info/map" style="  padding: 1%;
+	                                                                margin-left:5%;
+	                                                                background-color: #008e45;
+	                                                                font-size:0.7em;
+	                                                                color: white;
+	                                                                border: none;">查看地图</a>
+	                 </h2>
+	       <dl class="news_box" style="margin-left:20px;">
+	       <#if map_page??>
+               <#list map_page.content as item>
+                   <#if item_index lt 1>
+	                    <dt><a style="background: url(/client/images/news_icon.png) no-repeat left;padding-left: 38px;font-size:12px;text-align:left;width:100%;margin-top:20px;">${item.title!''}</a></dt>
+	                    <#if item.content?length lt 150>
+	                    <dd>${item.content!''}</dd>
+	                    <#else>
+	                    <dd>${item.content[0..144] }...</dd>
+	                    </#if>
+                   </#if>
+               </#list>
+           </#if>        
+           </dl>
+                 
+            </span>   
         </dl>
         <div class="news_more"><span></span><a href="/info/list/13">更多&gt;&gt;</a><span></span></div>
     </div>

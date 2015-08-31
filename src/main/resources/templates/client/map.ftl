@@ -20,7 +20,7 @@
 <script src="/client/js/Validform_v5.3.2_min.js"></script>
 
 <style type="text/css">
-    body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+    body, html, {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
 </style>
 
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ieC9fBD7CuIHdlTtHIRexz9T"></script>
