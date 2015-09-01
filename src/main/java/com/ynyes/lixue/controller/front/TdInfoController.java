@@ -170,6 +170,7 @@ public class TdInfoController {
         //找出栏目名称 zhangji
         Long catId = tdArticle.getCategoryId();
         map.addAttribute("info_name",tdArticleCategoryService.findOne(catId) );
+        map.addAttribute("catId", catId);
         
         if (null != tdArticle)
         {

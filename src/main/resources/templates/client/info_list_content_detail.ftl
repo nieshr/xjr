@@ -7,7 +7,7 @@
 <#if menu_name= "新闻中心">
 <div class="name_body">
 <a>${info.title!'' }</a>
-<a style="font-size:12px; color:#666666; margin-top:10px;">${info.updateTime?string("yyyy-MM-dd HH:mm")!'' }<span>来源：${info.source!'' }</span>
+<a style="font-size:12px; color:#666666; margin-top:10px;">${info.createTime?string("yyyy-MM-dd HH:mm")!'' }<span>来源：${info.source!'' }</span>
 <span>点击：${info.viewCount!'0' }</span></a>
 </div>
 
