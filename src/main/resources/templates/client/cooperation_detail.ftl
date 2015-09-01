@@ -1,6 +1,6 @@
 <div class="right_title">
-    <a>首页&nbsp;&gt;&nbsp;</a>
-    <a>合作加盟&nbsp;&gt;&nbsp;</a>
+    <a href="/">首页&nbsp;&gt;&nbsp;</a>
+    <a>合作加盟</a>
 </div>
  
 <div class="right_crouse">

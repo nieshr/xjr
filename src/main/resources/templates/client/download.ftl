@@ -8,6 +8,7 @@
 <meta name="description" content="${site.seoDescription!''}">
 <meta name="copyright" content="${site.copyright!''}" />
 
+<link rel="shortcut icon" href="/client/images/lixue.ico" />
 <link href="client/css/base.css" rel="stylesheet" type="text/css" />
 <link href="client/css/download.css" rel="stylesheet" type="text/css" />
 <script src="/client/js/jquery-1.9.1.min.js"></script>

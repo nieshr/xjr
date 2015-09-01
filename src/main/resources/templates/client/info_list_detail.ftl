@@ -1,8 +1,8 @@
 
 
 <div class="right_title">
-    <a>首页&nbsp;&gt;&nbsp;</a>   
-    <a>${menu_name }</a>
+    <a href="/">首页&nbsp;&gt;&nbsp;</a>   
+    <a href="/info/list/${menu_id}">${menu_name }</a>
     <a><#if info_name??> > ${info_name.title!'' }<#elseif coursetake??> > 课程报名</#if></a>
 </div>    
 <#if menu_name= "新闻中心">
@@ -12,8 +12,8 @@
 	        <#list info_page.content as item>           
 	            <dd>
 	                <a href="javascript:selectContent(${item.id },${item.menuId })" title="">${item.title!''}</a>
-	                <span style="float:right;">${item.updateTime!''}</span>
-	                <span style="float:right;">浏览次数：${item.viewCount!'0'}</span>
+	                <span style="float:right;text-align:left;">${item.createTime!''}</span>
+	                <span style="float:right;text-align:left;">浏览次数：${item.viewCount!'0'}</span>
 	            </dd>
 	        </#list>
 	    </#if>
@@ -115,7 +115,7 @@
         <#if info_page??>
             <#list info_page.content as item>
 			    <div class="joinus_content">
-			        <h3>${item.title!''}</h3>
+			        <h3>${item.title!''}</h3> <b style="float:right;">${item.updateTime?string("yyyy-MM-dd")!'' }</b>
 			        <div class="joinus_content2">${item.content!''}</div>
 			    </div>
 			</#list>
@@ -131,7 +131,7 @@
          </h2>
          <#if info_page??>
              <#list info_page.content as item>
-                <dl class="news_box">
+                <dl class="news_box2">
                     <dt><a>${item.title!''}</a></dt>
                     <dd>${item.content!''}</dd>
                 </dl>

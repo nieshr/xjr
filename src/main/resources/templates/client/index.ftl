@@ -7,11 +7,13 @@
 <meta name="keywords" content="${site.seoKeywords!''}">
 <meta name="description" content="${site.seoDescription!''}">
 <meta name="copyright" content="${site.copyright!''}" />
+<link rel="shortcut icon" href="/client/images/lixue.ico" />
 <link href="/client/css/base.css" rel="stylesheet" type="text/css" />
 <link href="/client/css/main.css" rel="stylesheet" type="text/css" />
 <script src="/client/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="/client/js/pageSwitch.js"></script>
 <script>
+
 function joinMap()
 {
 	$(".box-info").addClass("hide");
@@ -31,6 +33,25 @@ function mapJoin()
     
 }
 	
+function news1()
+{
+    $(".news-content2").addClass("hide");
+    $(".news-content1").removeClass("hide");
+    
+    $(".news1").addClass("map-and-join");
+    $(".news2").removeClass("map-and-join");
+    
+}
+function news2()
+{
+    $(".news-content1").addClass("hide");
+    $(".news-content2").removeClass("hide");
+    
+    $(".news2").addClass("map-and-join");
+    $(".news1").removeClass("map-and-join");
+    
+}
+
 </script>
 
 </head>
@@ -276,14 +297,26 @@ for(;i<navs.length;i++){
 <div class="index_news">
     <div class="news_01">
         <dl class="news_box">            
-            <dt><a href="/info/list/8" style=" background-image:url(/client/images/index_news.png);color:white;">新闻中心</a><a href="/info/list/8">新闻中心</a></dt>
+            <dt><a class="news1 map-and-join"  href="javascript:;" onclick="javascript:news1();">新闻中心</a>
+            <a class="news2"  href="javascript:;" onclick="javascript:news2();">新闻中心</a></dt>
+            <span id="news1" class="news-content1">
             <#if news_list??>
                 <#list news_list as item>
                     <#if item_index lt 7>
-                        <dd><a href="/info/list/content/${item.id!''}?mid=${item.menuId!''}" title="${item.brief!''}">${item.title!''}</a><p>${item.updateTime?string("yyyy-MM-dd")}</p></dd>
+                        <dd><a href="/info/list/content/${item.id!''}?mid=${item.menuId!''}" title="${item.brief!''}">${item.title!''}</a><p>${item.createTime?string("yyyy-MM-dd")}</p></dd>
                     </#if>
                 </#list>
             </#if>           
+            </span>
+            <span id="news2" class="news-content2 hide">
+            <#if news_list??>
+                <#list news_list as item>
+                    <#if item_index gt 6 && item_index lt 14>
+                        <dd><a href="/info/list/content/${item.id!''}?mid=${item.menuId!''}" title="${item.brief!''}">${item.title!''}</a><p>${item.createTime?string("yyyy-MM-dd")}</p></dd>
+                    </#if>
+                </#list>
+            </#if>  
+            </span>
         </dl>
         <div class="news_more"><span></span><a href="/info/list/8">更多&gt;&gt;</a><span></span></div>
     </div>

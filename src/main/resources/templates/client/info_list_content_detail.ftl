@@ -1,6 +1,7 @@
 <div class="right_title_body">
 <a>首页&nbsp;&gt;&nbsp;</a>
-<a><a href="/info/list/${menu_id}">${info_name.title!'' }</a></a>
+<a href="/info/list/${menu_id}">${menu_name}&nbsp;&gt;&nbsp;</a>
+<a href="javascript:selectCat(${menu_id},${catId})">${info_name.title!'' }</a>
 </div>
 
 <#if menu_name= "新闻中心">

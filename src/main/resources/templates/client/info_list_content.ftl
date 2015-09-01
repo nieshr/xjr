@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" href="/client/images/lixue.ico" />
 <title>无标题文档</title>
 <link href="/client/css/base.css" rel="stylesheet" type="text/css" />
 <link href="/client/css/news_body.css" rel="stylesheet" type="text/css" />

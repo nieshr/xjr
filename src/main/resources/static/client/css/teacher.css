@@ -38,10 +38,16 @@
 .right_title{ width:880px; height:40px; border-bottom:1px #acd7c1 solid; line-height:40px;}
 
 .right_teacher{ margin-top:30px; width:880px; display:block; overflow:hidden;  }
-.teacher{ height:248px; width:208px; border:1px #acd7c1 solid; float:left; margin-left:8px; margin-top:10px;  _margin-left:5px;}
-.teacher dt{ width:210px; height:210px;}
-.teacher dt img{width:210px; height:210px;}
-.teacher dd{width:210px; text-align:center; line-height:40px;}
+.teacher{ height:248px; width:208px; border:1px #acd7c1 solid; float:left; margin-left:8px; margin-top:10px;  _margin-left:5px;transition:all 0.25s ease;overflow:visible;}
+.teacher:hover{transform:scale(1.07,1.07);
+                -ms-transform:scale(1.07,1.07);
+                -moz-transform:scale(1.07,1.07);
+                -webkit-transform:scale(1.07,1.07);
+                -o-transform:scale(1.07,1.07);}
+.teacher dt{ width:210px; height:210px;overflow:visible;}
+
+.teacher dt img{width:210px; height:210px;overflow:visible;}
+.teacher dd{width:210px; text-align:center; line-height:40px;overflow:visible;}
 
 
 

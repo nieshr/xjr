@@ -163,7 +163,10 @@ public class TdInfoController {
         map.addAttribute("mid", mid);
         
         TdArticle tdArticle = tdArticleService.findOne(id);
-        
+        //浏览量 zhangji
+        Long viewCount = tdArticle.getViewCount();
+        tdArticle.setViewCount(viewCount+1);
+        tdArticleService.save(tdArticle);
         //找出栏目名称 zhangji
         Long catId = tdArticle.getCategoryId();
         map.addAttribute("info_name",tdArticleCategoryService.findOne(catId) );
@@ -229,6 +232,8 @@ public class TdInfoController {
 	    TdNavigationMenu menu = tdNavigationMenuService.findOne(mid);
 	    
 	    map.addAttribute("menu_name", menu.getTitle());
+	    map.addAttribute("menu_id", menu.getId()); //菜单id zhangji
+	    map.addAttribute("menu_sub_name", menu.getName());//英文名称 zhangji
 	    
 	    List<TdArticleCategory> catList = tdArticleCategoryService.findByMenuId(mid);
 	    
@@ -296,6 +301,12 @@ public class TdInfoController {
         //找出栏目名称 zhangji
         Long catId = tdArticle.getCategoryId();
         map.addAttribute("info_name",tdArticleCategoryService.findOne(catId) );
+        map.addAttribute("catId", catId);
+        
+        //浏览量 zhangji
+        Long viewCount = tdArticle.getViewCount();
+        tdArticle.setViewCount(viewCount+1);
+        tdArticleService.save(tdArticle);
         
         if (null != tdArticle)
         {
@@ -460,10 +471,15 @@ public class TdInfoController {
 	{
 		TdArticle article = tdArticleService.findOne(id);
 		map.addAttribute("coursetake",article.getTitle());
-		map.addAttribute("menu_name", "课程设置");
 		map.addAttribute("courseId",id);
 		map.addAttribute("courseMid",mid);
 		map.addAttribute("info", article);
+		
+	    TdNavigationMenu menu = tdNavigationMenuService.findOne(mid);
+	    
+	    map.addAttribute("menu_name", menu.getTitle());
+	    map.addAttribute("menu_id", menu.getId()); //菜单id zhangji
+	    map.addAttribute("menu_sub_name", menu.getName());//英文名称 zhangji
 		return "/client/info_list_detail";
 	}
 	
