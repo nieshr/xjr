@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.ynyes</groupId>
-    <artifactId>lixue</artifactId>
+    <artifactId>kjxjr</artifactId>
     <version>1.0</version>
 
-    <name>lixue</name>
-    <description>lixue project for ynyes</description>
+    <name>kjxjr</name>
+    <description>kjxjr project for ynyes</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -217,7 +217,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <start-class>com.ynyes.lixue.Application</start-class>
+        <start-class>com.ynyes.kjxjr.Application</start-class>
         <java.version>1.7</java.version>
     </properties>
 

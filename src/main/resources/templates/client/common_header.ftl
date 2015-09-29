@@ -5,7 +5,9 @@
 	        <input id="search-text" type="text" class="search_text" name="keywords" value="${keywords!keywords_list[0].title}"  onfocus="this.value='';" onblur="if(this.value==''){this.value='${keywords!keywords_list[0].title}'}"/>
 	        <input type="submit"  style="width:51px; height:41px; background-color:#008e45; color:white; font-size:14px;" value="搜索"
 	               />
+	              
         </form>
+     <a href="/login">登陆</a>   <a href="/logout">注销</a>
     </div>
     <div class="share">
         <div class="share_icon">
@@ -46,6 +48,7 @@
     <ul class="nav">
         <#if navi_item_list??>
             <#list navi_item_list as bar>
+             <a href="/login">登陆</a>   <a href="/logout">注销</a>
                 <li><a  href="${bar.linkUri}" title="">${bar.title!''}</a></li>
             </#list>
         </#if>
