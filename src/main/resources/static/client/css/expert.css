@@ -1,0 +1,89 @@
+/*一、辅导企业*/
+.list_base6{width:98%; padding-left: 1%;padding-right: 1%; height: auto; display: block; overflow: hidden; padding-top: 30px;}
+.list_base6 dl{width:25%; height:auto; display: block; overflow: hidden;float: left; text-align: center;}
+.list_base6 .list_active6 a{ color:#01458d;}
+.list_base6 dl dt{width: 100%; height:30px; color: #333333; font-size: 16px; background: #f0f0f0; line-height: 30px;}
+.list_base6 dl dd{width: 100%; height:40px; color: #666666; font-size: 14px; background: white; line-height: 40px; border-bottom:#f0f0f0 1px solid ;}
+
+/*列表颜色*/
+.list_color_blue a{color:#0ab2cb}
+.list_color_yellow a{color:#e67817}
+.list_color_green a{color:#529c15}
+
+/*二、档案跟踪*/
+.change_inform{ width:950px; height:40px; float:left; background:#ffffff; line-height: 40px;;}
+.change_inform span{ float: left; display: block; font-size: 16px; margin-left: 20px;}
+.change_inform input{ float: right; font-size: 12px; height:30px; width:108px; line-height: 30px; margin-right: 20px; margin-top: 5px; border-radius: 6px; border: none; color: white; background: #e67817;}
+
+.apply_change{width：100%; height:auto; display: block; overflow: hidden;}
+.apply_change dt{ width:100%; height: 40px; padding: 8px 0; margin-top: 20px; background: #80a2c6;}
+.apply_change dt span{ color: white; font-size: 14px; margin-left: 30px;}
+.apply_change dt p{ color: white; margin-left: 30px; }
+.apply_change dd{ width:950px; height:auto; display: block; overflow: hidden;}
+.apply_change dd div{ width:950px; margin-top: 10px; overflow: hidden;}
+.apply_change dd div span{width:120px; display: block; float: left; text-align: right;}
+.apply_change dd div p{width:auto; height:20px; display: block; float: left; text-align: right; margin-left: 10px;;}
+.apply_change dd div input{ margin-left: 20px; float: left; height:26px; line-height:26px; width:170px; }
+.apply_change dd div input disabled{disabled;}
+.apply_change dd div textarea{ margin-left: 20px; float: left; width:400px; height:200px;}
+.apply_change dd div select{ margin-left: 20px; float: left;}
+.apply_change .dt05{ width:100%; height:40px;margin-bottom: 30px;}
+.apply_change .dt05 input{ display: block; height:40px; width:60px; border-radius: 8px; margin: 0 auto; line-height:40px; border: none; background: #e67817; color: white; font-size: 14px; }
+
+.expert_date{width: 920px; margin-left:30px;height: auto; display: block; overflow: hidden; float: left;  margin-top: 30px;}
+.expert_date dd{width:100%;height: auto; padding:10px 0; display: block; overflow: hidden; float: left; margin-top: 10px; background: white; padding-left: 10px;}
+.expert_date dd span{ float: left; font-size: 14px; display: block; width:6%;}
+.expert_date dd p{ float: left;}
+.expert_date dt{ wdith:100%; height: auto; padding:10px 0; display: block;  float: left; margin-top: 30px; }
+.expert_date dt span{ font-size: 14px;  float: left;}
+.expert_date dt textarea{width:600px; height:300px ; margin-left: 10px;}
+.expert_date dt input{ clear: both; display: block; margin-left: 68px; width:60px; height:30px; margin-top: 10px; border: none; border-radius: 6px; background: #e67817; color: white;}
+
+
+/*S三、活动列表*/
+.list_base7{width:98%; padding-left: 1%;padding-right: 1%; height: auto; display: block; overflow: hidden; padding-top: 30px;}
+.list_base7 dl{width:25%; height:auto; display: block; overflow: hidden;float: left; text-align: center;}
+.list_base7 .list_active7 a{ color:#01458d;}
+.list_base7 dl dt{width: 100%; height:30px; color: #333333; font-size: 16px; background: #f0f0f0; line-height: 30px;}
+.list_base7 dl dd{width: 100%; height:40px; color: #666666; font-size: 14px; background: white; line-height: 40px; border-bottom:#f0f0f0 1px solid ;}
+
+
+
+
+
+
+
+
+/*六、档案跟踪*/
+/*专家管理-路演辅导*/
+.list_base8{width:98%; padding-left: 1%;padding-right: 1%; height: auto; display: block; overflow: hidden; padding-top: 10px;}
+.list_base8 dl{width:20%; height:auto; display: block; overflow: hidden;float: left; text-align: center;}
+.list_base8 .list_active8 a{ color:#01458d;}
+.list_base8 dl dt{width: 100%; height:30px; color: #333333; font-size: 16px; background: #f0f0f0; line-height: 30px;}
+.list_base8 dl dd{width: 100%; height:40px; color: #666666; font-size: 14px; background: white; line-height: 40px; border-bottom:#f0f0f0 1px solid ;}
+.btwz{ font-size:18px; text-align:center; margin-top: 30px; float: left;);}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*七、日志记录*/
+.expert_date{width: 920px; margin-left:30px;height: auto; display: block; overflow: hidden; float: left;  margin-top: 30px;}
+.expert_date dd{width:100%;height: auto; padding:10px 0; display: block; overflow: hidden; float: left; margin-top: 10px; background: white; padding-left: 10px;}
+.expert_date dd span{ float: left; font-size: 14px; display: block; width:6%;}
+.expert_date dd p{ float: left;}
+.expert_date dt{ wdith:100%; height: auto; padding:10px 0; display: block;  float: left; margin-top: 30px; }
+.expert_date dt span{ font-size: 14px;  float: left;}
+.expert_date dt textarea{width:600px; height:300px ; margin-left: 10px;}
+.expert_date dt input{ clear: both; display: block; margin-left: 68px; width:60px; height:30px; margin-top: 10px; border: none; border-radius: 6px; background: #e67817; color: white;}

@@ -1,0 +1,84 @@
+/*二、活动创建*/
+
+.active_content{width：100%; height:auto; display: block; overflow: hidden;}
+.active_content dt{ width:100%; height: 40px; padding: 8px 0; margin-top: 20px;}
+.active_content .dt01{background: #01458d;}
+.active_content .dt02{background: #e67817;}
+.active_content .dt03{background: #529c15;}
+.active_content .dt04{background: #0ab2cb;}
+.active_content dt span{ color: white; font-size: 14px; margin-left: 30px;}
+.active_content dt p{ color: white; margin-left: 30px; }
+.active_content dd{ width:950px; height:auto; display: block; overflow: hidden;}
+.active_content dd div{ width:950px; margin-top: 10px; overflow: hidden;}
+.active_content dd div span{width:120px; display: block; float: left; text-align: right; font-size: 14px;}
+.active_content dd div p{width:auto; height:20px; display: block; float: left; text-align: right; margin-left: 10px;;}
+.active_content dd div input{ margin-left: 20px; float: left; height:26px; line-height:26px; width:170px;}
+.active_content dd div textarea{ margin-left: 20px; float: left; width:400px; height:200px;}
+.active_content dd div select{ margin-left: 20px; float: left;}
+.active_content .dt05{ width:100%; height:40px;margin-bottom: 30px;}
+.active_content .dt05 input{ display: block; height:40px; width:60px; border-radius: 8px; margin: 0 auto; line-height:40px; border: none; background: #e67817; color: white; font-size: 14px; }
+
+.active_add_file{width:800px; height:auto; display: block; overflow: hidden; margin-left: 128px;}
+.active_add_file li{ width:800px; height:40px; float: left;}
+.active_add_file li img{width:40px; float: left; margin-top: 10px;;}
+.active_add_file li .p01{ float: left; display: block; height:40px; line-height: 40px;}
+.active_add_file li a{width:60px; height:40px; float: left; display: block; color: #01458d; line-height: 40px; margin-left:60px ;}
+
+.active_project_list{width:800px; height:auto; display: block; overflow: hidden; margin-left: 128px;}
+.active_project_list li{ width:800px; height:40px; float: left;}
+.active_project_list li img{width:40px; float: left; margin-top: 10px;;}
+.active_project_list li .p01{ float: left; display: block; height:40px; line-height: 40px;}
+
+/*二、活动资料*/
+.active_text{width：100%; height:auto; display: block; overflow: hidden;}
+.active_text dt{ width:100%; height: 40px; padding: 8px 0; margin-top: 20px;}
+.active_text .dt01{background: #01458d;}
+.active_text .dt02{background: #e67817;}
+.active_text .dt03{background: #529c15;}
+.active_text .dt04{background: #0ab2cb;}
+.active_text dt span{ color: white; font-size: 14px; margin-left: 30px;}
+.active_text dt p{ color: white; margin-left: 30px; }
+.active_text dd{ width:950px; height:auto; display: block; overflow: hidden;}
+.active_text dd div{ width:950px; margin-top: 10px; overflow: hidden;}
+.active_text dd div span{width:120px; display: block; float: left; text-align: right; font-size: 14px;}
+.active_text dd div p{width:auto; height:20px; display: block; float: left; text-align: right; margin-left: 10px;;}
+.active_text dd div input{ margin-left: 20px; float: left; height:26px; line-height:26px; width:170px;}
+.active_text dd div input disabled{disabled;}
+.active_text dd div textarea{ margin-left: 20px; float: left; width:400px; height:200px;}
+.active_text dd div select{ margin-left: 20px; float: left;}
+.active_text .dt05{ width:100%; height:40px;margin-bottom: 30px;}
+.active_text .dt05 input{ display: block; height:40px; width:60px; border-radius: 8px; margin: 0 auto; line-height:40px; border: none; background: #e67817; color: white; font-size: 14px; }
+
+.active_add_text{width:800px; height:auto; display: block; overflow: hidden; margin-left: 128px;}
+.active_add_text li{ width:800px; height:30px; float: left;}
+.active_add_text li img{width:30px; float: left; margin-top: 10px;;}
+.active_add_text li .p01{ float: left; display: block; height:30px; line-height: 30px;}
+.active_add_text li a{width:60px; height:30px; float: left; display: block; color: #01458d; line-height: 30px; margin-left:60px ;}
+
+.active_project_text{width:800px; height:auto; display: block; overflow: hidden; margin-left: 128px;}
+.active_project_text li{ width:800px; height:30px; float: left;}
+.active_project_text li img{width:30px; float: left; margin-top: 10px;;}
+.active_project_text li .p01{ float: left; display: block; height:30px; line-height: 30px; }
+.active_project_text li .p02{ float: left; display: block; height:30px; line-height: 30px; }
+.active_project_text li a{float: left; display: block; height:30px; line-height: 30px; color: #01458d; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
