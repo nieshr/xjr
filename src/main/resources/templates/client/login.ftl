@@ -27,6 +27,7 @@ $(document).ready(function(){
             else if (data.role == 4){
                 window.location.href="/activity/list";
             }
+
             else if (data.role == 2){
                 window.location.href="/user/diysite/order/list/0";
             }    
