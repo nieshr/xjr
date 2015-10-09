@@ -21,7 +21,7 @@ public interface TdActivityRepo extends
 		JpaSpecificationExecutor<TdActivity> 
 { 
     Page<TdActivity> findByTitleContainingOrderBySortIdAsc(String keywords, Pageable page);
-    
+    TdActivity findByStatusId(Long statusId);
     /**
 	 * @author lc
 	 * @注释：

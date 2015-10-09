@@ -1,11 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
 <title>填写资料</title>
-<link rel="shortcut icon" href="/client/images/index/icon.ico" />
+<link rel="shortcut icon" href="/client/images/icon.ico" />
 <link href="/client/css/base.css" rel="stylesheet" type="text/css" />
 <link href="/client/css/team.css" rel="stylesheet" type="text/css" />
 
@@ -48,31 +47,8 @@ function showPro(){
 <!--main-->
 <div class="main">
 <!--header-->
-<div class="header">
-    <a href="/"><div class="logo"></div></a>
-    <form>
-    <div class="search">
-    	<input type="text" value="请输入搜索内容" onfocus="if(this.value=='请输入搜索内容'){this.value='';}" onblur="if(this.value==''){this.value='请输入搜索内容'}" />
-        <input style="width:40px; background:url(/client/images/search.png) no-repeat center;" type="submit" value="" />
-    </div>
-    </form>
-    <dl class="porfile">
-    	<dt><a>帮助</a></dt>
-        <dt><a>站内信息</a></dt>
-        <dd>
-        	<div><img src="/client/images/porfile_img.png" /></div>
-        	<span>学友</span>
-            <p>管理员</p>
-            <span id="nav_guide"></span>
-        </dd>
-        <ul id="porfile_subnav">
-                	<li><a href="#">帐号资料</a></li>
-                    <li><a href="#">帐号资料</a></li>
-                    <li><a href="#">密码修改</a></li>
-                    <li><a href="/logout">注销</a></li>   
-        </ul>
-    </dl>
-</div><!--header_end-->
+<#include "/client/user_common_header.ftl" />
+<!--header_end-->
 <!--content-->
 <div class="content">
 <!--left-->

@@ -20,9 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ynyes.kjxjr.entity.TdCoupon;
 import com.ynyes.kjxjr.entity.TdActivity;
-import com.ynyes.kjxjr.entity.TdOrder;
 import com.ynyes.kjxjr.entity.TdUser;
 import com.ynyes.kjxjr.service.TdCommonService;
 import com.ynyes.kjxjr.service.TdCouponService;
@@ -81,5 +79,49 @@ public class TdActivityController {
         return "/client/activity_list";
     }
     
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    public String activityCreate(HttpServletRequest req, ModelMap map,Integer page) {
+        String username = (String) req.getSession().getAttribute("ActivityUsername");
+
+        if (null == username) {
+            return "redirect:/login";
+        }
+
+        tdCommonService.setHeader(map, req);
+        
+        TdActivity activity = tdActivityService.findByStatusId(0L);
+        map.addAttribute("activity", activity);
+
+        TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
+//        Page<TdActivity> activityPage = tdActivityService.findAllOrderByIdDesc(page,  ClientConstant.pageSize);
+        
+//        map.addAttribute("activity_page", activityPage);
+        map.addAttribute("user", user);
+
+        return "/client/activity_create";
+    }
+    
+    @RequestMapping(value = "/submit", method = RequestMethod.POST)
+    @ResponseBody
+    public  Map<String, Object> activitySubmit(HttpServletRequest req,TdActivity tdActivity,
+    		ModelMap map) {
+        Map<String, Object> res = new HashMap<String, Object>();
+        res.put("code", 1);
+    	
+        String username = (String) req.getSession().getAttribute("activityUsername");
+
+        if (null == username) {
+        	res.put("msg", "请先登录！");
+            return res;
+        }
+        
+        tdActivity.setStatusId(1L);
+        tdActivity.setCreateTime(new Date());
+       
+       	tdActivityService.save(tdActivity);
+       
+        res.put("code", 0);
+        return res;
+    }
   
 }

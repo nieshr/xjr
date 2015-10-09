@@ -43,7 +43,7 @@
 <!--left-->
 	<div class="leftbar">
 		<dl class="nav">
-            <dd><a href="#">创建活动</a></dd>
+            <dd><a href="/activity/create">创建活动</a></dd>
             
 
 		</dl>

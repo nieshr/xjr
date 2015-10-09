@@ -112,6 +112,7 @@ public class TdEnterpriseController {
         }
         TdUser user = tdUserService.findByUsername(username);
         
+        tdEnterprise.setStatusId(0L);
         tdEnterprise.setCreateTime(new Date());
         tdEnterprise.setPassword(user.getPassword());
        	tdEnterpriseService.save(tdEnterprise);
@@ -137,6 +138,25 @@ public class TdEnterpriseController {
         map.addAttribute("user", user);
 
         return "/client/enterprise_print";
+    }
+    
+    @RequestMapping(value = "/check", method = RequestMethod.GET)
+    public String userEnterpriseCheck(HttpServletRequest req, ModelMap map) {
+        String username = (String) req.getSession().getAttribute("enterpriseUsername");
+
+        if (null == username) {
+            return "redirect:/login";
+        }
+
+        tdCommonService.setHeader(map, req);
+
+        TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
+        TdEnterprise Enterprise = tdEnterpriseService.findbyUsername(username);
+        
+        map.addAttribute("enterprise", Enterprise);
+        map.addAttribute("user", user);
+
+        return "/client/enterprise_check";
     }
     
     @RequestMapping(value = "/password", method = RequestMethod.GET)

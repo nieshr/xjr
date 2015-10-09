@@ -22,7 +22,14 @@ $(document).ready(function(){
 	  	    ajaxPost:true,
             callback: function (data) { 
             if (data.role == 1){
-                window.location.href="/enterprise/info";
+                if (data.statusId == 1||data.statusId == 0)
+                {
+                    window.location.href="/enterprise/check";
+                }
+                else
+                {
+                    window.location.href="/enterprise/info";
+                }
             }    
             else if (data.role == 4){
                 window.location.href="/activity/list";

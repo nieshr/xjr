@@ -73,6 +73,19 @@ public class TdActivityService {
     }
     
     /**
+     * 查找未完成的那个活动
+     * @author Administrator
+     */
+    public TdActivity findByStatusId(Long statusId)
+    {
+        if (null == statusId)
+        {
+            return null;
+        }
+        
+        return repository.findByStatusId(statusId);
+    }
+    /**
      * 查找
      * 
      * @param ids

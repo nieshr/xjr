@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ynyes.kjxjr.entity.TdUser;
 import com.ynyes.kjxjr.service.TdCommonService;
+import com.ynyes.kjxjr.service.TdEnterpriseService;
 import com.ynyes.kjxjr.service.TdUserService;
 import com.ynyes.kjxjr.util.VerifServlet;
 
@@ -35,6 +36,9 @@ public class TdLoginController {
 
 	@Autowired
 	private TdCommonService tdCommonService;
+	
+	@Autowired
+	private TdEnterpriseService tdEnterpriseService;
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(HttpServletRequest req, ModelMap map) {
@@ -121,6 +125,7 @@ public class TdLoginController {
 					res.put("role", 1);
 					request.getSession().setAttribute("enterpriseUsername", user.getUsername());
 					request.getSession().setAttribute("enterpriseUsermobile", user.getMobile());
+					res.put("statusId", tdEnterpriseService.findbyUsername(username).getStatusId());
 					break;
 				case 2:
 					res.put("role", 2);
@@ -143,6 +148,7 @@ public class TdLoginController {
 					request.getSession().setAttribute("usermobile", user.getMobile());
 					break;
 			}
+			
 			return res;
 		}
 		/**
@@ -183,6 +189,7 @@ public class TdLoginController {
 				res.put("role", 1);
 				request.getSession().setAttribute("enterpriseUsername", user.getUsername());
 				request.getSession().setAttribute("enterpriseUsermobile", user.getMobile());
+				res.put("statusId", tdEnterpriseService.findbyUsername(username).getStatusId());
 				break;
 			case 2:
 				res.put("role", 2);

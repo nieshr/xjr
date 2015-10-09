@@ -40,6 +40,11 @@ public class TdActivity {
     @Column
     private String region;
     
+    // 创建时间
+    @Column
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private Date createTime;
+    
     // 日期
     @Column
     @DateTimeFormat(pattern="yyyy-MM-dd")
@@ -52,6 +57,10 @@ public class TdActivity {
     // 主题
     @Column
     private String theme;
+    
+    //活动创建状态： 0未完成；1已完成；
+    @Column
+    private Long statusId;
     
     // 简介
     @Column
@@ -191,6 +200,22 @@ public class TdActivity {
 
 	public void setDownload(String download) {
 		this.download = download;
+	}
+
+	public Long getStatusId() {
+		return statusId;
+	}
+
+	public void setStatusId(Long statusId) {
+		this.statusId = statusId;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
     
     
