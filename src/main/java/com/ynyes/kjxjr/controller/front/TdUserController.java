@@ -803,41 +803,17 @@ public class TdUserController {
     // return "/client/user_suggestion_list";
     // }
 
-    /**
-     * 投诉
-     * 
-     */
-    @RequestMapping(value = "/suggestion/add", method = RequestMethod.POST)
-    @ResponseBody
-    public Map<String, Object> suggestionAdd(HttpServletRequest req,
-            String content, String title, String name, String mobile,
-            String mail, String code, ModelMap map) {
-        Map<String, Object> res = new HashMap<String, Object>();
-        res.put("code", 1);
-
-        // String username = (String) req.getSession().getAttribute("username");
-        //
-        // if (null == username)
-        // {
-        // res.put("message", "请先登录！");
-        // return res;
-        // }
-        //
-        TdUserSuggestion tdSuggestion = new TdUserSuggestion();
-
-        tdSuggestion.setContent(content);
-        tdSuggestion.setTime(new Date());
-        tdSuggestion.setName(name);
-        tdSuggestion.setMail(mail);
-        tdSuggestion.setMobile(mobile);
-
-        // TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
-
-        tdUserSuggestionService.save(tdSuggestion);
-
-        res.put("code", 0);
-
-        return res;
+	@RequestMapping("/suggestion/submit")
+	@ResponseBody
+    public Map<String, Object> submitSuggestion(TdUserSuggestion userSuggestion, HttpServletRequest req)
+    {
+		Map<String, Object> res = new HashMap<String, Object>();
+    	res.put("code", 1);
+    	
+    	userSuggestion.setTime(new Date());
+    	tdUserSuggestionService.save(userSuggestion);
+    	res.put("code", 0);
+    	return res;
     }
     
     /**

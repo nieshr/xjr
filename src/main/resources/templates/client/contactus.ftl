@@ -3,9 +3,47 @@
 <head>
 	<meta charset="UTF-8">
 	<title>联系我们</title>
-	<link rel="stylesheet" href="/client/css/base.css">
-	<link rel="stylesheet" href="/client/css/main.css">
-	<script src="/client/js/main.js"></script>
+	<link rel="stylesheet" href="/client/css/news_base.css">
+	<link rel="stylesheet" href="/client/css/news_main.css">
+	<script src="/client/js/l_main.js"></script>
+	<script src="/client/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="/client/js/Validform_v5.3.2_min.js"></script>		
+<script>
+$(document).ready(function(){
+	$("#form1").Validform({
+	    	  tiptype:4,
+			  ajaxPost:true,
+	          callback: function (data) { 
+	   		  if (data.code == 0) {
+		          alert("提交成功");
+	              window.location.reload();
+              }
+             else {
+                alert(data.msg);
+             }
+        }
+	});
+});
+
+   document.onkeydown = function(event){
+    if((event.keyCode || event.which) == 13){
+        $("#btn_submit").click();
+    }
+   }
+</script>		
+<script>
+function show1()
+{
+	$(".contactussmall2").addClass("hide");
+	$(".contactussmall").removeClass("hide");
+}
+
+function show2()
+{
+	$(".contactussmall").addClass("hide");
+	$(".contactussmall2").removeClass("hide");
+}
+</script>
 </head>
 <body>
 <!-- head  -->
@@ -25,67 +63,49 @@
 </div>
 	<div class="contactussmall">
 		<div class="contactus">
-		  <#if site??>
-			<h1>${site.title!''}</h1>
-			<h3 class="contactustel">电话：${site.telephone!''}</h3>
-			<h3 class="contactusaddress">地址：${site.address!''}</h3>
-			<h3 class="contactusqq">QQ：987654321</h3>
-			<h3 class="contactusemail">邮箱：987654321@qq.com</h3>
-			<h3 class="contactusleft">线路：公交124路、998路、452路、124路</h3>
-			<h3 class="contactusleft2">轻轨3号线在黄泥磅轻轨站下。</h3>
-			<h3 class="contactuswechat">扫描添加微信：</h3>
-			<img src="img/qrcode2.png" alt="">
+			<#if site??>
+				<h1>${site.title!''}</h1>
+				<h3 class="contactustel">电话：${site.telephone!''}</h3>
+				<h3 class="contactusaddress">地址：${site.address!''}</h3>
+				<h3 class="contactusqq">QQ：${site.qq1!''}</h3>
+				<h3 class="contactusemail">邮箱：${site.adminEmail!''}</h3>
+				<h3 class="contactusleft">线路：${site.busRoute!''}</h3>
+				<h3 class="contactusleft2">${site.addressDetail!''}</h3>
+				<h3 class="contactuswechat">扫描添加微信：</h3>
+				<img src="${site.wxQrCode!''}" alt="">
+			</#if>	
 		</div>
 		<div class="map">
 			<iframe src="map.html" frameborder="0"></iframe>
 		</div>
 	</div>
-	<div class="contactustitle">
-		<span>在线留言</span>
-		<hr style="border-top:1px solid #DDDDDD;" />
+	<div class="contactussmall2 hide">
+		<div class="contactustitle">
+			<span>在线留言</span>
+			<hr style="border-top:1px solid #DDDDDD;" />
+		</div>
+		<form id="form1" action="/suggestion/submit">
+		<div class="massage">
+			<span>标题：</span>
+			<input type="text" name="title" class="search">
+			<br>
+			<span>内容:</span>
+			<textarea name="content" id="" cols="30" rows="10"></textarea>
+			<br>
+			<input type="submit" id="btn_submit" class="button" value="提交" />
+			<div class="map" style="margin-top:-210px;">
+				<iframe src="map.html" frameborder="0"></iframe>
+			</div>
+		</div>
+		
+		</form>
 	</div>
-	<form action="">
-	<div class="massage">
-		<span>标题：</span>
-		<input type="text" class="search">
-		<br>
-		<span>内容:</span>
-		<textarea name="" id="" cols="30" rows="10"></textarea>
-		<br>
-		<input type="submit" class="button" value="提交" />
-	</div>
-	</form>
-	
 </div>
 <!-- contendend -->
 
+
 <!-- 底部 -->
-<div class="footlist">
-<div class="footlist-title">
-	<ul>
-		<li class="footlist-title-title">友情链接：</li>
-		<li><a href="#">市科委</a><span>|</span></li>
-		<li><a href="#">市财政局</a><span>|</span></li>
-		<li><a href="#">市经信委</a><span>|</span></li>
-		<li><a href="#">市人社局</a><span>|</span></li>
-		<li><a href="#">市工商局</a><span>|</span></li>
-		<li><a href="#">市知识产权局</a><span>|</span></li>
-		<li><a href="#">团市委</a><span>|</span></li>
-		<li><a href="#">市妇联</a><span>|</span></li>
-		<li><a href="#">市工商联</a></li>
-	</ul>
-</div>
-<div class="footlist-body">
-	<h5>联系电话：023-67727040</h5>
-	<h5>传真：023-67874803</h5>
-	<h5>地址：重庆市渝北区新溉大道2号生产力大厦2楼</h5>
-	<h5>Copyright 2014-2015 Peking University Science Park All rights reserved design by cqtiandu.com 渝ICP备15009454号   </h5> 
-	<div class="footercode"> 
-	<img src="img/qrcode.png">
-	<p>微信公众号</p>
-	</div>
-</div>         
-</div>
+<#include "/client/news_common_footer.ftl" />
 <!-- 底部end -->
 
 </body>

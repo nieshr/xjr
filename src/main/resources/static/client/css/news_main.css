@@ -1,0 +1,149 @@
+.listbanner{width:100%;height:200px;position:relative;overflow: hidden;}
+.listbanner img{position:absolute;top:0;overflow: hidden;}
+.listbanner div{position:absolute;top:100px;width:100%;color:#fff;text-align:center;font-size:50px;}
+.listbanner div span{text-shadow: 3px 3px 15px #888888;}
+.titlelist{height: 70px;display: inline;}
+#titlelist{width:100%;padding-left: 10px;background: #EFEFEF;padding-top: 10px;}
+#titlelist div{width: 1000px;}
+.titlelist div a{padding:  15px; color: #333333;font-size: 16px;line-height: 56px;}
+.titlelist div a:hover{ text-decoration:none;font-size: 18px;}
+.titlelist div .active{border-bottom: 3px solid #E67817;font-size: 18px;}
+.teacher{margin-top: 20px;width: 1000px;}
+.contactustitle{margin-top: 20px;width: 1000px;}
+.teacher span,.contactustitle span{color: #E67821;font-size: 24px;padding: 0;margin: 0;line-height: 44px;}
+.teacher-list{overflow: hidden;}
+.teacher-list li{width:200px;height:216px;margin: 28px auto;float: left;}
+.teacher-list li img{margin: 0 auto;display: block;}
+.teacher-list li h6{font-size: 18px;text-align: center;font-weight: normal;line-height: 24px;margin-top: 18px;}
+.teacher-list li p{font-size: 14px;text-align: center;line-height: 24px;}
+.teacher-list-danwei{overflow: hidden;}
+.teacher-list-danwei li{width:200px;height:216px;margin: 28px auto;float: left;}
+.teacher-list-danwei li img{margin: 0 auto;display: block;}
+.teacher-list-danwei li h6{font-size: 18px;text-align: center;font-weight: normal;line-height: 24px;margin-top: 18px;}
+.teacher-list-danwei li p{font-size: 14px;text-align: center;line-height: 24px;}
+/* 懒人图库 搜集整理 www.lanrentuku.com */
+a:link, a:visited { color: #444; text-decoration: none; -webkit-transition: color .4s ease-in-out; -moz-transition: color .4s ease-in-out; -ms-transition: color .4s ease-in-out; -o-transition: color .4s ease-in-out; transition: color .4s ease-in-out; }
+a:hover { color: #c36; text-decoration: underline; }
+.pagnation { text-align: center; margin-top: 22px; }
+.pagnation a { display: inline-block; width: 34px; height: 34px; line-height: 34px; overflow: hidden; background: url(../news_img/sprite.png) no-repeat 0 -29px; margin-left: 4px; font-size: 16px; vertical-align: top; -webkit-transition: all .4s ease-in-out; -moz-transition: all .4s ease-in-out; -ms-transition: all .4s ease-in-out; -o-transition: all .4s ease-in-out; transition: all .4s ease-in-out; }
+.pagnation a:hover { background-position: 0 -64px; color: #fff; text-decoration: none }
+.pagnation .page-prev, .pagnation .page-next { line-height: 555px; }
+.pagnation .page-prev { background-position: -35px -29px; }
+.pagnation .page-prev:hover { background-position: -35px -64px; }
+.pagnation .page-next { background-position: -70px -29px; }
+.pagnation .page-next:hover { background-position: -70px -64px; }
+.pagnation .current { background-position: 0px -64px; color: #fff }
+.pagnation-tips { margin-top: 10px; color: #999; text-align: center }
+/* 懒人图库 搜集整理 www.lanrentuku.com */
+.contactus{width: 360px;margin-left: 0}
+.contactussmall{width: 1000px;margin: 33px auto}
+.contactus h1{font-size: 18px;color: #333333;line-height: 28px;}
+.contactus h3{font-size: 14px;color: #666;font-weight: normal;padding-left: 30px;line-height: 36px;}
+.contactustel{background: url(../img/tel.png) no-repeat 0 center;}
+.contactusaddress{background: url(../img/address.png) no-repeat 0 center;}
+.contactusqq{background: url(../img/qq.png) no-repeat 0 center;}
+.contactusemail{background: url(../img/email.png) no-repeat 0 center;}
+.contactusleft{background: url(../img/left.png) no-repeat 0 center;}
+.contactusleft2{margin-left: 42px;}
+.contactuswechat{background: url(../img/wechat.png) no-repeat 0 center;}
+.contactus img{margin-top: -33px;margin-left: 140px;}
+.map{width: 440px;height: 304px;margin-top: -380px;float: right;}
+.map iframe{width: 440px;height: 304px;}
+.massage{width: 1000px;margin: 0 auto; margin-bottom:120px;}
+.massage span{vertical-align:top;display: inline-block;margin-top: 24px;font-size: 14px;}
+.massage .search{width: 473px;height: 27px;margin-top: 24px;margin-left: 12px;}
+.massage textarea{width: 473px;height: 83px;margin-top: 24px;margin-left: 23px;}
+.button{width: 73px;height:28px;background: url(../news_img/button.png) no-repeat;color: #fff;border-radius:5px;border-bottom: none;margin-top: 26px;margin-left: 452px;}
+
+/*项目展示*/
+.teamdisplay{width: 1000px;margin: 16px auto;}
+.teamdisplay p{font-size: 24px;color: #333333;text-align: center;line-height: 77px;}
+.teamdisplay ul li{float: left;padding:9px 5px;}
+.teamdisplay ul li h3{font-size: 16px;font-weight: normal;line-height: 24px;color:#333;margin-top: 4px;}
+.teamdisplay ul li h4{font-size: 14px;font-weight: normal;line-height: 17px;color:#666;}
+/*项目展示end*/
+/*专项行动*/
+/*.specialaction{width: 1000px;border: 1px solid red;}*/
+.specialaction .specialaction-first{padding-left: 18px;margin: 25px auto;width: 982px;}
+.specialaction .specialaction-first dl dt{color: #666;font-size: 24px;line-height: 90px;}
+.specialaction .specialaction-first dl dd{color: #999;font-size: 16px;line-height: 36px;padding-left: 23px;background: url(../img/spitl.png) no-repeat 8px center;}
+.specialaction .specialaction-secend{background: #F2F3F7;text-align: center;}
+.specialaction-secend-body{width: 1000px;}
+.specialaction .specialaction-secend-one{margin-top: 29px;width: 333px;float: left;margin-bottom: 45px;}
+.specialaction .specialaction-secend-one img{margin-bottom: 5px;border-radius:44px; -moz-border-radius:44px;-webkit-border-radius:44px; 
+}
+.specialaction .specialaction-secend-one h4{font-size: 18px;line-height: 53px;font-weight: normal;}
+.specialaction .specialaction-secend-one h5{font-size: 14px;line-height: 24px;font-weight: normal;color: #666;}
+.specialaction .specialaction-third{width: 1000px;}
+.specialaction .specialaction-third-one{margin-top: 28px;}
+.specialaction .specialaction-third-one img{float: left;margin-left: 67px;margin-top: 74px;}
+.specialaction .specialaction-third-one h3{font-size: 24px;font-weight: normal;margin-top: 74px;line-height: 40px;float: left;margin-left: 40px;}
+.specialaction .specialaction-third-one h4{font-size: 14px;font-weight: normal;line-height: 24px;width: 694px;float: left;margin-left: 40px;}
+.specialaction .specialaction-third-one h4 span{color:#136ece;}
+.specialaction .specialaction-fourth{background: #F2F3F7;margin-top: 95px;padding-bottom: 50px;}
+.specialaction-fourth-body{width: 1000px;}
+.specialaction .specialaction-fourth-one{width: 500px;float: left;text-align: center;}
+.specialaction .specialaction-fourth-one img{margin-top: 50px;border-radius:64px; -moz-border-radius:64px;-webkit-border-radius:64px; 
+}
+.specialaction .specialaction-fourth-one h4{font-size: 18px;line-height: 62px;font-weight: normal;color: #333;}
+.specialaction .specialaction-fourth-one h5{font-size: 14px;line-height: 24px;font-weight: normal;color: #333;}
+/*专项行动end*/
+/*找回密码*/
+.lookpsw{height: 480px;}
+.lookpsw img{width: 100%;height: 480px;}
+.lookpsw-badge{margin-top: -420px;}
+.lookpsw-badge img{width: 172px;height:240px;margin: 0 auto;display: block;}
+.lookpsw-badge p{color: #fff;font-size: 16px;text-align: center;margin-top: 16px;}
+.lookpsw .zhaohuimima1{font-size: 30px;color: #fff;font-weight: normal;text-align: center;margin-left:-368px;margin-top: 80px;}
+.lookpsw .zhaohuimima2{font-size: 30px;color: #fff;font-weight: normal;text-align: center;margin-left:-124px;margin-top: 80px;}
+.lookpsw .zhaohuimima3{font-size: 30px;color: #fff;font-weight: normal;text-align: center;margin-left:124px;margin-top: 80px;}
+.lookpsw .zhaohuimima4{font-size: 30px;color: #fff;font-weight: normal;text-align: center;margin-left:368px;margin-top: 80px;}
+.lookpsw .sanjiaoxing1{width: 410px;margin-top: 28px;}
+.lookpsw .sanjiaoxing2{width: 160px;margin-top: 28px;}
+.lookpsw .sanjiaoxing3{width: 160px;margin-top: 28px;}
+.lookpsw .sanjiaoxing4{width: 410px;margin-top: 28px;}
+.lookpsw .triangle{width: 38px;height: 21px;display: block;}
+.lookpsw .triangle3{width: 38px;height: 21px;margin-left: 120px;}
+.lookpsw .triangle4{width: 38px;height: 21px;margin-left: 370px;}
+
+.lookpswbody{width: 781px;height: 34px;background: url(../img/lookpswbg01.png) repeat-x;margin-top: 48px;}
+.lookpswbodytwo{width: 781px;height: 34px;background: url(../img/lookpswbg02.png) repeat-x;margin-top: 48px;}
+.lookpswbodythree{width: 781px;height: 34px;background: url(../img/lookpswbg03.png) repeat-x;margin-top: 48px;}
+.lookpswbodyfour{width: 781px;height: 34px;background: url(../img/lookpswbg04.png) repeat-x;margin-top: 48px;}
+
+.lookpswbodytitle{width: 192px;height: 100%;text-align: center;float: left;line-height: 34px;}
+.lookpswbodytitle-one{background: url(../img/lookpswbgnumber01-1.png) no-repeat 50px center;}
+.lookpswbodytitle-one-normal{background: url(../img/lookpswbgnumber01.png) no-repeat 50px center;}
+.lookpswbodytitle-two{background: url(../img/lookpswbgnumber02.png) no-repeat 50px center;}
+.lookpswbodytitle-two-active{background: url(../img/lookpswbgnumber02-1.png) no-repeat 50px center;}
+.lookpswbodytitle-three{background: url(../img/lookpswbgnumber03.png) no-repeat 50px center;}
+.lookpswbodytitle-three-active{background: url(../img/lookpswbgnumber03-1.png) no-repeat 50px center;}
+.lookpswbodytitle-four{background: url(../img/lookpswbgnumber04-1.png) no-repeat 50px center;}
+.lookpswbodytitle-four-active{background: url(../img/lookpswbgnumber04.png) no-repeat 50px center;}
+.lookpsw-form{width: 508px;margin:50px auto;padding-left: 72px;}
+.lookpsw-form input{width: 375px;height: 50px;margin: 10px;font-size: 20px;}
+.lookpsw-form .lookpsw-error{background: url(../img/error.png) no-repeat 0 center;padding-left: 26px;margin-left: 10px;}
+.lookpsw-form .lookpsw-submit{background: #E77917;border-bottom: none;color: #fff;}
+.lookpsw-form .verification-body{width: 375px;margin-left: 0px;border: 1px solid #A9A9A9;margin: 10px;}
+.lookpsw-form .verification{width: 250px;margin-right: 0;padding: 0;margin: 0;border: none;}
+.lookpsw-form .verificationimg{float: right;}
+
+.tishixinxi{font-size: 16px;color: #333;text-align: center;width: 100%;margin-top: 60px;margin-bottom: -30px;margin-left: -15px;}
+.lookpsw-form h5{font-size: 12px;color: #999;margin-left: 16px;}
+.lookpsw-form h5 a{color: #01468f;padding: 0 3px;}
+
+.modification3{width: 1360px;}
+.modification2{width: 358px;height: 216px;background: url(../img/modification01.png) no-repeat;margin-top: -290px;float: right;}
+.modification2 p{font-size: 14px;color: #333;padding-top: 40px;margin-left: 55px;line-height: 30px;}
+.modification2 h5{font-weight: normal;font-size: 12px;color: #666;line-height: 24px;margin-left: 55px;}
+.modification{width: 358px;height: 216px;background: url(../img/modification.png) no-repeat;margin-top: 25px;}
+.modification p{text-align: center;font-size: 24px;color: #333;padding-top: 113px;}
+.modification h5{text-align: center;font-size: 12px;color: #999;padding-top: 12px;}
+.modification h5 a{color: #01468f;padding-right: 3px;}
+/*找回密码end*/
+
+
+
+
+
+

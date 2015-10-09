@@ -7,5 +7,5 @@ package com.ynyes.kjxjr.util;
 public class ClientConstant {
 
     public static final int pageSize = 20;
-    public static final int coursePageSize = 5;  //课程设置列表页的大小 zhangji
+    public static final int coursePageSize = 25;  //课程设置列表页的大小 zhangji
 }

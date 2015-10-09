@@ -23,6 +23,7 @@ $(document).ready(function(){
 	            if (data.code == 0)
 	            {
 					alert("提交成功");
+					location.href="/enterprise/print";
 				}
 	            else 
 	            {
@@ -48,7 +49,7 @@ function showPro(){
 <div class="main">
 <!--header-->
 <div class="header">
-    <div class="logo"></div>
+    <a href="/"><div class="logo"></div></a>
     <form>
     <div class="search">
     	<input type="text" value="请输入搜索内容" onfocus="if(this.value=='请输入搜索内容'){this.value='';}" onblur="if(this.value==''){this.value='请输入搜索内容'}" />

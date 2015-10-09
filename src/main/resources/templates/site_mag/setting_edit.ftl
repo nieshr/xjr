@@ -220,6 +220,20 @@ $(function () {
             </dd>
         </dl>
         <dl>
+            <dt>公交线路</dt>
+            <dd>
+                <input name="busRoute" type="text" value="<#if setting??>${setting.busRoute!""}</#if>" class="input normal" datatype="*0-100" sucmsg=" ">
+                <span class="Validform_checktip"></span>
+            </dd>
+        </dl>  
+        <dl>
+            <dt>详细地址</dt>
+            <dd>
+                <input name="addressDetail" type="text" value="<#if setting??>${setting.addressDetail!""}</#if>" class="input normal" datatype="*0-100" sucmsg=" ">
+                <span class="Validform_checktip"></span>
+            </dd>
+        </dl>         
+        <dl>
             <dt>联系电话</dt>
             <dd>
                 <input name="telephone" type="text" value="<#if setting??>${setting.telephone!""}</#if>" class="input normal" datatype="*0-100" sucmsg=" ">
@@ -318,6 +332,7 @@ $(function () {
                 <span class="Validform_checktip"></span>
             </dd>
         </dl>  
+
         <!--add 2015-7-28 17:46:12 mdj-->
      <#--   <dl>
             <dt>底部图标1</dt>

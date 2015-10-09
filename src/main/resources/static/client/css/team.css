@@ -1,4 +1,4 @@
-/*报名资料填写*/
+/*一、报名资料填写*/
 .team_apply{width:950px; height:112px; float:left;margin-top: 20px;margin-left:200px; _margin-left:110px;}
 .team_apply dt{width:112px; height:112px; float: left; }
 .team_apply dt a{display: block; width:112px;height:90px; font-size: 16px; color: white; text-align:center; line-height: 30px; padding-top: 22px;}
@@ -45,6 +45,113 @@
 .apply_step3 dd{ width:950px; }
 .apply_step3 dd p{ display: block; width:950px; text-align: center; height:30px; line-height: 30px; color: red;}
 .apply_step3 dd input{ margin: 0 auto; display: block; width:300px; height:40px; padding: 0 10px; border: none; background: #529c15; color: white; font-size: 16px; border-radius: 8px; }
+
+/*二、资料修改1*/
+.change_inform{ width:950px; height:40px; float:left; background:#ffffff; line-height: 40px;;}
+.change_inform span{ float: left; display: block; font-size: 16px; margin-left: 20px;}
+.change_inform input{ float: right; font-size: 12px; height:30px; width:108px; line-height: 30px; margin-right: 20px; margin-top: 5px; border-radius: 6px; border: none; color: white; background: #e67817;}
+
+.apply_change{width：100%; height:auto; display: block; overflow: hidden;}
+.apply_change dt{ width:100%; height: 40px; padding: 8px 0; margin-top: 20px; background: #80a2c6;}
+.apply_change dt span{ color: white; font-size: 14px; margin-left: 30px;}
+.apply_change dt p{ color: white; margin-left: 30px; }
+.apply_change dd{ width:950px; height:auto; display: block; overflow: hidden;}
+.apply_change dd div{ width:950px; margin-top: 10px; overflow: hidden;}
+.apply_change dd div span{width:120px; display: block; float: left; text-align: right;}
+.apply_change dd div p{width:auto; height:20px; display: block; float: left; text-align: right; margin-left: 10px;;}
+.apply_change dd div input{ margin-left: 20px; float: left; height:26px; line-height:26px; width:170px; }
+.apply_change dd div input disabled{disabled;}
+.apply_change dd div textarea{ margin-left: 20px; float: left; width:400px; height:200px;}
+.apply_change dd div select{ margin-left: 20px; float: left;}
+.apply_change .dt05{ width:100%; height:40px;margin-bottom: 30px;}
+.apply_change .dt05 input{ display: block; height:40px; width:60px; border-radius: 8px; margin: 0 auto; line-height:40px; border: none; background: #e67817; color: white; font-size: 14px; }
+
+/*四、活动详情*/
+.active_text{width：100%; height:auto; display: block; overflow: hidden;}
+.active_text dt{ width:100%; height: 40px; padding: 8px 0; margin-top: 20px;}
+.active_text .dt01{background: #01458d;}
+.active_text .dt02{background: #e67817;}
+.active_text .dt03{background: #529c15;}
+.active_text .dt04{background: #0ab2cb;}
+.active_text dt span{ color: white; font-size: 14px; margin-left: 30px;}
+.active_text dt p{ color: white; margin-left: 30px; }
+.active_text dd{ width:950px; height:auto; display: block; overflow: hidden;}
+.active_text dd div{ width:950px; margin-top: 10px; overflow: hidden;}
+.active_text dd div span{width:120px; display: block; float: left; text-align: right; font-size: 14px;}
+.active_text dd div p{width:auto; height:20px; display: block; float: left; text-align: right; margin-left: 10px;;}
+.active_text dd div input{ margin-left: 20px; float: left; height:26px; line-height:26px; width:170px;}
+.active_text dd div input disabled{disabled;}
+.active_text dd div textarea{ margin-left: 20px; float: left; width:485px; height:200px;}
+.active_text dd div select{ margin-left: 20px; float: left;}
+.active_text .dt05{ width:100%; height:40px;margin-bottom: 30px;}
+.active_text .dt05 input{ display: block; height:40px; width:60px; border-radius: 8px; margin: 0 auto; line-height:40px; border: none; background: #e67817; color: white; font-size: 14px; }
+
+.active_add_text{width:800px; height:auto; display: block; overflow: hidden; margin-left: 128px;}
+.active_add_text li{ width:800px; height:30px; float: left;}
+.active_add_text li img{width:30px; float: left; margin-top: 10px;;}
+.active_add_text li .p01{ float: left; display: block; height:30px; line-height: 30px;}
+.active_add_text li a{width:60px; height:30px; float: left; display: block; color: #01458d; line-height: 30px; margin-left:60px ;}
+
+.active_project_text{width:800px; height:auto; display: block; overflow: hidden; margin-left: 128px;}
+.active_project_text li{ width:800px; height:30px; float: left;}
+.active_project_text li img{width:30px; float: left; margin-top: 10px;;}
+.active_project_text li .p01{ float: left; display: block; height:30px; line-height: 30px; }
+.active_project_text li .p02{ float: left; display: block; height:30px; line-height: 30px; }
+.active_project_text li a{float: left; display: block; height:30px; line-height: 30px; color: #01458d; }
+
+
+/*五、申请展示*/
+.team_show{width:950px; height:40px; float:left; background:#ffffff; line-height: 40px; font-size: 16px;}
+.team_show input{float: left;margin-top:14px ; margin-left: 20px;}
+.team_show span{ display:block; float: left; margin-left:10px;}
+.team_show p{ float: left; margin-left: 100px;}
+
+.team_showbox{ width:950px; height:auto; display: block; overflow: hidden; float: left; margin-top: 20px;}
+.team_showbox li{ width:100%;height:auto; display: block; overflow: hidden; margin-top: 20px;}
+.team_showbox input{ height:26px; width:224px; line-height: 26px;}
+.team_showbox div{width:800px; height:400px; background: white;}
+.team_showbox div img{ width: 800px; height: 400px;}
+
+
+/*六、档案跟踪 = 修改资料*/
+.expert_date{width: 950px; margin-left:30px;height: auto; display: block; overflow: hidden; float: left;  margin-top: 30px;}
+.expert_date dd{width:100%;height: auto; padding:10px 0; display: block; overflow: hidden; float: left; margin-top: 10px; background: white; padding-left: 10px;}
+.expert_date dd span{ float: left; font-size: 14px; display: block; width:6%;}
+.expert_date dd p{ float: left;}
+.expert_date dt{ wdith:100%; height: auto; padding:10px 0; display: block;  float: left; margin-top: 30px; }
+.expert_date dt span{ font-size: 14px;  float: left;}
+.expert_date dt textarea{width:600px; height:300px ; margin-left: 10px;}
+.expert_date dt input{ clear: both; display: block; margin-left: 68px; width:60px; height:30px; margin-top: 10px; border: none; border-radius: 6px; background: #e67817; color: white;}
+
+
+/*七、站内消息*/
+.list_base11{width:98%; padding-left: 1%;padding-right: 1%; height: auto; display: block; overflow: hidden; padding-top: 30px;}
+.list_base11 dl{width:25%; height:auto; display: block; overflow: hidden;float: left; text-align: center;}
+.list_base11 .list_active11 a{ color:#01458d;}
+.list_base11 dl dt{width: 100%; height:30px; color: #333333; font-size: 16px; background: #f0f0f0; line-height: 30px;}
+.list_base11 dl dd{width: 100%; height:40px; color: #666666; font-size: 14px; background: white; line-height: 40px; border-bottom:#f0f0f0 1px solid ;}
+.btwz_1{ font-size:18px; float: left; margin-top: 20px;}
+
+.team_mes_list{ width:980px; height:auto; display: block; overflow: hidden; margin-top: 40px;}
+.team_mes_list dt{width:950px;height:auto; display: block; overflow: hidden; margin-left: 30px; font-size: 14px;}
+.team_mes_list dt p{ float: left; width:600px; height:30px; line-height: 30px; text-align:center;}
+.team_mes_list dt span{ display: block; float: left; width:350px; height:30px; line-height: 30px; text-align: center;}
+.team_mes_list dd{width:950px;height:auto; display: block; overflow: hidden; margin-left: 30px; }
+.team_mes_list dd p{ float: left; width:600px; height:30px; line-height: 30px; text-align:center;}
+.team_mes_list dd span{ display: block; float: left; width:350px; height:30px; line-height: 30px; text-align: center;}
+.team_mes_list dd a{font-size: 14px; float: left; display: block;}
+.team_mes_list dd input{width:242px; height:26px; line-height: 26px;}
+.team_mes_list dd textarea{width:600px; height:300px; line-height: 26px;}
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -573,4 +573,100 @@ public class TdInfoController {
 	    map.addAttribute("back", "退出");
 	    return "/client/map";
 	}
+	
+	@RequestMapping("/contact")
+    public String contact(ModelMap map, HttpServletRequest req){
+        
+	    tdCommonService.setHeader(map, req);
+
+	    return "/client/contactus";
+	}
+	//企业项目
+	@RequestMapping("/projectshow")
+    public String projectshow(ModelMap map, HttpServletRequest req){
+        
+	    tdCommonService.setHeader(map, req);
+	    
+		map.addAttribute("team_page", tdArticleService.findByMenuIdAndCategoryIdAndIsEnableOrderByIdDesc(11L, 16L, 0, ClientConstant.pageSize));	    
+		map.addAttribute("project_page", tdArticleService.findByMenuIdAndCategoryIdAndIsEnableOrderByIdDesc(11L, 17L, 0, ClientConstant.pageSize));	    
+		map.addAttribute("story_page", tdArticleService.findByMenuIdAndCategoryIdAndIsEnableOrderByIdDesc(11L, 18L, 0, ClientConstant.pageSize));	    
+	    return "/client/projectshow";
+	}
+	//专家资源
+	@RequestMapping("/resource")
+    public String resource(ModelMap map, HttpServletRequest req){
+        
+	    tdCommonService.setHeader(map, req);
+	    
+		map.addAttribute("tutor_page", tdArticleService.findByMenuIdAndCategoryIdAndIsEnableOrderByIdDesc(12L, 2L, 0, ClientConstant.pageSize));	    
+		map.addAttribute("invest_page", tdArticleService.findByMenuIdAndCategoryIdAndIsEnableOrderByIdDesc(12L, 3L, 0, ClientConstant.pageSize));	    
+	    return "/client/resource";
+	}
+	//专家资源列表
+	@RequestMapping("/resource/{catId}")
+    public String resourceList(@PathVariable Long catId, 
+    			    		String __EVENTTARGET,
+    			            String __EVENTARGUMENT,
+                            Integer page, 
+                            ModelMap map,
+                            HttpServletRequest req){	
+		
+	    tdCommonService.setHeader(map, req);   
+	    
+	    //翻页 zhangji
+	    if (null != __EVENTTARGET)
+        {
+            if (__EVENTTARGET.equalsIgnoreCase("btnPage"))
+            {
+                if (null != __EVENTARGUMENT)
+                {
+                    page = Integer.parseInt(__EVENTARGUMENT);
+                } 
+            }
+            
+        }
+	    /*翻页 end*/
+	    
+        if (null == page)
+        {
+            page = 0;
+        }
+	    
+        TdArticleCategory category = tdArticleCategoryService.findOne(catId);
+        Long mid= category.getMenuId();
+	    TdNavigationMenu menu = tdNavigationMenuService.findOne(mid);
+	    
+	    map.addAttribute("menu_name", menu.getTitle());
+	    map.addAttribute("menu_id", menu.getId()); //菜单id zhangji
+	    map.addAttribute("menu_sub_name", menu.getName());//英文名称 zhangji
+	    
+	    List<TdArticleCategory> catList = tdArticleCategoryService.findByMenuId(mid);
+	    
+	    if (null !=catList && catList.size() > 0)
+	    {
+	        if (null == catId || 0 == catId)
+	        {
+            //    catId = catList.get(0).getId();   //.get(0)表示 取catList表的第0个 zhangji
+	        		map.addAttribute("info_page", tdArticleService.findByMenuIdAndIsEnableOrderByIdDesc(mid, page, ClientConstant.coursePageSize));   //menu下所有项
+	        }
+	        else
+	        {	  
+	        		map.addAttribute("info_page", tdArticleService.findByMenuIdAndCategoryIdAndIsEnableOrderByIdDesc(mid, catId, page, ClientConstant.coursePageSize));	    
+	        }	
+	    }
+	    
+        if(12 == mid && null == catId)
+        {
+        	catId = catList.get(0).getId();   //.get(0)表示 取catList表的第0个 zhangji
+        }
+        	
+	    
+	    map.addAttribute("info_cat",tdArticleCategoryService.findOne(catId) );   //找出栏目名称 zhangji
+	    map.addAttribute("catId", catId);
+	    map.addAttribute("mid", mid);
+	    map.addAttribute("info_category_list", catList); //栏目的列表 zhangji
+	    map.addAttribute("latest_info_page", tdArticleService.findByMenuIdAndIsEnableOrderByIdDesc(mid, page, ClientConstant.coursePageSize));
+	    
+        return "/client/resource_detail";
+    }
 }

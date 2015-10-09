@@ -177,6 +177,14 @@ public class TdSetting {
     //纬度zhangji
     @Column
     private String latitude;
+    
+    //公交线路
+    @Column
+    private String busRoute;
+    
+    //详细地址
+    @Column
+    private String addressDetail;
 
     public Long getId() {
         return id;
@@ -505,6 +513,22 @@ public class TdSetting {
 
 	public void setLatitude(String latitude) {
 		this.latitude = latitude;
+	}
+
+	public String getBusRoute() {
+		return busRoute;
+	}
+
+	public void setBusRoute(String busRoute) {
+		this.busRoute = busRoute;
+	}
+
+	public String getAddressDetail() {
+		return addressDetail;
+	}
+
+	public void setAddressDetail(String addressDetail) {
+		this.addressDetail = addressDetail;
 	}
 	
 }
