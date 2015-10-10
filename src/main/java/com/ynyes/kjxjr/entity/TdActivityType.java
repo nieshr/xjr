@@ -19,7 +19,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 
 @Entity
-public class TdRegion {
+public class TdActivityType {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -28,13 +28,17 @@ public class TdRegion {
     @Column
     private Long  sortId;
     
-    // 区域名称
+    // 名称
     @Column
     private String title;
   
     // 状态
     @Column
     private Boolean isEnable;
+    
+    // 颜色
+    @Column
+    private String color;
 
 	public Long getId() {
 		return id;
@@ -66,6 +70,14 @@ public class TdRegion {
 
 	public void setIsEnable(Boolean isEnable) {
 		this.isEnable = isEnable;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
 	}
 
  

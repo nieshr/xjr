@@ -104,17 +104,17 @@ function showPro(){
     			<div><span>股东结构：</span><textarea name="shareholder" datatype="*"></textarea></div>
     			<div><span>所在地区：</span>
     				<select name="area" datatype="*">
-    					<option value="江北">江北</option>
-    					<option value="南岸">南岸</option>
-    					<option value="巴南">巴南</option>
-    					<option value="合川">合川</option>
-    					<option value="荣昌">荣昌</option>
+    					<#if region_list??>
+    						<#list region_list as item>
+    							<option value="${item.title!''}">${item.title!''}</option>
+    						</#list>
+    					</#if>	
     				</select>
     			</div>
     			<div  class="enter"><span>职工人数：</span>	<input type="text" name="staffNumber" datatype="n" value="" /></div>
     			<div><span>行业归属：</span>
-    				<#if type_list??>
-    					<#list type_list as item>
+    				<#if enterpriseType_list??>
+    					<#list enterpriseType_list as item>
     						<input style="margin-top: -3px; width:15px;" name="type" type="radio" value="${item.title!''}"/><p>${item.title!''}</p>
     					</#list>
     				</#if>		

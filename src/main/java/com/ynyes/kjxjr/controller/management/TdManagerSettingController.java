@@ -12,11 +12,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ynyes.kjxjr.entity.TdDemand;
+import com.ynyes.kjxjr.entity.TdRegion;
+import com.ynyes.kjxjr.entity.TdActivityType;
+import com.ynyes.kjxjr.entity.TdEnterpriseType;
 import com.ynyes.kjxjr.entity.TdServiceItem;
 import com.ynyes.kjxjr.entity.TdSetting;
 import com.ynyes.kjxjr.entity.TdUserSuggestion;
+import com.ynyes.kjxjr.service.TdActivityTypeService;
 import com.ynyes.kjxjr.service.TdDemandService;
+import com.ynyes.kjxjr.service.TdEnterpriseTypeService;
 import com.ynyes.kjxjr.service.TdManagerLogService;
+import com.ynyes.kjxjr.service.TdRegionService;
 import com.ynyes.kjxjr.service.TdServiceItemService;
 import com.ynyes.kjxjr.service.TdSettingService;
 import com.ynyes.kjxjr.service.TdUserSuggestionService;
@@ -46,6 +52,15 @@ public class TdManagerSettingController {
     
     @Autowired
     TdDemandService tdDemandService;
+    
+    @Autowired 
+    TdRegionService tdRegionService;
+    
+    @Autowired 
+    TdActivityTypeService tdActivityTypeService;
+    
+    @Autowired 
+    TdEnterpriseTypeService tdEnterpriseTypeService;
     
     @RequestMapping
     public String setting(Long status, ModelMap map,
@@ -85,7 +100,7 @@ public class TdManagerSettingController {
         return "redirect:/Verwalter/setting?status=1";
     }
     
-    @RequestMapping(value="/service/list")
+    @RequestMapping(value="/region/list")
     public String service(String __EVENTTARGET,
                         String __EVENTARGUMENT,
                         String __VIEWSTATE,
@@ -105,13 +120,13 @@ public class TdManagerSettingController {
             {
                 btnDelete(listId, listChkId);
                 
-                tdManagerLogService.addLog("edit", "删除服务", req);
+                tdManagerLogService.addLog("edit", "删除活动区域", req);
             }
             else if (__EVENTTARGET.equalsIgnoreCase("btnSave"))
             {
                 btnSave(listId, listSortId);
                 
-                tdManagerLogService.addLog("edit", "修改服务", req);
+                tdManagerLogService.addLog("edit", "修改活动区域", req);
             }
         }
 
@@ -119,9 +134,87 @@ public class TdManagerSettingController {
         map.addAttribute("__EVENTARGUMENT", __EVENTARGUMENT);
         map.addAttribute("__VIEWSTATE", __VIEWSTATE);
                 
-        map.addAttribute("service_item_list", tdServiceItemService.findAllOrderBySortIdAsc());
+        map.addAttribute("region_list", tdRegionService.findAllOrderBySortIdAsc());
                 
-        return "/site_mag/service_item_list";
+        return "/site_mag/region_list";
+    }
+    
+    @RequestMapping(value="/activityType/list")
+    public String activity(String __EVENTTARGET,
+                        String __EVENTARGUMENT,
+                        String __VIEWSTATE,
+                        Long[] listId,
+                        Integer[] listChkId,
+                        Long[] listSortId,
+                        ModelMap map,
+                        HttpServletRequest req){
+        String username = (String) req.getSession().getAttribute("manager");
+        if (null == username) {
+            return "redirect:/Verwalter/login";
+        }
+        
+        if (null != __EVENTTARGET)
+        {
+            if (__EVENTTARGET.equalsIgnoreCase("btnDelete"))
+            {
+                btnDelete(listId, listChkId);
+                
+                tdManagerLogService.addLog("edit", "删除活动类型", req);
+            }
+            else if (__EVENTTARGET.equalsIgnoreCase("btnSave"))
+            {
+                btnSave(listId, listSortId);
+                
+                tdManagerLogService.addLog("edit", "修改活动类型", req);
+            }
+        }
+
+        map.addAttribute("__EVENTTARGET", __EVENTTARGET);
+        map.addAttribute("__EVENTARGUMENT", __EVENTARGUMENT);
+        map.addAttribute("__VIEWSTATE", __VIEWSTATE);
+                
+        map.addAttribute("activityType_list", tdActivityTypeService.findAllOrderBySortIdAsc());
+                
+        return "/site_mag/activityType_list";
+    }
+    
+    @RequestMapping(value="/enterpriseType/list")
+    public String enterpriseType(String __EVENTTARGET,
+                        String __EVENTARGUMENT,
+                        String __VIEWSTATE,
+                        Long[] listId,
+                        Integer[] listChkId,
+                        Long[] listSortId,
+                        ModelMap map,
+                        HttpServletRequest req){
+        String username = (String) req.getSession().getAttribute("manager");
+        if (null == username) {
+            return "redirect:/Verwalter/login";
+        }
+        
+        if (null != __EVENTTARGET)
+        {
+            if (__EVENTTARGET.equalsIgnoreCase("btnDelete"))
+            {
+                btnDelete(listId, listChkId);
+                
+                tdManagerLogService.addLog("edit", "删除项目所属类型", req);
+            }
+            else if (__EVENTTARGET.equalsIgnoreCase("btnSave"))
+            {
+                btnSave(listId, listSortId);
+                
+                tdManagerLogService.addLog("edit", "修改项目所属类型", req);
+            }
+        }
+
+        map.addAttribute("__EVENTTARGET", __EVENTTARGET);
+        map.addAttribute("__EVENTARGUMENT", __EVENTARGUMENT);
+        map.addAttribute("__VIEWSTATE", __VIEWSTATE);
+                
+        map.addAttribute("enterpriseType_list", tdEnterpriseTypeService.findAllOrderBySortIdAsc());
+                
+        return "/site_mag/enterpriseType_list";
     }
     
     /**
@@ -279,7 +372,7 @@ public class TdManagerSettingController {
         return "/site_mag/demand_list";
     }
     
-    @RequestMapping(value="/service/edit")
+    @RequestMapping(value="/region/edit")
     public String edit(Long id,
                         String __VIEWSTATE,
                         ModelMap map,
@@ -295,14 +388,57 @@ public class TdManagerSettingController {
         
         if (null != id)
         {
-            map.addAttribute("service_item", tdServiceItemService.findOne(id));
+            map.addAttribute("region", tdRegionService.findOne(id));
         }
         
-        return "/site_mag/service_item_edit";
+        return "/site_mag/region_edit";
     }
     
-    @RequestMapping(value="/service/save", method = RequestMethod.POST)
-    public String serviceItemEdit(TdServiceItem tdServiceItem,
+    @RequestMapping(value="/activityType/edit")
+    public String activityTypeedit(Long id,
+                        String __VIEWSTATE,
+                        ModelMap map,
+                        HttpServletRequest req) {
+        String username = (String) req.getSession().getAttribute("manager");
+        
+        if (null == username)
+        {
+            return "redirect:/Verwalter/login";
+        }
+        
+        map.addAttribute("__VIEWSTATE", __VIEWSTATE);
+        if (null != id)
+        {
+            map.addAttribute("activityType", tdActivityTypeService.findOne(id));
+        }
+        
+        return "/site_mag/activityType_edit";
+    }
+    
+    @RequestMapping(value="/enterpriseType/edit")
+    public String enterpriseTypeedit(Long id,
+                        String __VIEWSTATE,
+                        ModelMap map,
+                        HttpServletRequest req) {
+        String username = (String) req.getSession().getAttribute("manager");
+        
+        if (null == username)
+        {
+            return "redirect:/Verwalter/login";
+        }
+        
+        map.addAttribute("__VIEWSTATE", __VIEWSTATE);
+        
+        if (null != id)
+        {
+            map.addAttribute("enterpriseType", tdEnterpriseTypeService.findOne(id));
+        }
+        
+        return "/site_mag/enterpriseType_edit";
+    }
+    
+    @RequestMapping(value="/region/save", method = RequestMethod.POST)
+    public String regionEdit(TdRegion tdRegion,
                         String __VIEWSTATE,
                         ModelMap map,
                         HttpServletRequest req) {
@@ -314,13 +450,53 @@ public class TdManagerSettingController {
         
         map.addAttribute("__VIEWSTATE", __VIEWSTATE);
         
-        tdServiceItemService.save(tdServiceItem);
+        tdRegionService.save(tdRegion);
         
-        tdManagerLogService.addLog("edit", "修改商城服务", req);
+        tdManagerLogService.addLog("edit", "修改活动区域", req);
         
-        return "redirect:/Verwalter/setting/service/list";
+        return "redirect:/Verwalter/setting/region/list";
     }
 
+    @RequestMapping(value="/activityType/save", method = RequestMethod.POST)
+    public String tdActivityTypeEdit(TdActivityType tdActivityType,
+                        String __VIEWSTATE,
+                        ModelMap map,
+                        HttpServletRequest req) {
+        String username = (String) req.getSession().getAttribute("manager");
+        if (null == username)
+        {
+            return "redirect:/Verwalter/login";
+        }
+        
+        map.addAttribute("__VIEWSTATE", __VIEWSTATE);
+        
+        tdActivityTypeService.save(tdActivityType);
+        
+        tdManagerLogService.addLog("edit", "修改活动类型", req);
+        
+        return "redirect:/Verwalter/setting/activityType/list";
+    }
+    
+    @RequestMapping(value="/enterpriseType/save", method = RequestMethod.POST)
+    public String enterpriseEdit(TdEnterpriseType tdEnterpriseType,
+                        String __VIEWSTATE,
+                        ModelMap map,
+                        HttpServletRequest req) {
+        String username = (String) req.getSession().getAttribute("manager");
+        if (null == username)
+        {
+            return "redirect:/Verwalter/login";
+        }
+        
+        map.addAttribute("__VIEWSTATE", __VIEWSTATE);
+        
+        tdEnterpriseTypeService.save(tdEnterpriseType);
+        
+        tdManagerLogService.addLog("edit", "修改项目所属", req);
+        
+        return "redirect:/Verwalter/setting/enterpriseType/list";
+    }
+    
     @ModelAttribute
     public void getModel(@RequestParam(value = "id", required = false) Long id,
                             @RequestParam(value = "serviceItemId", required = false) Long serviceItemId,

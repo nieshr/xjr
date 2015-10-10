@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
-import com.ynyes.kjxjr.entity.TdRegion;
+import com.ynyes.kjxjr.entity.TdEnterpriseType;
 
 /**
  * TdEnterprise 实体数据库操作接口
@@ -16,12 +16,12 @@ import com.ynyes.kjxjr.entity.TdRegion;
  *
  */
 
-public interface TdRegionRepo extends
-		PagingAndSortingRepository<TdRegion, Long>,
-		JpaSpecificationExecutor<TdRegion> 
+public interface TdEnterpriseTypeRepo extends
+		PagingAndSortingRepository<TdEnterpriseType, Long>,
+		JpaSpecificationExecutor<TdEnterpriseType> 
 { 
-    Page<TdRegion> findByTitleContainingOrderBySortIdAsc(String keywords, Pageable page);
-    List<TdRegion>findByIsEnableTrueOrderBySortIdAsc();
+    Page<TdEnterpriseType> findByTitleContainingOrderBySortIdAsc(String keywords, Pageable page);
+    List<TdEnterpriseType>findByIsEnableTrueOrderBySortIdAsc();
 
    
 

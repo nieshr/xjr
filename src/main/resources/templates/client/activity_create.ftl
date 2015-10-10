@@ -33,6 +33,10 @@ $(document).ready(function(){
 });
 
 </script>
+<style>
+.Validform_wrong {  background-position: 20px center;}
+.Validform_right {  background-position: 7px center;}
+</style>
 </head>
 <body>
 <!--main-->
@@ -69,12 +73,12 @@ $(document).ready(function(){
     <dl class="active_content">
     	<dd>
 
-    			<div><span>活动名称：</span><input type="text" name="title" value="<#if activity??>${activity.title!''}</#if>" /></div>
+    			<div><span>活动名称：</span><input type="text" name="title" datatype="*"value="<#if activity??>${activity.title!''}</#if>" /></div>
     			<div>
     				<span>活动类型：</span>
     				<select name="type" datatype="*">
-    				    <#if type_list??>
-    				        <#list type_list as item>
+    				    <#if activityType_list??>
+    				        <#list activityType_list as item>
     					        <option value="${item.title!''}" <#if activity?? &&activity.type == item.title>selected="selected"</#if>>${item.title!''}</option>
     					    </#list>
     					</#if>        

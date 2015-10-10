@@ -1,6 +1,6 @@
 package com.ynyes.kjxjr.service;
-
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,21 +10,17 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ynyes.kjxjr.entity.TdRegion;
-import com.ynyes.kjxjr.repository.TdRegionRepo;
+import com.ynyes.kjxjr.entity.TdActivityExpert;
+import com.ynyes.kjxjr.repository.TdActivityExpertRepo;
 
-/**
- * TdMallService 服务类
- * 
- * @author Sharon
- *
- */
 
 @Service
 @Transactional
-public class TdRegionService {
+public class TdActivityExpertService {
     @Autowired
-    TdRegionRepo repository;
+    TdActivityExpertRepo repository;
+    @Autowired
+    TdUserService tdUserService;
     
     /**
      * 删除
@@ -44,15 +40,15 @@ public class TdRegionService {
      * 
      * @param e 菜单项
      */
-    public void delete(TdRegion e)
+    public void delete(TdActivityExpert e)
     {
         if (null != e)
         {
             repository.delete(e);
         }
     }
-    
-    public void delete(List<TdRegion> entities)
+
+    public void delete(List<TdActivityExpert> entities)
     {
         if (null != entities)
         {
@@ -66,7 +62,7 @@ public class TdRegionService {
      * @param id ID
      * @return
      */
-    public TdRegion findOne(Long id)
+    public TdActivityExpert findOne(Long id)
     {
         if (null == id)
         {
@@ -76,58 +72,54 @@ public class TdRegionService {
         return repository.findOne(id);
     }
     
+
     /**
      * 查找
      * 
      * @param ids
      * @return
      */
-    public List<TdRegion> findAll(Iterable<Long> ids)
+    public List<TdActivityExpert> findAll(Iterable<Long> ids)
     {
-        return (List<TdRegion>) repository.findAll(ids);
+        return (List<TdActivityExpert>) repository.findAll(ids);
     }
     
-    public List<TdRegion> findAllOrderBySortIdAsc()
-    {
-        Sort sort = new Sort(Direction.ASC, "sortId");
-        
-        return (List<TdRegion>) repository.findAll(sort);
-    }
+
     
-    public List<TdRegion> findByIsEnableTrueOrderBySortIdAsc()
-    {
-        return repository.findByIsEnableTrueOrderBySortIdAsc();
-    }
-    
-    public Page<TdRegion> findAllOrderBySortIdAsc(int page, int size)
+    public Page<TdActivityExpert> findAllOrderBySortIdAsc(int page, int size)
     {
         PageRequest pageRequest = new PageRequest(page, size, new Sort(Direction.ASC, "sortId"));
         
         return repository.findAll(pageRequest);
     }
-    
-    public Page<TdRegion> searchAllOrderBySortIdAsc(String keywords, int page, int size)
+    public Page<TdActivityExpert> findAllOrderByIdDesc(int page, int size)
     {
-        PageRequest pageRequest = new PageRequest(page, size);
+        PageRequest pageRequest = new PageRequest(page, size, new Sort(Direction.DESC, "id"));
         
-        return repository.findByTitleContainingOrderBySortIdAsc(keywords, pageRequest);
+        return repository.findAll(pageRequest);
     }
+    
+
     
     /**
      * 保存
-     * 
      * @param e
      * @return
      */
-    public TdRegion save(TdRegion e)
+    public TdActivityExpert save(TdActivityExpert e)
     {
-        
         return repository.save(e);
     }
     
-    public List<TdRegion> save(List<TdRegion> entities)
+    public List<TdActivityExpert> save(List<TdActivityExpert> entities)
     {
-        
-        return (List<TdRegion>) repository.save(entities);
+        return (List<TdActivityExpert>) repository.save(entities);
     }
+    
+    /**
+	 * @author lc
+	 * @注释：
+	 */
+
+    
 }

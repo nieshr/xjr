@@ -31,6 +31,12 @@ $(document).ready(function(){
                     window.location.href="/enterprise/info";
                 }
             }    
+            else if (data.role == 2){
+                window.location.href="/region/enterprise/list";
+            }
+            else if (data.role == 3){
+                window.location.href="/expert/enterprise/list";
+            }
             else if (data.role == 4){
                 window.location.href="/activity/list";
             }

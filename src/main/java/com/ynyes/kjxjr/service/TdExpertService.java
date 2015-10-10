@@ -1,6 +1,6 @@
 package com.ynyes.kjxjr.service;
-
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,21 +10,18 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ynyes.kjxjr.entity.TdRegion;
-import com.ynyes.kjxjr.repository.TdRegionRepo;
+import com.ynyes.kjxjr.entity.TdExpert;
+import com.ynyes.kjxjr.entity.TdUser;
+import com.ynyes.kjxjr.repository.TdExpertRepo;
 
-/**
- * TdMallService 服务类
- * 
- * @author Sharon
- *
- */
 
 @Service
 @Transactional
-public class TdRegionService {
+public class TdExpertService {
     @Autowired
-    TdRegionRepo repository;
+    TdExpertRepo repository;
+    @Autowired
+    TdUserService tdUserService;
     
     /**
      * 删除
@@ -44,15 +41,15 @@ public class TdRegionService {
      * 
      * @param e 菜单项
      */
-    public void delete(TdRegion e)
+    public void delete(TdExpert e)
     {
         if (null != e)
         {
             repository.delete(e);
         }
     }
-    
-    public void delete(List<TdRegion> entities)
+
+    public void delete(List<TdExpert> entities)
     {
         if (null != entities)
         {
@@ -66,7 +63,7 @@ public class TdRegionService {
      * @param id ID
      * @return
      */
-    public TdRegion findOne(Long id)
+    public TdExpert findOne(Long id)
     {
         if (null == id)
         {
@@ -82,52 +79,68 @@ public class TdRegionService {
      * @param ids
      * @return
      */
-    public List<TdRegion> findAll(Iterable<Long> ids)
+    public List<TdExpert> findAll(Iterable<Long> ids)
     {
-        return (List<TdRegion>) repository.findAll(ids);
+        return (List<TdExpert>) repository.findAll(ids);
     }
     
-    public List<TdRegion> findAllOrderBySortIdAsc()
-    {
-        Sort sort = new Sort(Direction.ASC, "sortId");
-        
-        return (List<TdRegion>) repository.findAll(sort);
-    }
+
     
-    public List<TdRegion> findByIsEnableTrueOrderBySortIdAsc()
-    {
-        return repository.findByIsEnableTrueOrderBySortIdAsc();
-    }
-    
-    public Page<TdRegion> findAllOrderBySortIdAsc(int page, int size)
+    public Page<TdExpert> findAllOrderBySortIdAsc(int page, int size)
     {
         PageRequest pageRequest = new PageRequest(page, size, new Sort(Direction.ASC, "sortId"));
         
         return repository.findAll(pageRequest);
     }
     
-    public Page<TdRegion> searchAllOrderBySortIdAsc(String keywords, int page, int size)
+    public Page<TdExpert> searchAllOrderBySortIdAsc(String keywords, int page, int size)
     {
         PageRequest pageRequest = new PageRequest(page, size);
         
-        return repository.findByTitleContainingOrderBySortIdAsc(keywords, pageRequest);
+        return repository.findByNameContainingOrderBySortIdAsc(keywords, pageRequest);
     }
     
     /**
      * 保存
-     * 
      * @param e
      * @return
      */
-    public TdRegion save(TdRegion e)
+    public TdExpert save(TdExpert e)
     {
+        if (null != e.getUsername())    
+        {
+            TdUser user = tdUserService.findByUsername(e.getUsername());
+            
+            if (null == user )
+            {
+                user = tdUserService.addNewUser(e.getUsername(), e.getPassword(), e.getMobile(), null, null);
+                
+                user.setRoleId(0L); // 企业用户
+            }
+            // 修改加盟店密码也需要修改用户密码 @author: Sharon
+            else
+            {
+                user.setPassword(e.getPassword());
+            }
+            
+            tdUserService.save(user);
+        }
         
         return repository.save(e);
     }
     
-    public List<TdRegion> save(List<TdRegion> entities)
+    public List<TdExpert> save(List<TdExpert> entities)
     {
-        
-        return (List<TdRegion>) repository.save(entities);
+        return (List<TdExpert>) repository.save(entities);
     }
+    
+    /**
+	 * @author lc
+	 * @注释：
+	 */
+    public TdExpert findbyUsername(String username){
+		
+    	return (repository.findByUsername(username)); 	
+    }
+    
 }

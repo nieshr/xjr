@@ -109,7 +109,12 @@ body{ background:url(../images/background.png); background-size:100% 100%;}
 
 .apply_content dd div .hide{display:none;}
 .apply_content dd .hide{display:none;}
-
+/* zhangji 表格样式*/
+.new_list{width:950px; height: auto;  margin-top: 30px; float: left; }
+.new_list .list_title{ height: 40px; line-height: 40px; font-size: 16px; color: #333333; background: #f0f0f0;}
+.new_list tr{height: 40px; line-height: 40px; font-size: 14px;  background: white;}
+.new_list a{color: #01458d;}
+.new_list th{color: #333333;font-size: 16px;background: #f0f0f0;line-height: 30px;  font-weight: inherit;}
 
 
 

@@ -125,22 +125,23 @@ public class TdLoginController {
 					res.put("role", 1);
 					request.getSession().setAttribute("enterpriseUsername", user.getUsername());
 					request.getSession().setAttribute("enterpriseUsermobile", user.getMobile());
-					res.put("statusId", tdEnterpriseService.findbyUsername(username).getStatusId());
+					Long statusId =tdEnterpriseService.findbyUsername(username).getStatusId();
+					res.put("statusId", statusId);
 					break;
 				case 2:
 					res.put("role", 2);
-					request.getSession().setAttribute("RegionUsername", user.getUsername());
-					request.getSession().setAttribute("RegionUsermobile", user.getMobile());
+					request.getSession().setAttribute("regionUsername", user.getUsername());
+					request.getSession().setAttribute("regionUsermobile", user.getMobile());
 					break;
 				case 3:
 					res.put("role", 3);
-					request.getSession().setAttribute("ExpertUsername", user.getUsername());
-					request.getSession().setAttribute("ExpertUsermobile", user.getMobile());
+					request.getSession().setAttribute("expertUsername", user.getUsername());
+					request.getSession().setAttribute("expertUsermobile", user.getMobile());
 					break;
 				case 4:
 					res.put("role", 4);
-					request.getSession().setAttribute("ActivityUsername", user.getUsername());
-					request.getSession().setAttribute("ActivityUsermobile", user.getMobile());
+					request.getSession().setAttribute("activityUsername", user.getUsername());
+					request.getSession().setAttribute("activityUsermobile", user.getMobile());
 					break;	
 				default:
 					res.put("role", 0);
@@ -193,18 +194,18 @@ public class TdLoginController {
 				break;
 			case 2:
 				res.put("role", 2);
-				request.getSession().setAttribute("RegionUsername", user.getUsername());
-				request.getSession().setAttribute("RegionUsermobile", user.getMobile());
+				request.getSession().setAttribute("regionUsername", user.getUsername());
+				request.getSession().setAttribute("regionUsermobile", user.getMobile());
 				break;
 			case 3:
 				res.put("role", 3);
-				request.getSession().setAttribute("ExpertUsername", user.getUsername());
-				request.getSession().setAttribute("ExpertUsermobile", user.getMobile());
+				request.getSession().setAttribute("expertUsername", user.getUsername());
+				request.getSession().setAttribute("expertUsermobile", user.getMobile());
 				break;
 			case 4:
 				res.put("role", 4);
-				request.getSession().setAttribute("ActivityUsername", user.getUsername());
-				request.getSession().setAttribute("ActivityUsermobile", user.getMobile());
+				request.getSession().setAttribute("activityUsername", user.getUsername());
+				request.getSession().setAttribute("activityUsermobile", user.getMobile());
 				break;	
 			default:
 				res.put("role", 0);

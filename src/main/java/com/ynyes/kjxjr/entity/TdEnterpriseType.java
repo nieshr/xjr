@@ -19,7 +19,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 
 @Entity
-public class TdRegion {
+public class TdEnterpriseType {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -28,7 +28,7 @@ public class TdRegion {
     @Column
     private Long  sortId;
     
-    // 区域名称
+    // 名称
     @Column
     private String title;
   

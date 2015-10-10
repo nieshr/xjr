@@ -214,6 +214,10 @@ public class TdEnterprise {
     @Column
     private Long formType;
     
+    // 编号
+    @Column
+    private String number;
+    
     // 状态
     @Column
     private Long statusId;
@@ -225,6 +229,10 @@ public class TdEnterprise {
     // 登录密码
     @Column
     private String password;
+    
+    //注册手机
+    @Column
+    private String usermobile;
 
 	public Long getId() {
 		return id;
@@ -633,6 +641,23 @@ public class TdEnterprise {
 	public void setStatusId(Long statusId) {
 		this.statusId = statusId;
 	}
+
+	public String getNumber() {
+		return number;
+	}
+
+	public void setNumber(String number) {
+		this.number = number;
+	}
+
+	public String getUsermobile() {
+		return usermobile;
+	}
+
+	public void setUsermobile(String usermobile) {
+		this.usermobile = usermobile;
+	}
+
 
 }
   

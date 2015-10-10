@@ -31,15 +31,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
-
 import com.ynyes.kjxjr.entity.TdEnterprise;
+import com.ynyes.kjxjr.entity.TdRegion;
 import com.ynyes.kjxjr.entity.TdUser;
 import com.ynyes.kjxjr.service.TdCommonService;
 import com.ynyes.kjxjr.service.TdCouponService;
 import com.ynyes.kjxjr.service.TdEnterpriseService;
-import com.ynyes.kjxjr.service.TdEnterpriseService;
+import com.ynyes.kjxjr.service.TdRegionService;
 import com.ynyes.kjxjr.service.TdUserService;
+import com.ynyes.kjxjr.util.ClientConstant;
 import com.ynyes.kjxjr.util.SMSUtil;
 import com.ynyes.kjxjr.util.SiteMagConstant;
 
@@ -47,8 +47,8 @@ import scala.reflect.macros.internal.macroImpl;
 
 
 @Controller
-@RequestMapping(value="/enterprise")
-public class TdEnterpriseController {
+@RequestMapping(value="/region")
+public class TdRegionController {
 	
 	
 	@Autowired
@@ -58,35 +58,35 @@ public class TdEnterpriseController {
 	TdUserService tdUserService;
 	
 	@Autowired
-	TdEnterpriseService tdEnterpriseService;
+	TdRegionService tdRegionService;
 	
 	@Autowired
-	TdCouponService tdCouponService;
+	TdEnterpriseService tdEnterpriseService;
 	
-	   /**
-     * 企业填写资料
-     * @author Zhangji
-     * @param req
-     * @param map
-     * @return
-     */
-    @RequestMapping(value = "/info", method = RequestMethod.GET)
-    public String userEnterpriseInfo(HttpServletRequest req, ModelMap map) {
-        String username = (String) req.getSession().getAttribute("enterpriseUsername");
+
+    @RequestMapping(value = "/enterprise/list", method = RequestMethod.GET)
+    public String EnterpriseList(HttpServletRequest req, ModelMap map,Integer page) {
+        String username = (String) req.getSession().getAttribute("regionUsername");
 
         if (null == username) {
             return "redirect:/login";
+        }
+        
+        if (null ==page)
+        {
+        	page = 0;
         }
 
         tdCommonService.setHeader(map, req);
 
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
-        TdEnterprise Enterprise = tdEnterpriseService.findbyUsername(username);
+        Page<TdEnterprise> enterprisePage = tdEnterpriseService.findAllOrderByCreateTimeDesc(page, ClientConstant.pageSize);
         
-        map.addAttribute("enterprise", Enterprise);
+        
+        map.addAttribute("enterprise_page", enterprisePage);
         map.addAttribute("user", user);
 
-        return "/client/enterprise_info";
+        return "/client/region_enterprise_list";
     }
     
     /**
@@ -111,10 +111,7 @@ public class TdEnterpriseController {
             return res;
         }
         TdUser user = tdUserService.findByUsername(username);
-        String id = tdEnterprise.getId().toString();
-        String number = String.format("%04d", id);
         
-        tdEnterprise.setNumber(number);
         tdEnterprise.setStatusId(0L);
         tdEnterprise.setCreateTime(new Date());
         tdEnterprise.setPassword(user.getPassword());

@@ -96,6 +96,13 @@ public class TdEnterpriseService {
         return repository.findAll(pageRequest);
     }
     
+    public Page<TdEnterprise> findAllOrderByCreateTimeDesc(int page, int size)
+    {
+        PageRequest pageRequest = new PageRequest(page, size, new Sort(Direction.DESC, "createTime"));
+        
+        return repository.findAll(pageRequest);
+    }
+    
     public Page<TdEnterprise> searchAllOrderBySortIdAsc(String keywords, int page, int size)
     {
         PageRequest pageRequest = new PageRequest(page, size);

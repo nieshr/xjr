@@ -10,8 +10,8 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ynyes.kjxjr.entity.TdRegion;
-import com.ynyes.kjxjr.repository.TdRegionRepo;
+import com.ynyes.kjxjr.entity.TdActivityType;
+import com.ynyes.kjxjr.repository.TdActivityTypeRepo;
 
 /**
  * TdMallService 服务类
@@ -22,9 +22,9 @@ import com.ynyes.kjxjr.repository.TdRegionRepo;
 
 @Service
 @Transactional
-public class TdRegionService {
+public class TdActivityTypeService {
     @Autowired
-    TdRegionRepo repository;
+    TdActivityTypeRepo repository;
     
     /**
      * 删除
@@ -44,7 +44,7 @@ public class TdRegionService {
      * 
      * @param e 菜单项
      */
-    public void delete(TdRegion e)
+    public void delete(TdActivityType e)
     {
         if (null != e)
         {
@@ -52,7 +52,7 @@ public class TdRegionService {
         }
     }
     
-    public void delete(List<TdRegion> entities)
+    public void delete(List<TdActivityType> entities)
     {
         if (null != entities)
         {
@@ -66,7 +66,7 @@ public class TdRegionService {
      * @param id ID
      * @return
      */
-    public TdRegion findOne(Long id)
+    public TdActivityType findOne(Long id)
     {
         if (null == id)
         {
@@ -82,31 +82,31 @@ public class TdRegionService {
      * @param ids
      * @return
      */
-    public List<TdRegion> findAll(Iterable<Long> ids)
+    public List<TdActivityType> findAll(Iterable<Long> ids)
     {
-        return (List<TdRegion>) repository.findAll(ids);
+        return (List<TdActivityType>) repository.findAll(ids);
     }
     
-    public List<TdRegion> findAllOrderBySortIdAsc()
+    public List<TdActivityType> findAllOrderBySortIdAsc()
     {
         Sort sort = new Sort(Direction.ASC, "sortId");
         
-        return (List<TdRegion>) repository.findAll(sort);
+        return (List<TdActivityType>) repository.findAll(sort);
     }
     
-    public List<TdRegion> findByIsEnableTrueOrderBySortIdAsc()
+    public List<TdActivityType> findByIsEnableTrueOrderBySortIdAsc()
     {
         return repository.findByIsEnableTrueOrderBySortIdAsc();
     }
     
-    public Page<TdRegion> findAllOrderBySortIdAsc(int page, int size)
+    public Page<TdActivityType> findAllOrderBySortIdAsc(int page, int size)
     {
         PageRequest pageRequest = new PageRequest(page, size, new Sort(Direction.ASC, "sortId"));
         
         return repository.findAll(pageRequest);
     }
     
-    public Page<TdRegion> searchAllOrderBySortIdAsc(String keywords, int page, int size)
+    public Page<TdActivityType> searchAllOrderBySortIdAsc(String keywords, int page, int size)
     {
         PageRequest pageRequest = new PageRequest(page, size);
         
@@ -119,15 +119,15 @@ public class TdRegionService {
      * @param e
      * @return
      */
-    public TdRegion save(TdRegion e)
+    public TdActivityType save(TdActivityType e)
     {
         
         return repository.save(e);
     }
     
-    public List<TdRegion> save(List<TdRegion> entities)
+    public List<TdActivityType> save(List<TdActivityType> entities)
     {
         
-        return (List<TdRegion>) repository.save(entities);
+        return (List<TdActivityType>) repository.save(entities);
     }
 }

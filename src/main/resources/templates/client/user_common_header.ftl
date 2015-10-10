@@ -2,24 +2,24 @@
     <div class="logo"></div>
     <form>
     <div class="search">
-        <input type="text" value=" &nbsp;ÇëÊäÈëËÑË÷ÄÚÈÝ" />
-        <input style="width:40px; background:url(images/search.png) no-repeat center;" type="submit" value="" />
+    	<input type="text" value=" &nbsp;è¯·è¾“å…¥æœç´¢å†…å®¹" />
+        <input style="width:40px; background:url(/client/images/search.png) no-repeat center;" type="submit" value="" />
     </div>
     </form>
     <dl class="porfile">
-        <dt><a>°ïÖú</a></dt>
-        <dt><a>Õ¾ÄÚÐÅÏ¢</a></dt>
+    	<dt><a>å¸®åŠ©</a></dt>
+        <dt><a>ç«™å†…ä¿¡æ¯</a></dt>
         <dd>
-            <div><img src="images/porfile_img.png" /></div>
-            <span>Ñ§ÓÑ</span>
-            <p>¹ÜÀíÔ±</p>
+        	<div><img src="/client/images/porfile_img.png" /></div>
+        	<span>å­¦å‹</span>
+            <p>ç®¡ç†å‘˜</p>
             <span id="nav_guide"></span>
         </dd>
         <ul id="porfile_subnav">
-                    <li><a href="#">ÕÊºÅ×ÊÁÏ</a></li>
-                    <li><a href="#">Í·ÏñÉèÖÃ</a></li>
-                    <li><a href="#">ÐÞ¸ÄÃÜÂë</a></li>
-                    <li><a href="#">ÍË³ö</a></li>    
+                	<li><a href="#">å¸å·èµ„æ–™</a></li>
+                    <li><a href="#">å¤´åƒè®¾ç½®</a></li>
+                    <li><a href="#">ä¿®æ”¹å¯†ç </a></li>
+                    <li><a href="/logout">é€€å‡º</a></li>     
         </ul>
     </dl>
 </div>

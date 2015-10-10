@@ -8,10 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 
+import com.ynyes.kjxjr.entity.TdActivityType;
 import com.ynyes.kjxjr.entity.TdAdType;
 import com.ynyes.kjxjr.entity.TdArticleCategory;
 import com.ynyes.kjxjr.entity.TdDemand;
+import com.ynyes.kjxjr.entity.TdEnterpriseType;
 import com.ynyes.kjxjr.entity.TdProductCategory;
+import com.ynyes.kjxjr.entity.TdRegion;
 import com.ynyes.kjxjr.entity.TdSetting;
 import com.ynyes.kjxjr.util.ClientConstant;
 
@@ -54,6 +57,15 @@ public class TdCommonService {
     @Autowired
     private TdAdService tdAdService;
     
+    @Autowired
+    private TdActivityTypeService  tdActivityTypeService;
+    
+    @Autowired
+    private TdEnterpriseTypeService  tdEnterpriseTypeService;
+    
+    @Autowired
+    private TdRegionService  tdRegionService;
+    
     //团购 zhangji
     @Autowired
     private TdDemandService tdDemandService;
@@ -72,6 +84,18 @@ public class TdCommonService {
             map.addAttribute("cart_goods_list",
                     tdCartGoodsService.updateGoodsInfo(tdCartGoodsService.findByUsername(req.getSession().getId())));
         }
+        
+        //活动类型
+        List<TdActivityType> activityTypeList = tdActivityTypeService.findByIsEnableTrueOrderBySortIdAsc();
+        map.addAttribute("activityType_list", activityTypeList);
+        
+        //活动地区
+        List<TdRegion> regionList = tdRegionService.findByIsEnableTrueOrderBySortIdAsc();
+        map.addAttribute("region_list", regionList);
+        
+        //项目归属类别
+        List<TdEnterpriseType> enterpriseTypeList = tdEnterpriseTypeService.findByIsEnableTrueOrderBySortIdAsc();
+        map.addAttribute("enterpriseType_list", enterpriseTypeList);
         
         // 顶部小图广告
         TdAdType adType = tdAdTypeService.findByTitle("搜索框左侧小图广告");
