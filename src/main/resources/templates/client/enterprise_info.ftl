@@ -85,8 +85,8 @@ function showPro(){
         </dl>
      
         	<div style="width:100%;">
-        		<input type="radio"  checked="checked" name="formType" value="0" onClick="javascript:showEnter();"/><span>项目团队表格</span>
-        		<input type="radio"  name="formType" value="1" onClick="javascript:showPro();"/><span>企业组表格</span>
+        		<input type="radio" <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>checked="checked"</#if> name="formType" value="0" onClick="javascript:showEnter();"/><span>企业组表格</span>
+        		<input type="radio" <#if enterprise.formType??&&enterprise.formType==1>checked="checked"</#if> name="formType" value="1" onClick="javascript:showPro();"/><span>项目团队表格</span>
         	</div>
        
     </div>  
@@ -97,40 +97,47 @@ function showPro(){
     	<dt class="dt01"><span>一、基本信息</span><br/><p>此信息将自动生成到报名表中</p></dt>
     	<dd>
 
-    			<div><span class="enter">企业名称：</span><span class="pro hide">项目名称：</span><input type="text" name="title" value="" datatype="*"/></div>
-    			<div><span>成立时间：</span><input type="text" name="establish" value="" datatype="*" ignore="ignore" /></div>
-    			<div><span>注册资本<b style="color:#999;font-size:0.6em;">(万元)</b>：</span><input type="text" name="capital" value="" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"/></div>
-    			<div><span>法定代表人：</span><input type="text" name="representative" datatype="*"value="" /></div>
-    			<div><span>股东结构：</span><textarea name="shareholder" datatype="*"></textarea></div>
+    			<div>
+    			     <span class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>">企业名称：</span>
+    			     <span class="pro <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>hide</#if>">项目名称：</span>
+    			     <input type="text" name="title" value="<#if enterprise.formType??>${enterprise.title!''}</#if>" datatype="*"/>
+    		    </div>
+    			<div><span>成立时间：</span><input type="text" name="establish" value="<#if enterprise.formType??>${enterprise.establish!''}</#if>" datatype="*" ignore="ignore" /></div>
+    			<div><span>注册资本<b style="color:#999;font-size:0.6em;">(万元)</b>：</span><input type="text" name="capital" value="<#if enterprise.formType??>${enterprise.capital!''}</#if>" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"/></div>
+    			<div><span>法定代表人：</span><input type="text" name="representative" datatype="*"value="<#if enterprise.formType??>${enterprise.representative!''}</#if>" /></div>
+    			<div><span>股东结构：</span><textarea name="shareholder" datatype="*"><#if enterprise.formType??>${enterprise.shareholder!''}</#if></textarea></div>
     			<div><span>所在地区：</span>
     				<select name="area" datatype="*">
     					<#if region_list??>
     						<#list region_list as item>
-    							<option value="${item.title!''}">${item.title!''}</option>
+    							<option value="${item.title!''}" <#if enterprise.formType??&&enterprise.area==item.title>selected="selected"</#if>>${item.title!''}</option>
     						</#list>
     					</#if>	
     				</select>
     			</div>
-    			<div  class="enter"><span>职工人数：</span>	<input type="text" name="staffNumber" datatype="n" value="" /></div>
+    			<div  class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>"><span>职工人数：</span>	<input type="text" name="staffNumber" datatype="n" value="<#if enterprise.formType??>${enterprise.staffNumber!''}</#if>" /></div>
     			<div><span>行业归属：</span>
     				<#if enterpriseType_list??>
     					<#list enterpriseType_list as item>
-    						<input style="margin-top: -3px; width:15px;" name="type" type="radio" value="${item.title!''}"/><p>${item.title!''}</p>
+    						<input style="margin-top: -3px; width:15px;" name="type" type="radio" value="${item.title!''}" <#if enterprise.formType??&&enterprise.type==item.title>checked="checked"</#if>/><p>${item.title!''}</p>
     					</#list>
     				</#if>		
 				</div>
-				<div class="pro hide"><span>主要负责人：</span><input type="text"  name="inCharge" datatype="*" ignore="ignore" value="" /></div>
-				<div><span>邮箱：</span><input type="text" name="email" datatype="e"  ignore="ignore" value="" errormsg="请填写邮箱"/></div>
-    			<div><span>联系人：</span><input type="text"  name="contact" datatype="*"  value="" /></div>
-    			<div><span>公司网站：</span><input type="text" name="website" datatype="url"  ignore="ignore" value="" /></div>
-    			<div><span>联系电话：</span><input type="text"  name="telephone" datatype="*" value="" /></div>
-    			<div><span>传真：</span><input type="text"  name="fax" datatype="*"  ignore="ignore" value="" /></div>
-    			<div><span>QQ/MSN：</span><input type="text" name="chat" datatype="*" ignore="ignore"  value="" /></div>
-    			<div><span>手机：</span><input type="text"  name="mobile" datatype="m"  value="" errormsg="请填写手机"/></div>
-    			<div><span class="enter">企业简介：</span><span class="pro hide">团队简介：</span><textarea name="profile" datatype="*5-200"  errormsg="输入5到200字" tip="200字以内"></textarea></div>
-    			<div  class="enter"><span>公司团队：</span><textarea name="teamIntroduction" datatype="*5-200" ignore="ignore" errormsg="输入5到200字"  tip="200字以内"></textarea></div>
-    			<div><span>技术特点及优势：</span><textarea name="advantage" datatype="*5-200" errormsg="输入5到200字"  tip="200字以内"></textarea></div>
-    			<div><span>市场规模行业地位：</span><textarea name="size" datatype="*5-200" errormsg="输入5到200字" tip="200字以内"></textarea></div>
+				<div class="pro <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>hide</#if>"><span>主要负责人：</span><input type="text"  name="inCharge" datatype="*" ignore="ignore" value="<#if enterprise.formType??>${enterprise.inCharge!''}</#if>" /></div>
+				<div><span>邮箱：</span><input type="text" name="email" datatype="e"  ignore="ignore" value="<#if enterprise.formType??>${enterprise.email!''}</#if>" errormsg="请填写邮箱"/></div>
+    			<div><span>联系人：</span><input type="text"  name="contact" datatype="*"  value="<#if enterprise.formType??>${enterprise.contact!''}</#if>" /></div>
+    			<div><span>公司网站：</span><input type="text" name="website" datatype="url"  ignore="ignore" value="<#if enterprise.formType??>${enterprise.website!''}</#if>" /></div>
+    			<div><span>联系电话：</span><input type="text"  name="telephone" datatype="*" value="<#if enterprise.formType??>${enterprise.telephone!''}</#if>" /></div>
+    			<div><span>传真：</span><input type="text"  name="fax" datatype="*"  ignore="ignore" value="<#if enterprise.formType??>${enterprise.fax!''}</#if>" /></div>
+    			<div><span>QQ/MSN：</span><input type="text" name="chat" datatype="*" ignore="ignore"  value="<#if enterprise.formType??>${enterprise.chat!''}</#if>" /></div>
+    			<div><span>手机：</span><input type="text"  name="mobile" datatype="m"  value="<#if enterprise.formType??>${enterprise.mobile!''}</#if>" errormsg="请填写手机"/></div>
+    			<div>
+	    			<span class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>">企业简介：</span>
+	    			<span class="pro <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>hide</#if>">团队简介：</span><textarea name="profile" datatype="*5-200"  errormsg="输入5到200字" tip="200字以内"><#if enterprise.formType??>${enterprise.profile!''}</#if></textarea>
+    			</div>
+    			<div  class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>"><span>公司团队：</span><textarea name="teamIntroduction" datatype="*5-200" ignore="ignore" errormsg="输入5到200字"  tip="200字以内"><#if enterprise.formType??>${enterprise.teamIntroduction!''}</#if></textarea></div>
+    			<div><span>技术特点及优势：</span><textarea name="advantage" datatype="*5-200" errormsg="输入5到200字"  tip="200字以内"><#if enterprise.formType??>${enterprise.advantage!''}</#if></textarea></div>
+    			<div><span>市场规模行业地位：</span><textarea name="size" datatype="*5-200" errormsg="输入5到200字" tip="200字以内"><#if enterprise.formType??>${enterprise.size!''}</#if></textarea></div>
 
     	</dd>
     	<dt class="dt02"><span>二、近三年财务状况（单位：万元）</span><br/><p>此信息将自动生成到报名表中</p></dt>
@@ -145,31 +152,31 @@ function showPro(){
     			</div>
     			<div>
     				<span>2012</span>
-    				<input type="text" name="lastAssets3" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/" value=""  />
-    				<input type="text" name="lastNetAssets3" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value=""  />
-    				<input type="text" name="lastSale3" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value=""  />
-    				<input type="text" name="lastProfit3" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value=""  />
+    				<input type="text" name="lastAssets3" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/" value="<#if enterprise.formType??>${enterprise.lastAssets3!''}</#if>"  />
+    				<input type="text" name="lastNetAssets3" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastNetAssets3!''}</#if>"  />
+    				<input type="text" name="lastSale3" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastSale3!''}</#if>"  />
+    				<input type="text" name="lastProfit3" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastProfit3!''}</#if>"  />
     			</div>
     			<div>
     				<span>2013</span>
-    				<input type="text" name="lastAssets2" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value=""  />
-    				<input type="text" name="lastNetAssets2" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value=""  />
-    				<input type="text" name="lastSale2" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value=""  />
-    				<input type="text" name="lastProfit2" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value=""  />
+    				<input type="text" name="lastAssets2" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastAssets2!''}</#if>"  />
+    				<input type="text" name="lastNetAssets2" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastNetAssets2!''}</#if>"  />
+    				<input type="text" name="lastSale2" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastSale2!''}</#if>"  />
+    				<input type="text" name="lastProfit2" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastProfit2!''}</#if>"  />
     			</div>
     			<div>
     				<span>2014</span>
-    				<input type="text" name="lastAssets1" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value=""  />
-    				<input type="text" name="lastNetAssets1" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value=""  />
-    				<input type="text" name="lastSale1" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value=""  />
-    				<input type="text" name="lastProfit1" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value=""  />
+    				<input type="text" name="lastAssets1" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastAssets1!''}</#if>"  />
+    				<input type="text" name="lastNetAssets1" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastNetAssets1!''}</#if>"  />
+    				<input type="text" name="lastSale1" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastSale1!''}</#if>"  />
+    				<input type="text" name="lastProfit1" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastProfit1!''}</#if>"  />
     			</div>
     	</dd>
     	<dt class="dt03"><span>三、知识产权基本情况</span><br/><p>此信息将自动生成到报名表中</p></dt>
     	<dd>
-    			<div><span>发明专利</span><input type="text" name="inventiPatent" datatype="*" ignore="ignore" value=""  /></div>
-    			<div><span>实用新型专利</span><input type="text"name="newPatent" datatype="*"  ignore="ignore" value=""  /></div>
-    			<div><span>外观设计专利</span><input type="text" name="designPatent" datatype="*"  ignore="ignore"value=""  /></div>
+    			<div><span>发明专利</span><input type="text" name="inventiPatent" datatype="*" ignore="ignore" value="<#if enterprise.formType??>${enterprise.inventiPatent!''}</#if>"  /></div>
+    			<div><span>实用新型专利</span><input type="text"name="newPatent" datatype="*"  ignore="ignore" value="<#if enterprise.formType??>${enterprise.newPatent!''}</#if>"  /></div>
+    			<div><span>外观设计专利</span><input type="text" name="designPatent" datatype="*"  ignore="ignore"value="<#if enterprise.formType??>${enterprise.designPatent!''}</#if>"  /></div>
     	</dd>
     	<dt class="dt04"><span>四、融资信息（单位：万元）</span><br/><p>此信息将自动生成到报名表中</p></dt>
     	<dd>
@@ -181,21 +188,21 @@ function showPro(){
     			</div>
     			<div>
     				<span>（一）股权融资</span>
-    				<input type="text" name="expectEquityDate"  value=""  />
-    				<input type="text" name="expectEquityAmount" value=""  />
-    				<input type="text" name="expectEquityUse" value=""  />
+    				<input type="text" name="expectEquityDate"  value="<#if enterprise.formType??>${enterprise.expectEquityDate!''}</#if>"  />
+    				<input type="text" name="expectEquityAmount" value="<#if enterprise.formType??>${enterprise.expectEquityAmount!''}</#if>"  />
+    				<input type="text" name="expectEquityUse" value="<#if enterprise.formType??>${enterprise.expectEquityUse!''}</#if>"  />
     			</div>
     			<div>
     				<span>（二）债权融资</span>
-    				<input type="text" name="expectBondDate" value=""  />
-    				<input type="text" name="expectBondAmount" value=""  />
-    				<input type="text" name="expectBondUse" value=""  />
+    				<input type="text" name="expectBondDate" value="<#if enterprise.formType??>${enterprise.expectBondDate!''}</#if>"  />
+    				<input type="text" name="expectBondAmount" value="<#if enterprise.formType??>${enterprise.expectBondAmount!''}</#if>"  />
+    				<input type="text" name="expectBondUse" value="<#if enterprise.formType??>${enterprise.expectBondUse!''}</#if>"  />
     			</div>
     			<div>
     				<p>是否愿意将贵公司所填以上信息向投资金融平台披露</p>
-    			<input style=" width:15px;"  type="radio"  checked="checked" name="isShow" value="true" />
+    			<input style=" width:15px;"  type="radio" <#if enterprise.formType??&& enterprise.isShow ||!enterprise.formType??> checked="checked"</#if> name="isShow" value="true" />
     			<span style=" width:auto; display: block; margin-left: 10px; margin-top: 3px; ">是（同意请加盖公司公章）</span>
-        		<input style=" width:15px;" type="radio"  name="isShow" value="false" />
+        		<input style=" width:15px;" type="radio"  <#if enterprise.formType??&& !enterprise.isShow> checked="checked"</#if> name="isShow" value="false" />
         		<span style=" width:auto; display: block; margin-left: 10px; margin-top:3px;">否</span>
     			</div>
     	</dd>

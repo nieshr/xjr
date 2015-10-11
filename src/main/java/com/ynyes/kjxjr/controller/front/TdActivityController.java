@@ -126,27 +126,17 @@ public class TdActivityController {
      * 创建活动:选项目
      * 
      */
-    @RequestMapping(value = "/selectEnterprise", method = RequestMethod.POST)
-    public String  selectEnterprise(HttpServletRequest req,TdActivity tdActivity,
+    @RequestMapping(value = "/selectEnterprise")
+    public String  selectEnterprise(HttpServletRequest req,
     		ModelMap map) {
         String username = (String) req.getSession().getAttribute("activityUsername");
 
         if (null == username) {
             return "redirect:/login";
         }
-        //活动创建的状态:第一步为0，第二步为1
-        Long statusId = tdActivity.getStatusId();
-        if (statusId == 0L)
-        {
-        	tdActivity.setStatusId(1L);
-        }
-        else if (null ==statusId)
-        {
-        	tdActivity.setStatusId(0L);
-        }
       
-       	tdActivityService.save(tdActivity);
-       	map.addAttribute("activity", tdActivity);
+        TdActivity activity = tdActivityService.findByStatusId(0L);
+       	map.addAttribute("activity", activity);
      	map.addAttribute("statusId", 0);
      	map.addAttribute("enterprise_list", tdEnterpriseService.findAllOrderBySortIdAsc(0,ClientConstant.pageSize));
      	map.addAttribute("region_list", tdRegionService.findByIsEnableTrueOrderBySortIdAsc());
@@ -158,7 +148,7 @@ public class TdActivityController {
      * 创建活动:选专家评委
      * 
      */
-    @RequestMapping(value = "/selectExpert", method = RequestMethod.POST)
+    @RequestMapping(value = "/selectExpert")
     public String  selectExpert(HttpServletRequest req,TdActivity tdActivity,
     		ModelMap map) {
         String username = (String) req.getSession().getAttribute("activityUsername");
@@ -183,6 +173,73 @@ public class TdActivityController {
      	map.addAttribute("enterpriseType_list", tdEnterpriseTypeService.findByIsEnableTrueOrderBySortIdAsc());
         return "/client/activity_selectExpert";
     }
+    
+    @RequestMapping(value = "/bufferEn", method = RequestMethod.GET)
+    @ResponseBody
+    public  Map<String, Object> activityBuffer(HttpServletRequest req,
+    											ModelMap map,
+    											Long id,
+    											String title,
+    											String type,
+    											String region,
+    											String date,
+    											String address,
+    											String theme,
+    											String introduction,
+    											String prepareOn,
+    											String prepareOff,
+    											String eventEnd) throws java.text.ParseException {
+        Map<String, Object> res = new HashMap<String, Object>();
+        res.put("code", 1);
+    	
+        String username = (String) req.getSession().getAttribute("activityUsername");
+
+        if (null == username) {
+        	res.put("msg", "请先登录！");
+            return res;
+        }
+        
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        Date dateF = sdf.parse(date);
+//        Date prepareOnF = sdf.parse(prepareOn);
+//        Date prepareOffF = sdf.parse(prepareOff);
+//        Date eventEndF = sdf.parse(eventEnd);
+        if (null!=id)
+        {
+        	TdActivity activity = tdActivityService.findOne(id);
+        	activity.setTitle(title);
+        	activity.setType(type);
+        	activity.setRegion(region);
+//        	activity.setDate(dateF);
+        	activity.setAddress(address);
+        	activity.setTheme(theme);
+        	activity.setIntroduction(introduction);
+//        	activity.setPrepareOn(prepareOnF);
+//        	activity.setPrepareOff(prepareOffF);
+//        	activity.setEventEnd(eventEndF);
+        	tdActivityService.save(activity);
+        }
+        else
+        {
+        	TdActivity activity = new TdActivity();
+        	activity.setTitle(title);
+//        	activity.setType(type);
+        	activity.setRegion(region);
+//        	activity.setDate(dateF);
+        	activity.setAddress(address);
+        	activity.setTheme(theme);
+        	activity.setIntroduction(introduction);
+//        	activity.setPrepareOn(prepareOnF);
+//        	activity.setPrepareOff(prepareOffF);
+//        	activity.setEventEnd(eventEndF);
+        	activity.setStatusId(0L);
+        	tdActivityService.save(activity);
+        }
+       
+        res.put("code", 0);
+        return res;
+    }
+    
     
     @RequestMapping(value = "/submit", method = RequestMethod.POST)
     @ResponseBody

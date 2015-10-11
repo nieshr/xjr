@@ -111,7 +111,7 @@ public class TdEnterpriseController {
             return res;
         }
         TdUser user = tdUserService.findByUsername(username);
-        String id = tdEnterprise.getId().toString();
+        Long id = tdEnterprise.getId();
         String number = String.format("%04d", id);
         
         tdEnterprise.setNumber(number);

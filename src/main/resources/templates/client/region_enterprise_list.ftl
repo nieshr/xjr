@@ -76,39 +76,30 @@
         </div>
 		<table class="new_list">
         	<tr class="list_title">
-        		<th>编号</th>
+        		<th width="10%">编号</th>
         		<th>名称<th>
-        		<th>地址</th>
-        		<th>注册资本</th>
-        		<th>法人代表</th>
-        		<th>操作</th>
+        		<th width="15%">地区</th>
+        		<th width="15%">注册资本</th>
+        		<th width="15%">法人代表</th>
+        		<th width="15%">操作</th>
         	</tr>
         <#if enterprise_page??>
-        	<#list enterprise_page as item>
+        	<#list enterprise_page.content as item>
 	        	<tr>
-	        		<td width="160px">${item.}</td>
-	        		<td>DC12v充电式太阳能电风扇<td>
-	        		<td>2014-12-12</td>
-	        		<td><a href="#">详情查看</a> | <a href="#">下载模板</a> | <a href="#">上传</a> </td>
+	        		<td>${item.number!''}</td>
+	        		<td>${item.title!''}<td>
+	        		<td>${item.area!''}</td>
+	        		<td style="color:#529c15;">${item.capital!''}万元</td>
+	        		<td style="color:#e67817;">${item.representative!''}</td>
+	        		<td><#if item.statusId == 0>
+	        		     <a href="/region/enterprise/check/${item.id?c!''}">审核</a>
+	        		    <#elseif item.statusId == 1>
+	        		     <a href="/region/enterprise/check/${item.id?c!''}">取消审核</a>
+	        		    </#if>
+	        		     | <a href="#">站内信</a>
 	        	</tr>
-        	<tr>
-        		<td width="160px">每周行</td>
-        		<td>DC12v充电式太阳能电风扇<td>
-        		<td>2014-12-12</td>
-        		<td><a href="#">详情查看</a> | <a href="#">下载模板</a> | <a href="#">上传</a> </td>
-        	</tr>
-        	<tr>
-        		<td width="160px">每周行</td>
-        		<td>DC12v充电式太阳能电风扇<td>
-        		<td>2014-12-12</td>
-        		<td><a href="#">详情查看</a> | <a href="#">下载模板</a> | <a href="#">上传</a> </td>
-        	</tr>
-        	<tr>
-        		<td width="160px">每周行</td>
-        		<td>DC12v充电式太阳能电风扇<td>
-        		<td>2014-12-12</td>
-        		<td><a href="#">详情查看</a> | <a href="#">下载模板</a> | <a href="#">上传</a> </td>
-        	</tr>
+        	</#list>
+        </#if>	   
         </table>
     </div> 
     </div>

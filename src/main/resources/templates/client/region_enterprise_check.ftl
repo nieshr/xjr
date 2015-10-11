@@ -2,8 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>查看资料</title>
-<link rel="shortcut icon" href="images/icon.ico" />
+<title>审核</title>
 <link rel="shortcut icon" href="/client/images/icon.ico" />
 <link href="/client/css/base.css" rel="stylesheet" type="text/css" />
 <link href="/client/css/team.css" rel="stylesheet" type="text/css" />
@@ -20,31 +19,37 @@
 <!--content-->
 <div class="content">
 <!--left-->
-	<div class="leftbar">
-		<dl class="nav">
-            <dd><a href="#">基本资料</a></dd>
+    <div class="leftbar">
+        <dl class="nav">
+            <dd><a href="#">企业列表</a></dd>
             <dd><a href="#">活动列表</a></dd>
-            <dd><a href="#">申请展示</a></dd>
+            <dd><a href="#">档案跟踪</a></dd>
 
-		</dl>
-	</div>
+        </dl>
+    </div>
 <!--right-->
     <div class="right_content">
     <div class="right_box">
-    	<dl class="crumb">
-        	<dt><a href="#"></a></dt>
+        <dl class="crumb">
+            <dt><a href="#"></a></dt>
             <dd>
-            	<p>当前所在位置:</p>
+                <p>当前所在位置:</p>
 
-                <a href="#">基本资料</a>
-
+                <a href="#">区县管理</a>
+                <p>&gt;</p>
+                <a href="#">企业审核</a>
             </dd>
 
         </dl>
         <div class="change_inform">
-    		<span>审核状态：<#if enterprise.statusId == 1>已通过<#elseif enterprise.statusId == 0> 待审核</#if></span>
-    		<input style="cursor:pointer;" type="button" value="修改基本资料" onclick="location.href='/enterprise/info'"/>
-    	</div>
+            <#if enterprise.statusId == 0>
+            <span>审核状态： 待审核</span>
+            <input style="cursor:pointer;" type="button" value="审核通过 " onclick="location.href='/region/enterprise/pass/${enterprise.id?c!''}'"/>            
+            <#elseif enterprise.statusId == 1>
+            <span>审核状态：已通过</span>
+            <input style="cursor:pointer;" type="button" value="取消审核 " onclick="location.href='/region/enterprise/recall/${enterprise.id?c!''}'"/>
+            </#if>
+        </div>
     </div>  
  
       <form>
@@ -107,8 +112,8 @@
                 </div>
                 <div>
                     <span>2012</span>
-                    <input type="text" value="${enterprise.lastAssetes3!''}"  disabled="" />
-                    <input type="text" value="${enterprise.lastNetAssetes3!''}"  disabled="" />
+                    <input type="text" value="${enterprise.lastAssets3!''}"  disabled="" />
+                    <input type="text" value="${enterprise.lastNetAssets3!''}"  disabled="" />
                     <input type="text" value="${enterprise.lastSale3!''}"  disabled="" />
                     <input type="text" value="${enterprise.lastProfit3!''}"  disabled="" />
                 </div>

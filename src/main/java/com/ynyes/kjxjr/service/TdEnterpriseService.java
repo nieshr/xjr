@@ -79,6 +79,8 @@ public class TdEnterpriseService {
      * @param ids
      * @return
      */
+
+    
     public List<TdEnterprise> findAll(Iterable<Long> ids)
     {
         return (List<TdEnterprise>) repository.findAll(ids);
@@ -99,6 +101,13 @@ public class TdEnterpriseService {
     public Page<TdEnterprise> findAllOrderByCreateTimeDesc(int page, int size)
     {
         PageRequest pageRequest = new PageRequest(page, size, new Sort(Direction.DESC, "createTime"));
+        
+        return repository.findAll(pageRequest);
+    }
+    
+    public Page<TdEnterprise> findAllOrderByNumberAsc(int page, int size)
+    {
+        PageRequest pageRequest = new PageRequest(page, size, new Sort(Direction.ASC, "number"));
         
         return repository.findAll(pageRequest);
     }

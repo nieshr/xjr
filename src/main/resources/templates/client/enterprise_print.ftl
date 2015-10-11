@@ -63,26 +63,27 @@
     	<dd>
 
     			<div><span><#if enterprise.formType == 0>企业名称<#else> 项目名称</#if>：</span><input type="text" value="${enterprise.title!''}" disabled="" /></div>
+    			<div><span>编号：</span><input type="text" value="${enterprise.number!''}" disabled="" /></div>
     			<div><span>成立时间：</span><input type="text" value="${enterprise.establish!''}" disabled="" /></div>
     			<div><span>注册资本：</span><input type="text" value="${enterprise.capital!''}" disabled="" />&nbsp;&nbsp;(万元)</div>
     			<div><span>法定代表人：</span><input type="text" value="${enterprise.representative!''}" disabled="" /></div>
     			<div><span>股东结构：</span><textarea disabled="" >${enterprise.shareholder!''}</textarea></div>
     			<div><span>所在地区：</span>
     				<select disabled="" >
-    					<option>江北</option>
-    					<option>南岸</option>
-    					<option>巴南</option>
-    					<option>合川</option>
-    					<option>荣昌</option>
+                        <#if region_list??>
+                            <#list region_list as item>
+                                <option value="${item.title!''}" <#if enterprise.area==item.title>selected="selected"</#if>>${item.title!''}</option>
+                            </#list>
+                        </#if>  
     				</select>
     			</div>
     			<#if enterprise.formType == 0>
     			<div><span>职工人数：</span><input type="text" value="${enterprise.staffNumber!''}" disabled="" />&nbsp;&nbsp;(人)</div>
     			</#if>
     			<div><span>行业归属：</span>
-    				<#if type_list??>
-    					<#list type_list as item>
-    						<input style="margin-top: -3px; width:15px;" name="type" type="radio" <#if enterprise.type==item.title>selected="selected" </#if>value="${item.title!''}"/><p>${item.title!''}</p>
+    				<#if enterpriseType_list??>
+    					<#list enterpriseType_list as item>
+    						<input disabled="" style="margin-top: -3px; width:15px;" name="type" type="radio" <#if enterprise.type==item.title>checked="checked" </#if>value="${item.title!''}"/><p>${item.title!''}</p>
     					</#list>
     				</#if>	
 				</div>

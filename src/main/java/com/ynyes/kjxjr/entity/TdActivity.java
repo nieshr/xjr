@@ -34,7 +34,7 @@ public class TdActivity {
    
     // 活动类型
     @Column
-    private Long type;
+    private String type;
     
     // 活动地区
     @Column
@@ -62,6 +62,13 @@ public class TdActivity {
     @Column
     private Long statusId;
     
+    //活动创建状态：选择项目 0未完成；1已完成；
+    @Column
+    private Long statusEn;
+    
+    //活动创建状态：选择专家 0未完成；1已完成；
+    @Column
+    private Long statusEx;
     // 简介
     @Column
     @Lob
@@ -114,11 +121,11 @@ public class TdActivity {
 		this.title = title;
 	}
 
-	public Long getType() {
+	public String getType() {
 		return type;
 	}
 
-	public void setType(Long type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 
@@ -216,6 +223,22 @@ public class TdActivity {
 
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+
+	public Long getStatusEn() {
+		return statusEn;
+	}
+
+	public void setStatusEn(Long statusEn) {
+		this.statusEn = statusEn;
+	}
+
+	public Long getStatusEx() {
+		return statusEx;
+	}
+
+	public void setStatusEx(Long statusEx) {
+		this.statusEx = statusEx;
 	}
     
     

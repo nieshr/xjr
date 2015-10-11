@@ -32,6 +32,37 @@ $(document).ready(function(){
     });
 });
 
+$(function(){
+    $('#selectEnterprise').click(function(){
+         $.ajax({
+             type: "GET",
+             url: "/activity/bufferEn",
+             contentType: "application/json; charset=utf-8",
+             data: {id:$("#id").val(), 
+            	   title:$("#title").val(), 
+            	   type:$("#type").val(),
+            	   region:$("#region").val(),
+            	   date:$("#date").val(),
+            	   address:$("#address").val(),
+            	   theme:$("#theme").val(),
+            	   introduction:$("#introduction").val(),
+            	   prepareOn:$("#prepareOn").val(),
+            	   prepareOff:$("#prepareOff").val(),
+            	   eventEnd:$("#eventEnd").val()},
+             dataType: "json",
+             success: function(data){
+		                 if (data.code == 0)
+		                 {
+		                     location.href="/activity/selectEnterprise";
+		                 }
+		                 else 
+		                 {
+		                     alert(data.msg);
+		                 }
+                      }
+         });
+    });
+});
 </script>
 <style>
 .Validform_wrong {  background-position: 20px center;}
@@ -72,11 +103,13 @@ $(document).ready(function(){
     <form action="/activity/submit" id="form1" method="post">
     <dl class="active_content">
     	<dd>
-
-    			<div><span>活动名称：</span><input type="text" name="title" datatype="*"value="<#if activity??>${activity.title!''}</#if>" /></div>
+            <#if activity??>
+                <input type="hidden" name="id" id="id" value="${activity.id?c!''}"/>
+            </#if>
+    			<div><span>活动名称：</span><input type="text" name="title" id="title" datatype="*"value="<#if activity??>${activity.title!''}</#if>" /></div>
     			<div>
     				<span>活动类型：</span>
-    				<select name="type" datatype="*">
+    				<select name="type" id="type" datatype="*">
     				    <#if activityType_list??>
     				        <#list activityType_list as item>
     					        <option value="${item.title!''}" <#if activity?? &&activity.type == item.title>selected="selected"</#if>>${item.title!''}</option>
@@ -86,7 +119,7 @@ $(document).ready(function(){
     			</div>
     			<div>
     			    <span>地区 ：</span>
-                    <select name="region" datatype="*">
+                    <select name="region" id="region" datatype="*">
                         <#if region_list??>
                             <#list region_list as item>
                                 <option value="${item.title!''}" <#if activity?? &&activity.region == item.title>selected="selected"</#if>>${item.title!''}</option>
@@ -96,22 +129,22 @@ $(document).ready(function(){
     			</div>
     			<div><span>日期：</span>
 	    		
-	                    <input name="date" type="text" id="txtAddTime" value="<#if activity??>${activity.date!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="请选择正确的日期" sucmsg=" ">
+	                    <input name="date" type="text" id="date" value="<#if activity??>${activity.date!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="填写正确格式" sucmsg=" ">
 	            </div>    
     			
-    			<div><span>地址：</span><input type="text" name="address" datatype="*" value="<#if activity??>${activity.address!''}</#if>" /></div>
-    			<div><span>主题：</span><input type="text" name="theme" datatype="*"  value="<#if activity??>${activity.theme!''}</#if>" /></div>
+    			<div><span>地址：</span><input type="text" name="address" id="address" datatype="*" value="<#if activity??>${activity.address!''}</#if>" /></div>
+    			<div><span>主题：</span><input type="text" name="theme" id="theme" datatype="*"  value="<#if activity??>${activity.theme!''}</#if>" /></div>
     			
-				<div><span>简介：</span><textarea  name="introduction" datatype="*" ><#if activity??>${activity.introduction!''}</#if></textarea></div>
+				<div><span>简介：</span><textarea  name="introduction" id="introduction" datatype="*" ><#if activity??>${activity.introduction!''}</#if></textarea></div>
     			<div>
     				<span>筹备开始时刻：</span>
-                        <input name="prepareOn" type="text" id="txtAddTime" value="<#if activity??>${activity.prepareOn!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="请选择正确的日期" sucmsg=" ">
+                        <input name="prepareOn" id="prepareOn" type="text"  value="<#if activity??>${activity.prepareOn!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="填写正确格式" sucmsg=" ">
     				<span>筹备结束时刻：</span>
-                        <input name="prepareOff" type="text" id="txtAddTime" value="<#if activity??>${activity.prepareOff!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="请选择正确的日期" sucmsg=" ">
+                        <input name="prepareOff" id="prepareOff" type="text" value="<#if activity??>${activity.prepareOff!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="填写正确格式" sucmsg=" ">
     			</div>
     			<div>
     			    <span>活动结束时刻：</span>
-                    <input name="eventEnd" type="text" id="txtAddTime" value="<#if activity??>${activity.eventEnd!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="请选择正确的日期" sucmsg=" ">
+                    <input name="eventEnd" id="eventEnd" type="text" value="<#if activity??>${activity.eventEnd!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="填写正确格式" sucmsg=" ">
     			</div>
     			<div><span>添加文件：</span><input type="file" value="" /></div>
     			<div>
@@ -144,7 +177,9 @@ $(document).ready(function(){
 		    					</li>
     					    </#list>
     					</#if>    
-    					<input style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background:white url(images/active_add_project.png) no-repeat 10px; padding-left: 13px;" type="button" value="添加项目" />
+
+    					<input id="selectEnterprise" style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background:white url(images/active_add_project.png) no-repeat 10px; padding-left: 13px;" type="button" value="添加项目" />
+    				   
     				</ul>
     			</div>
     			
@@ -176,7 +211,7 @@ $(document).ready(function(){
     			
     
     	<dt style=" margin-top: 40px;" class="dt05">
-    		<input type="submit" value="创建" />
+    		<input type="submit" value="创建" style="cursor:pointer;"/>
     	</dt>
     </dl>
     </form>
