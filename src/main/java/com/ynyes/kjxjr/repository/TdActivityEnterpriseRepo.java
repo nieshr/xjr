@@ -20,6 +20,7 @@ public interface TdActivityEnterpriseRepo extends
 		PagingAndSortingRepository<TdActivityEnterprise, Long>,
 		JpaSpecificationExecutor<TdActivityEnterprise> 
 { 
-    
+	TdActivityEnterprise findByActivityIdAndEnterpriseId(Long activityId,Long enterpriseId);
+	List<TdActivityEnterprise> findByActivityId(Long activityId);
 
 }

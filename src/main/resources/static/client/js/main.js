@@ -30,3 +30,57 @@ $(function(){
 
 
 /*表格冻结*/
+
+
+//添加筛选企业
+function addEnterprise(id,activityId)
+{
+    $.ajax({
+        type:"post",
+        url:"/activity/addEnterprise",
+        data:{"id":id,"activityId":activityId},
+        success:function(data){
+            $("#selectedEnterprise").html(data);
+        }
+    });
+}
+
+//取消筛选企业
+function removeEnterprise(id,activityId)
+{
+    $.ajax({
+        type:"post",
+        url:"/activity/removeEnterprise",
+        data:{"id":id,"activityId":activityId},
+        success:function(data){
+            $("#selectedEnterprise").html(data);
+        }
+    });
+}
+
+
+//添加筛选专家
+function addExpert(id,activityId)
+{
+    $.ajax({
+        type:"post",
+        url:"/activity/addExpert",
+        data:{"id":id,"activityId":activityId},
+        success:function(data){
+            $("#selectedExpert").html(data);
+        }
+    });
+}
+
+//取消筛选专家
+function removeExpert(id,activityId)
+{
+    $.ajax({
+        type:"post",
+        url:"/activity/removeExpert",
+        data:{"id":id,"activityId":activityId},
+        success:function(data){
+            $("#selectedExpert").html(data);
+        }
+    });
+}

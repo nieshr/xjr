@@ -72,7 +72,14 @@ public class TdActivityEnterpriseService {
         return repository.findOne(id);
     }
     
-
+    public TdActivityEnterprise findByActivityIdAndEnterpriseId(Long activityId,Long enterpriseId)
+    {
+    	if (null == enterpriseId || null ==activityId )
+    	{
+    		return null;
+    	}
+    	return repository.findByActivityIdAndEnterpriseId(activityId,enterpriseId);
+    }
     /**
      * 查找
      * 
@@ -84,7 +91,10 @@ public class TdActivityEnterpriseService {
         return (List<TdActivityEnterprise>) repository.findAll(ids);
     }
     
-
+    public List<TdActivityEnterprise> findByActivityId(Long activityId)
+    {
+        return (List<TdActivityEnterprise>) repository.findByActivityId(activityId);
+    }
     
     public Page<TdActivityEnterprise> findAllOrderBySortIdAsc(int page, int size)
     {

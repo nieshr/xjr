@@ -21,12 +21,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ynyes.kjxjr.entity.TdActivity;
+import com.ynyes.kjxjr.entity.TdActivityEnterprise;
+import com.ynyes.kjxjr.entity.TdActivityExpert;
+import com.ynyes.kjxjr.entity.TdEnterprise;
+import com.ynyes.kjxjr.entity.TdExpert;
 import com.ynyes.kjxjr.entity.TdUser;
 import com.ynyes.kjxjr.service.TdCommonService;
 import com.ynyes.kjxjr.service.TdCouponService;
 import com.ynyes.kjxjr.service.TdEnterpriseService;
 import com.ynyes.kjxjr.service.TdEnterpriseTypeService;
 import com.ynyes.kjxjr.service.TdExpertService;
+import com.ynyes.kjxjr.service.TdActivityEnterpriseService;
+import com.ynyes.kjxjr.service.TdActivityExpertService;
 import com.ynyes.kjxjr.service.TdActivityService;
 import com.ynyes.kjxjr.service.TdActivityTypeService;
 import com.ynyes.kjxjr.service.TdOrderService;
@@ -72,6 +78,12 @@ public class TdActivityController {
 	
 	@Autowired
 	TdExpertService tdExpertService;
+	
+	@Autowired
+	TdActivityEnterpriseService tdActivityEnterpriseService;
+	
+	@Autowired
+	TdActivityExpertService tdActivityExpertService;
 	   /**
      * 企业填写资料
      * @author Zhangji
@@ -87,9 +99,14 @@ public class TdActivityController {
             return "redirect:/login";
         }
 
+        if (null == page)
+        {
+        	page = 0;
+        }
         tdCommonService.setHeader(map, req);
 
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
+        map.addAttribute("activity_page", tdActivityService.findAllOrderByIdDesc(page, ClientConstant.pageSize));
 //        Page<TdActivity> activityPage = tdActivityService.findAllOrderByIdDesc(page,  ClientConstant.pageSize);
         
 //        map.addAttribute("activity_page", activityPage);
@@ -109,9 +126,44 @@ public class TdActivityController {
         tdCommonService.setHeader(map, req);
         
         TdActivity activity = tdActivityService.findByStatusId(0L);
+        if (null != activity)
+        {
+	        map.addAttribute("activity", activity);
+	        map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityId(activity.getId()));
+	        map.addAttribute("selected_expert_list", tdActivityExpertService.findByActivityId(activity.getId()));
+        }
+
+        TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
+//        Page<TdActivity> activityPage = tdActivityService.findAllOrderByIdDesc(page,  ClientConstant.pageSize);
+        
+//        map.addAttribute("activity_page", activityPage);
+        map.addAttribute("user", user);
+
+        return "/client/activity_create";
+    }
+    
+    //完成项目选择
+    @RequestMapping(value = "/enterprise/finish", method = RequestMethod.GET)
+    public String enterpriseFinish(HttpServletRequest req, ModelMap map,Long id) {
+        String username = (String) req.getSession().getAttribute("activityUsername");
+
+        if (null == username) {
+            return "redirect:/login";
+        }
+
+        tdCommonService.setHeader(map, req);
+        
+        TdActivity activity = tdActivityService.findOne(id);
+        Long statusId = activity.getStatusId();
+        if(0 == statusId)
+        {
+        	activity.setStatusEn(1L);
+
+        	tdActivityService.save(activity);
+        }
         map.addAttribute("activity", activity);
-        map.addAttribute("activityType_list", tdActivityTypeService.findByIsEnableTrueOrderBySortIdAsc());
-        map.addAttribute("region_list", tdRegionService.findByIsEnableTrueOrderBySortIdAsc());
+        map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityId(activity.getId()));
+        map.addAttribute("selected_expert_list", tdActivityExpertService.findByActivityId(activity.getId()));
         
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
 //        Page<TdActivity> activityPage = tdActivityService.findAllOrderByIdDesc(page,  ClientConstant.pageSize);
@@ -122,12 +174,206 @@ public class TdActivityController {
         return "/client/activity_create";
     }
     
+    
+    //完成项目选择
+    @RequestMapping(value = "/expert/finish", method = RequestMethod.GET)
+    public String enxpertFinish(HttpServletRequest req, ModelMap map,Long id) {
+        String username = (String) req.getSession().getAttribute("activityUsername");
+
+        if (null == username) {
+            return "redirect:/login";
+        }
+
+        tdCommonService.setHeader(map, req);
+        
+        TdActivity activity = tdActivityService.findOne(id);
+        if(0L ==activity.getStatusId())
+        {
+        	activity.setStatusEx(1L);
+
+        	tdActivityService.save(activity);
+        }
+        map.addAttribute("activity", activity);
+        map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityId(activity.getId()));
+        map.addAttribute("selected_expert_list", tdActivityExpertService.findByActivityId(activity.getId()));
+        
+        TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
+//        Page<TdActivity> activityPage = tdActivityService.findAllOrderByIdDesc(page,  ClientConstant.pageSize);
+        
+//        map.addAttribute("activity_page", activityPage);
+        map.addAttribute("user", user);
+
+        return "/client/activity_create";
+    }
     /*
      * 创建活动:选项目
      * 
      */
     @RequestMapping(value = "/selectEnterprise")
     public String  selectEnterprise(HttpServletRequest req,
+    		ModelMap map,
+    		Integer page,
+    		String keywords,
+    		String area,
+    		String type,
+    		Long formType) {
+        String username = (String) req.getSession().getAttribute("activityUsername");
+
+        if (null == username) {
+            return "redirect:/login";
+        }
+        
+        if (null == page)
+        {
+        	page = 0;
+        }
+        //搜索
+        Page<TdEnterprise>enterprisePage = null;
+        if (null != keywords && !keywords.isEmpty())
+        {
+        	if(null != area && !area.isEmpty())
+        	{
+        		if (null != type && !type.isEmpty())
+        		{
+        			if(null != formType)
+        			{
+        				//123
+        				enterprisePage = tdEnterpriseService.findByAreaAndTypeAndFormTypeAndSearch(area, type, formType, keywords, page, ClientConstant.pageSize);
+        			}
+        			else
+        			{
+        				//12
+        				enterprisePage = tdEnterpriseService.findByAreaAndTypeAndSearch(area, type,keywords, page, ClientConstant.pageSize);
+        			}
+        		}
+            	else
+            	{
+            		if(null != formType)
+            		{
+            			//13
+            			enterprisePage = tdEnterpriseService.findByAreaAndFormTypeAndSearch(area,formType,keywords, page, ClientConstant.pageSize);
+            		}
+            		else
+            		{
+            			//1
+            			enterprisePage = tdEnterpriseService.findByAreaAndSearch(area, keywords, page, ClientConstant.pageSize);
+            		}
+            	}
+        	}
+        	else
+        	{
+        		if(null != type && !type.isEmpty())
+	        	{
+	        		if(null != formType)
+	        		{
+	        			//23
+	        			enterprisePage = tdEnterpriseService.findByTypeAndFormTypeAndSearch(type,formType,keywords, page, ClientConstant.pageSize);
+	        		}
+	        		else
+	        		{
+	        			//2
+	        			enterprisePage = tdEnterpriseService.findByTypeAndSearch(type, keywords, page, ClientConstant.pageSize);
+	        		}
+	        	}
+        		else
+        		{
+        			if (null != formType )
+        			{
+        				//3
+        				enterprisePage = tdEnterpriseService.findByFormTypeAndSearch(formType, keywords, page, ClientConstant.pageSize);
+        			}
+        			else
+        			{
+        				//0
+        				enterprisePage = tdEnterpriseService.findBySearch(keywords,page, ClientConstant.pageSize);
+        			}
+        		}
+        	}
+        }
+        else
+        {
+        	if(null != area && !area.isEmpty())
+        	{
+        		if (null != type && !type.isEmpty())
+        		{
+        			if(null != formType)
+        			{
+        				//123
+        				enterprisePage = tdEnterpriseService.findByAreaAndTypeAndFormType(area, type, formType, page, ClientConstant.pageSize);
+        			}
+        			else
+        			{
+        				//12
+        				enterprisePage = tdEnterpriseService.findByAreaAndType(area, type, page, ClientConstant.pageSize);
+        			}
+        		}
+            	else
+            	{
+            		if(null != formType)
+            		{
+            			//13
+            			enterprisePage = tdEnterpriseService.findByAreaAndFormType(area,formType,page, ClientConstant.pageSize);
+            		}
+            		else
+            		{
+            			//1
+            			enterprisePage = tdEnterpriseService.findByArea(area,  page, ClientConstant.pageSize);
+            		}
+            	}
+        	}
+        	else
+        	{
+        		if(null != type && !type.isEmpty())
+	        	{
+	        		if(null != formType)
+	        		{
+	        			//23
+	        			enterprisePage = tdEnterpriseService.findByTypeAndFormType(type,formType,page, ClientConstant.pageSize);
+	        		}
+	        		else
+	        		{
+	        			//2
+	        			enterprisePage = tdEnterpriseService.findByType(type, page, ClientConstant.pageSize);
+	        		}
+	        	}
+        		else
+        		{
+        			if (null != formType )
+        			{
+        				//3
+        				enterprisePage = tdEnterpriseService.findByFormType(formType, page, ClientConstant.pageSize);
+        			}
+        			else
+        			{
+        				//0
+        				enterprisePage = tdEnterpriseService.findAllOrderBySortIdAsc(page, ClientConstant.pageSize);
+        			}
+        		}
+        	}
+        }    	
+      
+       
+        	
+      
+        
+        TdActivity activity = tdActivityService.findByStatusId(0L);
+        Long activityId = activity.getId();
+        map.addAttribute("keywords", keywords);
+        map.addAttribute("area", area);
+        map.addAttribute("type", type);
+        map.addAttribute("formType", formType);
+       	map.addAttribute("activity", activity);
+       	map.addAttribute("activityId", activityId);
+     	map.addAttribute("statusId", 0);
+     	map.addAttribute("enterprise_page", enterprisePage);
+     	map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityId(activityId));
+     	map.addAttribute("region_list", tdRegionService.findByIsEnableTrueOrderBySortIdAsc());
+     	map.addAttribute("enterpriseType_list", tdEnterpriseTypeService.findByIsEnableTrueOrderBySortIdAsc());
+        return "/client/activity_selectEnterprise";
+    }
+
+    @RequestMapping(value = "/addEnterprise")
+    public String  addEnterprise(HttpServletRequest req,Long id,Long activityId,
     		ModelMap map) {
         String username = (String) req.getSession().getAttribute("activityUsername");
 
@@ -135,44 +381,287 @@ public class TdActivityController {
             return "redirect:/login";
         }
       
-        TdActivity activity = tdActivityService.findByStatusId(0L);
-       	map.addAttribute("activity", activity);
-     	map.addAttribute("statusId", 0);
-     	map.addAttribute("enterprise_list", tdEnterpriseService.findAllOrderBySortIdAsc(0,ClientConstant.pageSize));
-     	map.addAttribute("region_list", tdRegionService.findByIsEnableTrueOrderBySortIdAsc());
-     	map.addAttribute("enterpriseType_list", tdEnterpriseTypeService.findByIsEnableTrueOrderBySortIdAsc());
-        return "/client/activity_selectEnterprise";
+        if(null != id&&null !=activityId)
+        {
+        	TdEnterprise enterprise = tdEnterpriseService.findOne(id);
+        	TdActivity activity = tdActivityService.findOne(activityId);
+        	
+        	TdActivityEnterprise ActivityEnterprise = tdActivityEnterpriseService.findByActivityIdAndEnterpriseId(activityId,id);
+        	if (null == ActivityEnterprise)
+        	{
+        		TdActivityEnterprise newEnter =new  TdActivityEnterprise();
+        		newEnter.setEnterpriseId(id);
+        		newEnter.setCreateTime(new Date());
+        		newEnter.setEnterpriseTitle(enterprise.getTitle());
+        		newEnter.setActivityId(activity.getId());
+        		newEnter.setActivityTitle(activity.getTitle());
+        		newEnter.setArea(enterprise.getArea());
+        		newEnter.setType(enterprise.getType());
+        		tdActivityEnterpriseService.save(newEnter);
+        	}
+        	else
+        	{
+        		ActivityEnterprise.setCreateTime(new Date());
+        		ActivityEnterprise.setEnterpriseTitle(enterprise.getTitle());
+        		ActivityEnterprise.setActivityTitle(activity.getTitle());
+        		ActivityEnterprise.setArea(enterprise.getArea());
+        		ActivityEnterprise.setType(enterprise.getType());
+        		tdActivityEnterpriseService.save(ActivityEnterprise);
+        	}
+        	
+        }
+        
+        map.addAttribute("activityId",activityId);
+        map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityId(activityId));
+        return "/client/activity_selected_enterprise";
     }
-    
-    /*
-     * 创建活动:选专家评委
-     * 
-     */
-    @RequestMapping(value = "/selectExpert")
-    public String  selectExpert(HttpServletRequest req,TdActivity tdActivity,
+//    //批量增加
+//    @RequestMapping(value = "/addEnterprises")
+//    public String  addEnterprises(HttpServletRequest req, 
+//    		Long[] listId,
+//            Integer[] listChkId,
+//            Long activityId,
+//    		ModelMap map) {
+//        String username = (String) req.getSession().getAttribute("activityUsername");
+//
+//        if (null == username) {
+//            return "redirect:/login";
+//        }
+//      
+//        addEnterprise(listId, listChkId,activityId);
+//        
+//        
+//        TdActivity activity = tdActivityService.findByStatusId(0L);
+//      
+//     
+//       	map.addAttribute("activity", activity);
+//       	map.addAttribute("activityId", activityId);
+//     	map.addAttribute("statusId", 0);
+//     	map.addAttribute("enterprise_page", enterprisePage);
+//     	map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityId(activityId));
+//     	map.addAttribute("region_list", tdRegionService.findByIsEnableTrueOrderBySortIdAsc());
+//     	map.addAttribute("enterpriseType_list", tdEnterpriseTypeService.findByIsEnableTrueOrderBySortIdAsc());
+//        map.addAttribute("activityId",activityId);
+//        map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityId(activityId));
+//        return "/client/activity_selectEnterprise";
+//    }
+//    
+//    private void addEnterprise(Long[] ids, Integer[] chkIds,Long activityId)
+//    {
+//    	if (null == ids || null == chkIds
+//                || ids.length < 1 || chkIds.length < 1||null == activityId)
+//        {
+//            return;
+//        }
+//        
+//        for (int chkId : chkIds)
+//        {
+//            if (chkId >=0 && ids.length > chkId)
+//            {
+//                Long id = ids[chkId];
+//
+//            	TdEnterprise enterprise = tdEnterpriseService.findOne(id);
+//            	TdActivity activity = tdActivityService.findOne(activityId);
+//            	
+//            	TdActivityEnterprise ActivityEnterprise = tdActivityEnterpriseService.findByActivityIdAndEnterpriseId(activityId,id);
+//            	if (null == ActivityEnterprise)
+//            	{
+//            		TdActivityEnterprise newEnter =new  TdActivityEnterprise();
+//            		newEnter.setEnterpriseId(id);
+//            		newEnter.setCreateTime(new Date());
+//            		newEnter.setEnterpriseTitle(enterprise.getTitle());
+//            		newEnter.setActivityId(activity.getId());
+//            		newEnter.setActivityTitle(activity.getTitle());
+//            		newEnter.setArea(enterprise.getArea());
+//            		newEnter.setType(enterprise.getType());
+//            		tdActivityEnterpriseService.save(newEnter);
+//            	}
+//            	else
+//            	{
+//            		ActivityEnterprise.setCreateTime(new Date());
+//            		ActivityEnterprise.setEnterpriseTitle(enterprise.getTitle());
+//            		ActivityEnterprise.setActivityTitle(activity.getTitle());
+//            		ActivityEnterprise.setArea(enterprise.getArea());
+//            		ActivityEnterprise.setType(enterprise.getType());
+//            		tdActivityEnterpriseService.save(ActivityEnterprise);
+//            	}
+//            }
+//        }
+//    }
+
+    @RequestMapping(value = "/removeEnterprise")
+    public String  removeEnterprise(HttpServletRequest req,Long id,Long activityId,
     		ModelMap map) {
         String username = (String) req.getSession().getAttribute("activityUsername");
 
         if (null == username) {
             return "redirect:/login";
         }
-        Long statusId = tdActivity.getStatusId();
-        if (statusId == 0L)
+      
+        if(null != id)
         {
-        	tdActivity.setStatusId(1L);
+        	TdActivityEnterprise ActivityEnterprise = tdActivityEnterpriseService.findOne(id);
+        	if (null != ActivityEnterprise)
+        	{
+        		tdActivityEnterpriseService.delete(ActivityEnterprise);
+        	}
         }
-        else if (null ==statusId)
+        
+        map.addAttribute("activityId",activityId);
+        map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityId(activityId));
+        return "/client/activity_selected_enterprise";
+    }
+    
+//    //批量取消
+//    @RequestMapping(value = "/removeEnterprises")
+//    public String  removeEnterprises(HttpServletRequest req,
+//    		Long activityId,
+//    		Long[] listId,
+//            Integer[] listChkId,
+//    		ModelMap map) {
+//        String username = (String) req.getSession().getAttribute("activityUsername");
+//
+//        if (null == username) {
+//            return "redirect:/login";
+//        }
+//        removeEnterprise(listId, listChkId);
+//        
+//        map.addAttribute("activityId",activityId);
+//        map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityId(activityId));
+//        return "/client/activity_selectEnterprise";
+//    }
+//    
+//    private void removeEnterprise(Long[] ids, Integer[] chkIds)
+//    {
+//    	if (null == ids || null == chkIds
+//                || ids.length < 1 || chkIds.length < 1)
+//        {
+//            return;
+//        }
+//        
+//        for (int chkId : chkIds)
+//        {
+//            if (chkId >=0 && ids.length > chkId)
+//            {
+//                Long id = ids[chkId];
+//                
+//                tdActivityEnterpriseService.delete(id);
+//            }
+//        }
+//    }
+    /*
+     * 创建活动:选专家评委
+     * 
+     */
+  
+    @RequestMapping(value = "/selectExpert")
+    public String  selectExpert(HttpServletRequest req,
+    		ModelMap map,
+    		Integer page,
+    		String keywords) {
+        String username = (String) req.getSession().getAttribute("activityUsername");
+
+        if (null == username) {
+            return "redirect:/login";
+        }
+        
+        if (null == page)
         {
-        	tdActivity.setStatusId(0L);
+        	page = 0;
         }
-       	tdActivityService.save(tdActivity);
-       	map.addAttribute("activity", tdActivity);
+        //搜索
+        Page<TdExpert>ExpertPage = null;
+        if (null != keywords && !keywords.isEmpty())
+        {
+        	 ExpertPage = tdExpertService.findBySearch(keywords,page, ClientConstant.pageSize);
+        }
+        else
+        {
+			ExpertPage = tdExpertService.findAllOrderBySortIdAsc(page, ClientConstant.pageSize);
+        }    	
+        
+        TdActivity activity = tdActivityService.findByStatusId(0L);
+        Long activityId = activity.getId();
+        map.addAttribute("keywords", keywords);
+       	map.addAttribute("activity", activity);
+       	map.addAttribute("activityId", activityId);
      	map.addAttribute("statusId", 0);
-     	map.addAttribute("expert_list", tdExpertService.findAllOrderBySortIdAsc(0,ClientConstant.pageSize));
-     	map.addAttribute("region_list", tdRegionService.findByIsEnableTrueOrderBySortIdAsc());
-     	map.addAttribute("enterpriseType_list", tdEnterpriseTypeService.findByIsEnableTrueOrderBySortIdAsc());
+     	map.addAttribute("Expert_page", ExpertPage);
+     	map.addAttribute("selected_expert_list", tdActivityExpertService.findByActivityId(activityId));
         return "/client/activity_selectExpert";
     }
+
+    @RequestMapping(value = "/addExpert")
+    public String  addExpert(HttpServletRequest req,Long id,Long activityId,
+    		ModelMap map) {
+        String username = (String) req.getSession().getAttribute("activityUsername");
+
+        if (null == username) {
+            return "redirect:/login";
+        }
+      
+        if(null != id&&null !=activityId)
+        {
+        	TdExpert Expert = tdExpertService.findOne(id);
+        	TdActivity activity = tdActivityService.findOne(activityId);
+        	
+        	TdActivityExpert ActivityExpert = tdActivityExpertService.findByActivityIdAndExpertId(activityId,id);
+        	if (null == ActivityExpert)
+        	{
+        		TdActivityExpert newEnter =new  TdActivityExpert();
+        		newEnter.setExpertId(id);
+        		newEnter.setCreateTime(new Date());
+        		newEnter.setName(Expert.getName());
+        		newEnter.setActivityId(activity.getId());
+        		newEnter.setActivityTitle(activity.getTitle());
+        		newEnter.setEmail(Expert.getEmail());
+        		newEnter.setUsermobile(Expert.getUsermobile());
+        		tdActivityExpertService.save(newEnter);
+        	}
+        	else
+        	{
+        		ActivityExpert.setCreateTime(new Date());
+        		ActivityExpert.setName(Expert.getName());
+        		ActivityExpert.setActivityTitle(activity.getTitle());
+        		ActivityExpert.setEmail(Expert.getEmail());
+        		ActivityExpert.setUsermobile(Expert.getUsermobile());
+        		tdActivityExpertService.save(ActivityExpert);
+        	}
+        	
+        }
+        
+        map.addAttribute("activityId",activityId);
+        map.addAttribute("selected_expert_list", tdActivityExpertService.findByActivityId(activityId));
+        return "/client/activity_selected_expert";
+    }
+
+    @RequestMapping(value = "/removeExpert")
+    public String  removeExpert(HttpServletRequest req,Long id,Long activityId,
+    		ModelMap map) {
+        String username = (String) req.getSession().getAttribute("activityUsername");
+
+        if (null == username) {
+            return "redirect:/login";
+        }
+      
+        if(null != id)
+        {
+        	TdActivityExpert ActivityExpert = tdActivityExpertService.findOne(id);
+        	if (null != ActivityExpert)
+        	{
+        		tdActivityExpertService.delete(ActivityExpert);
+        	}
+        }
+        
+        map.addAttribute("activityId",activityId);
+        map.addAttribute("selected_expert_list", tdActivityExpertService.findByActivityId(activityId));
+        return "/client/activity_selected_expert";
+    }
+  /////////////////////////////////////选择专家  end 、、、/////////////////////////
+    /*
+     * 创建活动:选专家评委
+     * 
+     */
     
     @RequestMapping(value = "/bufferEn", method = RequestMethod.GET)
     @ResponseBody
@@ -180,7 +669,7 @@ public class TdActivityController {
     											ModelMap map,
     											Long id,
     											String title,
-    											String type,
+    											String activityType,
     											String region,
     											String date,
     											String address,
@@ -199,39 +688,39 @@ public class TdActivityController {
             return res;
         }
         
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        Date dateF = sdf.parse(date);
-//        Date prepareOnF = sdf.parse(prepareOn);
-//        Date prepareOffF = sdf.parse(prepareOff);
-//        Date eventEndF = sdf.parse(eventEnd);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date dateF = sdf.parse(date);
+        Date prepareOnF = sdf.parse(prepareOn);
+        Date prepareOffF = sdf.parse(prepareOff);
+        Date eventEndF = sdf.parse(eventEnd);
         if (null!=id)
         {
         	TdActivity activity = tdActivityService.findOne(id);
         	activity.setTitle(title);
-        	activity.setType(type);
+        	activity.setActivityType(activityType);
         	activity.setRegion(region);
-//        	activity.setDate(dateF);
+        	activity.setDate(dateF);
         	activity.setAddress(address);
         	activity.setTheme(theme);
         	activity.setIntroduction(introduction);
-//        	activity.setPrepareOn(prepareOnF);
-//        	activity.setPrepareOff(prepareOffF);
-//        	activity.setEventEnd(eventEndF);
+        	activity.setPrepareOn(prepareOnF);
+        	activity.setPrepareOff(prepareOffF);
+        	activity.setEventEnd(eventEndF);
         	tdActivityService.save(activity);
         }
         else
         {
         	TdActivity activity = new TdActivity();
         	activity.setTitle(title);
-//        	activity.setType(type);
+        	activity.setActivityType(activityType);
         	activity.setRegion(region);
-//        	activity.setDate(dateF);
+        	activity.setDate(dateF);
         	activity.setAddress(address);
         	activity.setTheme(theme);
         	activity.setIntroduction(introduction);
-//        	activity.setPrepareOn(prepareOnF);
-//        	activity.setPrepareOff(prepareOffF);
-//        	activity.setEventEnd(eventEndF);
+        	activity.setPrepareOn(prepareOnF);
+        	activity.setPrepareOff(prepareOffF);
+        	activity.setEventEnd(eventEndF);
         	activity.setStatusId(0L);
         	tdActivityService.save(activity);
         }
@@ -254,11 +743,17 @@ public class TdActivityController {
         	res.put("msg", "请先登录！");
             return res;
         }
-        Long statusId = tdActivity.getStatusId();
-        if (statusId == 1L)
+        
+        
+        if (null == tdActivity.getStatusEn()|| null ==  tdActivity.getStatusEx())
         {
-        	tdActivity.setStatusId(2L);
+        	res.put("msg", "请先选择项目和专家！");
+        	return res;
         }
+        else if (1 == tdActivity.getStatusEn()&&1 == tdActivity.getStatusEx())
+    	{
+    		tdActivity.setStatusId(1L);     //同时选择过项目和专家后，创建活动成功
+    	}
         else
         {
         	res.put("msg", "请先选择项目和专家！");

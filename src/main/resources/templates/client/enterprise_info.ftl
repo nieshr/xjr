@@ -115,7 +115,7 @@ function showPro(){
     					</#if>	
     				</select>
     			</div>
-    			<div  class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>"><span>职工人数：</span>	<input type="text" name="staffNumber" datatype="n" value="<#if enterprise.formType??>${enterprise.staffNumber!''}</#if>" /></div>
+    			<div  class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>"><span>职工人数：</span>	<input type="text" name="staffNumber" datatype="n"  ignore="ignore" value="<#if enterprise.formType??>${enterprise.staffNumber!''}</#if>" /></div>
     			<div><span>行业归属：</span>
     				<#if enterpriseType_list??>
     					<#list enterpriseType_list as item>
@@ -207,7 +207,7 @@ function showPro(){
     			</div>
     	</dd>
     	<dt class="dt05">
-    		<input type="submit" value="确定" />
+    		<input type="submit" style="cursor:pointer;" value="确定" />
     	</dt>
     </dl>
     <#else>

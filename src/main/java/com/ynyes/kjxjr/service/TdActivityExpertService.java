@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ynyes.kjxjr.entity.TdActivityEnterprise;
 import com.ynyes.kjxjr.entity.TdActivityExpert;
 import com.ynyes.kjxjr.repository.TdActivityExpertRepo;
 
@@ -84,6 +85,14 @@ public class TdActivityExpertService {
         return (List<TdActivityExpert>) repository.findAll(ids);
     }
     
+    public TdActivityExpert findByActivityIdAndExpertId(Long activityId,Long expertId)
+    {
+    	if (null == expertId || null ==activityId )
+    	{
+    		return null;
+    	}
+    	return repository.findByActivityIdAndExpertId(activityId,expertId);
+    }
 
     
     public Page<TdActivityExpert> findAllOrderBySortIdAsc(int page, int size)
@@ -99,6 +108,10 @@ public class TdActivityExpertService {
         return repository.findAll(pageRequest);
     }
     
+    public List<TdActivityExpert> findByActivityId(Long activityId)
+    {
+        return (List<TdActivityExpert>) repository.findByActivityId(activityId);
+    }
 
     
     /**

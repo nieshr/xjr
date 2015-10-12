@@ -35,7 +35,7 @@
 .apply_step2{width:950px; height:auto; display: block; overflow: hidden;}
 .apply_step2 dt{width:950px; height:40px; text-align: center; line-height: 40px; color: red;}
 .apply_step2 dd{ width:950px; height:40px;}
-.apply_step2 dd input{ margin: 0 auto; display: block; width:300px; height:40px; padding: 0 10px; border: none; background: #e67817; color: white; font-size: 16px; border-radius: 8px;}
+.apply_step2 dd input{ cursor:pointer;margin: 0 auto; display: block; width:300px; height:40px; padding: 0 10px; border: none; background: #e67817; color: white; font-size: 16px; border-radius: 8px;}
 
 /*资料_第三步*/
 .apply_step3{width:950px; height:auto; display: block; overflow: hidden;}

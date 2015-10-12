@@ -44,6 +44,15 @@ public class TdActivityEnterprise {
     @Column
     private Long enterpriseId;
     
+    // 项目地区
+    @Column
+    private String area;
+    
+    // 项目行业归属
+    @Column
+    private String type;
+    
+    
     // 创建时间
     @Column
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
@@ -103,6 +112,22 @@ public class TdActivityEnterprise {
 
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+
+	public String getArea() {
+		return area;
+	}
+
+	public void setArea(String area) {
+		this.area = area;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	

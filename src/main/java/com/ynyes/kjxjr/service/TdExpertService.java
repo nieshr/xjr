@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ynyes.kjxjr.entity.TdEnterprise;
 import com.ynyes.kjxjr.entity.TdExpert;
 import com.ynyes.kjxjr.entity.TdUser;
 import com.ynyes.kjxjr.repository.TdExpertRepo;
@@ -83,7 +84,16 @@ public class TdExpertService {
     {
         return (List<TdExpert>) repository.findAll(ids);
     }
-    
+    /*
+     * 关键字搜索
+     */
+    //搜索0
+    public Page<TdExpert> findBySearch(String keywords,int page, int size)
+    {
+    	 PageRequest pageRequest = new PageRequest(page, size);
+        
+        return repository.findByNameContainingOrderBySortIdAsc(keywords,pageRequest);
+    }
 
     
     public Page<TdExpert> findAllOrderBySortIdAsc(int page, int size)
@@ -113,9 +123,9 @@ public class TdExpertService {
             
             if (null == user )
             {
-                user = tdUserService.addNewUser(e.getUsername(), e.getPassword(), e.getMobile(), null, null);
+                user = tdUserService.addNewUser(e.getUsername(), e.getPassword(), e.getUsermobile(), null, null);
                 
-                user.setRoleId(0L); // 企业用户
+                user.setRoleId(3L); // 专家用户
             }
             // 修改加盟店密码也需要修改用户密码 @author: Sharon
             else

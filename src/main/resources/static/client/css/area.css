@@ -46,9 +46,9 @@
 .list_base2 dl dd input{ float: left; width: 14px;height: 14px; margin-left: 10px; margin-top: 13px;}
 
 .area_add_btn{margin-left: 20px;}
-.area_add_btn input{ width:100px; height: 30px; border: none; border-radius: 6px; background: #e67817; color: white; margin-top: 20px; margin-left: 20px; font-size: 14px; *+margin-left:40px;}
+.area_add_btn input{ width:100px; height: 30px; border: none; border-radius: 6px; background: #e67817; color: white; margin-top: 20px; /*margin-left: 20px;*/ font-size: 14px; *+margin-left:40px;}
 
-.area_save_btn{width:60px; height: 30px; border: none; border-radius: 6px; background: #e67817; color: white; margin-top: 20px; margin-left: 20px; font-size: 14px;}
+.area_save_btn{cursor:pointer;width:60px; height: 30px; border: none; border-radius: 6px; background: #e67817; color: white; margin-top: 20px; margin-left: 45%; font-size: 14px;}   /*zhangji*/
 
 
 

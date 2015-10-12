@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 	<style type="text/css">
@@ -43,51 +43,30 @@
 
                 <a href="#">活动列表</a>
 				<p>&gt;</p>
-                <a href="#">预选企业/团队</a>
+                <a href="#">预选专家</a>
             </dd>
             <dt class="crumb_back"><a  href="#">返回上一页</a></dt>
         </dl>
         <div class="area_choice">
-        	<form action="/activity/selectEnterprise" >
-        		<span>关键字:</span>
+        	<form action="/activity/selectExpert" >
+        		<span>姓名检索:</span>
         		<input style="margin:0 14px 0 0;" class="area_text" name="keywords" type="text" value="<#if keywords??&&keywords?length gt 0>${keywords}</#if>" />
-        		<select name="area" style="margin-left: 0px;">
-        			<option value="">区县</option>
-        			<#if region_list??>
-        				<#list region_list as item>
-        					<option value="${item.title!''}" <#if area??&&area?length gt 0&&area==item.title>selected="selected"</#if>>${item.title!''}</option>
-        				</#list>
-        			</#if>		
-        		</select>
-        		<select name="type">
-        			<option value="">行业归属</option>
-        			<#if enterpriseType_list??>
-        				<#list enterpriseType_list as item>
-        					<option value="${item.title!''}" <#if type??&&type?length gt 0&&type==item.title>selected="selected"</#if>>${item.title!''}</option>
-        				</#list>
-        			</#if>		
-        		</select>
-        		<select name="formType">
-        			<option value="">类型</option>
-        			<option value="0" <#if formType??&&formType == 0>selected="selected"</#if>>企业</option>
-        			<option value="1" <#if formType??&&formType == 1>selected="selected"</#if>>项目</option>
-        		</select>
-        		<input style="cursor:pointer;" class="area_Btn02" type="submit" value="确认筛选" />
+        		<input style="cursor:pointer;" class="area_Btn02" type="submit" value="搜索" />
         	</form>
         </div>
         
         
-       <!-- <form name="addEnterprise" action="/activity/addEnterprises">-->
+       <!-- <form name="addExpert" action="/activity/addExperts">-->
 	        <div class="list_base2" style="padding-top:0;">
 				<table class="new_list">
 		        	<tr class="list_title">
-		        		<th width="30%">备选企业列表</th>
-		        		<th width="25%">地区</th>
-		        		<th width="25%">行业归属</th>
+		        		<th width="30%">姓名</th>
+		        		<th width="25%">联系电话</th>
+		        		<th width="25%">邮箱</th>
 		        		<th width="20%">操作</th>
 		        	</tr>
-		        <#if enterprise_page??>
-		        	<#list enterprise_page.content as item>
+		        <#if Expert_page??>
+		        	<#list Expert_page.content as item>
 			        	<tr>
 			        		<#--
 			        		<td>
@@ -95,10 +74,10 @@
 				        		<input type="hidden" name="listId" id="listId" value="${item.id}">
 			        		</td>
 			        		-->
-			        		<td>${item.title!''}</td>
-			        		<td style="color:#0ab2cb;">${item.area!''}</td>
-			        		<td style="color:#e67817;">${item.type!''}</td>
-			        		<td><a href="javascript:addEnterprise(${item.id?c!''},${activityId?c!''});">添加预选</a></td>
+			        		<td>${item.name!''}</td>
+			        		<td style="color:#0ab2cb;">${item.usermobile!''}</td>
+			        		<td style="color:#e67817;">${item.email!''}</td>
+			        		<td><a href="javascript:addExpert(${item.id?c!''},${activityId?c!''});">添加预选</a></td>
 			        	</tr>
 		        	</#list>
 		        </#if>	   
@@ -109,13 +88,13 @@
 			</div>
 		<!--</form>-->
 		<div class="page">
-		<#if enterprise_page??>
-		<#assign PAGE_DATA = enterprise_page>
+		<#if Expert_page??>
+		<#assign PAGE_DATA = Expert_page>
 		  	 <#if PAGE_DATA??>
 				 <#if PAGE_DATA.number+1 == 1>
 			          <a disabled="disabled"  class="page_next">上一页</a>               
 			     <#else>
-			         <a href="/activity/selectEnterprise?page=${PAGE_DATA.number-1}"  class="page_next">上一页</a>                
+			         <a href="/activity/selectExpert?page=${PAGE_DATA.number-1}"  class="page_next">上一页</a>                
 			     </#if>
 			     
 			     <#assign continueEnter=false>
@@ -126,7 +105,7 @@
 			                 <#if page == PAGE_DATA.number+1>
 			                     <a  class ="current" style="color:#e67817;">${page }</a>
 			                 <#else>
-			                     <a href="/activity/selectEnterprise?page=${page-1}">${page}</a> 
+			                     <a href="/activity/selectExpert?page=${page-1}">${page}</a> 
 			                 </#if>
 			                 <#assign continueEnter=false>
 			             <#else>
@@ -142,7 +121,7 @@
 			     <#if PAGE_DATA.number+1 == PAGE_DATA.totalPages || PAGE_DATA.totalPages==0>
 			         <a disabled="disabled" class="page_last">下一页</a> 
 			     <#else>
-			         <a href="/activity/selectEnterprise?page=${PAGE_DATA.number+1}" class="page_last">下一页</a> 
+			         <a href="/activity/selectExpert?page=${PAGE_DATA.number+1}" class="page_last">下一页</a> 
 			     </#if>
 			 </#if>
 		  	<p>共${PAGE_DATA.totalPages!'1'}页  ${PAGE_DATA.totalElements!'1'}条</p>
@@ -151,13 +130,13 @@
 		
 		
 		
-		<div class="list_base2" id="selectedEnterprise">
-        	<#include "/client/activity_selected_enterprise.ftl" />
+		<div class="list_base2" id="selectedExpert">
+        	<#include "/client/activity_selected_expert.ftl" />
         </div>
         <div class="area_add_btn">
 		<!--	<input style="cursor:pointer;"  type="button" value="批量取消预选" />-->
 		</div>
-		<input style="cursor:pointer;" class="area_save_btn" style="margin-left:45%;"type="button" onclick="location.href='/activity/enterprise/finish?id=${activityId?c!''}'" value="保存" />
+		<input style="cursor:pointer;" class="area_save_btn" style="margin-left:45%;"type="button" onclick="location.href='/activity/expert/finish?id=${activityId?c!''}'" value="保存" />
     </div> 
     </div>
 </div><!--content_end-->

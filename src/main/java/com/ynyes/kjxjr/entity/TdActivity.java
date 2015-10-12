@@ -34,7 +34,7 @@ public class TdActivity {
    
     // 活动类型
     @Column
-    private String type;
+    private String activityType;
     
     // 活动地区
     @Column
@@ -121,12 +121,12 @@ public class TdActivity {
 		this.title = title;
 	}
 
-	public String getType() {
-		return type;
+	public String getActivityType() {
+		return activityType;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setActivityType(String activityType) {
+		this.activityType = activityType;
 	}
 
 	public String getRegion() {

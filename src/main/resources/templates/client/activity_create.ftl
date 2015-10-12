@@ -40,7 +40,7 @@ $(function(){
              contentType: "application/json; charset=utf-8",
              data: {id:$("#id").val(), 
             	   title:$("#title").val(), 
-            	   type:$("#type").val(),
+            	   activityType:$("#activityType").val(),
             	   region:$("#region").val(),
             	   date:$("#date").val(),
             	   address:$("#address").val(),
@@ -80,7 +80,8 @@ $(function(){
 <!--left-->
 	<div class="leftbar">
 		<dl class="nav">
-            <dd><a href="#">创建活动</a></dd>
+            <dd><a href="/activity/create">创建活动</a></dd>
+            <dd><a href="/activity/list">活动列表</a></dd>
 
 		</dl>
 	</div>
@@ -105,14 +106,16 @@ $(function(){
     	<dd>
             <#if activity??>
                 <input type="hidden" name="id" id="id" value="${activity.id?c!''}"/>
+                <input type="hidden" name="statusEn" id="statusEn" value="${activity.statusEn!''}"/>
+                <input type="hidden" name="statusEx" id="statusEx" value="${activity.statusEx!''}"/>
             </#if>
     			<div><span>活动名称：</span><input type="text" name="title" id="title" datatype="*"value="<#if activity??>${activity.title!''}</#if>" /></div>
     			<div>
     				<span>活动类型：</span>
-    				<select name="type" id="type" datatype="*">
+    				<select name="activityType" id="activityType" datatype="*">
     				    <#if activityType_list??>
     				        <#list activityType_list as item>
-    					        <option value="${item.title!''}" <#if activity?? &&activity.type == item.title>selected="selected"</#if>>${item.title!''}</option>
+    					        <option value="${item.title!''}" <#if activity?? &&activity.activityType == item.title>selected="selected"</#if>>${item.title!''}</option>
     					    </#list>
     					</#if>        
     				</select>
@@ -170,10 +173,10 @@ $(function(){
     			<div>
     				<span style="margin-top: 10px;">项目列表：</span>
     				<ul class="active_project_list">
-    				    <#if enterprise_list??>
-    				        <#list enterprise_list as item>
+    				    <#if selected_enterprise_list??>
+    				        <#list selected_enterprise_list as item>
 		    					<li>
-		    						<a class="p01">${item_index}.${item.title!''}</a>
+		    						<a class="p01">${item_index+1}.${item.enterpriseTitle!''}</a>
 		    					</li>
     					    </#list>
     					</#if>    
@@ -186,26 +189,15 @@ $(function(){
     			<div>
     				<span style="margin-top: 10px;">评委专家：</span>
     				<ul class="active_project_list">
-    					<li>
-    						<a class="p01">1.如何使用好微波炉sad护发素</a>
+    		    	    <#if selected_expert_list??>
+    				        <#list selected_expert_list as item>
+		    					<li>
+		    						<a class="p01">${item_index+1}.${item.name!''}</a>
+		    					</li>
+    					    </#list>
+    					</#if>    
 
-    					</li>
-    					<li>
-    						<a class="p01">1.如何使用好微波炉sad护发素</a>
-
-    					</li>
-    					<li>
-    						<a class="p01">1.如何使用好微波炉sad护发素</a>
-
-    					</li>
-    					<li>
-    						<a class="p01">1.如何使用好微波炉sad护发素</a>
-    					</li>
-    					<li>
-    						<a class="p01">1.如何使用好微波炉sad护发素</a>
-    					</li>
-
-    					<input style="width:100px; height:30px; line-height: 30px; border: none;background:white url(images/active_add_project.png) no-repeat 10px; padding-left: 13px;" type="button" value="添加评委" />
+    					<input style="cursor:pointer;width:100px; height:30px; line-height: 30px; border: none;background:white url(images/active_add_project.png) no-repeat 10px; padding-left: 13px;" type="button" onclick="location.href='/activity/selectExpert'" value="添加评委" />
     				</ul>
     			</div>
     			

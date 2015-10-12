@@ -6,6 +6,15 @@
 	<link rel="shortcut icon" href="images/icon.ico" />
 	<link href="/client/css/base.css" rel="stylesheet" type="text/css" />
 	<link href="/client/css/list_base.css" rel="stylesheet" type="text/css" />
+		<style type="text/css">
+		.page{ width: 600px; float: right; margin-top: 30px;}
+		.page *{ float: left;}
+		.page span{ color: #333333; line-height: 20px; display: block;}
+		.page a{  width: 20px; height: 20px;}
+		.page .page_next{ width: 60px;}
+		.page .page_last{width: 40px;}
+		.page p{  margin-left: 10px;}
+	</style>
 </head>
 <script src="/client/js/jquery-1.9.1.min.js"></script>
 <script src="/client/js/main.js"></script>
@@ -13,39 +22,16 @@
 <!--main-->
 <div class="main">
 <!--header-->
-<div class="header">
-    <div class="logo"></div>
-    <form>
-    <div class="search">
-    	<input type="text" value=" &nbsp;请输入搜索内容" />
-        <input style="width:40px; background:url(images/search.png) no-repeat center;" type="submit" value="" />
-    </div>
-    </form>
-    <dl class="porfile">
-    	<dt><a>帮助</a></dt>
-        <dt><a>站内信息</a></dt>
-        <dd>
-        	<div><img src="/client/images/porfile_img.png" /></div>
-        	<span>学友</span>
-            <p>管理员</p>
-            <span id="nav_guide"></span>
-        </dd>
-        <ul id="porfile_subnav">
-                	<li><a href="#">帐号资料</a></li>
-                    <li><a href="#">头像设置</a></li>
-                    <li><a href="#">修改密码</a></li>
-                    <li><a href="/logout">退出</a></li>    
-        </ul>
-    </dl>
-</div><!--header_end-->
+<#include "/client/user_common_header.ftl" />
+<!--header_end-->
 <!--content-->
 <div class="content">
 <!--left-->
 	<div class="leftbar">
 		<dl class="nav">
             <dd><a href="/activity/create">创建活动</a></dd>
+            <dd><a href="/activity/list">活动列表</a></dd>
             
-
 		</dl>
 	</div>
 <!--right-->
@@ -55,41 +41,79 @@
         	<dt><a href="#"></a></dt>
             <dd>
             	<p>当前所在位置:</p>
-                <a href="#">创建活动</a>
-               
+                <a href="#">活动列表</a>
             </dd>
-            
         </dl>
-        <div class="list_base10">
-        	<dl>
-        		<dt>序号</dt>
-        		<dd><a href="#">1</a></dd>
-        		<dd><a href="#">2</a></dd>
-        		<dd><a href="#">3</a></dd>
-        		<dd><a href="#">4</a></dd>
-        	</dl>
-        	<dl>
-        		<dt>活动</dt>
-        		<dd><a href="#">DC12v充电式太阳能电风扇</a></dd>
-        		<dd><a href="#">供应混凝土设备 变频振动器</a></dd>
-        		<dd><a href="#">专业飞行模拟驾驶</a></dd>
-        		<dd><a href="#">空白地区LED显示屏代理加盟</a></dd>
-        	</dl>
-        	<dl>
-        		<dt>活动类型</dt>
-        		<dd class="list_color_yellow"><a href="#">每周行</a></dd>
-        		<dd class="list_color_blue"><a href="#">训练营</a></dd>
-        		<dd class="list_color_green"><a href="#">年度秀</a></dd>
-        		<dd class="list_color_green"><a href="#">年度秀</a></dd>
-        	</dl>
-        	<dl  class="list_active10">
-        		<dt>操作</dt>
-        		<dd><a href="#">管理</a>丨<a href="#">查看</a>丨<a href="#">删除</a></dd>
-        		<dd><a href="#">管理</a>丨<a href="#">查看</a>丨<a href="#">删除</a></dd>
-        		<dd><a href="#">管理</a>丨<a href="#">查看</a>丨<a href="#">删除</a></dd>
-        		<dd><a href="#">管理</a>丨<a href="#">查看</a>丨<a href="#">删除</a></dd>
-        	</dl>
+        
+        
+        <div class="list_base2" style="padding-top:0;">
+			<table class="new_list">
+	        	<tr class="list_title">
+	        		<th width="30%">活动</th>
+	        		<th width="20%">地区</th>
+	        		<th width="20%">活动类型</th>
+	        		<th width="30%">操作</th>
+	        	</tr>
+	        <#if activity_page??>
+	        	<#list activity_page.content as item>
+		        	<tr>
+		        		<#--
+		        		<td>
+			        		<input style="width:15px;height:15px;float:left; margin:0 0 0 10px ;" id="listChkId" type="checkbox" name="listChkId" value="${item_index}"/>
+			        		<input type="hidden" name="listId" id="listId" value="${item.id}">
+		        		</td>
+		        		-->
+		        		<td>${item.title!''}</td>
+		        		<td style="color:#0ab2cb;">${item.address!''}</td>
+		        		<td style="color:#e67817;">${item.activityType!''}</td>
+		        		<td><a href="#">管理</a>丨<a href="#">查看</a>丨<a href="#">删除</a></td>
+		        	</tr>
+	        	</#list>
+	        </#if>	   
+	        </table>
         </div>
+        
+        		<div class="page">
+		<#if activity_page??>
+		<#assign PAGE_DATA = activity_page>
+		  	 <#if PAGE_DATA??>
+				 <#if PAGE_DATA.number+1 == 1>
+			          <a disabled="disabled"  class="page_next">上一页</a>               
+			     <#else>
+			         <a href="/activity/list?page=${PAGE_DATA.number-1}"  class="page_next">上一页</a>                
+			     </#if>
+			     
+			     <#assign continueEnter=false>
+			     
+			     <#if PAGE_DATA.totalPages gt 0>
+			         <#list 1..PAGE_DATA.totalPages as page>
+			             <#if page <= 3 || (PAGE_DATA.totalPages-page) < 3 || (PAGE_DATA.number+1-page)?abs<3 >
+			                 <#if page == PAGE_DATA.number+1>
+			                     <a  class ="current" style="color:#e67817;">${page }</a>
+			                 <#else>
+			                     <a href="/activity/list?page=${page-1}">${page}</a> 
+			                 </#if>
+			                 <#assign continueEnter=false>
+			             <#else>
+			                 <#if !continueEnter>
+			                     ...
+			                     <#assign continueEnter=true>
+			                 </#if>
+			             </#if>
+			         </#list>
+			     </#if>
+			     
+			     <#if PAGE_DATA.number+1 == PAGE_DATA.totalPages || PAGE_DATA.totalPages==0>
+			         <a disabled="disabled" class="page_last">下一页</a> 
+			     <#else>
+			         <a href="/activity/list?page=${PAGE_DATA.number+1}" class="page_last">下一页</a> 
+			     </#if>
+			 </#if>
+		  	<p>共${PAGE_DATA.totalPages!'1'}页  ${PAGE_DATA.totalElements!'1'}条</p>
+		  	</#if>
+		  </div>
+		  
+		  
     </div> 
     </div>
 </div><!--content_end-->

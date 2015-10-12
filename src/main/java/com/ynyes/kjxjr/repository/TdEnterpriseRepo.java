@@ -25,6 +25,23 @@ public interface TdEnterpriseRepo extends
     
     List<TdEnterprise> findByIsEnableTrue();
     
+    Page<TdEnterprise> findByAreaAndTitleContainingOrderBySortIdAsc(String area,String keywords, Pageable page);
+    Page<TdEnterprise> findByTypeAndTitleContainingOrderBySortIdAsc(String type,String keywords, Pageable page);
+    Page<TdEnterprise> findByFormTypeAndTitleContainingOrderBySortIdAsc(Long formType,String keywords, Pageable page);
+    Page<TdEnterprise> findByAreaAndTypeAndTitleContainingOrderBySortIdAsc(String Area,String type,String keywords, Pageable page);
+    Page<TdEnterprise> findByAreaAndFormTypeAndTitleContainingOrderBySortIdAsc(String Area,Long formType,String keywords, Pageable page);
+    Page<TdEnterprise> findByTypeAndFormTypeAndTitleContainingOrderBySortIdAsc(String type,Long formType,String keywords, Pageable page);
+    Page<TdEnterprise> findByAreaAndTypeAndFormTypeAndTitleContainingOrderBySortIdAsc(String Area,String type,Long formType,String keywords, Pageable page);
+    
+    Page<TdEnterprise> findByAreaOrderBySortIdAsc(String area, Pageable page);
+    Page<TdEnterprise> findByTypeOrderBySortIdAsc(String type,Pageable page);
+    Page<TdEnterprise> findByFormTypeOrderBySortIdAsc(Long formType, Pageable page);
+    Page<TdEnterprise> findByAreaAndTypeOrderBySortIdAsc(String Area,String type,Pageable page);
+    Page<TdEnterprise> findByAreaAndFormTypeOrderBySortIdAsc(String Area,Long formType, Pageable page);
+    Page<TdEnterprise> findByTypeAndFormTypeOrderBySortIdAsc(String type,Long formType, Pageable page);
+    Page<TdEnterprise> findByAreaAndTypeAndFormTypeOrderBySortIdAsc(String Area,String type,Long formType,Pageable page);
+    
+    
     
     /**
 	 * @author lc

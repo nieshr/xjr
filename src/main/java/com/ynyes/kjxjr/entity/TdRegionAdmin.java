@@ -42,7 +42,7 @@ public class TdRegionAdmin {
     
     // 联系电话
     @Column
-    private String mobile;
+    private String usermobile;
     
     // 主要负责人
     @Column
@@ -100,12 +100,12 @@ public class TdRegionAdmin {
 		this.telephone = telephone;
 	}
 
-	public String getMobile() {
-		return mobile;
+	public String getUsermobile() {
+		return usermobile;
 	}
 
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
+	public void setUsermobile(String usermobile) {
+		this.usermobile = usermobile;
 	}
 
 	public String getInCharge() {

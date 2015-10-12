@@ -38,12 +38,19 @@ public class TdActivityExpert {
     
     // 专家
     @Column
-    private String expertTitle;
+    private String name;
     
     // 专家Id
     @Column
     private Long expertId;
     
+    // 邮箱
+    @Column
+    private String email;
+    
+    // 联系电话
+    @Column
+    private String usermobile;
     
     // 创建时间
     @Column
@@ -90,14 +97,33 @@ public class TdActivityExpert {
 		this.activityId = activityId;
 	}
 
-
-	public String getExpertTitle() {
-		return expertTitle;
+	public String getName() {
+		return name;
 	}
 
 
-	public void setExpertTitle(String expertTitle) {
-		this.expertTitle = expertTitle;
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+	public String getUsermobile() {
+		return usermobile;
+	}
+
+
+	public void setUsermobile(String usermobile) {
+		this.usermobile = usermobile;
 	}
 
 

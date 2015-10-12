@@ -113,9 +113,9 @@ public class TdActivityAdminService {
             
             if (null == user )
             {
-                user = tdUserService.addNewUser(e.getUsername(), e.getPassword(), e.getMobile(), null, null);
+                user = tdUserService.addNewUser(e.getUsername(), e.getPassword(), e.getUsermobile(), null, null);
                 
-                user.setRoleId(0L); // 企业用户
+                user.setRoleId(4L); // 活动管理用户
             }
             // 修改加盟店密码也需要修改用户密码 @author: Sharon
             else

@@ -88,7 +88,7 @@
     				</#if>	
 				</div>
 				<#if enterprise.formType == 1>
-					<div><span>主要负责人：</span><input type="text"  name="inCharge" datatype="*" ignore="ignore" value="${enterprise.inCharge!''}" /></div>
+					<div><span>主要负责人：</span><input type="text"  name="inCharge" datatype="*" ignore="ignore" disabled=""  value="${enterprise.inCharge!''}" /></div>
 				</#if>
 				<div><span>邮箱：</span><input type="text" value="${enterprise.email!''}" disabled="" /></div>
     			<div><span>联系人：</span><input type="text" value="${enterprise.contact!''}" disabled="" /></div>

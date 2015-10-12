@@ -42,7 +42,7 @@ public class TdExpert {
     
     // 联系电话
     @Column
-    private String mobile;
+    private String usermobile;
   
     // 状态
     @Column
@@ -88,12 +88,21 @@ public class TdExpert {
 		this.telephone = telephone;
 	}
 
-	public String getMobile() {
-		return mobile;
+
+	public String getName() {
+		return name;
 	}
 
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getUsermobile() {
+		return usermobile;
+	}
+
+	public void setUsermobile(String usermobile) {
+		this.usermobile = usermobile;
 	}
 
 	public Long getStatusId() {

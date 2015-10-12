@@ -14,7 +14,7 @@ import com.ynyes.kjxjr.entity.TdRegion;
 import com.ynyes.kjxjr.repository.TdRegionRepo;
 
 /**
- * TdMallService 服务类
+ * TdRegionService 服务类
  * 
  * @author Sharon
  *

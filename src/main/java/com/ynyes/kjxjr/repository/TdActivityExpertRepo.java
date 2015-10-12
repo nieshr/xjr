@@ -20,6 +20,7 @@ public interface TdActivityExpertRepo extends
 		PagingAndSortingRepository<TdActivityExpert, Long>,
 		JpaSpecificationExecutor<TdActivityExpert> 
 { 
-  
+	TdActivityExpert findByActivityIdAndExpertId(Long activityId,Long ExpertId);
+	List<TdActivityExpert> findByActivityId(Long activityId);
 
 }

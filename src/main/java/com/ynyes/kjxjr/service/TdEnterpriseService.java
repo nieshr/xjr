@@ -90,6 +90,121 @@ public class TdEnterpriseService {
     {
         return repository.findByIsEnableTrue();
     }
+    /*
+     * 关键字搜索
+     */
+    //搜索0
+    public Page<TdEnterprise> findBySearch(String keywords,int page, int size)
+    {
+    	 PageRequest pageRequest = new PageRequest(page, size);
+        
+        return repository.findByTitleContainingOrderBySortIdAsc(keywords,pageRequest);
+    }
+    //搜索1
+    public Page<TdEnterprise> findByAreaAndSearch(String area,String keywords,int page, int size)
+    {
+    	 PageRequest pageRequest = new PageRequest(page, size);
+        
+        return repository.findByAreaAndTitleContainingOrderBySortIdAsc(area,keywords,pageRequest);
+    }
+    //搜索2
+    public Page<TdEnterprise> findByTypeAndSearch(String Type,String keywords,int page, int size)
+    {
+    	 PageRequest pageRequest = new PageRequest(page, size);
+        
+        return repository.findByTypeAndTitleContainingOrderBySortIdAsc(Type,keywords,pageRequest);
+    }
+    //搜索3
+    public Page<TdEnterprise> findByFormTypeAndSearch(Long formType,String keywords,int page, int size)
+    {
+    	 PageRequest pageRequest = new PageRequest(page, size);
+        
+        return repository.findByFormTypeAndTitleContainingOrderBySortIdAsc(formType,keywords,pageRequest);
+    }
+    //搜索12
+    public Page<TdEnterprise> findByAreaAndTypeAndSearch(String area,String type,String keywords,int page, int size)
+    {
+    	 PageRequest pageRequest = new PageRequest(page, size);
+        
+        return repository.findByAreaAndTypeAndTitleContainingOrderBySortIdAsc(area,type,keywords,pageRequest);
+    }
+    //搜索13
+    public Page<TdEnterprise> findByAreaAndFormTypeAndSearch(String area,Long formType,String keywords,int page, int size)
+    {
+    	 PageRequest pageRequest = new PageRequest(page, size);
+        
+        return repository.findByAreaAndFormTypeAndTitleContainingOrderBySortIdAsc(area,formType,keywords,pageRequest);
+    }
+    //搜索23
+    public Page<TdEnterprise> findByTypeAndFormTypeAndSearch(String type,Long formType,String keywords,int page, int size)
+    {
+    	 PageRequest pageRequest = new PageRequest(page, size);
+        
+        return repository.findByTypeAndFormTypeAndTitleContainingOrderBySortIdAsc(type,formType,keywords,pageRequest);
+    }
+    //搜索123
+    public Page<TdEnterprise> findByAreaAndTypeAndFormTypeAndSearch(String area,String type,Long formType,String keywords,int page, int size)
+    {
+    	 PageRequest pageRequest = new PageRequest(page, size);
+        
+        return repository.findByAreaAndTypeAndFormTypeAndTitleContainingOrderBySortIdAsc(area,type,formType,keywords,pageRequest);
+    }
+    /*
+     * 无关键字搜索
+     */
+
+    //搜索1
+    public Page<TdEnterprise> findByArea(String area,int page, int size)
+    {
+    	 PageRequest pageRequest = new PageRequest(page, size);
+        
+        return repository.findByAreaOrderBySortIdAsc(area,pageRequest);
+    }
+    //搜索2
+    public Page<TdEnterprise> findByType(String Type,int page, int size)
+    {
+    	 PageRequest pageRequest = new PageRequest(page, size);
+        
+        return repository.findByTypeOrderBySortIdAsc(Type,pageRequest);
+    }
+    //搜索3
+    public Page<TdEnterprise> findByFormType(Long formType,int page, int size)
+    {
+    	 PageRequest pageRequest = new PageRequest(page, size);
+        
+        return repository.findByFormTypeOrderBySortIdAsc(formType,pageRequest);
+    }
+    //搜索12
+    public Page<TdEnterprise> findByAreaAndType(String area,String type,int page, int size)
+    {
+    	 PageRequest pageRequest = new PageRequest(page, size);
+        
+        return repository.findByAreaAndTypeOrderBySortIdAsc(area,type,pageRequest);
+    }
+    //搜索13
+    public Page<TdEnterprise> findByAreaAndFormType(String area,Long formType,int page, int size)
+    {
+    	 PageRequest pageRequest = new PageRequest(page, size);
+        
+        return repository.findByAreaAndFormTypeOrderBySortIdAsc(area,formType,pageRequest);
+    }
+    //搜索23
+    public Page<TdEnterprise> findByTypeAndFormType(String type,Long formType,int page, int size)
+    {
+    	 PageRequest pageRequest = new PageRequest(page, size);
+        
+        return repository.findByTypeAndFormTypeOrderBySortIdAsc(type,formType,pageRequest);
+    }
+    //搜索123
+    public Page<TdEnterprise> findByAreaAndTypeAndFormType(String area,String type,Long formType,int page, int size)
+    {
+    	 PageRequest pageRequest = new PageRequest(page, size);
+        
+        return repository.findByAreaAndTypeAndFormTypeOrderBySortIdAsc(area,type,formType,pageRequest);
+    }
+    
+    
+    
     
     public Page<TdEnterprise> findAllOrderBySortIdAsc(int page, int size)
     {
@@ -132,9 +247,9 @@ public class TdEnterpriseService {
             
             if (null == user )
             {
-                user = tdUserService.addNewUser(e.getUsername(), e.getPassword(), e.getMobile(), null, null);
+                user = tdUserService.addNewUser(e.getUsername(), e.getPassword(), e.getUsermobile(), null, null);
                 
-                user.setRoleId(0L); // 企业用户
+                user.setRoleId(1L); // 企业用户
             }
             // 修改加盟店密码也需要修改用户密码 @author: Sharon
             else
