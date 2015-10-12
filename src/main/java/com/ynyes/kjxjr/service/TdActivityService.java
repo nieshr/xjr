@@ -111,6 +111,20 @@ public class TdActivityService {
         return repository.findAll(pageRequest);
     }
     
+    public Page<TdActivity> findByStatusIdOrderByIdDesc(Long statusId,int page, int size)
+    {
+        PageRequest pageRequest = new PageRequest(page, size, new Sort(Direction.DESC, "id"));
+        
+        return repository.findByStatusId(statusId,pageRequest);
+    }
+    
+    
+    public Page<TdActivity> findByRegionOrderByIdDesc(String region,int page, int size)
+    {
+        PageRequest pageRequest = new PageRequest(page, size, new Sort(Direction.DESC, "id"));
+        
+        return repository.findByRegion(region,pageRequest);
+    }
     public Page<TdActivity> searchAllOrderBySortIdAsc(String keywords, int page, int size)
     {
         PageRequest pageRequest = new PageRequest(page, size);

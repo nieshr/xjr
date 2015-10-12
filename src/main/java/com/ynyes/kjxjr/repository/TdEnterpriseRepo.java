@@ -22,6 +22,7 @@ public interface TdEnterpriseRepo extends
 		JpaSpecificationExecutor<TdEnterprise> 
 { 
     Page<TdEnterprise> findByTitleContainingOrderBySortIdAsc(String keywords, Pageable page);
+    Page<TdEnterprise> findByAreaOrderByNumberAsc(String area, Pageable page);
     
     List<TdEnterprise> findByIsEnableTrue();
     

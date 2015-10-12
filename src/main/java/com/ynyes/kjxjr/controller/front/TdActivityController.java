@@ -106,7 +106,7 @@ public class TdActivityController {
         tdCommonService.setHeader(map, req);
 
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
-        map.addAttribute("activity_page", tdActivityService.findAllOrderByIdDesc(page, ClientConstant.pageSize));
+        map.addAttribute("activity_page", tdActivityService.findByStatusIdOrderByIdDesc(1L,page, ClientConstant.pageSize));
 //        Page<TdActivity> activityPage = tdActivityService.findAllOrderByIdDesc(page,  ClientConstant.pageSize);
         
 //        map.addAttribute("activity_page", activityPage);
@@ -116,7 +116,7 @@ public class TdActivityController {
     }
     
     @RequestMapping(value = "/create", method = RequestMethod.GET)
-    public String activityCreate(HttpServletRequest req, ModelMap map,Integer page) {
+    public String activityCreate(HttpServletRequest req, ModelMap map) {
         String username = (String) req.getSession().getAttribute("activityUsername");
 
         if (null == username) {
@@ -138,8 +138,95 @@ public class TdActivityController {
         
 //        map.addAttribute("activity_page", activityPage);
         map.addAttribute("user", user);
+        map.addAttribute("pagetype", "create");
 
         return "/client/activity_create";
+    }
+    
+    //查看活动
+    @RequestMapping(value = "/check", method = RequestMethod.GET)
+    public String activityCheck(HttpServletRequest req, ModelMap map,Long id) {
+        String username = (String) req.getSession().getAttribute("activityUsername");
+
+        if (null == username) {
+            return "redirect:/login";
+        }
+
+        tdCommonService.setHeader(map, req);
+        
+        TdActivity activity = tdActivityService.findOne(id);
+        if (null != activity)
+        {
+	        map.addAttribute("activity", activity);
+	        map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityId(id));
+	        map.addAttribute("selected_expert_list", tdActivityExpertService.findByActivityId(id));
+        }
+
+        TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
+//        Page<TdActivity> activityPage = tdActivityService.findAllOrderByIdDesc(page,  ClientConstant.pageSize);
+        
+//        map.addAttribute("activity_page", activityPage);
+        map.addAttribute("user", user);
+        map.addAttribute("pagetype", "check");
+
+        return "/client/activity_create";
+    }
+    
+    //管理活动
+    @RequestMapping(value = "/edit", method = RequestMethod.GET)
+    public String activityEdit(HttpServletRequest req, ModelMap map,Long id) {
+        String username = (String) req.getSession().getAttribute("activityUsername");
+
+        if (null == username) {
+            return "redirect:/login";
+        }
+
+        tdCommonService.setHeader(map, req);
+        
+        TdActivity activity = tdActivityService.findOne(id);
+        if (null != activity)
+        {
+	        map.addAttribute("activity", activity);
+	        map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityId(id));
+	        map.addAttribute("selected_expert_list", tdActivityExpertService.findByActivityId(id));
+        }
+
+        TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
+//        Page<TdActivity> activityPage = tdActivityService.findAllOrderByIdDesc(page,  ClientConstant.pageSize);
+        
+//        map.addAttribute("activity_page", activityPage);
+        map.addAttribute("user", user);
+        map.addAttribute("pagetype", "edit");
+
+        return "/client/activity_create";
+    }
+    
+    //删除活动
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    public String activityDelete(HttpServletRequest req, ModelMap map,Long id) {
+        String username = (String) req.getSession().getAttribute("activityUsername");
+
+        if (null == username) {
+            return "redirect:/login";
+        }
+
+        tdCommonService.setHeader(map, req);
+        
+        TdActivity activity = tdActivityService.findOne(id);
+        if (null != activity)
+        {
+        	tdActivityService.delete(id);
+        }
+
+        TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
+//        Page<TdActivity> activityPage = tdActivityService.findAllOrderByIdDesc(page,  ClientConstant.pageSize);
+        
+//        map.addAttribute("activity_page", activityPage);
+        map.addAttribute("activity_page", tdActivityService.findByStatusIdOrderByIdDesc(1L,0, ClientConstant.pageSize));
+        map.addAttribute("user", user);
+        map.addAttribute("pagetype", "delete");
+
+        return "/client/activity_list";
     }
     
     //完成项目选择
@@ -706,6 +793,7 @@ public class TdActivityController {
         	activity.setPrepareOn(prepareOnF);
         	activity.setPrepareOff(prepareOffF);
         	activity.setEventEnd(eventEndF);
+        	activity.setStatusId(0L);
         	tdActivityService.save(activity);
         }
         else

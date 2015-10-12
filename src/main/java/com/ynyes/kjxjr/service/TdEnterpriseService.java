@@ -227,6 +227,13 @@ public class TdEnterpriseService {
         return repository.findAll(pageRequest);
     }
     
+    public Page<TdEnterprise> findByAreaOrderByNumberAsc(String area,int page, int size)
+    {
+        PageRequest pageRequest = new PageRequest(page, size, new Sort(Direction.ASC, "number"));
+        
+        return repository.findByAreaOrderByNumberAsc(area,pageRequest);
+    }
+    
     public Page<TdEnterprise> searchAllOrderBySortIdAsc(String keywords, int page, int size)
     {
         PageRequest pageRequest = new PageRequest(page, size);

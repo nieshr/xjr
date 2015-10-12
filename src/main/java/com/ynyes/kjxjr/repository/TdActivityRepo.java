@@ -22,6 +22,8 @@ public interface TdActivityRepo extends
 { 
     Page<TdActivity> findByTitleContainingOrderBySortIdAsc(String keywords, Pageable page);
     TdActivity findByStatusId(Long statusId);
+    Page<TdActivity> findByStatusId(Long statusId, Pageable page);
+    Page<TdActivity> findByRegion(String region, Pageable page);
     /**
 	 * @author lc
 	 * @注释：

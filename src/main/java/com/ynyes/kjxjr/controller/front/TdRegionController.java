@@ -31,12 +31,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ynyes.kjxjr.entity.TdActivity;
 import com.ynyes.kjxjr.entity.TdEnterprise;
 import com.ynyes.kjxjr.entity.TdRegion;
+import com.ynyes.kjxjr.entity.TdRegionAdmin;
 import com.ynyes.kjxjr.entity.TdUser;
+import com.ynyes.kjxjr.service.TdActivityService;
 import com.ynyes.kjxjr.service.TdCommonService;
 import com.ynyes.kjxjr.service.TdCouponService;
 import com.ynyes.kjxjr.service.TdEnterpriseService;
+import com.ynyes.kjxjr.service.TdRegionAdminService;
 import com.ynyes.kjxjr.service.TdRegionService;
 import com.ynyes.kjxjr.service.TdUserService;
 import com.ynyes.kjxjr.util.ClientConstant;
@@ -63,6 +67,11 @@ public class TdRegionController {
 	@Autowired
 	TdEnterpriseService tdEnterpriseService;
 	
+	@Autowired
+	TdActivityService tdActivityService;
+	
+	@Autowired
+	TdRegionAdminService tdRegionAdminService;
 
     @RequestMapping(value = "/enterprise/list", method = RequestMethod.GET)
     public String EnterpriseList(HttpServletRequest req, ModelMap map,Integer page) {
@@ -80,7 +89,8 @@ public class TdRegionController {
         tdCommonService.setHeader(map, req);
 
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
-        Page<TdEnterprise> enterprisePage = tdEnterpriseService.findAllOrderByNumberAsc(page, ClientConstant.pageSize);
+        TdRegionAdmin regionAdmin = tdRegionAdminService.findbyUsername(username);
+        Page<TdEnterprise> enterprisePage = tdEnterpriseService.findByAreaOrderByNumberAsc(regionAdmin.getTitle(),page, ClientConstant.pageSize);
         
         
         map.addAttribute("enterprise_page", enterprisePage);
@@ -166,4 +176,51 @@ public class TdRegionController {
         return "redirect:/region/enterprise/list";
     }
   
+    @RequestMapping(value = "/activity/list", method = RequestMethod.GET)
+    public String ActivitytList(HttpServletRequest req, ModelMap map,Integer page) {
+        String username = (String) req.getSession().getAttribute("regionUsername");
+
+        if (null == username) {
+            return "redirect:/login";
+        }
+        
+        if (null ==page)
+        {
+        	page = 0;
+        }
+
+        tdCommonService.setHeader(map, req);
+
+        TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
+        TdRegionAdmin regionAdmin = tdRegionAdminService.findbyUsername(username);
+        Page<TdActivity> activityPage = tdActivityService.findByRegionOrderByIdDesc(regionAdmin.getTitle(),page, ClientConstant.pageSize);
+        
+        
+        map.addAttribute("activity_page", activityPage);
+        map.addAttribute("user", user);
+
+        return "/client/region_activity_list";
+    }
+    
+    @RequestMapping(value = "/activity/detail", method = RequestMethod.GET)
+    public String ActivitytDetail(HttpServletRequest req, ModelMap map,Long id) {
+        String username = (String) req.getSession().getAttribute("regionUsername");
+
+        if (null == username) {
+            return "redirect:/login";
+        }
+        
+
+        tdCommonService.setHeader(map, req);
+
+        TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
+        TdActivity activity = tdActivityService.findOne(id);
+        
+        map.addAttribute("mark", "region");
+        map.addAttribute("pagetype", "check");
+        map.addAttribute("activity", activity);
+        map.addAttribute("user", user);
+
+        return "/client/activity_create";
+    }
 }

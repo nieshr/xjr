@@ -15,6 +15,7 @@
 		.page .page_last{width: 40px;}
 		.page p{  margin-left: 10px;}
 	</style>
+
 </head>
 <script src="/client/js/jquery-1.9.1.min.js"></script>
 <script src="/client/js/main.js"></script>
@@ -66,7 +67,7 @@
 		        		<td>${item.title!''}</td>
 		        		<td style="color:#0ab2cb;">${item.address!''}</td>
 		        		<td style="color:#e67817;">${item.activityType!''}</td>
-		        		<td><a href="#">管理</a>丨<a href="#">查看</a>丨<a href="#">删除</a></td>
+		        		<td><a href="/activity/edit?id=${item.id?c!''}">管理</a>丨<a href="/activity/check?id=${item.id?c!''}">查看</a>丨<a  href="/activity/delete?id=${item.id?c!''}">删除</a></td>
 		        	</tr>
 	        	</#list>
 	        </#if>	   

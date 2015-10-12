@@ -21,6 +21,7 @@
 <div class="content">
 <!--left-->
 	<div class="leftbar">
+	
 		<dl class="nav">
             <dd><a href="#">基本资料</a></dd>
             <dd><a href="#">活动列表</a></dd>

@@ -7,6 +7,16 @@
 	<link href="/client/css/base.css" rel="stylesheet" type="text/css" />
 	<link href="/client/css/area.css" rel="stylesheet" type="text/css" />
 	
+	    
+    <style type="text/css">
+        .page{ width: 600px; float: right; margin-top: 30px;}
+        .page *{ float: left;}
+        .page span{ color: #333333; line-height: 20px; display: block;}
+        .page a{  width: 20px; height: 20px;}
+        .page .page_next{ width: 60px;}
+        .page .page_last{width: 40px;}
+        .page p{  margin-left: 10px;}
+    </style>
 </head>
 <script src="/client/js/jquery-1.9.1.min.js"></script>
 <script src="/client/js/main.js"></script>
@@ -21,8 +31,8 @@
 <!--left-->
 	<div class="leftbar">
 		<dl class="nav">
-            <dd><a href="#">企业列表</a></dd>
-            <dd><a href="#">活动列表</a></dd>
+            <dd><a href="/region/enterprise/list">企业列表</a></dd>
+            <dd><a href="/region/activity/list">活动列表</a></dd>
             <dd><a href="#">档案跟踪</a></dd>
 
 		</dl>
@@ -97,11 +107,55 @@
 	        		     <a href="/region/enterprise/check/${item.id?c!''}">取消审核</a>
 	        		    </#if>
 	        		     | <a href="#">站内信</a>
+	        		</td>
 	        	</tr>
         	</#list>
         </#if>	   
         </table>
     </div> 
+    
+        <div class="page">
+        <#if enterprise_page??>
+        <#assign PAGE_DATA = enterprise_page>
+             <#if PAGE_DATA??>
+                 <#if PAGE_DATA.number+1 == 1>
+                      <a disabled="disabled"  class="page_next">上一页</a>               
+                 <#else>
+                     <a href="/region/enterprise/list?page=${PAGE_DATA.number-1}"  class="page_next">上一页</a>                
+                 </#if>
+                 
+                 <#assign continueEnter=false>
+                 
+                 <#if PAGE_DATA.totalPages gt 0>
+                     <#list 1..PAGE_DATA.totalPages as page>
+                         <#if page <= 3 || (PAGE_DATA.totalPages-page) < 3 || (PAGE_DATA.number+1-page)?abs<3 >
+                             <#if page == PAGE_DATA.number+1>
+                                 <a  class ="current" style="color:#e67817;">${page }</a>
+                             <#else>
+                                 <a href="/region/enterprise/list?page=${page-1}">${page}</a> 
+                             </#if>
+                             <#assign continueEnter=false>
+                         <#else>
+                             <#if !continueEnter>
+                                 ...
+                                 <#assign continueEnter=true>
+                             </#if>
+                         </#if>
+                     </#list>
+                 </#if>
+                 
+                 
+                 <#if PAGE_DATA.number+1 == PAGE_DATA.totalPages || PAGE_DATA.totalPages==0>
+                     <a disabled="disabled" class="page_last">下一页</a> 
+                 <#else>
+                     <a href="/region/enterprise/list?page=${PAGE_DATA.number+1}" class="page_last">下一页</a> 
+                 </#if>
+             </#if>
+            <p>共${PAGE_DATA.totalPages!'1'}页  ${PAGE_DATA.totalElements!'1'}条</p>
+            </#if>
+          </div>
+    
+    
     </div>
 </div><!--content_end-->
 </div><!--main-->

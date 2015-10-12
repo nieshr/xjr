@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>创建活动</title>
+<title>活动</title>
 <link rel="shortcut icon" href="/client/images/icon.ico" />
 <link href="/client/css/base.css" rel="stylesheet" type="text/css" />
 <link href="/client/css/active.css" rel="stylesheet" type="text/css" />
@@ -63,6 +63,38 @@ $(function(){
          });
     });
 });
+
+$(function(){
+    $('#selectExpert').click(function(){
+         $.ajax({
+             type: "GET",
+             url: "/activity/bufferEn",
+             contentType: "application/json; charset=utf-8",
+             data: {id:$("#id").val(), 
+                   title:$("#title").val(), 
+                   activityType:$("#activityType").val(),
+                   region:$("#region").val(),
+                   date:$("#date").val(),
+                   address:$("#address").val(),
+                   theme:$("#theme").val(),
+                   introduction:$("#introduction").val(),
+                   prepareOn:$("#prepareOn").val(),
+                   prepareOff:$("#prepareOff").val(),
+                   eventEnd:$("#eventEnd").val()},
+             dataType: "json",
+             success: function(data){
+                         if (data.code == 0)
+                         {
+                             location.href="/activity/selectExpert";
+                         }
+                         else 
+                         {
+                             alert(data.msg);
+                         }
+                      }
+         });
+    });
+});
 </script>
 <style>
 .Validform_wrong {  background-position: 20px center;}
@@ -79,11 +111,19 @@ $(function(){
 <div class="content">
 <!--left-->
 	<div class="leftbar">
+	   <#if mark?? && mark == "region">
+		   <dl class="nav">
+	            <dd><a href="/region/enterprise/create">企业列表</a></dd>
+	            <dd><a href="/region/activity/list">活动列表</a></dd>
+	            <dd><a href="">档案跟踪</a></dd>
+	        </dl>
+	   <#else>
 		<dl class="nav">
             <dd><a href="/activity/create">创建活动</a></dd>
             <dd><a href="/activity/list">活动列表</a></dd>
 
 		</dl>
+		</#if>
 	</div>
 <!--right-->
     <div class="right_content">
@@ -92,10 +132,13 @@ $(function(){
         	<dt><a href="#"></a></dt>
             <dd>
             	<p>当前所在位置:</p>
+            	<#if mark?? && mark == "region">
+            	   <a href="#">查看活动</a>
+            	<#else>
                 <a href="#">创建活动</a>
                 <p>&gt;</p>
                 <a href="#">资料填写</a>
-                
+                </#if>
             </dd>
             <dt class="crumb_back"><a  href="#">返回上一页</a></dt>
         </dl>
@@ -109,45 +152,45 @@ $(function(){
                 <input type="hidden" name="statusEn" id="statusEn" value="${activity.statusEn!''}"/>
                 <input type="hidden" name="statusEx" id="statusEx" value="${activity.statusEx!''}"/>
             </#if>
-    			<div><span>活动名称：</span><input type="text" name="title" id="title" datatype="*"value="<#if activity??>${activity.title!''}</#if>" /></div>
+    			<div><span>活动名称：</span><input <#if pagetype??&& pagetype == "check">disabled=""</#if> type="text" name="title" id="title" datatype="*"value="<#if activity??>${activity.title!''}</#if>" /></div>
     			<div>
     				<span>活动类型：</span>
-    				<select name="activityType" id="activityType" datatype="*">
+    				<select name="activityType" id="activityType" datatype="">
     				    <#if activityType_list??>
     				        <#list activityType_list as item>
-    					        <option value="${item.title!''}" <#if activity?? &&activity.activityType == item.title>selected="selected"</#if>>${item.title!''}</option>
+    					        <option value="${item.title!''}" <#if activity??&&activity.activityType?? &&activity.activityType == item.title>selected="selected"</#if> <#if pagetype??&& pagetype == "check">disabled=""</#if>>${item.title!''}</option>
     					    </#list>
     					</#if>        
     				</select>
     			</div>
     			<div>
     			    <span>地区 ：</span>
-                    <select name="region" id="region" datatype="*">
+                    <select name="region" id="region" datatype="">
                         <#if region_list??>
                             <#list region_list as item>
-                                <option value="${item.title!''}" <#if activity?? &&activity.region == item.title>selected="selected"</#if>>${item.title!''}</option>
+                                <option value="${item.title!''}" <#if activity?? &&activity.region == item.title>selected="selected"</#if>  <#if pagetype??&& pagetype == "check">disabled=""</#if>>${item.title!''}</option>
                             </#list>
                         </#if>        
                     </select>
     			</div>
     			<div><span>日期：</span>
 	    		
-	                    <input name="date" type="text" id="date" value="<#if activity??>${activity.date!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="填写正确格式" sucmsg=" ">
+	                    <input <#if pagetype??&& pagetype == "check">disabled=""</#if> name="date" type="text" id="date" value="<#if activity??>${activity.date!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="填写正确格式" sucmsg=" " >
 	            </div>    
     			
-    			<div><span>地址：</span><input type="text" name="address" id="address" datatype="*" value="<#if activity??>${activity.address!''}</#if>" /></div>
-    			<div><span>主题：</span><input type="text" name="theme" id="theme" datatype="*"  value="<#if activity??>${activity.theme!''}</#if>" /></div>
+    			<div><span>地址：</span><input <#if pagetype??&& pagetype == "check">disabled=""</#if> type="text" name="address" id="address" datatype="*" value="<#if activity??>${activity.address!''}</#if>" /></div>
+    			<div><span>主题：</span><input <#if pagetype??&& pagetype == "check">disabled=""</#if> type="text" name="theme" id="theme" datatype="*"  value="<#if activity??>${activity.theme!''}</#if>" /></div>
     			
-				<div><span>简介：</span><textarea  name="introduction" id="introduction" datatype="*" ><#if activity??>${activity.introduction!''}</#if></textarea></div>
+				<div><span>简介：</span><textarea <#if pagetype??&& pagetype == "check">disabled=""</#if> name="introduction" id="introduction" datatype="*" ><#if activity??>${activity.introduction!''}</#if></textarea></div>
     			<div>
     				<span>筹备开始时刻：</span>
-                        <input name="prepareOn" id="prepareOn" type="text"  value="<#if activity??>${activity.prepareOn!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="填写正确格式" sucmsg=" ">
+                        <input <#if pagetype??&& pagetype == "check">disabled=""</#if> name="prepareOn" id="prepareOn" type="text"  value="<#if activity??>${activity.prepareOn!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="填写正确格式" sucmsg=" ">
     				<span>筹备结束时刻：</span>
-                        <input name="prepareOff" id="prepareOff" type="text" value="<#if activity??>${activity.prepareOff!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="填写正确格式" sucmsg=" ">
+                        <input <#if pagetype??&& pagetype == "check">disabled=""</#if> name="prepareOff" id="prepareOff" type="text" value="<#if activity??>${activity.prepareOff!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="填写正确格式" sucmsg=" ">
     			</div>
     			<div>
     			    <span>活动结束时刻：</span>
-                    <input name="eventEnd" id="eventEnd" type="text" value="<#if activity??>${activity.eventEnd!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="填写正确格式" sucmsg=" ">
+                    <input <#if pagetype??&& pagetype == "check">disabled=""</#if> name="eventEnd" id="eventEnd" type="text" value="<#if activity??>${activity.eventEnd!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="填写正确格式" sucmsg=" ">
     			</div>
     			<div><span>添加文件：</span><input type="file" value="" /></div>
     			<div>
@@ -180,9 +223,10 @@ $(function(){
 		    					</li>
     					    </#list>
     					</#if>    
-
-    					<input id="selectEnterprise" style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background:white url(images/active_add_project.png) no-repeat 10px; padding-left: 13px;" type="button" value="添加项目" />
-    				   
+                        <#if pagetype??&& pagetype == "check">
+                        <#else>
+    					   <input id="selectEnterprise" style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background:white url(images/active_add_project.png) no-repeat 10px; padding-left: 13px;" type="button" value="添加项目" />
+    				    </#if>
     				</ul>
     			</div>
     			
@@ -196,15 +240,19 @@ $(function(){
 		    					</li>
     					    </#list>
     					</#if>    
-
-    					<input style="cursor:pointer;width:100px; height:30px; line-height: 30px; border: none;background:white url(images/active_add_project.png) no-repeat 10px; padding-left: 13px;" type="button" onclick="location.href='/activity/selectExpert'" value="添加评委" />
+                        <#if pagetype??&& pagetype == "check">
+                        <#else>
+    					   <input id="selectExpert" style="cursor:pointer;width:100px; height:30px; line-height: 30px; border: none;background:white url(images/active_add_project.png) no-repeat 10px; padding-left: 13px;" type="button" onclick="location.href='/activity/selectExpert'" value="添加评委" />
+    				    </#if>
     				</ul>
     			</div>
     			
-    
+     <#if pagetype?? && pagetype == "check">
+     <#else>
     	<dt style=" margin-top: 40px;" class="dt05">
-    		<input type="submit" value="创建" style="cursor:pointer;"/>
+    	   <input type="submit" value="创建" style="cursor:pointer;"/>
     	</dt>
+     </#if>
     </dl>
     </form>
     </div>
