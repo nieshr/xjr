@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -52,11 +51,22 @@ public class TdActivityEnterprise {
     @Column
     private String type;
     
+    //下载
+    @Column
+    private String download;
     
-    // 创建时间
+	// 创建时间
     @Column
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date createTime;
+    
+    public String getDownload() {
+		return download;
+	}
+
+	public void setDownload(String download) {
+		this.download = download;
+	}
 
 	public Long getId() {
 		return id;

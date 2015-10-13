@@ -1,6 +1,6 @@
 package com.ynyes.kjxjr.service;
+import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,7 +10,6 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ynyes.kjxjr.entity.TdActivityEnterprise;
 import com.ynyes.kjxjr.entity.TdActivityExpert;
 import com.ynyes.kjxjr.repository.TdActivityExpertRepo;
 
@@ -134,5 +133,26 @@ public class TdActivityExpertService {
 	 * @注释：
 	 */
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /**
+     * 根据专家ID查找还未开始的活动
+     * @author dengxiao
+     */
+    public List<TdActivityExpert> findByExpertIdAndCreateTimeAfterOrderByCreateTimeDesc(Long expertId){
+    	if(null == expertId){
+    		return null;
+    	}
+    	return repository.findByExpertIdAndCreateTimeAfterOrderByCreateTimeDesc(expertId, new Date());
+    }
     
 }
