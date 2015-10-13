@@ -44,6 +44,27 @@ public class TdActivityEnterprise {
     @Column
     private Long enterpriseId;
     
+    // 项目联系人
+    @Column
+    private String contact;
+    
+    // 项目编号
+    @Column
+    private String number;
+    
+    // 项目联系人手机
+    @Column
+    private String mobile;
+    
+    // 项目联系人QQ
+    @Column
+    private String QQ;
+    
+    // 项目简介
+    @Column
+    private String profile;
+    
+    
     // 项目地区
     @Column
     private String area;
@@ -52,11 +73,18 @@ public class TdActivityEnterprise {
     @Column
     private String type;
     
+    //活动中企业状态 :    0：创建活动选择；1：区县预选；2：区县推荐；
+    @Column
+    private Long statusId;
     
     // 创建时间
     @Column
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date createTime;
+    
+    //推荐理由
+    @Column
+    private String reason;
 
 	public Long getId() {
 		return id;
@@ -128,6 +156,62 @@ public class TdActivityEnterprise {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public Long getStatusId() {
+		return statusId;
+	}
+
+	public void setStatusId(Long statusId) {
+		this.statusId = statusId;
+	}
+
+	public String getReason() {
+		return reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+
+	public String getContact() {
+		return contact;
+	}
+
+	public void setContact(String contact) {
+		this.contact = contact;
+	}
+
+	public String getNumber() {
+		return number;
+	}
+
+	public void setNumber(String number) {
+		this.number = number;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public String getQQ() {
+		return QQ;
+	}
+
+	public void setQQ(String qQ) {
+		QQ = qQ;
+	}
+
+	public String getProfile() {
+		return profile;
+	}
+
+	public void setProfile(String profile) {
+		this.profile = profile;
 	}
 
 	

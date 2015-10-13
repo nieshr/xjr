@@ -21,6 +21,10 @@ public interface TdActivityEnterpriseRepo extends
 		JpaSpecificationExecutor<TdActivityEnterprise> 
 { 
 	TdActivityEnterprise findByActivityIdAndEnterpriseId(Long activityId,Long enterpriseId);
+	
 	List<TdActivityEnterprise> findByActivityId(Long activityId);
-
+	List<TdActivityEnterprise> findByActivityIdAndStatusId(Long activityId , Long StatusId);
+	
+	Page<TdActivityEnterprise> findByActivityIdAndEnterpriseTitleContainingOrderByIdDesc(Long activityId , String keywords , Pageable page);
+	Page<TdActivityEnterprise> findByActivityIdOrderByIdDesc(Long activityId , Pageable page);
 }

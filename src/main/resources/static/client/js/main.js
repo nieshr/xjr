@@ -84,3 +84,33 @@ function removeExpert(id,activityId)
         }
     });
 }
+
+
+
+//添加预选企业
+function addEnterprise1(id,activityId,statusId)
+{
+	var reason = $("#reason"+id).val();
+	
+  $.ajax({
+      type:"post",
+      url:"/region/addEnterprise",
+      data:{"id":id,"activityId":activityId,"statusId":statusId,"reason":reason},
+      success:function(data){
+          $("#selectedEnterprise").html(data);
+      }
+  });
+}
+
+//取消预选企业
+function removeEnterprise1(id,activityId,statusId)
+{
+  $.ajax({
+      type:"post",
+      url:"/region/removeEnterprise",
+      data:{"id":id,"activityId":activityId,"statusId":statusId},
+      success:function(data){
+          $("#selectedEnterprise").html(data);
+      }
+  });
+}

@@ -473,8 +473,8 @@ public class TdActivityController {
         	TdEnterprise enterprise = tdEnterpriseService.findOne(id);
         	TdActivity activity = tdActivityService.findOne(activityId);
         	
-        	TdActivityEnterprise ActivityEnterprise = tdActivityEnterpriseService.findByActivityIdAndEnterpriseId(activityId,id);
-        	if (null == ActivityEnterprise)
+        	TdActivityEnterprise activityEnterprise = tdActivityEnterpriseService.findByActivityIdAndEnterpriseId(activityId,id);
+        	if (null == activityEnterprise)
         	{
         		TdActivityEnterprise newEnter =new  TdActivityEnterprise();
         		newEnter.setEnterpriseId(id);
@@ -484,16 +484,29 @@ public class TdActivityController {
         		newEnter.setActivityTitle(activity.getTitle());
         		newEnter.setArea(enterprise.getArea());
         		newEnter.setType(enterprise.getType());
+        		newEnter.setNumber(enterprise.getNumber());
+        		newEnter.setEnterpriseTitle(enterprise.getTitle());
+        		newEnter.setContact(enterprise.getContact());
+        		newEnter.setMobile(enterprise.getMobile());
+        		newEnter.setQQ(enterprise.getChat());
+        		newEnter.setProfile(enterprise.getProfile());
+        		newEnter.setStatusId(0L);
         		tdActivityEnterpriseService.save(newEnter);
         	}
         	else
         	{
-        		ActivityEnterprise.setCreateTime(new Date());
-        		ActivityEnterprise.setEnterpriseTitle(enterprise.getTitle());
-        		ActivityEnterprise.setActivityTitle(activity.getTitle());
-        		ActivityEnterprise.setArea(enterprise.getArea());
-        		ActivityEnterprise.setType(enterprise.getType());
-        		tdActivityEnterpriseService.save(ActivityEnterprise);
+        		activityEnterprise.setCreateTime(new Date());
+        		activityEnterprise.setEnterpriseTitle(enterprise.getTitle());
+        		activityEnterprise.setActivityTitle(activity.getTitle());
+        		activityEnterprise.setArea(enterprise.getArea());
+        		activityEnterprise.setType(enterprise.getType());
+        		activityEnterprise.setNumber(enterprise.getNumber());
+        		activityEnterprise.setEnterpriseTitle(enterprise.getTitle());
+        		activityEnterprise.setContact(enterprise.getContact());
+        		activityEnterprise.setMobile(enterprise.getMobile());
+        		activityEnterprise.setQQ(enterprise.getChat());
+        		activityEnterprise.setProfile(enterprise.getProfile());
+        		tdActivityEnterpriseService.save(activityEnterprise);
         	}
         	
         }
@@ -697,7 +710,7 @@ public class TdActivityController {
         	{
         		TdActivityExpert newEnter =new  TdActivityExpert();
         		newEnter.setExpertId(id);
-        		newEnter.setCreateTime(new Date());
+        		newEnter.setCreateTime(activity.getDate());
         		newEnter.setName(Expert.getName());
         		newEnter.setActivityId(activity.getId());
         		newEnter.setActivityTitle(activity.getTitle());
@@ -707,7 +720,7 @@ public class TdActivityController {
         	}
         	else
         	{
-        		ActivityExpert.setCreateTime(new Date());
+        		ActivityExpert.setCreateTime(activity.getDate());
         		ActivityExpert.setName(Expert.getName());
         		ActivityExpert.setActivityTitle(activity.getTitle());
         		ActivityExpert.setEmail(Expert.getEmail());

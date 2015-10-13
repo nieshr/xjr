@@ -121,6 +121,7 @@ public class TdLoginController {
 			Integer  roleId = user.getRoleId().intValue();
 			switch(roleId)
 			{
+			//企业项目
 				case 1:
 					res.put("role", 1);
 					request.getSession().setAttribute("enterpriseUsername", user.getUsername());
@@ -128,16 +129,19 @@ public class TdLoginController {
 					Long statusId =tdEnterpriseService.findbyUsername(username).getStatusId();
 					res.put("statusId", statusId);
 					break;
+					//区县管理
 				case 2:
 					res.put("role", 2);
 					request.getSession().setAttribute("regionUsername", user.getUsername());
 					request.getSession().setAttribute("regionUsermobile", user.getMobile());
 					break;
+					//专家
 				case 3:
 					res.put("role", 3);
 					request.getSession().setAttribute("expertUsername", user.getUsername());
 					request.getSession().setAttribute("expertUsermobile", user.getMobile());
 					break;
+					//活动管理
 				case 4:
 					res.put("role", 4);
 					request.getSession().setAttribute("activityUsername", user.getUsername());

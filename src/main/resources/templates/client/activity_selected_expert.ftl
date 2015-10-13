@@ -12,7 +12,7 @@
 			        		<td>${item.name!''}</td>
 			        		<td style="color:#0ab2cb;">${item.usermobile!''}</td>
 			        		<td style="color:#e67817;">${item.email!''}</td>
-			        		<td><a href="javascript:removeExpert(${item.id?c!''},${activityId?c!''});">取消预选</a></td>
+			        		<td><a href="javascript:removeExpert(${item.id?c!''},${activityId?c!''});">取消</a></td>
 			        	</tr>
 		        	</#list>
 		        </#if>	   

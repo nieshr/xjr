@@ -67,7 +67,7 @@
 .list_base4 dl dd{width: 100%; height:40px; color: #666666; font-size: 14px; background: white; line-height: 40px; border-bottom:#f0f0f0 1px solid ;}
 
 
-.area_save_btn01{width:260px; height: 30px; border: none; border-radius: 6px; background: #e67817; color: white; margin-top: 20px; margin-left: 20px; font-size: 14px;}
+.area_save_btn01{ cursor:pointer; width:260px; height: 30px; border: none; border-radius: 6px; background: #e67817; color: white; margin-top: 20px; margin-left: 20px; font-size: 14px;}
 
 .area_up{ width: 950px; height: auto; display: block; overflow: hidden; float: left;}
 .area_up dt{width: 950px; height: auto; display: block; overflow: hidden; float: left;}

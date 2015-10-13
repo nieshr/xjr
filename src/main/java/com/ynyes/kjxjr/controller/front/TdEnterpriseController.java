@@ -206,7 +206,7 @@ public class TdEnterpriseController {
     }
     
     //导出
-    // 订单列表
+    // 企业项目资料
     @SuppressWarnings("deprecation")
 	@RequestMapping(value="/export/enter")
     public String goodsListDialog(String keywords,
