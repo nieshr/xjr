@@ -24,7 +24,7 @@
                   <a href="/"><li class="active">首页</li></a>
                   <a href="#"><li>专项行动</li></a>
                   <a href="#"><li>培育活动</li></a>
-                  <a href="#"><li>新闻动态</li></a>
+                  <a href="/info/index"><li>新闻动态</li></a>
                   <a href="#"><li>企业项目</li></a>
                   <a href="#"><li>专家资源</li></a>
                   <a href="#"><li>合作机构</li></a>

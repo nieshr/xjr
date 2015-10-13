@@ -130,4 +130,8 @@ public class TdActivityTypeService {
         
         return (List<TdActivityType>) repository.save(entities);
     }
+    
+    public List<TdActivityType> findAll(){
+    	return (List<TdActivityType>) repository.findAll();
+    }
 }

@@ -27,6 +27,7 @@ import com.ynyes.kjxjr.service.TdDemandService;
 import com.ynyes.kjxjr.service.TdNavigationMenuService;
 import com.ynyes.kjxjr.service.TdUserRecentVisitService;
 import com.ynyes.kjxjr.util.ClientConstant;
+import com.ynyes.kjxjr.util.SiteMagConstant;
 
 /**
  * 
@@ -54,6 +55,35 @@ public class TdInfoController {
 	@Autowired
 	private TdDemandService tdDemandService;
     
+	@RequestMapping("/index")
+	public String infoIndex(ModelMap map,HttpServletRequest req){
+		tdCommonService.setHeader(map, req); 
+		
+		//新闻动态所有类别
+		List<TdArticleCategory> tdArticleCategories = tdArticleCategoryService.findByMenuId(10L);
+		map.addAttribute("newsCat_list", tdArticleCategories);
+		
+		//通知公告
+		map.addAttribute("notice_page", tdArticleService.findByCategoryId(19L, 0, SiteMagConstant.pageSize));
+		
+	    //活动状态
+		map.addAttribute("activity_page", tdArticleService.findByCategoryId(20L, 0, SiteMagConstant.pageSize));
+		
+	    //媒体报道
+		map.addAttribute("media_page", tdArticleService.findByCategoryId(21L, 0, SiteMagConstant.pageSize));
+		
+	    //数据公布
+		map.addAttribute("data_page", tdArticleService.findByCategoryId(22L, 0, SiteMagConstant.pageSize));
+		
+	    //热点追踪
+		map.addAttribute("hot_page", tdArticleService.findByCategoryId(23L, 0, SiteMagConstant.pageSize));
+		
+	    //创业风向
+		map.addAttribute("SYB_page", tdArticleService.findByCategoryId(24L, 0, SiteMagConstant.pageSize));
+		
+		return "/client/news_index";
+	}
+	
 	@RequestMapping("/list/{mid}")
     public String infoList(@PathVariable Long mid, 
                             Long catId, 
@@ -78,6 +108,10 @@ public class TdInfoController {
             
         }
 	    /*翻页 end*/
+	    
+	    //新闻动态所有类别
+	    List<TdArticleCategory> tdArticleCategories = tdArticleCategoryService.findByMenuId(10L);
+	    map.addAttribute("newsCat_list", tdArticleCategories);
 	    
         if (null == page)
         {
@@ -121,7 +155,7 @@ public class TdInfoController {
 	        	}
 	        	else
 	        	{
-	        		map.addAttribute("info_page", tdArticleService.findByMenuIdAndCategoryIdAndIsEnableOrderByIdDesc(mid, catId, page, ClientConstant.pageSize));	    
+	        		map.addAttribute("info_page", tdArticleService.findByMenuIdAndCategoryIdAndIsEnableOrderBySortIdAsc(mid, catId, page, ClientConstant.pageSize));	    
 	        	}
 	        }	
 	    }
@@ -138,7 +172,7 @@ public class TdInfoController {
 	    map.addAttribute("info_category_list", catList); //栏目的列表 zhangji
 	    map.addAttribute("latest_info_page", tdArticleService.findByMenuIdAndIsEnableOrderByIdDesc(mid, page, ClientConstant.pageSize));
 	    
-        return "/client/info_list";
+        return "/client/news_list";
     }
 	
 	@RequestMapping("/list/content/{id}")
@@ -182,7 +216,7 @@ public class TdInfoController {
         // 最近添加
         map.addAttribute("latest_info_page", tdArticleService.findByMenuIdAndIsEnableOrderByIdDesc(mid, 0, ClientConstant.pageSize));
         
-        return "/client/info_list_content";
+        return "/client/news_detail";
     }
 	
 	/**

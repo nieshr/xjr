@@ -143,7 +143,7 @@ public class TdUser {
 	@Column
 	private Long statusId;
 	
-	// 用户类型
+	// 用户类型(1.企业用户2. 区县管理 3.专家 4. 活动管理)
 	@Column
 	private String role;
 	

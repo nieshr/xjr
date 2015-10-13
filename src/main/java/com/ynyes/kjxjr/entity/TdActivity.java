@@ -48,7 +48,7 @@ public class TdActivity {
     // 日期
     @Column
     @DateTimeFormat(pattern="yyyy-MM-dd")
-    private Date Date;
+    private Date date;
     
     // 地址
     @Column
@@ -151,11 +151,11 @@ public class TdActivity {
 	}
 
 	public Date getDate() {
-		return Date;
+		return date;
 	}
 
 	public void setDate(Date date) {
-		Date = date;
+		this.date = date;
 	}
 
 	public String getAddress() {
@@ -214,14 +214,6 @@ public class TdActivity {
 		this.fileUrl = fileUrl;
 	}
 
-	public String getDownload() {
-		return download;
-	}
-
-	public void setDownload(String download) {
-		this.download = download;
-	}
-
 	public Long getStatusId() {
 		return statusId;
 	}
@@ -278,7 +270,14 @@ public class TdActivity {
 		this.regionStatusId = regionStatusId;
 	}
     
-    
+	public String getDownload() {
+		return download;
+	}
+
+	public void setDownload(String download) {
+		this.download = download;
+	}
+
 	
 }
   

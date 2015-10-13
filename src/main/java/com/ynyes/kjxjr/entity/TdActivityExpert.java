@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -54,8 +53,17 @@ public class TdActivityExpert {
     
     // 创建时间
     @Column
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date createTime;
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 
 
 	public Long getId() {
@@ -136,16 +144,5 @@ public class TdActivityExpert {
 		this.expertId = expertId;
 	}
 
-
-	public Date getCreateTime() {
-		return createTime;
-	}
-
-
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-
-	
 }
   

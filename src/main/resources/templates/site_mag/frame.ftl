@@ -111,7 +111,7 @@
   var suggestionsnumber = 0;
   var demandsnumber = 0;
   $(document).ready(function () {
-        setInterval("remind()",30000);
+       // setInterval("remind()",30000);
   });
   //下单自动提醒
     function remind(){    

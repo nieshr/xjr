@@ -7,7 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
- * 自提点
+ * 角色
  * 
  * @author Sharon
  *
@@ -22,6 +22,10 @@ public class TdDiySite {
     // 自提点名称
     @Column
     private String title;
+    
+    //角色id 
+    @Column
+    private Long roleId;
     
     // 自提点地址
     @Column
@@ -87,6 +91,10 @@ public class TdDiySite {
     @Column
     private String mobile;
     
+    // 电子邮箱
+ 	@Column
+ 	private String email;
+    
     // 经度
     @Column
     private Double totalCash;
@@ -123,7 +131,15 @@ public class TdDiySite {
         this.isEnable = isEnable;
     }
     
-    public Long getSortId() {
+    public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Long getSortId() {
         return sortId;
     }
 
@@ -147,7 +163,15 @@ public class TdDiySite {
         this.longitude = longitude;
     }
 
-    public Double getLatitude() {
+    public Long getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(Long roleId) {
+		this.roleId = roleId;
+	}
+
+	public Double getLatitude() {
         return latitude;
     }
 
