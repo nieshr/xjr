@@ -134,7 +134,7 @@ $(function () {
   <dl>
     <dt>邮箱</dt>
     <dd>
-        <input name="email" type="text" value="<#if diy_site??>${diy_site.email!""}</#if>" class="input normal" datatype="m" sucmsg=" "> 
+        <input name="email" type="text" value="<#if diy_site??>${diy_site.email!""}</#if>" class="input normal" datatype="*" sucmsg=" "> 
         <span class="Validform_checktip">*用于接收通知邮件</span>
     </dd>
   </dl>

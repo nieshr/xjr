@@ -50,7 +50,7 @@
             </dd>
             <dt class="crumb_back"><a  href="#">返回上一页</a></dt>
         </dl>
-        <div class="area_choice">
+       <#-- <div class="area_choice">
         		<span>关键字:</span>
         		<input style="margin: 0 14px 0 0;"  name="keywords"  class="area_text" type="text" value="" />
 				<select name="keyword1" style="margin-left: 0px;">
@@ -84,6 +84,7 @@
         	<a href="#">胜出项目</a>
 
         </div>
+        -->
 		<table class="new_list">
         	<tr class="list_title">
         		<th width="10%">编号</th>

@@ -514,7 +514,7 @@ public String exportRecommend(
       cell.setCellStyle(style);  
 			
 		if (null != exportUrl) {
-			if (ImportData(activityEnterpriseList, row, cell, sheet)) {
+			if (ImportData(activityEnterpriseList, row, cell, sheet,style)) {
 				download(wb, username, resp);
 			}         
 		}  
@@ -527,8 +527,8 @@ public String exportRecommend(
 	 * @注释：将page中的订单数据存入excel表格中
 	 */
  @SuppressWarnings("deprecation")
-	public boolean ImportData(List<TdActivityEnterprise> activityEnterpriseList, HSSFRow row, HSSFCell cell, HSSFSheet sheet){
-
+	public boolean ImportData(List<TdActivityEnterprise> activityEnterpriseList, HSSFRow row, HSSFCell cell, HSSFSheet sheet ,HSSFCellStyle style){
+	 	
         	for (int i = 0; i < activityEnterpriseList.size(); i++)  
             {  
         	 				
@@ -537,15 +537,30 @@ public String exportRecommend(
                 //获取用户信息
 //                TdUser tdUser = tdUserService.findByUsername(tdOrder.getUsername());
                 // 第四步，创建单元格，并设置值  
-                row.createCell((short) 0).setCellValue(i+1);
-                row.createCell((short) 1).setCellValue(tdActivityEnterprise.getNumber()); 
-                row.createCell((short) 2).setCellValue(tdActivityEnterprise.getEnterpriseTitle()); 
-                row.createCell((short) 3).setCellValue(tdActivityEnterprise.getContact()); 
-                row.createCell((short) 4).setCellValue(tdActivityEnterprise.getMobile());
-                row.createCell((short) 5).setCellValue(tdActivityEnterprise.getQQ());
-                row.createCell((short) 6).setCellValue(tdActivityEnterprise.getProfile());
-                row.createCell((short) 7).setCellValue(tdActivityEnterprise.getReason()); 
-                
+                cell = row.createCell((short) 0);
+                cell.setCellValue(i+1);
+                cell.setCellStyle(style); 
+                cell = row.createCell((short) 1);
+                cell.setCellValue(tdActivityEnterprise.getNumber());
+                cell.setCellStyle(style);
+                cell = row.createCell((short) 2);
+                cell.setCellStyle(style);
+                cell.setCellValue(tdActivityEnterprise.getEnterpriseTitle()); 
+                cell = row.createCell((short) 3);
+                cell.setCellStyle(style);
+                cell.setCellValue(tdActivityEnterprise.getContact()); 
+                cell = row.createCell((short) 4);
+                cell.setCellStyle(style);
+                cell.setCellValue(tdActivityEnterprise.getMobile());
+                cell = row.createCell((short) 5);
+                cell.setCellStyle(style);
+                cell.setCellValue(tdActivityEnterprise.getQQ());
+                cell = row.createCell((short) 6);
+                cell.setCellStyle(style);
+                cell.setCellValue(tdActivityEnterprise.getProfile());
+                cell = row.createCell((short) 7);
+                cell.setCellValue(tdActivityEnterprise.getReason()); 
+                cell.setCellStyle(style);
              
             } 
  	return true;

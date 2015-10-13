@@ -18,6 +18,35 @@
 
 <script src="/client/js/jquery-1.9.1.min.js"></script>
 <script src="/client/js/main.js"></script>
+<script type="text/javascript" src="/client/js/Validform_v5.3.2_min.js"></script>
+<script>
+function upload(){
+    $("#upload").submit(function(){
+   	  var options ={
+   	        type: "POST",
+   	        url: "/client/recommend/upload",
+   	        contentType: "application/json; charset=utf-8",
+   	        data: {activityId:$("#activityId").val(), 
+   	              Filedata:$("#file").val() },
+   	        dataType: "json",
+   	        success: function(data){
+   	                    if (data.status == 1)
+   	                    {
+   	                        alert("上传成功！")
+   	                    }
+   	                    else 
+   	                    {
+   	                        alert(data.msg);
+   	                    }
+   	                 }
+   	    };
+   	$('#upload').ajaxSubmit(options); 
+    });	
+  
+}
+
+
+</script>
 </head>
 <body>
 <!--main-->
@@ -140,13 +169,21 @@
         <div class="area_add_btn">
         <!--    <input style="cursor:pointer;"  type="button" value="批量取消预选" />-->
         </div>
+        <#if statusId??&&statusId == 2>
+         <form id="upload" enctype="multipart/form-data" action="/client/recommend/upload" method="post">
+            <input type="hidden" id="activityId" name="activityId" value="${activity.id?c!''}"></input>
+		    <dl class="area_up">
+			    <dd><input onclick="location.href='/region/export/recommend?activityId=${activityId?c!''}'" class="area_save_btn01" type="button" value="生成并下载《区县推荐项目汇总表》" /></dd>
+			   
+			    <dd>
+			        <span style="font-size: 14px; margin-left: 20px;">添加文件：</span>
+			        <input id="file" style="margin-left: 20px; margin-top: 20px;" name="Filedata" type="file" value="" />
+			    </dd>
+			    <dd><input onclick="javascript:upload();" style="margin-left:20px;" class="area_save_btn" type="button" value="上传" /></dd>
+			</dl>
+		  </form>	
+		</#if>	
         
-	    <dl class="area_up">
-	    <dd><input onclick="location.href='/region/export/recommend?activityId=${activityId?c!''}'" class="area_save_btn01" type="button" value="生成并下载《区县推荐项目汇总表》" /></dd>
-	    <dd><span style="font-size: 14px; margin-left: 20px;">添加文件：</span><input  style="margin-left: 20px; margin-top: 20px;" type="file" value="" /></dd>
-	    <dd><input style="margin-left:20px;" class="area_save_btn" type="button" value="上传" /></dd>
-		</dl>
-
         
         <input style="cursor:pointer;" class="area_save_btn" style="margin-left:45%;"type="button" onclick="location.href='/region/enterprise/finish?id=${activityId?c!''}&statusId=${statusId!''}'" value="完成" />
     </div> 

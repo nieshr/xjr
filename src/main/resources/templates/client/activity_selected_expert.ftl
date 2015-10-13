@@ -1,3 +1,8 @@
+				<#if msg??>
+				<h1 style="line-height:30px;  width:100%; text-align:center; float:left;">
+                    ${msg!''}
+                </h1>
+                </#if>
 				<table class="new_list">
 		        	<tr class="list_title">
 		        		<th width="30%">姓名</th>

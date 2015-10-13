@@ -10,6 +10,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ynyes.kjxjr.entity.TdActivity;
+import com.ynyes.kjxjr.service.TdActivityService;
 import com.ynyes.kjxjr.util.SiteMagConstant;
 
 @Controller
@@ -24,9 +27,13 @@ import com.ynyes.kjxjr.util.SiteMagConstant;
 public class TdClientUploadController {
 
 	String ImageRoot = SiteMagConstant.imagePath;
-	@RequestMapping(value = "/upload", method = RequestMethod.POST)
+	
+	@Autowired
+	TdActivityService tdActivityService;
+	
+	@RequestMapping(value = "/recommend/upload", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> upload(String action,
+    public Map<String, Object> upload(String action,Long activityId,
             @RequestParam MultipartFile Filedata, HttpServletRequest req) {
         Map<String, Object> res = new HashMap<String, Object>();
         res.put("status", 0);
@@ -51,7 +58,9 @@ public class TdClientUploadController {
                     new FileOutputStream(file));
             stream.write(bytes);
             stream.close();
-
+            TdActivity tdActivity = tdActivityService.findOne(activityId);
+            tdActivity.setFileUrl("/images/" + fileName);
+            tdActivityService.save(tdActivity);
             res.put("status", 1);
             res.put("msg", "上传文件成功！");
             res.put("path", fileName);

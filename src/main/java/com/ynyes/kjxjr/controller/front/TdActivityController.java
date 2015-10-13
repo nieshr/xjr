@@ -699,6 +699,17 @@ public class TdActivityController {
         if (null == username) {
             return "redirect:/login";
         }
+        
+        List<TdActivityExpert> expertList = tdActivityExpertService.findByActivityId(activityId);
+        if (expertList.size() > 6)
+        {
+        	map.addAttribute("msg", "最大添加人数为7人！！");
+        	
+            map.addAttribute("activityId",activityId);
+            map.addAttribute("selected_expert_list", expertList);
+        	return "/client/activity_selected_expert";
+        }
+        
       
         if(null != id&&null !=activityId)
         {
