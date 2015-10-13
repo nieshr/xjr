@@ -65,10 +65,10 @@ function __doPostBack(eventTarget, eventArgument) {
   <tbody>
   <tr class="odd_bg">
     <th width="8%">选择</th>
-    <th align="left">名称</th>
+    <th align="left">角色类型</th>
     <th align="left">登录名</th>
-    <th align="left">地区</th>
-    <th align="left" width="37%">地理位置</th>
+    <#--><th align="left">地区</th>
+    <th align="left" width="37%">地理位置</th>-->
     <th align="left" width="12%">排序</th>
     <th width="8%">是否启用</th>
     <th width="10%">操作</th>
@@ -83,10 +83,10 @@ function __doPostBack(eventTarget, eventArgument) {
                     </span>
                     <input type="hidden" name="listId" id="listId" value="${item.id}">
                 </td>
-                <td><a href="/Verwalter/order/setting/diysite/edit?id=${item.id}">${item.title!""}</a></td>
-                <td>${item.username!""}</td>
-                <td>${item.city!""}</td>
-                <td>${item.address!""}</td>
+                <td>${item.title!""}</td>
+                <td><a href="/Verwalter/order/setting/diysite/edit?id=${item.id}">${item.username!""}</a></td>
+                <#--><td>${item.city!""}</td>
+                <td>${item.address!""}</td>-->
                 <td><input name="listSortId" type="text" value="${item.sortId!""}" class="sort" onkeydown="return checkNumber(event);"></td>
                 <td align="center"><#if item.isEnable?? && item.isEnable>是<#else>否</#if></td>
                 <td align="center">

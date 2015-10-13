@@ -141,7 +141,7 @@ public class TdDiySiteService {
             {
                 user = tdUserService.addNewUser(e.getUsername(), e.getPassword(), e.getMobile(), null, null);
                 
-                user.setRoleId(2L); // 加盟商用户
+                user.setRoleId(e.getRoleId()); // 设置角色类型
             }
             // 修改加盟店密码也需要修改用户密码 @author: Sharon
             else

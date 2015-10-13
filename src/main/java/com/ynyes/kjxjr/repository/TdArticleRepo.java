@@ -35,6 +35,8 @@ public interface TdArticleRepo extends
     
     Page<TdArticle> findByMenuIdAndCategoryIdAndStatusIdOrderByIdDesc(Long menuId, Long catId, Long statusId, Pageable page);
     
+    Page<TdArticle> findByMenuIdAndCategoryIdAndStatusIdOrderBySortIdAsc(Long menuId, Long catId, Long statusId, Pageable page);
+    
     //顺序排列 zhangji
     Page<TdArticle> findByMenuIdAndCategoryIdAndStatusIdOrderByIdAsc(Long menuId, Long catId, Long statusId, Pageable page);
     
