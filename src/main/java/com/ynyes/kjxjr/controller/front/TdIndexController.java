@@ -6,12 +6,14 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.mobile.device.Device;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ynyes.kjxjr.entity.TdAdType;
+import com.ynyes.kjxjr.entity.TdArticle;
 import com.ynyes.kjxjr.entity.TdArticleCategory;
 import com.ynyes.kjxjr.entity.TdProductCategory;
 import com.ynyes.kjxjr.service.TdAdService;
@@ -65,6 +67,24 @@ public class TdIndexController {
         
         tdCommonService.setHeader(map, req);              
         
+        // 组织体系
+        List<TdArticleCategory> tdArticleCategories = tdArticleCategoryService.findByMenuId(8L);
+        if (null != tdArticleCategories) {
+        	map.addAttribute("organization_0_list", tdArticleCategories);
+            for(TdArticleCategory tdArticleCategory : tdArticleCategories){
+            	List<TdArticle> tdArticles = tdArticleService.findByCategoryId(tdArticleCategory.getId());
+            	if (null != tdArticles) {
+					map.addAttribute("organization_level1_"+tdArticleCategory.getId(), tdArticles);
+				}
+            }
+		}
+        
+        //新闻动态
+        List<TdArticle> tdArticles = tdArticleService.findByMenuId(10L);
+        if (null != tdArticles) {
+			map.addAttribute("news_list", tdArticles);
+		}
+        
         // 普通课程
         map.addAttribute("course_page0", tdArticleService                   		
         		.findByMenuIdAndRecommendIdOrderBySortIdAsc(12L,0L, 0, ClientConstant.pageSize));
@@ -95,8 +115,8 @@ public class TdIndexController {
         		.findByCategoryId(courseInfoList.get(2).getId(), 0, ClientConstant.pageSize)); 
         
         //新闻
-        map.addAttribute("news_list", tdArticleService                   		
-        		.findByMenuIdOrderByCreateTime(8L));   
+//        map.addAttribute("news_list", tdArticleService                   		
+//        		.findByMenuIdOrderByCreateTime(8L));   
         
         //招聘信息
 //        /////////
