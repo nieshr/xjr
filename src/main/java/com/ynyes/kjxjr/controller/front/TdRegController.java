@@ -154,7 +154,6 @@ public class TdRegController {
 	@RequestMapping(value = "/reg", method = RequestMethod.POST)
 	public String reg(String username, String mobile, String password, String email, String smsCode, String code,
 			String carCode, Long shareId, HttpServletRequest request) {
-		String codeBack = (String) request.getSession().getAttribute("RANDOMVALIDATECODEKEY");
 		String smsCodeSave = (String) request.getSession().getAttribute("SMSCODE");
 		if (null == smsCodeSave) {
 			if (null == shareId) {
