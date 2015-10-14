@@ -77,7 +77,7 @@
 			        		<td>${item.name!''}</td>
 			        		<td style="color:#0ab2cb;">${item.usermobile!''}</td>
 			        		<td style="color:#e67817;">${item.email!''}</td>
-			        		<td><a href="javascript:addExpert(${item.id?c!''},${activityId?c!''});">添加预选</a></td>
+			        		<td><a href="javascript:addExpert(${item.id?c!''},${activityId?c!''});">添加</a></td>
 			        	</tr>
 		        	</#list>
 		        </#if>	   

@@ -64,9 +64,9 @@ $(function () {
   <a href="/Verwalter/order/setting/diysite/list" class="back"><i></i><span>返回列表页</span></a>
   <a href="/Verwalter/center" class="home"><i></i><span>首页</span></a>
   <i class="arrow"></i>
-  <a href="/Verwalter/order/setting/diysite/list"><span>同盟店</span></a>
+  <a href="/Verwalter/order/setting/diysite/list"><span>角色</span></a>
   <i class="arrow"></i>
-  <span>编辑同盟店</span>
+  <span>编辑角色</span>
 </div>
 <div class="line10"></div>
 <!--/导航栏-->
@@ -83,12 +83,25 @@ $(function () {
 </div>
 
 <div class="tab-content">
-  <dl>
-    <dt>同盟店名称</dt>
+  <#--><dl>
+    <dt>角色名称</dt>
     <dd>
         <input name="title" type="text" value="<#if diy_site??>${diy_site.title!""}</#if>" class="input normal" datatype="*2-100" sucmsg=" "> 
         <span class="Validform_checktip">*同盟店名称</span>
     </dd>
+  </dl>-->
+  <dl>
+      <dt>角色类别</dt>
+      <dd>
+           <div class="rule-single-select">
+                <select name="roleId" datatype="*0-100" sucmsg=" ">
+                     <option value="" <#if !diy_site??>selected="selected"</#if>>请选择...</option>
+                     <option value="2" <#if diy_site?? && diy_site.roleId?? && diy_site.roleId==2>selected="selected"</#if>>区县管理</option> 
+                     <option value="3" <#if diy_site?? && diy_site.roleId?? && diy_site.roleId==3>selected="selected"</#if>>活动</option>
+                     <option value="4" <#if diy_site?? && diy_site.roleId?? && diy_site.roleId==4>selected="selected"</#if>>专家</option>                   
+                </select>
+           </div>
+       </dd>
   </dl>
   <dl>
     <dt>登录名</dt>
@@ -118,8 +131,14 @@ $(function () {
         <span class="Validform_checktip">*用于接收通知短信</span>
     </dd>
   </dl>
-  
   <dl>
+    <dt>邮箱</dt>
+    <dd>
+        <input name="email" type="text" value="<#if diy_site??>${diy_site.email!""}</#if>" class="input normal" datatype="*" sucmsg=" "> 
+        <span class="Validform_checktip">*用于接收通知邮件</span>
+    </dd>
+  </dl>
+  <#--><dl>
     <dt>店面图片</dt>
     <dd>
         <input id="txtImgUrl" name="imageUri" type="text" datatype="*" value="<#if diy_site?? && diy_site.imageUri??>${diy_site.imageUri!""}</#if>" class="input normal upload-path">
@@ -231,7 +250,7 @@ $(function () {
       <input name="complainTele" type="text" value="<#if diy_site??>${diy_site.complainTele!""}</#if>" class="input normal" datatype="*" errormsg="" sucmsg=" ">
       <span class="Validform_checktip"></span>
     </dd>
-  </dl>
+  </dl>-->
   
   <dl>
     <dt>是否启用</dt>
@@ -244,7 +263,7 @@ $(function () {
             <label>否</label>
         </span>
       </div>
-      <span class="Validform_checktip">*不启用则不显示该门店</span>
+      <span class="Validform_checktip">*不启用则不该角色不可用</span>
     </dd>
   </dl>
   <dl>

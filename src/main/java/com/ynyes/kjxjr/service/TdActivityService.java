@@ -1,4 +1,5 @@
 package com.ynyes.kjxjr.service;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -119,12 +120,13 @@ public class TdActivityService {
     }
     
     
-    public Page<TdActivity> findByRegionOrderByIdDesc(String region,int page, int size)
+    public Page<TdActivity> findByRegionAndStatusIdAndPrepareOffAfterAndPrepareOnBeforeOrderByIdDesc(String region , Long statusId  , int page, int size)
     {
         PageRequest pageRequest = new PageRequest(page, size, new Sort(Direction.DESC, "id"));
         
-        return repository.findByRegion(region,pageRequest);
+        return repository.findByRegionAndStatusIdAndPrepareOffAfterAndPrepareOnBefore(region , statusId , new Date() ,new Date() , pageRequest);
     }
+    
     public Page<TdActivity> searchAllOrderBySortIdAsc(String keywords, int page, int size)
     {
         PageRequest pageRequest = new PageRequest(page, size);

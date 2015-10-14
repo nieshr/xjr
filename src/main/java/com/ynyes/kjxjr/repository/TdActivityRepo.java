@@ -1,5 +1,6 @@
 package com.ynyes.kjxjr.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -23,7 +24,7 @@ public interface TdActivityRepo extends
     Page<TdActivity> findByTitleContainingOrderBySortIdAsc(String keywords, Pageable page);
     TdActivity findByStatusId(Long statusId);
     Page<TdActivity> findByStatusId(Long statusId, Pageable page);
-    Page<TdActivity> findByRegion(String region, Pageable page);
+    Page<TdActivity> findByRegionAndStatusIdAndPrepareOffAfterAndPrepareOnBefore(String region , Long statusId , Date current1 , Date current2 , Pageable page);
     /**
 	 * @author lc
 	 * @注释：

@@ -62,13 +62,26 @@ public class TdActivity {
     @Column
     private Long statusId;
     
-    //活动创建状态：选择项目 0未完成；1已完成；
+    //活动创建-选择项目状态： 0未完成；1已完成；
     @Column
     private Long statusEn;
     
-    //活动创建状态：选择专家 0未完成；1已完成；
+    //活动创建-选择专家状态： 0未完成；1已完成；
     @Column
     private Long statusEx;
+    
+    //区县管理状态： 0未完成；1已完成；
+    @Column
+    private Long regionStatusId;
+    
+    //区县管理-预选状态： 0未完成；1已完成；
+    @Column
+    private Long statusChoose;
+
+    //区县管理-推荐状态： 0未完成；1已完成；
+    @Column
+    private Long statusRecommend;
+    
     // 简介
     @Column
     @Lob
@@ -233,6 +246,30 @@ public class TdActivity {
 		this.statusEx = statusEx;
 	}
 
+	public Long getStatusChoose() {
+		return statusChoose;
+	}
+
+	public void setStatusChoose(Long statusChoose) {
+		this.statusChoose = statusChoose;
+	}
+
+	public Long getStatusRecommend() {
+		return statusRecommend;
+	}
+
+	public void setStatusRecommend(Long statusRecommend) {
+		this.statusRecommend = statusRecommend;
+	}
+
+	public Long getRegionStatusId() {
+		return regionStatusId;
+	}
+
+	public void setRegionStatusId(Long regionStatusId) {
+		this.regionStatusId = regionStatusId;
+	}
+    
 	public String getDownload() {
 		return download;
 	}
@@ -240,6 +277,7 @@ public class TdActivity {
 	public void setDownload(String download) {
 		this.download = download;
 	}
+
 	
 }
   

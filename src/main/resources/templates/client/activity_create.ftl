@@ -155,7 +155,7 @@ $(function(){
     			<div><span>活动名称：</span><input <#if pagetype??&& pagetype == "check">disabled=""</#if> type="text" name="title" id="title" datatype="*"value="<#if activity??>${activity.title!''}</#if>" /></div>
     			<div>
     				<span>活动类型：</span>
-    				<select name="activityType" id="activityType" datatype="">
+    				<select name="activityType" id="activityType">
     				    <#if activityType_list??>
     				        <#list activityType_list as item>
     					        <option value="${item.title!''}" <#if activity??&&activity.activityType?? &&activity.activityType == item.title>selected="selected"</#if> <#if pagetype??&& pagetype == "check">disabled=""</#if>>${item.title!''}</option>
@@ -165,7 +165,7 @@ $(function(){
     			</div>
     			<div>
     			    <span>地区 ：</span>
-                    <select name="region" id="region" datatype="">
+                    <select name="region" id="region" >
                         <#if region_list??>
                             <#list region_list as item>
                                 <option value="${item.title!''}" <#if activity?? &&activity.region == item.title>selected="selected"</#if>  <#if pagetype??&& pagetype == "check">disabled=""</#if>>${item.title!''}</option>
@@ -230,7 +230,7 @@ $(function(){
     				</ul>
     			</div>
     			
-    			<div>
+    			<div style="margin-top:50px;">
     				<span style="margin-top: 10px;">评委专家：</span>
     				<ul class="active_project_list">
     		    	    <#if selected_expert_list??>

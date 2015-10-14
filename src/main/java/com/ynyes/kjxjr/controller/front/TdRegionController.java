@@ -32,10 +32,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ynyes.kjxjr.entity.TdActivity;
+import com.ynyes.kjxjr.entity.TdActivityEnterprise;
 import com.ynyes.kjxjr.entity.TdEnterprise;
 import com.ynyes.kjxjr.entity.TdRegion;
 import com.ynyes.kjxjr.entity.TdRegionAdmin;
 import com.ynyes.kjxjr.entity.TdUser;
+import com.ynyes.kjxjr.service.TdActivityEnterpriseService;
+import com.ynyes.kjxjr.service.TdActivityExpertService;
 import com.ynyes.kjxjr.service.TdActivityService;
 import com.ynyes.kjxjr.service.TdCommonService;
 import com.ynyes.kjxjr.service.TdCouponService;
@@ -72,6 +75,12 @@ public class TdRegionController {
 	
 	@Autowired
 	TdRegionAdminService tdRegionAdminService;
+	
+	@Autowired
+	TdActivityEnterpriseService tdActivityEnterpriseService;
+	
+	@Autowired
+	TdActivityExpertService tdActivityExpertService;
 
     @RequestMapping(value = "/enterprise/list", method = RequestMethod.GET)
     public String EnterpriseList(HttpServletRequest req, ModelMap map,Integer page) {
@@ -193,7 +202,7 @@ public class TdRegionController {
 
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
         TdRegionAdmin regionAdmin = tdRegionAdminService.findbyUsername(username);
-        Page<TdActivity> activityPage = tdActivityService.findByRegionOrderByIdDesc(regionAdmin.getTitle(),page, ClientConstant.pageSize);
+        Page<TdActivity> activityPage = tdActivityService.findByRegionAndStatusIdAndPrepareOffAfterAndPrepareOnBeforeOrderByIdDesc(regionAdmin.getTitle() , 1L ,page, ClientConstant.pageSize);
         
         
         map.addAttribute("activity_page", activityPage);
@@ -220,7 +229,382 @@ public class TdRegionController {
         map.addAttribute("pagetype", "check");
         map.addAttribute("activity", activity);
         map.addAttribute("user", user);
+        
+        map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityId(activity.getId()));
+        map.addAttribute("selected_expert_list", tdActivityExpertService.findByActivityId(activity.getId()));
 
         return "/client/activity_create";
     }
+    
+/**
+ * 预选
+ */
+@RequestMapping(value = "/chooseEnterprise")
+public String  regionSelectEnterprise(HttpServletRequest req,
+		ModelMap map,
+		Integer page,
+		Long id,
+		String keywords) {
+    String username = (String) req.getSession().getAttribute("regionUsername");
+
+	    if (null == username) {
+	        return "redirect:/login";
+	    }
+	    
+	    if (null == page)
+	    {
+	    	page = 0;
+	    }
+	    //搜索
+	    Page<TdActivityEnterprise>enterprisePage = null;
+	    if (null != keywords && !keywords.isEmpty())
+	    {
+	    	enterprisePage =tdActivityEnterpriseService.findByActivityIdAndSearch(id,keywords,page, ClientConstant.pageSize);
+	    }
+	    else
+	    {
+	    	enterprisePage =tdActivityEnterpriseService.findByActivityId(id,page, ClientConstant.pageSize);
+	    }    	
+	    
+	    TdActivity activity = tdActivityService.findOne(id);
+	    Long activityId = activity.getId();
+	    Long statusId = 1L;
+	    
+	    map.addAttribute("keywords", keywords);
+	   	map.addAttribute("activity", activity);
+	   	map.addAttribute("activityId", activityId);
+		map.addAttribute("statusId", statusId);   //类型   1：预选；2：推荐
+	 	map.addAttribute("enterprise_page", enterprisePage);
+	 	map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityIdAndStatusId(activityId,1L));
+	    return "/client/region_selectEnterprise";
+}
+
+/**
+ * 推荐
+ */
+@RequestMapping(value = "/recommendEnterprise")
+public String  recommendEnterprise(HttpServletRequest req,
+		ModelMap map,
+		Integer page,
+		Long id,
+		String keywords) {
+    String username = (String) req.getSession().getAttribute("regionUsername");
+
+	    if (null == username) {
+	        return "redirect:/login";
+	    }
+	    
+	    if (null == page)
+	    {
+	    	page = 0;
+	    }
+	    //搜索
+	    Page<TdActivityEnterprise>enterprisePage = null;
+	    if (null != keywords && !keywords.isEmpty())
+	    {
+	    	enterprisePage =tdActivityEnterpriseService.findByActivityIdAndSearch(id,keywords,page, ClientConstant.pageSize);
+	    }
+	    else
+	    {
+	    	enterprisePage =tdActivityEnterpriseService.findByActivityId(id,page, ClientConstant.pageSize);
+	    }    	
+	    
+	    TdActivity activity = tdActivityService.findOne(id);
+	    Long activityId = activity.getId();
+	    Long statusId = 2L;
+	    
+	    map.addAttribute("keywords", keywords);
+	   	map.addAttribute("activity", activity);
+	   	map.addAttribute("activityId", activityId);
+		map.addAttribute("statusId", statusId);   //选择类型   1：预选；2：推荐
+	 	map.addAttribute("enterprise_page", enterprisePage);
+	 	map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityIdAndStatusId(activityId,2L));
+	    return "/client/region_selectEnterprise";
+}
+
+
+@RequestMapping(value = "/addEnterprise")
+public String  regionAddEnterprise(HttpServletRequest req,Long id,Long activityId,Long statusId,String reason,
+		ModelMap map) {
+    String username = (String) req.getSession().getAttribute("regionUsername");
+
+    if (null == username) {
+        return "redirect:/login";
+    }
+	List<TdActivityEnterprise> selectedEnterpriseList = tdActivityEnterpriseService.findByActivityIdAndStatusId(activityId,statusId);
+    
+	if (selectedEnterpriseList.size() >19)
+	{
+		map.addAttribute("msg", "最多添加20个项目！！");
+	    map.addAttribute("statusId", statusId);
+	    map.addAttribute("activityId",activityId);
+	    map.addAttribute("selected_enterprise_list", selectedEnterpriseList);
+	    return "/client/region_selected_enterprise";
+	}
+  
+    if(null != id&&null !=activityId&&null !=statusId)
+    {
+    	TdActivityEnterprise activityenterprise = tdActivityEnterpriseService.findOne(id);
+    	TdEnterprise enterprise = tdEnterpriseService.findOne(activityenterprise.getEnterpriseId());
+    	TdActivity activity = tdActivityService.findOne(activityId);
+    	
+    	
+    	if (null != activityenterprise)
+    	{
+    		activityenterprise.setCreateTime(new Date());
+    		activityenterprise.setEnterpriseTitle(enterprise.getTitle());
+    		activityenterprise.setActivityTitle(activity.getTitle());
+    		activityenterprise.setArea(enterprise.getArea());
+    		activityenterprise.setType(enterprise.getType());
+    		activityenterprise.setStatusId(statusId);
+    		activityenterprise.setReason(reason);
+    		tdActivityEnterpriseService.save(activityenterprise);
+    	}
+    	
+    }
+    
+    map.addAttribute("statusId", statusId);
+    map.addAttribute("activityId",activityId);
+    map.addAttribute("selected_enterprise_list",  tdActivityEnterpriseService.findByActivityIdAndStatusId(activityId,statusId));
+    return "/client/region_selected_enterprise";
+}
+
+
+@RequestMapping(value = "/removeEnterprise")
+public String  regionRemoveEnterprise(HttpServletRequest req,Long id,Long activityId,Long statusId,
+		ModelMap map) {
+    String username = (String) req.getSession().getAttribute("regionUsername");
+
+    if (null == username) {
+        return "redirect:/login";
+    }
+  
+    if(null != id)
+    {
+    	TdActivityEnterprise activityEnterprise = tdActivityEnterpriseService.findOne(id);
+    	if (null != activityEnterprise)
+    	{
+    		activityEnterprise.setStatusId(0L);
+    		tdActivityEnterpriseService.save(activityEnterprise);
+    	}
+    }
+    
+    map.addAttribute("statusId",statusId);
+    map.addAttribute("activityId",activityId);
+    map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityIdAndStatusId(activityId,statusId));
+    return "/client/region_selected_enterprise";
+}
+
+//完成项目选择
+@RequestMapping(value = "/enterprise/finish", method = RequestMethod.GET)
+	public String enterpriseFinish(HttpServletRequest req, ModelMap map,Long id,Long statusId) {
+			    String username = (String) req.getSession().getAttribute("regionUsername");
+			
+			    if (null == username) {
+			        return "redirect:/login";
+			    }
+			
+			    tdCommonService.setHeader(map, req);
+			    
+			    TdActivity activity = tdActivityService.findOne(id);
+			    
+			    if(1 == statusId)
+			    {
+			    	activity.setStatusChoose(1L);
+			
+			    	tdActivityService.save(activity);
+			    }
+			    else  if(2 == statusId)
+			    {
+			    	activity.setStatusRecommend(1L);
+			    	tdActivityService.save(activity);
+			    }
+			    
+			    if (1 == activity.getStatusChoose()&&1 == activity.getStatusRecommend())
+			    {
+			    	activity.setRegionStatusId(1L);
+			    	tdActivityService.save(activity);
+			    }
+			    map.addAttribute("activity", activity);
+			    
+			    TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
+			    map.addAttribute("user", user);
+			
+			    return "redirect:/region/activity/list";
+		}
+    
+//导出
+// 区县科委推荐项目汇总表
+@SuppressWarnings("deprecation")
+@RequestMapping(value="/export/recommend")
+public String exportRecommend(
+                            Long activityId,
+                            ModelMap map,
+                            String exportUrl,
+                            HttpServletResponse resp,
+                            HttpServletRequest req){
+    String username = (String) req.getSession().getAttribute("regionUsername");
+    if (null == username) {
+        return "redirect:/login";
+    }
+
+        	exportUrl = SiteMagConstant.backupPath;
+    
+			if (null != exportUrl) {
+				List<TdActivityEnterprise> activityEnterpriseList = tdActivityEnterpriseService.findByActivityIdAndStatusId(activityId, 2L);
+		
+    /**  
+		 * @author lc
+		 * @注释：根据不同条件导出excel文件
+		 */
+      // 第一步，创建一个webbook，对应一个Excel文件  
+      HSSFWorkbook wb = new HSSFWorkbook();  
+      // 第二步，在webbook中添加一个sheet,对应Excel文件中的sheet  
+      HSSFSheet sheet = wb.createSheet("activityEnterprise");  
+      //列宽
+      
+      sheet.setColumnWidth((short) 0 , 1000);
+      sheet.setColumnWidth((short) 1 , 1500);
+      sheet.setColumnWidth((short) 2 , 10000);
+      sheet.setColumnWidth((short) 3 , 2000);
+      sheet.setColumnWidth((short) 4 , 4000);
+      sheet.setColumnWidth((short) 5 , 4000);
+      sheet.setColumnWidth((short) 6 , 20000);
+      sheet.setColumnWidth((short) 7 , 10000);
+      
+      
+      
+      
+      // 第三步，在sheet中添加表头第0行,注意老版本poi对Excel的行数列数有限制short  
+      HSSFRow row = sheet.createRow((int) 0);  
+      // 第四步，创建单元格，并设置值表头 设置表头居中  
+      HSSFCellStyle style = wb.createCellStyle();  
+      style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+     
+      HSSFCell cell = row.createCell((short) 0);  
+      cell.setCellValue("序号");  
+      cell.setCellStyle(style);
+      
+      cell = row.createCell((short) 1);  
+      cell.setCellValue("编号");  
+      cell.setCellStyle(style);  
+      
+      cell = row.createCell((short) 2);  
+      cell.setCellValue("公司（团队）名称");  
+      cell.setCellStyle(style);  
+      
+      cell = row.createCell((short) 3);  
+      cell.setCellValue("联系人");  
+      cell.setCellStyle(style);  
+      
+      cell = row.createCell((short) 4);  
+      cell.setCellValue("手机");  
+      cell.setCellStyle(style);  
+    
+      cell = row.createCell((short) 5);  
+      cell.setCellValue("QQ/MSN");  
+      cell.setCellStyle(style);  
+      
+      cell = row.createCell((short) 6);  
+      cell.setCellValue("项目简介");  
+      cell.setCellStyle(style);  
+      
+      cell = row.createCell((short) 7);  
+      cell.setCellValue("推荐理由");  
+      cell.setCellStyle(style);  
+			
+		if (null != exportUrl) {
+			if (ImportData(activityEnterpriseList, row, cell, sheet,style)) {
+				download(wb, username, resp);
+			}         
+		}  
+			}
+    return "/redirect:/region/activity/list";
+}
+
+/**
+	 * @author lc
+	 * @注释：将page中的订单数据存入excel表格中
+	 */
+ @SuppressWarnings("deprecation")
+	public boolean ImportData(List<TdActivityEnterprise> activityEnterpriseList, HSSFRow row, HSSFCell cell, HSSFSheet sheet ,HSSFCellStyle style){
+	 	
+        	for (int i = 0; i < activityEnterpriseList.size(); i++)  
+            {  
+        	 				
+                row = sheet.createRow((int) i + 1);  
+                TdActivityEnterprise tdActivityEnterprise = activityEnterpriseList.get(i);  
+                //获取用户信息
+//                TdUser tdUser = tdUserService.findByUsername(tdOrder.getUsername());
+                // 第四步，创建单元格，并设置值  
+                cell = row.createCell((short) 0);
+                cell.setCellValue(i+1);
+                cell.setCellStyle(style); 
+                cell = row.createCell((short) 1);
+                cell.setCellValue(tdActivityEnterprise.getNumber());
+                cell.setCellStyle(style);
+                cell = row.createCell((short) 2);
+                cell.setCellStyle(style);
+                cell.setCellValue(tdActivityEnterprise.getEnterpriseTitle()); 
+                cell = row.createCell((short) 3);
+                cell.setCellStyle(style);
+                cell.setCellValue(tdActivityEnterprise.getContact()); 
+                cell = row.createCell((short) 4);
+                cell.setCellStyle(style);
+                cell.setCellValue(tdActivityEnterprise.getMobile());
+                cell = row.createCell((short) 5);
+                cell.setCellStyle(style);
+                cell.setCellValue(tdActivityEnterprise.getQQ());
+                cell = row.createCell((short) 6);
+                cell.setCellStyle(style);
+                cell.setCellValue(tdActivityEnterprise.getProfile());
+                cell = row.createCell((short) 7);
+                cell.setCellValue(tdActivityEnterprise.getReason()); 
+                cell.setCellStyle(style);
+             
+            } 
+ 	return true;
+ }
+ /**
+	 * @author lc
+	 * @注释：文件写入和下载
+	 */
+ public Boolean download(HSSFWorkbook wb, String exportUrl, HttpServletResponse resp){
+ 	 try  
+      {  
+	          FileOutputStream fout = new FileOutputStream(exportUrl+"activityEnterprise.xls");  
+//	          OutputStreamWriter writer = new OutputStreamWriter(fout, "utf8");	                       	     
+	          wb.write(fout);  
+	          fout.close();
+      }catch (Exception e)  
+      {  
+          e.printStackTrace();  
+      } 
+ 	 OutputStream os;
+		 try {
+				os = resp.getOutputStream();
+				File file = new File(exportUrl + "activityEnterprise.xls");
+              
+          if (file.exists())
+              {
+                try {
+                      resp.reset();
+                      resp.setHeader("Content-Disposition", "attachment; filename="
+                              + "activityEnterprise.xls");
+                      resp.setContentType("application/octet-stream; charset=utf-8");
+                      os.write(FileUtils.readFileToByteArray(file));
+                      os.flush();
+                  } finally {
+                      if (os != null) {
+                          os.close();
+                      }
+                  }
+          }
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+		 }
+		 return true;	
+ }
+
 }

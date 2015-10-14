@@ -11,13 +11,42 @@
         .page p{  margin-left: 10px;}
     </style>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-    <title>添加项目</title>
+    <title><#if statusId??&&statusId == 1>添加预选项目<#elseif statusId??&&statusId == 2>添加推荐项目</#if></title>
     <link rel="shortcut icon" href="/client/images/icon.ico" />
     <link href="/client/css/base.css" rel="stylesheet" type="text/css" />
     <link href="/client/css/area.css" rel="stylesheet" type="text/css" />
 
 <script src="/client/js/jquery-1.9.1.min.js"></script>
 <script src="/client/js/main.js"></script>
+<script type="text/javascript" src="/client/js/Validform_v5.3.2_min.js"></script>
+<script>
+function upload(){
+    $("#upload").submit(function(){
+   	  var options ={
+   	        type: "POST",
+   	        url: "/client/recommend/upload",
+   	        contentType: "application/json; charset=utf-8",
+   	        data: {activityId:$("#activityId").val(), 
+   	              Filedata:$("#file").val() },
+   	        dataType: "json",
+   	        success: function(data){
+   	                    if (data.status == 1)
+   	                    {
+   	                        alert("上传成功！")
+   	                    }
+   	                    else 
+   	                    {
+   	                        alert(data.msg);
+   	                    }
+   	                 }
+   	    };
+   	$('#upload').ajaxSubmit(options); 
+    });	
+  
+}
+
+
+</script>
 </head>
 <body>
 <!--main-->
@@ -30,7 +59,9 @@
 <!--left-->
     <div class="leftbar">
         <dl class="nav">
-            <dd><a href="#">创建活动</a></dd>
+            <dd><a href="/region/enterprise/list">企业列表</a></dd>
+            <dd><a href="/region/activity/list">活动列表</a></dd>
+            <dd><a href="#">档案跟踪</a></dd>
         </dl>
     </div>
 <!--right-->
@@ -43,17 +74,25 @@
 
                 <a href="#">区县管理</a>
                 <p>&gt;</p>
-                <a href="#">推荐企业/团队</a>
+                <#if statusId??&&statusId == 1>
+                <a href="#">预选企业/团队</a>
+                <#elseif statusId??&&statusId == 2>
+                 <a href="#">推荐企业/团队</a>
+                 </#if>
             </dd>
             <dt class="crumb_back"><a  href="#">返回上一页</a></dt>
         </dl>
        <!-- <form name="addEnterprise" action="/activity/addEnterprises">-->
             <div class="list_base2" style="padding-top:0;">
+            <h1 style="line-height:50px;  width:100%; text-align:center; float:left;">${activity.title!''}</h1>
                 <table class="new_list">
                     <tr class="list_title">
-                        <th width="30%">备选企业列表</th>
-                        <th width="25%">地区</th>
-                        <th width="25%">行业归属</th>
+                        <th width="20%">备选企业列表</th>
+                        <th width="20%">地区</th>
+                        <th width="20%">行业归属</th>
+                        <#if statusId??&&statusId == 2>
+                        	<th width="20%">推荐理由</th>
+                        </#if>
                         <th width="20%">操作</th>
                     </tr>
                 <#if enterprise_page??>
@@ -65,10 +104,13 @@
                                 <input type="hidden" name="listId" id="listId" value="${item.id}">
                             </td>
                             -->
-                            <td>${item.title!''}</td>
+                            <td>${item.enterpriseTitle!''}</td>
                             <td style="color:#0ab2cb;">${item.area!''}</td>
                             <td style="color:#e67817;">${item.type!''}</td>
-                            <td><a href="javascript:addEnterprise(${item.id?c!''},${activityId?c!''});">添加预选</a></td>
+                            <#if statusId??&&statusId == 2>
+                            <td><input style="width: 98%;height: 30px;" type="text" id="reason${item.id?c!''}"/></td>
+                            </#if>
+                            <td><a href="javascript:addEnterprise1(${item.id?c!''},${activityId?c!''},${statusId!''});">添加预选</a></td>
                         </tr>
                     </#list>
                 </#if>     
@@ -122,12 +164,28 @@
         
         
         <div class="list_base2" id="selectedEnterprise">
-            <#include "/client/activity_selected_enterprise.ftl" />
+            <#include "/client/region_selected_enterprise.ftl" />
         </div>
         <div class="area_add_btn">
         <!--    <input style="cursor:pointer;"  type="button" value="批量取消预选" />-->
         </div>
-        <input style="cursor:pointer;" class="area_save_btn" style="margin-left:45%;"type="button" onclick="location.href='/activity/enterprise/finish?id=${activityId?c!''}'" value="保存" />
+        <#if statusId??&&statusId == 2>
+         <form id="upload" enctype="multipart/form-data" action="/client/recommend/upload" method="post">
+            <input type="hidden" id="activityId" name="activityId" value="${activity.id?c!''}"></input>
+		    <dl class="area_up">
+			    <dd><input onclick="location.href='/region/export/recommend?activityId=${activityId?c!''}'" class="area_save_btn01" type="button" value="生成并下载《区县推荐项目汇总表》" /></dd>
+			   
+			    <dd>
+			        <span style="font-size: 14px; margin-left: 20px;">添加文件：</span>
+			        <input id="file" style="margin-left: 20px; margin-top: 20px;" name="Filedata" type="file" value="" />
+			    </dd>
+			    <dd><input onclick="javascript:upload();" style="margin-left:20px;" class="area_save_btn" type="button" value="上传" /></dd>
+			</dl>
+		  </form>	
+		</#if>	
+        
+        
+        <input style="cursor:pointer;" class="area_save_btn" style="margin-left:45%;"type="button" onclick="location.href='/region/enterprise/finish?id=${activityId?c!''}&statusId=${statusId!''}'" value="完成" />
     </div> 
     </div>
 </div><!--content_end-->

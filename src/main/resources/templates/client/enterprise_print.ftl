@@ -57,6 +57,7 @@
         </dl>
     </div>  
     
+    
       <form>
     <dl class="apply_change">
     	<dt class="dt01"><span>一、基本信息</span><br/><p>此信息将自动生成到报名表中</p></dt>
