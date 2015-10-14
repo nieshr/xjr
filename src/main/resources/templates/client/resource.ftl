@@ -10,7 +10,7 @@
 	<script src="/client/js/jquery-1.9.1.min.js"></script>
 </head>
 <body>
-<#include "/client/news_common_header.ftl" />
+<#include "/client/resource_common_header.ftl" />
 <!-- contend -->
 <div class="titlelist">
 	<div id="titlelist">

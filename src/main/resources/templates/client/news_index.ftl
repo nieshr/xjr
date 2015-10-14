@@ -16,7 +16,7 @@
 <body>
 <!-- 导航 -->
 <!-- head  -->
-<#include "/client/news_common_header.ftl" />
+    <#include "/client/news_common_header.ftl" />
 <!-- head end -->
 
 <!--菜单导航-->

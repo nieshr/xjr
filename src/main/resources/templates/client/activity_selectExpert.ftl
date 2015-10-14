@@ -45,7 +45,7 @@
 				<p>&gt;</p>
                 <a href="#">预选专家</a>
             </dd>
-            <dt class="crumb_back"><a  href="#">返回上一页</a></dt>
+            <dt class="crumb_back"><a  href="javascript:history.go(-1);">返回上一页</a></dt>
         </dl>
         <div class="area_choice">
         	<form action="/activity/selectExpert" >

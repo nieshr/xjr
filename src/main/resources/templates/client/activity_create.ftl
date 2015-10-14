@@ -140,7 +140,7 @@ $(function(){
                 <a href="#">资料填写</a>
                 </#if>
             </dd>
-            <dt class="crumb_back"><a  href="#">返回上一页</a></dt>
+            <dt class="crumb_back"><a  href="javascript:history.go(-1);">返回上一页</a></dt>
         </dl>
         
     </div>  
