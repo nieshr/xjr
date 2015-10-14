@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,19 +18,28 @@ import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.Region;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ynyes.kjxjr.entity.TdActivity;
+import com.ynyes.kjxjr.entity.TdActivityEnterprise;
 import com.ynyes.kjxjr.entity.TdEnterprise;
+import com.ynyes.kjxjr.entity.TdRegionAdmin;
 import com.ynyes.kjxjr.entity.TdUser;
+import com.ynyes.kjxjr.service.TdActivityEnterpriseService;
+import com.ynyes.kjxjr.service.TdActivityExpertService;
+import com.ynyes.kjxjr.service.TdActivityService;
 import com.ynyes.kjxjr.service.TdCommonService;
 import com.ynyes.kjxjr.service.TdCouponService;
 import com.ynyes.kjxjr.service.TdEnterpriseService;
 import com.ynyes.kjxjr.service.TdUserService;
+import com.ynyes.kjxjr.util.ClientConstant;
 import com.ynyes.kjxjr.util.SiteMagConstant;
 
 
@@ -49,6 +59,15 @@ public class TdEnterpriseController {
 	
 	@Autowired
 	TdCouponService tdCouponService;
+	
+	@Autowired
+	TdActivityService tdActivityService;
+	
+	@Autowired
+	TdActivityEnterpriseService tdActivityEnterpriseService;
+	
+	@Autowired
+	TdActivityExpertService tdActivityExpertService;
 	
 	   /**
      * 企业填写资料
@@ -73,6 +92,7 @@ public class TdEnterpriseController {
         map.addAttribute("enterprise", Enterprise);
         map.addAttribute("user", user);
 
+        
         return "/client/enterprise_info";
     }
     
@@ -130,8 +150,29 @@ public class TdEnterpriseController {
         return "/client/enterprise_print";
     }
     
+    @RequestMapping(value = "/upload", method = RequestMethod.GET)
+    public String userEnterpriseUpload(HttpServletRequest req, ModelMap map ,Long done) {
+        String username = (String) req.getSession().getAttribute("enterpriseUsername");
+
+        if (null == username) {
+            return "redirect:/login";
+        }
+
+        tdCommonService.setHeader(map, req);
+
+        TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
+        TdEnterprise Enterprise = tdEnterpriseService.findbyUsername(username);
+        
+        map.addAttribute("enterprise", Enterprise);
+        map.addAttribute("id", Enterprise.getId());
+        map.addAttribute("user", user);
+        map.addAttribute("done", done);
+
+        return "/client/enterprise_upload";
+    }
+    
     @RequestMapping(value = "/check", method = RequestMethod.GET)
-    public String userEnterpriseCheck(HttpServletRequest req, ModelMap map) {
+    public String userEnterpriseCheck(HttpServletRequest req, ModelMap map ) {
         String username = (String) req.getSession().getAttribute("enterpriseUsername");
 
         if (null == username) {
@@ -146,8 +187,99 @@ public class TdEnterpriseController {
         map.addAttribute("enterprise", Enterprise);
         map.addAttribute("user", user);
 
+        
         return "/client/enterprise_check";
     }
+    
+    //申请重新审核
+    @RequestMapping(value = "/recall", method = RequestMethod.GET)
+    public String userEnterpriseRecall(HttpServletRequest req, ModelMap map ) {
+        String username = (String) req.getSession().getAttribute("enterpriseUsername");
+
+        if (null == username) {
+            return "redirect:/login";
+        }
+
+        tdCommonService.setHeader(map, req);
+
+        TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
+        TdEnterprise enterprise = tdEnterpriseService.findbyUsername(username);
+        if (null != enterprise)
+        {
+        	enterprise.setStatusId(2L);
+        	tdEnterpriseService.save(enterprise);
+        }
+        map.addAttribute("enterprise", enterprise);
+        map.addAttribute("user", user);
+
+        
+        return "/client/enterprise_check";
+    }
+    
+    @RequestMapping(value = "/activity/list", method = RequestMethod.GET)
+    public String ActivitytList(HttpServletRequest req, ModelMap map,Integer page , Long statusId)  {
+        String username = (String) req.getSession().getAttribute("enterpriseUsername");
+
+        if (null == username) {
+            return "redirect:/login";
+        }
+        
+        if (null ==page)
+        {
+        	page = 0;
+        }
+
+        tdCommonService.setHeader(map, req);
+
+        TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
+        TdEnterprise enterprise = tdEnterpriseService.findbyUsername(username);
+        
+        if (null == statusId)
+        {
+        	 Page<TdActivityEnterprise> ae = tdActivityEnterpriseService.findByEnterpriseIdOrderByIdDesc(enterprise.getId() , page , ClientConstant.pageSize);
+        	 map.addAttribute("activity_page", ae);
+        }
+        else
+        {
+        	Page<TdActivityEnterprise> ae = tdActivityEnterpriseService.findByEnterpriseIdAndStatusIdOrderByIdDesc(enterprise.getId(), statusId , page , ClientConstant.pageSize);
+        	map.addAttribute("activity_page", ae);
+        }
+        
+        map.addAttribute("statusId", statusId);
+        map.addAttribute("user", user);
+
+        return "/client/enterprise_activity_list";
+    }
+    
+    //查看活动
+    @RequestMapping(value = "/activity/check", method = RequestMethod.GET)
+    public String activityCheck(HttpServletRequest req, ModelMap map,Long id) {
+        String username = (String) req.getSession().getAttribute("enterpriseUsername");
+
+        if (null == username) {
+            return "redirect:/login";
+        }
+
+        tdCommonService.setHeader(map, req);
+        
+        TdActivity activity = tdActivityService.findOne(id);
+        if (null != activity)
+        {
+	        map.addAttribute("activity", activity);
+	        map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityId(id));
+	        map.addAttribute("selected_expert_list", tdActivityExpertService.findByActivityId(id));
+        }
+
+        TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
+//        Page<TdActivity> activityPage = tdActivityService.findAllOrderByIdDesc(page,  ClientConstant.pageSize);
+        
+//        map.addAttribute("activity_page", activityPage);
+        map.addAttribute("user", user);
+        map.addAttribute("mark", "enterprise");
+        map.addAttribute("pagetype", "check");
+        return "/client/activity_create";
+    }
+    
     
     @RequestMapping(value = "/password", method = RequestMethod.GET)
     public String userPassword(HttpServletRequest req, ModelMap map) {
@@ -221,11 +353,18 @@ public class TdEnterpriseController {
           HSSFWorkbook wb = new HSSFWorkbook();  
           // 第二步，在webbook中添加一个sheet,对应Excel文件中的sheet  
           HSSFSheet sheet = wb.createSheet("order");  
+          
+          sheet.addMergedRegion(new Region((short) 0 , (short) 0 , (short) 1 , (short) 4));
+          sheet.addMergedRegion(new Region((short) 1 , (short) 1 , (short) 1 , (short) 2));
+          
           // 第三步，在sheet中添加表头第0行,注意老版本poi对Excel的行数列数有限制short  
           HSSFRow row = sheet.createRow((int) 0);  
           // 第四步，创建单元格，并设置值表头 设置表头居中  
           HSSFCellStyle style = wb.createCellStyle();  
           style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+          
+          HSSFCellStyle titleStyle = wb.createCellStyle();  
+          
           
           row = sheet.createRow((int) 0);  
           HSSFCell cell = row.createCell((short) 0);  
@@ -479,12 +618,13 @@ public class TdEnterpriseController {
           {
          	 row.createCell((short) 1).setCellValue("否"); 
           }
-    			
+    		
 			if (null != exportUrl) {
 					download(wb, username, resp);
 			}  
+			
     			}
-        return "/client/enterprise_upload";
+    		 return "redirect:/enterprise/upload";
     }
     
 //    /**

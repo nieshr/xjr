@@ -218,7 +218,11 @@ public class TdEnterprise {
     @Column
     private String number;
     
-    // 状态
+    
+    /**
+     * 状态  0：待审核；1：已审核；2：取消审核
+     * @author Zhangji
+     */
     @Column
     private Long statusId;
     
@@ -233,6 +237,10 @@ public class TdEnterprise {
     //注册手机
     @Column
     private String usermobile;
+    
+    //上传资料文件
+    @Column
+    private String fileUrl;
 
 	public Long getId() {
 		return id;
@@ -656,6 +664,14 @@ public class TdEnterprise {
 
 	public void setUsermobile(String usermobile) {
 		this.usermobile = usermobile;
+	}
+
+	public String getFileUrl() {
+		return fileUrl;
+	}
+
+	public void setFileUrl(String fileUrl) {
+		this.fileUrl = fileUrl;
 	}
 
 

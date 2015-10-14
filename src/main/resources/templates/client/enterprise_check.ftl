@@ -7,10 +7,12 @@
 <link rel="shortcut icon" href="/client/images/icon.ico" />
 <link href="/client/css/base.css" rel="stylesheet" type="text/css" />
 <link href="/client/css/team.css" rel="stylesheet" type="text/css" />
-</head>
+
 <script src="/client/js/jquery-1.9.1.min.js"></script>
 <script src="/client/js/main.js"></script>
 
+
+</head>
 <body>
 <!--main-->
 <div class="main">
@@ -23,8 +25,8 @@
 	<div class="leftbar">
 	
 		<dl class="nav">
-            <dd><a href="#">基本资料</a></dd>
-            <dd><a href="#">活动列表</a></dd>
+            <dd><a href="/enterprise/check">基本资料</a></dd>
+            <dd><a href="/enterprise/activity/list">活动列表</a></dd>
             <dd><a href="#">申请展示</a></dd>
 
 		</dl>
@@ -43,8 +45,15 @@
 
         </dl>
         <div class="change_inform">
-    		<span>审核状态：<#if enterprise.statusId == 1>已通过<#elseif enterprise.statusId == 0> 待审核</#if></span>
-    		<input style="cursor:pointer;" type="button" value="修改基本资料" onclick="location.href='/enterprise/info'"/>
+	        <#if enterprise.statusId == 1>
+	    		<span>审核状态：已通过</span>
+	    		<input style="cursor:pointer;" type="button" value="申请重新审核" onclick="location.href='/enterprise/recall'"/>
+	        <#elseif enterprise.statusId == 0>
+	    		<span>审核状态：待审核</span>
+	    		<input style="cursor:pointer;" type="button" value="修改基本资料" onclick="location.href='/enterprise/info'"/>	    	
+	        <#elseif enterprise.statusId == 2>
+	    		<span>审核状态：已申请重新审核，等待区县管理员处理</span>
+	    	</#if>    			
     	</div>
     </div>  
  

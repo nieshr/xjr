@@ -22,7 +22,7 @@ $(document).ready(function(){
 	  	    ajaxPost:true,
             callback: function (data) { 
             if (data.role == 1){
-                if (data.statusId == 1||data.statusId == 0)
+                if (data.statusId == 1||data.statusId == 0 || data.statusId == 2)
                 {
                     window.location.href="/enterprise/check";
                 }

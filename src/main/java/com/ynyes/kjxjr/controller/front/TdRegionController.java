@@ -108,6 +108,7 @@ public class TdRegionController {
         return "/client/region_enterprise_list";
     }
     
+    //区县审核项目，查看详情
     @RequestMapping(value = "/enterprise/check/{id}", method = RequestMethod.GET)
     public String userEnterpriseCheck(HttpServletRequest req, ModelMap map,@PathVariable Long id) {
         String username = (String) req.getSession().getAttribute("regionUsername");
@@ -131,6 +132,8 @@ public class TdRegionController {
 
         return "/client/region_enterprise_check";
     }
+    
+    //通过审核
     @RequestMapping(value = "/enterprise/pass/{id}", method = RequestMethod.GET)
     public String userEnterprisePass(HttpServletRequest req, ModelMap map,@PathVariable Long id) {
         String username = (String) req.getSession().getAttribute("regionUsername");
@@ -158,6 +161,36 @@ public class TdRegionController {
         return "redirect:/region/enterprise/list";
     }
     
+    //取消审核
+    @RequestMapping(value = "/enterprise/cancel/{id}", method = RequestMethod.GET)
+    public String userEnterpriseCancel(HttpServletRequest req, ModelMap map,@PathVariable Long id) {
+        String username = (String) req.getSession().getAttribute("regionUsername");
+
+        if (null == username) {
+            return "redirect:/login";
+        }
+        
+        if (null == id)
+        {
+        	return "/client/error_404";
+        }
+
+        tdCommonService.setHeader(map, req);
+
+        TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
+        TdEnterprise Enterprise = tdEnterpriseService.findOne(id);
+        if (Enterprise.getStatusId()==1)
+        {
+	        Enterprise.setStatusId(0L);
+	        tdEnterpriseService.save(Enterprise);
+        }
+        map.addAttribute("enterprise", Enterprise);
+        map.addAttribute("user", user);
+
+        return "redirect:/region/enterprise/list";
+    }
+    
+    //重新审核
     @RequestMapping(value = "/enterprise/recall/{id}", method = RequestMethod.GET)
     public String userEnterpriseRecall(HttpServletRequest req, ModelMap map,@PathVariable Long id) {
         String username = (String) req.getSession().getAttribute("regionUsername");
@@ -175,10 +208,11 @@ public class TdRegionController {
 
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
         TdEnterprise Enterprise = tdEnterpriseService.findOne(id);
-        
-        Enterprise.setStatusId(0L);
-        tdEnterpriseService.save(Enterprise);
-        
+        if (Enterprise.getStatusId()==2)
+        {
+	        Enterprise.setStatusId(0L);
+	        tdEnterpriseService.save(Enterprise);
+        }
         map.addAttribute("enterprise", Enterprise);
         map.addAttribute("user", user);
 
@@ -287,6 +321,7 @@ public String  recommendEnterprise(HttpServletRequest req,
 		ModelMap map,
 		Integer page,
 		Long id,
+		Long isDone,
 		String keywords) {
     String username = (String) req.getSession().getAttribute("regionUsername");
 
@@ -313,6 +348,10 @@ public String  recommendEnterprise(HttpServletRequest req,
 	    Long activityId = activity.getId();
 	    Long statusId = 2L;
 	    
+	    if (null != isDone && isDone == 1)
+	    {
+	    	map.addAttribute("done", isDone);
+	    }
 	    map.addAttribute("keywords", keywords);
 	   	map.addAttribute("activity", activity);
 	   	map.addAttribute("activityId", activityId);

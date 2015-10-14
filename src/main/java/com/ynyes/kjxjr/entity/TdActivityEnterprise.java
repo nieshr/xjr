@@ -35,6 +35,29 @@ public class TdActivityEnterprise {
     @Column
     private Long activityId;
     
+    // 活动类型
+    @Column
+    private String activityType;
+    
+    // 活动日期
+    @Column
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date date;
+    
+    // 筹备开始
+    @Column
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private Date prepareOn;
+    
+    // 筹备结束
+    @Column
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private Date prepareOff;
+    
+    // 活动文件
+    @Column
+    private String fileUrl;
+    
     // 项目/企业
     @Column
     private String enterpriseTitle;
@@ -97,7 +120,6 @@ public class TdActivityEnterprise {
 	public void setDownload(String download) {
 		this.download = download;
 	}
-
 
 	public Long getId() {
 		return id;
@@ -225,6 +247,46 @@ public class TdActivityEnterprise {
 
 	public void setProfile(String profile) {
 		this.profile = profile;
+	}
+
+	public String getActivityType() {
+		return activityType;
+	}
+
+	public void setActivityType(String activityType) {
+		this.activityType = activityType;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public Date getPrepareOn() {
+		return prepareOn;
+	}
+
+	public void setPrepareOn(Date prepareOn) {
+		this.prepareOn = prepareOn;
+	}
+
+	public Date getPrepareOff() {
+		return prepareOff;
+	}
+
+	public void setPrepareOff(Date prepareOff) {
+		this.prepareOff = prepareOff;
+	}
+
+	public String getFileUrl() {
+		return fileUrl;
+	}
+
+	public void setFileUrl(String fileUrl) {
+		this.fileUrl = fileUrl;
 	}
 
 	

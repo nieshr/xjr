@@ -16,9 +16,18 @@
 		.page p{  margin-left: 10px;}
 	</style>
 
-</head>
 <script src="/client/js/jquery-1.9.1.min.js"></script>
 <script src="/client/js/main.js"></script>
+<script>
+function unfinish()
+{
+	alert("有未完成创建的活动！");
+}
+<#if alert?? &&alert == 1>
+window.onload=unfinish;
+</#if>
+</script>
+</head>
 <body>
 <!--main-->
 <div class="main">
@@ -45,7 +54,23 @@
                 <a href="#">活动列表</a>
             </dd>
         </dl>
-        
+       <#if unfinish??>
+	       <div class="list_base2" style="padding-top:0;">
+				<table class="new_list">
+		        	<tr class="list_title">
+		        		<th width="30%">未完成创建活动</th>
+		        		<th width="20%">地区</th>
+		        		<th width="20%">活动类型</th>
+		        		<th width="30%">操作</th>
+		        	</tr>
+		        		<td>${unfinish.title!''}</td>
+		        		<td style="color:#0ab2cb;">${unfinish.address!''}</td>
+		        		<td style="color:#e67817;">${unfinish.activityType!''}</td>
+		        		<td><a href="/activity/edit?id=${unfinish.id?c!''}">管理</a>丨<a href="/activity/check?id=${unfinish.id?c!''}">查看</a>丨<a  href="/activity/delete?id=${unfinish.id?c!''}">删除</a></td>
+			        </tr>
+		        </table>
+	        </div>
+	    </#if>    
         
         <div class="list_base2" style="padding-top:0;">
 			<table class="new_list">
@@ -74,7 +99,7 @@
 	        </table>
         </div>
         
-        		<div class="page">
+       <div class="page">
 		<#if activity_page??>
 		<#assign PAGE_DATA = activity_page>
 		  	 <#if PAGE_DATA??>

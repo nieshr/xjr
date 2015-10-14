@@ -47,16 +47,16 @@
                 <p>&gt;</p>
                 <a href="#">活动列表</a>
             </dd>
-            <dt class="crumb_back"><a  href="#">返回上一页</a></dt>
+            <dt class="crumb_back"><a  href="javascript:history.go(-1);">返回上一页</a></dt>
         </dl>
         
         <table class="new_list">
             <tr class="list_title">
                 <th width="30%">活动名称</th>
-                <th width="10%">日期<th>
-                <th width="10%">筹备开始</th>
-                <th width="10%">筹备结束</th>
-                <th width="40%">操作</th>
+                <th width="12%">日期<th>
+                <th width="15%">筹备开始</th>
+                <th width="15%">筹备结束</th>
+                <th width="30%">操作</th>
             </tr>
         <#if activity_page??>
             <#list activity_page.content as item>
@@ -69,8 +69,8 @@
                          <a href="/region/activity/detail?id=${item.id?c!''}">详情</a>
                          | <a href="/region/chooseEnterprise?id=${item.id?c!''}">预选</a>
                          | <a href="/region/recommendEnterprise?id=${item.id?c!''}">推荐企业</a>
-                         | <a href="#">下载模板</a>
-                         | <a href="#">上传推荐表</a>
+                         | <a <#if item.fileUrl??> href="/download/data?name=${item.fileUrl!''}" <#else> style="color:#999999;"</#if>>下载模板</a>
+                        <#-- | <a href="">上传推荐表</a> -->
                      </td>
                 </tr>
             </#list>

@@ -48,7 +48,7 @@
                 <p>&gt;</p>
                 <a href="#">企业列表</a>
             </dd>
-            <dt class="crumb_back"><a  href="#">返回上一页</a></dt>
+            <dt class="crumb_back"><a  href="javascript:history.go(-1);">返回上一页</a></dt>
         </dl>
        <#-- <div class="area_choice">
         		<span>关键字:</span>
@@ -106,6 +106,8 @@
 	        		     <a href="/region/enterprise/check/${item.id?c!''}">审核</a>
 	        		    <#elseif item.statusId == 1>
 	        		     <a href="/region/enterprise/check/${item.id?c!''}">取消审核</a>
+	        		    <#elseif item.statusId == 2>
+	        		     <a href="/region/enterprise/check/${item.id?c!''}">重新审核</a>	        		     
 	        		    </#if>
 	        		     | <a href="#">站内信</a>
 	        		</td>

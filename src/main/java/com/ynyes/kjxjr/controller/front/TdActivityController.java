@@ -106,10 +106,10 @@ public class TdActivityController {
         tdCommonService.setHeader(map, req);
 
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
-        map.addAttribute("activity_page", tdActivityService.findByStatusIdOrderByIdDesc(1L,page, ClientConstant.pageSize));
-//        Page<TdActivity> activityPage = tdActivityService.findAllOrderByIdDesc(page,  ClientConstant.pageSize);
+        TdActivity unfinish = tdActivityService.findByStatusId(0L);
         
-//        map.addAttribute("activity_page", activityPage);
+        map.addAttribute("unfinish", unfinish);
+        map.addAttribute("activity_page", tdActivityService.findByStatusIdOrderByIdDesc(1L,page, ClientConstant.pageSize));
         map.addAttribute("user", user);
 
         return "/client/activity_list";
@@ -176,22 +176,37 @@ public class TdActivityController {
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public String activityEdit(HttpServletRequest req, ModelMap map,Long id) {
         String username = (String) req.getSession().getAttribute("activityUsername");
-
+        TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
+        
         if (null == username) {
             return "redirect:/login";
         }
 
         tdCommonService.setHeader(map, req);
+
+        
+        //检查是否有未完成的创建
+        TdActivity unfinish = tdActivityService.findByStatusId(0L);
+        if (null != unfinish && unfinish.getId() != id)
+        {
+        	map.addAttribute("alert", 1);
+            map.addAttribute("activity_page", tdActivityService.findByStatusIdOrderByIdDesc(1L,0, ClientConstant.pageSize));
+            map.addAttribute("unfinish", unfinish);
+            map.addAttribute("user", user);
+
+            return "/client/activity_list";
+        }
         
         TdActivity activity = tdActivityService.findOne(id);
         if (null != activity)
         {
+        	activity.setStatusId(0L);
+        	tdActivityService.save(activity);
 	        map.addAttribute("activity", activity);
 	        map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityId(id));
 	        map.addAttribute("selected_expert_list", tdActivityExpertService.findByActivityId(id));
         }
 
-        TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
 //        Page<TdActivity> activityPage = tdActivityService.findAllOrderByIdDesc(page,  ClientConstant.pageSize);
         
 //        map.addAttribute("activity_page", activityPage);
@@ -325,12 +340,12 @@ public class TdActivityController {
         			if(null != formType)
         			{
         				//123
-        				enterprisePage = tdEnterpriseService.findByAreaAndTypeAndFormTypeAndSearch(area, type, formType, keywords, page, ClientConstant.pageSize);
+        				enterprisePage = tdEnterpriseService.findByAreaAndTypeAndFormTypeAndStatusIdAndSearch(area, type, formType, 1L, keywords, page, ClientConstant.pageSize);
         			}
         			else
         			{
         				//12
-        				enterprisePage = tdEnterpriseService.findByAreaAndTypeAndSearch(area, type,keywords, page, ClientConstant.pageSize);
+        				enterprisePage = tdEnterpriseService.findByAreaAndTypeAndStatusIdAndSearch(area, type,  1L, keywords, page, ClientConstant.pageSize);
         			}
         		}
             	else
@@ -338,12 +353,12 @@ public class TdActivityController {
             		if(null != formType)
             		{
             			//13
-            			enterprisePage = tdEnterpriseService.findByAreaAndFormTypeAndSearch(area,formType,keywords, page, ClientConstant.pageSize);
+            			enterprisePage = tdEnterpriseService.findByAreaAndFormTypeAndStatusIdAndSearch(area,formType,  1L, keywords, page, ClientConstant.pageSize);
             		}
             		else
             		{
             			//1
-            			enterprisePage = tdEnterpriseService.findByAreaAndSearch(area, keywords, page, ClientConstant.pageSize);
+            			enterprisePage = tdEnterpriseService.findByAreaAndStatusIdAndSearch(area,  1L, keywords, page, ClientConstant.pageSize);
             		}
             	}
         	}
@@ -354,12 +369,12 @@ public class TdActivityController {
 	        		if(null != formType)
 	        		{
 	        			//23
-	        			enterprisePage = tdEnterpriseService.findByTypeAndFormTypeAndSearch(type,formType,keywords, page, ClientConstant.pageSize);
+	        			enterprisePage = tdEnterpriseService.findByTypeAndFormTypeAndStatusIdAndSearch(type,formType  ,1L, keywords, page, ClientConstant.pageSize);
 	        		}
 	        		else
 	        		{
 	        			//2
-	        			enterprisePage = tdEnterpriseService.findByTypeAndSearch(type, keywords, page, ClientConstant.pageSize);
+	        			enterprisePage = tdEnterpriseService.findByTypeAndStatusIdAndSearch(type,  1L,  keywords, page, ClientConstant.pageSize);
 	        		}
 	        	}
         		else
@@ -367,12 +382,12 @@ public class TdActivityController {
         			if (null != formType )
         			{
         				//3
-        				enterprisePage = tdEnterpriseService.findByFormTypeAndSearch(formType, keywords, page, ClientConstant.pageSize);
+        				enterprisePage = tdEnterpriseService.findByFormTypeAndStatusIdAndSearch(formType,   1L, keywords, page, ClientConstant.pageSize);
         			}
         			else
         			{
         				//0
-        				enterprisePage = tdEnterpriseService.findBySearch(keywords,page, ClientConstant.pageSize);
+        				enterprisePage = tdEnterpriseService.findByStatusIdAndSearch( 1L, keywords,page, ClientConstant.pageSize);
         			}
         		}
         	}
@@ -386,12 +401,12 @@ public class TdActivityController {
         			if(null != formType)
         			{
         				//123
-        				enterprisePage = tdEnterpriseService.findByAreaAndTypeAndFormType(area, type, formType, page, ClientConstant.pageSize);
+        				enterprisePage = tdEnterpriseService.findByAreaAndTypeAndFormTypeAndStatusId(area, type, formType,   1L, page, ClientConstant.pageSize);
         			}
         			else
         			{
         				//12
-        				enterprisePage = tdEnterpriseService.findByAreaAndType(area, type, page, ClientConstant.pageSize);
+        				enterprisePage = tdEnterpriseService.findByAreaAndTypeAndStatusId(area, type, 1L,  page, ClientConstant.pageSize);
         			}
         		}
             	else
@@ -399,12 +414,12 @@ public class TdActivityController {
             		if(null != formType)
             		{
             			//13
-            			enterprisePage = tdEnterpriseService.findByAreaAndFormType(area,formType,page, ClientConstant.pageSize);
+            			enterprisePage = tdEnterpriseService.findByAreaAndFormTypeAndStatusId(area,formType,  1L, page, ClientConstant.pageSize);
             		}
             		else
             		{
             			//1
-            			enterprisePage = tdEnterpriseService.findByArea(area,  page, ClientConstant.pageSize);
+            			enterprisePage = tdEnterpriseService.findByAreaAndStatusId(area, 1L,   page,  ClientConstant.pageSize);
             		}
             	}
         	}
@@ -415,12 +430,12 @@ public class TdActivityController {
 	        		if(null != formType)
 	        		{
 	        			//23
-	        			enterprisePage = tdEnterpriseService.findByTypeAndFormType(type,formType,page, ClientConstant.pageSize);
+	        			enterprisePage = tdEnterpriseService.findByTypeAndFormTypeAndStatusId(type,formType,  1L, page, ClientConstant.pageSize);
 	        		}
 	        		else
 	        		{
 	        			//2
-	        			enterprisePage = tdEnterpriseService.findByType(type, page, ClientConstant.pageSize);
+	        			enterprisePage = tdEnterpriseService.findByTypeAndStatusId(type,  1L,  page, ClientConstant.pageSize);
 	        		}
 	        	}
         		else
@@ -428,12 +443,12 @@ public class TdActivityController {
         			if (null != formType )
         			{
         				//3
-        				enterprisePage = tdEnterpriseService.findByFormType(formType, page, ClientConstant.pageSize);
+        				enterprisePage = tdEnterpriseService.findByFormTypeAndStatusId(formType,  1L,  page, ClientConstant.pageSize);
         			}
         			else
         			{
         				//0
-        				enterprisePage = tdEnterpriseService.findAllOrderBySortIdAsc(page, ClientConstant.pageSize);
+        				enterprisePage = tdEnterpriseService.findByStatusId( 1L, page, ClientConstant.pageSize);
         			}
         		}
         	}
@@ -481,6 +496,10 @@ public class TdActivityController {
         		newEnter.setCreateTime(new Date());
         		newEnter.setEnterpriseTitle(enterprise.getTitle());
         		newEnter.setActivityId(activity.getId());
+        		newEnter.setActivityType(activity.getActivityType());
+        		newEnter.setDate(activity.getDate());
+        		newEnter.setPrepareOn(activity.getPrepareOn());
+        		newEnter.setPrepareOff(activity.getPrepareOff());
         		newEnter.setActivityTitle(activity.getTitle());
         		newEnter.setArea(enterprise.getArea());
         		newEnter.setType(enterprise.getType());
@@ -497,6 +516,10 @@ public class TdActivityController {
         	{
         		activityEnterprise.setCreateTime(new Date());
         		activityEnterprise.setEnterpriseTitle(enterprise.getTitle());
+        		activityEnterprise.setActivityType(activity.getActivityType());
+        		activityEnterprise.setDate(activity.getDate());
+        		activityEnterprise.setPrepareOn(activity.getPrepareOn());
+        		activityEnterprise.setPrepareOff(activity.getPrepareOff());
         		activityEnterprise.setActivityTitle(activity.getTitle());
         		activityEnterprise.setArea(enterprise.getArea());
         		activityEnterprise.setType(enterprise.getType());
@@ -804,7 +827,9 @@ public class TdActivityController {
         Date prepareOnF = sdf.parse(prepareOn);
         Date prepareOffF = sdf.parse(prepareOff);
         Date eventEndF = sdf.parse(eventEnd);
-        if (null!=id)
+        
+        TdActivity unfinish = tdActivityService.findByStatusId(0L);
+        if (null!=unfinish)
         {
         	TdActivity activity = tdActivityService.findOne(id);
         	activity.setTitle(title);

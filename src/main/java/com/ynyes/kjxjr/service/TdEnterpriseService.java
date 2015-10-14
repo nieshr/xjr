@@ -94,113 +94,120 @@ public class TdEnterpriseService {
      * 关键字搜索
      */
     //搜索0
-    public Page<TdEnterprise> findBySearch(String keywords,int page, int size)
+    public Page<TdEnterprise> findByStatusIdAndSearch( Long statusId , String keywords,int page, int size)
     {
     	 PageRequest pageRequest = new PageRequest(page, size);
         
-        return repository.findByTitleContainingOrderBySortIdAsc(keywords,pageRequest);
+        return repository.findByStatusIdAndTitleContainingOrderBySortIdAsc(statusId , keywords,pageRequest);
     }
     //搜索1
-    public Page<TdEnterprise> findByAreaAndSearch(String area,String keywords,int page, int size)
+    public Page<TdEnterprise> findByAreaAndStatusIdAndSearch(String area, Long statusId , String keywords,int page, int size)
     {
     	 PageRequest pageRequest = new PageRequest(page, size);
         
-        return repository.findByAreaAndTitleContainingOrderBySortIdAsc(area,keywords,pageRequest);
+        return repository.findByAreaAndStatusIdAndTitleContainingOrderBySortIdAsc(area,statusId , keywords,pageRequest);
     }
     //搜索2
-    public Page<TdEnterprise> findByTypeAndSearch(String Type,String keywords,int page, int size)
+    public Page<TdEnterprise> findByTypeAndStatusIdAndSearch(String Type, Long statusId , String keywords,int page, int size)
     {
     	 PageRequest pageRequest = new PageRequest(page, size);
         
-        return repository.findByTypeAndTitleContainingOrderBySortIdAsc(Type,keywords,pageRequest);
+        return repository.findByTypeAndStatusIdAndTitleContainingOrderBySortIdAsc(Type,statusId , keywords,pageRequest);
     }
     //搜索3
-    public Page<TdEnterprise> findByFormTypeAndSearch(Long formType,String keywords,int page, int size)
+    public Page<TdEnterprise> findByFormTypeAndStatusIdAndSearch(Long formType, Long statusId , String keywords,int page, int size)
     {
     	 PageRequest pageRequest = new PageRequest(page, size);
         
-        return repository.findByFormTypeAndTitleContainingOrderBySortIdAsc(formType,keywords,pageRequest);
+        return repository.findByFormTypeAndStatusIdAndTitleContainingOrderBySortIdAsc(formType, statusId , keywords,pageRequest);
     }
     //搜索12
-    public Page<TdEnterprise> findByAreaAndTypeAndSearch(String area,String type,String keywords,int page, int size)
+    public Page<TdEnterprise> findByAreaAndTypeAndStatusIdAndSearch(String area,String type, Long statusId , String keywords,int page, int size)
     {
     	 PageRequest pageRequest = new PageRequest(page, size);
         
-        return repository.findByAreaAndTypeAndTitleContainingOrderBySortIdAsc(area,type,keywords,pageRequest);
+        return repository.findByAreaAndTypeAndStatusIdAndTitleContainingOrderBySortIdAsc(area,type, statusId , keywords,pageRequest);
     }
     //搜索13
-    public Page<TdEnterprise> findByAreaAndFormTypeAndSearch(String area,Long formType,String keywords,int page, int size)
+    public Page<TdEnterprise> findByAreaAndFormTypeAndStatusIdAndSearch(String area,Long formType, Long statusId , String keywords,int page, int size)
     {
     	 PageRequest pageRequest = new PageRequest(page, size);
         
-        return repository.findByAreaAndFormTypeAndTitleContainingOrderBySortIdAsc(area,formType,keywords,pageRequest);
+        return repository.findByAreaAndFormTypeAndStatusIdAndTitleContainingOrderBySortIdAsc(area,formType, statusId , keywords,pageRequest);
     }
     //搜索23
-    public Page<TdEnterprise> findByTypeAndFormTypeAndSearch(String type,Long formType,String keywords,int page, int size)
+    public Page<TdEnterprise> findByTypeAndFormTypeAndStatusIdAndSearch(String type,Long formType, Long statusId , String keywords,int page, int size)
     {
     	 PageRequest pageRequest = new PageRequest(page, size);
         
-        return repository.findByTypeAndFormTypeAndTitleContainingOrderBySortIdAsc(type,formType,keywords,pageRequest);
+        return repository.findByTypeAndFormTypeAndStatusIdAndTitleContainingOrderBySortIdAsc(type,formType, statusId , keywords,pageRequest);
     }
     //搜索123
-    public Page<TdEnterprise> findByAreaAndTypeAndFormTypeAndSearch(String area,String type,Long formType,String keywords,int page, int size)
+    public Page<TdEnterprise> findByAreaAndTypeAndFormTypeAndStatusIdAndSearch(String area,String type,Long formType, Long statusId , String keywords,int page, int size)
     {
     	 PageRequest pageRequest = new PageRequest(page, size);
         
-        return repository.findByAreaAndTypeAndFormTypeAndTitleContainingOrderBySortIdAsc(area,type,formType,keywords,pageRequest);
+        return repository.findByAreaAndTypeAndFormTypeAndStatusIdAndTitleContainingOrderBySortIdAsc(area,type,formType, statusId , keywords,pageRequest);
     }
     /*
      * 无关键字搜索
      */
 
-    //搜索1
-    public Page<TdEnterprise> findByArea(String area,int page, int size)
+    //搜索0
+    public Page<TdEnterprise> findByStatusId(Long statusId , int page, int size)
     {
     	 PageRequest pageRequest = new PageRequest(page, size);
         
-        return repository.findByAreaOrderBySortIdAsc(area,pageRequest);
+        return repository.findByStatusIdOrderBySortIdAsc( statusId , pageRequest);
+    }
+    //搜索1
+    public Page<TdEnterprise> findByAreaAndStatusId(String area, Long statusId , int page, int size)
+    {
+    	 PageRequest pageRequest = new PageRequest(page, size);
+        
+        return repository.findByAreaAndStatusIdOrderBySortIdAsc(area, statusId , pageRequest);
     }
     //搜索2
-    public Page<TdEnterprise> findByType(String Type,int page, int size)
+    public Page<TdEnterprise> findByTypeAndStatusId(String Type, Long statusId , int page, int size)
     {
     	 PageRequest pageRequest = new PageRequest(page, size);
         
-        return repository.findByTypeOrderBySortIdAsc(Type,pageRequest);
+        return repository.findByTypeAndStatusIdOrderBySortIdAsc(Type, statusId , pageRequest);
     }
     //搜索3
-    public Page<TdEnterprise> findByFormType(Long formType,int page, int size)
+    public Page<TdEnterprise> findByFormTypeAndStatusId(Long formType, Long statusId , int page, int size)
     {
     	 PageRequest pageRequest = new PageRequest(page, size);
         
-        return repository.findByFormTypeOrderBySortIdAsc(formType,pageRequest);
+        return repository.findByFormTypeAndStatusIdOrderBySortIdAsc(formType , statusId , pageRequest);
     }
     //搜索12
-    public Page<TdEnterprise> findByAreaAndType(String area,String type,int page, int size)
+    public Page<TdEnterprise> findByAreaAndTypeAndStatusId(String area,String type, Long statusId , int page, int size)
     {
     	 PageRequest pageRequest = new PageRequest(page, size);
         
-        return repository.findByAreaAndTypeOrderBySortIdAsc(area,type,pageRequest);
+        return repository.findByAreaAndTypeAndStatusIdOrderBySortIdAsc(area,type, statusId , pageRequest);
     }
     //搜索13
-    public Page<TdEnterprise> findByAreaAndFormType(String area,Long formType,int page, int size)
+    public Page<TdEnterprise> findByAreaAndFormTypeAndStatusId(String area,Long formType, Long statusId , int page, int size)
     {
     	 PageRequest pageRequest = new PageRequest(page, size);
         
-        return repository.findByAreaAndFormTypeOrderBySortIdAsc(area,formType,pageRequest);
+        return repository.findByAreaAndFormTypeAndStatusIdOrderBySortIdAsc(area,formType, statusId , pageRequest);
     }
     //搜索23
-    public Page<TdEnterprise> findByTypeAndFormType(String type,Long formType,int page, int size)
+    public Page<TdEnterprise> findByTypeAndFormTypeAndStatusId(String type,Long formType, Long statusId , int page, int size)
     {
     	 PageRequest pageRequest = new PageRequest(page, size);
         
-        return repository.findByTypeAndFormTypeOrderBySortIdAsc(type,formType,pageRequest);
+        return repository.findByTypeAndFormTypeAndStatusIdOrderBySortIdAsc(type,formType, statusId , pageRequest);
     }
     //搜索123
-    public Page<TdEnterprise> findByAreaAndTypeAndFormType(String area,String type,Long formType,int page, int size)
+    public Page<TdEnterprise> findByAreaAndTypeAndFormTypeAndStatusId(String area,String type,Long formType, Long statusId , int page, int size)
     {
     	 PageRequest pageRequest = new PageRequest(page, size);
         
-        return repository.findByAreaAndTypeAndFormTypeOrderBySortIdAsc(area,type,formType,pageRequest);
+        return repository.findByAreaAndTypeAndFormTypeAndStatusIdOrderBySortIdAsc(area,type,formType, statusId , pageRequest);
     }
     
     

@@ -54,8 +54,8 @@ function showPro(){
 <!--left-->
 	<div class="leftbar">
 		<dl class="nav">
-            <dd><a href="#">基本资料</a></dd>
-            <dd><a href="#">活动列表</a></dd>
+            <dd><a href="/enterprise/info">基本资料</a></dd>
+            <dd><a href="/enterprise/activity/list">活动列表</a></dd>
             <dd><a href="#">申请展示</a></dd>
 
 		</dl>
@@ -77,11 +77,11 @@ function showPro(){
             <dt class="crumb_back"><a  href="#">返回上一页</a></dt>
         </dl>
         <dl class="team_apply">
-        	<dt><a class="a1" href="#">第一步<br/>资料填写</a></dt>
+        	<dt><a class="a1" href="/enterprise/info">第一步<br/>资料填写</a></dt>
         	<dd></dd>
-        	<dt><a class="a2" href="#">第二步<br />生成打印</a></dt>
+        	<dt><a class="a2" href="/enterprise/print">第二步<br />生成打印</a></dt>
         	<dd></dd>
-        	<dt><a class="a3" href="#">第三步<br />上传报名表</a></dt>
+        	<dt><a class="a3" href="/enterprise/upload">第三步<br />上传报名表</a></dt>
         </dl>
      
         	<div style="width:100%;">
