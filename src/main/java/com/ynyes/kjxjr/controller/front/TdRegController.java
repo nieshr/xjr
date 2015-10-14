@@ -23,10 +23,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ynyes.kjxjr.entity.TdSetting;
+import com.ynyes.kjxjr.entity.TdEnterprise;
 import com.ynyes.kjxjr.entity.TdUser;
-import com.ynyes.kjxjr.entity.TdUserPoint;
 import com.ynyes.kjxjr.service.TdCommonService;
+import com.ynyes.kjxjr.service.TdEnterpriseService;
 import com.ynyes.kjxjr.service.TdSettingService;
 import com.ynyes.kjxjr.service.TdUserPointService;
 import com.ynyes.kjxjr.service.TdUserService;
@@ -49,10 +49,13 @@ public class TdRegController {
 
 	@Autowired
 	private TdCommonService tdCommonService;
+	
+	@Autowired
+	private TdEnterpriseService tdEnterpriseService;
 
 	@RequestMapping(value = "/reg/check/{type}", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, String> validateForm(@PathVariable String type, String param) {
+	public Map<String, String> validateForm(@PathVariable String type, String param,HttpServletRequest req) {
 		Map<String, String> res = new HashMap<String, String>();
 
 		res.put("status", "n");
@@ -75,7 +78,24 @@ public class TdRegController {
 				return res;
 			}
 		}
+		
+		/**
+		 * ajax实时验证验证码，判断用户验证码是否输入正确
+		 * @author dengxiao
+		 */
+		if(type.equalsIgnoreCase("smsCode")){
+			String smsCode = (String) req.getSession().getAttribute("SMSCODE");
+			if (null == param || param.isEmpty()) {
+				res.put("info", "用户名不能为空");
+				return res;
+			}
+			if(!smsCode.equalsIgnoreCase(param)){
+				res.put("info", "验证码输入错误！");
+				return res;
+			}
+		}
 
+		
 		/**
 		 * ajax实时验证 手机号查找用户 判断手机号是已否注册
 		 * 
@@ -154,15 +174,31 @@ public class TdRegController {
 	@RequestMapping(value = "/reg", method = RequestMethod.POST)
 	public String reg(String username, String mobile, String password, String email, String smsCode, String code,
 			String carCode, Long shareId, HttpServletRequest request) {
-		String smsCodeSave = (String) request.getSession().getAttribute("SMSCODE");
-		if (null == smsCodeSave) {
-			if (null == shareId) {
-				return "redirect:/reg?name= " + username + "&carCode=" + carCode;
-			} else {
-				return "redirect:/reg?shareId=" + shareId + "&name= " + username + "&carCode=" + carCode;
-			}
-		}
-
+		TdUser user = new TdUser();
+		user.setUsername(username);
+		user.setPassword(password);
+		user.setMobile(mobile);
+		user.setEmail(email);
+		user.setStatusId(1L);
+		tdUserService.save(user);
+		
+		TdEnterprise enterprise = new TdEnterprise();
+		enterprise.setUsername(username);
+		enterprise.setPassword(password);
+		enterprise.setEmail(email);
+		enterprise.setUsermobile(mobile);
+		tdEnterpriseService.save(enterprise);
+		request.getSession().setAttribute("enterpriseUsername", username);
+		
+		return "redirect:/enterprise/info";
+//		if (null == smsCodeSave) {
+//			if (null == shareId) {
+//				return "redirect:/reg?name= " + username + "&carCode=" + carCode;
+//			} else {
+//				return "redirect:/reg?shareId=" + shareId + "&name= " + username + "&carCode=" + carCode;
+//			}
+//		}
+//
 //		if (!codeBack.equalsIgnoreCase(code)) {
 //			if (null == shareId) {
 //				return "redirect:/reg?errCode=1&name= " + username + "&carCode=" + carCode;
@@ -170,70 +206,70 @@ public class TdRegController {
 //				return "redirect:/reg?errCode=1&shareId=" + shareId + "&name= " + username + "&carCode=" + carCode;
 //			}
 //		}
-
-		if (!smsCodeSave.equalsIgnoreCase(smsCode)) {
-			if (null == shareId) {
-				return "redirect:/reg?errCode=4&name= " + username + "&mobile=" + mobile;
-			} else {
-				return "redirect:/reg?errCode=4&shareId=" + shareId + "&name= " + username + "&carCode=" + carCode;
-			}
-		}
-
-		TdUser user = tdUserService.addNewUser(username, password, mobile, email, carCode);
-
-		if (null == user) {
-			if (null == shareId) {
-				return "redirect:/reg?errCode=3";
-			} else {
-				return "redirect:/reg?errCode=3&shareId=" + shareId;
-			}
-		}
-
-		user = tdUserService.save(user);
-
-		// 奖励分享用户
-		if (null != shareId) {
-			TdUser sharedUser = tdUserService.findOne(shareId);
-
-			if (null != sharedUser && sharedUser.getRoleId().equals(0L)) {
-				TdSetting setting = tdSettingService.findTopBy();
-				TdUserPoint userPoint = new TdUserPoint();
-
-				if (null != setting) {
-					userPoint.setPoint(setting.getRegisterSharePoints());
-				} else {
-					userPoint.setPoint(0L);
-				}
-
-				if (null != sharedUser.getTotalPoints()) {
-					userPoint.setTotalPoint(sharedUser.getTotalPoints() + userPoint.getPoint());
-				} else {
-					userPoint.setTotalPoint(userPoint.getPoint());
-				}
-
-				userPoint.setUsername(sharedUser.getUsername());
-				userPoint.setDetail("用户分享网站成功奖励");
-
-				userPoint = tdUserPointService.save(userPoint);
-
-				sharedUser.setTotalPoints(userPoint.getTotalPoint()); // 积分
-				tdUserService.save(sharedUser);
-			}
-		}
-
-		request.getSession().setAttribute("username", username);
-
-		String referer = (String) request.getAttribute("referer");
-
-		if (null != request.getAttribute("referer")) {
-			return "redirect:" + referer;
-		}
-
-		if (null == shareId) {
-			return "redirect:/user";
-		}
-
-		return "redirect:/user?shareId=" + shareId;
+//
+//		if (!smsCodeSave.equalsIgnoreCase(smsCode)) {
+//			if (null == shareId) {
+//				return "redirect:/reg?errCode=4&name= " + username + "&mobile=" + mobile;
+//			} else {
+//				return "redirect:/reg?errCode=4&shareId=" + shareId + "&name= " + username + "&carCode=" + carCode;
+//			}
+//		}
+//
+//		TdUser user = tdUserService.addNewUser(username, password, mobile, email, carCode);
+//
+//		if (null == user) {
+//			if (null == shareId) {
+//				return "redirect:/reg?errCode=3";
+//			} else {
+//				return "redirect:/reg?errCode=3&shareId=" + shareId;
+//			}
+//		}
+//
+//		user = tdUserService.save(user);
+//
+//		// 奖励分享用户
+//		if (null != shareId) {
+//			TdUser sharedUser = tdUserService.findOne(shareId);
+//
+//			if (null != sharedUser && sharedUser.getRoleId().equals(0L)) {
+//				TdSetting setting = tdSettingService.findTopBy();
+//				TdUserPoint userPoint = new TdUserPoint();
+//
+//				if (null != setting) {
+//					userPoint.setPoint(setting.getRegisterSharePoints());
+//				} else {
+//					userPoint.setPoint(0L);
+//				}
+//
+//				if (null != sharedUser.getTotalPoints()) {
+//					userPoint.setTotalPoint(sharedUser.getTotalPoints() + userPoint.getPoint());
+//				} else {
+//					userPoint.setTotalPoint(userPoint.getPoint());
+//				}
+//
+//				userPoint.setUsername(sharedUser.getUsername());
+//				userPoint.setDetail("用户分享网站成功奖励");
+//
+//				userPoint = tdUserPointService.save(userPoint);
+//
+//				sharedUser.setTotalPoints(userPoint.getTotalPoint()); // 积分
+//				tdUserService.save(sharedUser);
+//			}
+//		}
+//
+//		request.getSession().setAttribute("username", username);
+//
+//		String referer = (String) request.getAttribute("referer");
+//
+//		if (null != request.getAttribute("referer")) {
+//			return "redirect:" + referer;
+//		}
+//
+//		if (null == shareId) {
+//			return "redirect:/user";
+//		}
+//
+//		return "redirect:/user?shareId=" + shareId;
 	}
 
 	@RequestMapping(value = "/code", method = RequestMethod.GET)

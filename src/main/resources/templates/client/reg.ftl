@@ -16,25 +16,6 @@
 $(document).ready(function(){
 	$("#reg").Validform({
 		tiptype:4,
-		  ajaxPost:true,
-		                callback: function (data) { 
-                <!-- 修改 -->
-                    if (data.role == 2){
-                        window.location.href="/user/diysite/order/list/0";
-                    }    
-                    else if (data.code == 0) {
-                    	alert("注册成功")
-                        var url = document.referrer;          
-                        if(undefined==url || ""==url){
-                            window.location.href="/";
-                        }else{
-                            window.location.href = url; 
-                        }
-                    } else {
-                        alert(data.msg);
-
-                    }
-                }
 	});
 	    $(".whitebutton").mouseover(function(){   
         var index = $(this).index();
@@ -44,6 +25,17 @@ $(document).ready(function(){
      $(".whitebutton").mouseout(function(){   
         $(".whitebutton").siblings().removeClass("sel");
         $("#present").addClass("sel");
+   	 });
+   	 
+   	 $("#isCheck").change(function(){
+   	    var check = document.getElementById("isCheck");
+   	    if(check.checked){
+   	        $("#btn_reg").removeAttr("disabled");
+   	        $("#btn_reg").css("background","#e77917");
+   	    }else{
+   	        $("#btn_reg").attr("disabled","true");
+            $("#btn_reg").css("background","#999999");
+   	    }
    	 });
 //手机验证码
     $("#smsCodeBtn").bind("click", function() {  
@@ -156,11 +148,11 @@ $(document).ready(function(){
             -->
         </div>
         <div class="sure">
-        	<input class="check" type="checkbox" />
+        	<input class="check" id="isCheck" type="checkbox" />
             <span class="span6"> 我已阅读并接受<a href="#"> 版权声明 </a>和<a href="#"> 隐私保护 </a>条款</span>
         </div>
         <div>
-        	<input class="ipt8" id="btn_reg" type="submit" value="加入小巨人" />
+        	<input class="ipt8" id="btn_reg" type="submit" disabled="disabled" style="background-color:#999999" value="加入小巨人" />
         </div>
     </form>
     </div>

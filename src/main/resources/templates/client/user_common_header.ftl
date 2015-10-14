@@ -16,10 +16,10 @@
             <span id="nav_guide"></span>
         </dd>
         <ul id="porfile_subnav">
-                	<li><a href="#">帐号资料</a></li>
-                    <li><a href="#">头像设置</a></li>
-                    <li><a href="#">修改密码</a></li>
-                    <li><a href="/logout">退出</a></li>     
+        	<li><a href="#">帐号资料</a></li>
+            <li><a href="#">头像设置</a></li>
+            <li><a href="/user/password">修改密码</a></li>
+            <li><a href="/logout">退出</a></li>     
         </ul>
     </dl>
 </div>

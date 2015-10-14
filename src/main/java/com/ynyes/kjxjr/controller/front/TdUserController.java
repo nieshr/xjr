@@ -21,36 +21,38 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ynyes.kjxjr.entity.TdCoupon;
+import com.ynyes.kjxjr.entity.TdActivityAdmin;
 import com.ynyes.kjxjr.entity.TdDemand;
 import com.ynyes.kjxjr.entity.TdDiySite;
 import com.ynyes.kjxjr.entity.TdEnterprise;
+import com.ynyes.kjxjr.entity.TdExpert;
 import com.ynyes.kjxjr.entity.TdGoods;
 import com.ynyes.kjxjr.entity.TdOrder;
 import com.ynyes.kjxjr.entity.TdOrderGoods;
+import com.ynyes.kjxjr.entity.TdRegionAdmin;
 import com.ynyes.kjxjr.entity.TdShippingAddress;
 import com.ynyes.kjxjr.entity.TdUser;
 import com.ynyes.kjxjr.entity.TdUserCollect;
 import com.ynyes.kjxjr.entity.TdUserComment;
 import com.ynyes.kjxjr.entity.TdUserConsult;
-import com.ynyes.kjxjr.entity.TdUserPoint;
 import com.ynyes.kjxjr.entity.TdUserRecentVisit;
 import com.ynyes.kjxjr.entity.TdUserReturn;
 import com.ynyes.kjxjr.entity.TdUserSuggestion;
+import com.ynyes.kjxjr.service.TdActivityAdminService;
 import com.ynyes.kjxjr.service.TdCommonService;
-import com.ynyes.kjxjr.service.TdCouponService;
 import com.ynyes.kjxjr.service.TdDemandService;
 import com.ynyes.kjxjr.service.TdDiySiteService;
 import com.ynyes.kjxjr.service.TdEnterpriseService;
+import com.ynyes.kjxjr.service.TdExpertService;
 import com.ynyes.kjxjr.service.TdGoodsService;
 import com.ynyes.kjxjr.service.TdOrderGoodsService;
 import com.ynyes.kjxjr.service.TdOrderService;
+import com.ynyes.kjxjr.service.TdRegionAdminService;
 import com.ynyes.kjxjr.service.TdShippingAddressService;
 import com.ynyes.kjxjr.service.TdUserCashRewardService;
 import com.ynyes.kjxjr.service.TdUserCollectService;
 import com.ynyes.kjxjr.service.TdUserCommentService;
 import com.ynyes.kjxjr.service.TdUserConsultService;
-import com.ynyes.kjxjr.service.TdUserPointService;
 import com.ynyes.kjxjr.service.TdUserRecentVisitService;
 import com.ynyes.kjxjr.service.TdUserReturnService;
 import com.ynyes.kjxjr.service.TdUserService;
@@ -90,9 +92,18 @@ public class TdUserController {
     @Autowired
     private TdDiySiteService tdDiySiteService;
     
+    @Autowired
+    private TdRegionAdminService tdRegionAdminService;
+    
+    @Autowired
+    private TdExpertService tdExpertService;
+    
     //企业资料
     @Autowired
     private TdEnterpriseService tdentErpriseService;
+    
+    @Autowired
+    private TdActivityAdminService tdActivityAdminService;
     /**
      * 投诉service
      * 
@@ -1188,6 +1199,22 @@ public class TdUserController {
 
         return "/client/user_distributor_return";
     }
+    
+    @RequestMapping("/user/check/oldpassword")
+    @ResponseBody
+    public Map<String, Object> checkOldPassword(HttpServletRequest req,String param){
+    	Map<String, Object> res = new HashMap<>();
+    	res.put("status", "n");
+    	
+    	String username = (String) req.getSession().getAttribute("username");
+    	TdUser user = tdUserService.findByUsername(username);
+		if(!param.equals(user.getPassword())){
+			res.put("info", "当前密码输入错误！");
+			return res;
+		}
+		res.put("status", "y");
+		return res;
+    }
 
 //    @RequestMapping(value = "/user/distributor/lower")
 //    public String distributorLowerList(HttpServletRequest req, Integer page,
@@ -1318,19 +1345,15 @@ public class TdUserController {
 
     @RequestMapping(value = "/user/password", method = RequestMethod.GET)
     public String userPassword(HttpServletRequest req, ModelMap map) {
-        String username = (String) req.getSession().getAttribute("username");
-
-        if (null == username) {
-            return "redirect:/login";
-        }
-
-        tdCommonService.setHeader(map, req);
-
-        TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
-
-        map.addAttribute("user", user);
-
-        return "/client/user_change_password";
+    	String username = (String) req.getSession().getAttribute("username");
+    	if(null == username){
+    		return "/client/login";
+    	}
+    	TdUser user = tdUserService.findByUsername(username);
+    	
+    	map.addAttribute("user", user);
+    	return "/client/password_reset";
+    	
     }
 
     @RequestMapping(value = "/user/password", method = RequestMethod.POST)
@@ -1357,6 +1380,35 @@ public class TdUserController {
 
         res.put("code", 0);
         return res;
+    }
+    
+    @RequestMapping("/user/password/save")
+    public String savePassword(HttpServletRequest req,String newPassword){
+    	String username = (String) req.getSession().getAttribute("username");
+    	TdUser user = tdUserService.findByUsername(username);
+    	user.setPassword(newPassword);
+    	tdUserService.save(user);
+    	if(1L == user.getRoleId()){
+    		TdEnterprise enterprise = tdentErpriseService.findbyUsername(username);
+    		enterprise.setPassword(newPassword);
+    		tdentErpriseService.save(enterprise);
+    	}
+    	if(2L == user.getRoleId()){
+    		TdRegionAdmin regionAdmin = tdRegionAdminService.findbyUsername(username);
+    		regionAdmin.setPassword(newPassword);
+    		tdRegionAdminService.save(regionAdmin);
+    	}
+    	if(3L == user.getRoleId()){
+    		TdExpert expert = tdExpertService.findbyUsername(username);
+    		expert.setPassword(newPassword);
+    		tdExpertService.save(expert);
+    	}
+    	if(4L == user.getRoleId()){
+    		TdActivityAdmin activityAdmin = tdActivityAdminService.findbyUsername(username);
+    		activityAdmin.setPassword(newPassword);
+    		tdActivityAdminService.save(activityAdmin);
+    	}
+    	return "/client/login";
     }
     
     /**

@@ -122,6 +122,7 @@ public class TdLoginController {
 					res.put("role", 1);
 					request.getSession().setAttribute("enterpriseUsername", user.getUsername());
 					request.getSession().setAttribute("enterpriseUsermobile", user.getMobile());
+					request.getSession().setAttribute("username", user.getUsername());
 					Long statusId =tdEnterpriseService.findbyUsername(username).getStatusId();
 					res.put("statusId", statusId);
 					break;
@@ -130,23 +131,27 @@ public class TdLoginController {
 					res.put("role", 2);
 					request.getSession().setAttribute("regionUsername", user.getUsername());
 					request.getSession().setAttribute("regionUsermobile", user.getMobile());
+					request.getSession().setAttribute("username", user.getUsername());
 					break;
 					//专家
 				case 3:
 					res.put("role", 3);
 					request.getSession().setAttribute("expertUsername", user.getUsername());
 					request.getSession().setAttribute("expertUsermobile", user.getMobile());
+					request.getSession().setAttribute("username", user.getUsername());
 					break;
 					//活动管理
 				case 4:
 					res.put("role", 4);
 					request.getSession().setAttribute("activityUsername", user.getUsername());
 					request.getSession().setAttribute("activityUsermobile", user.getMobile());
+					request.getSession().setAttribute("username", user.getUsername());
 					break;	
 				default:
 					res.put("role", 0);
 					request.getSession().setAttribute("username", user.getUsername());
 					request.getSession().setAttribute("usermobile", user.getMobile());
+					request.getSession().setAttribute("username", user.getUsername());
 					break;
 			}
 			
