@@ -11,6 +11,9 @@
 <link href="/client/css/swiper.min.css" rel="stylesheet" type="text/css" >
 <link href="/client/css/l_base.css" rel="stylesheet" type="text/css" />
 <link href="/client/css/l_main.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" src="/client/js/jquery-1.9.1.min.js"></script>
+
 </head>
 <body>
  
@@ -30,7 +33,11 @@
                   <a href="#"><li>合作机构</li></a>
                   <a href="/info/contact"><li>联系方式</li></a>
                 </ul>
-                <div class="logoin"><a href="/login">登录</a><span>|</span><a href="/reg">注册</a></div>
+                <#if username??>
+                    <div class="logoin"><a href="/user" style="color:#ff4040;">${username}</a><span>|</span><a href="/logout">退出</a></div>
+                <#else>
+                    <div class="logoin"><a href="/login">登录</a><span>|</span><a href="/reg">注册</a></div>
+                </#if>
               </div>
             <!-- 导航end -->
 
@@ -53,48 +60,65 @@
                     <p class="p2">Organization system</p>
                 </div>
                 <ul>
-                    <li class="li1">
-                        <p class="p1">指导单位</p>
-                        <p>重庆市科学技术委员会</p>
-                        <p class="p1">主办单位</p>
-                        <p>重庆高技术创业中心</p>
-                        <p>重庆市科技创业投资协会</p>
-                    </li>
-                    <li class="li2">
-                        <p class="p1">支持单位</p>
-                        <p>市科委</p>
-                        <p>市财政局</p>
-                        <p>市经信委</p>
-                        <p>市人社局</p>
-                        <p>市工商局</p>
-                        <p>市知识产权局</p>
-                    </li>
-                    <li class="li3 current">
-                        <p class="p1">支持单位</p>
-                        <p>团市委</p>
-                        <p>市妇联</p>
-                        <p>市工商联</p>
-                        <p>各区县(自治县)人民政府</p>
-                        <p>各高等学校</p>
-                        <p>科研院所</p>
-                        <p>各众创空间</p>
-                    </li>
-                    <li class="li4">
-                        <p class="p1">金融机构</p>
-                        <p>天使投资机构</p>
-                        <p>风险投资机构</p>
-                        <p>种子基金管理机构</p>
-                        <p>参与知识产权质押</p>
-                        <p>融资的承贷银行</p>
-                        <p>及相关投融资服务机构</p>
-                    </li>
-                    <li class="li5">
-                        <p class="p1">支持媒体</p>
-                        <p>重庆日报</p>
-                        <p>重庆电视台</p>
-                        <p>重庆晨报</p>
-                        <p>华龙网</p>
-                    </li>
+                <#if organization_0_list??>
+                    <#list organization_0_list as item>
+                        <#if item_index == 0>
+                            <li class="li1">
+                                <p class="p1">${item.title!''}</p>
+                                <#if ("organization_level1_"+item.id)?eval??>
+                                    <#list ("organization_level1_"+item.id)?eval as article>
+                                        <#if article_index < 1>
+                                            <p>${atricle.title!''}</p>
+                                        </#if>
+                                    </#list>
+                                </#if>
+                                                                
+                        <#elseif item_index == 1>
+                            <p class="p1">${item.title!''}</p>
+                            <#if ("organization_level1_"+item.id)?eval??>
+                                  <#list ("organization_level1_"+item.id)?eval as article>
+                                        <#if article_index < 5>
+                                            <p>${atricle.title!''}</p>
+                                        </#if>
+                                  </#list>
+                            </#if>                              
+                            </li>
+                        <#elseif item_index == 2>
+                            <li class="li2">
+                                <p class="p1">${item.title!''}</p>
+                                <#if ("organization_level1_"+item.id)?eval??>
+                                    <#list ("organization_level1_"+item.id)?eval as article>
+                                        <#if article_index < 6>
+                                            <p>${atricle.title!''}</p>
+                                        </#if>
+                                    </#list>
+                                </#if>                                
+                            </li>
+                            <li class="li3 current">
+                                <p class="p1">${item.title!''}</p>
+                                <#if ("organization_level1_"+item.id)?eval??>
+                                    <#list ("organization_level1_"+item.id)?eval as article>
+                                        <#if article_index gt 5>
+                                            <p>${atricle.title!''}</p>
+                                        </#if>
+                                    </#list>
+                                </#if>                                
+                            </li>
+                        <#else>
+                            <li class="li4">
+                                <p class="p1">${item.title!''}</p>
+                                <#if ("organization_level1_"+item.id)?eval??>
+                                    <#list ("organization_level1_"+item.id)?eval as article>
+                                        <#if article_index < 6>
+                                            <p>${atricle.title!''}</p>
+                                        </#if>
+                                    </#list>
+                                </#if>
+                                
+                            </li>
+                        </#if>
+                    </#list>
+                </#if>                    
                 </ul>
             </div>
             <div class="section2">
@@ -225,79 +249,61 @@
                         <p class="p2">News dynamics</p>
                     </div>
                     <div class="div2">
-                        <video width="480" height="400" controls="controls"></video>
+                        <video width="480" height="400" src="/images/20151014153104349.mp4" controls="controls" id="video" autoplay="autoplay">
+                                                
+                        </video>
                         <ul>
-                            <li class="li1"><a href="#">
-                                <img src="/client/l_images/news_photo_1.png" alt="新闻图片" />
-                                <div class="newsmess">
-                                    <p class="p1">“创启未来”国际青年科技创业大赛..</p>
-                                    <p class="p2">2015年8月25日，金华开发区国家级科技企业孵化器政策介绍会暨“创启未来”大赛金华城市赛宣讲会在北大金华信息科.</p>
-                                    <p class="p3">
-                                        <span class="span2"><i class="i2"></i>21</span>
-                                        <span class="span1"><i class="i1"></i>03:22</span>
-                                    </p>
-                                </div>
-                            </a></li>
-                            <li class="li2"><a href="#">
-                                <img src="/client/l_images/news_photo_1.png" alt="新闻图片" />
-                                <div class="newsmess">
-                                    <p class="p1">“创启未来”国际青年科技创业大赛..</p>
-                                    <p class="p2">2015年8月25日，金华开发区国家级科技企业孵化器政策介绍会暨“创启未来”大赛金华城市赛宣讲会在北大金华信息科.</p>
-                                    <p class="p3">
-                                        <span class="span2"><i class="i2"></i>21</span>
-                                        <span class="span1"><i class="i1"></i>03:22</span>
-                                    </p>
-                                </div>
-                            </a></li>
-                            <li class="li3"><a href="#">
-                                <img src="/client/l_images/news_photo_1.png" alt="新闻图片" />
-                                <div class="newsmess">
-                                    <p class="p1">“创启未来”国际青年科技创业大赛..</p>
-                                    <p class="p2">2015年8月25日，金华开发区国家级科技企业孵化器政策介绍会暨“创启未来”大赛金华城市赛宣讲会在北大金华信息科.</p>
-                                    <p class="p3">
-                                        <span class="span2"><i class="i2"></i>21</span>
-                                        <span class="span1"><i class="i1"></i>03:22</span>
-                                    </p>
-                                </div>
-                            </a></li>
+                        <#if news_list??>                   
+                            <#list news_list as item>
+<script>
+
+function showVideo${item_index}(){
+    $("#video").text("<embed src='/images/20151014153310798.mp4' type='video/x-ms-asf-plugin' width='550' height='400' autostart='false' loop='true' />");
+}     
+
+</script> 
+                                <#if item_index < 3>
+                                    <li class="li1"><a href="javascript:showVideo${item_index}();">
+                                        <img src="${item.imgUrl!''}" width="173" height="120" alt="新闻图片" />
+                                        <div class="newsmess">
+                                            <p class="p1"><#if item.title?length lt 18>
+                                                ${item.title!''}
+                                            <#else>
+                                                ${item.title[0..17]?default("")}...
+                                            </#if></p>
+                                            <p class="p2">${item.brief!''}</p>
+                                            <p class="p3">
+                                                <span class="span2"><i class="i2"></i>${item.viewCount!'0'}</span>
+                                                <span class="span1"><i class="i1"></i>03:22</span>
+                                            </p>
+                                        </div>
+                                    </a></li>
+                                </#if>
+                            </#list>    
+                        </#if>                            
                         </ul>
                     </div>
                 </div>
                 <div class="sect2">
                     <ol>
-                        <li class="li1"><a href="#">
-                           <img src="/client/l_images/news_photo_1.png" alt="新闻图片" />
-                            <div class="newsmess1">
-                                <p class="p1">“创启未来”国际青年科技创业大赛..</p>
-                                <p class="p2">2015-12-12</p>
-                                <p class="p3">2015年8月25日，金华开发区国家级科技企业孵化器政策介绍会暨“创启未来”大赛金华城市赛宣讲会在北大金华信息科.</p>
-                            </div> 
-                        </a></li>
-                        <li class="li2"><a href="#">
-                            <img src="/client/l_images/news_photo_1.png" alt="新闻图片" />
-                            <div class="newsmess1">
-                                <p class="p1">“创启未来”国际青年科技创业大赛..</p>
-                                <p class="p2">2015-12-12</p>
-                                <p class="p3">2015年8月25日，金华开发区国家级科技企业孵化器政策介绍会暨“创启未来”大赛金华城市赛宣讲会在北大金华信息科.</p>
-                            </div> 
-                        </a></li>
-                        <li class="li3"><a href="#">
-                            <img src="/client/l_images/news_photo_1.png" alt="新闻图片" />
-                            <div class="newsmess1">
-                                <p class="p1">“创启未来”国际青年科技创业大赛..</p>
-                                <p class="p2">2015-12-12</p>
-                                <p class="p3">2015年8月25日，金华开发区国家级科技企业孵化器政策介绍会暨“创启未来”大赛金华城市赛宣讲会在北大金华信息科.</p>
-                            </div> 
-                        </a></li>
-                        <li class="li4"><a href="#">
-                            <img src="/client/l_images/news_photo_1.png" alt="新闻图片" />
-                            <div class="newsmess1">
-                                <p class="p1">“创启未来”国际青年科技创业大赛..</p>
-                                <p class="p2">2015-12-12</p>
-                                <p class="p3">2015年8月25日，金华开发区国家级科技企业孵化器政策介绍会暨“创启未来”大赛金华城市赛宣讲会在北大金华信息科.</p>
-                                
-                            </div> 
-                        </a></li>
+                    <#if news_list??>
+                        <#list news_list as item>
+                            <#if item_index < 4>
+                                <li class="li1"><a href="/info/list/content/${item.id?c}?mid=${item.menuId?c}">
+                                   <img src="${item.imgUrl!''}" width="173" height="120" alt="新闻图片" />
+                                    <div class="newsmess1">
+                                        <p class="p1"><#if item.title?length lt 18>
+                                            ${item.title!''}
+                                        <#else>
+                                            ${item.title[0..17]?default("")}...
+                                        </#if></p>
+                                        <p class="p2">${item.createTime?string("yyyy-MM-dd")}</p>
+                                        <p class="p3">${item.brief!''}</p>
+                                    </div> 
+                                </a></li>
+                            </#if>
+                        </#list>
+                    </#if>                       
                     </ol>
                 </div>
             </div>
@@ -306,32 +312,7 @@
         <div class="swiper-slide footer" id="s5" style="height:195px;">
             <div class="five">
                 <!-- 底部 -->
-                <div class="footlist">
-                <div class="footlist-title">
-                <ul>
-                <li class="footlist-title-title">友情链接：</li>
-                <li><a href="#">市科委</a><span>|</span></li>
-                <li><a href="#">市财政局</a><span>|</span></li>
-                <li><a href="#">市经信委</a><span>|</span></li>
-                <li><a href="#">市人社局</a><span>|</span></li>
-                <li><a href="#">市工商局</a><span>|</span></li>
-                <li><a href="#">市知识产权局</a><span>|</span></li>
-                <li><a href="#">团市委</a><span>|</span></li>
-                <li><a href="#">市妇联</a><span>|</span></li>
-                <li><a href="#">市工商联</a></li>
-                </ul>
-                </div>
-                <div class="footlist-body">
-                <h5>联系电话：023-67727040</h5>
-                <h5>传真：023-67874803</h5>
-                <h5>地址：重庆市渝北区新溉大道2号生产力大厦2楼</h5>
-                <h5>Copyright 2014-2015 Peking University Science Park All rights reserved design by cqtiandu.com 渝ICP备15009454号   </h5> 
-                <div class="footercode"> 
-                <img src="/client/l_images/QR_code.png">
-                <p>微信公众号</p>
-                </div>
-                </div>         
-                </div>
+                <#include "/client/news_common_footer.ftl" />
                 <!-- 底部end -->
             </div>
         </div>

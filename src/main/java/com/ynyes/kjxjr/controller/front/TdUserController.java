@@ -1397,7 +1397,7 @@ public class TdUserController {
     		TdRegionAdmin regionAdmin = tdRegionAdminService.findbyUsername(username);
     		regionAdmin.setPassword(newPassword);
     		tdRegionAdminService.save(regionAdmin);
-    	}
+    	} 
     	if(3L == user.getRoleId()){
     		TdExpert expert = tdExpertService.findbyUsername(username);
     		expert.setPassword(newPassword);
