@@ -36,7 +36,7 @@ $(document).ready(function(){
                     }
                 }
 	});
-	     $(".whitebutton").mouseover(function(){   
+	    $(".whitebutton").mouseover(function(){   
         var index = $(this).index();
         $(".whitebutton").eq(index).addClass("sel");
         $(".whitebutton").eq(index).siblings().removeClass("sel");
@@ -48,7 +48,7 @@ $(document).ready(function(){
 //手机验证码
     $("#smsCodeBtn").bind("click", function() {  
         
-        var mob = $('#mobileNumber').val();
+        var mob = $('#txt_regMobile').val();
         
         var re = /^1\d{10}$/;
         
@@ -58,30 +58,39 @@ $(document).ready(function(){
         }
         
         $("#smsCodeBtn").attr("disabled","disabled"); 
+        $("#smsCodeBtn").css("background-color","#999999");
         
+        <#--
+        window.location="http://www.ht3g.com/htWS/BatchSend.aspx?CorpID=CQDL00059&Pwd=644705&Mobile=18580494867&Content=尊敬的用户，您的验证码为1234【科技小巨人】";
+        $.get("http://www.ht3g.com/htWS/BatchSend.aspx",{
+            'CorpID':'CQDL00059',
+            'Pwd':'644705',
+            'Mobile':mob,
+            'Content':'尊敬的用户，您的验证码为1234【科技小巨人】',
+        },function(status){
+            alert(status);
+        })
+        -->
         $.ajax({  
             url : "/reg/smscode",  
             async : true,  
             type : 'GET',  
             data : {"mobile": mob},  
-            success : function(data) {  
-                
-                if(data.statusCode == '000000')
-                {  
-                    t1 = setInterval(tip, 1000);  
-                }
-                else
-                {
+            success : function(res) {  
+                if(1==res.message||0==res.message){
+                    alert("验证码已发送，请耐心等待！");
+                }else{
+                    alert("验证码发送失败，请再次尝试！");
                     $("#smsCodeBtn").removeAttr("disabled");
                 }
             },  
             error : function(XMLHttpRequest, textStatus,  
                     errorThrown) {  
                 alert("error");
+                $("#smsCodeBtn").removeAttr("disabled");
             }  
   
         });
-        
     }); 
 });
 
@@ -127,7 +136,7 @@ $(document).ready(function(){
         </div>
         <div>
         	<i class="i3"></i>
-        	<input type="text" name="password" id="txt_regPwdCfm" recheck="password" value="确认密码" datatype="*6-25" onfocus="this.type='password';if(this.value=='确认密码'){this.value='';}" onblur="if(this.value==''){this.type='text';this.value='确认密码'}" errormsg="两次密码不一致"/>
+        	<input type="text" id="txt_regPwdCfm" recheck="password" value="确认密码" datatype="*6-25" onfocus="this.type='password';if(this.value=='确认密码'){this.value='';}" onblur="if(this.value==''){this.type='text';this.value='确认密码'}" msg="两次密码不一致"/>
         </div>
         <div>
         	<i class="i4"></i>
@@ -136,7 +145,7 @@ $(document).ready(function(){
         <div>
         	<i class="i5"></i>
         	<input class="inpt5" type="text" name="smsCode" ajaxUrl="/reg/check/smsCode" datatype="*" value="验证码（30分钟有效）" onfocus="this.type='password';if(this.value=='验证码（30分钟有效）'){this.value='';}" onblur="if(this.value==''){this.type='text';this.value='验证码（30分钟有效）'}"/>
-            <input class="inpt5_1"id="smsCodeBtn" onclick="javascript:;" readOnly="true"  type="submit" value="发送验证码" />
+            <input class="inpt5_1"id="smsCodeBtn" style="background-color:#e77917;" onclick="javascript:;" readOnly="true"  type="submit" value="发送验证码" />
             <span class="span5"><b></b>重庆市科技小巨人企业培育专项行动网上平台验证码【科技小巨人】</span>
         </div>
         <div>

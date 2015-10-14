@@ -5,6 +5,7 @@
 	<title>Document</title>
 	<link rel="shortcut icon" href="/images/icon.ico" />
 	<link href="/client/css/form.css" rel="stylesheet" type="text/css" />
+	<script src="/client/js/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript">
         window.onload = function(){
         	var canvas = document.getElementById('canvas');
@@ -106,6 +107,37 @@
         }
         
         function submitPoint(code,number){
+            var totalExpressionValue = document.getElementById(code+"_totalExpression").innerHTML;
+            var totalFeasibilityValue = document.getElementById(code+"_totalFeasibility").innerHTML;
+            var totalMarketValue = document.getElementById(code+"_totalMarketValue").innerHTML;
+            var totalTechnologyValue = document.getElementById(code+"_totalTechnology").innerHTML;
+            var totalGroupValue = document.getElementById(code+"_totalGroup").innerHTML;
+            
+            var oneExpression = document.getElementById(code+"_oneExpression").value;
+            var twoExpression = document.getElementById(code+"_twoExpression").value;
+            var threeExpression = document.getElementById(code+"_threeExpression").value;
+            var fourExpression = document.getElementById(code+"_fourExpression").value;
+            
+            var oneFeasibility = document.getElementById(code+"_oneFeasibility").value;
+            var twoFeasibility = document.getElementById(code+"_twoFeasibility").value;
+            var threeFeasibility = document.getElementById(code+"_threeFeasibility").value;
+            var fourFeasibility = document.getElementById(code+"_fourFeasibility").value;
+            
+            var oneMarket = document.getElementById(code+"_oneMarketValue").value;
+            var twoMarket = document.getElementById(code+"_twoMarketValue").value;
+            var threeMarket = document.getElementById(code+"threeMarketValue").value;
+            var fourMarket = document.getElementById(code+"_fourMarketValue").value;
+            
+            var oneTechnology = document.getElementById(code+"_oneTechnology").value;
+            var twoTechnology = document.getElementById(code+"_twoTechnology").value;
+            var threeTechnology = document.getElementById(code+"_threeTechnology").value;
+            var fourTechnology = document.getElementById(code+"_fourTechnology").value;
+            var fiveTechnology = document.getElementById(code+"_fiveTechnology").value;
+            
+            var oneGroup = document.getElementById(code+"_oneGroup").value;
+            var twoGroup = document.getElementById(code+"_twoGroup").value;
+            var threeGroup = document.getElementById(code+"_threeGroup").value;
+            
             
         }
 	</script>
