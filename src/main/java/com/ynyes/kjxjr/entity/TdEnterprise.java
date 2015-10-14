@@ -24,10 +24,6 @@ public class TdEnterprise {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    // 审核
-    @Column
-    private Boolean isEnable;
-    
     // 排序
     @Column
     private Long  sortId;
@@ -248,14 +244,6 @@ public class TdEnterprise {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Boolean getIsEnable() {
-		return isEnable;
-	}
-
-	public void setIsEnable(Boolean isEnable) {
-		this.isEnable = isEnable;
 	}
 
 	public Long getSortId() {

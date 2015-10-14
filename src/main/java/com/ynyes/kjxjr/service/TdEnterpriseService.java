@@ -86,10 +86,7 @@ public class TdEnterpriseService {
         return (List<TdEnterprise>) repository.findAll(ids);
     }
     
-    public List<TdEnterprise> findByIsEnableTrue()
-    {
-        return repository.findByIsEnableTrue();
-    }
+
     /*
      * 关键字搜索
      */

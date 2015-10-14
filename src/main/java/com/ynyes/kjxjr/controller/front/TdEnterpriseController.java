@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.FileUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFPrintSetup;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -362,7 +363,8 @@ public class TdEnterpriseController {
           sheet1.addMergedRegion(new Region((short) 3 , (short) 1 , (short) 3 , (short) 2));		//注册资本
           sheet1.addMergedRegion(new Region((short) 4 , (short) 1 , (short) 4 , (short) 2));		//股东结构
           sheet1.addMergedRegion(new Region((short) 5 , (short) 1 , (short) 5 , (short) 2));		//地址
-          sheet1.addMergedRegion(new Region((short) 6 , (short) 1 , (short) 7 , (short) 4));		//股东结构
+          sheet1.addMergedRegion(new Region((short) 6 , (short) 1 , (short) 7 , (short) 4));		//行业归属
+          sheet1.addMergedRegion(new Region((short) 6 , (short) 0 , (short) 7 , (short) 0));		//行业归属
           sheet1.addMergedRegion(new Region((short) 8 , (short) 1 , (short) 8 , (short) 2));		//邮箱
           sheet1.addMergedRegion(new Region((short) 9 , (short) 1 , (short) 9 , (short) 2));		//公司网站
           sheet1.addMergedRegion(new Region((short) 10 , (short) 1 , (short) 10 , (short) 2));		//QQ
@@ -380,6 +382,27 @@ public class TdEnterpriseController {
           sheet1.addMergedRegion(new Region((short) 30 , (short) 0 , (short) 30 , (short) 4));		//新型专利
           sheet1.addMergedRegion(new Region((short) 31 , (short) 0 , (short) 31 , (short) 4));		//外观专利
           
+          
+          //打印设置
+          HSSFPrintSetup ps = sheet1.getPrintSetup();
+          ps.setLandscape(false); //打印方向，true:横向，false:纵向
+          ps.setPaperSize(HSSFPrintSetup.A4_PAPERSIZE); //纸张
+          sheet1.setMargin(HSSFSheet.BottomMargin, (double)0.3); //页边距（下）
+          sheet1.setMargin(HSSFSheet.LeftMargin, (double)0.3); //页边距（左）
+          sheet1.setMargin(HSSFSheet.RightMargin, (double)0.3); //页边距（右）
+          sheet1.setMargin(HSSFSheet.TopMargin, (double)0.3); //页边距（上）
+          sheet1.setHorizontallyCenter(true); //设置打印页面为水平居中
+          sheet1.setVerticallyCenter(true); //设置打印页面为垂直居中
+          
+          //列宽
+          
+          sheet1.setColumnWidth((short) 0 , 5000);
+          sheet1.setColumnWidth((short) 1 , 5000);
+          sheet1.setColumnWidth((short) 2 , 5000);	
+          sheet1.setColumnWidth((short) 3 , 5000);
+          sheet1.setColumnWidth((short) 4 , 5000);
+         
+          
           // 第三步，在sheet中添加表头第0行,注意老版本poi对Excel的行数列数有限制short  
           HSSFRow row = sheet1.createRow((int) 0);  
           // 第四步，创建单元格，并设置值表头 设置表头居中  
@@ -389,7 +412,14 @@ public class TdEnterpriseController {
           HSSFCellStyle style1 = wb.createCellStyle();  
           style1.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
           
-          HSSFCellStyle titleStyle = wb.createCellStyle();  
+          HSSFCellStyle style2 = wb.createCellStyle();  
+          style2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
+          style2.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+          
+          HSSFCellStyle style3 = wb.createCellStyle();
+          style3.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
+          style3.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+          style3.setWrapText(true);
           
           
           row = sheet1.createRow((int) 0);  
@@ -435,13 +465,13 @@ public class TdEnterpriseController {
 	          cell.setCellStyle(style);  
 		      cell = row.createCell((short) 1);
 	  		  cell.setCellValue(enterprise.getTitle()); 
-	  		  cell.setCellStyle(style1);  
+	  		  cell.setCellStyle(style);  
 	  		  cell = row.createCell((short) 3);
 	  		  cell.setCellValue("成立时间");
 	  		  cell.setCellStyle(style);  
 	  		  cell = row.createCell((short) 4);
 	  		  cell.setCellValue(enterprise.getEstablish()); 
-	  		  cell.setCellStyle(style1);  
+	  		  cell.setCellStyle(style);  
          }
          
           row= sheet1.createRow((int) 3); 
@@ -483,12 +513,10 @@ public class TdEnterpriseController {
           row= sheet1.createRow((int) 6); 
           cell = row.createCell((short) 0);  
           cell.setCellValue("行业归属");  
-          cell.setCellStyle(style);  
-          cell.setCellStyle(style1);  
+          cell.setCellStyle(style2);  
           cell = row.createCell((short) 1);
           cell.setCellValue(enterprise.getType());     
-          cell.setCellStyle(style);  
-          cell.setCellStyle(style1);  
+          cell.setCellStyle(style2);  
           
           row= sheet1.createRow((int) 8); 
           cell = row.createCell((short) 0);  
@@ -537,19 +565,17 @@ public class TdEnterpriseController {
         	  row= sheet1.createRow((int) 11); 
               cell = row.createCell((short) 0);  
               cell.setCellValue("公司团队（200字内）");  
-              cell.setCellStyle(style);  
-              cell.setCellStyle(style1);  
+              cell.setCellStyle(style1); 
               cell = row.createCell((short) 1);
               cell.setCellValue(enterprise.getTeamIntroduction());     
-              cell.setCellStyle(style1);  
+              cell.setCellStyle(style1); 
           }
           else
           {
         	  row= sheet1.createRow((int) 11); 
               cell = row.createCell((short) 0);  
               cell.setCellValue("团队负责人");  
-              cell.setCellStyle(style);  
-              cell.setCellStyle(style1);  
+              cell.setCellStyle(style2);  
               cell = row.createCell((short) 1);
               cell.setCellValue(enterprise.getInCharge());     
               cell.setCellStyle(style1);  
@@ -560,7 +586,6 @@ public class TdEnterpriseController {
         	  row= sheet1.createRow((int) 14); 
               cell = row.createCell((short) 0);  
               cell.setCellValue("企业简介（200字内）");  
-              cell.setCellStyle(style);  
               cell.setCellStyle(style1);  
               cell = row.createCell((short) 1);
               cell.setCellValue(enterprise.getProfile());     
@@ -571,7 +596,6 @@ public class TdEnterpriseController {
         	  row= sheet1.createRow((int) 14); 
               cell = row.createCell((short) 0);  
               cell.setCellValue("团队简介（200字内）");  
-              cell.setCellStyle(style);  
               cell.setCellStyle(style1);  
               cell = row.createCell((short) 1);
               cell.setCellValue(enterprise.getProfile());     
@@ -581,16 +605,14 @@ public class TdEnterpriseController {
     	  row= sheet1.createRow((int) 17); 
           cell = row.createCell((short) 0);  
           cell.setCellValue("技术特点及优势（200字内）");  
-          cell.setCellStyle(style);  
           cell.setCellStyle(style1);  
           cell = row.createCell((short) 1);
           cell.setCellValue(enterprise.getAdvantage());     
-          cell.setCellStyle(style1);  
+          cell.setCellStyle(style1); 
 
     	  row= sheet1.createRow((int) 20); 
           cell = row.createCell((short) 0);  
           cell.setCellValue("市场规模行业地位（200字内）");  
-          cell.setCellStyle(style);  
           cell.setCellStyle(style1);  
           cell = row.createCell((short) 1);
           cell.setCellValue(enterprise.getSize());     
@@ -672,86 +694,186 @@ public class TdEnterpriseController {
           
           HSSFSheet sheet2 = wb.createSheet("第二页");  
           
-          sheet2.addMergedRegion(new Region((short) 0 , (short) 0 , (short) 0 , (short) 4));     //知识产权
-          sheet2.addMergedRegion(new Region((short) 1 , (short) 1 , (short) 1 , (short) 4));     //发明专利
-          sheet2.addMergedRegion(new Region((short) 2 , (short) 1 , (short) 2 , (short) 4));     //新型专利
-          sheet2.addMergedRegion(new Region((short) 3 , (short) 1 , (short) 3 , (short) 4));     //外观专利
-          sheet2.addMergedRegion(new Region((short) 4 , (short) 0 , (short) 5 , (short) 4));     //融资信息
-          sheet2.addMergedRegion(new Region((short) 6 , (short) 3 , (short) 6 , (short) 4));     
+          sheet2.addMergedRegion(new Region((short) 0 , (short) 0 , (short) 1 , (short) 4));     //知识产权
+          sheet2.addMergedRegion(new Region((short) 2 , (short) 1 , (short) 2 , (short) 4));     //发明专利
+          sheet2.addMergedRegion(new Region((short) 3 , (short) 1 , (short) 3 , (short) 4));     //新型专利
+          sheet2.addMergedRegion(new Region((short) 4 , (short) 1 , (short) 4 , (short) 4));     //外观专利
+          sheet2.addMergedRegion(new Region((short) 5 , (short) 0 , (short) 6 , (short) 4));     //融资信息
           sheet2.addMergedRegion(new Region((short) 7 , (short) 3 , (short) 7 , (short) 4));     
           sheet2.addMergedRegion(new Region((short) 8 , (short) 3 , (short) 8 , (short) 4));     
           sheet2.addMergedRegion(new Region((short) 9 , (short) 3 , (short) 9 , (short) 4));     
-          sheet2.addMergedRegion(new Region((short) 10 , (short) 1 , (short) 10 , (short) 4));     //项目可供资料
-          sheet2.addMergedRegion(new Region((short) 11 , (short) 1 , (short) 14 , (short) 4));     //盖章
+          sheet2.addMergedRegion(new Region((short) 10 , (short) 3 , (short) 10 , (short) 4));     
+          sheet2.addMergedRegion(new Region((short) 11 , (short) 2 , (short) 11 , (short) 4));     //项目可供资料
+          sheet2.addMergedRegion(new Region((short) 11 , (short) 0 , (short) 11 , (short) 1));     //项目可供资料
+          sheet2.addMergedRegion(new Region((short) 12 , (short) 1 , (short) 14 , (short) 4));     //盖章
+          sheet2.addMergedRegion(new Region((short) 12 , (short) 0 , (short) 14 , (short) 0));     //盖章
+          
+          //打印设置
+          HSSFPrintSetup ps2 = sheet2.getPrintSetup();
+          ps.setLandscape(false); //打印方向，true:横向，false:纵向
+          ps.setPaperSize(HSSFPrintSetup.A4_PAPERSIZE); //纸张
+          sheet2.setMargin(HSSFSheet.BottomMargin, (double)0.3); //页边距（下）
+          sheet2.setMargin(HSSFSheet.LeftMargin, (double)0.3); //页边距（左）
+          sheet2.setMargin(HSSFSheet.RightMargin, (double)0.3); //页边距（右）
+          sheet2.setMargin(HSSFSheet.TopMargin, (double)0.3); //页边距（上）
+          sheet2.setHorizontallyCenter(true); //设置打印页面为水平居中
+          sheet2.setVerticallyCenter(true); //设置打印页面为垂直居中
+          
+          //列宽
+          
+          sheet2.setColumnWidth((short) 0 , 5000);
+          sheet2.setColumnWidth((short) 1 , 5000);
+          sheet2.setColumnWidth((short) 2 , 5000);	
+          sheet2.setColumnWidth((short) 3 , 5000);
+          sheet2.setColumnWidth((short) 4 , 5000);
           
           
-//          row= sheet.createRow((int) 31);
-//          cell = row.createCell((short) 0);  
-//          cell.setCellValue("发明专利");  
-//          cell.setCellStyle(style);
-//          row.createCell((short) 1).setCellValue(enterprise.getInventiPatent()); 
-//          
-//          row= sheet.createRow((int) 32);
-//          cell = row.createCell((short) 0);  
-//          cell.setCellValue("实用新型专利");  
-//          cell.setCellStyle(style);
-//          row.createCell((short) 1).setCellValue(enterprise.getNewPatent()); 
-//          
-//          row= sheet.createRow((int) 33);
-//          cell = row.createCell((short) 0);  
-//          cell.setCellValue("外观设计专利");  
-//          cell.setCellStyle(style);
-//          row.createCell((short) 1).setCellValue(enterprise.getDesignPatent()); 
-//          
-//          row= sheet.createRow((int) 34);
-//          cell = row.createCell((short) 0);  
-//          cell.setCellValue("期望股权融资时间");  
-//          cell.setCellStyle(style);
-//          row.createCell((short) 1).setCellValue(enterprise.getExpectEquityDate()); 
-//          
-//          row= sheet.createRow((int) 35);
-//          cell = row.createCell((short) 0);  
-//          cell.setCellValue("期望股权融资金额");  
-//          cell.setCellStyle(style);
-//          row.createCell((short) 1).setCellValue(enterprise.getExpectEquityAmount()+"万元"); 
-//          
-//          row= sheet.createRow((int) 36);
-//          cell = row.createCell((short) 0);  
-//          cell.setCellValue("融资用途");  
-//          cell.setCellStyle(style);
-//          row.createCell((short) 1).setCellValue(enterprise.getExpectEquityUse()); 
-//          
-//          row= sheet.createRow((int) 37);
-//          cell = row.createCell((short) 0);  
-//          cell.setCellValue("期望债权融资时间");  
-//          cell.setCellStyle(style);
-//          row.createCell((short) 1).setCellValue(enterprise.getExpectBondDate()); 
-//          
-//          row= sheet.createRow((int) 38);
-//          cell = row.createCell((short) 0);  
-//          cell.setCellValue("期望债权融资金额");  
-//          cell.setCellStyle(style);
-//          row.createCell((short) 1).setCellValue(enterprise.getExpectEquityAmount()+"万元"); 
-//          
-//          row= sheet.createRow((int) 39);
-//          cell = row.createCell((short) 0);  
-//          cell.setCellValue("融资用途");  
-//          cell.setCellStyle(style);
-//          row.createCell((short) 1).setCellValue(enterprise.getExpectBondUse()); 
-//          
-//          row= sheet.createRow((int) 40);
-//          cell = row.createCell((short) 0);  
-//          cell.setCellValue("是否愿意披露信息");  
-//          cell.setCellStyle(style);
-//          if (enterprise.getIsShow())
-//          {
-//         	 row.createCell((short) 1).setCellValue("是"); 
-//          }
-//          else
-//          {
-//         	 row.createCell((short) 1).setCellValue("否"); 
-//          }
-//    		
+          row = sheet2.createRow((int) 0);  
+          cell = row.createCell((short) 0);  
+          cell.setCellValue("知识产权基本情况");  
+          cell.setCellStyle(style2);
+          
+          row = sheet2.createRow((int) 2);  
+          cell = row.createCell((short) 0);  
+          cell.setCellValue("发明专利");  
+          cell.setCellStyle(style);
+          cell = row.createCell((short) 1);
+          if(null !=enterprise.getInventiPatent())
+          {
+        	  cell.setCellValue(enterprise.getInventiPatent()); 
+          }
+          cell.setCellStyle(style);
+          
+          row = sheet2.createRow((int) 3);  
+          cell = row.createCell((short) 0);  
+          cell.setCellValue("实用新型专利");  
+          cell.setCellStyle(style);
+          cell = row.createCell((short) 1);  
+          if (null != enterprise.getNewPatent())
+          {
+        	  cell.setCellValue(enterprise.getNewPatent());  
+          }
+          cell.setCellStyle(style);
+          
+          row = sheet2.createRow((int) 4);  
+          cell = row.createCell((short) 0);  
+          cell.setCellValue("外观设计专利");  
+          cell.setCellStyle(style);
+          cell = row.createCell((short) 1);  
+          if (null != enterprise.getDesignPatent())
+          {
+        	  cell.setCellValue(enterprise.getDesignPatent());  
+          }
+          cell.setCellStyle(style);
+          
+          row = sheet2.createRow((int) 5);  
+          cell = row.createCell((short) 0);  
+          cell.setCellValue("融资信息（万元）");  
+         
+          cell.setCellStyle(style2);
+          
+          row = sheet2.createRow((int) 7);  
+          cell = row.createCell((short) 0);  
+          cell.setCellValue("期望获得资金的时间");  
+          cell.setCellStyle(style);
+          cell = row.createCell((short) 1);  
+          cell.setCellValue("期望融资方式");  
+          cell.setCellStyle(style);
+          cell = row.createCell((short) 2);  
+          cell.setCellValue("期望融资金额");  
+          cell.setCellStyle(style);
+          cell = row.createCell((short) 3);  
+          cell.setCellValue("融资用途");  
+          cell.setCellStyle(style);
+          
+          row = sheet2.createRow((int) 8);  
+          cell = row.createCell((short) 0);  
+          if (null != enterprise.getExpectEquityDate())
+          {
+        	  cell.setCellValue(enterprise.getExpectEquityDate()); 
+          }
+          cell.setCellStyle(style);
+          cell = row.createCell((short) 1);  
+          cell.setCellValue("股权融资");  
+          cell.setCellStyle(style);
+          cell = row.createCell((short) 2);  
+          if (null != enterprise.getExpectEquityAmount() )
+          {
+        	  cell.setCellValue(enterprise.getExpectEquityAmount());  
+          }
+          cell.setCellStyle(style);
+          cell = row.createCell((short) 3);  
+          if (null != enterprise.getExpectEquityUse())
+          {
+        	  cell.setCellValue(enterprise.getExpectEquityUse());  
+          }
+        
+          cell.setCellStyle(style);
+          
+          row = sheet2.createRow((int) 9);  
+          cell = row.createCell((short) 0);  
+          cell.setCellValue("期望获得资金的时间");  
+          cell.setCellStyle(style);
+          cell = row.createCell((short) 1);  
+          cell.setCellValue("期望融资方式");  
+          cell.setCellStyle(style);
+          cell = row.createCell((short) 2);  
+          cell.setCellValue("期望融资金额");  
+          cell.setCellStyle(style);
+          cell = row.createCell((short) 3);  
+          cell.setCellValue("融资用途");  
+          cell.setCellStyle(style);
+          
+          row = sheet2.createRow((int) 10);  
+          cell = row.createCell((short) 0);  
+          if (null != enterprise.getExpectBondDate())
+          {
+        	  cell.setCellValue(enterprise.getExpectBondDate());  
+          }
+          cell.setCellStyle(style);
+          cell = row.createCell((short) 1);  
+          cell.setCellValue("债权融资");  
+          cell.setCellStyle(style);
+          cell = row.createCell((short) 2);  
+          if (null != enterprise.getExpectBondAmount())
+          {
+        	  cell.setCellValue(enterprise.getExpectBondAmount());  
+          }
+          cell.setCellStyle(style);
+          cell = row.createCell((short) 3);  
+          if (null != enterprise.getExpectBondAmount())
+          {
+        	  cell.setCellValue(enterprise.getExpectBondUse());  
+          }
+          cell.setCellStyle(style);
+          
+          row = sheet2.createRow((int) 11);  
+          cell = row.createCell((short) 0);  
+          cell.setCellValue("是否愿意将贵公司所填以上信息向投资金融平台披露");  
+          cell.setCellStyle(style);
+          cell.setCellStyle(style3); 
+          if (true == enterprise.getIsShow())
+          {
+              cell = row.createCell((short) 2);  
+              cell.setCellValue("是");  
+              cell.setCellStyle(style);
+          }
+          else
+          {
+              cell = row.createCell((short) 2);  
+              cell.setCellValue("否");  
+              cell.setCellStyle(style);
+          }
+
+          row = sheet2.createRow((int) 12);  
+          cell = row.createCell((short) 0);  
+          cell.setCellValue("公司盖章");  
+          cell.setCellStyle(style2);
+          cell = row.createCell((short) 1);  
+          cell.setCellValue("");  
+          cell.setCellStyle(style);
+          
+
 			if (null != exportUrl) {
 					download(wb, username, resp);
 			}  
@@ -760,110 +882,7 @@ public class TdEnterpriseController {
     		 return "redirect:/enterprise/upload";
     }
     
-//    /**
-// 	 * @author lc
-// 	 * @注释：将page中的订单数据存入excel表格中
-// 	 */
-//     @SuppressWarnings("deprecation")
-// 	public boolean ImportData(TdEnterprise enterprise, HSSFRow row, HSSFCell cell, HSSFSheet sheet){
-//
-//             row = sheet.createRow(1);  
-//            
-//             //获取用户信息
-//             TdUser tdUser = tdUserService.findByUsername(enterprise.getUsername());
-//             // 第四步，创建单元格，并设置值  
-//             row= sheet.createRow((int) 0);
-//             row.createCell((short) 1).setCellValue(enterprise.getTitle());
-//             row= sheet.createRow((int) 1);
-//             row.createCell((short) 1).setCellValue(enterprise.getEstablish()); 
-//             row= sheet.createRow((int) 2);
-//             row.createCell((short) 1).setCellValue(enterprise.getCapital()+"万元");       
-//             row= sheet.createRow((int) 3);
-//             row.createCell((short) 1).setCellValue(enterprise.getRepresentative()); 
-//             row= sheet.createRow((int) 4);
-//             row.createCell((short) 1).setCellValue(enterprise.getShareholder()); 
-//             row= sheet.createRow((int) 5);
-//             row.createCell((short) 1).setCellValue(enterprise.getArea()); 
-//             row= sheet.createRow((int) 6);
-//             row.createCell((short) 1).setCellValue(enterprise.getStaffNumber()); 
-//             row= sheet.createRow((int) 7);
-//             row.createCell((short) 1).setCellValue(enterprise.getType()); 
-//             row= sheet.createRow((int) 8);
-//             row.createCell((short) 1).setCellValue(enterprise.getEmail()); 
-//             row= sheet.createRow((int) 9);
-//             row.createCell((short) 1).setCellValue(enterprise.getContact()); 
-//             row= sheet.createRow((int) 10);
-//             row.createCell((short) 1).setCellValue(enterprise.getWebsite()); 
-//             row= sheet.createRow((int) 11);
-//             row.createCell((short) 1).setCellValue(enterprise.getTelephone()); 
-//             row= sheet.createRow((int) 12);
-//             row.createCell((short) 1).setCellValue(enterprise.getFax()); 
-//             row= sheet.createRow((int) 13);
-//             row.createCell((short) 1).setCellValue(enterprise.getChat()); 
-//             row= sheet.createRow((int) 14);
-//             row.createCell((short) 1).setCellValue(enterprise.getMobile()); 
-//             row= sheet.createRow((int) 15);
-//             row.createCell((short) 1).setCellValue(enterprise.getProfile()); 
-//             row= sheet.createRow((int) 16);
-//             row.createCell((short) 1).setCellValue(enterprise.getTeamIntroduction()); 
-//             row= sheet.createRow((int) 17);
-//             row.createCell((short) 1).setCellValue(enterprise.getAdvantage()); 
-//             row= sheet.createRow((int) 18);
-//             row.createCell((short) 1).setCellValue(enterprise.getSize()); 
-//             row= sheet.createRow((int) 19);
-//             row.createCell((short) 1).setCellValue(enterprise.getLastAssets3()+"万元"); 
-//             row= sheet.createRow((int) 20);
-//             row.createCell((short) 1).setCellValue(enterprise.getLastNetAssets3()+"万元"); 
-//             row= sheet.createRow((int) 21);
-//             row.createCell((short) 1).setCellValue(enterprise.getLastSale3()+"万元"); 
-//             row= sheet.createRow((int) 22);
-//             row.createCell((short) 1).setCellValue(enterprise.getLastProfit3()+"万元"); 
-//             row= sheet.createRow((int) 23);
-//             row.createCell((short) 1).setCellValue(enterprise.getLastAssets2()+"万元"); 
-//             row= sheet.createRow((int) 24);
-//             row.createCell((short) 1).setCellValue(enterprise.getLastNetAssets2()+"万元"); 
-//             row= sheet.createRow((int) 25);
-//             row.createCell((short) 1).setCellValue(enterprise.getLastSale2()+"万元"); 
-//             row= sheet.createRow((int) 26);
-//             row.createCell((short) 1).setCellValue(enterprise.getLastProfit2()+"万元"); 
-//             row= sheet.createRow((int) 27);
-//             row.createCell((short) 1).setCellValue(enterprise.getLastAssets1()+"万元"); 
-//             row= sheet.createRow((int) 28);
-//             row.createCell((short) 1).setCellValue(enterprise.getLastNetAssets1()+"万元"); 
-//             row= sheet.createRow((int) 29);
-//             row.createCell((short) 1).setCellValue(enterprise.getLastSale1()+"万元"); 
-//             row= sheet.createRow((int) 30);
-//             row.createCell((short) 1).setCellValue(enterprise.getLastProfit1()+"万元"); 
-//             row= sheet.createRow((int) 31);
-//             row.createCell((short) 1).setCellValue(enterprise.getInventiPatent()); 
-//             row= sheet.createRow((int) 32);
-//             row.createCell((short) 1).setCellValue(enterprise.getNewPatent()); 
-//             row= sheet.createRow((int) 33);
-//             row.createCell((short) 1).setCellValue(enterprise.getDesignPatent()); 
-//             row= sheet.createRow((int) 34);
-//             row.createCell((short) 1).setCellValue(enterprise.getExpectEquityDate()); 
-//             row= sheet.createRow((int) 35);
-//             row.createCell((short) 1).setCellValue(enterprise.getExpectEquityAmount()+"万元"); 
-//             row= sheet.createRow((int) 36);
-//             row.createCell((short) 1).setCellValue(enterprise.getExpectEquityUse()); 
-//             row= sheet.createRow((int) 37);
-//             row.createCell((short) 1).setCellValue(enterprise.getExpectBondDate()); 
-//             row= sheet.createRow((int) 38);
-//             row.createCell((short) 1).setCellValue(enterprise.getExpectEquityAmount()+"万元"); 
-//             row= sheet.createRow((int) 39);
-//             row.createCell((short) 1).setCellValue(enterprise.getExpectBondUse()); 
-//             row= sheet.createRow((int) 40);
-//             if (enterprise.getIsShow())
-//             {
-//            	 row.createCell((short) 1).setCellValue("是"); 
-//             }
-//             else
-//             {
-//            	 row.createCell((short) 1).setCellValue("否"); 
-//             }
-//
-//     	return true;
-//     }
+
      /**
  	 * @author lc
  	 * @注释：文件写入和下载

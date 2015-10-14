@@ -26,7 +26,6 @@ public interface TdEnterpriseRepo extends
     Page<TdEnterprise> findByStatusIdOrderBySortIdAsc( Long statusId ,Pageable page);
     Page<TdEnterprise> findByAreaOrderByNumberAsc(String area, Pageable page);
     
-    List<TdEnterprise> findByIsEnableTrue();
     
     Page<TdEnterprise> findByAreaAndStatusIdAndTitleContainingOrderBySortIdAsc(String area, Long statusId , String keywords, Pageable page);
     Page<TdEnterprise> findByTypeAndStatusIdAndTitleContainingOrderBySortIdAsc(String type, Long statusId , String keywords, Pageable page);

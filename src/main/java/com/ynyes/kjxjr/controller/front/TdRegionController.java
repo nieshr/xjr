@@ -21,6 +21,7 @@ import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.Region;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.expression.ParseException;
@@ -516,11 +517,29 @@ public String exportRecommend(
       
       // 第三步，在sheet中添加表头第0行,注意老版本poi对Excel的行数列数有限制short  
       HSSFRow row = sheet.createRow((int) 0);  
+      
+      sheet.addMergedRegion(new Region((short) 0 , (short) 0 , (short) 1 , (short) 7));     //标题
+      
       // 第四步，创建单元格，并设置值表头 设置表头居中  
       HSSFCellStyle style = wb.createCellStyle();  
       style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
-     
+      
+      HSSFCellStyle style1 = wb.createCellStyle();  
+      style1.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
+      
+      HSSFCellStyle style2 = wb.createCellStyle();  
+      style2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
+      style2.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+      
+      
       HSSFCell cell = row.createCell((short) 0);  
+      cell.setCellValue(activityEnterpriseList.get(0).getArea()+activityEnterpriseList.get(0).getActivityTitle());  
+      cell.setCellStyle(style2);
+      
+      
+      
+      row =sheet.createRow((int) 2);
+      cell = row.createCell((short) 0);  
       cell.setCellValue("序号");  
       cell.setCellStyle(style);
       
@@ -551,6 +570,7 @@ public String exportRecommend(
       cell = row.createCell((short) 7);  
       cell.setCellValue("推荐理由");  
       cell.setCellStyle(style);  
+      
 			
 		if (null != exportUrl) {
 			if (ImportData(activityEnterpriseList, row, cell, sheet,style)) {
@@ -571,7 +591,7 @@ public String exportRecommend(
         	for (int i = 0; i < activityEnterpriseList.size(); i++)  
             {  
         	 				
-                row = sheet.createRow((int) i + 1);  
+                row = sheet.createRow((int) i + 3);  
                 TdActivityEnterprise tdActivityEnterprise = activityEnterpriseList.get(i);  
                 //获取用户信息
 //                TdUser tdUser = tdUserService.findByUsername(tdOrder.getUsername());
