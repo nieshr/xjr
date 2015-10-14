@@ -89,7 +89,7 @@
                                 <dt>操作</dt>
                                 <#if activities??>
                                     <#list activities as item>
-                                        <dd><a href="#">评分</a>&nbsp;|&nbsp;<a href="/expert/detail/${item.id?c}">详情</a></dd>
+                                        <dd><a href="/expert/grade?activityId=${item.id?c}">评分</a>&nbsp;|&nbsp;<a href="/expert/detail/${item.id?c}">详情</a></dd>
                                     </#list>
                                 </#if>
                             </dl>

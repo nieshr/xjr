@@ -22,11 +22,13 @@ import com.ynyes.kjxjr.entity.TdActivity;
 import com.ynyes.kjxjr.entity.TdActivityEnterprise;
 import com.ynyes.kjxjr.entity.TdActivityExpert;
 import com.ynyes.kjxjr.entity.TdActivityType;
+import com.ynyes.kjxjr.entity.TdEnterpriseGrade;
 import com.ynyes.kjxjr.entity.TdExpert;
 import com.ynyes.kjxjr.service.TdActivityEnterpriseService;
 import com.ynyes.kjxjr.service.TdActivityExpertService;
 import com.ynyes.kjxjr.service.TdActivityService;
 import com.ynyes.kjxjr.service.TdActivityTypeService;
+import com.ynyes.kjxjr.service.TdEnterpriseGradeService;
 import com.ynyes.kjxjr.service.TdExpertService;
 import com.ynyes.kjxjr.util.SiteMagConstant;
 
@@ -50,7 +52,11 @@ public class TdExpertController {
 
 	@Autowired
 	private TdActivityEnterpriseService tdActivityEnterpriseService;
-
+	
+	@Autowired
+	private TdEnterpriseGradeService tdEnterpriseGradeService;
+	
+	
 	@RequestMapping(value = "/enterprise/list")
 	public String execute(HttpServletRequest req, ModelMap map) {
 		String expertUsername = (String) req.getSession().getAttribute("expertUsername");
@@ -150,5 +156,17 @@ public class TdExpertController {
 				}
 			}
 		}
+	}
+
+	@RequestMapping(value="/grade")
+	public String goGrade(Long activityId,HttpServletRequest req,ModelMap map){
+		String expertUsername = (String) req.getSession().getAttribute("expertUsername");
+		if(null == expertUsername){
+			return "/client/login";
+		}
+		TdExpert expert = tdExpertService.findbyUsername(expertUsername);
+		List<TdEnterpriseGrade> grade_list = tdEnterpriseGradeService.findByExpertIdAndActivityId(expert.getId(), activityId);
+		map.addAttribute("grade_list", grade_list);
+		return "/client/project_grade";
 	}
 }
