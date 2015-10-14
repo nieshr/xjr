@@ -30,7 +30,7 @@ window.onload=done;
 	<div class="leftbar">
 		<dl class="nav">
             <dd><a href="/enterprise/info">基本资料</a></dd>
-            <dd><a href="#">活动列表</a></dd>
+            <dd><a href="/enterprise/activity/list">活动列表</a></dd>
             <dd><a href="#">申请展示</a></dd>
 
 		</dl>

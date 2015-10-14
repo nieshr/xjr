@@ -352,273 +352,406 @@ public class TdEnterpriseController {
           // 第一步，创建一个webbook，对应一个Excel文件  
           HSSFWorkbook wb = new HSSFWorkbook();  
           // 第二步，在webbook中添加一个sheet,对应Excel文件中的sheet  
-          HSSFSheet sheet = wb.createSheet("order");  
           
-          sheet.addMergedRegion(new Region((short) 0 , (short) 0 , (short) 1 , (short) 4));
-          sheet.addMergedRegion(new Region((short) 1 , (short) 1 , (short) 1 , (short) 2));
+          //第一页
+          HSSFSheet sheet1 = wb.createSheet("第一页");  
+          
+          sheet1.addMergedRegion(new Region((short) 0 , (short) 0 , (short) 0 , (short) 4));     //标题
+          sheet1.addMergedRegion(new Region((short) 1 , (short) 0 , (short) 1 , (short) 4));     //标题
+          sheet1.addMergedRegion(new Region((short) 2 , (short) 1 , (short) 2 , (short) 2));		//企业名称
+          sheet1.addMergedRegion(new Region((short) 3 , (short) 1 , (short) 3 , (short) 2));		//注册资本
+          sheet1.addMergedRegion(new Region((short) 4 , (short) 1 , (short) 4 , (short) 2));		//股东结构
+          sheet1.addMergedRegion(new Region((short) 5 , (short) 1 , (short) 5 , (short) 2));		//地址
+          sheet1.addMergedRegion(new Region((short) 6 , (short) 1 , (short) 7 , (short) 4));		//股东结构
+          sheet1.addMergedRegion(new Region((short) 8 , (short) 1 , (short) 8 , (short) 2));		//邮箱
+          sheet1.addMergedRegion(new Region((short) 9 , (short) 1 , (short) 9 , (short) 2));		//公司网站
+          sheet1.addMergedRegion(new Region((short) 10 , (short) 1 , (short) 10 , (short) 2));		//QQ
+          sheet1.addMergedRegion(new Region((short) 11 , (short) 1 , (short) 13 , (short) 4));		//公司团队、主要负责人
+          sheet1.addMergedRegion(new Region((short) 11 , (short) 0 , (short) 13 , (short) 0));		//公司团队、主要负责人
+          sheet1.addMergedRegion(new Region((short) 14 , (short) 1 , (short) 16 , (short) 4));		//企业简介
+          sheet1.addMergedRegion(new Region((short) 14 , (short) 0 , (short) 16 , (short) 0));		//企业简介
+          sheet1.addMergedRegion(new Region((short) 17 , (short) 1 , (short) 19 , (short) 4));		//技术特点
+          sheet1.addMergedRegion(new Region((short) 17 , (short) 0 , (short) 19 , (short) 0));		//技术特点
+          sheet1.addMergedRegion(new Region((short) 20 , (short) 1 , (short) 22 , (short) 4));		//市场规模
+          sheet1.addMergedRegion(new Region((short) 20 , (short) 0 , (short) 22 , (short) 0));		//市场规模
+          sheet1.addMergedRegion(new Region((short) 23 , (short) 0 , (short) 23 , (short) 4));		//近三年财务
+          sheet1.addMergedRegion(new Region((short) 28 , (short) 0 , (short) 28 , (short) 4));		//知识产权
+          sheet1.addMergedRegion(new Region((short) 29 , (short) 0 , (short) 29 , (short) 4));		//发明专利
+          sheet1.addMergedRegion(new Region((short) 30 , (short) 0 , (short) 30 , (short) 4));		//新型专利
+          sheet1.addMergedRegion(new Region((short) 31 , (short) 0 , (short) 31 , (short) 4));		//外观专利
           
           // 第三步，在sheet中添加表头第0行,注意老版本poi对Excel的行数列数有限制short  
-          HSSFRow row = sheet.createRow((int) 0);  
+          HSSFRow row = sheet1.createRow((int) 0);  
           // 第四步，创建单元格，并设置值表头 设置表头居中  
           HSSFCellStyle style = wb.createCellStyle();  
           style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
           
+          HSSFCellStyle style1 = wb.createCellStyle();  
+          style1.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
+          
           HSSFCellStyle titleStyle = wb.createCellStyle();  
           
           
-          row = sheet.createRow((int) 0);  
+          row = sheet1.createRow((int) 0);  
           HSSFCell cell = row.createCell((short) 0);  
-          cell.setCellValue("企业名称");  
+          cell.setCellValue("重庆市科技小巨人企业培育专项行动报名表");  
           cell.setCellStyle(style);
-          row.createCell((short) 1).setCellValue(enterprise.getTitle());
           
-          row= sheet.createRow((int) 1);  
-          cell = row.createCell((short) 0);  
-          cell.setCellValue("成立时间");  
-          cell.setCellStyle(style);  
-          row.createCell((short) 1).setCellValue(enterprise.getEstablish()); 
-          
-          row= sheet.createRow((int) 2); 
-          cell = row.createCell((short) 0);  
-          cell.setCellValue("注册资本");  
-          cell.setCellStyle(style);  
-          row.createCell((short) 1).setCellValue(enterprise.getCapital()+"万元");       
-        
-          row= sheet.createRow((int) 3); 
-          cell = row.createCell((short) 0);  
-          cell.setCellValue("法定代表人");  
-          cell.setCellStyle(style);
-          row.createCell((short) 1).setCellValue(enterprise.getRepresentative()); 
-         
-          row= sheet.createRow((int) 4);
-          cell = row.createCell((short) 0);  
-          cell.setCellValue("股东结构");  
-          cell.setCellStyle(style);
-          row.createCell((short) 1).setCellValue(enterprise.getShareholder()); 
-          
-          row= sheet.createRow((int) 5);
-          cell = row.createCell((short) 0);  
-          cell.setCellValue("所在地区");  
-          cell.setCellStyle(style);
-          row.createCell((short) 1).setCellValue(enterprise.getArea()); 
-          
-          row= sheet.createRow((int) 6);
-          cell = row.createCell((short) 0);  
-          cell.setCellValue("职工人数");  
-          cell.setCellStyle(style);
-          row.createCell((short) 1).setCellValue(enterprise.getStaffNumber()+"人"); 
-          
-          row= sheet.createRow((int) 7);
-          cell = row.createCell((short) 0);  
-          cell.setCellValue("行业归属");  
-          cell.setCellStyle(style);
-          row.createCell((short) 1).setCellValue(enterprise.getType()); 
-          
-          row= sheet.createRow((int) 8);
-          cell = row.createCell((short) 0);  
-          cell.setCellValue("邮箱");  
-          cell.setCellStyle(style);
-          row.createCell((short) 1).setCellValue(enterprise.getEmail()); 
-          
-          row= sheet.createRow((int) 9);
-          cell = row.createCell((short) 0);  
-          cell.setCellValue("联系人");  
-          cell.setCellStyle(style);
-          row.createCell((short) 1).setCellValue(enterprise.getContact()); 
-          
-          row= sheet.createRow((int) 10);
-          cell = row.createCell((short) 0);  
-          cell.setCellValue("公司网站");  
-          cell.setCellStyle(style);
-          row.createCell((short) 1).setCellValue(enterprise.getWebsite()); 
-          
-          row= sheet.createRow((int) 11);
-          cell = row.createCell((short) 0);  
-          cell.setCellValue("联系电话");  
-          cell.setCellStyle(style);
-          row.createCell((short) 1).setCellValue(enterprise.getTelephone()); 
-          
-          row= sheet.createRow((int) 12);
-          cell = row.createCell((short) 0);  
-          cell.setCellValue("传真");  
-          cell.setCellStyle(style);
-          row.createCell((short) 1).setCellValue(enterprise.getFax()); 
-          
-          row= sheet.createRow((int) 13);
-          cell = row.createCell((short) 0);  
-          cell.setCellValue("QQ/MSN");  
-          cell.setCellStyle(style);
-          row.createCell((short) 1).setCellValue(enterprise.getChat()); 
-          
-          row= sheet.createRow((int) 14);
-          cell = row.createCell((short) 0);  
-          cell.setCellValue("手机");  
-          cell.setCellStyle(style);
-          row.createCell((short) 1).setCellValue(enterprise.getMobile()); 
-          
-          row= sheet.createRow((int) 15);
-          cell = row.createCell((short) 0);  
-          cell.setCellValue("企业简介");  
-          cell.setCellStyle(style);
-          row.createCell((short) 1).setCellValue(enterprise.getProfile()); 
-          
-          row= sheet.createRow((int) 16);
-          cell = row.createCell((short) 0);  
-          cell.setCellValue("公司团队");  
-          cell.setCellStyle(style);
-          row.createCell((short) 1).setCellValue(enterprise.getTeamIntroduction()); 
-          
-          row= sheet.createRow((int) 17);
-          cell = row.createCell((short) 0);  
-          cell.setCellValue("技术特点及优势");  
-          cell.setCellStyle(style);
-          row.createCell((short) 1).setCellValue(enterprise.getAdvantage()); 
-          
-          row= sheet.createRow((int) 18);
-          cell = row.createCell((short) 0);  
-          cell.setCellValue("市场规模行业地位");  
-          cell.setCellStyle(style);
-          row.createCell((short) 1).setCellValue(enterprise.getSize()); 
-          
-          row= sheet.createRow((int) 19);
-          cell = row.createCell((short) 0);  
-          cell.setCellValue("3年前总资产");  
-          cell.setCellStyle(style);
-          row.createCell((short) 1).setCellValue(enterprise.getLastAssets3()+"万元"); 
-          
-          row= sheet.createRow((int) 20);
-          cell = row.createCell((short) 0);  
-          cell.setCellValue("3年前净资产");  
-          cell.setCellStyle(style);
-          row.createCell((short) 1).setCellValue(enterprise.getLastNetAssets3()+"万元");
-          
-          row= sheet.createRow((int) 21);
-          cell = row.createCell((short) 0);  
-          cell.setCellValue("3年前销售收入");  
-          cell.setCellStyle(style);
-          row.createCell((short) 1).setCellValue(enterprise.getLastSale3()+"万元"); 
-          
-          row= sheet.createRow((int) 22);
-          cell = row.createCell((short) 0);  
-          cell.setCellValue("3年前毛利润");  
-          cell.setCellStyle(style);
-          row.createCell((short) 1).setCellValue(enterprise.getLastProfit3()+"万元"); 
-          
-          row= sheet.createRow((int) 23);
-          cell = row.createCell((short) 0);  
-          cell.setCellValue("2年前总资产");  
-          cell.setCellStyle(style);
-          row.createCell((short) 1).setCellValue(enterprise.getLastAssets2()+"万元"); 
-          
-          row= sheet.createRow((int) 24);
-          cell = row.createCell((short) 0);  
-          cell.setCellValue("2年前净资产");  
-          cell.setCellStyle(style);
-          row.createCell((short) 1).setCellValue(enterprise.getLastNetAssets2()+"万元"); 
-          
-          row= sheet.createRow((int) 25);
-          cell = row.createCell((short) 0);  
-          cell.setCellValue("2年前销售收入");  
-          cell.setCellStyle(style);
-          row.createCell((short) 1).setCellValue(enterprise.getLastSale2()+"万元"); 
-          
-          row= sheet.createRow((int) 26);
-          cell = row.createCell((short) 0);  
-          cell.setCellValue("2年前毛利润");  
-          cell.setCellStyle(style);
-          row.createCell((short) 1).setCellValue(enterprise.getLastProfit2()+"万元"); 
-          
-          row= sheet.createRow((int) 27);
-          cell = row.createCell((short) 0);  
-          cell.setCellValue("1年前总资产");  
-          cell.setCellStyle(style);
-          row.createCell((short) 1).setCellValue(enterprise.getLastAssets1()+"万元"); 
-          
-          row= sheet.createRow((int) 28);
-          cell = row.createCell((short) 0);  
-          cell.setCellValue("1年前净资产");  
-          cell.setCellStyle(style);
-          row.createCell((short) 1).setCellValue(enterprise.getLastNetAssets1()+"万元"); 
-          
-          row= sheet.createRow((int) 29);
-          cell = row.createCell((short) 0);  
-          cell.setCellValue("1年前销售收入");  
-          cell.setCellStyle(style);
-          row.createCell((short) 1).setCellValue(enterprise.getLastSale1()+"万元"); 
-          
-          row= sheet.createRow((int) 30);
-          cell = row.createCell((short) 0);  
-          cell.setCellValue("1年前毛利润");  
-          cell.setCellStyle(style);
-          row.createCell((short) 1).setCellValue(enterprise.getLastProfit1()+"万元"); 
-          
-          row= sheet.createRow((int) 31);
-          cell = row.createCell((short) 0);  
-          cell.setCellValue("发明专利");  
-          cell.setCellStyle(style);
-          row.createCell((short) 1).setCellValue(enterprise.getInventiPatent()); 
-          
-          row= sheet.createRow((int) 32);
-          cell = row.createCell((short) 0);  
-          cell.setCellValue("实用新型专利");  
-          cell.setCellStyle(style);
-          row.createCell((short) 1).setCellValue(enterprise.getNewPatent()); 
-          
-          row= sheet.createRow((int) 33);
-          cell = row.createCell((short) 0);  
-          cell.setCellValue("外观设计专利");  
-          cell.setCellStyle(style);
-          row.createCell((short) 1).setCellValue(enterprise.getDesignPatent()); 
-          
-          row= sheet.createRow((int) 34);
-          cell = row.createCell((short) 0);  
-          cell.setCellValue("期望股权融资时间");  
-          cell.setCellStyle(style);
-          row.createCell((short) 1).setCellValue(enterprise.getExpectEquityDate()); 
-          
-          row= sheet.createRow((int) 35);
-          cell = row.createCell((short) 0);  
-          cell.setCellValue("期望股权融资金额");  
-          cell.setCellStyle(style);
-          row.createCell((short) 1).setCellValue(enterprise.getExpectEquityAmount()+"万元"); 
-          
-          row= sheet.createRow((int) 36);
-          cell = row.createCell((short) 0);  
-          cell.setCellValue("融资用途");  
-          cell.setCellStyle(style);
-          row.createCell((short) 1).setCellValue(enterprise.getExpectEquityUse()); 
-          
-          row= sheet.createRow((int) 37);
-          cell = row.createCell((short) 0);  
-          cell.setCellValue("期望债权融资时间");  
-          cell.setCellStyle(style);
-          row.createCell((short) 1).setCellValue(enterprise.getExpectBondDate()); 
-          
-          row= sheet.createRow((int) 38);
-          cell = row.createCell((short) 0);  
-          cell.setCellValue("期望债权融资金额");  
-          cell.setCellStyle(style);
-          row.createCell((short) 1).setCellValue(enterprise.getExpectEquityAmount()+"万元"); 
-          
-          row= sheet.createRow((int) 39);
-          cell = row.createCell((short) 0);  
-          cell.setCellValue("融资用途");  
-          cell.setCellStyle(style);
-          row.createCell((short) 1).setCellValue(enterprise.getExpectBondUse()); 
-          
-          row= sheet.createRow((int) 40);
-          cell = row.createCell((short) 0);  
-          cell.setCellValue("是否愿意披露信息");  
-          cell.setCellStyle(style);
-          if (enterprise.getIsShow())
+          if (enterprise.getFormType() == 0)
           {
-         	 row.createCell((short) 1).setCellValue("是"); 
+	          row= sheet1.createRow((int) 1);  
+	          cell = row.createCell((short) 0);  
+	          cell.setCellValue("企业组");  
+	          cell.setCellStyle(style);  
           }
           else
           {
-         	 row.createCell((short) 1).setCellValue("否"); 
+	          row= sheet1.createRow((int) 1);  
+	          cell = row.createCell((short) 0);  
+	          cell.setCellValue("项目组");  
+	          cell.setCellStyle(style);  
           }
-    		
+         if(enterprise.getFormType() == 0)
+         {
+        	 row= sheet1.createRow((int) 2);  
+             cell = row.createCell((short) 0);  
+             cell.setCellValue("企业名称");  
+             cell.setCellStyle(style);  
+   	      	 cell = row.createCell((short) 1);
+     		  cell.setCellValue(enterprise.getTitle()); 
+     		  cell.setCellStyle(style1);  
+     		  cell = row.createCell((short) 3);
+     		  cell.setCellValue("成立时间");
+     		  cell.setCellStyle(style);  
+     		  cell = row.createCell((short) 4);
+     		  cell.setCellValue(enterprise.getEstablish()); 
+     		  cell.setCellStyle(style1);  
+         }
+         else
+         {
+	          row= sheet1.createRow((int) 2);  
+	          cell = row.createCell((short) 0);  
+	          cell.setCellValue("项目名称");  
+	          cell.setCellStyle(style);  
+		      cell = row.createCell((short) 1);
+	  		  cell.setCellValue(enterprise.getTitle()); 
+	  		  cell.setCellStyle(style1);  
+	  		  cell = row.createCell((short) 3);
+	  		  cell.setCellValue("成立时间");
+	  		  cell.setCellStyle(style);  
+	  		  cell = row.createCell((short) 4);
+	  		  cell.setCellValue(enterprise.getEstablish()); 
+	  		  cell.setCellStyle(style1);  
+         }
+         
+          row= sheet1.createRow((int) 3); 
+          cell = row.createCell((short) 0);  
+          cell.setCellValue("注册资本（万元）");  
+          cell.setCellStyle(style);  
+          cell = row.createCell((short) 1);
+          cell.setCellValue(enterprise.getCapital());     
+          cell.setCellStyle(style);  
+          cell = row.createCell((short) 3);
+          cell.setCellValue("法定代表人");
+          cell.setCellStyle(style);  
+          cell =row.createCell((short) 4);
+          cell.setCellValue(enterprise.getRepresentative()); 
+          cell.setCellStyle(style);  
+          
+          row= sheet1.createRow((int) 4); 
+          cell = row.createCell((short) 0);  
+          cell.setCellValue("股东结构");  
+          cell.setCellStyle(style);  
+          cell = row.createCell((short) 4);
+          cell.setCellValue(enterprise.getShareholder());     
+          cell.setCellStyle(style);  
+
+          row= sheet1.createRow((int) 5); 
+          cell = row.createCell((short) 0);  
+          cell.setCellValue("地址");  
+          cell.setCellStyle(style);  
+          cell = row.createCell((short) 1);
+          cell.setCellValue(enterprise.getArea());     
+          cell.setCellStyle(style);  
+          cell = row.createCell((short) 3);
+          cell.setCellValue("职工人数（人）");
+          cell.setCellStyle(style);  
+          cell =row.createCell((short) 4);
+          cell.setCellValue(enterprise.getStaffNumber()); 
+          cell.setCellStyle(style);  
+          
+          row= sheet1.createRow((int) 6); 
+          cell = row.createCell((short) 0);  
+          cell.setCellValue("行业归属");  
+          cell.setCellStyle(style);  
+          cell.setCellStyle(style1);  
+          cell = row.createCell((short) 1);
+          cell.setCellValue(enterprise.getType());     
+          cell.setCellStyle(style);  
+          cell.setCellStyle(style1);  
+          
+          row= sheet1.createRow((int) 8); 
+          cell = row.createCell((short) 0);  
+          cell.setCellValue("邮箱");  
+          cell.setCellStyle(style);  
+          cell = row.createCell((short) 1);
+          cell.setCellValue(enterprise.getEmail());     
+          cell.setCellStyle(style);  
+          cell = row.createCell((short) 3);
+          cell.setCellValue("联系人");
+          cell.setCellStyle(style);  
+          cell =row.createCell((short) 4);
+          cell.setCellValue(enterprise.getContact()); 
+          cell.setCellStyle(style);  
+          
+          row= sheet1.createRow((int) 9); 
+          cell = row.createCell((short) 0);  
+          cell.setCellValue("公司网站");  
+          cell.setCellStyle(style);  
+          cell = row.createCell((short) 1);
+          cell.setCellValue(enterprise.getWebsite());     
+          cell.setCellStyle(style);  
+          cell = row.createCell((short) 3);
+          cell.setCellValue("联系电话");
+          cell.setCellStyle(style);  
+          cell =row.createCell((short) 4);
+          cell.setCellValue(enterprise.getTelephone()); 
+          cell.setCellStyle(style);  
+          
+          row= sheet1.createRow((int) 10); 
+          cell = row.createCell((short) 0);  
+          cell.setCellValue("QQ/MSN");  
+          cell.setCellStyle(style);  
+          cell = row.createCell((short) 1);
+          cell.setCellValue(enterprise.getChat());     
+          cell.setCellStyle(style);  
+          cell = row.createCell((short) 3);
+          cell.setCellValue("手机");
+          cell.setCellStyle(style);  
+          cell =row.createCell((short) 4);
+          cell.setCellValue(enterprise.getMobile()); 
+          cell.setCellStyle(style);  
+          
+          if(enterprise.getFormType() == 0)
+          {
+        	  row= sheet1.createRow((int) 11); 
+              cell = row.createCell((short) 0);  
+              cell.setCellValue("公司团队（200字内）");  
+              cell.setCellStyle(style);  
+              cell.setCellStyle(style1);  
+              cell = row.createCell((short) 1);
+              cell.setCellValue(enterprise.getTeamIntroduction());     
+              cell.setCellStyle(style1);  
+          }
+          else
+          {
+        	  row= sheet1.createRow((int) 11); 
+              cell = row.createCell((short) 0);  
+              cell.setCellValue("团队负责人");  
+              cell.setCellStyle(style);  
+              cell.setCellStyle(style1);  
+              cell = row.createCell((short) 1);
+              cell.setCellValue(enterprise.getInCharge());     
+              cell.setCellStyle(style1);  
+          }
+          
+          if(enterprise.getFormType() == 0)
+          {
+        	  row= sheet1.createRow((int) 14); 
+              cell = row.createCell((short) 0);  
+              cell.setCellValue("企业简介（200字内）");  
+              cell.setCellStyle(style);  
+              cell.setCellStyle(style1);  
+              cell = row.createCell((short) 1);
+              cell.setCellValue(enterprise.getProfile());     
+              cell.setCellStyle(style1);  
+          }
+          else
+          {
+        	  row= sheet1.createRow((int) 14); 
+              cell = row.createCell((short) 0);  
+              cell.setCellValue("团队简介（200字内）");  
+              cell.setCellStyle(style);  
+              cell.setCellStyle(style1);  
+              cell = row.createCell((short) 1);
+              cell.setCellValue(enterprise.getProfile());     
+              cell.setCellStyle(style1);  
+          }
+         
+    	  row= sheet1.createRow((int) 17); 
+          cell = row.createCell((short) 0);  
+          cell.setCellValue("技术特点及优势（200字内）");  
+          cell.setCellStyle(style);  
+          cell.setCellStyle(style1);  
+          cell = row.createCell((short) 1);
+          cell.setCellValue(enterprise.getAdvantage());     
+          cell.setCellStyle(style1);  
+
+    	  row= sheet1.createRow((int) 20); 
+          cell = row.createCell((short) 0);  
+          cell.setCellValue("市场规模行业地位（200字内）");  
+          cell.setCellStyle(style);  
+          cell.setCellStyle(style1);  
+          cell = row.createCell((short) 1);
+          cell.setCellValue(enterprise.getSize());     
+          cell.setCellStyle(style1);  
+          
+    	  row= sheet1.createRow((int) 23); 
+          cell = row.createCell((short) 0);  
+          cell.setCellValue("近三年财务状况（万元）");  
+          cell.setCellStyle(style);  
+        
+          
+    	  row= sheet1.createRow((int) 24); 
+          cell = row.createCell((short) 0);  
+          cell.setCellValue("年限");  
+          cell.setCellStyle(style);  
+          cell = row.createCell((short) 1);  
+          cell.setCellValue("总资产");  
+          cell.setCellStyle(style);  
+          cell = row.createCell((short) 2);  
+          cell.setCellValue("净资产");  
+          cell.setCellStyle(style);  
+          cell = row.createCell((short) 3);  
+          cell.setCellValue("销售收入");  
+          cell.setCellStyle(style);  
+          cell = row.createCell((short) 4);  
+          cell.setCellValue("毛利润");  
+          cell.setCellStyle(style);  
+          
+    	  row= sheet1.createRow((int) 25); 
+          cell = row.createCell((short) 0);  
+          cell.setCellValue("2012");  
+          cell.setCellStyle(style);  
+          cell = row.createCell((short) 1);  
+          cell.setCellValue(enterprise.getLastAssets3());  
+          cell.setCellStyle(style);  
+          cell = row.createCell((short) 2);  
+          cell.setCellValue(enterprise.getLastNetAssets3());  
+          cell.setCellStyle(style);  
+          cell = row.createCell((short) 3);  
+          cell.setCellValue(enterprise.getLastSale3());  
+          cell.setCellStyle(style);  
+          cell = row.createCell((short) 4);  
+          cell.setCellValue(enterprise.getLastProfit3());  
+          cell.setCellStyle(style);  
+          
+    	  row= sheet1.createRow((int) 26); 
+          cell = row.createCell((short) 0);  
+          cell.setCellValue("2013");  
+          cell.setCellStyle(style);  
+          cell = row.createCell((short) 1);  
+          cell.setCellValue(enterprise.getLastAssets2());  
+          cell.setCellStyle(style);  
+          cell = row.createCell((short) 2);  
+          cell.setCellValue(enterprise.getLastNetAssets2());  
+          cell.setCellStyle(style);  
+          cell = row.createCell((short) 3);  
+          cell.setCellValue(enterprise.getLastSale2());  
+          cell.setCellStyle(style);  
+          cell = row.createCell((short) 4);  
+          cell.setCellValue(enterprise.getLastProfit2());  
+          cell.setCellStyle(style);  
+
+    	  row= sheet1.createRow((int) 27); 
+          cell = row.createCell((short) 0);  
+          cell.setCellValue("2014");  
+          cell.setCellStyle(style);  
+          cell = row.createCell((short) 1);  
+          cell.setCellValue(enterprise.getLastAssets1());  
+          cell.setCellStyle(style);  
+          cell = row.createCell((short) 2);  
+          cell.setCellValue(enterprise.getLastNetAssets1());  
+          cell.setCellStyle(style);  
+          cell = row.createCell((short) 3);  
+          cell.setCellValue(enterprise.getLastSale1());  
+          cell.setCellStyle(style);  
+          cell = row.createCell((short) 4);  
+          cell.setCellValue(enterprise.getLastProfit1());  
+          cell.setCellStyle(style);  
+          
+          HSSFSheet sheet2 = wb.createSheet("第二页");  
+          
+          sheet2.addMergedRegion(new Region((short) 0 , (short) 0 , (short) 0 , (short) 4));     //知识产权
+          sheet2.addMergedRegion(new Region((short) 1 , (short) 1 , (short) 1 , (short) 4));     //发明专利
+          sheet2.addMergedRegion(new Region((short) 2 , (short) 1 , (short) 2 , (short) 4));     //新型专利
+          sheet2.addMergedRegion(new Region((short) 3 , (short) 1 , (short) 3 , (short) 4));     //外观专利
+          sheet2.addMergedRegion(new Region((short) 4 , (short) 0 , (short) 5 , (short) 4));     //融资信息
+          sheet2.addMergedRegion(new Region((short) 6 , (short) 3 , (short) 6 , (short) 4));     
+          sheet2.addMergedRegion(new Region((short) 7 , (short) 3 , (short) 7 , (short) 4));     
+          sheet2.addMergedRegion(new Region((short) 8 , (short) 3 , (short) 8 , (short) 4));     
+          sheet2.addMergedRegion(new Region((short) 9 , (short) 3 , (short) 9 , (short) 4));     
+          sheet2.addMergedRegion(new Region((short) 10 , (short) 1 , (short) 10 , (short) 4));     //项目可供资料
+          sheet2.addMergedRegion(new Region((short) 11 , (short) 1 , (short) 14 , (short) 4));     //盖章
+          
+          
+//          row= sheet.createRow((int) 31);
+//          cell = row.createCell((short) 0);  
+//          cell.setCellValue("发明专利");  
+//          cell.setCellStyle(style);
+//          row.createCell((short) 1).setCellValue(enterprise.getInventiPatent()); 
+//          
+//          row= sheet.createRow((int) 32);
+//          cell = row.createCell((short) 0);  
+//          cell.setCellValue("实用新型专利");  
+//          cell.setCellStyle(style);
+//          row.createCell((short) 1).setCellValue(enterprise.getNewPatent()); 
+//          
+//          row= sheet.createRow((int) 33);
+//          cell = row.createCell((short) 0);  
+//          cell.setCellValue("外观设计专利");  
+//          cell.setCellStyle(style);
+//          row.createCell((short) 1).setCellValue(enterprise.getDesignPatent()); 
+//          
+//          row= sheet.createRow((int) 34);
+//          cell = row.createCell((short) 0);  
+//          cell.setCellValue("期望股权融资时间");  
+//          cell.setCellStyle(style);
+//          row.createCell((short) 1).setCellValue(enterprise.getExpectEquityDate()); 
+//          
+//          row= sheet.createRow((int) 35);
+//          cell = row.createCell((short) 0);  
+//          cell.setCellValue("期望股权融资金额");  
+//          cell.setCellStyle(style);
+//          row.createCell((short) 1).setCellValue(enterprise.getExpectEquityAmount()+"万元"); 
+//          
+//          row= sheet.createRow((int) 36);
+//          cell = row.createCell((short) 0);  
+//          cell.setCellValue("融资用途");  
+//          cell.setCellStyle(style);
+//          row.createCell((short) 1).setCellValue(enterprise.getExpectEquityUse()); 
+//          
+//          row= sheet.createRow((int) 37);
+//          cell = row.createCell((short) 0);  
+//          cell.setCellValue("期望债权融资时间");  
+//          cell.setCellStyle(style);
+//          row.createCell((short) 1).setCellValue(enterprise.getExpectBondDate()); 
+//          
+//          row= sheet.createRow((int) 38);
+//          cell = row.createCell((short) 0);  
+//          cell.setCellValue("期望债权融资金额");  
+//          cell.setCellStyle(style);
+//          row.createCell((short) 1).setCellValue(enterprise.getExpectEquityAmount()+"万元"); 
+//          
+//          row= sheet.createRow((int) 39);
+//          cell = row.createCell((short) 0);  
+//          cell.setCellValue("融资用途");  
+//          cell.setCellStyle(style);
+//          row.createCell((short) 1).setCellValue(enterprise.getExpectBondUse()); 
+//          
+//          row= sheet.createRow((int) 40);
+//          cell = row.createCell((short) 0);  
+//          cell.setCellValue("是否愿意披露信息");  
+//          cell.setCellStyle(style);
+//          if (enterprise.getIsShow())
+//          {
+//         	 row.createCell((short) 1).setCellValue("是"); 
+//          }
+//          else
+//          {
+//         	 row.createCell((short) 1).setCellValue("否"); 
+//          }
+//    		
 			if (null != exportUrl) {
 					download(wb, username, resp);
 			}  
