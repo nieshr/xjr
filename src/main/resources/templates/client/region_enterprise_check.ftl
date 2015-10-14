@@ -47,8 +47,16 @@
             <input style="cursor:pointer;" type="button" value="审核通过 " onclick="location.href='/region/enterprise/pass/${enterprise.id?c!''}'"/>            
             <#elseif enterprise.statusId == 1>
             <span>审核状态：已通过</span>
-            <input style="cursor:pointer;" type="button" value="取消审核 " onclick="location.href='/region/enterprise/recall/${enterprise.id?c!''}'"/>
+            <input style="cursor:pointer;" type="button" value="取消审核 " onclick="location.href='/region/enterprise/cancel/${enterprise.id?c!''}'"/>
+            <#elseif enterprise.statusId == 2>
+            <span>审核状态： 用户申请了重新审核</span>
+            <input style="cursor:pointer;" type="button" value="重新审核 " onclick="location.href='/region/enterprise/recall/${enterprise.id?c!''}'"/> 
             </#if>
+        </div>
+        <div class="change_inform">
+        	<span>
+        		<a style="font-size:12px;  text-decoration: underline;" href="/download/data?name=${enterprise.fileUrl!''}">【申请表附件下载】</a>
+        	</span>
         </div>
     </div>  
  

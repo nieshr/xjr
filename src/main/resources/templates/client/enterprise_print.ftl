@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
-<title>填写资料</title>
+<title>导出表格</title>
 <link rel="shortcut icon" href="/client/images/icon.ico" />
 <link href="/client/css/base.css" rel="stylesheet" type="text/css" />
 <link href="/client/css/team.css" rel="stylesheet" type="text/css" />
@@ -23,8 +23,8 @@
 <!--left-->
 	<div class="leftbar">
 		<dl class="nav">
-            <dd><a href="#">基本资料</a></dd>
-            <dd><a href="#">活动列表</a></dd>
+            <dd><a href="/enterprise/info">基本资料</a></dd>
+            <dd><a href="/enterprise/activity/list">活动列表</a></dd>
             <dd><a href="#">申请展示</a></dd>
 
 		</dl>
@@ -42,18 +42,21 @@
                 <p>&gt;</p>
                 <a href="#">填写资料</a>
             </dd>
-            <dt class="crumb_back"><a  href="#">返回上一页</a></dt>
+            <dt class="crumb_back"><a  href="javascript:history.go(-1);">返回上一页</a></dt>
         </dl>
         <dl class="team_apply">
-        	<dt><a class="a1" href="#">第一步<br/>资料填写</a></dt>
+        	<dt><a class="a1" href="/enterprise/info">第一步<br/>资料填写</a></dt>
         	<dd></dd>
-        	<dt><a class="a2" href="#">第二步<br />生成打印</a></dt>
+        	<dt><a class="a2" href="/enterprise/print">第二步<br />生成打印</a></dt>
         	<dd></dd>
-        	<dt><a class="a3" href="#">第三步<br />上传报名表</a></dt>
+        	<dt><a class="a3" href="/enterprise/upload">第三步<br />上传报名表</a></dt>
         </dl>
         <dl class="apply_step2">
         	<dt>*点击按钮，生成当前填写的报名表进行打印盖章</dt>
-        	<dd><input type="button" value="生成表格并下载打印" onclick="location.href='/enterprise/export/enter'"/></dd>
+        	<dd><input style="display:block;"  type="button" value="生成表格并下载打印" onclick="location.href='/enterprise/export/enter'"/></dd>
+        </dl>
+        <dl class="apply_step2" style="margin-top:20px ; ">
+        	<dd><input style="background:#529c15;" type="button" value="上传报名表" onclick="location.href='/enterprise/upload'"/></dd>
         </dl>
     </div>  
     

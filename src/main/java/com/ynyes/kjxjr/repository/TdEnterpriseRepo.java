@@ -22,25 +22,27 @@ public interface TdEnterpriseRepo extends
 		JpaSpecificationExecutor<TdEnterprise> 
 { 
     Page<TdEnterprise> findByTitleContainingOrderBySortIdAsc(String keywords, Pageable page);
+    Page<TdEnterprise> findByStatusIdAndTitleContainingOrderBySortIdAsc( Long statusId , String keywords, Pageable page);
+    Page<TdEnterprise> findByStatusIdOrderBySortIdAsc( Long statusId ,Pageable page);
     Page<TdEnterprise> findByAreaOrderByNumberAsc(String area, Pageable page);
     
     List<TdEnterprise> findByIsEnableTrue();
     
-    Page<TdEnterprise> findByAreaAndTitleContainingOrderBySortIdAsc(String area,String keywords, Pageable page);
-    Page<TdEnterprise> findByTypeAndTitleContainingOrderBySortIdAsc(String type,String keywords, Pageable page);
-    Page<TdEnterprise> findByFormTypeAndTitleContainingOrderBySortIdAsc(Long formType,String keywords, Pageable page);
-    Page<TdEnterprise> findByAreaAndTypeAndTitleContainingOrderBySortIdAsc(String Area,String type,String keywords, Pageable page);
-    Page<TdEnterprise> findByAreaAndFormTypeAndTitleContainingOrderBySortIdAsc(String Area,Long formType,String keywords, Pageable page);
-    Page<TdEnterprise> findByTypeAndFormTypeAndTitleContainingOrderBySortIdAsc(String type,Long formType,String keywords, Pageable page);
-    Page<TdEnterprise> findByAreaAndTypeAndFormTypeAndTitleContainingOrderBySortIdAsc(String Area,String type,Long formType,String keywords, Pageable page);
+    Page<TdEnterprise> findByAreaAndStatusIdAndTitleContainingOrderBySortIdAsc(String area, Long statusId , String keywords, Pageable page);
+    Page<TdEnterprise> findByTypeAndStatusIdAndTitleContainingOrderBySortIdAsc(String type, Long statusId , String keywords, Pageable page);
+    Page<TdEnterprise> findByFormTypeAndStatusIdAndTitleContainingOrderBySortIdAsc(Long formType, Long statusId , String keywords, Pageable page);
+    Page<TdEnterprise> findByAreaAndTypeAndStatusIdAndTitleContainingOrderBySortIdAsc(String Area,String type, Long statusId , String keywords, Pageable page);
+    Page<TdEnterprise> findByAreaAndFormTypeAndStatusIdAndTitleContainingOrderBySortIdAsc(String Area,Long formType, Long statusId , String keywords, Pageable page);
+    Page<TdEnterprise> findByTypeAndFormTypeAndStatusIdAndTitleContainingOrderBySortIdAsc(String type,Long formType, Long statusId , String keywords, Pageable page);
+    Page<TdEnterprise> findByAreaAndTypeAndFormTypeAndStatusIdAndTitleContainingOrderBySortIdAsc(String Area,String type,Long formType, Long statusId , String keywords, Pageable page);
     
-    Page<TdEnterprise> findByAreaOrderBySortIdAsc(String area, Pageable page);
-    Page<TdEnterprise> findByTypeOrderBySortIdAsc(String type,Pageable page);
-    Page<TdEnterprise> findByFormTypeOrderBySortIdAsc(Long formType, Pageable page);
-    Page<TdEnterprise> findByAreaAndTypeOrderBySortIdAsc(String Area,String type,Pageable page);
-    Page<TdEnterprise> findByAreaAndFormTypeOrderBySortIdAsc(String Area,Long formType, Pageable page);
-    Page<TdEnterprise> findByTypeAndFormTypeOrderBySortIdAsc(String type,Long formType, Pageable page);
-    Page<TdEnterprise> findByAreaAndTypeAndFormTypeOrderBySortIdAsc(String Area,String type,Long formType,Pageable page);
+    Page<TdEnterprise> findByAreaAndStatusIdOrderBySortIdAsc(String area, Long statusId , Pageable page);
+    Page<TdEnterprise> findByTypeAndStatusIdOrderBySortIdAsc(String type,Long statusId , Pageable page);
+    Page<TdEnterprise> findByFormTypeAndStatusIdOrderBySortIdAsc(Long formType, Long statusId , Pageable page);
+    Page<TdEnterprise> findByAreaAndTypeAndStatusIdOrderBySortIdAsc(String Area,String type,Long statusId , Pageable page);
+    Page<TdEnterprise> findByAreaAndFormTypeAndStatusIdOrderBySortIdAsc(String Area,Long formType,Long statusId ,  Pageable page);
+    Page<TdEnterprise> findByTypeAndFormTypeAndStatusIdOrderBySortIdAsc(String type,Long formType, Long statusId , Pageable page);
+    Page<TdEnterprise> findByAreaAndTypeAndFormTypeAndStatusIdOrderBySortIdAsc(String Area,String type,Long formType,Long statusId , Pageable page);
     
     
     

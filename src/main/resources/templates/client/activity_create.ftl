@@ -95,6 +95,17 @@ $(function(){
          });
     });
 });
+
+
+function done()
+{
+	alert("上传成功！");
+	location.reload();
+}
+<#if done?? &&done == 1>
+window.onload=done;
+</#if>
+
 </script>
 <style>
 .Validform_wrong {  background-position: 20px center;}
@@ -117,12 +128,17 @@ $(function(){
 	            <dd><a href="/region/activity/list">活动列表</a></dd>
 	            <dd><a href="">档案跟踪</a></dd>
 	        </dl>
+	   <#elseif mark?? && mark == "enterprise">
+			<dl class="nav">
+	            <dd><a href="/enterprise/check">基本资料</a></dd>
+	            <dd><a href="#">活动列表</a></dd>
+	            <dd><a href="#">申请展示</a></dd>
+			</dl>	        
 	   <#else>
-		<dl class="nav">
-            <dd><a href="/activity/create">创建活动</a></dd>
-            <dd><a href="/activity/list">活动列表</a></dd>
-
-		</dl>
+			<dl class="nav">
+	            <dd><a href="/activity/create">创建活动</a></dd>
+	            <dd><a href="/activity/list">活动列表</a></dd>
+			</dl>
 		</#if>
 	</div>
 <!--right-->
@@ -192,27 +208,6 @@ $(function(){
     			    <span>活动结束时刻：</span>
                     <input <#if pagetype??&& pagetype == "check">disabled=""</#if> name="eventEnd" id="eventEnd" type="text" value="<#if activity??>${activity.eventEnd!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="填写正确格式" sucmsg=" ">
     			</div>
-    			<div><span>添加文件：</span><input type="file" value="" /></div>
-    			<div>
-    				<span style="margin-top: 10px;">相关下载：</span>
-    				<ul class="active_add_file">
-    					<li>
-    						<img src="images/active_file.png" />
-    						<p class="p01">1.文件sdfsdfsdfsdfsdfsdfsdfsdfdfdsf名字</p>
-    						<a href="#">下载</a>
-    					</li>
-    					<li>
-    						<img src="images/active_file.png" />
-    						<p class="p01">1.文件sdfsdfsdfsdfsdfsdfsdfsdfdfdsf名字</p>
-    						<a href="#">下载</a>
-    					</li>
-    					<li>
-    						<img src="images/active_file.png" />
-    						<p class="p01">1.文件sdfsdfsdfsdfsdfsdfsdfsdfdfdsf名字</p>
-    						<a href="#">下载</a>
-    					</li>
-    				</ul>
-    			</div>
     			<div>
     				<span style="margin-top: 10px;">项目列表：</span>
     				<ul class="active_project_list">
@@ -255,6 +250,32 @@ $(function(){
      </#if>
     </dl>
     </form>
+     <h2 style="margin:0 0 20px 20px;">附件：</h2>
+    <dl class="active_content">
+    	<dd>
+		<form id="upload" enctype="multipart/form-data" action="/client/activity/upload" method="post">
+		<input type="hidden" id="id" name="id" value="${activity.id?c!''}"></input>
+		<div>
+			<span>添加文件：</span>
+			<input name="Filedata" type="file" id="file" value="" />
+			<input  style="margin-left:20px;" class="area_save_btn" type="submit" value="上传" />
+		</div>
+		</form>
+		<div>
+			<span style="margin-top: 10px;">相关下载：</span>
+			<ul class="active_add_file">
+			<#if activity??>
+				<li>
+					<img src="/client/images/active_file.png" />
+					<p class="p01">${activity.fileUrl!''}</p>
+					<a href="/download/data?name=${activity.fileUrl!''}">下载</a>
+				</li>
+			</#if>	
+			</ul>
+		</div>
+		</dl>
+		
+		
     </div>
 </div><!--content_end-->
 </div><!--main-->

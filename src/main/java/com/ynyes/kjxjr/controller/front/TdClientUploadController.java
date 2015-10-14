@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,7 +20,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ynyes.kjxjr.entity.TdActivity;
+import com.ynyes.kjxjr.entity.TdEnterprise;
 import com.ynyes.kjxjr.service.TdActivityService;
+import com.ynyes.kjxjr.service.TdEnterpriseService;
 import com.ynyes.kjxjr.util.SiteMagConstant;
 
 @Controller
@@ -30,14 +33,19 @@ public class TdClientUploadController {
 	
 	@Autowired
 	TdActivityService tdActivityService;
+	@Autowired
+	TdEnterpriseService tdEnterpriseService;
 	
 	@RequestMapping(value = "/recommend/upload", method = RequestMethod.POST)
-    @ResponseBody
-    public Map<String, Object> upload(String action,Long activityId,
-            @RequestParam MultipartFile Filedata, HttpServletRequest req) {
-        Map<String, Object> res = new HashMap<String, Object>();
-        res.put("status", 0);
-
+    public String upload(String action,Long activityId,
+            @RequestParam MultipartFile Filedata, ModelMap map, HttpServletRequest req) {
+		
+        String username = (String) req.getSession().getAttribute("regionUsername");
+        
+        if (null == username) {
+            return "redirect:/login";
+        }
+        
         String name = Filedata.getOriginalFilename();
 //        String contentType = Filedata.getContentType();
 
@@ -59,22 +67,110 @@ public class TdClientUploadController {
             stream.write(bytes);
             stream.close();
             TdActivity tdActivity = tdActivityService.findOne(activityId);
-            tdActivity.setFileUrl("/images/" + fileName);
+            tdActivity.setFileUrl(fileName);
             tdActivityService.save(tdActivity);
-            res.put("status", 1);
-            res.put("msg", "上传文件成功！");
-            res.put("path", fileName);
-            res.put("thumb", "/images/" + fileName);
-            res.put("name", name);
-            res.put("size", Filedata.getSize());
-            res.put("ext", ext.substring(1));
+      
 
         } catch (Exception e) {
-            res.put("status", 0);
-            res.put("msg", "上传文件失败！");
+        	e.printStackTrace();
         }
+        
+        Long done = 1L;
+        return "redirect:/region/recommendEnterprise?id="+activityId
+        		+"&isDone="+done;
 
-        return res;
+    }
+	
+	@RequestMapping(value = "/enterprise/upload", method = RequestMethod.POST)
+    public String enterUpload(String action,Long id,
+            @RequestParam MultipartFile Filedata, ModelMap map, HttpServletRequest req) {
+		
+        String username = (String) req.getSession().getAttribute("enterpriseUsername");
+        
+        if (null == username) {
+            return "redirect:/login";
+        }
+        
+        String name = Filedata.getOriginalFilename();
+//        String contentType = Filedata.getContentType();
+
+        String ext = name.substring(name.lastIndexOf("."));
+
+        try {
+            byte[] bytes = Filedata.getBytes();
+
+            Date dt = new Date(System.currentTimeMillis());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+            String fileName = sdf.format(dt) + ext;
+
+            String uri = ImageRoot + "/" + fileName;
+
+            File file = new File(uri);
+
+            BufferedOutputStream stream = new BufferedOutputStream(
+                    new FileOutputStream(file));
+            stream.write(bytes);
+            stream.close();
+            
+            TdEnterprise enterprise = tdEnterpriseService.findOne(id);
+            String fileUrl = enterprise.getFileUrl();
+            		
+            enterprise.setFileUrl(fileName);
+            tdEnterpriseService.save(enterprise);
+      
+
+        } catch (Exception e) {
+        	e.printStackTrace();
+        }
+        
+        Long done = 1L;
+        return "redirect:/enterprise/upload?done="+done
+        		+"&id="+id;
+
+    }
+	
+	@RequestMapping(value = "/activity/upload", method = RequestMethod.POST)
+    public String activytyUpload(String action,Long id,
+            @RequestParam MultipartFile Filedata, ModelMap map, HttpServletRequest req) {
+		
+        String username = (String) req.getSession().getAttribute("activityUsername");
+        
+        if (null == username) {
+            return "redirect:/login";
+        }
+        
+        String name = Filedata.getOriginalFilename();
+//        String contentType = Filedata.getContentType();
+
+        String ext = name.substring(name.lastIndexOf("."));
+
+        try {
+            byte[] bytes = Filedata.getBytes();
+
+            Date dt = new Date(System.currentTimeMillis());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+            String fileName = sdf.format(dt) + ext;
+
+            String uri = ImageRoot + "/" + fileName;
+
+            File file = new File(uri);
+
+            BufferedOutputStream stream = new BufferedOutputStream(
+                    new FileOutputStream(file));
+            stream.write(bytes);
+            stream.close();
+            TdActivity activity = tdActivityService.findOne(id);
+            activity.setFileUrl(fileName);
+            tdActivityService.save(activity);
+      
+
+        } catch (Exception e) {
+        	e.printStackTrace();
+        }
+        
+        Long done = 1L;
+        return "redirect:/activity/create?done="+done
+        		+"&id="+id;
 
     }
 }

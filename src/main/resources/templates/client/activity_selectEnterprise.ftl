@@ -30,7 +30,8 @@
 <!--left-->
 	<div class="leftbar">
 		<dl class="nav">
-			<dd><a href="#">创建活动</a></dd>
+            <dd><a href="/activity/create">创建活动</a></dd>
+            <dd><a href="/activity/list">活动列表</a></dd>
 		</dl>
 	</div>
 <!--right-->
@@ -45,7 +46,7 @@
 				<p>&gt;</p>
                 <a href="#">预选企业/团队</a>
             </dd>
-            <dt class="crumb_back"><a  href="#">返回上一页</a></dt>
+            <dt class="crumb_back"><a  href="javascript:history.go(-1);">返回上一页</a></dt>
         </dl>
         <div class="area_choice">
         	<form action="/activity/selectEnterprise" >

@@ -34,32 +34,7 @@ public class TdDataLoadController {
 	private TdNavigationMenuService tdNavigationMenuService;
 	
 	String filepath = SiteMagConstant.imagePath;
-	@RequestMapping("/download")
-	public String  down(HttpServletRequest req,ModelMap map,Integer page)
-	{
-		tdCommonService.setHeader(map, req);
-		
-		Long mid = 12L;
-		TdNavigationMenu menu = tdNavigationMenuService.findOne(mid);
-	    
-	    map.addAttribute("menu_name", "资料下载");
-	    map.addAttribute("menu_id", menu.getId()); //菜单id zhangji
-	    map.addAttribute("menu_sub_name", "Download");//英文名称 zhangji
-	    map.addAttribute("message", "下载");
-		
-		
-		if(page != null)
-		{
-			map.addAttribute("load_data_page",tdArticleService.findByMenuId(83L, page, SiteMagConstant.pageSize));
-			return "/client/download_content";
-		}
-		else
-		{
-			map.addAttribute("load_data_page",tdArticleService.findByMenuId(83L, 0, SiteMagConstant.pageSize));
-		}
-		
-		return "/client/download";
-	}
+
 	
 	@RequestMapping(value="/download/data", method = RequestMethod.GET)
     @ResponseBody
@@ -89,6 +64,10 @@ public class TdDataLoadController {
                     os.close();
                 }
             }
+        }
+        else 
+        {
+        	return;
         }
     }
 }

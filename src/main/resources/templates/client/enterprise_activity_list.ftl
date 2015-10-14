@@ -1,11 +1,16 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-	<title>活动列表</title>
-	<link rel="shortcut icon" href="images/icon.ico" />
-	<link href="/client/css/base.css" rel="stylesheet" type="text/css" />
-	<link href="/client/css/list_base.css" rel="stylesheet" type="text/css" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<title>导出表格</title>
+<link rel="shortcut icon" href="/client/images/icon.ico" />
+<link href="/client/css/base.css" rel="stylesheet" type="text/css" />
+<link href="/client/css/team.css" rel="stylesheet" type="text/css" />
+
+<script src="/client/js/jquery-1.9.1.min.js"></script>
+<script src="/client/js/main.js"></script>
+<script type="text/javascript" src="/client/js/Validform_v5.3.2_min.js"></script>
 		<style type="text/css">
 		.page{ width: 600px; float: right; margin-top: 30px;}
 		.page *{ float: left;}
@@ -15,19 +20,6 @@
 		.page .page_last{width: 40px;}
 		.page p{  margin-left: 10px;}
 	</style>
-
-<script src="/client/js/jquery-1.9.1.min.js"></script>
-<script src="/client/js/main.js"></script>
-<script>
-function unfinish()
-{
-	alert("有未完成创建的活动！");
-}
-<#if alert?? &&alert == 1>
-window.onload=unfinish;
-</#if>
-</script>
-</head>
 <body>
 <!--main-->
 <div class="main">
@@ -39,9 +31,10 @@ window.onload=unfinish;
 <!--left-->
 	<div class="leftbar">
 		<dl class="nav">
-            <dd><a href="/activity/create">创建活动</a></dd>
-            <dd><a href="/activity/list">活动列表</a></dd>
-            
+            <dd><a href="/enterprise/check">基本资料</a></dd>
+            <dd><a href="/enterprise/activity/list">活动列表</a></dd>
+            <dd><a href="#">申请展示</a></dd>
+
 		</dl>
 	</div>
 <!--right-->
@@ -51,54 +44,33 @@ window.onload=unfinish;
         	<dt><a href="#"></a></dt>
             <dd>
             	<p>当前所在位置:</p>
+                <a href="#">企业/团队</a>
+                <p>&gt;</p>
                 <a href="#">活动列表</a>
+
             </dd>
+            <dt class="crumb_back"><a  href="javascript:history.go(-1);">返回上一页</a></dt>
         </dl>
-       <#if unfinish??>
-	       <div class="list_base2" style="padding-top:0;">
-				<table class="new_list">
-		        	<tr class="list_title">
-		        		<th width="30%">未完成创建活动</th>
-		        		<th width="20%">地区</th>
-		        		<th width="20%">活动类型</th>
-		        		<th width="30%">操作</th>
-		        	</tr>
-		        		<td>${unfinish.title!''}</td>
-		        		<td style="color:#0ab2cb;">${unfinish.address!''}</td>
-		        		<td style="color:#e67817;">${unfinish.activityType!''}</td>
-		        		<td><a href="/activity/edit?id=${unfinish.id?c!''}">管理</a>丨<a href="/activity/check?id=${unfinish.id?c!''}">查看</a>丨<a  href="/activity/delete?id=${unfinish.id?c!''}">删除</a></td>
-			        </tr>
-		        </table>
-	        </div>
-	    </#if>    
-        
-        <div class="list_base2" style="padding-top:0;">
-			<table class="new_list">
+        	 <div class="list_base2" style="padding-top:0;">
+      			<table class="new_list">
 	        	<tr class="list_title">
-	        		<th width="30%">活动</th>
-	        		<th width="20%">地区</th>
 	        		<th width="20%">活动类型</th>
+	        		<th width="30%">活动名称</th>
+	        		<th width="20%">日期</th>
 	        		<th width="30%">操作</th>
 	        	</tr>
 	        <#if activity_page??>
 	        	<#list activity_page.content as item>
 		        	<tr>
-		        		<#--
-		        		<td>
-			        		<input style="width:15px;height:15px;float:left; margin:0 0 0 10px ;" id="listChkId" type="checkbox" name="listChkId" value="${item_index}"/>
-			        		<input type="hidden" name="listId" id="listId" value="${item.id}">
-		        		</td>
-		        		-->
-		        		<td>${item.title!''}</td>
-		        		<td style="color:#0ab2cb;">${item.address!''}</td>
-		        		<td style="color:#e67817;">${item.activityType!''}</td>
-		        		<td><a href="/activity/edit?id=${item.id?c!''}">管理</a>丨<a href="/activity/check?id=${item.id?c!''}">查看</a>丨<a  href="/activity/delete?id=${item.id?c!''}">删除</a></td>
+		        		<td>${item.activityType!''}</td>
+		        		<td style="color:#0ab2cb;">${item.activityTitle!''}</td>
+		        		<td style="color:#e67817;">${item.date?string("yyyy-MM-dd")!''}</td>
+		        		<td><a href="/enterprise/activity/check?id=${item.activityId?c!''}">详情查看</a>丨<a href="/activity/check?id=${item.id?c!''}">下载模板</a>丨<a  href="/activity/delete?id=${item.id?c!''}">上传</a></td>
 		        	</tr>
 	        	</#list>
 	        </#if>	   
 	        </table>
-        </div>
-        
+    
        <div class="page">
 		<#if activity_page??>
 		<#assign PAGE_DATA = activity_page>
@@ -138,9 +110,7 @@ window.onload=unfinish;
 		  	<p>共${PAGE_DATA.totalPages!'1'}页  ${PAGE_DATA.totalElements!'1'}条</p>
 		  	</#if>
 		  </div>
-		  
-		  
-    </div> 
+		</div>      
     </div>
 </div><!--content_end-->
 </div><!--main-->

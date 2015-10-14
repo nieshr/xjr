@@ -89,6 +89,7 @@ public class TdActivityEnterpriseService {
     {
         return (List<TdActivityEnterprise>) repository.findAll(ids);
     }
+    
     //创建活动，已选择列表
     public List<TdActivityEnterprise> findByActivityId(Long activityId)
     {
@@ -112,6 +113,22 @@ public class TdActivityEnterpriseService {
         PageRequest pageRequest = new PageRequest(page, size, new Sort(Direction.DESC, "id"));
         
         return repository.findAll(pageRequest);
+    }
+    
+    //企业查找自己被推荐或被预选的活动
+    public Page<TdActivityEnterprise> findByEnterpriseIdAndStatusIdOrderByIdDesc(Long activityId , Long statusId , int page, int size)
+    {
+    	 PageRequest pageRequest = new PageRequest(page, size, new Sort(Direction.DESC, "id"));
+    	 
+    	 return repository.findByEnterpriseIdAndStatusIdOrderByIdDesc(activityId , statusId , pageRequest);
+    }
+    
+    //企业查找自己所有相关的活动
+    public Page<TdActivityEnterprise> findByEnterpriseIdOrderByIdDesc(Long activityId , int page, int size)
+    {
+    	 PageRequest pageRequest = new PageRequest(page, size, new Sort(Direction.DESC, "id"));
+    	
+        return repository.findByEnterpriseIdOrderByIdDesc(activityId , pageRequest);
     }
     
     //区县管理，项目预选搜索
