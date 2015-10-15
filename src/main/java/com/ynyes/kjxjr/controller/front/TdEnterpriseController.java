@@ -607,6 +607,8 @@ public class TdEnterpriseController {
           cell = row.createCell((short) 1);
           cell.setCellValue(enterprise.getEmail());     
           cell.setCellStyle(style);  
+          cell = row.createCell((short) 2);
+          cell.setCellStyle(style);  
           cell = row.createCell((short) 3);
           cell.setCellValue("联系人");
           cell.setCellStyle(style);  
