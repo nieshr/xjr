@@ -8,6 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 <title>科技小巨人-首页</title>
 <!--css-->
+<link rel="shortcut icon" href="/images/icon.ico" />
 <link href="/client/css/swiper.min.css" rel="stylesheet" type="text/css" >
 <link href="/client/css/l_base.css" rel="stylesheet" type="text/css" />
 <link href="/client/css/l_main.css" rel="stylesheet" type="text/css" />
@@ -28,8 +29,8 @@
                   <a href="#"><li>专项行动</li></a>
                   <a href="#"><li>培育活动</li></a>
                   <a href="/info/index"><li>新闻动态</li></a>
-                  <a href="#"><li>企业项目</li></a>
-                  <a href="#"><li>专家资源</li></a>
+                  <a href="/info/projectshow"><li>企业项目</li></a>
+                  <a href="/info/resource"><li>专家资源</li></a>
                   <a href="#"><li>合作机构</li></a>
                   <a href="/info/contact"><li>联系方式</li></a>
                 </ul>

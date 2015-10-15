@@ -97,8 +97,8 @@ $(function () {
                 <select name="roleId" datatype="*0-100" sucmsg=" ">
                      <option value="" <#if !diy_site??>selected="selected"</#if>>请选择...</option>
                      <option value="2" <#if diy_site?? && diy_site.roleId?? && diy_site.roleId==2>selected="selected"</#if>>区县管理</option> 
-                     <option value="3" <#if diy_site?? && diy_site.roleId?? && diy_site.roleId==3>selected="selected"</#if>>活动</option>
-                     <option value="4" <#if diy_site?? && diy_site.roleId?? && diy_site.roleId==4>selected="selected"</#if>>专家</option>                   
+                     <option value="3" <#if diy_site?? && diy_site.roleId?? && diy_site.roleId==3>selected="selected"</#if>>专家</option>
+                     <option value="4" <#if diy_site?? && diy_site.roleId?? && diy_site.roleId==4>selected="selected"</#if>>活动管理员</option>                   
                 </select>
            </div>
        </dd>
@@ -136,6 +136,13 @@ $(function () {
     <dd>
         <input name="email" type="text" value="<#if diy_site??>${diy_site.email!""}</#if>" class="input normal" datatype="*" sucmsg=" "> 
         <span class="Validform_checktip">*用于接收通知邮件</span>
+    </dd>
+  </dl>
+  
+    <dl>
+    <dt>负责人</dt>
+    <dd>
+        <input name="inCharge" type="text" value="<#if diy_site??>${diy_site.inCharge!""}</#if>" class="input normal" datatype="*" sucmsg=" "> 
     </dd>
   </dl>
   <#--><dl>
@@ -257,9 +264,9 @@ $(function () {
     <dd>
       <div class="rule-multi-radio multi-radio">
         <span id="rblStatus" style="display: none;">
-            <input type="radio" name="isEnable" value="1" <#if !diy_site?? || !diy_site.isEnable?? || diy_site?? && diy_site.isEnable?? && diy_site.isEnable>checked="checked"</#if>>
+            <input type="radio" name="statusId" value="1" <#if !diy_site?? || !diy_site.statusId?? || diy_site?? && diy_site.statusId?? && diy_site.statusId == 1>checked="checked"</#if>>
             <label>是</label>
-            <input type="radio" name="isEnable" value="0" <#if diy_site?? && diy_site.isEnable?? && !diy_site.isEnable>checked="checked"</#if>>
+            <input type="radio" name="statusId" value="0" <#if diy_site?? && diy_site.statusId?? && diy_site.statusId != 0>checked="checked"</#if>>
             <label>否</label>
         </span>
       </div>

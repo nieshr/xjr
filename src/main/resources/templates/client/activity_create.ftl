@@ -253,14 +253,17 @@ window.onload=done;
      <h2 style="margin:0 0 20px 20px;">附件：</h2>
     <dl class="active_content">
     	<dd>
+    	 <#if pagetype?? && pagetype == "check">
+    	 <#else>
 		<form id="upload" enctype="multipart/form-data" action="/client/activity/upload" method="post">
-		<input type="hidden" id="id" name="id" value="${activity.id?c!''}"></input>
+		<input type="hidden" id="id" name="id" <#if activity??>value="${activity.id?c}"</#if>></input>
 		<div>
 			<span>添加文件：</span>
 			<input name="Filedata" type="file" id="file" value="" />
 			<input  style="margin-left:20px;" class="area_save_btn" type="submit" value="上传" />
 		</div>
 		</form>
+		</#if>
 		<div>
 			<span style="margin-top: 10px;">相关下载：</span>
 			<ul class="active_add_file">

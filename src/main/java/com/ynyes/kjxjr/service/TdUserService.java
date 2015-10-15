@@ -106,7 +106,7 @@ public class TdUserService {
     
     public TdUser addNewUser(String username, String password, String mobile, String email, String carCode)
     {
-        if (null == username || null == password || username.isEmpty() || password.isEmpty())
+        if (null == username || null == password || username.isEmpty() || password.isEmpty()|| email.isEmpty())
         {
             return null;
         }

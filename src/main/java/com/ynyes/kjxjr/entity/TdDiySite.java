@@ -35,6 +35,10 @@ public class TdDiySite {
     @Column
     private String payType;
     
+    //活动管理员负责人
+    @Column
+    private String inCharge;
+    
     // 营业时间
     @Column
     private String openTimeSpan;
@@ -54,6 +58,10 @@ public class TdDiySite {
     // 是否启用
     @Column
     private Boolean isEnable;
+    
+    // 是否启用
+    @Column
+    private Long statusId;
     
     // 排序数字
     @Column
@@ -266,4 +274,22 @@ public class TdDiySite {
     public void setTotalCash(Double totalCash) {
         this.totalCash = totalCash;
     }
+
+	public String getInCharge() {
+		return inCharge;
+	}
+
+	public void setInCharge(String inCharge) {
+		this.inCharge = inCharge;
+	}
+
+	public Long getStatusId() {
+		return statusId;
+	}
+
+	public void setStatusId(Long statusId) {
+		this.statusId = statusId;
+	}
+    
+    
 }

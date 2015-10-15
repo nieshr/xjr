@@ -512,9 +512,9 @@ public class TdManagerOrderController {
         if (null != tdDiySite.getRoleId()) {
 			if (tdDiySite.getRoleId().equals(2L)) {
 				tdDiySite.setTitle("区县管理");
-			}else if (tdDiySite.getRoleId().equals(3L)) {
-				tdDiySite.setTitle("活动");
 			}else if (tdDiySite.getRoleId().equals(4L)) {
+				tdDiySite.setTitle("活动");
+			}else if (tdDiySite.getRoleId().equals(3L)) {
 				tdDiySite.setTitle("专家");
 			}
 		}

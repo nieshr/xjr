@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ynyes.kjxjr.entity.TdEnterprise;
 import com.ynyes.kjxjr.entity.TdExpert;
+import com.ynyes.kjxjr.entity.TdRegionAdmin;
 import com.ynyes.kjxjr.entity.TdUser;
 import com.ynyes.kjxjr.repository.TdExpertRepo;
 
@@ -110,33 +111,29 @@ public class TdExpertService {
         return repository.findByNameContainingOrderBySortIdAsc(keywords, pageRequest);
     }
     
-    /**
-     * 保存
-     * @param e
-     * @return
-     */
-    public TdExpert save(TdExpert e)
+    
+    public TdExpert addNewUser(String username, String password, String mobile, String email ,String inCharge , Long statusId)
     {
-        if (null != e.getUsername())    
+        if (null == username || null == password || username.isEmpty() || password.isEmpty()|| email.isEmpty() || inCharge.isEmpty())
         {
-            TdUser user = tdUserService.findByUsername(e.getUsername());
-            
-            if (null == user )
-            {
-                user = tdUserService.addNewUser(e.getUsername(), e.getPassword(), e.getUsermobile(), null, null);
-                
-                user.setRoleId(3L); // 专家用户
-            }
-            // 修改加盟店密码也需要修改用户密码 @author: Sharon
-            else
-            {
-                user.setPassword(e.getPassword());
-            }
-            
-            tdUserService.save(user);
+            return null;
         }
         
-        return repository.save(e);
+        if (null != repository.findByUsername(username))
+        {
+            return null;
+        }
+        
+        TdExpert expert = new TdExpert();
+        
+        expert.setUsername(username);
+        expert.setPassword(password);
+        expert.setUsermobile(mobile);
+        expert.setEmail(email);
+        expert.setStatusId(statusId); // 正常
+        expert.setInCharge(inCharge);
+        
+        return expert;
     }
     
     public List<TdExpert> save(List<TdExpert> entities)
@@ -144,6 +141,11 @@ public class TdExpertService {
         return (List<TdExpert>) repository.save(entities);
     }
     
+    
+    public TdExpert save(TdExpert e)
+    {
+        return repository.save(e);
+    }
     /**
 	 * @author lc
 	 * @注释：

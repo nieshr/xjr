@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ynyes.kjxjr.entity.TdActivityAdmin;
 import com.ynyes.kjxjr.entity.TdEnterprise;
 import com.ynyes.kjxjr.entity.TdRegionAdmin;
 import com.ynyes.kjxjr.entity.TdUser;
@@ -94,38 +95,37 @@ public class TdRegionAdminService {
     }
     
     
-    /**
-     * 保存
-     * @param e
-     * @return
-     */
-    public TdRegionAdmin save(TdRegionAdmin e)
+    public TdRegionAdmin addNewUser(String username, String password, String mobile, String email ,String inCharge , Long statusId)
     {
-        if (null != e.getUsername())    
+        if (null == username || null == password || username.isEmpty() || password.isEmpty()|| email.isEmpty() || inCharge.isEmpty())
         {
-            TdUser user = tdUserService.findByUsername(e.getUsername());
-            
-            if (null == user )
-            {
-                user = tdUserService.addNewUser(e.getUsername(), e.getPassword(), e.getUsermobile(), null, null);
-                
-                user.setRoleId(2L); // 区县管理用户
-            }
-            // 修改加盟店密码也需要修改用户密码 @author: Sharon
-            else
-            {
-                user.setPassword(e.getPassword());
-            }
-            
-            tdUserService.save(user);
+            return null;
         }
         
-        return repository.save(e);
+        if (null != repository.findByUsername(username))
+        {
+            return null;
+        }
+        
+        TdRegionAdmin region = new TdRegionAdmin();
+        
+        region.setUsername(username);
+        region.setPassword(password);
+        region.setUsermobile(mobile);
+        region.setEmail(email);
+        region.setStatusId(statusId); 
+        region.setInCharge(inCharge);
+        
+        return region;
     }
-    
     public List<TdRegionAdmin> save(List<TdRegionAdmin> entities)
     {
         return (List<TdRegionAdmin>) repository.save(entities);
+    }
+    
+    public TdRegionAdmin save(TdRegionAdmin e)
+    {
+        return repository.save(e);
     }
     
     /**
