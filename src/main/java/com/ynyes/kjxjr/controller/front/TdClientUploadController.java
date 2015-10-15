@@ -160,6 +160,9 @@ public class TdClientUploadController {
             stream.write(bytes);
             stream.close();
             TdActivity activity = tdActivityService.findOne(id);
+            if(null == activity){
+            	activity = new TdActivity();
+            }
             activity.setFileUrl(fileName);
             tdActivityService.save(activity);
       

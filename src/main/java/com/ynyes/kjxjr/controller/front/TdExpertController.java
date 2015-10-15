@@ -69,7 +69,9 @@ public class TdExpertController {
 		List<TdActivity> activities_list = new ArrayList<>();
 		for (TdActivityExpert item : ae_list) {
 			TdActivity activity = tdActivityService.findOne(item.getActivityId());
-			activities_list.add(activity);
+			if (null != activity) {
+				activities_list.add(activity);
+			}
 		}
 		map.addAttribute("expert", expert);
 		map.addAttribute("activities", activities_list);
