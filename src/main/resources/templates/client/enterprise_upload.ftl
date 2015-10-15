@@ -57,6 +57,7 @@ window.onload=done;
         	<dd></dd>
         	<dt><a class="a3" href="/enterprise/upload">第三步<br />上传报名表</a></dt>
         </dl>
+        <div style="float:left;	">
         <form id="upload" enctype="multipart/form-data" action="/client/enterprise/upload" method="post">
         <dl class="apply_step2" >
             <input type="hidden" id="id" name="id" value="<#if id??>${id?c!''}</#if>"></input>
@@ -68,6 +69,7 @@ window.onload=done;
 				<dd><input  style="background:#529c15;"  class="area_save_btn" type="submit" value="上传报名表" /></dd>
 		</dl>		
         </form>
+        </div>
     </div>  
     </div>
 </div><!--content_end-->

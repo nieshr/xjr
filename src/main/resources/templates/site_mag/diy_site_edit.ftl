@@ -266,7 +266,7 @@ $(function () {
         <span id="rblStatus" style="display: none;">
             <input type="radio" name="statusId" value="1" <#if !diy_site?? || !diy_site.statusId?? || diy_site?? && diy_site.statusId?? && diy_site.statusId == 1>checked="checked"</#if>>
             <label>是</label>
-            <input type="radio" name="statusId" value="0" <#if diy_site?? && diy_site.statusId?? && !diy_site.statusId == 0>checked="checked"</#if>>
+            <input type="radio" name="statusId" value="0" <#if diy_site?? && diy_site.statusId?? && diy_site.statusId != 0>checked="checked"</#if>>
             <label>否</label>
         </span>
       </div>
