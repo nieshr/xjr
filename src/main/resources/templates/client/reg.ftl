@@ -136,13 +136,20 @@ $(document).ready(function(){
         </div>
         <div>
         	<i class="i5"></i>
-        	<input class="inpt5" type="text" name="smsCode" ajaxUrl="/reg/check/smsCode" datatype="*" value="验证码（30分钟有效）" onfocus="this.type='password';if(this.value=='验证码（30分钟有效）'){this.value='';}" onblur="if(this.value==''){this.type='text';this.value='验证码（30分钟有效）'}"/>
+        	<input class="inpt5" type="text" name="smsCode" ajaxUrl="/reg/check/smsCode" datatype="*" value="验证码（30分钟有效）" onfocus="this.type='text';if(this.value=='验证码（30分钟有效）'){this.value='';}" onblur="if(this.value==''){this.type='text';this.value='验证码（30分钟有效）'}"/>
             <input class="inpt5_1"id="smsCodeBtn" style="background-color:#e77917;" onclick="javascript:;" readOnly="true"  type="submit" value="发送验证码" />
-            <span class="span5"><b></b>重庆市科技小巨人企业培育专项行动网上平台验证码【科技小巨人】</span>
+            <span class="Validform_checktip Validform_wrong" style=""></span>
+            
+            <#--<span class="span5"><b></b><font style="float:left;">重庆市科技小巨人企业培育专项行动网上平台验证码【科技小巨人】</font></span>-->
         </div>
+        <div style="margin-top:-10px;margin-bottom:-20px;">
+          
+           <span class="span5"><b></b><font style="float:left;">重庆市科技小巨人企业培育专项行动网上平台验证码【科技小巨人】</font></span>
+        </div>
+        
         <div>
         	<i class="i6"></i>
-        	<input type="text" value="email" name="email" datatype="e" value="email" onfocus="this.type='password';if(this.value=='email'){this.value='';}" onblur="if(this.value==''){this.type='text';this.value='email'}"/>
+        	<input type="text" name="email" datatype="e" value="email" onfocus="this.type='text';if(this.value=='email'){this.value='';}" onblur="if(this.value==''){this.type='text';this.value='email'}"/>
             <!--
             <span><b></b>该用户名已被注册</span>
             -->

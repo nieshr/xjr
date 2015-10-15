@@ -40,6 +40,7 @@ function showPro(){
 	$(".pro").css("display","block");
 	$(".enter").css("display","none");
 }
+
 </script>
 </head>
 
@@ -64,7 +65,7 @@ function showPro(){
     <div class="right_content">
     <form action="/enterprise/info/submit" id="step1" method="post">
     <div class="right_box">
-    	<dl class="crumb">
+    	<dl class="crumb" style="z-index:1000;">
         	<dt><a href="#"></a></dt>
             <dd>
             	<p>当前所在位置:</p>
@@ -74,7 +75,7 @@ function showPro(){
                 <p>&gt;</p>
                 <a href="#">填写资料</a>
             </dd>
-            <dt class="crumb_back"><a  href="#">返回上一页</a></dt>
+            <dt class="crumb_back" onClick="history.go(-1);"><a>返回上一页</a></dt>
         </dl>
         <dl class="team_apply">
         	<dt><a class="a1" href="/enterprise/info">第一步<br/>资料填写</a></dt>
