@@ -125,8 +125,8 @@
                 </div>
                 <div>
                     <span>2012</span>
-                    <input type="text" value="${enterprise.lastAssetes3!''}"  disabled="" />
-                    <input type="text" value="${enterprise.lastNetAssetes3!''}"  disabled="" />
+                    <input type="text" value="${enterprise.lastAssets3!''}"  disabled="" />
+                    <input type="text" value="${enterprise.lastNetAssets3!''}"  disabled="" />
                     <input type="text" value="${enterprise.lastSale3!''}"  disabled="" />
                     <input type="text" value="${enterprise.lastProfit3!''}"  disabled="" />
                 </div>

@@ -91,9 +91,11 @@ public class TdEnterpriseController {
         TdEnterprise enterprise = tdEnterpriseService.findbyUsername(username);
         
         //行业所属是多选。。。。
-        String type[] = enterprise.getType().split(",");
-        
-        map.addAttribute("enterpriseType", type);
+        if (null != enterprise.getType())
+        {
+        	String type[] = enterprise.getType().split(",");
+        	map.addAttribute("enterpriseType", type);
+        }
         map.addAttribute("enterprise", enterprise);
         map.addAttribute("user", user);
 
@@ -111,7 +113,7 @@ public class TdEnterpriseController {
      */
     @RequestMapping(value = "/info/submit", method = RequestMethod.POST)
     @ResponseBody
-    public  Map<String, Object> enterpriseInfoSubmit(HttpServletRequest req,TdEnterprise tdEnterprise,
+    public  Map<String, Object> enterpriseInfoSubmit(HttpServletRequest req,Long id,TdEnterprise tdEnterprise,
     		ModelMap map) {
         Map<String, Object> res = new HashMap<String, Object>();
         res.put("code", 1);
@@ -132,14 +134,14 @@ public class TdEnterpriseController {
         }
         
         TdUser user = tdUserService.findByUsername(username);
-        Long id = tdEnterprise.getId();
+        TdEnterprise enterprise = tdEnterpriseService.findOne(id);
         String number = String.format("%04d", id);
         
-        tdEnterprise.setNumber(number);
-        tdEnterprise.setStatusId(0L);
-        tdEnterprise.setCreateTime(new Date());
-        tdEnterprise.setPassword(user.getPassword());
-       	tdEnterpriseService.save(tdEnterprise);
+        enterprise.setNumber(number);
+        enterprise.setStatusId(0L);
+        enterprise.setCreateTime(new Date());
+        enterprise.setPassword(user.getPassword());
+       	tdEnterpriseService.save(enterprise);
        
         res.put("code", 0);
         return res;
@@ -159,9 +161,11 @@ public class TdEnterpriseController {
         TdEnterprise enterprise = tdEnterpriseService.findbyUsername(username);
         
         //行业所属是多选。。。。
-        String type[] = enterprise.getType().split(",");
-        
-        map.addAttribute("enterpriseType", type);
+        if (null != enterprise.getType())
+        {
+        	String type[] = enterprise.getType().split(",");
+        	map.addAttribute("enterpriseType", type);
+        }
         
         map.addAttribute("enterprise", enterprise);
         map.addAttribute("user", user);
@@ -206,9 +210,11 @@ public class TdEnterpriseController {
         TdEnterprise enterprise = tdEnterpriseService.findbyUsername(username);
         
         //行业所属是多选。。。。
-        String type[] = enterprise.getType().split(",");
-        
-        map.addAttribute("enterpriseType", type);
+        if (null != enterprise.getType())
+        {
+        	String type[] = enterprise.getType().split(",");
+        	map.addAttribute("enterpriseType", type);
+        }
         map.addAttribute("enterprise", enterprise);
         map.addAttribute("user", user);
 
@@ -233,6 +239,11 @@ public class TdEnterpriseController {
         {
         	enterprise.setStatusId(2L);
         	tdEnterpriseService.save(enterprise);
+            if (null != enterprise.getType())
+            {
+            	String type[] = enterprise.getType().split(",");
+            	map.addAttribute("enterpriseType", type);
+            }
         }
         map.addAttribute("enterprise", enterprise);
         map.addAttribute("user", user);
