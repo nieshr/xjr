@@ -11,7 +11,10 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ynyes.kjxjr.entity.TdActivityAdmin;
 import com.ynyes.kjxjr.entity.TdDiySite;
+import com.ynyes.kjxjr.entity.TdExpert;
+import com.ynyes.kjxjr.entity.TdRegionAdmin;
 import com.ynyes.kjxjr.entity.TdUser;
 import com.ynyes.kjxjr.entity.TdUserComment;
 import com.ynyes.kjxjr.repository.TdDiySiteRepo;
@@ -35,6 +38,14 @@ public class TdDiySiteService {
     @Autowired
     TdUserService tdUserService;
     
+    @Autowired
+    TdRegionAdminService tdRegionAdminService;
+    
+    @Autowired
+    TdActivityAdminService tdActivityAdminService;
+    
+    @Autowired
+    TdExpertService tdExpertService;
     /**
      * 删除
      * 
@@ -139,9 +150,29 @@ public class TdDiySiteService {
             
             if (null == user )
             {
-                user = tdUserService.addNewUser(e.getUsername(), e.getPassword(), e.getMobile(), null, null);
+                user = tdUserService.addNewUser(e.getUsername(), e.getPassword(), e.getMobile(), e.getEmail(), null);
                 
                 user.setRoleId(e.getRoleId()); // 设置角色类型
+                
+                Long roleId = e.getRoleId();
+                if (roleId ==2)
+                {
+                	TdRegionAdmin region = tdRegionAdminService.addNewUser(e.getUsername(), e.getPassword(), e.getMobile(), e.getEmail(), e.getInCharge() , e.getStatusId());
+                	tdRegionAdminService.save(region);
+                }
+                
+                if (roleId ==3)
+                {
+                	TdExpert expert = tdExpertService.addNewUser(e.getUsername(), e.getPassword(), e.getMobile(), e.getEmail(), e.getInCharge()  , e.getStatusId());
+
+                    tdExpertService.save(expert);
+}
+
+                if (roleId == 4)
+                {
+                	TdActivityAdmin activity = tdActivityAdminService.addNewUser(e.getUsername(), e.getPassword(), e.getMobile(), e.getEmail(), e.getInCharge()  , e.getStatusId());
+                	 tdActivityAdminService.save(activity);
+                }
             }
             // 修改加盟店密码也需要修改用户密码 @author: Sharon
             else
@@ -150,6 +181,9 @@ public class TdDiySiteService {
             }
             
             tdUserService.save(user);
+            
+           
+            
         }
         
         return repository.save(e);

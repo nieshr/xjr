@@ -11,4 +11,6 @@ public interface TdEnterpriseGradeRepo
 		extends PagingAndSortingRepository<TdEnterpriseGrade, Long>, JpaSpecificationExecutor<TdEnterpriseGrade> {
 
 	List<TdEnterpriseGrade> findByExpertIdAndActivityId(Long expertId,Long activityId);
+	
+	TdEnterpriseGrade findByExpertIdAndActivityIdAndNumber(Long expertId,Long activityId,String number);
 }

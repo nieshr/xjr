@@ -125,7 +125,7 @@
             
             var oneMarket = document.getElementById(code+"_oneMarketValue").value;
             var twoMarket = document.getElementById(code+"_twoMarketValue").value;
-            var threeMarket = document.getElementById(code+"threeMarketValue").value;
+            var threeMarket = document.getElementById(code+"_threeMarketValue").value;
             var fourMarket = document.getElementById(code+"_fourMarketValue").value;
             
             var oneTechnology = document.getElementById(code+"_oneTechnology").value;
@@ -138,7 +138,37 @@
             var twoGroup = document.getElementById(code+"_twoGroup").value;
             var threeGroup = document.getElementById(code+"_threeGroup").value;
             
-            
+            $.post("/expert/grade/sure",{
+                "totalExpression":totalExpressionValue,
+                "totalFeasibility":totalFeasibilityValue,
+                "totalMarketValue":totalMarketValue,
+                "totalTechnology":totalTechnologyValue,
+                "totalGroup":totalGroupValue,
+                "oneExpression":oneExpression,
+                "twoExpression":twoExpression,
+                "threeExpression":threeExpression,
+                "fourExpression":fourExpression,
+                "oneFeasibility":oneFeasibility,
+                "twoFeasibility":twoFeasibility,
+                "threeFeasibility":threeFeasibility,
+                "fourFeasibility":fourFeasibility,
+                "oneMarketValue":oneMarket,
+                "twoMarketValue":twoMarket,
+                "threeMarketValue":threeMarket,
+                "fourMarketValue":fourMarket,
+                "oneTechnology":oneTechnology,
+                "twoTechnology":twoTechnology,
+                "threeTechnology":threeTechnology,
+                "fourTechnology":fourTechnology,
+                "fiveTechnology":fiveTechnology,
+                "oneGroup":oneGroup,
+                "twoGroup":twoGroup,
+                "threeGroup":threeGroup,
+                "number":number,
+                "activityId":"${activityId}"
+            },function(res){
+                
+            });
         }
 	</script>
 	<style type="text/css">

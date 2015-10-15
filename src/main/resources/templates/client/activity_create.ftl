@@ -256,7 +256,7 @@ window.onload=done;
     	 <#if pagetype?? && pagetype == "check">
     	 <#else>
 		<form id="upload" enctype="multipart/form-data" action="/client/activity/upload" method="post">
-		<input type="hidden" id="id" name="id" value="${activity.id?c!''}"></input>
+		<input type="hidden" id="id" name="id" <#if activity??>value="${activity.id?c}"</#if>></input>
 		<div>
 			<span>添加文件：</span>
 			<input name="Filedata" type="file" id="file" value="" />

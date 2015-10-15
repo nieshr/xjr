@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -52,11 +53,10 @@ public class TdExpertController {
 
 	@Autowired
 	private TdActivityEnterpriseService tdActivityEnterpriseService;
-	
+
 	@Autowired
 	private TdEnterpriseGradeService tdEnterpriseGradeService;
-	
-	
+
 	@RequestMapping(value = "/enterprise/list")
 	public String execute(HttpServletRequest req, ModelMap map) {
 		String expertUsername = (String) req.getSession().getAttribute("expertUsername");
@@ -69,7 +69,9 @@ public class TdExpertController {
 		List<TdActivity> activities_list = new ArrayList<>();
 		for (TdActivityExpert item : ae_list) {
 			TdActivity activity = tdActivityService.findOne(item.getActivityId());
-			activities_list.add(activity);
+			if (null != activity) {
+				activities_list.add(activity);
+			}
 		}
 		map.addAttribute("expert", expert);
 		map.addAttribute("activities", activities_list);
@@ -158,15 +160,30 @@ public class TdExpertController {
 		}
 	}
 
-	@RequestMapping(value="/grade")
-	public String goGrade(Long activityId,HttpServletRequest req,ModelMap map){
+	@RequestMapping(value = "/grade")
+	public String goGrade(Long activityId, HttpServletRequest req, ModelMap map) {
 		String expertUsername = (String) req.getSession().getAttribute("expertUsername");
-		if(null == expertUsername){
+		if (null == expertUsername) {
 			return "/client/login";
 		}
 		TdExpert expert = tdExpertService.findbyUsername(expertUsername);
-		List<TdEnterpriseGrade> grade_list = tdEnterpriseGradeService.findByExpertIdAndActivityId(expert.getId(), activityId);
+		List<TdEnterpriseGrade> grade_list = tdEnterpriseGradeService.findByExpertIdAndActivityId(expert.getId(),
+				activityId);
 		map.addAttribute("grade_list", grade_list);
+		map.addAttribute("activityId", activityId);
 		return "/client/project_grade";
+	}
+
+	@RequestMapping(value = "/grade/sure")
+	@ResponseBody
+	public Map<String, Object> gradeSure(TdEnterpriseGrade grade, String number, Long activityId,
+			HttpServletRequest req) {
+		String expertUsername = (String) req.getSession().getAttribute("expertUsername");
+		TdExpert expert = tdExpertService.findbyUsername(expertUsername);
+		TdEnterpriseGrade theGrade = tdEnterpriseGradeService.findByExpertIdAndActivityIdAndNumber(expert.getId(),
+				activityId, number);
+		grade.setTotalPoint(grade.getTotalExpression() + grade.getTotalFeasibility() + grade.getTotalMarketValue()
+				+ grade.getTotalTechnology() + grade.getTotalGroup());
+		return null;
 	}
 }

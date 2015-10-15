@@ -1,4 +1,5 @@
 package com.ynyes.kjxjr.service;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -11,7 +12,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ynyes.kjxjr.entity.TdActivityAdmin;
+import com.ynyes.kjxjr.entity.TdSetting;
 import com.ynyes.kjxjr.entity.TdUser;
+import com.ynyes.kjxjr.entity.TdUserLevel;
+import com.ynyes.kjxjr.entity.TdUserPoint;
 import com.ynyes.kjxjr.repository.TdActivityAdminRepo;
 
 
@@ -100,32 +104,32 @@ public class TdActivityAdminService {
         return repository.findByTitleContainingOrderBySortIdAsc(keywords, pageRequest);
     }
     
-    /**
-     * 保存
-     * @param e
-     * @return
-     */
-    public TdActivityAdmin save(TdActivityAdmin e)
+    public TdActivityAdmin addNewUser(String username, String password, String mobile, String email ,String inCharge , Long statusId)
     {
-        if (null != e.getUsername())    
+        if (null == username || null == password || username.isEmpty() || password.isEmpty()|| email.isEmpty() || inCharge.isEmpty())
         {
-            TdUser user = tdUserService.findByUsername(e.getUsername());
-            
-            if (null == user )
-            {
-                user = tdUserService.addNewUser(e.getUsername(), e.getPassword(), e.getUsermobile(), null, null);
-                
-                user.setRoleId(4L); // 活动管理用户
-            }
-            // 修改加盟店密码也需要修改用户密码 @author: Sharon
-            else
-            {
-                user.setPassword(e.getPassword());
-            }
-            
-            tdUserService.save(user);
+            return null;
         }
         
+        if (null != repository.findByUsername(username))
+        {
+            return null;
+        }
+        
+        TdActivityAdmin activity = new TdActivityAdmin();
+        
+        activity.setUsername(username);
+        activity.setPassword(password);
+        activity.setUsermobile(mobile);
+        activity.setEmail(email);
+        activity.setStatusId(statusId); 
+        activity.setInCharge(inCharge);
+        
+        return activity;
+    }
+    
+    public TdActivityAdmin save(TdActivityAdmin e)
+    {
         return repository.save(e);
     }
     

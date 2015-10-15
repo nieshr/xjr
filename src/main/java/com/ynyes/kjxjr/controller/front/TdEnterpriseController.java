@@ -361,7 +361,7 @@ public class TdEnterpriseController {
           sheet1.addMergedRegion(new Region((short) 1 , (short) 0 , (short) 1 , (short) 4));     //标题
           sheet1.addMergedRegion(new Region((short) 2 , (short) 1 , (short) 2 , (short) 2));		//企业名称
           sheet1.addMergedRegion(new Region((short) 3 , (short) 1 , (short) 3 , (short) 2));		//注册资本
-          sheet1.addMergedRegion(new Region((short) 4 , (short) 1 , (short) 4 , (short) 2));		//股东结构
+          sheet1.addMergedRegion(new Region((short) 4 , (short) 1 , (short) 4 , (short) 4));		//股东结构
           sheet1.addMergedRegion(new Region((short) 5 , (short) 1 , (short) 5 , (short) 2));		//地址
           sheet1.addMergedRegion(new Region((short) 6 , (short) 1 , (short) 7 , (short) 4));		//行业归属
           sheet1.addMergedRegion(new Region((short) 6 , (short) 0 , (short) 7 , (short) 0));		//行业归属
@@ -396,7 +396,7 @@ public class TdEnterpriseController {
           
           //列宽
           
-          sheet1.setColumnWidth((short) 0 , 5000);
+          sheet1.setColumnWidth((short) 0 , 8000);
           sheet1.setColumnWidth((short) 1 , 5000);
           sheet1.setColumnWidth((short) 2 , 5000);	
           sheet1.setColumnWidth((short) 3 , 5000);
@@ -408,38 +408,91 @@ public class TdEnterpriseController {
           // 第四步，创建单元格，并设置值表头 设置表头居中  
           HSSFCellStyle style = wb.createCellStyle();  
           style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+          style.setBorderBottom(HSSFCellStyle.BORDER_MEDIUM);    //设置边框样式
+          style.setBorderRight(HSSFCellStyle.BORDER_MEDIUM);
+          style.setBorderLeft(HSSFCellStyle.BORDER_MEDIUM);  
+          style.setBorderTop(HSSFCellStyle.BORDER_MEDIUM);  
+          
           
           HSSFCellStyle style1 = wb.createCellStyle();  
           style1.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
+          style1.setBorderBottom(HSSFCellStyle.BORDER_MEDIUM);    //设置边框样式
+          style1.setBorderRight(HSSFCellStyle.BORDER_MEDIUM);
+          style1.setBorderLeft(HSSFCellStyle.BORDER_MEDIUM);  
+          style1.setBorderTop(HSSFCellStyle.BORDER_MEDIUM);  
+          
           
           HSSFCellStyle style2 = wb.createCellStyle();  
           style2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
           style2.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+          style2.setBorderBottom(HSSFCellStyle.BORDER_MEDIUM);    //设置边框样式
+          style2.setBorderRight(HSSFCellStyle.BORDER_MEDIUM);
+          style2.setBorderLeft(HSSFCellStyle.BORDER_MEDIUM);  
+          style2.setBorderTop(HSSFCellStyle.BORDER_MEDIUM);  
+          
           
           HSSFCellStyle style3 = wb.createCellStyle();
           style3.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
           style3.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
           style3.setWrapText(true);
           
+          HSSFCellStyle title = wb.createCellStyle();  
+          title.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
+          title.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+          title.setBorderRight(HSSFCellStyle.BORDER_MEDIUM);
+          title.setBorderLeft(HSSFCellStyle.BORDER_MEDIUM);  
+          title.setBorderTop(HSSFCellStyle.BORDER_MEDIUM);  
+          
+          
+          HSSFCellStyle title2 = wb.createCellStyle();  
+          title2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
+          title2.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+          title2.setBorderBottom(HSSFCellStyle.BORDER_MEDIUM);    //设置边框样式
+          title2.setBorderRight(HSSFCellStyle.BORDER_MEDIUM);
+          title2.setBorderLeft(HSSFCellStyle.BORDER_MEDIUM);  
+       
           
           row = sheet1.createRow((int) 0);  
           HSSFCell cell = row.createCell((short) 0);  
           cell.setCellValue("重庆市科技小巨人企业培育专项行动报名表");  
-          cell.setCellStyle(style);
-          
+          cell.setCellStyle(title);
+          cell = row.createCell((short) 1);
+          cell.setCellStyle(title);
+          cell = row.createCell((short) 2);
+          cell.setCellStyle(title);
+          cell = row.createCell((short) 3);  
+          cell.setCellStyle(title);
+          cell = row.createCell((short) 4);  
+          cell.setCellStyle(title);
           if (enterprise.getFormType() == 0)
           {
 	          row= sheet1.createRow((int) 1);  
 	          cell = row.createCell((short) 0);  
-	          cell.setCellValue("企业组");  
-	          cell.setCellStyle(style);  
+	          cell.setCellValue("（企业组）");  
+	          cell.setCellStyle(title2);  
+	          cell = row.createCell((short) 1);
+	          cell.setCellStyle(title2);
+	          cell = row.createCell((short) 2);
+	          cell.setCellStyle(title2);
+	          cell = row.createCell((short) 3);  
+	          cell.setCellStyle(title2);
+	          cell = row.createCell((short) 4);  
+	          cell.setCellStyle(title2);
           }
           else
           {
 	          row= sheet1.createRow((int) 1);  
 	          cell = row.createCell((short) 0);  
 	          cell.setCellValue("项目组");  
-	          cell.setCellStyle(style);  
+	          cell.setCellStyle(title2);  
+	          cell = row.createCell((short) 1);
+	          cell.setCellStyle(title2);
+	          cell = row.createCell((short) 2);
+	          cell.setCellStyle(title2);
+	          cell = row.createCell((short) 3);  
+	          cell.setCellStyle(title2);
+	          cell = row.createCell((short) 4);  
+	          cell.setCellStyle(title2);
           }
          if(enterprise.getFormType() == 0)
          {
@@ -449,13 +502,15 @@ public class TdEnterpriseController {
              cell.setCellStyle(style);  
    	      	 cell = row.createCell((short) 1);
      		  cell.setCellValue(enterprise.getTitle()); 
-     		  cell.setCellStyle(style1);  
+     		  cell.setCellStyle(style);  
+	          cell = row.createCell((short) 2);
+	          cell.setCellStyle(style);
      		  cell = row.createCell((short) 3);
      		  cell.setCellValue("成立时间");
      		  cell.setCellStyle(style);  
      		  cell = row.createCell((short) 4);
      		  cell.setCellValue(enterprise.getEstablish()); 
-     		  cell.setCellStyle(style1);  
+     		  cell.setCellStyle(style);  
          }
          else
          {
@@ -466,6 +521,8 @@ public class TdEnterpriseController {
 		      cell = row.createCell((short) 1);
 	  		  cell.setCellValue(enterprise.getTitle()); 
 	  		  cell.setCellStyle(style);  
+	          cell = row.createCell((short) 2);
+	          cell.setCellStyle(style);
 	  		  cell = row.createCell((short) 3);
 	  		  cell.setCellValue("成立时间");
 	  		  cell.setCellStyle(style);  
@@ -481,6 +538,8 @@ public class TdEnterpriseController {
           cell = row.createCell((short) 1);
           cell.setCellValue(enterprise.getCapital());     
           cell.setCellStyle(style);  
+          cell = row.createCell((short) 2);
+          cell.setCellStyle(style);  
           cell = row.createCell((short) 3);
           cell.setCellValue("法定代表人");
           cell.setCellStyle(style);  
@@ -492,8 +551,14 @@ public class TdEnterpriseController {
           cell = row.createCell((short) 0);  
           cell.setCellValue("股东结构");  
           cell.setCellStyle(style);  
-          cell = row.createCell((short) 4);
+          cell = row.createCell((short) 1);
           cell.setCellValue(enterprise.getShareholder());     
+          cell.setCellStyle(style);  
+          cell = row.createCell((short) 2);
+          cell.setCellStyle(style);  
+          cell = row.createCell((short) 3);
+          cell.setCellStyle(style);  
+          cell = row.createCell((short) 4);
           cell.setCellStyle(style);  
 
           row= sheet1.createRow((int) 5); 
@@ -502,6 +567,8 @@ public class TdEnterpriseController {
           cell.setCellStyle(style);  
           cell = row.createCell((short) 1);
           cell.setCellValue(enterprise.getArea());     
+          cell.setCellStyle(style);  
+          cell = row.createCell((short) 2);
           cell.setCellStyle(style);  
           if (enterprise.getFormType()==0)
           {
@@ -525,6 +592,12 @@ public class TdEnterpriseController {
           cell.setCellStyle(style2);  
           cell = row.createCell((short) 1);
           cell.setCellValue(enterprise.getType());     
+          cell.setCellStyle(style2);  
+          cell = row.createCell((short) 2);
+          cell.setCellStyle(style2);  
+          cell = row.createCell((short) 3);
+          cell.setCellStyle(style2);  
+          cell = row.createCell((short) 4);
           cell.setCellStyle(style2);  
           
           row= sheet1.createRow((int) 8); 
@@ -577,7 +650,7 @@ public class TdEnterpriseController {
               cell.setCellStyle(style1); 
               cell = row.createCell((short) 1);
               cell.setCellValue(enterprise.getTeamIntroduction());     
-              cell.setCellStyle(style1); 
+              
           }
           else
           {
@@ -598,7 +671,7 @@ public class TdEnterpriseController {
               cell.setCellStyle(style1);  
               cell = row.createCell((short) 1);
               cell.setCellValue(enterprise.getProfile());     
-              cell.setCellStyle(style1);  
+             
           }
           else
           {
@@ -608,7 +681,7 @@ public class TdEnterpriseController {
               cell.setCellStyle(style1);  
               cell = row.createCell((short) 1);
               cell.setCellValue(enterprise.getProfile());     
-              cell.setCellStyle(style1);  
+              
           }
          
     	  row= sheet1.createRow((int) 17); 
@@ -617,7 +690,7 @@ public class TdEnterpriseController {
           cell.setCellStyle(style1);  
           cell = row.createCell((short) 1);
           cell.setCellValue(enterprise.getAdvantage());     
-          cell.setCellStyle(style1); 
+          
 
     	  row= sheet1.createRow((int) 20); 
           cell = row.createCell((short) 0);  
@@ -625,7 +698,7 @@ public class TdEnterpriseController {
           cell.setCellStyle(style1);  
           cell = row.createCell((short) 1);
           cell.setCellValue(enterprise.getSize());     
-          cell.setCellStyle(style1);  
+        
           
     	  row= sheet1.createRow((int) 23); 
           cell = row.createCell((short) 0);  

@@ -27,6 +27,10 @@ public class TdExpert {
     @Column
     private String name;
     
+    //名字
+    @Column
+    private String inCharge;
+    
     // 邮箱
     @Column
     private String email;
@@ -122,6 +126,14 @@ public class TdExpert {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getInCharge() {
+		return inCharge;
+	}
+
+	public void setInCharge(String inCharge) {
+		this.inCharge = inCharge;
 	}
 
  

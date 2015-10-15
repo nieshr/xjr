@@ -47,7 +47,7 @@ function show2()
 </head>
 <body>
 <!-- head  -->
-<#include "/client/news_common_header.ftl" />
+<#include "/client/contact_common_header.ftl" />
 <!-- head end -->
 <!-- contend -->
 <div class="titlelist">

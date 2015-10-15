@@ -11,7 +11,7 @@
         <dt><a>站内信息</a></dt>
         <dd>
         	<div><img src="/client/images/porfile_img.png" /></div>
-        	<span>学友</span>
+        	<span>${username!''}</span>
             <p>管理员</p>
             <span id="nav_guide"></span>
         </dd>

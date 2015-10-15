@@ -179,7 +179,7 @@ public class TdRegController {
 		user.setPassword(password);
 		user.setMobile(mobile);
 		user.setEmail(email);
-		user.setStatusId(1L);
+		user.setRoleId(1L);
 		tdUserService.save(user);
 		
 		TdEnterprise enterprise = new TdEnterprise();
@@ -189,6 +189,7 @@ public class TdRegController {
 		enterprise.setUsermobile(mobile);
 		tdEnterpriseService.save(enterprise);
 		request.getSession().setAttribute("enterpriseUsername", username);
+		request.getSession().setAttribute("username", username);
 		
 		return "redirect:/enterprise/info";
 //		if (null == smsCodeSave) {

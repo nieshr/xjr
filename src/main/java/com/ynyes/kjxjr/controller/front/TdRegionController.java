@@ -524,13 +524,27 @@ public String exportRecommend(
       // 第四步，创建单元格，并设置值表头 设置表头居中  
       HSSFCellStyle style = wb.createCellStyle();  
       style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+      style.setBorderBottom(HSSFCellStyle.BORDER_MEDIUM);    //设置边框样式
+      style.setBorderRight(HSSFCellStyle.BORDER_MEDIUM);
+      style.setBorderLeft(HSSFCellStyle.BORDER_MEDIUM);  
+      style.setBorderTop(HSSFCellStyle.BORDER_MEDIUM);  
+      
       
       HSSFCellStyle style1 = wb.createCellStyle();  
       style1.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
+      style1.setBorderBottom(HSSFCellStyle.BORDER_MEDIUM);    //设置边框样式
+      style1.setBorderRight(HSSFCellStyle.BORDER_MEDIUM);
+      style1.setBorderLeft(HSSFCellStyle.BORDER_MEDIUM);  
+      style1.setBorderTop(HSSFCellStyle.BORDER_MEDIUM);  
+      
       
       HSSFCellStyle style2 = wb.createCellStyle();  
       style2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
       style2.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+      style2.setBorderBottom(HSSFCellStyle.BORDER_MEDIUM);    //设置边框样式
+      style2.setBorderRight(HSSFCellStyle.BORDER_MEDIUM);
+      style2.setBorderLeft(HSSFCellStyle.BORDER_MEDIUM);  
+      style2.setBorderTop(HSSFCellStyle.BORDER_MEDIUM);  
       
       HSSFCellStyle title = wb.createCellStyle();  
       title.setBorderBottom(HSSFCellStyle.BORDER_NONE);    //设置边框样式
@@ -542,16 +556,12 @@ public String exportRecommend(
       
       //盖章
       HSSFCellStyle left = wb.createCellStyle();  
-      left.setBorderRight(HSSFCellStyle.BORDER_NONE);
-      left.setBorderLeft(HSSFCellStyle.BORDER_NONE);  
-      left.setBorderTop(HSSFCellStyle.BORDER_NONE);  
+      left.setBorderBottom(HSSFCellStyle.BORDER_MEDIUM);    //设置边框样式
       left.setAlignment(HSSFCellStyle.ALIGN_LEFT); // 居格式
       
       //日期
       HSSFCellStyle right = wb.createCellStyle();  
-      right.setBorderRight(HSSFCellStyle.BORDER_NONE);
-      right.setBorderLeft(HSSFCellStyle.BORDER_NONE);  
-      right.setBorderTop(HSSFCellStyle.BORDER_NONE);  
+      right.setBorderBottom(HSSFCellStyle.BORDER_MEDIUM);    //设置边框样式
       right.setAlignment(HSSFCellStyle.ALIGN_RIGHT); // 格式
       
       

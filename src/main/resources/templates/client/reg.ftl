@@ -148,7 +148,7 @@ $(document).ready(function(){
             -->
         </div>
         <div class="sure">
-        	<input class="check" id="isCheck" type="checkbox" />
+        	<input style="margin-top:7px" class="check" id="isCheck" type="checkbox" />
             <span class="span6"> 我已阅读并接受<a href="#"> 版权声明 </a>和<a href="#"> 隐私保护 </a>条款</span>
         </div>
         <div>
