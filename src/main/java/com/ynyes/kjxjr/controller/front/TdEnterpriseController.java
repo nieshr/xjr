@@ -503,9 +503,18 @@ public class TdEnterpriseController {
           cell = row.createCell((short) 1);
           cell.setCellValue(enterprise.getArea());     
           cell.setCellStyle(style);  
-          cell = row.createCell((short) 3);
-          cell.setCellValue("职工人数（人）");
-          cell.setCellStyle(style);  
+          if (enterprise.getFormType()==0)
+          {
+              cell = row.createCell((short) 3);
+              cell.setCellValue("职工人数（人）");
+              cell.setCellStyle(style);  
+          }
+          else
+          {
+              cell = row.createCell((short) 3);
+              cell.setCellValue("团队人数（人）");
+              cell.setCellStyle(style);  
+          }
           cell =row.createCell((short) 4);
           cell.setCellValue(enterprise.getStaffNumber()); 
           cell.setCellStyle(style);  
@@ -705,8 +714,7 @@ public class TdEnterpriseController {
           sheet2.addMergedRegion(new Region((short) 10 , (short) 3 , (short) 10 , (short) 4));     
           sheet2.addMergedRegion(new Region((short) 11 , (short) 2 , (short) 11 , (short) 4));     //项目可供资料
           sheet2.addMergedRegion(new Region((short) 11 , (short) 0 , (short) 11 , (short) 1));     //项目可供资料
-          sheet2.addMergedRegion(new Region((short) 12 , (short) 1 , (short) 14 , (short) 4));     //盖章
-          sheet2.addMergedRegion(new Region((short) 12 , (short) 0 , (short) 14 , (short) 0));     //盖章
+          sheet2.addMergedRegion(new Region((short) 12 , (short) 0 , (short) 14 , (short) 4));     //盖章
           
           //打印设置
           HSSFPrintSetup ps2 = sheet2.getPrintSetup();
@@ -774,79 +782,78 @@ public class TdEnterpriseController {
           
           row = sheet2.createRow((int) 7);  
           cell = row.createCell((short) 0);  
-          cell.setCellValue("期望获得资金的时间");  
-          cell.setCellStyle(style);
-          cell = row.createCell((short) 1);  
           cell.setCellValue("期望融资方式");  
           cell.setCellStyle(style);
+          cell = row.createCell((short) 1);  
+          cell.setCellValue("（一）股权融资");  
+          cell.setCellStyle(style);
           cell = row.createCell((short) 2);  
-          cell.setCellValue("期望融资金额");  
+          cell.setCellValue("期望获得资金的时间");  
           cell.setCellStyle(style);
           cell = row.createCell((short) 3);  
-          cell.setCellValue("融资用途");  
-          cell.setCellStyle(style);
-          
-          row = sheet2.createRow((int) 8);  
-          cell = row.createCell((short) 0);  
           if (null != enterprise.getExpectEquityDate())
           {
         	  cell.setCellValue(enterprise.getExpectEquityDate()); 
           }
           cell.setCellStyle(style);
-          cell = row.createCell((short) 1);  
-          cell.setCellValue("股权融资");  
+          
+          row = sheet2.createRow((int) 8);  
+          cell = row.createCell((short) 0);  
+          cell.setCellValue("期望融资金额");  
           cell.setCellStyle(style);
-          cell = row.createCell((short) 2);  
+          cell = row.createCell((short) 1);  
           if (null != enterprise.getExpectEquityAmount() )
           {
         	  cell.setCellValue(enterprise.getExpectEquityAmount());  
           }
           cell.setCellStyle(style);
+          cell = row.createCell((short) 2);  
+          cell.setCellValue("融资用途");  
+          cell.setCellStyle(style);
           cell = row.createCell((short) 3);  
           if (null != enterprise.getExpectEquityUse())
           {
-        	  cell.setCellValue(enterprise.getExpectEquityUse());  
+        	  cell.setCellValue(enterprise.getExpectEquityUse()); 
           }
-        
-          cell.setCellStyle(style);
+          
           
           row = sheet2.createRow((int) 9);  
           cell = row.createCell((short) 0);  
-          cell.setCellValue("期望获得资金的时间");  
-          cell.setCellStyle(style);
-          cell = row.createCell((short) 1);  
           cell.setCellValue("期望融资方式");  
           cell.setCellStyle(style);
+          cell = row.createCell((short) 1);  
+          cell.setCellValue("（二）债券融资");  
+          cell.setCellStyle(style);
           cell = row.createCell((short) 2);  
-          cell.setCellValue("期望融资金额");  
+          cell.setCellValue("期望获得资金的时间");  
           cell.setCellStyle(style);
           cell = row.createCell((short) 3);  
-          cell.setCellValue("融资用途");  
-          cell.setCellStyle(style);
-          
-          row = sheet2.createRow((int) 10);  
-          cell = row.createCell((short) 0);  
           if (null != enterprise.getExpectBondDate())
           {
-        	  cell.setCellValue(enterprise.getExpectBondDate());  
+        	  cell.setCellValue(enterprise.getExpectBondDate()); 
           }
           cell.setCellStyle(style);
-          cell = row.createCell((short) 1);  
-          cell.setCellValue("债权融资");  
+          
+          row = sheet2.createRow((int) 8);  
+          cell = row.createCell((short) 0);  
+          cell.setCellValue("期望融资金额");  
           cell.setCellStyle(style);
-          cell = row.createCell((short) 2);  
-          if (null != enterprise.getExpectBondAmount())
+          cell = row.createCell((short) 1);  
+          if (null != enterprise.getExpectBondAmount() )
           {
         	  cell.setCellValue(enterprise.getExpectBondAmount());  
           }
           cell.setCellStyle(style);
-          cell = row.createCell((short) 3);  
-          if (null != enterprise.getExpectBondAmount())
-          {
-        	  cell.setCellValue(enterprise.getExpectBondUse());  
-          }
+          cell = row.createCell((short) 2);  
+          cell.setCellValue("融资用途");  
           cell.setCellStyle(style);
-          
+          cell = row.createCell((short) 3);  
+          if (null != enterprise.getExpectBondUse())
+          {
+        	  cell.setCellValue(enterprise.getExpectBondUse()); 
+          }
+           
+     
           row = sheet2.createRow((int) 11);  
           cell = row.createCell((short) 0);  
           cell.setCellValue("是否愿意将贵公司所填以上信息向投资金融平台披露");  
@@ -867,11 +874,9 @@ public class TdEnterpriseController {
 
           row = sheet2.createRow((int) 12);  
           cell = row.createCell((short) 0);  
-          cell.setCellValue("公司盖章");  
+          cell.setCellValue("同意请加公司公章");  
           cell.setCellStyle(style2);
-          cell = row.createCell((short) 1);  
-          cell.setCellValue("");  
-          cell.setCellStyle(style);
+          
           
 
 			if (null != exportUrl) {

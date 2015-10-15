@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ibm.icu.text.DateFormat;
 import com.ynyes.kjxjr.entity.TdActivity;
 import com.ynyes.kjxjr.entity.TdActivityEnterprise;
 import com.ynyes.kjxjr.entity.TdEnterprise;
@@ -519,7 +520,7 @@ public String exportRecommend(
       HSSFRow row = sheet.createRow((int) 0);  
       
       sheet.addMergedRegion(new Region((short) 0 , (short) 0 , (short) 1 , (short) 7));     //标题
-      
+      sheet.addMergedRegion(new Region((short) 2 , (short) 0 , (short) 2 , (short) 2));     //公章
       // 第四步，创建单元格，并设置值表头 设置表头居中  
       HSSFCellStyle style = wb.createCellStyle();  
       style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
@@ -531,14 +532,50 @@ public String exportRecommend(
       style2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
       style2.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
       
+      HSSFCellStyle title = wb.createCellStyle();  
+      title.setBorderBottom(HSSFCellStyle.BORDER_NONE);    //设置边框样式
+      title.setBorderRight(HSSFCellStyle.BORDER_NONE);
+      title.setBorderLeft(HSSFCellStyle.BORDER_NONE);  
+      title.setBorderTop(HSSFCellStyle.BORDER_NONE);  
+      title.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
+      title.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 居中格式
+      
+      //盖章
+      HSSFCellStyle left = wb.createCellStyle();  
+      left.setBorderRight(HSSFCellStyle.BORDER_NONE);
+      left.setBorderLeft(HSSFCellStyle.BORDER_NONE);  
+      left.setBorderTop(HSSFCellStyle.BORDER_NONE);  
+      left.setAlignment(HSSFCellStyle.ALIGN_LEFT); // 居格式
+      
+      //日期
+      HSSFCellStyle right = wb.createCellStyle();  
+      right.setBorderRight(HSSFCellStyle.BORDER_NONE);
+      right.setBorderLeft(HSSFCellStyle.BORDER_NONE);  
+      right.setBorderTop(HSSFCellStyle.BORDER_NONE);  
+      right.setAlignment(HSSFCellStyle.ALIGN_RIGHT); // 格式
+      
       
       HSSFCell cell = row.createCell((short) 0);  
-      cell.setCellValue(activityEnterpriseList.get(0).getArea()+activityEnterpriseList.get(0).getActivityTitle());  
-      cell.setCellStyle(style2);
-      
-      
+      cell.setCellValue("区县科委推荐项目汇总表"+"（"+activityEnterpriseList.get(0).getArea()+activityEnterpriseList.get(0).getActivityTitle()+"）");  
+      cell.setCellStyle(title);
       
       row =sheet.createRow((int) 2);
+      cell = row.createCell((short) 0);  
+      cell.setCellValue("推荐单位（章）");  
+      cell.setCellStyle(left);
+      
+      SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+      String date = sdf.format(new Date());
+      cell = row.createCell((short) 6);  
+      cell.setCellValue("日期：");  
+      cell.setCellStyle(right);
+      cell = row.createCell((short) 7);  
+      cell.setCellValue(date);  
+      cell.setCellStyle(style);
+      
+      
+      
+      row =sheet.createRow((int) 3);
       cell = row.createCell((short) 0);  
       cell.setCellValue("序号");  
       cell.setCellStyle(style);
@@ -591,7 +628,7 @@ public String exportRecommend(
         	for (int i = 0; i < activityEnterpriseList.size(); i++)  
             {  
         	 				
-                row = sheet.createRow((int) i + 3);  
+                row = sheet.createRow((int) i + 4);  
                 TdActivityEnterprise tdActivityEnterprise = activityEnterpriseList.get(i);  
                 //获取用户信息
 //                TdUser tdUser = tdUserService.findByUsername(tdOrder.getUsername());
