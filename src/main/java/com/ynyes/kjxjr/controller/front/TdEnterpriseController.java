@@ -600,6 +600,19 @@ public class TdEnterpriseController {
           cell = row.createCell((short) 4);
           cell.setCellStyle(style2);  
           
+          
+          row= sheet1.createRow((int) 7); 
+          cell = row.createCell((short) 0);  
+          cell.setCellStyle(style2);  
+          cell = row.createCell((short) 1);
+          cell.setCellStyle(style2);  
+          cell = row.createCell((short) 2);
+          cell.setCellStyle(style2);  
+          cell = row.createCell((short) 3);
+          cell.setCellStyle(style2);  
+          cell = row.createCell((short) 4);
+          cell.setCellStyle(style2);  
+          
           row= sheet1.createRow((int) 8); 
           cell = row.createCell((short) 0);  
           cell.setCellValue("邮箱");  
@@ -623,6 +636,8 @@ public class TdEnterpriseController {
           cell = row.createCell((short) 1);
           cell.setCellValue(enterprise.getWebsite());     
           cell.setCellStyle(style);  
+          cell = row.createCell((short) 2);
+          cell.setCellStyle(style);  
           cell = row.createCell((short) 3);
           cell.setCellValue("联系电话");
           cell.setCellStyle(style);  
@@ -636,6 +651,8 @@ public class TdEnterpriseController {
           cell.setCellStyle(style);  
           cell = row.createCell((short) 1);
           cell.setCellValue(enterprise.getChat());     
+          cell.setCellStyle(style);  
+          cell = row.createCell((short) 2);
           cell.setCellStyle(style);  
           cell = row.createCell((short) 3);
           cell.setCellValue("手机");
