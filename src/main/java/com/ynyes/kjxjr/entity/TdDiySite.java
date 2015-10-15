@@ -55,9 +55,9 @@ public class TdDiySite {
     @Column
     private String city;
     
-//    // 是否启用
-//    @Column
-//    private Boolean isEnable;
+    // 是否启用
+    @Column
+    private Boolean isEnable;
     
     // 是否启用
     @Column
@@ -131,14 +131,14 @@ public class TdDiySite {
         this.address = address;
     }
 
-//    public Boolean getIsEnable() {
-//        return isEnable;
-//    }
-//
-//    public void setIsEnable(Boolean isEnable) {
-//        this.isEnable = isEnable;
-//    }
-//    
+    public Boolean getIsEnable() {
+        return isEnable;
+    }
+
+    public void setIsEnable(Boolean isEnable) {
+        this.isEnable = isEnable;
+    }
+    
     public String getEmail() {
 		return email;
 	}
