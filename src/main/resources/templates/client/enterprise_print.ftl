@@ -87,7 +87,15 @@
     			<div><span>行业归属：</span>
     				<#if enterpriseType_list??>
     					<#list enterpriseType_list as item>
-    						<input disabled="" style="margin-top: -3px; width:15px;" name="type" type="radio" <#if enterprise.type==item.title>checked="checked" </#if>value="${item.title!''}"/><p>${item.title!''}</p>
+    						<input disabled="" style="margin-top: -3px; width:15px;" name="type" type="radio" 
+    							<#if enterprise.formType?? && enterpriseType??>
+	    			     			<#list enterpriseType as type>
+	    			     				<#if type == item.title>
+	    			     					checked="checked"
+	    			     				</#if>
+	    			     			</#list>
+	    			     		</#if>			    						
+    						value="${item.title!''}"/><p>${item.title!''}</p>
     					</#list>
     				</#if>	
 				</div>

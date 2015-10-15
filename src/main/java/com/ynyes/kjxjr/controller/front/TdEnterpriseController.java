@@ -88,9 +88,13 @@ public class TdEnterpriseController {
         tdCommonService.setHeader(map, req);
 
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
-        TdEnterprise Enterprise = tdEnterpriseService.findbyUsername(username);
+        TdEnterprise enterprise = tdEnterpriseService.findbyUsername(username);
         
-        map.addAttribute("enterprise", Enterprise);
+        //行业所属是多选。。。。
+        String type[] = enterprise.getType().split(",");
+        
+        map.addAttribute("enterpriseType", type);
+        map.addAttribute("enterprise", enterprise);
         map.addAttribute("user", user);
 
         
@@ -116,8 +120,17 @@ public class TdEnterpriseController {
 
         if (null == username) {
         	res.put("msg", "请先登录！");
+        	res.put("check", 0);
             return res;
         }
+        
+        if (null != tdEnterprise.getStatusId()&&1 == tdEnterprise.getStatusId())
+        {
+        	res.put("msg", "资料已审核，如需修改请申请重新审核！");
+        	res.put("check", 1);
+        	return res;
+        }
+        
         TdUser user = tdUserService.findByUsername(username);
         Long id = tdEnterprise.getId();
         String number = String.format("%04d", id);
@@ -143,9 +156,14 @@ public class TdEnterpriseController {
         tdCommonService.setHeader(map, req);
 
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
-        TdEnterprise Enterprise = tdEnterpriseService.findbyUsername(username);
+        TdEnterprise enterprise = tdEnterpriseService.findbyUsername(username);
         
-        map.addAttribute("enterprise", Enterprise);
+        //行业所属是多选。。。。
+        String type[] = enterprise.getType().split(",");
+        
+        map.addAttribute("enterpriseType", type);
+        
+        map.addAttribute("enterprise", enterprise);
         map.addAttribute("user", user);
 
         return "/client/enterprise_print";
@@ -163,6 +181,8 @@ public class TdEnterpriseController {
 
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
         TdEnterprise Enterprise = tdEnterpriseService.findbyUsername(username);
+        
+        
         
         map.addAttribute("enterprise", Enterprise);
         map.addAttribute("id", Enterprise.getId());
@@ -183,9 +203,13 @@ public class TdEnterpriseController {
         tdCommonService.setHeader(map, req);
 
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
-        TdEnterprise Enterprise = tdEnterpriseService.findbyUsername(username);
+        TdEnterprise enterprise = tdEnterpriseService.findbyUsername(username);
         
-        map.addAttribute("enterprise", Enterprise);
+        //行业所属是多选。。。。
+        String type[] = enterprise.getType().split(",");
+        
+        map.addAttribute("enterpriseType", type);
+        map.addAttribute("enterprise", enterprise);
         map.addAttribute("user", user);
 
         

@@ -10,6 +10,7 @@
 
 <script src="/client/js/jquery-1.9.1.min.js"></script>
 <script src="/client/js/main.js"></script>
+<script type="text/javascript" src="/mag/js/WdatePicker.js"></script>
 <script type="text/javascript" src="/client/js/Validform_v5.3.2_min.js"></script>
 
 <script>
@@ -27,6 +28,14 @@ $(document).ready(function(){
 	            else 
 	            {
 	                alert(data.msg);
+	                if (data.check == 0)
+	                {
+	                	location.href='/login';
+	                }
+	                else if (data.check ==1)
+	                {
+	                	location.href='/enterprise/check';
+	                }
 	            }
        		 }
 	});
@@ -40,6 +49,9 @@ function showPro(){
 	$(".pro").css("display","block");
 	$(".enter").css("display","none");
 }
+
+
+
 </script>
 </head>
 
@@ -102,7 +114,11 @@ function showPro(){
     			     <span class="pro <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>hide</#if>">项目名称：</span>
     			     <input type="text" name="title" value="<#if enterprise.formType??>${enterprise.title!''}</#if>" datatype="*"/>
     		    </div>
-    			<div><span>成立时间：</span><input type="text" name="establish" value="<#if enterprise.formType??>${enterprise.establish!''}</#if>" datatype="*" ignore="ignore" /></div>
+    			<div><span>成立时间：</span>
+    			  <input  type="text" id="date" value="<#if enterprise.formType??>${enterprise.establish?string("yyyy年MM月dd日")!''}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy年MM月dd日',vel:'date_2',lang:'zh-cn'})" datatype="*" / >
+    			  <input id="date_2" name="establish" value="<#if enterprise.formType??>${enterprise.establish?string("yyyy-MM-dd")!''}</#if>" type="hidden" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}$/" errormsg="填写正确格式" sucmsg=" " />
+    			<#--<input type="text" name="establish" value="<#if enterprise.formType??>${enterprise.establish!''}</#if>" datatype="*" ignore="ignore" /> -->
+    			</div>
     			<div><span>注册资本<b style="color:#999;font-size:0.6em;">(万元)</b>：</span><input type="text" name="capital" value="<#if enterprise.formType??>${enterprise.capital!''}</#if>" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"/></div>
     			<div><span>法定代表人：</span><input type="text" name="representative" datatype="*"value="<#if enterprise.formType??>${enterprise.representative!''}</#if>" /></div>
     			<div><span>股东结构：</span><textarea name="shareholder" datatype="*"><#if enterprise.formType??>${enterprise.shareholder!''}</#if></textarea></div>
@@ -119,7 +135,15 @@ function showPro(){
     			<div><span>行业归属：</span>
     				<#if enterpriseType_list??>
     					<#list enterpriseType_list as item>
-    						<input style="margin-top: -3px; width:15px;" name="type" type="radio" value="${item.title!''}" <#if enterprise.formType??&&enterprise.type==item.title>checked="checked"</#if>/><p>${item.title!''}</p>
+    						<input style="margin-top: -3px; width:15px;" name="type" type="checkbox" value="${item.title!''}" 
+    							<#if enterprise.formType?? && enterpriseType??>
+	    			     			<#list enterpriseType as type>
+	    			     				<#if type == item.title>
+	    			     					checked="checked"
+	    			     				</#if>
+	    			     			</#list>
+	    			     		</#if>			
+    							/><p>${item.title!''}</p>
     					</#list>
     				</#if>		
 				</div>
@@ -174,9 +198,9 @@ function showPro(){
     	</dd>
     	<dt class="dt03"><span>三、知识产权基本情况</span><br/><p>此信息将自动生成到报名表中</p></dt>
     	<dd>
-    			<div><span>发明专利</span><input type="text" name="inventiPatent" datatype="*" ignore="ignore" value="<#if enterprise.formType??>${enterprise.inventiPatent!''}</#if>"  /></div>
-    			<div><span>实用新型专利</span><input type="text"name="newPatent" datatype="*"  ignore="ignore" value="<#if enterprise.formType??>${enterprise.newPatent!''}</#if>"  /></div>
-    			<div><span>外观设计专利</span><input type="text" name="designPatent" datatype="*"  ignore="ignore"value="<#if enterprise.formType??>${enterprise.designPatent!''}</#if>"  /></div>
+    			<div><span>发明专利</span><input type="text" name="inventiPatent" datatype="n" style="width:40px;" value="<#if enterprise.formType??>${enterprise.inventiPatent!''}</#if>"  />&nbsp;个</div>
+    			<div><span>实用新型专利</span><input type="text"name="newPatent" datatype="n"  style="width:40px;" value="<#if enterprise.formType??>${enterprise.newPatent!''}</#if>"  />&nbsp;个</div>
+    			<div><span>外观设计专利</span><input type="text" name="designPatent" datatype="n" style="width:40px;" value="<#if enterprise.formType??>${enterprise.designPatent!''}</#if>"  />&nbsp;个</div>
     	</dd>
     	<dt class="dt04"><span>四、融资信息（单位：万元）</span><br/><p>此信息将自动生成到报名表中</p></dt>
     	<dd>
@@ -188,14 +212,18 @@ function showPro(){
     			</div>
     			<div>
     				<span>（一）股权融资</span>
-    				<input type="text" name="expectEquityDate"  value="<#if enterprise.formType??>${enterprise.expectEquityDate!''}</#if>"  />
-    				<input type="text" name="expectEquityAmount" value="<#if enterprise.formType??>${enterprise.expectEquityAmount!''}</#if>"  />
+    				<input  type="text" id="equi" value="<#if enterprise.formType??>${enterprise.establish?string("yyyy年MM月dd日")!''}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy年MM月dd日',vel:'expectEquityDate',lang:'zh-cn'})" datatype="*" ignore="ignore"/ >
+    			  	<input id="expectEquityDate" name="expectEquityDate" value="<#if enterprise.formType??>${enterprise.expectEquityDate?string("yyyy-MM-dd")!''}</#if>" type="hidden" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}$/" errormsg="填写正确格式" sucmsg=" " />
+    				
+    				<input type="text" name="expectEquityAmount" value="<#if enterprise.formType??>${enterprise.expectEquityAmount!''}</#if>"  ignore="ignore" datatype="n"/>
     				<input type="text" name="expectEquityUse" value="<#if enterprise.formType??>${enterprise.expectEquityUse!''}</#if>"  />
     			</div>
     			<div>
     				<span>（二）债权融资</span>
-    				<input type="text" name="expectBondDate" value="<#if enterprise.formType??>${enterprise.expectBondDate!''}</#if>"  />
-    				<input type="text" name="expectBondAmount" value="<#if enterprise.formType??>${enterprise.expectBondAmount!''}</#if>"  />
+    				<input  type="text" id="bond" value="<#if enterprise.formType??>${enterprise.establish?string("yyyy年MM月dd日")!''}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy年MM月dd日',vel:'expectBondDate',lang:'zh-cn'})" datatype="*" ignore="ignore"/ >
+    			  	<input id="expectBondDate" name="expectBondDate" value="<#if enterprise.formType??>${enterprise.expectBondDate?string("yyyy-MM-dd")!''}</#if>" type="hidden" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}$/" errormsg="填写正确格式" sucmsg=" " />
+    				
+    				<input type="text" name="expectBondAmount" value="<#if enterprise.formType??>${enterprise.expectBondAmount!''}</#if>" ignore="ignore" datatype="n" />
     				<input type="text" name="expectBondUse" value="<#if enterprise.formType??>${enterprise.expectBondUse!''}</#if>"  />
     			</div>
     			<div>
