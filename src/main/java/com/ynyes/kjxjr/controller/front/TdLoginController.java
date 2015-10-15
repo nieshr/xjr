@@ -32,7 +32,7 @@ public class TdLoginController {
 
 	@Autowired
 	private TdCommonService tdCommonService;
-	
+
 	@Autowired
 	private TdEnterpriseService tdEnterpriseService;
 
@@ -53,51 +53,49 @@ public class TdLoginController {
 			referer = "/";
 		}
 		/**
-		 * @author lc 
+		 * @author lc
 		 * @注释：同盟店登录
 		 */
 		String diysiteUsername = (String) req.getSession().getAttribute("diysiteUsername");
-		
+
 		TdUser tdUser = tdUserService.findByUsername(diysiteUsername);
-		if(null != tdUser){
+		if (null != tdUser) {
 			if (null != tdUser.getRoleId() && tdUser.getRoleId().equals(2L)) {
 				return "redirect:/user/diysite/order/list/0";
 			}
 		}
-		
+
 		return "redirect:" + referer;
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> login(String username, String password, String alipayuser_id,String type, String code,
+	public Map<String, Object> login(String username, String password, String alipayuser_id, String type, String code,
 			Boolean isSave, HttpServletRequest request) {
 		Map<String, Object> res = new HashMap<String, Object>();
 		String codeBack = (String) request.getSession().getAttribute("RANDOMVALIDATECODEKEY");
 
 		res.put("code", 1);
-		
+
 		/**
 		 * 按账号查找登录验证 密码验证 修改最后登录时间
 		 * 
 		 * @author libiao
 		 */
-		TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
+		TdUser user = tdUserService.findByUsername(username);
 
 		if (null != user) {
 			if (!user.getPassword().equals(password)) {
 				res.put("msg", "密码错误");
-				res.put("username",username);
+				res.put("username", username);
 				return res;
 			}
-			 if (!codeBack.equalsIgnoreCase(code))
-			 {
-				 res.put("msg", "验证码错误");
-				 return res;
-			 }
+			if (codeBack == null || !codeBack.equalsIgnoreCase(code)) {
+				res.put("msg", "验证码错误");
+				return res;
+			}
 			user.setLastLoginTime(new Date());
 			user = tdUserService.save(user);
-			
 
 			res.put("code", 0);
 
@@ -105,56 +103,59 @@ public class TdLoginController {
 			 * @author lichong
 			 * @注释：判断用户类型
 			 */
-//			if(null != user.getRoleId() && user.getRoleId().equals(2L)){
-//				res.put("role", 2);
-//				request.getSession().setAttribute("diysiteUsername", user.getUsername());
-//				return res;
-//			}
-//			request.getSession().setAttribute("username", user.getUsername());
-//			request.getSession().setAttribute("usermobile", user.getMobile());
-//			return res;
-			
-			Integer  roleId = user.getRoleId().intValue();
-			switch(roleId)
-			{
-			//企业项目
-				case 1:
-					res.put("role", 1);
-					request.getSession().setAttribute("enterpriseUsername", user.getUsername());
-					request.getSession().setAttribute("enterpriseUsermobile", user.getMobile());
-					request.getSession().setAttribute("username", user.getUsername());
-					Long statusId =tdEnterpriseService.findbyUsername(username).getStatusId();
-					res.put("statusId", statusId);
-					break;
-					//区县管理
-				case 2:
-					res.put("role", 2);
-					request.getSession().setAttribute("regionUsername", user.getUsername());
-					request.getSession().setAttribute("regionUsermobile", user.getMobile());
-					request.getSession().setAttribute("username", user.getUsername());
-					break;
-					//专家
-				case 3:
-					res.put("role", 3);
-					request.getSession().setAttribute("expertUsername", user.getUsername());
-					request.getSession().setAttribute("expertUsermobile", user.getMobile());
-					request.getSession().setAttribute("username", user.getUsername());
-					break;
-					//活动管理
-				case 4:
-					res.put("role", 4);
-					request.getSession().setAttribute("activityUsername", user.getUsername());
-					request.getSession().setAttribute("activityUsermobile", user.getMobile());
-					request.getSession().setAttribute("username", user.getUsername());
-					break;	
-				default:
-					res.put("role", 0);
-					request.getSession().setAttribute("username", user.getUsername());
-					request.getSession().setAttribute("usermobile", user.getMobile());
-					request.getSession().setAttribute("username", user.getUsername());
-					break;
+			// if(null != user.getRoleId() && user.getRoleId().equals(2L)){
+			// res.put("role", 2);
+			// request.getSession().setAttribute("diysiteUsername",
+			// user.getUsername());
+			// return res;
+			// }
+			// request.getSession().setAttribute("username",
+			// user.getUsername());
+			// request.getSession().setAttribute("usermobile",
+			// user.getMobile());
+			// return res;
+
+			System.err.println(user);
+			Integer roleId = user.getRoleId().intValue();
+			switch (roleId) {
+			// 企业项目
+			case 1:
+				res.put("role", 1);
+				request.getSession().setAttribute("enterpriseUsername", user.getUsername());
+				request.getSession().setAttribute("enterpriseUsermobile", user.getMobile());
+				request.getSession().setAttribute("username", user.getUsername());
+				Long statusId = tdEnterpriseService.findbyUsername(username).getStatusId();
+				res.put("statusId", statusId);
+				break;
+			// 区县管理
+			case 2:
+				res.put("role", 2);
+				request.getSession().setAttribute("regionUsername", user.getUsername());
+				request.getSession().setAttribute("regionUsermobile", user.getMobile());
+				request.getSession().setAttribute("username", user.getUsername());
+				break;
+			// 专家
+			case 3:
+				res.put("role", 3);
+				request.getSession().setAttribute("expertUsername", user.getUsername());
+				request.getSession().setAttribute("expertUsermobile", user.getMobile());
+				request.getSession().setAttribute("username", user.getUsername());
+				break;
+			// 活动管理
+			case 4:
+				res.put("role", 4);
+				request.getSession().setAttribute("activityUsername", user.getUsername());
+				request.getSession().setAttribute("activityUsermobile", user.getMobile());
+				request.getSession().setAttribute("username", user.getUsername());
+				break;
+			default:
+				res.put("role", 0);
+				request.getSession().setAttribute("username", user.getUsername());
+				request.getSession().setAttribute("usermobile", user.getMobile());
+				request.getSession().setAttribute("username", user.getUsername());
+				break;
 			}
-			
+
 			return res;
 		}
 		/**
@@ -171,7 +172,6 @@ public class TdLoginController {
 			user.setLastLoginTime(new Date());
 
 			user = tdUserService.save(user);
-			
 
 			res.put("code", 0);
 
@@ -179,18 +179,20 @@ public class TdLoginController {
 			 * @author lichong
 			 * @注释：判断用户类型
 			 */
-//			if (user.getRoleId() == 2L) {
-//				res.put("role", 2);
-//				request.getSession().setAttribute("diysiteUsername", user.getUsername());
-//				return res;
-//			}
-//			request.getSession().setAttribute("username", user.getUsername());
-//			request.getSession().setAttribute("usermobile", user.getMobile());
-//			return res;
-			
-			Integer  roleId = user.getRoleId().intValue();
-			switch(roleId)
-			{
+			// if (user.getRoleId() == 2L) {
+			// res.put("role", 2);
+			// request.getSession().setAttribute("diysiteUsername",
+			// user.getUsername());
+			// return res;
+			// }
+			// request.getSession().setAttribute("username",
+			// user.getUsername());
+			// request.getSession().setAttribute("usermobile",
+			// user.getMobile());
+			// return res;
+
+			Integer roleId = user.getRoleId().intValue();
+			switch (roleId) {
 			case 1:
 				res.put("role", 1);
 				request.getSession().setAttribute("enterpriseUsername", user.getUsername());
@@ -211,122 +213,116 @@ public class TdLoginController {
 				res.put("role", 4);
 				request.getSession().setAttribute("activityUsername", user.getUsername());
 				request.getSession().setAttribute("activityUsermobile", user.getMobile());
-				break;	
+				break;
 			default:
 				res.put("role", 0);
 				request.getSession().setAttribute("username", user.getUsername());
 				request.getSession().setAttribute("usermobile", user.getMobile());
 				break;
-		}
-				return res;
+			}
+			return res;
 		} else { // 账号-手机都未通过验证，则用户不存在
 			res.put("msg", "不存在该用户");
 			return res;
 		}
-		
+
 	}
 
 	/**
-	 * @author Zhangji
-	 * 验证码检验
+	 * @author Zhangji 验证码检验
 	 */
-	  @RequestMapping(value = "/login/check/{type}", method = RequestMethod.POST)
-	    @ResponseBody
-	    public Map<String, String> validateForm(@PathVariable String type, String param,HttpServletRequest request) {
-	        Map<String, String> res = new HashMap<String, String>();
+	@RequestMapping(value = "/login/check/{type}", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, String> validateForm(@PathVariable String type, String param, HttpServletRequest request) {
+		Map<String, String> res = new HashMap<String, String>();
 
-	        res.put("status", "n");
-	        
-	        
-	        if (null == type)
-	        {
-	        	res.put("info", "参数错误");
-	            return res;
-	        }
-	        
-	        if (type.equalsIgnoreCase("code"))
-	        {
-	        	if (null == param || param.isEmpty()) {
-	                res.put("info", "请输入验证码");
-	                return res;
-	            }
-	        	
-	        	TdUser user = tdUserService.findByUsername(param);
-	        	String codeBack = (String) request.getSession().getAttribute("RANDOMVALIDATECODEKEY");
-	        	if (!codeBack.equalsIgnoreCase(param))
-	        	{
-	        		res.put("info", "验证码错误");
-	                return res;
-	        	}
-	        }
-	        
-	        res.put("status", "y");
+		res.put("status", "n");
 
-	        return res;
-	    }
+		if (null == type) {
+			res.put("info", "参数错误");
+			return res;
+		}
+
+		if (type.equalsIgnoreCase("code")) {
+			if (null == param || param.isEmpty()) {
+				res.put("info", "请输入验证码");
+				return res;
+			}
+
+			TdUser user = tdUserService.findByUsername(param);
+			String codeBack = (String) request.getSession().getAttribute("RANDOMVALIDATECODEKEY");
+			if (!codeBack.equalsIgnoreCase(param)) {
+				res.put("info", "验证码错误");
+				return res;
+			}
+		}
+
+		res.put("status", "y");
+
+		return res;
+	}
+
 	/**
 	 * @author lc
-	 * @return 
+	 * @return
 	 * @注释：密码找回
 	 */
 	@RequestMapping(value = "/login/password_retrieve", method = RequestMethod.GET)
-	public String Retrieve(HttpServletRequest req, ModelMap map){
+	public String Retrieve(HttpServletRequest req, ModelMap map) {
 		tdCommonService.setHeader(map, req);
 		return "/client/user_retrieve_step1";
 	}
-	
+
 	@RequestMapping(value = "/login/password_retrieve", method = RequestMethod.POST)
 	@ResponseBody
-	public  Map<String, Object> Check(String username, String code, HttpServletRequest request){
+	public Map<String, Object> Check(String username, String code, HttpServletRequest request) {
 		Map<String, Object> res = new HashMap<String, Object>();
 		res.put("code", 1);
-		
+
 		if (username.isEmpty()) {
 			res.put("msg", "用户名不能为空");
 		}
-		
+
 		String codeBack = (String) request.getSession().getAttribute("RANDOMVALIDATECODEKEY");
-		if (!codeBack.equalsIgnoreCase(code)){
+		if (!codeBack.equalsIgnoreCase(code)) {
 			res.put("msg", "验证码错误");
 			return res;
-		 }
-		 
+		}
+
 		TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
 		if (null != user) {
-			
+
 			request.getSession().setAttribute("retrieve_username", user.getUsername());
-            
+
 			res.put("code", 0);
-		}
-		else {
+		} else {
 			res.put("msg", "用户不存在");
 		}
-		
+
 		return res;
 	}
-	
+
 	@RequestMapping(value = "/login/retrieve_step2", method = RequestMethod.GET)
-	public String Step2(Integer errCode, HttpServletRequest req, ModelMap map){
+	public String Step2(Integer errCode, HttpServletRequest req, ModelMap map) {
 		tdCommonService.setHeader(map, req);
 		String username = (String) req.getSession().getAttribute("retrieve_username");
 		TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
-		
-		 if (null != errCode)
-         {
-             if (errCode.equals(1))
-             {
-                 map.addAttribute("error", "验证码错误");
-             }
-             
-             map.addAttribute("errCode", errCode);
-         }
-		 
+
+		if (null != errCode) {
+			if (errCode.equals(1)) {
+				map.addAttribute("error", "验证码错误");
+			}
+
+			map.addAttribute("errCode", errCode);
+		}
+
 		map.put("user", user);
-		
+
 		return "/client/user_retrieve_step2";
 	}
+
 	@RequestMapping(value = "/login/retrieve_step2", method = RequestMethod.POST)
-	public String Step2(String smsCode,HttpServletRequest req, ModelMap map){
+	public String Step2(String smsCode, HttpServletRequest req, ModelMap map) {
 		if (null == smsCode) {
 			return "redirect:/login/retrieve_step2?errCode=4";
 		}
@@ -337,12 +333,12 @@ public class TdLoginController {
 		String username = (String) req.getSession().getAttribute("retrieve_username");
 		map.put("retrieve_username", username);
 		tdCommonService.setHeader(map, req);
-		
+
 		return "/client/user_retrieve_step3";
 	}
-	
+
 	@RequestMapping(value = "/login/retrieve_step3", method = RequestMethod.POST)
-	public String Step3(String password, HttpServletRequest req, ModelMap map){
+	public String Step3(String password, HttpServletRequest req, ModelMap map) {
 		String username = (String) req.getSession().getAttribute("retrieve_username");
 		TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
 		if (null != password) {
@@ -355,14 +351,14 @@ public class TdLoginController {
 		}
 		return "/client/error_404";
 	}
-	
-    /**
+
+	/**
 	 * @author lc
 	 * @注释：登录手机验证
 	 */
 	@RequestMapping(value = "/login/mobile_accredit", method = RequestMethod.POST)
 	public String mobileVerification(String username, String mobile, String type, String typeId,
-									HttpServletRequest request, ModelMap map){
+			HttpServletRequest request, ModelMap map) {
 		if (null == username) {
 			return "client/error_404";
 		}
@@ -371,13 +367,13 @@ public class TdLoginController {
 		}
 		TdUser user = tdUserService.addNewUser(username, "123456", null, null, null);
 		if (null != user) {
-//			if("qq".equals(type)){
-//				//QQ登录新建账号
-//				user.setQqUserId(typeId);
-//			}else{
-//				//支付宝登录新建账号
-//				user.setAlipayUserId(typeId);
-//			}
+			// if("qq".equals(type)){
+			// //QQ登录新建账号
+			// user.setQqUserId(typeId);
+			// }else{
+			// //支付宝登录新建账号
+			// user.setAlipayUserId(typeId);
+			// }
 			user.setMobile(mobile);
 			user.setLastLoginTime(new Date());
 			tdUserService.save(user);
@@ -387,7 +383,6 @@ public class TdLoginController {
 		}
 		return "client/error_404";
 	}
-	
 
 	@RequestMapping("/logout")
 	public String logOut(HttpServletRequest request) {

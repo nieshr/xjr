@@ -10,7 +10,7 @@
 			<a href="#"><li>合作机构</li></a>
 			<a href="/info/contact"><li class="active">联系方式</li></a>
 		</ul>
-		<div class="logoin"><a href="/login">登录</a><span>|</span><a href="/reg">注册</a></div>
+		<div class="logoin"><a href="/login" <#if username??>style="color:#ff4040;"</#if>>${username!'登陆'}</a><span>|</span><a href="/reg">注册</a></div>
 	</div>
 <!-- 导航end -->
 <!-- banner -->
