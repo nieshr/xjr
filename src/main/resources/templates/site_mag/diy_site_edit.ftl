@@ -94,8 +94,8 @@ $(function () {
       <dt>角色类别</dt>
       <dd>
            <div class="rule-single-select">
-                <select name="roleId" datatype="*0-100" sucmsg=" ">
-                     <option value="" <#if !diy_site??>selected="selected"</#if>>请选择...</option>
+                <select name="roleId" datatype="*" sucmsg=" ">
+                     <option value="" <#if !diy_site?? || !diy_site.roleId??>selected="selected"</#if>>请选择...</option>
                      <option value="2" <#if diy_site?? && diy_site.roleId?? && diy_site.roleId==2>selected="selected"</#if>>区县管理</option> 
                      <option value="3" <#if diy_site?? && diy_site.roleId?? && diy_site.roleId==3>selected="selected"</#if>>专家</option>
                      <option value="4" <#if diy_site?? && diy_site.roleId?? && diy_site.roleId==4>selected="selected"</#if>>活动管理员</option>                   
@@ -145,128 +145,15 @@ $(function () {
         <input name="inCharge" type="text" value="<#if diy_site??>${diy_site.inCharge!""}</#if>" class="input normal" datatype="*" sucmsg=" "> 
     </dd>
   </dl>
-  <#--><dl>
-    <dt>店面图片</dt>
-    <dd>
-        <input id="txtImgUrl" name="imageUri" type="text" datatype="*" value="<#if diy_site?? && diy_site.imageUri??>${diy_site.imageUri!""}</#if>" class="input normal upload-path">
-        <div class="upload-box upload-img"></div>
-        <div class="photo-list thumb_ImgUrl_show">
-            <ul>
-                <li>
-                    <div class="img-box1"></div>
-                </li>
-            </ul>
-        </div>
-        <span class="Validform_checktip"></span>
-    </dd>
-  </dl>
-  
-  <dl id="div_show360_container">
-    <dt>店面展示图片</dt>
-    <dd>
-        <div class="upload-box upload-show360"></div>
-        <div class="photo-list_show360">
-            <ul>
-                <#if diy_site?? && diy_site.showPictures??>
-                    <#list diy_site.showPictures?split(",") as uri>
-                        <#if uri != "">
-                        <li>
-                            <input type="hidden" name="hid_photo_name_show360" value="0|${uri!""}|${uri!""}">
-                            <div class="img-box">
-                                <img src="${uri!""}" bigsrc="${uri!""}">
-                            </div>
-                            <a href="javascript:;" onclick="delImg(this);">删除</a>
-                        </li>
-                        </#if>
-                    </#list>
-                </#if>
-            </ul>
-        </div>
-    </dd>
-  </dl>
-  
-  <dl>
-    <dt>城市</dt>
-    <dd>
-        <div class="rule-single-select">
-            <select name="city" datatype="*" sucmsg=" ">
-                <#if !diy_site?? || !diy_site.city??>
-                    <option value="">请选择城市...</option>
-                </#if>
-                <option value="昆明" <#if diy_site?? && diy_site.city?? && diy_site.city=="昆明">selected="selected"</#if>>昆明</option>
-                <option value="曲靖" <#if diy_site?? && diy_site.city?? && diy_site.city=="曲靖">selected="selected"</#if>>曲靖</option>
-                <option value="大理" <#if diy_site?? && diy_site.city?? && diy_site.city=="大理">selected="selected"</#if>>大理</option>
-            </select>
-        </div>
-    </dd>
-  </dl>
-  
-  <dl>
-    <dt>同盟店详细位置</dt>
-    <dd>
-      <input name="address" type="text" value="<#if diy_site??>${diy_site.address!""}</#if>" class="input normal" datatype="*" errormsg="" sucmsg=" ">
-      <span class="Validform_checktip">该信息可以帮助用户选择最合适的同盟店</span>
-    </dd>
-  </dl>
-  
-  <dl>
-    <dt>经度</dt>
-    <dd>
-      <input name="longitude" type="text" value="<#if diy_site?? && diy_site.longitude??>${diy_site.longitude?string("#.######")}</#if>" class="input normal" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,6})?$/" errormsg="" sucmsg=" ">
-      <a href="http://api.map.baidu.com/lbsapi/getpoint/" target="_blank">坐标拾取</a>
-      <span class="Validform_checktip"></span>
-    </dd>
-  </dl>
-  
-  <dl>
-    <dt>纬度</dt>
-    <dd>
-      <input name="latitude" type="text" value="<#if diy_site?? && diy_site.latitude??>${diy_site.latitude?string("#.######")}</#if>" class="input normal" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,6})?$/" errormsg="" sucmsg=" ">
-      <a href="http://api.map.baidu.com/lbsapi/getpoint/" target="_blank">坐标拾取</a>
-      <span class="Validform_checktip"></span>
-    </dd>
-  </dl>
-  
-  <dl>
-    <dt>付款方式</dt>
-    <dd>
-      <input name="payType" type="text" value="<#if diy_site??>${diy_site.payType!""}</#if>" class="input normal" datatype="*" errormsg="" sucmsg=" ">
-      <span class="Validform_checktip">现金/刷卡</span>
-    </dd>
-  </dl>
-  
-  <dl>
-    <dt>营业时间</dt>
-    <dd>
-      <input name="openTimeSpan" type="text" value="<#if diy_site??>${diy_site.openTimeSpan!""}</#if>" class="input normal" datatype="*" errormsg="" sucmsg=" ">
-      <span class="Validform_checktip"></span>
-    </dd>
-  </dl>
-  
-  <dl>
-    <dt>客服电话</dt>
-    <dd>
-      <input name="serviceTele" type="text" value="<#if diy_site??>${diy_site.serviceTele!""}</#if>" class="input normal" datatype="*" errormsg="" sucmsg=" ">
-      <span class="Validform_checktip"></span>
-    </dd>
-  </dl>
-  
-  <dl>
-    <dt>投诉电话</dt>
-    <dd>
-      <input name="complainTele" type="text" value="<#if diy_site??>${diy_site.complainTele!""}</#if>" class="input normal" datatype="*" errormsg="" sucmsg=" ">
-      <span class="Validform_checktip"></span>
-    </dd>
-  </dl>-->
   
   <dl>
     <dt>是否启用</dt>
     <dd>
       <div class="rule-multi-radio multi-radio">
         <span id="rblStatus" style="display: none;">
-            <input type="radio" name="statusId" value="1" <#if !diy_site?? || !diy_site.statusId?? || diy_site?? && diy_site.statusId?? && diy_site.statusId == 1>checked="checked"</#if>>
+            <input type="radio" name="statusId" value="1" <#if !diy_site?? || diy_site?? && diy_site.statusId?? && diy_site.statusId == 1>checked="checked"</#if>>
             <label>是</label>
-            <input type="radio" name="statusId" value="0" <#if diy_site?? && diy_site.statusId?? && !diy_site.statusId == 0>checked="checked"</#if>>
+            <input type="radio" name="statusId" value="0" <#if diy_site?? && diy_site.statusId?? && diy_site.statusId == 0>checked="checked"</#if>>
             <label>否</label>
         </span>
       </div>
