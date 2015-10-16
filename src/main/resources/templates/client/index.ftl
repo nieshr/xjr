@@ -14,7 +14,11 @@
 <link href="/client/css/l_main.css" rel="stylesheet" type="text/css" />
 
 <script type="text/javascript" src="/client/js/jquery-1.9.1.min.js"></script>
-
+<script type="text/javascript">
+    function collectOnline(){
+        
+    }
+</script>
 </head>
 <body>
  

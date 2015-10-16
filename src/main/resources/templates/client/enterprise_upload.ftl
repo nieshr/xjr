@@ -9,9 +9,10 @@
 <script src="/client/js/main.js"></script>
 <script type="text/javascript" src="/client/js/Validform_v5.3.2_min.js"></script>
 <script>
+
 function done()
 {
-	alert("上传成功！");
+    alert("上传资料成功！");
 	location.href="/enterprise/check";
 }
 <#if done?? &&done == 1>
