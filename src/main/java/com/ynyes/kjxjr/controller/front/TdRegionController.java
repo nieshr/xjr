@@ -180,9 +180,11 @@ public class TdRegionController {
 
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
         TdEnterprise Enterprise = tdEnterpriseService.findOne(id);
-        
-        Enterprise.setStatusId(1L);
-        tdEnterpriseService.save(Enterprise);
+        if (Enterprise.getStatusId()==0||Enterprise.getStatusId()==3)
+        {
+            Enterprise.setStatusId(1L);
+            tdEnterpriseService.save(Enterprise);
+        }
         
         map.addAttribute("enterprise", Enterprise);
         map.addAttribute("user", user);
@@ -208,11 +210,12 @@ public class TdRegionController {
 
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
         TdEnterprise Enterprise = tdEnterpriseService.findOne(id);
-        if (Enterprise.getStatusId()==1)
+        if (Enterprise.getStatusId()==1 ||Enterprise.getStatusId()==0)
         {
-	        Enterprise.setStatusId(0L);
+	        Enterprise.setStatusId(3L);
 	        tdEnterpriseService.save(Enterprise);
         }
+
         map.addAttribute("enterprise", Enterprise);
         map.addAttribute("user", user);
 
@@ -237,7 +240,7 @@ public class TdRegionController {
 
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
         TdEnterprise Enterprise = tdEnterpriseService.findOne(id);
-        if (Enterprise.getStatusId()==2)
+        if (Enterprise.getStatusId()==1 ||Enterprise.getStatusId()==2)
         {
 	        Enterprise.setStatusId(0L);
 	        tdEnterpriseService.save(Enterprise);

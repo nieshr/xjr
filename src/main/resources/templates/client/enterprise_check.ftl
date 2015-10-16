@@ -45,21 +45,32 @@
 
         </dl>
         <div class="change_inform">
-        	<#if enterprise.statusid??>
-		        <#if enterprise.statusId == 1>
-		    		<span>审核状态：已通过</span>
-		    		<input style="cursor:pointer;" type="button" value="申请重新审核" onclick="location.href='/enterprise/recall'"/>
-		        <#elseif enterprise.statusId == 0>
-		    		<span>审核状态：待审核</span>
-		    		<input style="cursor:pointer;" type="button" value="修改基本资料" onclick="location.href='/enterprise/info'"/>	    	
-		        <#elseif enterprise.statusId == 2>
-		    		<span>审核状态：已申请重新审核，等待区县管理员处理</span>
-		    	</#if>    			
-		    <#else>
-		    		<span>状态：尚未填写资料</span>
-		    		<input style="cursor:pointer;" type="button" value="填写报名资料" onclick="location.href='/enterprise/info'"/>	   
-		    </#if>
+	        <#if  enterprise.statusId?? && enterprise.statusId == 1>
+	    		<span>审核状态：已通过</span> 
+	    	</#if>
+	        <#if  enterprise.statusId?? && enterprise.statusId == 0>
+	    		<span>审核状态：待审核</span>
+	    		<input style="cursor:pointer;" type="button" value="申请修改资料" onclick="location.href='/enterprise/recall'"/>
+	    	</#if>	   	
+	        <#if   enterprise.statusId?? && enterprise.statusId == 2>
+	    		<span>审核状态：已申请重新审核，等待区县管理员处理</span>
+	    	</#if>
+	        <#if  enterprise.statusId?? && enterprise.statusId == 3>
+	    		<span>审核状态：未通过</span>
+	    		<input style="cursor:pointer;" type="button" value="申请重新审核" onclick="location.href='/enterprise/recall'"/>
+	    	</#if>	   		    	
+	    	<#if !enterprise.statusId??>
+	    		<span>状态：尚未填写资料</span>
+	    		<input style="cursor:pointer;" type="button" value="填写报名资料" onclick="location.href='/enterprise/info'"/>	   
+	    	</#if>    			
     	</div>
+    	<#if enterprise.fileUrl??>
+	    	<div class="change_inform">
+	        	<span>
+	        	<a style="font-size:12px;  text-decoration: underline;" href="/download/data?name=${enterprise.fileUrl!''}">【申请表附件下载】</a>
+	        	</span>
+	        </div>
+        </#if>
     </div>  
  
       <form>
@@ -69,7 +80,7 @@
 
     			<div><span><#if enterprise.formType??&&enterprise.formType == 0>企业名称<#else> 项目名称</#if>：</span><input type="text" value="${enterprise.title!''}" disabled="" /></div>
     			<div><span>编号：</span><input type="text" value="${enterprise.number!''}" disabled="" /></div>
-    			<div><span>成立时间：</span><input type="text" value="${enterprise.establish!''}" disabled="" /></div>
+    			<div><span>成立时间：</span><input type="text" value="${enterprise.establish?string("yyyy年MM月dd日")!''}" disabled="" /></div>
     			<div><span>注册资本：</span><input type="text" value="${enterprise.capital!''}" disabled="" />&nbsp;&nbsp;(万元)</div>
     			<div><span>法定代表人：</span><input type="text" value="${enterprise.representative!''}" disabled="" /></div>
     			<div><span>股东结构：</span><textarea disabled="" >${enterprise.shareholder!''}</textarea></div>

@@ -102,13 +102,8 @@
 	        		<td>${item.area!''}</td>
 	        		<td style="color:#529c15;">${item.capital?c!''}万元</td>
 	        		<td style="color:#e67817;">${item.representative!''}</td>
-	        		<td><#if item.statusId == 0>
-	        		     <a href="/region/enterprise/check/${item.id?c!''}">审核</a>
-	        		    <#elseif item.statusId == 1>
-	        		     <a href="/region/enterprise/check/${item.id?c!''}">取消审核</a>
-	        		    <#elseif item.statusId == 2>
-	        		     <a href="/region/enterprise/check/${item.id?c!''}">重新审核</a>	        		     
-	        		    </#if>
+	        		<td>
+	        		     <a href="/region/enterprise/check/${item.id?c!''}">详情</a>
 	        		     | <a href="#">站内信</a>
 	        		</td>
 	        	</tr>

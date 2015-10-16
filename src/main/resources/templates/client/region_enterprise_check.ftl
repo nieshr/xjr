@@ -39,18 +39,22 @@
                 <p>&gt;</p>
                 <a href="#">企业审核</a>
             </dd>
-
+			   <dt class="crumb_back"><a  href="javascript:history.go(-1);">返回上一页</a></dt>
         </dl>
         <div class="change_inform">
             <#if enterprise.statusId == 0>
             <span>审核状态： 待审核</span>
-            <input style="cursor:pointer;" type="button" value="审核通过 " onclick="location.href='/region/enterprise/pass/${enterprise.id?c!''}'"/>            
+            <input style="cursor:pointer;" type="button" value="审核通过 " onclick="location.href='/region/enterprise/pass/${enterprise.id?c!''}'"/>          
+            <input style="cursor:pointer;" type="button" value="审核未通过 " onclick="location.href='/region/enterprise/cancel/${enterprise.id?c!''}'"/>         
             <#elseif enterprise.statusId == 1>
             <span>审核状态：已通过</span>
-            <input style="cursor:pointer;" type="button" value="取消审核 " onclick="location.href='/region/enterprise/cancel/${enterprise.id?c!''}'"/>
+            <input style="cursor:pointer;" type="button" value="取消审核 " onclick="location.href='/region/enterprise/recall/${enterprise.id?c!''}'"/>
             <#elseif enterprise.statusId == 2>
             <span>审核状态： 用户申请了重新审核</span>
             <input style="cursor:pointer;" type="button" value="重新审核 " onclick="location.href='/region/enterprise/recall/${enterprise.id?c!''}'"/> 
+             <#elseif enterprise.statusId == 3>
+            <span>审核状态：未通过</span>
+            <input style="cursor:pointer;" type="button" value="审核通过 " onclick="location.href='/region/enterprise/pass/${enterprise.id?c!''}'"/>           
             </#if>
         </div>
         <div class="change_inform">
@@ -175,6 +179,43 @@
     				<input type="text" value="<#if enterprise.expectBondAmount??>${enterprise.expectBondAmount?c!''}</#if>"  disabled="" />
     				<input type="text" value="${enterprise.expectBondUse!''}"  disabled="" />
                 </div>
+                
+                 			<div>
+    				<p>项目可供资料</p>
+	    			<input style=" width:15px;"  type="checkbox"  name="dataAble" value="商业计划书" disabled=""
+	    				    		<#if enterprise.dataAble?? && dataAble??>
+		    			     			<#list dataAble as item>
+		    			     				<#if item == "商业计划书">
+		    			     					checked="checked"
+		    			     				</#if>
+		    			     			</#list>
+		    			     		</#if>		
+	    			 />
+	    			<span style=" width:auto; display: block; margin-left: 10px; margin-top: 3px; ">商业计划书</span>
+	    			
+	    			 <input style=" width:15px;"  type="checkbox"  name="dataAble" value="可行性报告" disabled=""
+	    				    		<#if enterprise.dataAble?? && dataAble??>
+		    			     			<#list dataAble as item>
+		    			     				<#if item == "可行性报告">
+		    			     					checked="checked"
+		    			     				</#if>
+		    			     			</#list>
+		    			     		</#if>		
+	    			 />
+	    			<span style=" width:auto; display: block; margin-left: 10px; margin-top: 3px; ">可行性报告</span>
+	    			
+	    		    <input style=" width:15px;"  type="checkbox"  name="dataAble" value="其他说明资料" disabled=""
+	    				    		<#if enterprise.dataAble?? && dataAble??>	
+		    			     			<#list dataAble as item>
+		    			     				<#if item == "其他说明资料">
+		    			     					checked="checked"
+		    			     				</#if>
+		    			     			</#list>
+		    			     		</#if>		
+	    			 />
+	    			<span style=" width:auto; display: block; margin-left: 10px; margin-top: 3px; ">其他说明资料</span>
+    			</div>    
+                
                 <div>
                     <p>是否愿意将贵公司所填以上信息向投资金融平台披露</p>
                 <input style=" width:15px;"  type="radio" <#if enterprise.isShow?? &&enterprise.isShow> checked="checked" </#if>name="team" value="" disabled="" />
