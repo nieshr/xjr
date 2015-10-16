@@ -85,6 +85,10 @@ public class TdRegController {
 		 */
 		if(type.equalsIgnoreCase("smsCode")){
 			String smsCode = (String) req.getSession().getAttribute("SMSCODE");
+			if(null == smsCode){
+				res.put("info", "请点击\"发送验证码\"");
+				return res;
+			}
 			if (null == param || param.isEmpty()) {
 				res.put("info", "用户名不能为空");
 				return res;

@@ -147,7 +147,7 @@ public class TdUserController {
 		map.addAttribute("server_ip", req.getLocalName());
 		map.addAttribute("server_port", req.getLocalPort());
 
-		TdUser tdUser = tdUserService.findByUsernameAndIsEnabled(username);
+		TdUser tdUser = tdUserService.findByUsername(username);
 
 		if (null == tdUser) {
 			return "/client/error_404";
@@ -177,12 +177,12 @@ public class TdUserController {
 		} else if (2L == tdUser.getRoleId()) {
 			return "redirect:/region/enterprise/list";
 		} else if (1L == tdUser.getRoleId()) {
-			if (0L == tdUser.getStatusId() || 1L == tdUser.getStatusId() || 2L == tdUser.getStatusId()) {
+			if (null != tdUser.getStatusId()) {
 				return "redirect:/enterprise/check";
 			} else {
 				return "redirect:/enterprise/info";
 			}
-		} 
+		}
 
 		return "/client/user_index";
 	}

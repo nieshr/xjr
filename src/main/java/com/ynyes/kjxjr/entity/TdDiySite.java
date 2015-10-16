@@ -106,6 +106,10 @@ public class TdDiySite {
     // 经度
     @Column
     private Double totalCash;
+    
+    //区县
+    @Column
+    private String region;
 
     public Long getId() {
         return id;
@@ -289,6 +293,14 @@ public class TdDiySite {
 
 	public void setStatusId(Long statusId) {
 		this.statusId = statusId;
+	}
+
+	public String getRegion() {
+		return region;
+	}
+
+	public void setRegion(String region) {
+		this.region = region;
 	}
     
     

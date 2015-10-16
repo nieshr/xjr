@@ -45,7 +45,10 @@
             <div class="clear"></div>
 
             <div class="banner1">
-                <img src="${site.wxQrCode!''}" alt="二维码" />
+                <img src="/client/l_images/QR_code.png" alt="二维码" />
+                <div style="position:absolute; left:0px; top:723px; width:100%;" >
+                    <a style="margin:0 auto; border:white 2px solid;height:64px;width:280px; display:block;line-height: 64px; border-radius: 10px; color:white; font-size:38px;" href="#">在线征集</a>
+                </div>
             </div>
 
         </div>

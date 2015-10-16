@@ -65,7 +65,7 @@
                 <div><span><#if enterprise.formType == 0>企业名称<#else> 项目名称</#if>：</span><input type="text" value="${enterprise.title!''}" disabled="" /></div>
                 <div><span>编号：</span><input type="text" value="${enterprise.number!''}" disabled="" /></div>
                 <div><span>成立时间：</span><input type="text" value="${enterprise.establish?string("yyyy年MM月dd日")!''}" disabled="" /></div>
-                <div><span>注册资本：</span><input type="text" value="${enterprise.capital!''}" disabled="" />&nbsp;&nbsp;(万元)</div>
+                <div><span>注册资本：</span><input type="text" value="${enterprise.capital?string("0.00")!''}" disabled="" />&nbsp;&nbsp;(万元)</div>
                 <div><span>法定代表人：</span><input type="text" value="${enterprise.representative!''}" disabled="" /></div>
                 <div><span>股东结构：</span><textarea disabled="" >${enterprise.shareholder!''}</textarea></div>
                 <div><span>所在地区：</span>
@@ -125,24 +125,24 @@
                 </div>
                 <div>
                     <span>2012</span>
-                    <input type="text" value="${enterprise.lastAssetes3!''}"  disabled="" />
-                    <input type="text" value="${enterprise.lastNetAssetes3!''}"  disabled="" />
-                    <input type="text" value="${enterprise.lastSale3!''}"  disabled="" />
-                    <input type="text" value="${enterprise.lastProfit3!''}"  disabled="" />
+                    <input type="text" value="${enterprise.lastAssets3?string("0.00")}"  disabled="" />
+                    <input type="text" value="${enterprise.lastNetAssets3?string("0.00")}"  disabled="" />
+                    <input type="text" value="${enterprise.lastSale3?string("0.00")}"  disabled="" />
+                    <input type="text" value="${enterprise.lastProfit3?string("0.00")}"  disabled="" />
                 </div>
                 <div>
                     <span>2013</span>
-                    <input type="text" value="${enterprise.lastAssets2!''}"  disabled="" />
-                    <input type="text" value="${enterprise.lastNetAssets2!''}"  disabled="" />
-                    <input type="text" value="${enterprise.lastSale2!''}"  disabled="" />
-                    <input type="text" value="${enterprise.lastProfit2!''}"  disabled="" />
+                    <input type="text" value="${enterprise.lastAssets2?string("0.00")}"  disabled="" />
+                    <input type="text" value="${enterprise.lastNetAssets2?string("0.00")}"  disabled="" />
+                    <input type="text" value="${enterprise.lastSale2?string("0.00")}"  disabled="" />
+                    <input type="text" value="${enterprise.lastProfit2?string("0.00")}"  disabled="" />
                 </div>
                 <div>
                     <span>2014</span>
-                    <input type="text" value="${enterprise.lastAssets1!''}"  disabled="" />
-                    <input type="text" value="${enterprise.lastNetAssets1!''}"  disabled="" />
-                    <input type="text" value="${enterprise.lastSale1!''}"  disabled="" />
-                    <input type="text" value="${enterprise.lastProfit1!''}"  disabled="" />
+                    <input type="text" value="${enterprise.lastAssets1?string("0.00")}"  disabled="" />
+                    <input type="text" value="${enterprise.lastNetAssets1?string("0.00")}"  disabled="" />
+                    <input type="text" value="${enterprise.lastSale1?string("0.00")}"  disabled="" />
+                    <input type="text" value="${enterprise.lastProfit1?string("0.00")}"  disabled="" />
                 </div>
         </dd>
         <dt class="dt03"><span>三、知识产权基本情况</span><br/><p>此信息将自动生成到报名表中</p></dt>
@@ -163,13 +163,13 @@
                 <div>
                     <span>（一）股权融资</span>
                     <input type="text" value="${enterprise.expectEquityDate?string("yyyy年MM月dd日")!''}"  disabled="" />
-                    <input type="text" value="${enterprise.expectEquityAmount!''}"  disabled="" />
+                    <input type="text" value="<#if enterprise.expectEquityAmount??>${enterprise.expectEquityAmount?string("0.00")}</#if>"  disabled="" />
                     <input type="text" value="${enterprise.expectEquityUse!''}"  disabled="" />
                 </div>
                 <div>
                     <span>（二）债权融资</span>
                     <input type="text" value="${enterprise.expectBondDate?string("yyyy年MM月dd日")!''}"  disabled="" />
-                    <input type="text" value="${enterprise.expectBondAmount!''}"  disabled="" />
+                    <input type="text" value="<#if enterprise.expectBondAmount??>${enterprise.expectBondAmount?string("0.00")}</#if>"  disabled="" />
                     <input type="text" value="${enterprise.expectBondUse!''}"  disabled="" />
                 </div>
                 <div>

@@ -95,9 +95,9 @@ public class TdRegionAdminService {
     }
     
     
-    public TdRegionAdmin addNewUser(String username, String password, String mobile, String email ,String inCharge , Long statusId)
+    public TdRegionAdmin addNewUser(String username, String password, String mobile, String email ,String inCharge , Long statusId , String region)
     {
-        if (null == username || null == password || username.isEmpty() || password.isEmpty()|| email.isEmpty() || inCharge.isEmpty())
+        if (null == username || null == password || username.isEmpty() || password.isEmpty()|| email.isEmpty() || inCharge.isEmpty() || region.isEmpty())
         {
             return null;
         }
@@ -107,16 +107,17 @@ public class TdRegionAdminService {
             return null;
         }
         
-        TdRegionAdmin region = new TdRegionAdmin();
+        TdRegionAdmin regionAdmin = new TdRegionAdmin();
         
-        region.setUsername(username);
-        region.setPassword(password);
-        region.setUsermobile(mobile);
-        region.setEmail(email);
-        region.setStatusId(statusId); 
-        region.setInCharge(inCharge);
+        regionAdmin.setUsername(username);
+        regionAdmin.setPassword(password);
+        regionAdmin.setUsermobile(mobile);
+        regionAdmin.setEmail(email);
+        regionAdmin.setStatusId(statusId); 
+        regionAdmin.setInCharge(inCharge);
+        regionAdmin.setRegion(region);
         
-        return region;
+        return regionAdmin;
     }
     public List<TdRegionAdmin> save(List<TdRegionAdmin> entities)
     {

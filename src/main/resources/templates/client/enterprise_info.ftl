@@ -55,7 +55,6 @@ function showPro(){
 }
 
 
-
 </script>
 </head>
 
@@ -80,7 +79,7 @@ function showPro(){
     <div class="right_content">
 
     <div class="right_box">
-    	<dl class="crumb">
+    	<dl class="crumb" style="z-index:1000;">
         	<dt><a href="#"></a></dt>
             <dd>
             	<p>当前所在位置:</p>
@@ -90,7 +89,7 @@ function showPro(){
                 <p>&gt;</p>
                 <a href="#">填写资料</a>
             </dd>
-            <dt class="crumb_back"><a  href="#">返回上一页</a></dt>
+            <dt class="crumb_back" onClick="history.go(-1);"><a>返回上一页</a></dt>
         </dl>
         <dl class="team_apply">
         	<dt><a class="a1" href="">第一步<br/>资料填写</a></dt>
@@ -124,7 +123,7 @@ function showPro(){
     			  <input id="date_2" name="establish" value="<#if enterprise.formType??>${enterprise.establish?string("yyyy-MM-dd")!''}</#if>" type="hidden" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}$/" errormsg="填写正确格式" sucmsg=" " />
     			<#--<input type="text" name="establish" value="<#if enterprise.formType??>${enterprise.establish!''}</#if>" datatype="*" ignore="ignore" /> -->
     			</div>
-    			<div><span>注册资本<b style="color:#999;font-size:0.6em;">(万元)</b>：</span><input type="text" name="capital" value="<#if enterprise.formType??>${enterprise.capital!''}</#if>" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  errormsg="请填写数字！" /></div>
+    			<div><span>注册资本<b style="color:#999;font-size:0.6em;">(万元)</b>：</span><input type="text" name="capital" value="<#if enterprise.formType??>${enterprise.capital?string("0.00")!''}</#if>" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  errormsg="请填写数字！" /></div>
     			<div><span>法定代表人：</span><input type="text" name="representative" datatype="*"value="<#if enterprise.formType??>${enterprise.representative!''}</#if>" /></div>
     			<div><span>股东结构：</span><textarea name="shareholder" datatype="*"><#if enterprise.formType??>${enterprise.shareholder!''}</#if></textarea></div>
     			<div><span>所在地区：</span>
@@ -181,24 +180,24 @@ function showPro(){
     			</div>
     			<div>
     				<span>2012</span>
-    				<input type="text" name="lastAssets3" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/" value="<#if enterprise.formType??>${enterprise.lastAssets3!''}</#if>"  />
-    				<input type="text" name="lastNetAssets3" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastNetAssets3!''}</#if>"  />
-    				<input type="text" name="lastSale3" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastSale3!''}</#if>"  />
-    				<input type="text" name="lastProfit3" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastProfit3!''}</#if>"  />
+    				<input type="text" name="lastAssets3" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/" value="<#if enterprise.formType??>${enterprise.lastAssets3?string("0.00")}</#if>"  />
+    				<input type="text" name="lastNetAssets3" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastNetAssets3?string("0.00")}</#if>"  />
+    				<input type="text" name="lastSale3" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastSale3?string("0.00")}</#if>"  />
+    				<input type="text" name="lastProfit3" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastProfit3?string("0.00")}</#if>"  />
     			</div>
     			<div>
     				<span>2013</span>
-    				<input type="text" name="lastAssets2" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastAssets2!''}</#if>"  />
-    				<input type="text" name="lastNetAssets2" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastNetAssets2!''}</#if>"  />
-    				<input type="text" name="lastSale2" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastSale2!''}</#if>"  />
-    				<input type="text" name="lastProfit2" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastProfit2!''}</#if>"  />
+    				<input type="text" name="lastAssets2" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastAssets2?string("0.00")}</#if>"  />
+    				<input type="text" name="lastNetAssets2" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastNetAssets2?string("0.00")}</#if>"  />
+    				<input type="text" name="lastSale2" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastSale2?string("0.00")}</#if>"  />
+    				<input type="text" name="lastProfit2" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastProfit2?string("0.00")}</#if>"  />
     			</div>
     			<div>
     				<span>2014</span>
-    				<input type="text" name="lastAssets1" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastAssets1!''}</#if>"  />
-    				<input type="text" name="lastNetAssets1" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastNetAssets1!''}</#if>"  />
-    				<input type="text" name="lastSale1" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastSale1!''}</#if>"  />
-    				<input type="text" name="lastProfit1" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastProfit1!''}</#if>"  />
+    				<input type="text" name="lastAssets1" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastAssets1?string("0.00")}</#if>"  />
+    				<input type="text" name="lastNetAssets1" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastNetAssets1?string("0.00")}</#if>"  />
+    				<input type="text" name="lastSale1" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastSale1?string("0.00")}</#if>"  />
+    				<input type="text" name="lastProfit1" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastProfit1?string("0.00")}</#if>"  />
     			</div>
     	</dd>
     	<dt class="dt03"><span>三、知识产权基本情况</span><br/><p>此信息将自动生成到报名表中</p></dt>
@@ -220,7 +219,7 @@ function showPro(){
     				<input  type="text" id="equi" value="<#if enterprise.formType??>${enterprise.establish?string("yyyy年MM月dd日")!''}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy年MM月dd日',vel:'expectEquityDate',lang:'zh-cn'})" datatype="*" ignore="ignore"/ >
     			  	<input id="expectEquityDate" name="expectEquityDate" value="<#if enterprise.formType??>${enterprise.expectEquityDate?string("yyyy-MM-dd")!''}</#if>" type="hidden" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}$/" errormsg="填写正确格式" sucmsg=" " />
     				
-    				<input type="text" name="expectEquityAmount" value="<#if enterprise.formType??>${enterprise.expectEquityAmount!''}</#if>"  ignore="ignore" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  errormsg="请填写数字！"/>
+    				<input type="text" name="expectEquityAmount" value="<#if enterprise.formType??><#if enterprise.expectEquityAmount??>${enterprise.expectEquityAmount?string("0.00")}</#if></#if>"  ignore="ignore" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  errormsg="请填写数字！"/>
     				<input type="text" name="expectEquityUse" value="<#if enterprise.formType??>${enterprise.expectEquityUse!''}</#if>"  />
     			</div>
     			<div>
@@ -228,7 +227,7 @@ function showPro(){
     				<input  type="text" id="bond" value="<#if enterprise.formType??>${enterprise.establish?string("yyyy年MM月dd日")!''}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy年MM月dd日',vel:'expectBondDate',lang:'zh-cn'})" datatype="*" ignore="ignore"/ >
     			  	<input id="expectBondDate" name="expectBondDate" value="<#if enterprise.formType??>${enterprise.expectBondDate?string("yyyy-MM-dd")!''}</#if>" type="hidden" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}$/" errormsg="填写正确格式" sucmsg=" " />
     				
-    				<input type="text" name="expectBondAmount" value="<#if enterprise.formType??>${enterprise.expectBondAmount!''}</#if>" ignore="ignore" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  errormsg="请填写数字！" />
+    				<input type="text" name="expectBondAmount" value="<#if enterprise.formType??><#if enterprise.expectBondAmount??>${enterprise.expectBondAmount?string("0.00")}</#if></#if>" ignore="ignore" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  errormsg="请填写数字！" />
     				<input type="text" name="expectBondUse" value="<#if enterprise.formType??>${enterprise.expectBondUse!''}</#if>"  />
     			</div>
     			<div>
