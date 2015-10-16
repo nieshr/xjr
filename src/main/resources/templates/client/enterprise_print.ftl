@@ -84,10 +84,11 @@
     			<#if enterprise.formType == 0>
     			<div><span>职工人数：</span><input type="text" value="${enterprise.staffNumber!''}" disabled="" />&nbsp;&nbsp;(人)</div>
     			</#if>
+
     			<div><span>行业归属：</span>
     				<#if enterpriseType_list??>
     					<#list enterpriseType_list as item>
-    						<input disabled="" style="margin-top: -3px; width:15px;" name="type" type="radio" 
+    						<input disabled="" style="margin-top: -3px; width:15px;" name="type" type="checkbox" value="${item.title!''}"
     							<#if enterprise.formType?? && enterpriseType??>
 	    			     			<#list enterpriseType as type>
 	    			     				<#if type == item.title>
@@ -95,7 +96,7 @@
 	    			     				</#if>
 	    			     			</#list>
 	    			     		</#if>			    						
-    						value="${item.title!''}"/><p>${item.title!''}</p>
+    						/><p>${item.title!''}</p>
     					</#list>
     				</#if>	
 				</div>
@@ -111,7 +112,7 @@
     			<div><span>手机：</span><input type="text" value="${enterprise.mobile!''}" disabled="" /></div>
     			<div><span><#if enterprise.formType == 0>企业简介<#else>团队简介</#if>：</span><textarea disabled="" >${enterprise.profile!''}</textarea><span>(200字以内)</span></div>
     			<#if enterprise.formType == 0>
-    				<div><span>公司团队：</span><textarea disabled="" >${enterprise.teamInroduction!''}</textarea><span>(200字以内)</span></div>
+    				<div><span>公司团队：</span><textarea disabled="" >${enterprise.teamIntroduction!''}</textarea><span>(200字以内)</span></div>
     			</#if>
     			<div><span>技术特点及优势：</span><textarea disabled="" >${enterprise.advantage!''}</textarea><span>(200字以内)</span></div>
     			<div><span>市场规模行业地位：</span><textarea disabled="" >${enterprise.size!''}</textarea><span>(200字以内)</span></div>
@@ -128,25 +129,25 @@
     				<span style=" display: block; width:170px; text-align: center; margin-left: 20px; disabled="" ">毛利润</span>
     			</div>
     			<div>
-    				<span>2012</span>
-    				<input type="text" value="${enterprise.lastAssetes3!''}"  disabled="" />
-    				<input type="text" value="${enterprise.lastNetAssetes3!''}"  disabled="" />
-    				<input type="text" value="${enterprise.lastSale3!''}"  disabled="" />
-    				<input type="text" value="${enterprise.lastProfit3!''}"  disabled="" />
+    				<span><#if lastyear3??>${lastyear3?string("yyyy")}</#if></span>
+    				<input type="text" value="<#if enterprise.lastAssets3??>${enterprise.lastAssets3?c!''}</#if>"  disabled="" />
+    				<input type="text" value="<#if enterprise.lastNetAssets3??>${enterprise.lastNetAssets3?c!''}</#if>"  disabled="" />
+    				<input type="text" value="<#if enterprise.lastSale3??>${enterprise.lastSale3?c!''}</#if>"  disabled="" />
+    				<input type="text" value="<#if enterprise.lastProfit3??>${enterprise.lastProfit3?c!''}</#if>"  disabled="" />
     			</div>
     			<div>
-    				<span>2013</span>
-    				<input type="text" value="${enterprise.lastAssets2!''}"  disabled="" />
-    				<input type="text" value="${enterprise.lastNetAssets2!''}"  disabled="" />
-    				<input type="text" value="${enterprise.lastSale2!''}"  disabled="" />
-    				<input type="text" value="${enterprise.lastProfit2!''}"  disabled="" />
+    				<span><#if lastyear2??>${lastyear2?string("yyyy")}</#if></span>
+    				<input type="text" value="<#if enterprise.lastAssets2??>${enterprise.lastAssets2?c!''}</#if>"  disabled="" />
+    				<input type="text" value="<#if enterprise.lastNetAssets2??>${enterprise.lastNetAssets2?c!''}</#if>"  disabled="" />
+    				<input type="text" value="<#if enterprise.lastSale2??>${enterprise.lastSale2?c!''}</#if>"  disabled="" />
+    				<input type="text" value="<#if enterprise.lastProfit2??>${enterprise.lastProfit2?c!''}</#if>"  disabled="" />
     			</div>
     			<div>
-    				<span>2014</span>
-    				<input type="text" value="${enterprise.lastAssets1!''}"  disabled="" />
-    				<input type="text" value="${enterprise.lastNetAssets1!''}"  disabled="" />
-    				<input type="text" value="${enterprise.lastSale1!''}"  disabled="" />
-    				<input type="text" value="${enterprise.lastProfit1!''}"  disabled="" />
+    				<span><#if lastyear1??>${lastyear1?string("yyyy")}</#if></span>
+    				<input type="text" value="<#if enterprise.lastAssets1??>${enterprise.lastAssets1?c!''}</#if>"  disabled="" />
+    				<input type="text" value="<#if enterprise.lastNetAssets1??>${enterprise.lastNetAssets1?c!''}</#if>"  disabled="" />
+    				<input type="text" value="<#if enterprise.lastSale1??>${enterprise.lastSale1?c!''}</#if>"  disabled="" />
+    				<input type="text" value="<#if enterprise.lastProfit1??>${enterprise.lastProfit1?c!''}</#if>"  disabled="" />
     			</div>
     	</dd>
     	<dt class="dt03"><span>三、知识产权基本情况</span><br/><p>此信息将自动生成到报名表中</p></dt>
@@ -166,14 +167,14 @@
     			</div>
     			<div>
     				<span>（一）股权融资</span>
-    				<input type="text" value="${enterprise.expectEquityDate!''}"  disabled="" />
-    				<input type="text" value="${enterprise.expectEquityAmount!''}"  disabled="" />
+    				<input type="text" value="${enterprise.expectEquityDate?string("yyyy年MM月dd日")!''}"  disabled="" />
+    				<input type="text" value="${enterprise.expectEquityAmount?c!''}"  disabled="" />
     				<input type="text" value="${enterprise.expectEquityUse!''}"  disabled="" />
     			</div>
     			<div>
     				<span>（二）债权融资</span>
-    				<input type="text" value="${enterprise.expectBondDate!''}"  disabled="" />
-    				<input type="text" value="${enterprise.expectBondAmount!''}"  disabled="" />
+    				<input type="text" value="<#if enterprise.expectBondDate??>${enterprise.expectBondDate?string("yyyy年MM月dd日")!''}</#if>"  disabled="" />
+    				<input type="text" value="<#if enterprise.expectBondAmount??>${enterprise.expectBondAmount?c!''}</#if>"  disabled="" />
     				<input type="text" value="${enterprise.expectBondUse!''}"  disabled="" />
     			</div>
     			<div>

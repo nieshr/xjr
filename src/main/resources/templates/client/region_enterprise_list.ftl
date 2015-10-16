@@ -100,7 +100,7 @@
 	        		<td>${item.number!''}</td>
 	        		<td>${item.title!''}<td>
 	        		<td>${item.area!''}</td>
-	        		<td style="color:#529c15;">${item.capital!''}万元</td>
+	        		<td style="color:#529c15;">${item.capital?c!''}万元</td>
 	        		<td style="color:#e67817;">${item.representative!''}</td>
 	        		<td><#if item.statusId == 0>
 	        		     <a href="/region/enterprise/check/${item.id?c!''}">审核</a>

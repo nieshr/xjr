@@ -237,6 +237,10 @@ public class TdEnterprise {
     @Column
     private String usermobile;
     
+    // 注册邮箱
+    @Column
+    private String useremail;
+    
     //上传资料文件
     @Column
     private String fileUrl;
@@ -663,6 +667,14 @@ public class TdEnterprise {
 
 	public void setFileUrl(String fileUrl) {
 		this.fileUrl = fileUrl;
+	}
+
+	public String getUseremail() {
+		return useremail;
+	}
+
+	public void setUseremail(String useremail) {
+		this.useremail = useremail;
 	}
 
 

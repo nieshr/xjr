@@ -92,20 +92,22 @@ function showPro(){
             <dt class="crumb_back" onClick="history.go(-1);"><a>返回上一页</a></dt>
         </dl>
         <dl class="team_apply">
-        	<dt><a class="a1" href="">第一步<br/>资料填写</a></dt>
+        	<dt><a class="a1" >第一步<br/>资料填写</a></dt>
         	<dd></dd>
-        	<dt><a class="a2" href="" title="请先填写并提交资料">第二步<br />生成打印</a></dt>
+        	<dt><a class="a2"  title="请先填写并提交资料">第二步<br />生成打印</a></dt>
         	<dd></dd>
-        	<dt><a class="a3" href="" title="请先填写并提交资料">第三步<br />上传报名表</a></dt>
+        	<dt><a class="a3"  title="请先填写并提交资料">第三步<br />上传报名表</a></dt>
         </dl>
 
        
     </div>  
     <#if enterprise??>
-    <input type="hidden" name="id" value="${enterprise.id?c!''}" />
-    <input type="hidden" name="username" value="${enterprise.username!''}"/>
     <dl class="apply_content">
              <form action="/enterprise/info/submit" id="step1" method="post">
+                 <input type="hidden" name="id" value="${enterprise.id?c!''}" />
+			    <input type="hidden" name="username" value="${enterprise.username!''}"/>
+			    <input type="hidden" name="usermobile" value="${enterprise.usermobile!''}"/>
+			    <input type="hidden" name="useremail" value="${enterprise.useremail!''}"/>
         	<div style="margin: 20px 0 20px 50px ;width:100%;">
         		<input type="radio" <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>checked="checked"</#if> name="formType" value="0" onClick="javascript:showEnter();"/><span>企业组表格</span>
         		<input type="radio" <#if enterprise.formType??&&enterprise.formType==1>checked="checked"</#if> name="formType" value="1" onClick="javascript:showPro();"/><span>项目团队表格</span>
@@ -123,7 +125,7 @@ function showPro(){
     			  <input id="date_2" name="establish" value="<#if enterprise.formType??>${enterprise.establish?string("yyyy-MM-dd")!''}</#if>" type="hidden" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}$/" errormsg="填写正确格式" sucmsg=" " />
     			<#--<input type="text" name="establish" value="<#if enterprise.formType??>${enterprise.establish!''}</#if>" datatype="*" ignore="ignore" /> -->
     			</div>
-    			<div><span>注册资本<b style="color:#999;font-size:0.6em;">(万元)</b>：</span><input type="text" name="capital" value="<#if enterprise.formType??>${enterprise.capital?string("0.00")!''}</#if>" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  errormsg="请填写数字！" /></div>
+    			<div><span>注册资本<b style="color:#999;font-size:0.6em;">(万元)</b>：</span><input type="text" name="capital" value="<#if enterprise.formType??>${enterprise.capital?c!''}</#if>" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  errormsg="请填写数字！" /></div>
     			<div><span>法定代表人：</span><input type="text" name="representative" datatype="*"value="<#if enterprise.formType??>${enterprise.representative!''}</#if>" /></div>
     			<div><span>股东结构：</span><textarea name="shareholder" datatype="*"><#if enterprise.formType??>${enterprise.shareholder!''}</#if></textarea></div>
     			<div><span>所在地区：</span>
@@ -179,46 +181,27 @@ function showPro(){
     				<span style=" display: block; width:170px; text-align: center; margin-left: 20px;">毛利润</span>
     			</div>
     			<div>
-    				<span>2012</span>
-<<<<<<< HEAD
-    				<input type="text" name="lastAssets3" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/" value="<#if enterprise.formType??>${enterprise.lastAssets3?string("0.00")}</#if>"  />
-    				<input type="text" name="lastNetAssets3" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastNetAssets3?string("0.00")}</#if>"  />
-    				<input type="text" name="lastSale3" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastSale3?string("0.00")}</#if>"  />
-    				<input type="text" name="lastProfit3" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastProfit3?string("0.00")}</#if>"  />
-=======
-    				<input type="text" name="lastAssets3" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/" value="<#if enterprise.formType??>${enterprise.lastAssets3!''}</#if>"  errormsg="请填写数字！"/>
-    				<input type="text" name="lastNetAssets3" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastNetAssets3!''}</#if>"   errormsg="请填写数字！"/>
-    				<input type="text" name="lastSale3" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastSale3!''}</#if>"  errormsg="请填写数字！" />
-    				<input type="text" name="lastProfit3" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastProfit3!''}</#if>"   errormsg="请填写数字！"/>
->>>>>>> branch 'master' of https://github.com/nieshr/xjr.git
+    				<span><#if lastyear3??>${lastyear3?string("yyyy")}</#if></span>
+
+    				<input type="text" name="lastAssets3" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/" value="<#if enterprise.formType??>${enterprise.lastAssets3?c!''}</#if>"  errormsg="请填写数字！"/>
+    				<input type="text" name="lastNetAssets3" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastNetAssets3?c!''}</#if>"   errormsg="请填写数字！"/>
+    				<input type="text" name="lastSale3" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastSale3?c!''}</#if>"  errormsg="请填写数字！" />
+    				<input type="text" name="lastProfit3" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastProfit3?c!''}</#if>"   errormsg="请填写数字！"/>
     			</div>
     			<div>
-    				<span>2013</span>
-<<<<<<< HEAD
-    				<input type="text" name="lastAssets2" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastAssets2?string("0.00")}</#if>"  />
-    				<input type="text" name="lastNetAssets2" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastNetAssets2?string("0.00")}</#if>"  />
-    				<input type="text" name="lastSale2" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastSale2?string("0.00")}</#if>"  />
-    				<input type="text" name="lastProfit2" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastProfit2?string("0.00")}</#if>"  />
-=======
-    				<input type="text" name="lastAssets2" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastAssets2!''}</#if>"   errormsg="请填写数字！"/>
-    				<input type="text" name="lastNetAssets2" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastNetAssets2!''}</#if>"   errormsg="请填写数字！"/>
-    				<input type="text" name="lastSale2" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastSale2!''}</#if>"  errormsg="请填写数字！" />
-    				<input type="text" name="lastProfit2" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastProfit2!''}</#if>"   errormsg="请填写数字！"/>
->>>>>>> branch 'master' of https://github.com/nieshr/xjr.git
+    				<span><#if lastyear2??>${lastyear2?string("yyyy")}</#if></span>
+
+    				<input type="text" name="lastAssets2" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastAssets2?c!''}</#if>"   errormsg="请填写数字！"/>
+    				<input type="text" name="lastNetAssets2" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastNetAssets2?c!''}</#if>"   errormsg="请填写数字！"/>
+    				<input type="text" name="lastSale2" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastSale2?c!''}</#if>"  errormsg="请填写数字！" />
+    				<input type="text" name="lastProfit2" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastProfit2?c!''}</#if>"   errormsg="请填写数字！"/>
     			</div>
     			<div>
-    				<span>2014</span>
-<<<<<<< HEAD
-    				<input type="text" name="lastAssets1" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastAssets1?string("0.00")}</#if>"  />
-    				<input type="text" name="lastNetAssets1" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastNetAssets1?string("0.00")}</#if>"  />
-    				<input type="text" name="lastSale1" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastSale1?string("0.00")}</#if>"  />
-    				<input type="text" name="lastProfit1" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastProfit1?string("0.00")}</#if>"  />
-=======
-    				<input type="text" name="lastAssets1" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastAssets1!''}</#if>"  errormsg="请填写数字！" />
-    				<input type="text" name="lastNetAssets1" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastNetAssets1!''}</#if>"   errormsg="请填写数字！"/>
-    				<input type="text" name="lastSale1" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastSale1!''}</#if>"  errormsg="请填写数字！" />
-    				<input type="text" name="lastProfit1" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastProfit1!''}</#if>"  errormsg="请填写数字！" />
->>>>>>> branch 'master' of https://github.com/nieshr/xjr.git
+    				<span><#if lastyear1??>${lastyear1?string("yyyy")}</#if></span>
+    				<input type="text" name="lastAssets1" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastAssets1?c!''}</#if>"  errormsg="请填写数字！" />
+    				<input type="text" name="lastNetAssets1" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastNetAssets1?c!''}</#if>"   errormsg="请填写数字！"/>
+    				<input type="text" name="lastSale1" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastSale1?c!''}</#if>"  errormsg="请填写数字！" />
+    				<input type="text" name="lastProfit1" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastProfit1?c!''}</#if>"  errormsg="请填写数字！" />
     			</div>
     	</dd>
     	<dt class="dt03"><span>三、知识产权基本情况</span><br/><p>此信息将自动生成到报名表中</p></dt>
@@ -237,18 +220,18 @@ function showPro(){
     			</div>
     			<div>
     				<span>（一）股权融资</span>
-    				<input  type="text" id="equi" value="<#if enterprise.formType??>${enterprise.establish?string("yyyy年MM月dd日")!''}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy年MM月dd日',vel:'expectEquityDate',lang:'zh-cn'})" datatype="*" ignore="ignore"/ >
-    			  	<input id="expectEquityDate" name="expectEquityDate" value="<#if enterprise.formType??>${enterprise.expectEquityDate?string("yyyy-MM-dd")!''}</#if>" type="hidden" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}$/" errormsg="填写正确格式" sucmsg=" " />
+    				<input  type="text" id="equi" value="<#if enterprise.expectEquityDate??>${enterprise.expectEquityDate?string("yyyy年MM月dd日")!''}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy年MM月dd日',vel:'expectEquityDate',lang:'zh-cn'})" datatype="*" ignore="ignore"/ >
+    			  	<input id="expectEquityDate" name="expectEquityDate" value="<#if enterprise.expectEquityDate??>${enterprise.expectEquityDate?string("yyyy-MM-dd")!''}</#if>" type="hidden" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}$/" errormsg="填写正确格式" sucmsg=" " />
     				
-    				<input type="text" name="expectEquityAmount" value="<#if enterprise.formType??><#if enterprise.expectEquityAmount??>${enterprise.expectEquityAmount?string("0.00")}</#if></#if>"  ignore="ignore" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  errormsg="请填写数字！"/>
+    				<input type="text" name="expectEquityAmount" value="<#if enterprise.formType??><#if enterprise.expectEquityAmount??>${enterprise.expectEquityAmount?c}</#if></#if>"  ignore="ignore" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  errormsg="请填写数字！"/>
     				<input type="text" name="expectEquityUse" value="<#if enterprise.formType??>${enterprise.expectEquityUse!''}</#if>"  />
     			</div>
     			<div>
     				<span>（二）债权融资</span>
-    				<input  type="text" id="bond" value="<#if enterprise.formType??>${enterprise.establish?string("yyyy年MM月dd日")!''}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy年MM月dd日',vel:'expectBondDate',lang:'zh-cn'})" datatype="*" ignore="ignore"/ >
-    			  	<input id="expectBondDate" name="expectBondDate" value="<#if enterprise.formType??>${enterprise.expectBondDate?string("yyyy-MM-dd")!''}</#if>" type="hidden" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}$/" errormsg="填写正确格式" sucmsg=" " />
+    				<input  type="text" id="bond" value="<#if enterprise.expectBondDate??>${enterprise.expectBondDate?string("yyyy年MM月dd日")!''}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy年MM月dd日',vel:'expectBondDate',lang:'zh-cn'})" datatype="*" ignore="ignore"/ >
+    			  	<input id="expectBondDate" name="expectBondDate" value="<#if enterprise.expectBondDate??>${enterprise.expectBondDate?string("yyyy-MM-dd")!''}</#if>" type="hidden" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}$/" errormsg="填写正确格式" sucmsg=" " />
     				
-    				<input type="text" name="expectBondAmount" value="<#if enterprise.formType??><#if enterprise.expectBondAmount??>${enterprise.expectBondAmount?string("0.00")}</#if></#if>" ignore="ignore" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  errormsg="请填写数字！" />
+    				<input type="text" name="expectBondAmount" value="<#if enterprise.formType??><#if enterprise.expectBondAmount??>${enterprise.expectBondAmount?c}</#if></#if>" ignore="ignore" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  errormsg="请填写数字！" />
     				<input type="text" name="expectBondUse" value="<#if enterprise.formType??>${enterprise.expectBondUse!''}</#if>"  />
     			</div>
     			<div>

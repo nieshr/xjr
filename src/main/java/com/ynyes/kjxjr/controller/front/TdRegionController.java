@@ -127,9 +127,31 @@ public class TdRegionController {
         tdCommonService.setHeader(map, req);
 
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
-        TdEnterprise Enterprise = tdEnterpriseService.findOne(id);
+        TdEnterprise enterprise = tdEnterpriseService.findOne(id);
         
-        map.addAttribute("enterprise", Enterprise);
+        //行业所属是多选。。。。
+        if (null != enterprise.getType())
+        {
+        	String type[] = enterprise.getType().split(",");
+        	map.addAttribute("enterpriseType", type);
+        }
+        
+        
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.YEAR, -1);
+        Date lastyear1 = calendar.getTime();
+        map.addAttribute("lastyear1", lastyear1);
+        
+        calendar.add(Calendar.YEAR, -1);
+        Date lastyear2 = calendar.getTime();
+        map.addAttribute("lastyear2", lastyear2);
+        
+        calendar.add(Calendar.YEAR, -1);
+        Date lastyear3 = calendar.getTime();
+        map.addAttribute("lastyear3", lastyear3);
+        
+        map.addAttribute("enterprise", enterprise);
         map.addAttribute("user", user);
 
         return "/client/region_enterprise_check";
