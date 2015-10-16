@@ -45,15 +45,20 @@
 
         </dl>
         <div class="change_inform">
-	        <#if enterprise.statusId == 1>
-	    		<span>审核状态：已通过</span>
-	    		<input style="cursor:pointer;" type="button" value="申请重新审核" onclick="location.href='/enterprise/recall'"/>
-	        <#elseif enterprise.statusId == 0>
-	    		<span>审核状态：待审核</span>
-	    		<input style="cursor:pointer;" type="button" value="修改基本资料" onclick="location.href='/enterprise/info'"/>	    	
-	        <#elseif enterprise.statusId == 2>
-	    		<span>审核状态：已申请重新审核，等待区县管理员处理</span>
-	    	</#if>    			
+        	<#if enterprise.statusid??>
+		        <#if enterprise.statusId == 1>
+		    		<span>审核状态：已通过</span>
+		    		<input style="cursor:pointer;" type="button" value="申请重新审核" onclick="location.href='/enterprise/recall'"/>
+		        <#elseif enterprise.statusId == 0>
+		    		<span>审核状态：待审核</span>
+		    		<input style="cursor:pointer;" type="button" value="修改基本资料" onclick="location.href='/enterprise/info'"/>	    	
+		        <#elseif enterprise.statusId == 2>
+		    		<span>审核状态：已申请重新审核，等待区县管理员处理</span>
+		    	</#if>    			
+		    <#else>
+		    		<span>状态：尚未填写资料</span>
+		    		<input style="cursor:pointer;" type="button" value="填写报名资料" onclick="location.href='/enterprise/info'"/>	   
+		    </#if>
     	</div>
     </div>  
  
@@ -62,7 +67,7 @@
     	<dt class="dt01"><span>一、基本信息</span><br/><p>此信息将自动生成到报名表中</p></dt>
     	<dd>
 
-    			<div><span><#if enterprise.formType == 0>企业名称<#else> 项目名称</#if>：</span><input type="text" value="${enterprise.title!''}" disabled="" /></div>
+    			<div><span><#if enterprise.formType??&&enterprise.formType == 0>企业名称<#else> 项目名称</#if>：</span><input type="text" value="${enterprise.title!''}" disabled="" /></div>
     			<div><span>编号：</span><input type="text" value="${enterprise.number!''}" disabled="" /></div>
     			<div><span>成立时间：</span><input type="text" value="${enterprise.establish!''}" disabled="" /></div>
     			<div><span>注册资本：</span><input type="text" value="${enterprise.capital!''}" disabled="" />&nbsp;&nbsp;(万元)</div>
@@ -72,13 +77,13 @@
     				<select disabled="" >
                         <#if region_list??>
                             <#list region_list as item>
-                                <option value="${item.title!''}" <#if enterprise.area==item.title>selected="selected"</#if>>${item.title!''}</option>
+                                <option value="${item.title!''}" <#if enterprise.area??&&enterprise.area==item.title>selected="selected"</#if>>${item.title!''}</option>
                             </#list>
                         </#if>  
     				</select>
     			</div>
-    			<#if enterprise.formType == 0>
-    			<div><span>职工人数：</span><input type="text" value="${enterprise.staffNumber?c!''}" disabled="" />&nbsp;&nbsp;(人)</div>
+    			<#if enterprise.formType??&& enterprise.formType == 0>
+    			<div><span>职工人数：</span><input type="text" value="<#if enterprise.staffNumber??>${enterprise.staffNumber?c!''}</#if>" disabled="" />&nbsp;&nbsp;(人)</div>
     			</#if>
 
     			<div><span>行业归属：</span>
@@ -96,7 +101,7 @@
     					</#list>
     				</#if>	
 				</div>
-				<#if enterprise.formType == 1>
+				<#if enterprise.formType??&& enterprise.formType == 1>
 					<div><span>主要负责人：</span><input type="text"  name="inCharge" datatype="*" ignore="ignore" disabled=""  value="${enterprise.inCharge!''}" /></div>
 				</#if>
 				<div><span>邮箱：</span><input type="text" value="${enterprise.email!''}" disabled="" /></div>
@@ -106,8 +111,8 @@
     			<div><span>传真：</span><input type="text" value="${enterprise.fax!''}" disabled="" /></div>
     			<div><span>QQ/MSN：</span><input type="text" value="${enterprise.chat!''}" disabled="" /></div>
     			<div><span>手机：</span><input type="text" value="${enterprise.mobile!''}" disabled="" /></div>
-    			<div><span><#if enterprise.formType == 0>企业简介<#else>团队简介</#if>：</span><textarea disabled="" >${enterprise.profile!''}</textarea><span>(200字以内)</span></div>
-    			<#if enterprise.formType == 0>
+    			<div><span><#if enterprise.formType??&& enterprise.formType == 0>企业简介<#else>团队简介</#if>：</span><textarea disabled="" >${enterprise.profile!''}</textarea><span>(200字以内)</span></div>
+    			<#if enterprise.formType??&& enterprise.formType == 0>
     				<div><span>公司团队：</span><textarea disabled="" >${enterprise.teamIntroduction!''}</textarea><span>(200字以内)</span></div>
     			</#if>
     			<div><span>技术特点及优势：</span><textarea disabled="" >${enterprise.advantage!''}</textarea><span>(200字以内)</span></div>
@@ -163,8 +168,8 @@
     			</div>
     			<div>
     				<span>（一）股权融资</span>
-    				<input type="text" value="${enterprise.expectEquityDate?string("yyyy年MM月dd日")!''}"  disabled="" />
-    				<input type="text" value="${enterprise.expectEquityAmount?c!''}"  disabled="" />
+    				<input type="text" value="<#if enterprise.expectEquityDate??>${enterprise.expectEquityDate?string("yyyy年MM月dd日")!''}</#if>"  disabled="" />
+    				<input type="text" value="<#if enterprise.expectEquityAmount??>${enterprise.expectEquityAmount?c!''}</#if>"  disabled="" />
     				<input type="text" value="${enterprise.expectEquityUse!''}"  disabled="" />
     			</div>
     			<div>
@@ -174,10 +179,46 @@
     				<input type="text" value="${enterprise.expectBondUse!''}"  disabled="" />
     			</div>
     			<div>
+    				<p>项目可供资料</p>
+	    			<input style=" width:15px;"  type="checkbox"  name="dataAble" value="商业计划书" disabled=""
+	    				    		<#if enterprise.dataAble?? && dataAble??>
+		    			     			<#list dataAble as item>
+		    			     				<#if item == "商业计划书">
+		    			     					checked="checked"
+		    			     				</#if>
+		    			     			</#list>
+		    			     		</#if>		
+	    			 />
+	    			<span style=" width:auto; display: block; margin-left: 10px; margin-top: 3px; ">商业计划书</span>
+	    			
+	    			 <input style=" width:15px;"  type="checkbox"  name="dataAble" value="可行性报告" disabled=""
+	    				    		<#if enterprise.dataAble?? && dataAble??>
+		    			     			<#list dataAble as item>
+		    			     				<#if item == "可行性报告">
+		    			     					checked="checked"
+		    			     				</#if>
+		    			     			</#list>
+		    			     		</#if>		
+	    			 />
+	    			<span style=" width:auto; display: block; margin-left: 10px; margin-top: 3px; ">可行性报告</span>
+	    			
+	    		    <input style=" width:15px;"  type="checkbox"  name="dataAble" value="其他说明资料" disabled=""
+	    				    		<#if enterprise.dataAble?? && dataAble??>	
+		    			     			<#list dataAble as item>
+		    			     				<#if item == "其他说明资料">
+		    			     					checked="checked"
+		    			     				</#if>
+		    			     			</#list>
+		    			     		</#if>		
+	    			 />
+	    			<span style=" width:auto; display: block; margin-left: 10px; margin-top: 3px; ">其他说明资料</span>
+    			</div>    			
+    			
+    			<div>
     				<p>是否愿意将贵公司所填以上信息向投资金融平台披露</p>
     			<input style=" width:15px;"  type="radio" <#if enterprise.isShow?? &&enterprise.isShow> checked="checked" </#if>name="team" value="" disabled="" />
     			<span style=" width:auto; display: block; margin-left: 10px; margin-top: 3px; ">是（同意请加盖公司公章）</span>
-        		<input style=" width:15px;" type="radio" <#if !enterprise.isShow|| !enterprise.isShow> checked="checked" </#if>  name="team" value="" disabled="" />
+        		<input style=" width:15px;" type="radio" <#if !enterprise.isShow??|| enterprise.isShow??&&!enterprise.isShow> checked="checked" </#if>  name="team" value="" disabled="" />
         		<span style=" width:auto; display: block; margin-left: 10px; margin-top:3px;">否</span>
     			</div>
     	</dd>

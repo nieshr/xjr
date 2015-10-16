@@ -98,6 +98,12 @@ public class TdEnterpriseController {
         	map.addAttribute("enterpriseType", type);
         }
         
+        if (null != enterprise.getDataAble())
+        {
+        	String dataAble[] = enterprise.getDataAble().split(",");
+        	map.addAttribute("dataAble", dataAble);
+        }
+        
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         calendar.add(Calendar.YEAR, -1);
@@ -183,6 +189,11 @@ public class TdEnterpriseController {
         	map.addAttribute("enterpriseType", type);
         }
         
+        if (null != enterprise.getDataAble())
+        {
+        	String dataAble[] = enterprise.getDataAble().split(",");
+        	map.addAttribute("dataAble", dataAble);
+        }
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         calendar.add(Calendar.YEAR, -1);
@@ -246,6 +257,11 @@ public class TdEnterpriseController {
         	map.addAttribute("enterpriseType", type);
         }
         
+        if (null != enterprise.getDataAble())
+        {
+        	String dataAble[] = enterprise.getDataAble().split(",");
+        	map.addAttribute("dataAble", dataAble);
+        }
         
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
@@ -297,6 +313,12 @@ public class TdEnterpriseController {
         {
         	String type[] = enterprise.getType().split(",");
         	map.addAttribute("enterpriseType", type);
+        }
+        
+        if (null != enterprise.getDataAble())
+        {
+        	String dataAble[] = enterprise.getDataAble().split(",");
+        	map.addAttribute("dataAble", dataAble);
         }
         
         Calendar calendar = Calendar.getInstance();

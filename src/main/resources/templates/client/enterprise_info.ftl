@@ -234,6 +234,43 @@ function showPro(){
     				<input type="text" name="expectBondAmount" value="<#if enterprise.formType??><#if enterprise.expectBondAmount??>${enterprise.expectBondAmount?c}</#if></#if>" ignore="ignore" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  errormsg="请填写数字！" />
     				<input type="text" name="expectBondUse" value="<#if enterprise.formType??>${enterprise.expectBondUse!''}</#if>"  />
     			</div>
+    			
+    			<div>
+    				<p>项目可供资料</p>
+	    			<input style=" width:15px;"  type="checkbox"  name="dataAble" value="商业计划书"
+	    				    		<#if enterprise.dataAble?? && dataAble??>
+		    			     			<#list dataAble as item>
+		    			     				<#if item == "商业计划书">
+		    			     					checked="checked"
+		    			     				</#if>
+		    			     			</#list>
+		    			     		</#if>		
+	    			 />
+	    			<span style=" width:auto; display: block; margin-left: 10px; margin-top: 3px; ">商业计划书</span>
+	    			
+	    			 <input style=" width:15px;"  type="checkbox"  name="dataAble" value="可行性报告"
+	    				    		<#if enterprise.dataAble?? && dataAble??>
+		    			     			<#list dataAble as item>
+		    			     				<#if item == "可行性报告">
+		    			     					checked="checked"
+		    			     				</#if>
+		    			     			</#list>
+		    			     		</#if>		
+	    			 />
+	    			<span style=" width:auto; display: block; margin-left: 10px; margin-top: 3px; ">可行性报告</span>
+	    			
+	    		    <input style=" width:15px;"  type="checkbox"  name="dataAble" value="其他说明资料"
+	    				    		<#if enterprise.dataAble?? && dataAble??>	
+		    			     			<#list dataAble as item>
+		    			     				<#if item == "其他说明资料">
+		    			     					checked="checked"
+		    			     				</#if>
+		    			     			</#list>
+		    			     		</#if>		
+	    			 />
+	    			<span style=" width:auto; display: block; margin-left: 10px; margin-top: 3px; ">其他说明资料</span>
+    			</div>
+    			
     			<div>
     				<p>是否愿意将贵公司所填以上信息向投资金融平台披露</p>
     			<input style=" width:15px;"  type="radio" <#if enterprise.formType??&& enterprise.isShow ||!enterprise.formType??> checked="checked"</#if> name="isShow" value="true" />

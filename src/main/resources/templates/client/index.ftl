@@ -313,7 +313,7 @@ function showVideo${item_index}(){
             </div>
         </div>
 
-        <div class="swiper-slide footer" id="s5" style="height:195px;">
+        <div class="swiper-slide footer" id="s5" >
             <div class="five">
                 <!-- 底部 -->
                 <#include "/client/news_common_footer.ftl" />

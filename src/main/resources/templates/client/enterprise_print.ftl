@@ -68,7 +68,7 @@
 
     			<div><span><#if enterprise.formType == 0>企业名称<#else> 项目名称</#if>：</span><input type="text" value="${enterprise.title!''}" disabled="" /></div>
     			<div><span>编号：</span><input type="text" value="${enterprise.number!''}" disabled="" /></div>
-    			<div><span>成立时间：</span><input type="text" value="${enterprise.establish!''}" disabled="" /></div>
+    			<div><span>成立时间：</span><input type="text" value="${enterprise.establish?string("yyyy年MM月dd日")!''}" disabled="" /></div>
     			<div><span>注册资本：</span><input type="text" value="${enterprise.capital!''}" disabled="" />&nbsp;&nbsp;(万元)</div>
     			<div><span>法定代表人：</span><input type="text" value="${enterprise.representative!''}" disabled="" /></div>
     			<div><span>股东结构：</span><textarea disabled="" >${enterprise.shareholder!''}</textarea></div>
@@ -167,8 +167,8 @@
     			</div>
     			<div>
     				<span>（一）股权融资</span>
-    				<input type="text" value="${enterprise.expectEquityDate?string("yyyy年MM月dd日")!''}"  disabled="" />
-    				<input type="text" value="${enterprise.expectEquityAmount?c!''}"  disabled="" />
+    				<input type="text" value="<#if enterprise.expectEquityDate??>${enterprise.expectEquityDate?string("yyyy年MM月dd日")!''}</#if>"  disabled="" />
+    				<input type="text" value="<#if enterprise.expectEquityAmount??>${enterprise.expectEquityAmount?c!''}</#if>"  disabled="" />
     				<input type="text" value="${enterprise.expectEquityUse!''}"  disabled="" />
     			</div>
     			<div>
@@ -176,12 +176,50 @@
     				<input type="text" value="<#if enterprise.expectBondDate??>${enterprise.expectBondDate?string("yyyy年MM月dd日")!''}</#if>"  disabled="" />
     				<input type="text" value="<#if enterprise.expectBondAmount??>${enterprise.expectBondAmount?c!''}</#if>"  disabled="" />
     				<input type="text" value="${enterprise.expectBondUse!''}"  disabled="" />
-    			</div>
+                </div>
     			<div>
+    			
+    			    			<div>
+    				<p>项目可供资料</p>
+	    			<input style=" width:15px;"  type="checkbox"  name="dataAble" value="商业计划书" disabled=""
+	    				    		<#if enterprise.dataAble?? && dataAble??>
+		    			     			<#list dataAble as item>
+		    			     				<#if item == "商业计划书">
+		    			     					checked="checked"
+		    			     				</#if>
+		    			     			</#list>
+		    			     		</#if>		
+	    			 />
+	    			<span style=" width:auto; display: block; margin-left: 10px; margin-top: 3px; ">商业计划书</span>
+	    			
+	    			 <input style=" width:15px;"  type="checkbox"  name="dataAble" value="可行性报告" disabled=""
+	    				    		<#if enterprise.dataAble?? && dataAble??>
+		    			     			<#list dataAble as item>
+		    			     				<#if item == "可行性报告">
+		    			     					checked="checked"
+		    			     				</#if>
+		    			     			</#list>
+		    			     		</#if>		
+	    			 />
+	    			<span style=" width:auto; display: block; margin-left: 10px; margin-top: 3px; ">可行性报告</span>
+	    			
+	    		    <input style=" width:15px;"  type="checkbox"  name="dataAble" value="其他说明资料" disabled=""
+	    				    		<#if enterprise.dataAble?? && dataAble??>	
+		    			     			<#list dataAble as item>
+		    			     				<#if item == "其他说明资料">
+		    			     					checked="checked"
+		    			     				</#if>
+		    			     			</#list>
+		    			     		</#if>		
+	    			 />
+	    			<span style=" width:auto; display: block; margin-left: 10px; margin-top: 3px; ">其他说明资料</span>
+    			</div>    			
+    			
+    			
     				<p>是否愿意将贵公司所填以上信息向投资金融平台披露</p>
     			<input style=" width:15px;"  type="radio" <#if enterprise.isShow?? &&enterprise.isShow> checked="checked" </#if>name="team" value="" disabled="" />
     			<span style=" width:auto; display: block; margin-left: 10px; margin-top: 3px; ">是（同意请加盖公司公章）</span>
-        		<input style=" width:15px;" type="radio" <#if !enterprise.isShow|| !enterprise.isShow> checked="checked" </#if>  name="team" value="" disabled="" />
+        		<input style=" width:15px;" type="radio" <#if !enterprise.isShow??|| enterprise.isShow??&&!enterprise.isShow> checked="checked" </#if>  name="team" value="" disabled="" />
         		<span style=" width:auto; display: block; margin-left: 10px; margin-top:3px;">否</span>
     			</div>
     	</dd>

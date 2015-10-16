@@ -165,8 +165,8 @@
     			</div>
     			<div>
     				<span>（一）股权融资</span>
-    				<input type="text" value="${enterprise.expectEquityDate?string("yyyy年MM月dd日")!''}"  disabled="" />
-    				<input type="text" value="${enterprise.expectEquityAmount?c!''}"  disabled="" />
+    				<input type="text" value="<#if enterprise.expectEquityDate??>${enterprise.expectEquityDate?string("yyyy年MM月dd日")!''}</#if>"  disabled="" />
+    				<input type="text" value="<#if enterprise.expectEquityAmount??>${enterprise.expectEquityAmount?c!''}</#if>"  disabled="" />
     				<input type="text" value="${enterprise.expectEquityUse!''}"  disabled="" />
     			</div>
     			<div>

@@ -244,6 +244,10 @@ public class TdEnterprise {
     //上传资料文件
     @Column
     private String fileUrl;
+    
+    //可供资料
+    @Column
+    private String dataAble;
 
 	public Long getId() {
 		return id;
@@ -675,6 +679,14 @@ public class TdEnterprise {
 
 	public void setUseremail(String useremail) {
 		this.useremail = useremail;
+	}
+
+	public String getDataAble() {
+		return dataAble;
+	}
+
+	public void setDataAble(String dataAble) {
+		this.dataAble = dataAble;
 	}
 
 

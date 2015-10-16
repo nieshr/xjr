@@ -136,6 +136,11 @@ public class TdRegionController {
         	map.addAttribute("enterpriseType", type);
         }
         
+        if (null != enterprise.getDataAble())
+        {
+        	String dataAble[] = enterprise.getDataAble().split(",");
+        	map.addAttribute("dataAble", dataAble);
+        }
         
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
