@@ -180,24 +180,45 @@ function showPro(){
     			</div>
     			<div>
     				<span>2012</span>
+<<<<<<< HEAD
     				<input type="text" name="lastAssets3" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/" value="<#if enterprise.formType??>${enterprise.lastAssets3?string("0.00")}</#if>"  />
     				<input type="text" name="lastNetAssets3" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastNetAssets3?string("0.00")}</#if>"  />
     				<input type="text" name="lastSale3" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastSale3?string("0.00")}</#if>"  />
     				<input type="text" name="lastProfit3" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastProfit3?string("0.00")}</#if>"  />
+=======
+    				<input type="text" name="lastAssets3" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/" value="<#if enterprise.formType??>${enterprise.lastAssets3!''}</#if>"  errormsg="请填写数字！"/>
+    				<input type="text" name="lastNetAssets3" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastNetAssets3!''}</#if>"   errormsg="请填写数字！"/>
+    				<input type="text" name="lastSale3" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastSale3!''}</#if>"  errormsg="请填写数字！" />
+    				<input type="text" name="lastProfit3" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastProfit3!''}</#if>"   errormsg="请填写数字！"/>
+>>>>>>> branch 'master' of https://github.com/nieshr/xjr.git
     			</div>
     			<div>
     				<span>2013</span>
+<<<<<<< HEAD
     				<input type="text" name="lastAssets2" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastAssets2?string("0.00")}</#if>"  />
     				<input type="text" name="lastNetAssets2" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastNetAssets2?string("0.00")}</#if>"  />
     				<input type="text" name="lastSale2" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastSale2?string("0.00")}</#if>"  />
     				<input type="text" name="lastProfit2" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastProfit2?string("0.00")}</#if>"  />
+=======
+    				<input type="text" name="lastAssets2" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastAssets2!''}</#if>"   errormsg="请填写数字！"/>
+    				<input type="text" name="lastNetAssets2" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastNetAssets2!''}</#if>"   errormsg="请填写数字！"/>
+    				<input type="text" name="lastSale2" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastSale2!''}</#if>"  errormsg="请填写数字！" />
+    				<input type="text" name="lastProfit2" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastProfit2!''}</#if>"   errormsg="请填写数字！"/>
+>>>>>>> branch 'master' of https://github.com/nieshr/xjr.git
     			</div>
     			<div>
     				<span>2014</span>
+<<<<<<< HEAD
     				<input type="text" name="lastAssets1" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastAssets1?string("0.00")}</#if>"  />
     				<input type="text" name="lastNetAssets1" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastNetAssets1?string("0.00")}</#if>"  />
     				<input type="text" name="lastSale1" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastSale1?string("0.00")}</#if>"  />
     				<input type="text" name="lastProfit1" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastProfit1?string("0.00")}</#if>"  />
+=======
+    				<input type="text" name="lastAssets1" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastAssets1!''}</#if>"  errormsg="请填写数字！" />
+    				<input type="text" name="lastNetAssets1" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastNetAssets1!''}</#if>"   errormsg="请填写数字！"/>
+    				<input type="text" name="lastSale1" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastSale1!''}</#if>"  errormsg="请填写数字！" />
+    				<input type="text" name="lastProfit1" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.formType??>${enterprise.lastProfit1!''}</#if>"  errormsg="请填写数字！" />
+>>>>>>> branch 'master' of https://github.com/nieshr/xjr.git
     			</div>
     	</dd>
     	<dt class="dt03"><span>三、知识产权基本情况</span><br/><p>此信息将自动生成到报名表中</p></dt>

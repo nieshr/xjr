@@ -125,10 +125,17 @@
                 </div>
                 <div>
                     <span>2012</span>
+<<<<<<< HEAD
                     <input type="text" value="${enterprise.lastAssets3?string("0.00")}"  disabled="" />
                     <input type="text" value="${enterprise.lastNetAssets3?string("0.00")}"  disabled="" />
                     <input type="text" value="${enterprise.lastSale3?string("0.00")}"  disabled="" />
                     <input type="text" value="${enterprise.lastProfit3?string("0.00")}"  disabled="" />
+=======
+                    <input type="text" value="${enterprise.lastAssets3!''}"  disabled="" />
+                    <input type="text" value="${enterprise.lastNetAssets3!''}"  disabled="" />
+                    <input type="text" value="${enterprise.lastSale3!''}"  disabled="" />
+                    <input type="text" value="${enterprise.lastProfit3!''}"  disabled="" />
+>>>>>>> branch 'master' of https://github.com/nieshr/xjr.git
                 </div>
                 <div>
                     <span>2013</span>
