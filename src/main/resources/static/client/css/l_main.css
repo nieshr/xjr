@@ -200,21 +200,21 @@
 .three .section2 .div2 .p1,.three .section2 .div3 .p1{text-align:right;}
 .three .section2 .div6 .p1{margin-top:30px;}
 .three .section2 .div1{
-	top: 33%;
+	top:61%;
 	left: 46%;
 	background:#ffffff;
 	padding: 20px;
 }
 .three .section2 .div2{
-	top:19%;
+	top:54%;
 	left:20%;
 }
 .three .section2 .div3{
-	top:54%;
+	top:74%;
 	left:23%;
 }
 .three .section2 .div4{
-	top:65%;
+	top:82%;
 	left:45%;
 	width:180px;
 	text-align:left;
@@ -223,11 +223,11 @@
 	margin-left:59px;
 }
 .three .section2 .div5{
-	top:54%;
+	top:74%;
 	left:61%;
 }
 .three .section2 .div6{
-	top:19%;
+	top:54%;
 	left:68%;
 }
 .three .section2 div .p1{
@@ -410,8 +410,8 @@
 }
 /*第五屏*/
 #s5{position:relative;}
-.five{position:absolute;top:0;left:0;width:100%;}
-.footer{height:195px;}
+.five{position:absolute;bottom:0;left:0;width:100%;}
+/*.footer{height:195px;}*/
 
 /*右侧浮动导航*/
 .floatbox {

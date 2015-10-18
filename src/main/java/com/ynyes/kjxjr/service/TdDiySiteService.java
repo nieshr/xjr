@@ -157,8 +157,8 @@ public class TdDiySiteService {
                 Long roleId = e.getRoleId();
                 if (roleId ==2)
                 {
-                	TdRegionAdmin region = tdRegionAdminService.addNewUser(e.getUsername(), e.getPassword(), e.getMobile(), e.getEmail(), e.getInCharge() , e.getStatusId());
-                	tdRegionAdminService.save(region);
+                	TdRegionAdmin regionAdmin = tdRegionAdminService.addNewUser(e.getUsername(), e.getPassword(), e.getMobile(), e.getEmail(), e.getInCharge() , e.getStatusId(), e.getRegion());
+                	tdRegionAdminService.save(regionAdmin);
                 }
                 
                 if (roleId ==3)

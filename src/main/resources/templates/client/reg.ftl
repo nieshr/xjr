@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <!--网页左上角小图标-->
-<link rel="shortcut icon" href="/client/images/index/icon.ico" />
+<link rel="shortcut icon" href="/client/images/icon.ico" />
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>科技小巨人-注册</title>
