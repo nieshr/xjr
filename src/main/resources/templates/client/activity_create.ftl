@@ -100,7 +100,6 @@ $(function(){
 function done()
 {
 	alert("上传成功！");
-	location.reload();
 }
 <#if done?? &&done == 1>
 window.onload=done;
@@ -167,6 +166,7 @@ window.onload=done;
                 <input type="hidden" name="id" id="id" value="${activity.id?c!''}"/>
                 <input type="hidden" name="statusEn" id="statusEn" value="${activity.statusEn!''}"/>
                 <input type="hidden" name="statusEx" id="statusEx" value="${activity.statusEx!''}"/>
+                <input type="hidden" name="fileUrl" id="fileUrl" value="<#if activity.fileUrl??>${activity.fileUrl!''}</#if>"/>
             </#if>
     			<div><span>活动名称：</span><input <#if pagetype??&& pagetype == "check">disabled=""</#if> type="text" name="title" id="title" datatype="*"value="<#if activity??>${activity.title!''}</#if>" /></div>
     			<div>
@@ -190,7 +190,6 @@ window.onload=done;
                     </select>
     			</div>
     			<div><span>日期：</span>
-	    		
 	                    <input <#if pagetype??&& pagetype == "check">disabled=""</#if> name="date" type="text" id="date" value="<#if activity??>${activity.date!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="填写正确格式" sucmsg=" " >
 	            </div>    
     			
@@ -210,11 +209,22 @@ window.onload=done;
     			</div>
     			<div>
     				<span style="margin-top: 10px;">项目列表：</span>
-    				<ul class="active_project_list">
+    				<ul class="active_project_text">
     				    <#if selected_enterprise_list??>
     				        <#list selected_enterprise_list as item>
 		    					<li>
-		    						<a class="p01">${item_index+1}.${item.enterpriseTitle!''}</a>
+		    						<p class="p01">${item_index+1}.${item.enterpriseTitle!''}</p>
+		    						<a style="display:block;  width:100px;"></a>
+		    						<a href="#">查看</a>
+		                            <a>丨</a>
+		                            <a href="/enterprise/grade?activityId=${activity.id?c!''}&enterpriseId=${item.id?c!''}">得分</a>
+		                            <a>丨</a>
+		                            <a href="#">分配路演辅导</a>
+		                            <a>丨</a>
+		                            <a href="#">下载</a>
+		                            <a style="display:block;  width:80px;"></a>
+		                            <p class="p02">辅导专家，李专家</p>
+		    						
 		    					</li>
     					    </#list>
     					</#if>    
@@ -227,11 +237,14 @@ window.onload=done;
     			
     			<div style="margin-top:50px;">
     				<span style="margin-top: 10px;">评委专家：</span>
-    				<ul class="active_project_list">
+    				<ul class="active_project_text">
     		    	    <#if selected_expert_list??>
     				        <#list selected_expert_list as item>
 		    					<li>
-		    						<a class="p01">${item_index+1}.${item.name!''}</a>
+		    						<p class="p01">${item_index+1}.${item.name!''}</p>
+		    						<a style="display:block;  width:100px;"></a>
+                                    <a href="#">评分情况</a>
+		    						
 		    					</li>
     					    </#list>
     					</#if>    
@@ -245,11 +258,12 @@ window.onload=done;
      <#if pagetype?? && pagetype == "check">
      <#else>
     	<dt style=" margin-top: 40px;" class="dt05">
-    	   <input type="submit" value="创建" style="cursor:pointer;"/>
+    	   <input type="submit" value="保存" style="cursor:pointer;"/>
     	</dt>
      </#if>
     </dl>
     </form>
+    <#if activity??>
      <h2 style="margin:0 0 20px 20px;">附件：</h2>
     <dl class="active_content">
     	<dd>
@@ -260,7 +274,7 @@ window.onload=done;
 		<div>
 			<span>添加文件：</span>
 			<input name="Filedata" type="file" id="file" value="" />
-			<input  style="margin-left:20px;" class="area_save_btn" type="submit" value="上传" />
+			<input  style="margin-left:20px;" class="area_save_btn" type="button" onclick="javascript:submitCheck();" value="上传" />
 		</div>
 		</form>
 		</#if>
@@ -277,7 +291,7 @@ window.onload=done;
 			</div>
 	    </#if>	
 		</dl>
-		
+		</#if>
 		
     </div>
 </div><!--content_end-->

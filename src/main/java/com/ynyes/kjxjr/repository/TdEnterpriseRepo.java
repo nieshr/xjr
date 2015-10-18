@@ -28,20 +28,20 @@ public interface TdEnterpriseRepo extends
     
     
     Page<TdEnterprise> findByAreaAndStatusIdAndTitleContainingOrderBySortIdAsc(String area, Long statusId , String keywords, Pageable page);
-    Page<TdEnterprise> findByTypeAndStatusIdAndTitleContainingOrderBySortIdAsc(String type, Long statusId , String keywords, Pageable page);
+    Page<TdEnterprise> findByTypeContainingAndStatusIdAndTitleContainingOrderBySortIdAsc(String type, Long statusId , String keywords, Pageable page);
     Page<TdEnterprise> findByFormTypeAndStatusIdAndTitleContainingOrderBySortIdAsc(Long formType, Long statusId , String keywords, Pageable page);
-    Page<TdEnterprise> findByAreaAndTypeAndStatusIdAndTitleContainingOrderBySortIdAsc(String Area,String type, Long statusId , String keywords, Pageable page);
+    Page<TdEnterprise> findByAreaAndTypeContainingAndStatusIdAndTitleContainingOrderBySortIdAsc(String Area,String type, Long statusId , String keywords, Pageable page);
     Page<TdEnterprise> findByAreaAndFormTypeAndStatusIdAndTitleContainingOrderBySortIdAsc(String Area,Long formType, Long statusId , String keywords, Pageable page);
-    Page<TdEnterprise> findByTypeAndFormTypeAndStatusIdAndTitleContainingOrderBySortIdAsc(String type,Long formType, Long statusId , String keywords, Pageable page);
-    Page<TdEnterprise> findByAreaAndTypeAndFormTypeAndStatusIdAndTitleContainingOrderBySortIdAsc(String Area,String type,Long formType, Long statusId , String keywords, Pageable page);
+    Page<TdEnterprise> findByTypeContainingAndFormTypeAndStatusIdAndTitleContainingOrderBySortIdAsc(String type,Long formType, Long statusId , String keywords, Pageable page);
+    Page<TdEnterprise> findByAreaAndTypeContainingAndFormTypeAndStatusIdAndTitleContainingOrderBySortIdAsc(String Area,String type,Long formType, Long statusId , String keywords, Pageable page);
     
     Page<TdEnterprise> findByAreaAndStatusIdOrderBySortIdAsc(String area, Long statusId , Pageable page);
-    Page<TdEnterprise> findByTypeAndStatusIdOrderBySortIdAsc(String type,Long statusId , Pageable page);
+    Page<TdEnterprise> findByTypeContainingAndStatusIdOrderBySortIdAsc(String type,Long statusId , Pageable page);
     Page<TdEnterprise> findByFormTypeAndStatusIdOrderBySortIdAsc(Long formType, Long statusId , Pageable page);
-    Page<TdEnterprise> findByAreaAndTypeAndStatusIdOrderBySortIdAsc(String Area,String type,Long statusId , Pageable page);
+    Page<TdEnterprise> findByAreaAndTypeContainingAndStatusIdOrderBySortIdAsc(String Area,String type,Long statusId , Pageable page);
     Page<TdEnterprise> findByAreaAndFormTypeAndStatusIdOrderBySortIdAsc(String Area,Long formType,Long statusId ,  Pageable page);
-    Page<TdEnterprise> findByTypeAndFormTypeAndStatusIdOrderBySortIdAsc(String type,Long formType, Long statusId , Pageable page);
-    Page<TdEnterprise> findByAreaAndTypeAndFormTypeAndStatusIdOrderBySortIdAsc(String Area,String type,Long formType,Long statusId , Pageable page);
+    Page<TdEnterprise> findByTypeContainingAndFormTypeAndStatusIdOrderBySortIdAsc(String type,Long formType, Long statusId , Pageable page);
+    Page<TdEnterprise> findByAreaAndTypeContainingAndFormTypeAndStatusIdOrderBySortIdAsc(String Area,String type,Long formType,Long statusId , Pageable page);
     
     
     

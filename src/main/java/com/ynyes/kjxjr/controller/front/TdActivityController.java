@@ -1,6 +1,7 @@
 package com.ynyes.kjxjr.controller.front;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -108,7 +110,7 @@ public class TdActivityController {
     }
     
     @RequestMapping(value = "/create", method = RequestMethod.GET)
-    public String activityCreate(HttpServletRequest req, ModelMap map) {
+    public String activityCreate(HttpServletRequest req, ModelMap map , Long done) {
         String username = (String) req.getSession().getAttribute("activityUsername");
 
         if (null == username) {
@@ -131,9 +133,63 @@ public class TdActivityController {
 //        map.addAttribute("activity_page", activityPage);
         map.addAttribute("user", user);
         map.addAttribute("pagetype", "create");
+        map.addAttribute("done", done);
 
         return "/client/activity_create";
     }
+    
+    //区县审核项目，查看详情
+    @RequestMapping(value = "/enterprise/check/{id}", method = RequestMethod.GET)
+    public String userEnterpriseCheck(HttpServletRequest req, ModelMap map,@PathVariable Long id) {
+        String username = (String) req.getSession().getAttribute("activityUsername");
+
+        if (null == username) {
+            return "redirect:/login";
+        }
+        
+        if (null == id)
+        {
+        	return "/client/error_404";
+        }
+
+        tdCommonService.setHeader(map, req);
+
+        TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
+        TdEnterprise enterprise = tdEnterpriseService.findOne(id);
+        
+        //行业所属是多选。。。。
+        if (null != enterprise.getType())
+        {
+        	String type[] = enterprise.getType().split(",");
+        	map.addAttribute("enterpriseType", type);
+        }
+        
+        if (null != enterprise.getDataAble())
+        {
+        	String dataAble[] = enterprise.getDataAble().split(",");
+        	map.addAttribute("dataAble", dataAble);
+        }
+        
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.YEAR, -1);
+        Date lastyear1 = calendar.getTime();
+        map.addAttribute("lastyear1", lastyear1);
+        
+        calendar.add(Calendar.YEAR, -1);
+        Date lastyear2 = calendar.getTime();
+        map.addAttribute("lastyear2", lastyear2);
+        
+        calendar.add(Calendar.YEAR, -1);
+        Date lastyear3 = calendar.getTime();
+        map.addAttribute("lastyear3", lastyear3);
+        
+        map.addAttribute("enterprise", enterprise);
+        map.addAttribute("user", user);
+
+        return "/client/activity_enterprise_check";
+    }
+    
     
     //查看活动
     @RequestMapping(value = "/check", method = RequestMethod.GET)
@@ -229,6 +285,10 @@ public class TdActivityController {
 //        Page<TdActivity> activityPage = tdActivityService.findAllOrderByIdDesc(page,  ClientConstant.pageSize);
         
 //        map.addAttribute("activity_page", activityPage);
+        
+        TdActivity unfinish = tdActivityService.findByStatusId(0L);
+        
+        map.addAttribute("unfinish", unfinish);
         map.addAttribute("activity_page", tdActivityService.findByStatusIdOrderByIdDesc(1L,0, ClientConstant.pageSize));
         map.addAttribute("user", user);
         map.addAttribute("pagetype", "delete");
@@ -812,6 +872,14 @@ public class TdActivityController {
         if (null == username) {
         	res.put("msg", "请先登录！");
             return res;
+        }
+        
+        if (null == title || null == activityType || null == region 
+        	|| null == date || null == address || null == theme || null == introduction 
+        	||null == prepareOn || null == prepareOff ||null == eventEnd)
+        {
+        	res.put("msg", "请先填写完整资料！");
+        	return res;
         }
         
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

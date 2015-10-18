@@ -84,4 +84,16 @@ public class TdEnterpriseGradeService {
 		}
 		return repository.findByExpertIdAndActivityIdAndNumber(expertId, activityId, number);
 	}
+	
+	/**
+	 * 根据企业ID和活动ID查找评分表
+	 * 
+	 * @author dengxiao
+	 */
+	public List<TdEnterpriseGrade> findByEnterpriseIdAndActivityId(Long enterpriseId, Long activityId) {
+		if (null == enterpriseId || null == activityId) {
+			return null;
+		}
+		return repository.findByEnterpriseIdAndActivityIdOrderByExpertIdAsc(enterpriseId, activityId);
+	}
 }

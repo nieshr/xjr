@@ -45,13 +45,14 @@
 
         </dl>
         <div class="change_inform">
+            <#if  enterprise.statusId?? && enterprise.statusId == 0>
+                <span>审核状态：待审核</span>
+                <input style="cursor:pointer;" type="button" value="申请修改资料" onclick="location.href='/enterprise/recall'"/>
+            </#if>  
 	        <#if  enterprise.statusId?? && enterprise.statusId == 1>
 	    		<span>审核状态：已通过</span> 
+	    		 <input style="cursor:pointer;" type="button" value="申请修改资料" onclick="location.href='/enterprise/recall'"/>
 	    	</#if>
-	        <#if  enterprise.statusId?? && enterprise.statusId == 0>
-	    		<span>审核状态：待审核</span>
-	    		<input style="cursor:pointer;" type="button" value="申请修改资料" onclick="location.href='/enterprise/recall'"/>
-	    	</#if>	   	
 	        <#if   enterprise.statusId?? && enterprise.statusId == 2>
 	    		<span>审核状态：已申请重新审核，等待区县管理员处理</span>
 	    	</#if>
@@ -59,8 +60,8 @@
 	    		<span>审核状态：未通过</span>
 	    		<input style="cursor:pointer;" type="button" value="申请重新审核" onclick="location.href='/enterprise/recall'"/>
 	    	</#if>	   		    	
-	    	<#if !enterprise.statusId??>
-	    		<span>状态：尚未填写资料</span>
+	    	<#if !enterprise.statusId?? || enterprise.statusId?? && enterprise.statusId == 4>
+	    		<span>状态：尚未完善资料</span>
 	    		<input style="cursor:pointer;" type="button" value="填写报名资料" onclick="location.href='/enterprise/info'"/>	   
 	    	</#if>    			
     	</div>
@@ -130,8 +131,10 @@
     			<div><span>市场规模行业地位：</span><textarea disabled="" >${enterprise.size!''}</textarea><span>(200字以内)</span></div>
 
     	</dd>
-    	<dt class="dt02"><span>二、近三年财务状况（单位：万元）</span><br/><p>此信息将自动生成到报名表中</p></dt>
-    	<dd>
+        <dt class="dt02 enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>"><span>二、近三年财务状况（单位：万元）</span><br/><p>此信息将自动生成到报名表中</p></dt>
+        <dd class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>">
+            <div class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>">
+    
 
     			<div>
     				<span>年限</span>
@@ -161,15 +164,28 @@
     				<input type="text" value="<#if enterprise.lastSale1??>${enterprise.lastSale1?c!''}</#if>"  disabled="" />
     				<input type="text" value="<#if enterprise.lastProfit1??>${enterprise.lastProfit1?c!''}</#if>"  disabled="" />
     			</div>
+    		</div>	
     	</dd>
-    	<dt class="dt03"><span>三、知识产权基本情况</span><br/><p>此信息将自动生成到报名表中</p></dt>
+        <dt class="dt03 enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>">
+            <span>三、知识产权基本情况</span>
+            <br/><p>此信息将自动生成到报名表中</p>
+        </dt>
+        <dt class="dt03 pro <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>hide</#if>">
+            <span>二、知识产权基本情况</span>
+            <br/><p>此信息将自动生成到报名表中</p>
+        </dt>   
     	<dd>
 
     			<div><span>发明专利</span><input type="text" value="${enterprise.inventiPatent!''}"  disabled="" /></div>
     			<div><span>实用新型专利</span><input type="text" value="${enterprise.newPatent!''}"  disabled="" /></div>
     			<div><span>外观设计专利</span><input type="text" value="${enterprise.designPatent!''}"  disabled="" /></div>
     	</dd>
-    	<dt class="dt04"><span>四、融资信息（单位：万元）</span><br/><p>此信息将自动生成到报名表中</p></dt>
+        <dt class="dt04 enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>"><span>四、融资信息（单位：万元）</span>
+                                    <br/><p>此信息将自动生成到报名表中</p>
+        </dt>
+        <dt class="dt04 pro <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>hide</#if>"><span>三、融资信息（单位：万元）</span>
+                                    <br/><p>此信息将自动生成到报名表中</p>
+        </dt>    
     	<dd style="margin-bottom: 30px;">
     			<div>
     				<span>期望融资方式</span>

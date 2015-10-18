@@ -242,7 +242,7 @@ public class TdRegionController {
         TdEnterprise Enterprise = tdEnterpriseService.findOne(id);
         if (Enterprise.getStatusId()==1 ||Enterprise.getStatusId()==2)
         {
-	        Enterprise.setStatusId(0L);
+	        Enterprise.setStatusId(4L);
 	        tdEnterpriseService.save(Enterprise);
         }
         map.addAttribute("enterprise", Enterprise);
@@ -534,14 +534,14 @@ public String exportRecommend(
       HSSFSheet sheet = wb.createSheet("activityEnterprise");  
       //列宽
       
-      sheet.setColumnWidth((short) 0 , 1000);
-      sheet.setColumnWidth((short) 1 , 1500);
-      sheet.setColumnWidth((short) 2 , 10000);
-      sheet.setColumnWidth((short) 3 , 2000);
-      sheet.setColumnWidth((short) 4 , 4000);
-      sheet.setColumnWidth((short) 5 , 4000);
-      sheet.setColumnWidth((short) 6 , 20000);
-      sheet.setColumnWidth((short) 7 , 10000);
+      sheet.setColumnWidth((short) 0 , 4*256);
+      sheet.setColumnWidth((short) 1 , 6*256);
+      sheet.setColumnWidth((short) 2 , 40*256);
+      sheet.setColumnWidth((short) 3 , 8*256);
+      sheet.setColumnWidth((short) 4 , 13*256);
+      sheet.setColumnWidth((short) 5 , 12*256);
+      sheet.setColumnWidth((short) 6 , 100*256);
+      sheet.setColumnWidth((short) 7 , 100*256);
       
       
       
@@ -611,7 +611,7 @@ public String exportRecommend(
       cell.setCellStyle(right);
       cell = row.createCell((short) 7);  
       cell.setCellValue(date);  
-      cell.setCellStyle(style);
+      cell.setCellStyle(left);
       
       
       

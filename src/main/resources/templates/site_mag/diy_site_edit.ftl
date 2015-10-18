@@ -122,8 +122,10 @@ $(function () {
       <dt>区县</dt>
       <dd>
            <div class="rule-single-select">
-                <select name="region" datatype="*"  sucmsg=" ">
+                <select name="region"  sucmsg=" ">
+                <#--
                      <option value="" <#if !diy_site?? || !diy_site.region??>selected="selected"</#if>>请选择...</option>
+                    -->
                      <#if region_list??>
                      	<#list region_list as item>
                      		<option value="${item.tite!''}" <#if diy_site?? && diy_site.region?? && diy_site.region==item.title>selected="selected"</#if>>${item.title!''}</option> 

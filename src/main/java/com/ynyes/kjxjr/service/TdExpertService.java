@@ -132,6 +132,7 @@ public class TdExpertService {
         expert.setEmail(email);
         expert.setStatusId(statusId); // 正常
         expert.setInCharge(inCharge);
+        expert.setName(inCharge);
         
         return expert;
     }

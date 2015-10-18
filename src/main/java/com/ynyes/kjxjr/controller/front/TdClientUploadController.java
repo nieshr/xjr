@@ -116,6 +116,7 @@ public class TdClientUploadController {
             String fileUrl = enterprise.getFileUrl();
             		
             enterprise.setFileUrl(fileName);
+            enterprise.setStatusId(0L);
             tdEnterpriseService.save(enterprise);
       
 

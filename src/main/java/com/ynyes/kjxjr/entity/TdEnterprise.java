@@ -219,7 +219,7 @@ public class TdEnterprise {
     
     
     /**
-     * 状态  0：待审核；1：已审核；2：取消审核
+     * 状态  0：待审核；1：已通过；2：申请重新审核 ； 3：未通过；4：重新审核
      * @author Zhangji
      */
     @Column

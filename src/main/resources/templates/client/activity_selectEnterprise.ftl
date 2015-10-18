@@ -44,7 +44,7 @@
 
                 <a href="#">活动列表</a>
 				<p>&gt;</p>
-                <a href="#">预选企业/团队</a>
+                <a href="#">添加企业/团队</a>
             </dd>
             <dt class="crumb_back"><a  href="javascript:history.go(-1);">返回上一页</a></dt>
         </dl>
@@ -96,7 +96,7 @@
 				        		<input type="hidden" name="listId" id="listId" value="${item.id}">
 			        		</td>
 			        		-->
-			        		<td>${item.title!''}</td>
+			        		<td><a href="/activity/enterprise/check/${item.id?c!''}" target=_blank >${item.title!''}</a></td>
 			        		<td style="color:#0ab2cb;">${item.area!''}</td>
 			        		<td style="color:#e67817;">${item.type!''}</td>
 			        		<td><a href="javascript:addEnterprise(${item.id?c!''},${activityId?c!''});">添加</a></td>
@@ -152,9 +152,9 @@
 		
 		
 		
-		<div class="list_base2" id="selectedEnterprise">
+		
         	<#include "/client/activity_selected_enterprise.ftl" />
-        </div>
+        
         <div class="area_add_btn">
 		<!--	<input style="cursor:pointer;"  type="button" value="批量取消预选" />-->
 		</div>
