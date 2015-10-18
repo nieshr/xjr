@@ -49,6 +49,21 @@ $(function () {
         });
     });
 });
+
+
+     $(function(){  
+        $("#roleId").change(function(){      
+        var select_role = $(this).children('option:selected').val();  
+        if(select_role == '2'){  
+        	$("#region").css("display","block");
+         }else{  
+         	$("#region").css("display","none");
+         }  
+        
+     });  
+   });  
+ 
+
 </script>
 </head>
 
@@ -94,11 +109,26 @@ $(function () {
       <dt>角色类别</dt>
       <dd>
            <div class="rule-single-select">
-                <select name="roleId" datatype="*" sucmsg=" ">
+                <select id="roleId" name="roleId" datatype="*" sucmsg=" ">
                      <option value="" <#if !diy_site?? || !diy_site.roleId??>selected="selected"</#if>>请选择...</option>
                      <option value="2" <#if diy_site?? && diy_site.roleId?? && diy_site.roleId==2>selected="selected"</#if>>区县管理</option> 
                      <option value="3" <#if diy_site?? && diy_site.roleId?? && diy_site.roleId==3>selected="selected"</#if>>专家</option>
                      <option value="4" <#if diy_site?? && diy_site.roleId?? && diy_site.roleId==4>selected="selected"</#if>>活动管理员</option>                   
+                </select>
+           </div>
+       </dd>
+  </dl>
+    <dl  id="region"  style= "display:none;">
+      <dt>区县</dt>
+      <dd>
+           <div class="rule-single-select">
+                <select name="region" datatype="*"  sucmsg=" ">
+                     <option value="" <#if !diy_site?? || !diy_site.region??>selected="selected"</#if>>请选择...</option>
+                     <#if region_list??>
+                     	<#list region_list as item>
+                     		<option value="${item.tite!''}" <#if diy_site?? && diy_site.region?? && diy_site.region==item.title>selected="selected"</#if>>${item.title!''}</option> 
+          				</#list>
+          			</#if>            
                 </select>
            </div>
        </dd>
@@ -153,6 +183,7 @@ $(function () {
         <span id="rblStatus" style="display: none;">
             <input type="radio" name="statusId" value="1" <#if !diy_site?? || diy_site?? && diy_site.statusId?? && diy_site.statusId == 1>checked="checked"</#if>>
             <label>是</label>
+
             <input type="radio" name="statusId" value="0" <#if diy_site?? && diy_site.statusId?? && diy_site.statusId == 0>checked="checked"</#if>>
             <label>否</label>
         </span>

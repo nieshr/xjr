@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -86,9 +87,36 @@ public class TdEnterpriseController {
         tdCommonService.setHeader(map, req);
 
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
-        TdEnterprise Enterprise = tdEnterpriseService.findbyUsername(username);
+        TdEnterprise enterprise = tdEnterpriseService.findbyUsername(username);
         
-        map.addAttribute("enterprise", Enterprise);
+        //行业所属是多选。。。。
+        if (null != enterprise.getType())
+        {
+        	String type[] = enterprise.getType().split(",");
+        	map.addAttribute("enterpriseType", type);
+        }
+        
+        if (null != enterprise.getDataAble())
+        {
+        	String dataAble[] = enterprise.getDataAble().split(",");
+        	map.addAttribute("dataAble", dataAble);
+        }
+        
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.YEAR, -1);
+        Date lastyear1 = calendar.getTime();
+        map.addAttribute("lastyear1", lastyear1);
+        
+        calendar.add(Calendar.YEAR, -1);
+        Date lastyear2 = calendar.getTime();
+        map.addAttribute("lastyear2", lastyear2);
+        
+        calendar.add(Calendar.YEAR, -1);
+        Date lastyear3 = calendar.getTime();
+        map.addAttribute("lastyear3", lastyear3);
+
+        map.addAttribute("enterprise", enterprise);
         map.addAttribute("user", user);
 
         
@@ -114,8 +142,17 @@ public class TdEnterpriseController {
 
         if (null == username) {
         	res.put("msg", "请先登录！");
+        	res.put("check", 0);
             return res;
         }
+        
+        if (null != tdEnterprise.getStatusId()&&1 == tdEnterprise.getStatusId())
+        {
+        	res.put("msg", "资料已审核，如需修改请申请重新审核！");
+        	res.put("check", 1);
+        	return res;
+        }
+        
         TdUser user = tdUserService.findByUsername(username);
         Long id = tdEnterprise.getId();
         String number = String.format("%04d", id);
@@ -141,9 +178,35 @@ public class TdEnterpriseController {
         tdCommonService.setHeader(map, req);
 
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
-        TdEnterprise Enterprise = tdEnterpriseService.findbyUsername(username);
+        TdEnterprise enterprise = tdEnterpriseService.findbyUsername(username);
         
-        map.addAttribute("enterprise", Enterprise);
+        //行业所属是多选。。。。
+        if (null != enterprise.getType())
+        {
+        	String type[] = enterprise.getType().split(",");
+        	map.addAttribute("enterpriseType", type);
+        }
+        
+        if (null != enterprise.getDataAble())
+        {
+        	String dataAble[] = enterprise.getDataAble().split(",");
+        	map.addAttribute("dataAble", dataAble);
+        }
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.YEAR, -1);
+        Date lastyear1 = calendar.getTime();
+        map.addAttribute("lastyear1", lastyear1);
+        
+        calendar.add(Calendar.YEAR, -1);
+        Date lastyear2 = calendar.getTime();
+        map.addAttribute("lastyear2", lastyear2);
+        
+        calendar.add(Calendar.YEAR, -1);
+        Date lastyear3 = calendar.getTime();
+        map.addAttribute("lastyear3", lastyear3);
+        
+        map.addAttribute("enterprise", enterprise);
         map.addAttribute("user", user);
 
         return "/client/enterprise_print";
@@ -161,6 +224,8 @@ public class TdEnterpriseController {
 
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
         TdEnterprise Enterprise = tdEnterpriseService.findbyUsername(username);
+        
+        
         
         map.addAttribute("enterprise", Enterprise);
         map.addAttribute("id", Enterprise.getId());
@@ -181,9 +246,36 @@ public class TdEnterpriseController {
         tdCommonService.setHeader(map, req);
 
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
-        TdEnterprise Enterprise = tdEnterpriseService.findbyUsername(username);
+        TdEnterprise enterprise = tdEnterpriseService.findbyUsername(username);
         
-        map.addAttribute("enterprise", Enterprise);
+        //行业所属是多选。。。。
+        if (null != enterprise.getType())
+        {
+        	String type[] = enterprise.getType().split(",");
+        	map.addAttribute("enterpriseType", type);
+        }
+        
+        if (null != enterprise.getDataAble())
+        {
+        	String dataAble[] = enterprise.getDataAble().split(",");
+        	map.addAttribute("dataAble", dataAble);
+        }
+        
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.YEAR, -1);
+        Date lastyear1 = calendar.getTime();
+        map.addAttribute("lastyear1", lastyear1);
+        
+        calendar.add(Calendar.YEAR, -1);
+        Date lastyear2 = calendar.getTime();
+        map.addAttribute("lastyear2", lastyear2);
+        
+        calendar.add(Calendar.YEAR, -1);
+        Date lastyear3 = calendar.getTime();
+        map.addAttribute("lastyear3", lastyear3);
+        
+        map.addAttribute("enterprise", enterprise);
         map.addAttribute("user", user);
 
         
@@ -207,7 +299,40 @@ public class TdEnterpriseController {
         {
         	enterprise.setStatusId(2L);
         	tdEnterpriseService.save(enterprise);
+            if (null != enterprise.getType())
+            {
+            	String type[] = enterprise.getType().split(",");
+            	map.addAttribute("enterpriseType", type);
+            }
         }
+        
+        //行业所属是多选。。。。
+        if (null != enterprise.getType())
+        {
+        	String type[] = enterprise.getType().split(",");
+        	map.addAttribute("enterpriseType", type);
+        }
+        
+        if (null != enterprise.getDataAble())
+        {
+        	String dataAble[] = enterprise.getDataAble().split(",");
+        	map.addAttribute("dataAble", dataAble);
+        }
+        
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.YEAR, -1);
+        Date lastyear1 = calendar.getTime();
+        map.addAttribute("lastyear1", lastyear1);
+        
+        calendar.add(Calendar.YEAR, -1);
+        Date lastyear2 = calendar.getTime();
+        map.addAttribute("lastyear2", lastyear2);
+        
+        calendar.add(Calendar.YEAR, -1);
+        Date lastyear3 = calendar.getTime();
+        map.addAttribute("lastyear3", lastyear3);
+        
         map.addAttribute("enterprise", enterprise);
         map.addAttribute("user", user);
 

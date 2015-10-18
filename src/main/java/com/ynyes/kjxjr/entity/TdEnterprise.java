@@ -34,7 +34,8 @@ public class TdEnterprise {
     
     // 成立时间
     @Column
-    private String establish;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date establish;
     
     // 注册资本
     @Column
@@ -171,7 +172,8 @@ public class TdEnterprise {
     
     // 期望股权融资时间
     @Column
-    private String expectEquityDate;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date expectEquityDate;
  
     // 期望股权融资金额
     @Column
@@ -183,7 +185,8 @@ public class TdEnterprise {
     
     // 期望债权融资时间
     @Column
-    private String expectBondDate;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date expectBondDate;
  
     // 期望债权融资金额
     @Column
@@ -234,9 +237,17 @@ public class TdEnterprise {
     @Column
     private String usermobile;
     
+    // 注册邮箱
+    @Column
+    private String useremail;
+    
     //上传资料文件
     @Column
     private String fileUrl;
+    
+    //可供资料
+    @Column
+    private String dataAble;
 
 	public Long getId() {
 		return id;
@@ -262,11 +273,11 @@ public class TdEnterprise {
 		this.title = title;
 	}
 
-	public String getEstablish() {
+	public Date getEstablish() {
 		return establish;
 	}
 
-	public void setEstablish(String establish) {
+	public void setEstablish(Date establish) {
 		this.establish = establish;
 	}
 
@@ -534,11 +545,11 @@ public class TdEnterprise {
 		this.designPatent = designPatent;
 	}
 
-	public String getExpectEquityDate() {
+	public Date getExpectEquityDate() {
 		return expectEquityDate;
 	}
 
-	public void setExpectEquityDate(String expectEquityDate) {
+	public void setExpectEquityDate(Date expectEquityDate) {
 		this.expectEquityDate = expectEquityDate;
 	}
 
@@ -558,11 +569,11 @@ public class TdEnterprise {
 		this.expectEquityUse = expectEquityUse;
 	}
 
-	public String getExpectBondDate() {
+	public Date getExpectBondDate() {
 		return expectBondDate;
 	}
 
-	public void setExpectBondDate(String expectBondDate) {
+	public void setExpectBondDate(Date expectBondDate) {
 		this.expectBondDate = expectBondDate;
 	}
 
@@ -660,6 +671,22 @@ public class TdEnterprise {
 
 	public void setFileUrl(String fileUrl) {
 		this.fileUrl = fileUrl;
+	}
+
+	public String getUseremail() {
+		return useremail;
+	}
+
+	public void setUseremail(String useremail) {
+		this.useremail = useremail;
+	}
+
+	public String getDataAble() {
+		return dataAble;
+	}
+
+	public void setDataAble(String dataAble) {
+		this.dataAble = dataAble;
 	}
 
 

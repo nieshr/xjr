@@ -47,6 +47,10 @@ public class TdRegionAdmin {
     // 主要负责人
     @Column
     private String inCharge;
+    
+    // 区县
+    @Column
+    private String region;
   
     // 状态
     @Column
@@ -59,6 +63,8 @@ public class TdRegionAdmin {
     // 登录密码
     @Column
     private String password;
+    
+    
 
 	public Long getId() {
 		return id;
@@ -138,6 +144,14 @@ public class TdRegionAdmin {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getRegion() {
+		return region;
+	}
+
+	public void setRegion(String region) {
+		this.region = region;
 	}
 
  
