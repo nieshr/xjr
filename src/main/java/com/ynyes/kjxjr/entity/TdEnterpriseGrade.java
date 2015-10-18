@@ -137,6 +137,18 @@ public class TdEnterpriseGrade {
 	//是否已经打分
 	@Column
 	private Boolean isGrade;
+	
+	//排序号
+	@Column
+	private Long sordId;
+
+	public Long getSordId() {
+		return sordId;
+	}
+
+	public void setSordId(Long sordId) {
+		this.sordId = sordId;
+	}
 
 	public Long getId() {
 		return id;
