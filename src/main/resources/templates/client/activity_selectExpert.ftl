@@ -20,12 +20,12 @@
 <script src="/client/js/main.js"></script>
 <script>
 <#if msg??>
-function warnMsg()
+function warnmsg()
 {
     alert("${msg}");
 }
 
-window.onload=warnMsg;
+window.onload=warnmsg;
 </#if>
 
 </script>
