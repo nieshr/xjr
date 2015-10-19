@@ -1536,7 +1536,7 @@ public class TdEnterpriseController {
               
               row = sheet1.createRow((int) 12);  
               cell = row.createCell((short) 0);  
-              cell.setCellValue(" 邮箱");  
+              cell.setCellValue("邮箱");  
               cell.setCellStyle(style);
               cell = row.createCell((short) 1);
               cell.setCellValue(enterprise.getEmail());  
