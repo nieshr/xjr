@@ -27,19 +27,11 @@ function unfinish()
 window.onload=unfinish;
 </#if>
 
-function confirm()
-{
-var del=confirm("确认删除该活动？");
-if (del == true)
-  {
-  return true;
-  }
-else
-  {
-  return false;
-  }
+function deledeConfirm() {
+    if (!confirm("确认删除活动？")) {
+        window.event.returnValue = false;
+    }
 }
-
 
 </script>
 </head>
@@ -107,7 +99,7 @@ else
 		        		<td>${item.title!''}</td>
 		        		<td style="color:#0ab2cb;">${item.address!''}</td>
 		        		<td style="color:#e67817;">${item.activityType!''}</td>
-		        		<td><a href="/activity/edit?id=${item.id?c!''}">管理</a>丨<a href="/activity/check?id=${item.id?c!''}">查看</a>丨<a  onclick="javascript:confirm();" href="/activity/delete?id=${item.id?c!''}">删除</a></td>
+		        		<td><a href="/activity/edit?id=${item.id?c!''}">管理</a>丨<a href="/activity/check?id=${item.id?c!''}">查看</a>丨<a  onclick="javascript:deledeConfirm();" href="/activity/delete?id=${item.id?c!''}">删除</a></td>
 		        	</tr>
 	        	</#list>
 	        </#if>	   

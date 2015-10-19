@@ -22,7 +22,9 @@ import com.ynyes.kjxjr.entity.TdActivity;
 import com.ynyes.kjxjr.entity.TdActivityEnterprise;
 import com.ynyes.kjxjr.entity.TdActivityExpert;
 import com.ynyes.kjxjr.entity.TdEnterprise;
+import com.ynyes.kjxjr.entity.TdEnterpriseGrade;
 import com.ynyes.kjxjr.entity.TdExpert;
+import com.ynyes.kjxjr.entity.TdExpertCoachEnterprise;
 import com.ynyes.kjxjr.entity.TdUser;
 import com.ynyes.kjxjr.service.TdActivityEnterpriseService;
 import com.ynyes.kjxjr.service.TdActivityExpertService;
@@ -30,8 +32,10 @@ import com.ynyes.kjxjr.service.TdActivityService;
 import com.ynyes.kjxjr.service.TdActivityTypeService;
 import com.ynyes.kjxjr.service.TdCommonService;
 import com.ynyes.kjxjr.service.TdCouponService;
+import com.ynyes.kjxjr.service.TdEnterpriseGradeService;
 import com.ynyes.kjxjr.service.TdEnterpriseService;
 import com.ynyes.kjxjr.service.TdEnterpriseTypeService;
+import com.ynyes.kjxjr.service.TdExpertCoachEnterpriseService;
 import com.ynyes.kjxjr.service.TdExpertService;
 import com.ynyes.kjxjr.service.TdOrderService;
 import com.ynyes.kjxjr.service.TdRegionService;
@@ -78,6 +82,13 @@ public class TdActivityController {
 	
 	@Autowired
 	TdActivityExpertService tdActivityExpertService;
+	
+	@Autowired
+	TdEnterpriseGradeService tdEnterpriseGradeService;
+	
+	@Autowired
+	TdExpertCoachEnterpriseService tdExpertCoachEnterpriseService;
+
 	   /**
      * 企业填写资料
      * @author Zhangji
@@ -307,6 +318,26 @@ public class TdActivityController {
 
         tdCommonService.setHeader(map, req);
         
+//        List<TdActivityExpert> sum = tdActivityExpertService.findByActivityId(id);
+//        //限制数量为20个
+//        if (sum.size() < 20)
+//        {
+//        	map.addAttribute("errormsg", "请选择20个企业！");
+//			Page<TdEnterprise> enterprisePage = tdEnterpriseService.findByStatusId( 1L, 0, ClientConstant.pageSize);
+//			
+//			TdActivity activity = tdActivityService.findByStatusId(0L);
+//			Long activityId = activity.getId();
+//			map.addAttribute("activity", activity);
+//			map.addAttribute("activityId", activityId);
+//			map.addAttribute("statusId", 0);
+//			map.addAttribute("enterprise_page", enterprisePage);
+//			map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityId(activityId));
+//			map.addAttribute("region_list", tdRegionService.findByIsEnableTrueOrderBySortIdAsc());
+//			map.addAttribute("enterpriseType_list", tdEnterpriseTypeService.findByIsEnableTrueOrderBySortIdAsc());
+//			return "/client/activity_selectEnterprise";
+//        }
+        
+        
         TdActivity activity = tdActivityService.findOne(id);
         Long statusId = activity.getStatusId();
         if(0 == statusId)
@@ -339,6 +370,29 @@ public class TdActivityController {
         }
 
         tdCommonService.setHeader(map, req);
+        List<TdActivityExpert> sum = tdActivityExpertService.findByActivityId(id);
+        //限制数量为7个
+        if (sum.size() < 7)
+        {
+        	map.addAttribute("errormsg", "专家数量为7个！");
+
+           int  	page = 0;
+
+            //搜索
+            Page<TdExpert>ExpertPage = null;
+
+    			ExpertPage = tdExpertService.findAllOrderBySortIdAsc(page, ClientConstant.pageSize);
+
+            
+            TdActivity activity = tdActivityService.findByStatusId(0L);
+            Long activityId = activity.getId();
+           	map.addAttribute("activity", activity);
+           	map.addAttribute("activityId", activityId);
+         	map.addAttribute("statusId", 0);
+         	map.addAttribute("Expert_page", ExpertPage);
+         	map.addAttribute("selected_expert_list", tdActivityExpertService.findByActivityId(activityId));
+            return "/client/activity_selectExpert";
+        }
         
         TdActivity activity = tdActivityService.findOne(id);
         if(0L ==activity.getStatusId())
@@ -538,6 +592,12 @@ public class TdActivityController {
         if(null != id&&null !=activityId)
         {
         	TdEnterprise enterprise = tdEnterpriseService.findOne(id);
+        	if (null != enterprise)
+        	{
+        		enterprise.setIsSelect(true);
+        		tdEnterpriseService.save(enterprise);
+        	}
+        	
         	TdActivity activity = tdActivityService.findOne(activityId);
         	
         	TdActivityEnterprise activityEnterprise = tdActivityEnterpriseService.findByActivityIdAndEnterpriseId(activityId,id);
@@ -778,7 +838,7 @@ public class TdActivityController {
         List<TdActivityExpert> expertList = tdActivityExpertService.findByActivityId(activityId);
         if (expertList.size() > 6)
         {
-        	map.addAttribute("msg", "最大添加人数为7人！！");
+        	map.addAttribute("errormsg", "最大添加人数为7人！！");
         	
             map.addAttribute("activityId",activityId);
             map.addAttribute("selected_expert_list", expertList);
@@ -788,7 +848,12 @@ public class TdActivityController {
       
         if(null != id&&null !=activityId)
         {
-        	TdExpert Expert = tdExpertService.findOne(id);
+        	TdExpert expert = tdExpertService.findOne(id);
+        	if (null != expert)
+        	{
+        		expert.setIsSelect(true);
+        		tdExpertService.save(expert);
+        	}
         	TdActivity activity = tdActivityService.findOne(activityId);
         	
         	TdActivityExpert ActivityExpert = tdActivityExpertService.findByActivityIdAndExpertId(activityId,id);
@@ -797,20 +862,39 @@ public class TdActivityController {
         		TdActivityExpert newEnter =new  TdActivityExpert();
         		newEnter.setExpertId(id);
         		newEnter.setCreateTime(activity.getDate());
-        		newEnter.setName(Expert.getName());
+        		newEnter.setName(expert.getName());
         		newEnter.setActivityId(activity.getId());
         		newEnter.setActivityTitle(activity.getTitle());
-        		newEnter.setEmail(Expert.getEmail());
-        		newEnter.setUsermobile(Expert.getUsermobile());
+        		newEnter.setEmail(expert.getEmail());
+        		newEnter.setUsermobile(expert.getUsermobile());
         		tdActivityExpertService.save(newEnter);
         	}
         	else
         	{
         		ActivityExpert.setCreateTime(activity.getDate());
-        		ActivityExpert.setName(Expert.getName());
+        		ActivityExpert.setName(expert.getName());
         		ActivityExpert.setActivityTitle(activity.getTitle());
-        		ActivityExpert.setEmail(Expert.getEmail());
-        		ActivityExpert.setUsermobile(Expert.getUsermobile());
+        		ActivityExpert.setEmail(expert.getEmail());
+        		ActivityExpert.setUsermobile(expert.getUsermobile());
+        		tdActivityExpertService.save(ActivityExpert);
+        	}
+        	
+        	//同时创建评分表数据
+        	TdEnterpriseGrade enterpriseGrade = tdEnterpriseGradeService.findByExpertIdAndActivityId(activityId,id);
+        	if (null == enterpriseGrade)
+        	{
+        		for(int i =0;i<20;i++)
+        		{
+        		TdEnterpriseGrade newEnter =new  TdEnterpriseGrade();
+        		newEnter.setExpertId(id);
+        		newEnter.setActivityId(activity.getId());
+        		newEnter.setIsGrade(false);
+        		tdEnterpriseGradeService.save(newEnter);
+        		}
+        	}
+        	else
+        	{
+        		enterpriseGrade.setExpertId(id);
         		tdActivityExpertService.save(ActivityExpert);
         	}
         	
@@ -837,7 +921,25 @@ public class TdActivityController {
         	{
         		tdActivityExpertService.delete(ActivityExpert);
         	}
+        	
+        	TdExpert expert = tdExpertService.findOne(ActivityExpert.getExpertId());
+        	expert.setIsSelect(false);
+        	tdExpertService.save(expert);
+        	
+        	//同时创建评分表数据
+        	List<TdEnterpriseGrade> enterpriseGradeList = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderByNumberAsc(activityId,ActivityExpert.getExpertId());
+        	if (null != enterpriseGradeList)
+        	{
+        		for(TdEnterpriseGrade item : enterpriseGradeList)
+        		{
+        			tdEnterpriseGradeService.delete(item.getId());
+        		}
+        	}
+        
+        	
+       
         }
+      
         
         map.addAttribute("activityId",activityId);
         map.addAttribute("selected_expert_list", tdActivityExpertService.findByActivityId(activityId));
@@ -926,6 +1028,58 @@ public class TdActivityController {
         return res;
     }
     
+    //区县审核项目，查看详情
+    @RequestMapping(value = "/enterprise/detail/{id}", method = RequestMethod.GET)
+    public String activityEnterpriseCheck(HttpServletRequest req, ModelMap map,@PathVariable Long id) {
+        String username = (String) req.getSession().getAttribute("activityUsername");
+
+        if (null == username) {
+            return "redirect:/login";
+        }
+        
+        if (null == id)
+        {
+        	return "/client/error_404";
+        }
+
+        tdCommonService.setHeader(map, req);
+
+        TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
+        TdEnterprise enterprise = tdEnterpriseService.findOne(id);
+        
+        //行业所属是多选。。。。
+        if (null != enterprise.getType())
+        {
+        	String type[] = enterprise.getType().split(",");
+        	map.addAttribute("enterpriseType", type);
+        }
+        
+        if (null != enterprise.getDataAble())
+        {
+        	String dataAble[] = enterprise.getDataAble().split(",");
+        	map.addAttribute("dataAble", dataAble);
+        }
+        
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.YEAR, -1);
+        Date lastyear1 = calendar.getTime();
+        map.addAttribute("lastyear1", lastyear1);
+        
+        calendar.add(Calendar.YEAR, -1);
+        Date lastyear2 = calendar.getTime();
+        map.addAttribute("lastyear2", lastyear2);
+        
+        calendar.add(Calendar.YEAR, -1);
+        Date lastyear3 = calendar.getTime();
+        map.addAttribute("lastyear3", lastyear3);
+        
+        map.addAttribute("enterprise", enterprise);
+        map.addAttribute("user", user);
+        map.addAttribute("usertype", "activity");
+        
+        return "/client/region_enterprise_check";
+    }
     
     @RequestMapping(value = "/submit", method = RequestMethod.POST)
     @ResponseBody
@@ -964,4 +1118,99 @@ public class TdActivityController {
         return res;
     }
   
+    @RequestMapping(value = "/getGrade")
+    public String getGrade(Long activityId,ModelMap map){
+    	List<TdActivityExpert> activity_experts = tdActivityExpertService.findByActivityId(activityId);
+    	if(null != activity_experts){
+    		if(0 < activity_experts.size()){
+    			List<TdEnterpriseGrade> experts0_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderByNumberAsc(activity_experts.get(0).getExpertId(), activityId);
+    			map.addAttribute("expert0_grade", experts0_grade);
+    			map.addAttribute("expert0", activity_experts.get(0).getName());
+    		}
+    		
+			if(1 < activity_experts.size()){
+				List<TdEnterpriseGrade> experts1_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderByNumberAsc(activity_experts.get(1).getExpertId(), activityId);
+    			map.addAttribute("expert1_grade", experts1_grade);
+    			map.addAttribute("expert1", activity_experts.get(1).getName());		
+    		}
+			
+			if(2 < activity_experts.size()){
+				List<TdEnterpriseGrade> experts2_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderByNumberAsc(activity_experts.get(2).getExpertId(), activityId);
+    			map.addAttribute("expert2_grade", experts2_grade);
+    			map.addAttribute("expert2", activity_experts.get(2).getName());
+			}
+			
+			if(3 < activity_experts.size()){
+				List<TdEnterpriseGrade> experts3_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderByNumberAsc(activity_experts.get(3).getExpertId(), activityId);
+    			map.addAttribute("expert3_grade", experts3_grade);
+    			map.addAttribute("expert3", activity_experts.get(3).getName());
+			}
+			
+			if(4 < activity_experts.size()){
+				List<TdEnterpriseGrade> experts4_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderByNumberAsc(activity_experts.get(4).getExpertId(), activityId);
+    			map.addAttribute("expert4_grade", experts4_grade);
+    			map.addAttribute("expert4", activity_experts.get(4).getName());
+			}
+			
+			if(5 < activity_experts.size()){
+				List<TdEnterpriseGrade> experts5_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderByNumberAsc(activity_experts.get(5).getExpertId(), activityId);
+    			map.addAttribute("expert5_grade", experts5_grade);
+    			map.addAttribute("expert5", activity_experts.get(5).getName());
+			}
+			
+			if(6 < activity_experts.size()){
+				List<TdEnterpriseGrade> experts6_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderByNumberAsc(activity_experts.get(6).getExpertId(), activityId);
+    			map.addAttribute("expert6_grade", experts6_grade);
+    			map.addAttribute("expert6", activity_experts.get(6).getName());
+			}
+    	}
+    	return "/client/total_grade";
+    }
+    
+    @RequestMapping(value = "/getCoach")
+    public String getCoach(Long enterpriseId,Long activityId,ModelMap map,HttpServletRequest req,String keywords,Integer page){
+    	String activityUsername = (String) req.getSession().getAttribute("activityUsername");
+    	if(null == activityUsername){
+    		return "/client/login";
+    	}
+    	
+    	if(null == page){
+    		page = 0;
+    	}
+    	
+    	Page<TdExpert>ExpertPage = null;
+        if (null != keywords && !keywords.isEmpty())
+        {
+        	 ExpertPage = tdExpertService.findBySearch(keywords,page, ClientConstant.pageSize);
+        }
+        else
+        {
+			ExpertPage = tdExpertService.findAllOrderBySortIdAsc(page, ClientConstant.pageSize);
+        }
+    	map.addAttribute("keywords", keywords);
+    	map.addAttribute("page", page);
+    	map.addAttribute("ExpertPage", ExpertPage);
+    	map.addAttribute("enterpriseId", enterpriseId);
+    	map.addAttribute("activityId", activityId);
+    	return "/client/activity_coach_expert";
+    }
+    
+    @RequestMapping(value="/addCoach")
+    public String addCoach(Long expertId,Long enterpriseId,Long activityId,HttpServletRequest req){
+    	String activityUsername = (String) req.getSession().getAttribute("activityUsername");
+    	if(null == activityUsername){
+    		return "/client/login";
+    	}
+    	
+    	TdEnterprise enterprise = tdEnterpriseService.findOne(enterpriseId);
+    	TdExpert expert = tdExpertService.findOne(expertId);
+    	TdExpertCoachEnterprise coach = new TdExpertCoachEnterprise();
+    	coach.setEnterpriseId(enterpriseId);
+    	coach.setEnterpriseName(enterprise.getTitle());
+    	coach.setIsGrade(false);
+    	coach.setAddr(enterprise.getAddress());
+    	coach.setExpertName(expert.getName());
+    	tdExpertCoachEnterpriseService.save(coach);
+    	return "redirect:/activity/edit?id="+activityId;
+    }
 }

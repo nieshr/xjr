@@ -54,6 +54,10 @@ public class TdEnterprise {
     @Column
     private String area;
     
+    // 地址
+    @Column
+    private String address;
+    
     // 职工人数
     @Column
     private Double staffNumber;
@@ -244,6 +248,10 @@ public class TdEnterprise {
     //上传资料文件
     @Column
     private String fileUrl;
+    
+    //是否被选择
+    @Column
+    private Boolean isSelect;
     
     //可供资料
     @Column
@@ -687,6 +695,22 @@ public class TdEnterprise {
 
 	public void setDataAble(String dataAble) {
 		this.dataAble = dataAble;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public Boolean getIsSelect() {
+		return isSelect;
+	}
+
+	public void setIsSelect(Boolean isSelect) {
+		this.isSelect = isSelect;
 	}
 
 

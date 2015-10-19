@@ -19,9 +19,9 @@
                 <!--left-->
                 <div class="leftbar">
                     <dl class="nav">
-                        <dd><a href="#">活动列表</a></dd>
-                        <dd><a href="#">辅导企业</a></dd>
-                        <dd><a href="#">路演辅导</a></dd>
+                        <dd><a href="/expert/enterprise/list">活动列表</a></dd>
+                        <dd><a href="/expert/enterprises">辅导企业</a></dd>
+                        <dd><a href="/expert/lyfd">路演辅导</a></dd>
                     </dl>
                 </div>
                 <!--right-->

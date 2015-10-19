@@ -18,33 +18,10 @@
 
 <script src="/client/js/jquery-1.9.1.min.js"></script>
 <script src="/client/js/main.js"></script>
-<script>
-<#if errormsg??>
-function warnmsg()
-{
-    alert("${errormsg}");
-}
-
-window.onload=warnmsg;
-</#if>
-
-
-//添加筛选专家
-function addExpert(id,activityId)
-{
-    $.ajax({
-        type:"post",
-        url:"/activity/addExpert",
-        data:{"id":id,"activityId":activityId},
-        success:function(data){
-            $("#selectedExpert").html(data);
-            <#if !errormsg??>
-            alert("添加成功！");
-            </#if>
-            location.reload();
-        }
-    });
-}
+<script type="text/javascript">
+    function addCoachExpert(id){
+        window.location.href = "/activity/addCoach?expertId="+id+"&enterpriseId=${enterpriseId!''}&activityId=${activityId!''}";
+    }
 </script>
 </head>
 <body>
@@ -69,6 +46,7 @@ function addExpert(id,activityId)
         	<dt><a href="#"></a></dt>
             <dd>
             	<p>当前所在位置:</p>
+
                 <a href="#">活动列表</a>
 				<p>&gt;</p>
                 <a href="#">预选专家</a>
@@ -105,13 +83,7 @@ function addExpert(id,activityId)
 			        		<td>${item.name!''}</td>
 			        		<td style="color:#0ab2cb;">${item.usermobile!''}</td>
 			        		<td style="color:#e67817;">${item.email!''}</td>
-			        		<td>
-				        		<#if item.isSelect??&&item.isSelect>
-				        			<p>已添加</p>
-				        		<#else>
-				        			<a href="javascript:addExpert(${item.id?c!''},${activityId?c!''});">添加</a>
-				        		</#if>
-			        		</td>
+			        		<td><a href="javascript:addCoachExpert('${item.id?c}')">确定</a></td>
 			        	</tr>
 		        	</#list>
 		        </#if>	   
@@ -139,7 +111,7 @@ function addExpert(id,activityId)
 			                 <#if page == PAGE_DATA.number+1>
 			                     <a  class ="current" style="color:#e67817;">${page }</a>
 			                 <#else>
-			                     <a href="/activity/selectExpert?page=${page-1}">${page}</a> 
+			                     <a href="/activity/getCoach?page=${page-1}">${page}</a> 
 			                 </#if>
 			                 <#assign continueEnter=false>
 			             <#else>
@@ -155,22 +127,12 @@ function addExpert(id,activityId)
 			     <#if PAGE_DATA.number+1 == PAGE_DATA.totalPages || PAGE_DATA.totalPages==0>
 			         <a disabled="disabled" class="page_last">下一页</a> 
 			     <#else>
-			         <a href="/activity/selectExpert?page=${PAGE_DATA.number+1}" class="page_last">下一页</a> 
+			         <a href="/activity/getCoach?page=${PAGE_DATA.number+1}" class="page_last">下一页</a> 
 			     </#if>
 			 </#if>
 		  	<p>共${PAGE_DATA.totalPages!'1'}页  ${PAGE_DATA.totalElements!'1'}条</p>
 		  	</#if>
 		  </div>
-		
-		
-		
-		<div class="list_base2" id="selectedExpert">
-        	<#include "/client/activity_selected_expert.ftl" />
-        </div>
-        <div class="area_add_btn">
-		<!--	<input style="cursor:pointer;"  type="button" value="批量取消预选" />-->
-		</div>
-		<input style="cursor:pointer;" class="area_save_btn" style="margin-left:45%;"type="button" onclick="location.href='/activity/expert/finish?id=${activityId?c!''}'" value="保存" />
     </div> 
     </div>
 </div><!--content_end-->

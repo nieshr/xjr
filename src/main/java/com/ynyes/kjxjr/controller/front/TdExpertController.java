@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,13 +26,19 @@ import com.ynyes.kjxjr.entity.TdActivity;
 import com.ynyes.kjxjr.entity.TdActivityEnterprise;
 import com.ynyes.kjxjr.entity.TdActivityExpert;
 import com.ynyes.kjxjr.entity.TdActivityType;
+import com.ynyes.kjxjr.entity.TdCoachContent;
+import com.ynyes.kjxjr.entity.TdEnterprise;
 import com.ynyes.kjxjr.entity.TdEnterpriseGrade;
 import com.ynyes.kjxjr.entity.TdExpert;
+import com.ynyes.kjxjr.entity.TdExpertCoachEnterprise;
 import com.ynyes.kjxjr.service.TdActivityEnterpriseService;
 import com.ynyes.kjxjr.service.TdActivityExpertService;
 import com.ynyes.kjxjr.service.TdActivityService;
 import com.ynyes.kjxjr.service.TdActivityTypeService;
+import com.ynyes.kjxjr.service.TdCoachContentService;
 import com.ynyes.kjxjr.service.TdEnterpriseGradeService;
+import com.ynyes.kjxjr.service.TdEnterpriseService;
+import com.ynyes.kjxjr.service.TdExpertCoachEnterpriseService;
 import com.ynyes.kjxjr.service.TdExpertService;
 import com.ynyes.kjxjr.util.SiteMagConstant;
 
@@ -57,6 +66,15 @@ public class TdExpertController {
 	@Autowired
 	private TdEnterpriseGradeService tdEnterpriseGradeService;
 
+	@Autowired
+	private TdExpertCoachEnterpriseService tdExpertCoachEnterpriseService;
+
+	@Autowired
+	private TdCoachContentService tdCoachContentService;
+
+	@Autowired
+	private TdEnterpriseService tdEnterpriseService;
+	
 	@RequestMapping(value = "/enterprise/list")
 	public String execute(HttpServletRequest req, ModelMap map) {
 		String expertUsername = (String) req.getSession().getAttribute("expertUsername");
@@ -167,7 +185,7 @@ public class TdExpertController {
 			return "/client/login";
 		}
 		TdExpert expert = tdExpertService.findbyUsername(expertUsername);
-		List<TdEnterpriseGrade> grade_list = tdEnterpriseGradeService.findByExpertIdAndActivityId(expert.getId(),
+		List<TdEnterpriseGrade> grade_list = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderByNumberAsc(expert.getId(),
 				activityId);
 		map.addAttribute("grade_list", grade_list);
 		map.addAttribute("activityId", activityId);
@@ -178,12 +196,132 @@ public class TdExpertController {
 	@ResponseBody
 	public Map<String, Object> gradeSure(TdEnterpriseGrade grade, String number, Long activityId,
 			HttpServletRequest req) {
+		Map<String, Object> res = new HashMap<>();
+		res.put("status", -1);
 		String expertUsername = (String) req.getSession().getAttribute("expertUsername");
 		TdExpert expert = tdExpertService.findbyUsername(expertUsername);
+		TdEnterprise enterprise = tdEnterpriseService.findByNumber(number);
 		TdEnterpriseGrade theGrade = tdEnterpriseGradeService.findByExpertIdAndActivityIdAndNumber(expert.getId(),
 				activityId, number);
-		grade.setTotalPoint(grade.getTotalExpression() + grade.getTotalFeasibility() + grade.getTotalMarketValue()
+		theGrade.setTotalPoint(grade.getTotalExpression() + grade.getTotalFeasibility() + grade.getTotalMarketValue()
 				+ grade.getTotalTechnology() + grade.getTotalGroup());
-		return null;
+		theGrade.setExpertId(grade.getExpertId());
+		theGrade.setEnterpriseId(enterprise.getId());
+		theGrade.setActivityId(activityId);
+		theGrade.setNumber(number);
+		theGrade.setTotalExpression(grade.getTotalExpression());
+		theGrade.setOneExpression(grade.getOneExpression());
+		theGrade.setTwoExpression(grade.getTwoExpression());
+		theGrade.setThreeExpression(grade.getThreeExpression());
+		theGrade.setFourExpression(grade.getFourExpression());
+		theGrade.setTotalFeasibility(grade.getTotalFeasibility());
+		theGrade.setOneFeasibility(grade.getOneFeasibility());
+		theGrade.setTwoFeasibility(grade.getTwoFeasibility());
+		theGrade.setThreeFeasibility(grade.getThreeFeasibility());
+		theGrade.setFourFeasibility(grade.getFourExpression());
+		theGrade.setTotalMarketValue(grade.getTotalMarketValue());
+		theGrade.setOneMarketValue(grade.getOneMarketValue());
+		theGrade.setTwoMarketValue(grade.getTwoMarketValue());
+		theGrade.setThreeMarketValue(grade.getThreeMarketValue());
+		theGrade.setFourMarketValue(grade.getFourMarketValue());
+		theGrade.setTotalTechnology(grade.getTotalTechnology());
+		theGrade.setOneTechnology(grade.getOneTechnology());
+		theGrade.setTwoTechnology(grade.getTwoTechnology());
+		theGrade.setThreeTechnology(grade.getThreeTechnology());
+		theGrade.setFourTechnology(grade.getFourTechnology());
+		theGrade.setFiveTechnology(grade.getFiveTechnology());
+		theGrade.setTotalPoint(grade.getTotalPoint());
+		theGrade.setOneGroup(grade.getOneGroup());
+		theGrade.setTwoGroup(grade.getTwoGroup());
+		theGrade.setThreeGroup(grade.getThreeGroup());
+		
+		TdExpertCoachEnterprise expertCoachEnterprise = tdExpertCoachEnterpriseService.findByExpertIdAndEnterpriseId(expert.getId(), enterprise.getId());
+		expertCoachEnterprise.setIsGrade(true);
+		tdExpertCoachEnterpriseService.save(expertCoachEnterprise);
+		res.put("status", 0);
+		return res;
+	}
+
+	@RequestMapping(value = "/enterprises")
+	public String enterprises(HttpServletRequest req, ModelMap map) {
+		String expertUsername = (String) req.getSession().getAttribute("expertUsername");
+		if (null == expertUsername) {
+			return "/client/login";
+		}
+		TdExpert expert = tdExpertService.findbyUsername(expertUsername);
+		List<TdExpertCoachEnterprise> enterprise_list = tdExpertCoachEnterpriseService
+				.findByExpertIdAndIsGradeIsFalse(expert.getId());
+		map.addAttribute("enterprise_list", enterprise_list);
+		return "/client/expert_enterprise_list";
+	}
+
+	@RequestMapping(value = "/coach/{enterpriseId}")
+	public String coach(@PathVariable Long enterpriseId, HttpServletRequest req, ModelMap map) {
+		String expertUsername = (String) req.getSession().getAttribute("expertUsername");
+		if (null == expertUsername) {
+			return "/client/login";
+		}
+		TdExpert expert = tdExpertService.findbyUsername(expertUsername);
+		List<TdCoachContent> content_list = tdCoachContentService
+				.findByExpertIdAndEnterpriseIdOrderByCoachDateAsc(expert.getId(), enterpriseId);
+		TdEnterprise enterprise = tdEnterpriseService.findOne(enterpriseId);
+		map.addAttribute("enterprise", enterprise);
+		if (null != enterprise.getType())
+        {
+        	String type[] = enterprise.getType().split(",");
+        	map.addAttribute("enterpriseType", type);
+        }
+		Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.YEAR, -1);
+        Date lastyear1 = calendar.getTime();
+        map.addAttribute("lastyear1", lastyear1);
+        
+        calendar.add(Calendar.YEAR, -1);
+        Date lastyear2 = calendar.getTime();
+        map.addAttribute("lastyear2", lastyear2);
+        
+        calendar.add(Calendar.YEAR, -1);
+        Date lastyear3 = calendar.getTime();
+        map.addAttribute("lastyear3", lastyear3);
+        
+		map.addAttribute("content_list", content_list);
+		return "/client/coach_record";
+	}
+
+	@RequestMapping(value = "/coach/save")
+	public String coachSave(HttpServletRequest req, String content, Long enterpriseId) {
+		String expertUsername = (String) req.getSession().getAttribute("expertUsername");
+		TdExpert expert = tdExpertService.findbyUsername(expertUsername);
+		TdCoachContent coach = new TdCoachContent();
+		coach.setCoachDate(new Date());
+		coach.setContent(content);
+		coach.setEnterpriseId(enterpriseId);
+		coach.setExpertId(expert.getId());
+		tdCoachContentService.save(coach);
+		return "redirect:/expert/coach/" + enterpriseId;
+	}
+	
+	@RequestMapping(value = "/lyfd")
+	public String lyfd(HttpServletRequest req,ModelMap map){
+		String expertUsername = (String) req.getSession().getAttribute("expertUsername");
+		TdExpert expert = tdExpertService.findbyUsername(expertUsername);
+		List<TdExpertCoachEnterprise> grade_false_list = tdExpertCoachEnterpriseService.findByExpertIdAndIsGradeIsFalse(expert.getId());
+		List<TdExpertCoachEnterprise> grade_true_list = tdExpertCoachEnterpriseService.findByExpertIdAndIsGradeIsTrue(expert.getId());
+		map.addAttribute("grade_false_list", grade_false_list);
+		map.addAttribute("grade_true_list", grade_true_list);
+		return "/client/lydf";
+	}
+	
+	@RequestMapping(value = "/coach/log/{enterpriseId}")
+	public String coachLog(@PathVariable Long enterpriseId,HttpServletRequest req,ModelMap map){
+		String expertUsername = (String) req.getSession().getAttribute("expertUsername");
+		if(null == expertUsername){
+			return "/client/login";
+		}
+		TdExpert expert = tdExpertService.findbyUsername(expertUsername);
+		List<TdCoachContent> content_list = tdCoachContentService.findByExpertIdAndEnterpriseIdOrderByCoachDateAsc(expert.getId(), enterpriseId);
+		map.addAttribute("content_list", content_list);
+		return "/client/coach_log";
 	}
 }

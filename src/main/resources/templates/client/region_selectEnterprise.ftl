@@ -95,7 +95,13 @@ window.onload=done;
                             <#if statusId??&&statusId == 2>
                             <td><input style="width: 98%;height: 30px;" type="text" id="reason${item.id?c!''}"/></td>
                             </#if>
-                            <td><a href="javascript:addEnterprise1(${item.id?c!''},${activityId?c!''},${statusId!''});">添加预选</a></td>
+                            <td>
+	                            <#if item.statusId == 2>
+	                           	 	<p>已添加</p>
+	                            <#else>
+	                          	  	<a href="javascript:addEnterprise1(${item.id?c!''},${activityId?c!''},${statusId!''});">添加推荐</a>
+	                        	</#if>
+                        	</td>
                         </tr>
                     </#list>
                 </#if>     
@@ -112,7 +118,7 @@ window.onload=done;
                  <#if PAGE_DATA.number+1 == 1>
                       <a disabled="disabled"  class="page_next">上一页</a>               
                  <#else>
-                     <a href="/activity/selectEnterprise?page=${PAGE_DATA.number-1}"  class="page_next">上一页</a>                
+                     <a href="/region/recommendEnterprise?page=${PAGE_DATA.number-1}&id=${activityId?c!''}"  class="page_next">上一页</a>                
                  </#if>
                  
                  <#assign continueEnter=false>
@@ -123,7 +129,7 @@ window.onload=done;
                              <#if page == PAGE_DATA.number+1>
                                  <a  class ="current" style="color:#e67817;">${page }</a>
                              <#else>
-                                 <a href="/activity/selectEnterprise?page=${page-1}">${page}</a> 
+                                 <a href="/region/recommendEnterprise?page=${page-1}&id=${activityId?c!''}">${page}</a> 
                              </#if>
                              <#assign continueEnter=false>
                          <#else>
@@ -139,7 +145,7 @@ window.onload=done;
                  <#if PAGE_DATA.number+1 == PAGE_DATA.totalPages || PAGE_DATA.totalPages==0>
                      <a disabled="disabled" class="page_last">下一页</a> 
                  <#else>
-                     <a href="/activity/selectEnterprise?page=${PAGE_DATA.number+1}" class="page_last">下一页</a> 
+                     <a href="/region/recommendEnterprise?page=${PAGE_DATA.number+1}&id=${activityId?c!''}" class="page_last">下一页</a> 
                  </#if>
              </#if>
             <p>共${PAGE_DATA.totalPages!'1'}页  ${PAGE_DATA.totalElements!'1'}条</p>

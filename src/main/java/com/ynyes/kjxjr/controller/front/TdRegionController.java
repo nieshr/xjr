@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.FileUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.usermodel.HSSFPrintSetup;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -36,6 +38,7 @@ import com.ibm.icu.text.DateFormat;
 import com.ynyes.kjxjr.entity.TdActivity;
 import com.ynyes.kjxjr.entity.TdActivityEnterprise;
 import com.ynyes.kjxjr.entity.TdEnterprise;
+import com.ynyes.kjxjr.entity.TdEnterpriseGrade;
 import com.ynyes.kjxjr.entity.TdRegion;
 import com.ynyes.kjxjr.entity.TdRegionAdmin;
 import com.ynyes.kjxjr.entity.TdUser;
@@ -44,6 +47,7 @@ import com.ynyes.kjxjr.service.TdActivityExpertService;
 import com.ynyes.kjxjr.service.TdActivityService;
 import com.ynyes.kjxjr.service.TdCommonService;
 import com.ynyes.kjxjr.service.TdCouponService;
+import com.ynyes.kjxjr.service.TdEnterpriseGradeService;
 import com.ynyes.kjxjr.service.TdEnterpriseService;
 import com.ynyes.kjxjr.service.TdRegionAdminService;
 import com.ynyes.kjxjr.service.TdRegionService;
@@ -80,6 +84,9 @@ public class TdRegionController {
 	
 	@Autowired
 	TdActivityEnterpriseService tdActivityEnterpriseService;
+	
+	@Autowired
+	TdEnterpriseGradeService tdEnterpriseGradeService;
 	
 	@Autowired
 	TdActivityExpertService tdActivityExpertService;
@@ -158,7 +165,8 @@ public class TdRegionController {
         
         map.addAttribute("enterprise", enterprise);
         map.addAttribute("user", user);
-
+        map.addAttribute("usertype", "region");
+        
         return "/client/region_enterprise_check";
     }
     
@@ -404,7 +412,7 @@ public String  regionAddEnterprise(HttpServletRequest req,Long id,Long activityI
     }
 	List<TdActivityEnterprise> selectedEnterpriseList = tdActivityEnterpriseService.findByActivityIdAndStatusId(activityId,statusId);
     
-	if (selectedEnterpriseList.size() >19)
+	if (statusId == 2 &&selectedEnterpriseList.size() >19)
 	{
 		map.addAttribute("msg", "最多添加20个项目！！");
 	    map.addAttribute("statusId", statusId);
@@ -430,8 +438,31 @@ public String  regionAddEnterprise(HttpServletRequest req,Long id,Long activityI
     		activityenterprise.setStatusId(statusId);
     		activityenterprise.setReason(reason);
     		tdActivityEnterpriseService.save(activityenterprise);
+    		
+    		if (2 == statusId)
+    		{
+	        	List<TdEnterpriseGrade> enterpriseGradeList = tdEnterpriseGradeService.findByActivityIdOrderByIdAsc(activityId);
+	        	int i = 0;
+	       
+	        	for (TdEnterpriseGrade grade : enterpriseGradeList)
+	        	{
+	        		
+	        		if (  i % 20== 0)
+	        			if(null == grade.getNumber())
+	        		{
+	        			grade.setNumber(enterprise.getNumber());
+	        			grade.setEnterpriseId(activityenterprise.getEnterpriseId());
+	        			grade.setActivityId(activityId);
+	        			tdEnterpriseGradeService.save(grade);
+	        		}
+	        		else if (null != grade.getNumber())
+	        		{
+	        			i = i-1;
+	        		}
+	        		i = i+1; 
+	        	}
+    		}
     	}
-    	
     }
     
     map.addAttribute("statusId", statusId);
@@ -458,6 +489,23 @@ public String  regionRemoveEnterprise(HttpServletRequest req,Long id,Long activi
     		activityEnterprise.setStatusId(0L);
     		tdActivityEnterpriseService.save(activityEnterprise);
     	}
+    	
+		if (2 == statusId)
+		{
+        	List<TdEnterpriseGrade> enterpriseGradeList = tdEnterpriseGradeService.findByEnterpriseIdAndActivityId(activityEnterprise.getEnterpriseId(), activityId);
+        	int i = 0;
+        	for (TdEnterpriseGrade grade:enterpriseGradeList)
+        	{
+        		if (i%20 == 0&& null != grade.getNumber())
+        		{
+        			grade.setNumber(null);
+        			grade.setEnterpriseId(null);
+        			grade.setActivityId(activityId);
+        			tdEnterpriseGradeService.save(grade);
+        		}
+        		i = i+1;
+        	}
+		}
     }
     
     map.addAttribute("statusId",statusId);
@@ -532,16 +580,27 @@ public String exportRecommend(
       HSSFWorkbook wb = new HSSFWorkbook();  
       // 第二步，在webbook中添加一个sheet,对应Excel文件中的sheet  
       HSSFSheet sheet = wb.createSheet("activityEnterprise");  
-      //列宽
       
+      //打印设置
+      HSSFPrintSetup ps = sheet.getPrintSetup();
+      ps.setLandscape(true); //打印方向，true:横向，false:纵向
+      ps.setPaperSize(HSSFPrintSetup.A4_PAPERSIZE); //纸张
+      sheet.setMargin(HSSFSheet.BottomMargin, (double)0.3); //页边距（下）
+      sheet.setMargin(HSSFSheet.LeftMargin, (double)0.3); //页边距（左）
+      sheet.setMargin(HSSFSheet.RightMargin, (double)0.3); //页边距（右）
+      sheet.setMargin(HSSFSheet.TopMargin, (double)0.3); //页边距（上）
+      sheet.setHorizontallyCenter(true); //设置打印页面为水平居中
+      sheet.setVerticallyCenter(true); //设置打印页面为垂直居中
+      
+      //列宽
       sheet.setColumnWidth((short) 0 , 4*256);
       sheet.setColumnWidth((short) 1 , 6*256);
-      sheet.setColumnWidth((short) 2 , 40*256);
+      sheet.setColumnWidth((short) 2 , 30*256);
       sheet.setColumnWidth((short) 3 , 8*256);
       sheet.setColumnWidth((short) 4 , 13*256);
-      sheet.setColumnWidth((short) 5 , 12*256);
-      sheet.setColumnWidth((short) 6 , 100*256);
-      sheet.setColumnWidth((short) 7 , 100*256);
+      sheet.setColumnWidth((short) 5 , 14*256);
+      sheet.setColumnWidth((short) 6 , 50*256);
+      sheet.setColumnWidth((short) 7 , 16*256);
       
       
       
@@ -554,27 +613,27 @@ public String exportRecommend(
       // 第四步，创建单元格，并设置值表头 设置表头居中  
       HSSFCellStyle style = wb.createCellStyle();  
       style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
-      style.setBorderBottom(HSSFCellStyle.BORDER_MEDIUM);    //设置边框样式
-      style.setBorderRight(HSSFCellStyle.BORDER_MEDIUM);
-      style.setBorderLeft(HSSFCellStyle.BORDER_MEDIUM);  
-      style.setBorderTop(HSSFCellStyle.BORDER_MEDIUM);  
+      style.setBorderBottom(HSSFCellStyle.BORDER_THIN);    //设置边框样式
+      style.setBorderRight(HSSFCellStyle.BORDER_THIN);
+      style.setBorderLeft(HSSFCellStyle.BORDER_THIN);  
+      style.setBorderTop(HSSFCellStyle.BORDER_THIN);  
       
       
       HSSFCellStyle style1 = wb.createCellStyle();  
       style1.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
-      style1.setBorderBottom(HSSFCellStyle.BORDER_MEDIUM);    //设置边框样式
-      style1.setBorderRight(HSSFCellStyle.BORDER_MEDIUM);
-      style1.setBorderLeft(HSSFCellStyle.BORDER_MEDIUM);  
-      style1.setBorderTop(HSSFCellStyle.BORDER_MEDIUM);  
+      style1.setBorderBottom(HSSFCellStyle.BORDER_THIN);    //设置边框样式
+      style1.setBorderRight(HSSFCellStyle.BORDER_THIN);
+      style1.setBorderLeft(HSSFCellStyle.BORDER_THIN);  
+      style1.setBorderTop(HSSFCellStyle.BORDER_THIN);  
       
       
       HSSFCellStyle style2 = wb.createCellStyle();  
       style2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
       style2.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
-      style2.setBorderBottom(HSSFCellStyle.BORDER_MEDIUM);    //设置边框样式
-      style2.setBorderRight(HSSFCellStyle.BORDER_MEDIUM);
-      style2.setBorderLeft(HSSFCellStyle.BORDER_MEDIUM);  
-      style2.setBorderTop(HSSFCellStyle.BORDER_MEDIUM);  
+      style2.setBorderBottom(HSSFCellStyle.BORDER_THIN);    //设置边框样式
+      style2.setBorderRight(HSSFCellStyle.BORDER_THIN);
+      style2.setBorderLeft(HSSFCellStyle.BORDER_THIN);  
+      style2.setBorderTop(HSSFCellStyle.BORDER_THIN);  
       
       HSSFCellStyle title = wb.createCellStyle();  
       title.setBorderBottom(HSSFCellStyle.BORDER_NONE);    //设置边框样式
@@ -583,15 +642,20 @@ public String exportRecommend(
       title.setBorderTop(HSSFCellStyle.BORDER_NONE);  
       title.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
       title.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 居中格式
+      HSSFFont font = wb.createFont();
+      font.setFontName("黑体");
+      font.setFontHeightInPoints((short) 12);//设置字体大小
+      font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);//粗体显示
+      title.setFont(font);//选择需要用到的字体格式
       
       //盖章
       HSSFCellStyle left = wb.createCellStyle();  
-      left.setBorderBottom(HSSFCellStyle.BORDER_MEDIUM);    //设置边框样式
+      left.setBorderBottom(HSSFCellStyle.BORDER_THIN);    //设置边框样式
       left.setAlignment(HSSFCellStyle.ALIGN_LEFT); // 居格式
       
       //日期
       HSSFCellStyle right = wb.createCellStyle();  
-      right.setBorderBottom(HSSFCellStyle.BORDER_MEDIUM);    //设置边框样式
+      right.setBorderBottom(HSSFCellStyle.BORDER_THIN);    //设置边框样式
       right.setAlignment(HSSFCellStyle.ALIGN_RIGHT); // 格式
       
       

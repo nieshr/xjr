@@ -69,6 +69,7 @@
                         </#if>  
                     </select>
                 </div>
+                <div><span>地址：</span><input type="text" name="address" datatype="*"value="<#if enterprise.address??>${enterprise.address!''}</#if>"  disabled="" /></div>
                 <div><span  class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>">职工人数：</span>
                         <span  class="pro  <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>hide</#if>">团队人数：</span>
                     <input type="text" name="staffNumber" datatype="n"  value="<#if enterprise.staffNumber??>${enterprise.staffNumber!''}</#if>" disabled=""/></div>

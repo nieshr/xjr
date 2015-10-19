@@ -127,7 +127,7 @@ function showPro(){
     			</div>
     			<div><span>注册资本<b style="color:#999;font-size:0.6em;">(万元)</b>：</span><input type="text" name="capital" value="<#if enterprise.formType??>${enterprise.capital?c!''}</#if>" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  errormsg="请填写数字！" /></div>
     			<div><span>法定代表人：</span><input type="text" name="representative" datatype="*"value="<#if enterprise.formType??>${enterprise.representative!''}</#if>" /></div>
-    			<div><span>股东结构：</span><textarea name="shareholder" datatype="*5-199"><#if enterprise.formType??>${enterprise.shareholder!''}</#if></textarea></div>
+    			<div><span>股东结构：</span><textarea name="shareholder" datatype="*5-100"  errormsg="输入5到100字"><#if enterprise.formType??>${enterprise.shareholder!''}</#if></textarea></div>
     			<div><span>所在地区：</span>
     				<select name="area" datatype="*">
     					<#if region_list??>
@@ -137,6 +137,7 @@ function showPro(){
     					</#if>	
     				</select>
     			</div>
+    			<div><span>地址：</span><input type="text" name="address" datatype="*"value="<#if enterprise.address??>${enterprise.address!''}</#if>" /></div>
     			<div><span  class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>">职工人数：</span>
     			        <span  class="pro  <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>hide</#if>">团队人数：</span>
     				<input type="text" name="staffNumber" datatype="n"  value="<#if enterprise.formType??>${enterprise.staffNumber!''}</#if>" /></div>
@@ -168,8 +169,8 @@ function showPro(){
 	    			<span class="pro <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>hide</#if>">团队简介：</span><textarea name="profile" datatype="*5-199"  errormsg="输入5到200字" tip="200字以内"><#if enterprise.formType??>${enterprise.profile!''}</#if></textarea>
     			</div>
     			<div  class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>"><span>公司团队：</span><textarea name="teamIntroduction" datatype="*5-199" ignore="ignore" errormsg="输入5到200字"  tip="200字以内"><#if enterprise.formType??>${enterprise.teamIntroduction!''}</#if></textarea></div>
-    			<div><span>技术特点及优势：</span><textarea name="advantage" datatype="*5-199" errormsg="输入5到200字"  tip="200字以内"><#if enterprise.formType??>${enterprise.advantage!''}</#if></textarea></div>
-    			<div><span>市场规模行业地位：</span><textarea name="size" datatype="*5-199" errormsg="输入5到200字" tip="200字以内"><#if enterprise.formType??>${enterprise.size!''}</#if></textarea></div>
+    			<div><span>技术特点及优势：</span><textarea name="advantage" datatype="*5-200" errormsg="输入5到200字"  tip="200字以内"><#if enterprise.formType??>${enterprise.advantage!''}</#if></textarea></div>
+    			<div><span>市场规模行业地位：</span><textarea name="size" datatype="*5-200" errormsg="输入5到200字" tip="200字以内"><#if enterprise.formType??>${enterprise.size!''}</#if></textarea></div>
 
     	</dd>
     	<dt class="dt02 enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>"><span>二、近三年财务状况（单位：万元）</span><br/><p>此信息将自动生成到报名表中</p></dt>
@@ -185,7 +186,7 @@ function showPro(){
     			<div>
     				<span><#if lastyear3??>${lastyear3?string("yyyy")}</#if></span>
 
-    				<input type="text" name="lastAssets3" ignored="ignored" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/" value="<#if enterprise.lastAssets3??>${enterprise.lastAssets3?c!''}</#if>" ignore="ignore"  errormsg="请填写数字！"/>
+    				<input type="text" name="lastAssets3" ignore="ignore" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/" value="<#if enterprise.lastAssets3??>${enterprise.lastAssets3?c!''}</#if>" ignore="ignore"  errormsg="请填写数字！"/>
     				<input type="text" name="lastNetAssets3"  ignored="ignored" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.lastNetAssets3??>${enterprise.lastNetAssets3?c!''}</#if>"  ignore="ignore"   errormsg="请填写数字！"/>
     				<input type="text" name="lastSale3" ignored="ignored" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.lastSale3??>${enterprise.lastSale3?c!''}</#if>"  ignore="ignore"  errormsg="请填写数字！" />
     				<input type="text" name="lastProfit3" ignored="ignored" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  value="<#if enterprise.lastProfit3??>${enterprise.lastProfit3?c!''}</#if>"  ignore="ignore"   errormsg="请填写数字！"/>
@@ -239,7 +240,7 @@ function showPro(){
     			  	<input id="expectEquityDate" name="expectEquityDate" value="<#if enterprise.expectEquityDate??>${enterprise.expectEquityDate?string("yyyy-MM-dd")!''}</#if>" type="hidden" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}$/" errormsg="填写正确格式" sucmsg=" " />
     				
     				<input type="text" name="expectEquityAmount" value="<#if enterprise.formType??><#if enterprise.expectEquityAmount??>${enterprise.expectEquityAmount?c}</#if></#if>"  ignore="ignore" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  errormsg="请填写数字！"/>
-    				<input type="text" name="expectEquityUse" value="<#if enterprise.formType??>${enterprise.expectEquityUse!''}</#if>"  />
+    				<input type="text" style="width:400px;" name="expectEquityUse" datatype="*2-100" ignore="ignore" value="<#if enterprise.formType??>${enterprise.expectEquityUse!''}</#if>"  />
     			</div>
     			<div>
     				<span>（二）债权融资</span>
@@ -247,7 +248,7 @@ function showPro(){
     			  	<input id="expectBondDate" name="expectBondDate" value="<#if enterprise.expectBondDate??>${enterprise.expectBondDate?string("yyyy-MM-dd")!''}</#if>" type="hidden" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}$/" errormsg="填写正确格式" sucmsg=" " />
     				
     				<input type="text" name="expectBondAmount" value="<#if enterprise.formType??><#if enterprise.expectBondAmount??>${enterprise.expectBondAmount?c}</#if></#if>" ignore="ignore" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  errormsg="请填写数字！" />
-    				<input type="text" name="expectBondUse" value="<#if enterprise.formType??>${enterprise.expectBondUse!''}</#if>"  />
+    				<input type="text" style="width:400px;" name="expectBondUse" datatype="*2-100" ignore="ignore" value="<#if enterprise.formType??>${enterprise.expectBondUse!''}</#if>"  />
     			</div>
     			
     			<div>

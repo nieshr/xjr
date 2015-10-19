@@ -12,7 +12,7 @@
 
 function done()
 {
-    alert("上传资料成功！");
+    alert("上传资料成功！");	
 	location.href="/enterprise/check";
 }
 <#if done?? &&done == 1>

@@ -50,5 +50,7 @@ public interface TdEnterpriseRepo extends
 	 * @注释：
 	 */
     TdEnterprise findByUsername(String username);
+    
+    TdEnterprise findByNumber(String number);
 
 }

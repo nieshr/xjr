@@ -27,7 +27,7 @@
 		<dl class="nav">
             <dd><a href="/enterprise/check">基本资料</a></dd>
             <dd><a href="/enterprise/activity/list">活动列表</a></dd>
-            <dd><a href="#">申请展示</a></dd>
+            <dd><a href="/enterprise/project">申请展示</a></dd>
 
 		</dl>
 	</div>
@@ -94,6 +94,7 @@
                         </#if>  
     				</select>
     			</div>
+    			<div><span>地址：</span><input type="text" name="address" datatype="*"value="<#if enterprise.address??>${enterprise.address!''}</#if>"  disabled="" /></div>
     			<#if enterprise.formType??&& enterprise.formType == 0>
     			<div><span>职工人数：</span><input type="text" value="<#if enterprise.staffNumber??>${enterprise.staffNumber?c!''}</#if>" disabled="" />&nbsp;&nbsp;(人)</div>
     			</#if>
