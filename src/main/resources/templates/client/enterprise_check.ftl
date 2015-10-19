@@ -27,7 +27,7 @@
 		<dl class="nav">
             <dd><a href="/enterprise/check">基本资料</a></dd>
             <dd><a href="/enterprise/activity/list">活动列表</a></dd>
-            <dd><a href="#">申请展示</a></dd>
+            <dd><a href="/enterprise/project">申请展示</a></dd>
 
 		</dl>
 	</div>

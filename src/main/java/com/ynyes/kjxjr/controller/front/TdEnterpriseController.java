@@ -34,6 +34,7 @@ import com.ynyes.kjxjr.entity.TdUser;
 import com.ynyes.kjxjr.service.TdActivityEnterpriseService;
 import com.ynyes.kjxjr.service.TdActivityExpertService;
 import com.ynyes.kjxjr.service.TdActivityService;
+import com.ynyes.kjxjr.service.TdArticleCategoryService;
 import com.ynyes.kjxjr.service.TdCommonService;
 import com.ynyes.kjxjr.service.TdCouponService;
 import com.ynyes.kjxjr.service.TdEnterpriseService;
@@ -67,6 +68,9 @@ public class TdEnterpriseController {
 	
 	@Autowired
 	TdActivityExpertService tdActivityExpertService;
+	
+    @Autowired
+    TdArticleCategoryService tdArticleCategoryService;
 	
 	   /**
      * 企业填写资料
@@ -295,6 +299,16 @@ public class TdEnterpriseController {
         map.addAttribute("user", EnterpriseUser);
 
         return "/client/Enterprise_change_password";
+    }
+    
+    @RequestMapping(value="/project")
+    public String project(HttpServletRequest req,ModelMap map){
+    	
+    	
+    	tdCommonService.setHeader(map, req);
+    	
+    	map.addAttribute("category_list", tdArticleCategoryService.findByMenuId(11L));
+    	return "/client/activity_askshow";
     }
 
     @RequestMapping(value = "/password", method = RequestMethod.POST)
