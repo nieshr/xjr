@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -227,6 +228,25 @@ public class TdExpertController {
 				.findByExpertIdAndEnterpriseIdOrderByCoachDateAsc(expert.getId(), enterpriseId);
 		TdEnterprise enterprise = tdEnterpriseService.findOne(enterpriseId);
 		map.addAttribute("enterprise", enterprise);
+		if (null != enterprise.getType())
+        {
+        	String type[] = enterprise.getType().split(",");
+        	map.addAttribute("enterpriseType", type);
+        }
+		Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.YEAR, -1);
+        Date lastyear1 = calendar.getTime();
+        map.addAttribute("lastyear1", lastyear1);
+        
+        calendar.add(Calendar.YEAR, -1);
+        Date lastyear2 = calendar.getTime();
+        map.addAttribute("lastyear2", lastyear2);
+        
+        calendar.add(Calendar.YEAR, -1);
+        Date lastyear3 = calendar.getTime();
+        map.addAttribute("lastyear3", lastyear3);
+        
 		map.addAttribute("content_list", content_list);
 		return "/client/coach_record";
 	}

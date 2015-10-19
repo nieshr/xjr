@@ -90,41 +90,44 @@ function record(){
                         <dl class="apply_change" >
                         <dt class="dt01"><span>一、基本信息</span><br/><p>此信息将自动生成到报名表中</p></dt>
                         <dd>
-                            <div><span>企业名称：</span><input type="text" value="" disabled="" /></div>
-                            <div><span>成立时间：</span><input type="text" value="" disabled="" /></div>
-                            <div><span>注册资本：</span><input type="text" value="" disabled="" />&nbsp;&nbsp;(万元)</div>
-                            <div><span>法定代表人：</span><input type="text" value="" disabled="" /></div>
-                            <div><span>股东结构：</span><textarea disabled="" ></textarea></div>
+                            <div><span>企业名称：</span><input type="text" value="${enterprise.title!''}" disabled="" /></div>
+                            <div><span>成立时间：</span><input type="text" value="${establish?string('yyyy-MM-dd')}" disabled="" /></div>
+                            <div><span>注册资本：</span><input type="text" value="${enterprise.capital}" disabled="" />&nbsp;&nbsp;(万元)</div>
+                            <div><span>法定代表人：</span><input type="text" value="${enterprise.representative!''}" disabled="" /></div>
+                            <div><span>股东结构：</span><textarea disabled="${enterprise.sharehodler!''}" ></textarea></div>
                             <div><span>所在地区：</span>
                             <select disabled="" >
-                                <option>江北</option>
-                                <option>南岸</option>
-                                <option>巴南</option>
-                                <option>合川</option>
-                                <option>荣昌</option>
+                                <option>${enterprise.area!''}</option>
                             </select>
                             </div>
-                            <div><span>职工人数：</span><input type="text" value="" disabled="" />&nbsp;&nbsp;(人)</div>
+                            <div><span>职工人数：</span><input type="text" value="${enterprise.staffNumber!'0'}" disabled="" />&nbsp;&nbsp;(人)</div>
                             <div>
                                 <span>行业归属：</span>
-                                <input style="margin-top: -3px; width:15px;" type="checkbox" value="" disabled="" ><p>电子信息</p>
-                                <input style="margin-top: -3px; width:15px;" type="checkbox" value="" disabled="" ><p>生物医药</p>
-                                <input style="margin-top: -3px; width:15px;" type="checkbox" value="" disabled="" ><p>光电一体化</p>
-                                <input style="margin-top: -3px; width:15px;" type="checkbox" value="" disabled="" ><p>资源与环境</p>
-                                <input style="margin-top: -3px; width:15px;" type="checkbox" value="" disabled="" ><p>新能源、新材料</p>
-                                <input style="margin-top: -3px; width:15px;" type="checkbox" value="" disabled="" ><p>其他</p>		
+                                <#if enterpriseType_list??>
+                                    <#list enterpriseType_list as item>
+                                        <input disabled="" style="margin-top: -3px; width:15px;" name="type" type="checkbox" value="${item.title!''}"
+                                            <#if enterprise.formType?? && enterpriseType??>
+                                                <#list enterpriseType as type>
+                                                    <#if type == item.title>
+                                                        checked="checked"
+                                                    </#if>
+                                                </#list>
+                                            </#if>                                      
+                                        /><p>${item.title!''}</p>
+                                    </#list>
+                                </#if>		
                             </div>
-                            <div><span>邮箱：</span><input type="text" value="" disabled="" /></div>
-                            <div><span>联系人：</span><input type="text" value="" disabled="" /></div>
-                            <div><span>公司网站：</span><input type="text" value="" disabled="" /></div>
-                            <div><span>联系电话：</span><input type="text" value="" disabled="" /></div>
-                            <div><span>传真：</span><input type="text" value="" disabled="" /></div>
-                            <div><span>QQ/MSN：</span><input type="text" value="" disabled="" /></div>
-                            <div><span>手机：</span><input type="text" value="" disabled="" /></div>
-                            <div><span>企业简介：</span><textarea disabled="" ></textarea><span>(200字以内)</span></div>
-                            <div><span>公司团队：</span><textarea disabled="" ></textarea><span>(200字以内)</span></div>
-                            <div><span>技术特点及优势：</span><textarea disabled="" ></textarea><span>(200字以内)</span></div>
-                            <div><span>市场规模行业地位：</span><textarea disabled="" ></textarea><span>(200字以内)</span></div>
+                            <div><span>邮箱：</span><input type="text" value="${enterprise.email!''}" disabled="" /></div>
+                            <div><span>联系人：</span><input type="text" value="${enterprise.contact!''}" disabled="" /></div>
+                            <div><span>公司网站：</span><input type="text" value="${enterprise.website!''}" disabled="" /></div>
+                            <div><span>联系电话：</span><input type="text" value="${enterprise.telephone!''}" disabled="" /></div>
+                            <div><span>传真：</span><input type="text" value="${enterprise.fax!''}" disabled="" /></div>
+                            <div><span>QQ/MSN：</span><input type="text" value="${enterprise.shat!''}" disabled="" /></div>
+                            <div><span>手机：</span><input type="text" value="${enterprise.mobile}" disabled="" /></div>
+                            <div><span>企业简介：</span><textarea disabled="" >${enterprise.profile!''}</textarea><span>(200字以内)</span></div>
+                            <div><span>公司团队：</span><textarea disabled="" >${enterprise.teamlntroduction!''}</textarea><span>(200字以内)</span></div>
+                            <div><span>技术特点及优势：</span><textarea disabled="" >${enterprise.advantage!''}</textarea><span>(200字以内)</span></div>
+                            <div><span>市场规模行业地位：</span><textarea disabled="" >${enterprise.size}</textarea><span>(200字以内)</span></div>
                         </dd>
                         <dt class="dt02"><span>二、近三年财务状况（单位：万元）</span><br/><p>此信息将自动生成到报名表中</p></dt>
                         <dd>
@@ -136,32 +139,32 @@ function record(){
                             <span style=" display: block; width:170px; text-align: center; margin-left: 20px; disabled="" ">毛利润</span>
                         </div>
                         <div>
-                            <span>2012</span>
-                            <input type="text" value=""  disabled="" />
-                            <input type="text" value=""  disabled="" />
-                            <input type="text" value=""  disabled="" />
-                            <input type="text" value=""  disabled="" />
+                            <span><#if lastyear3??>${lastyear3?string("yyyy")}</#if></span>
+                            <input type="text" value="<#if enterprise.lastAssets3??>${enterprise.lastAssets3?c!''}</#if>"  disabled="" />
+                            <input type="text" value="<#if enterprise.lastNetAssets3??>${enterprise.lastNetAssets3?c!''}</#if>"  disabled="" />
+                            <input type="text" value="<#if enterprise.lastSale3??>${enterprise.lastSale3?c!''}</#if>"  disabled="" />
+                            <input type="text" value="<#if enterprise.lastProfit3??>${enterprise.lastProfit3?c!''}</#if>"  disabled="" />
                         </div>
                         <div>
-                            <span>2013</span>
-                            <input type="text" value=""  disabled="" />
-                            <input type="text" value=""  disabled="" />
-                            <input type="text" value=""  disabled="" />
-                            <input type="text" value=""  disabled="" />
+                            <span><#if lastyear2??>${lastyear2?string("yyyy")}</#if></span>
+                            <input type="text" value="<#if enterprise.lastAssets2??>${enterprise.lastAssets2?c!''}</#if>"  disabled="" />
+                            <input type="text" value="<#if enterprise.lastNetAssets2??>${enterprise.lastNetAssets2?c!''}</#if>"  disabled="" />
+                            <input type="text" value="<#if enterprise.lastSale2??>${enterprise.lastSale2?c!''}</#if>"  disabled="" />
+                            <input type="text" value="<#if enterprise.lastProfit2??>${enterprise.lastProfit2?c!''}</#if>"  disabled="" />
                         </div>
                         <div>
-                            <span>2014</span>
-                            <input type="text" value=""  disabled="" />
-                            <input type="text" value=""  disabled="" />
-                            <input type="text" value=""  disabled="" />
-                            <input type="text" value=""  disabled="" />
+                            <span><#if lastyear1??>${lastyear1?string("yyyy")}</#if></span>
+                            <input type="text" value="<#if enterprise.lastAssets1??>${enterprise.lastAssets1?c!''}</#if>"  disabled="" />
+                            <input type="text" value="<#if enterprise.lastNetAssets1??>${enterprise.lastNetAssets1?c!''}</#if>"  disabled="" />
+                            <input type="text" value="<#if enterprise.lastSale1??>${enterprise.lastSale1?c!''}</#if>"  disabled="" />
+                            <input type="text" value="<#if enterprise.lastProfit1??>${enterprise.lastProfit1?c!''}</#if>"  disabled="" />
                         </div>
                     </dd>
                     <dt class="dt03"><span>三、知识产权基本情况</span><br/><p>此信息将自动生成到报名表中</p></dt>
                     <dd>
-                        <div><span>发明专利</span><input type="text" value=""  disabled="" /></div>
-                        <div><span>实用新型专利</span><input type="text" value=""  disabled="" /></div>
-                        <div><span>外观设计专利</span><input type="text" value=""  disabled="" /></div>
+                        <div><span>发明专利</span><input type="text" value="${enterprise.inventiPatent!''}"  disabled="" /></div>
+                        <div><span>实用新型专利</span><input type="text" value="${enterptise.newPatent!''}"  disabled="" /></div>
+                        <div><span>外观设计专利</span><input type="text" value="${enterprise.designPatent!''}"  disabled="" /></div>
                     </dd>
                     <dt class="dt04"><span>四、融资信息（单位：万元）</span><br/><p>此信息将自动生成到报名表中</p></dt>
                     <dd style="margin-bottom: 30px;">
@@ -173,21 +176,21 @@ function record(){
                         </div>
                         <div>
                         <span>（一）股权融资</span>
-                        <input type="text" value=""  disabled="" />
-                        <input type="text" value=""  disabled="" />
-                        <input type="text" value=""  disabled="" />
+                        <input type="text" value="<#if enterprise.expectEquityDate??>${enterprise.expectEquityDate?string("yyyy年MM月dd日")!''}</#if>"  disabled="" />
+                        <input type="text" value="<#if enterprise.expectEquityAmount??>${enterprise.expectEquityAmount?c!''}</#if>"  disabled="" />
+                        <input type="text" value="${enterprise.expectEquityUse!''}"  disabled="" />
                         </div>
                         <div>
                         <span>（二）债权融资</span>
-                        <input type="text" value=""  disabled="" />
-                        <input type="text" value=""  disabled="" />
-                        <input type="text" value=""  disabled="" />
+                        <input type="text" value="<#if enterprise.expectBondDate??>${enterprise.expectBondDate?string("yyyy年MM月dd日")!''}</#if>"  disabled="" />
+                        <input type="text" value="<#if enterprise.expectBondAmount??>${enterprise.expectBondAmount?c!''}</#if>"  disabled="" />
+                        <input type="text" value="${enterprise.expectBondUse!''}"  disabled="" />
                         </div>
                         <div>
                         <p>是否愿意将贵公司所填以上信息向投资金融平台披露</p>
-                        <input style=" width:15px;"  type="radio"  checked="checked" name="team" value="" disabled="" />
+                        <input style=" width:15px;"  type="radio" <#if enterprise.isShow?? &&enterprise.isShow> checked="checked" </#if>name="team" value="" disabled="" />
                         <span style=" width:auto; display: block; margin-left: 10px; margin-top: 3px; ">是（同意请加盖公司公章）</span>
-                        <input style=" width:15px;" type="radio"  name="team" value="" disabled="" />
+                        <input style=" width:15px;" type="radio" <#if !enterprise.isShow??|| enterprise.isShow??&&!enterprise.isShow> checked="checked" </#if>  name="team" value="" disabled="" />
                         <span style=" width:auto; display: block; margin-left: 10px; margin-top:3px;">否</span>
                         </div>
                     </dd>

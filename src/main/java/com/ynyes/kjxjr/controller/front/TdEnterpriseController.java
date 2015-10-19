@@ -34,12 +34,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ynyes.kjxjr.entity.TdActivity;
 import com.ynyes.kjxjr.entity.TdActivityEnterprise;
+import com.ynyes.kjxjr.entity.TdArticle;
 import com.ynyes.kjxjr.entity.TdEnterprise;
 import com.ynyes.kjxjr.entity.TdEnterpriseGrade;
 import com.ynyes.kjxjr.entity.TdUser;
 import com.ynyes.kjxjr.service.TdActivityEnterpriseService;
 import com.ynyes.kjxjr.service.TdActivityExpertService;
 import com.ynyes.kjxjr.service.TdActivityService;
+import com.ynyes.kjxjr.service.TdArticleCategoryService;
+import com.ynyes.kjxjr.service.TdArticleService;
 import com.ynyes.kjxjr.service.TdCommonService;
 import com.ynyes.kjxjr.service.TdCouponService;
 import com.ynyes.kjxjr.service.TdEnterpriseGradeService;
@@ -74,9 +77,16 @@ public class TdEnterpriseController {
 	
 	@Autowired
 	TdActivityExpertService tdActivityExpertService;
-	
+
 	@Autowired
 	TdEnterpriseGradeService tdEnterpriseGradeService;
+
+    @Autowired
+    TdArticleCategoryService tdArticleCategoryService;
+    
+    @Autowired
+    TdArticleService tdArticleService;
+
 	
 	   /**
      * 企业填写资料
@@ -450,7 +460,40 @@ public class TdEnterpriseController {
 
         return "/client/Enterprise_change_password";
     }
+    
+    @RequestMapping(value="/project")
+    public String project(HttpServletRequest req,ModelMap map){
+//   	 String EnterpriseUsername = (String) req.getSession().getAttribute("EnterpriseUsername");
+//
+//        if (null == EnterpriseUsername) {
+//            return "redirect:/login";
+//        }
+    	
+    	tdCommonService.setHeader(map, req);
+    	
+    	map.addAttribute("category_list", tdArticleCategoryService.findByMenuId(11L));
+    	return "/client/activity_askshow";
+    }
+    
+    @RequestMapping(value="/article",method=RequestMethod.POST)
+    public String activty(TdArticle article,HttpServletRequest req,ModelMap map){
+//    	 String EnterpriseUsername = (String) req.getSession().getAttribute("EnterpriseUsername");
+//
+//         if (null == EnterpriseUsername) {
+//             return "redirect:/login";
+//         }
+         article.setChannelId(1L);
+         article.setStatusId(1L);
+         article.setSource("本站");
+         article.setMenuId(11L);
+         
+         tdArticleService.save(article);
+         
+         map.addAttribute("category_list", tdArticleCategoryService.findByMenuId(11L));
+    	return "/client/activity_askshow";
+    }
 
+    
     @RequestMapping(value = "/password", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> userPassword(HttpServletRequest req, String oldPassword,
