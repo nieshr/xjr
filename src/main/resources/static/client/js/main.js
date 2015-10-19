@@ -41,6 +41,9 @@ function addEnterprise(id,activityId)
         data:{"id":id,"activityId":activityId},
         success:function(data){
             $("#selectedEnterprise").html(data);
+            alert("添加成功！");
+            location.reload();
+          
         }
     });
 }
@@ -68,6 +71,8 @@ function addExpert(id,activityId)
         data:{"id":id,"activityId":activityId},
         success:function(data){
             $("#selectedExpert").html(data);
+            alert("添加成功！");
+            location.reload();
         }
     });
 }
@@ -98,6 +103,8 @@ function addEnterprise1(id,activityId,statusId)
       data:{"id":id,"activityId":activityId,"statusId":statusId,"reason":reason},
       success:function(data){
           $("#selectedEnterprise").html(data);
+          alert("添加推荐成功！");
+          location.reload();
       }
   });
 }

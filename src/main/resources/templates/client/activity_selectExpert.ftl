@@ -19,15 +19,32 @@
 <script src="/client/js/jquery-1.9.1.min.js"></script>
 <script src="/client/js/main.js"></script>
 <script>
-<#if msg??>
+<#if errormsg??>
 function warnmsg()
 {
-    alert("${msg}");
+    alert("${errormsg}");
 }
 
 window.onload=warnmsg;
 </#if>
 
+
+//添加筛选专家
+function addExpert(id,activityId)
+{
+    $.ajax({
+        type:"post",
+        url:"/activity/addExpert",
+        data:{"id":id,"activityId":activityId},
+        success:function(data){
+            $("#selectedExpert").html(data);
+            <#if !errormsg??>
+            alert("添加成功！");
+            </#if>
+            location.reload();
+        }
+    });
+}
 </script>
 </head>
 <body>
@@ -52,7 +69,6 @@ window.onload=warnmsg;
         	<dt><a href="#"></a></dt>
             <dd>
             	<p>当前所在位置:</p>
-
                 <a href="#">活动列表</a>
 				<p>&gt;</p>
                 <a href="#">预选专家</a>
@@ -89,7 +105,13 @@ window.onload=warnmsg;
 			        		<td>${item.name!''}</td>
 			        		<td style="color:#0ab2cb;">${item.usermobile!''}</td>
 			        		<td style="color:#e67817;">${item.email!''}</td>
-			        		<td><a href="javascript:addExpert(${item.id?c!''},${activityId?c!''});">添加</a></td>
+			        		<td>
+				        		<#if item.isSelect??&&item.isSelect>
+				        			<p>已添加</p>
+				        		<#else>
+				        			<a href="javascript:addExpert(${item.id?c!''},${activityId?c!''});">添加</a>
+				        		</#if>
+			        		</td>
 			        	</tr>
 		        	</#list>
 		        </#if>	   

@@ -99,7 +99,13 @@
 			        		<td><a href="/activity/enterprise/check/${item.id?c!''}" target=_blank >${item.title!''}</a></td>
 			        		<td style="color:#0ab2cb;">${item.area!''}</td>
 			        		<td style="color:#e67817;">${item.type!''}</td>
-			        		<td><a href="javascript:addEnterprise(${item.id?c!''},${activityId?c!''});">添加</a></td>
+			        		<td>
+			        		<#if item.isSelect??&&item.isSelect>
+				        		<p>已添加</p>
+				        	<#else>
+			        			<a class="add${item.id?c}" href="javascript:addEnterprise(${item.id?c!''},${activityId?c!''});">添加</a>
+			        		</#if>
+			        		</td>
 			        	</tr>
 		        	</#list>
 		        </#if>	   

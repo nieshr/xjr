@@ -249,6 +249,10 @@ public class TdEnterprise {
     @Column
     private String fileUrl;
     
+    //是否被选择
+    @Column
+    private Boolean isSelect;
+    
     //可供资料
     @Column
     private String dataAble;
@@ -699,6 +703,14 @@ public class TdEnterprise {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public Boolean getIsSelect() {
+		return isSelect;
+	}
+
+	public void setIsSelect(Boolean isSelect) {
+		this.isSelect = isSelect;
 	}
 
 

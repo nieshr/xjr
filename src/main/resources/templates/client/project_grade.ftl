@@ -225,9 +225,9 @@
 			<#if grade_list??>
 			    <#list grade_list as item>
         			<td>
-        				<select onChange="changeExpression('${item_index}');" id="${item_index}_oneExpression" <#if item.isGrade==true>disabled=""</#if>>
+        				<select onChange="changeExpression('${item_index}');" id="${item_index}_oneExpression" <#if item.isGrade>disabled=""</#if>>
         				    <#list 0..5 as n>
-        					   <option value="${n}" <#if n==item.oneExpression>selected=""</#if>>${n}</option>
+        					   <option value="${n}" <#if item.oneExpression??&&n==item.oneExpression>selected=""</#if>>${n}</option>
         					</#list>
         				</select>
         			</td>
@@ -241,7 +241,7 @@
         			<td>
         				<select onChange="changeExpression('${item_index}');" id="${item_index}_twoExpression" <#if item.isGrade==true>disabled=""</#if>>
         				    <#list 0..5 as n>
-            					<option value="${n}" <#if n==item.twoExpression>selected=""</#if>>${n}</option>
+            					<option value="${n}" <#if item.twoExpression?? &&n==item.twoExpression>selected=""</#if>>${n}</option>
         					</#list>
         				</select>
         			</td>
@@ -255,7 +255,7 @@
         			<td>
         				<select onChange="changeExpression('${item_index}');" id="${item_index}_threeExpression" <#if item.isGrade==true>disabled=""</#if>>
         				    <#list 0..5 as n>
-        					   <option value="${n}" <#if n==item.threeExpression>selected=""</#if>>${n}</option>
+        					   <option value="${n}" <#if item.threeExpression?? &&n==item.threeExpression>selected=""</#if>>${n}</option>
         					</#list>
         				</select>
         			</td>
@@ -269,7 +269,7 @@
     		        <td>
         				<select onChange="changeExpression('${item_index}');" id="${item_index}_fourExpression" <#if item.isGrade==true>disabled=""</#if>>
         				    <#list 0..5 as n>
-        					   <option value="${n}" <#if n==item.fourExpression>selected=""</#if>>${n}</option>
+        					   <option value="${n}" <#if item.fourExpression??&&n==item.fourExpression>selected=""</#if>>${n}</option>
         					</#list>
         				</select>
         			</td>
@@ -297,7 +297,7 @@
         			<td>
         				<select onChange="changeFeasibility('${item_index}');" id="${item_index}_oneFeasibility" <#if item.isGrade==true>disabled=""</#if>>
         					<#list 0..5 as n>
-        					   <option value="${n}" <#if n==item.oneFeasibility>selected=""</#if>>${n}</option>
+        					   <option value="${n}" <#if item.oneFeasibility??&&n==item.oneFeasibility>selected=""</#if>>${n}</option>
         					</#list>
         				</select>
         			</td>
@@ -311,7 +311,7 @@
         			<td>
         				<select onChange="changeFeasibility('${item_index}');" id="${item_index}_twoFeasibility" <#if item.isGrade==true>disabled=""</#if>>
         				    <#list 0..5 as n>
-        					   <option value="${n}" <#if n==item.twoFeasibility>selected=""</#if>>${n}</option>
+        					   <option value="${n}" <#if item.twoFeasibility??&&n==item.twoFeasibility>selected=""</#if>>${n}</option>
         					</#list>
         				</select>
         			</td>
@@ -325,7 +325,7 @@
         			<td>
         				<select onChange="changeFeasibility('${item_index}');" id="${item_index}_threeFeasibility" <#if item.isGrade==true>disabled=""</#if>>
         				    <#list 0..5 as n>
-        					   <option value="${n}" <#if n==item.threeFeasibility>selected=""</#if>>${n}</option>
+        					   <option value="${n}" <#if item.threeFeasibility??&&n==item.threeFeasibility>selected=""</#if>>${n}</option>
         					</#list>
         				</select>
         			</td>
@@ -339,7 +339,7 @@
         			<td>
         				<select onChange="changeFeasibility('${item_index}');" id="${item_index}_fourFeasibility" <#if item.isGrade==true>disabled=""</#if>>
         				    <#list 0..5 as n>
-        					   <option value="${n}" <#if n==item.fourFeasibility>selected=""</#if>>${n}</option>
+        					   <option value="${n}" <#if item.fourFeasibility??&&n==item.fourFeasibility>selected=""</#if>>${n}</option>
         					</#list>
         				</select>
         			</td>
@@ -364,9 +364,9 @@
 			<#if grade_list??>
 			    <#list grade_list as item>
         			<td>
-        				<select onChange="changeMarketValue('${item_index}');" id="${item_index}_oneMarketValue" <#if item.isGrade==true>disabled=""</#if>>
+        				<select onChange="changeMarketValue('${item_index}');" id="${item_index}_oneMarketValue" <#if  item.isGrade??&&item.isGrade==true>disabled=""</#if>>
         				    <#list 0..5 as n>
-        					   <option value="${n}" <#if n==item.oneMarketValue>selected=""</#if>>${n}</option>
+        					   <option value="${n}" <#if item.oneMarketValue??&&n==item.oneMarketValue>selected=""</#if>>${n}</option>
         					</#list>
         				</select>
         			</td>
@@ -380,7 +380,7 @@
         			<td>
         				<select onChange="changeMarketValue('${item_index}');" id="${item_index}_twoMarketValue" <#if item.isGrade==true>disabled=""</#if>>
         				    <#list 0..5 as n>
-        					   <option value="${n}" <#if n==item.twoMarketValue>selected=""</#if>>${n}</option>
+        					   <option value="${n}" <#if item.twoMarketValue??&&n==item.twoMarketValue>selected=""</#if>>${n}</option>
         					</#list>
         				</select>
         			</td>
@@ -394,7 +394,7 @@
         			<td>
         				<select onChange="changeMarketValue('${item_index}');" id="${item_index}_threeMarketValue" <#if item.isGrade==true>disabled=""</#if>>
         				    <#list 0..5 as n>
-        					<option value="${n}" <#if n==item.threeMarketValue>selected=""</#if>>${n}</option>
+        					<option value="${n}" <#if item.threeMarketValue??&&n==item.threeMarketValue>selected=""</#if>>${n}</option>
         					</#list>
         				</select>
         			</td>
@@ -408,7 +408,7 @@
         			<td>
         				<select onChange="changeMarketValue('${item_index}');" id="${item_index}_fourMarketValue" <#if item.isGrade==true>disabled=""</#if>>
         				    <#list 0..5 as n>
-			         		  <option value="${n}" <#if n==item.fourMarketValue>selected=""</#if>>${n}</option>
+			         		  <option value="${n}" <#if item.fourMarketValue??&&n==item.fourMarketValue>selected=""</#if>>${n}</option>
 			         		</#list>
         				</select>
         			</td>
@@ -436,7 +436,7 @@
         			<td>
         				<select onChange="changeTechnology('${item_index}');" id="${item_index}_oneTechnology" <#if item.isGrade==true>disabled=""</#if>>
         				    <#list 0..5 as n>
-        					   <option value="${n}" <#if n==item.oneTechnology>selected=""</#if>>${n}</option>
+        					   <option value="${n}" <#if item.oneTechnology??&&n==item.oneTechnology>selected=""</#if>>${n}</option>
         					</#list>
         				</select>
         			</td>
@@ -450,7 +450,7 @@
         			<td>
         				<select onChange="changeTechnology('${item_index}');" id="${item_index}_twoTechnology" <#if item.isGrade==true>disabled=""</#if>>
         				    <#list 0..5 as n>
-        					   <option value="${n}" <#if n==item.twoTechnology>selected=""</#if>>${n}</option>
+        					   <option value="${n}" <#if item.twoTechnology??&&n==item.twoTechnology>selected=""</#if>>${n}</option>
         					</#list>
         				</select>
         			</td>
@@ -464,7 +464,7 @@
         			<td>
         				<select onChange="changeTechnology('${item_index}');" id="${item_index}_threeTechnology" <#if item.isGrade==true>disabled=""</#if>>
         				    <#list 0..5 as n>
-        					   <option value="${n}" <#if n==item.threeTechnology>selected=""</#if>>${n}</option>
+        					   <option value="${n}" <#if item.threeTechnology??&&n==item.threeTechnology>selected=""</#if>>${n}</option>
         					</#list>
         				</select>
         			</td>
@@ -478,7 +478,7 @@
         			<td>
         				<select onChange="changeTechnology('${item_index}');" id="${item_index}_fourTechnology" <#if item.isGrade==true>disabled=""</#if>>
         				    <#list 0..5 as n>
-        					   <option value="${n}" <#if n==item.fourTechnology>selected=""</#if>>${n}</option>
+        					   <option value="${n}" <#if item.fourTechnology??&&n==item.fourTechnology>selected=""</#if>>${n}</option>
         					</#list>
         				</select>
         			</td>
@@ -492,7 +492,7 @@
         			<td>
         				<select onChange="changeTechnology('${item_index}');" id="${item_index}_fiveTechnology" <#if item.isGrade==true>disabled=""</#if>>
         				    <#list 0..5 as n>
-        					   <option value="${n}" <#if n==item.fiveTechnology>selected=""</#if>>${n}</option>
+        					   <option value="${n}" <#if item.fiveTechnology??&&n==item.fiveTechnology>selected=""</#if>>${n}</option>
         					</#list>
         				</select>
         			</td>
@@ -518,7 +518,7 @@
     			<td>
     				<select onChange="changeGroup('${item_index}');" id="${item_index}_oneGroup" <#if item.isGrade==true>disabled=""</#if>>
     				    <#list 0..5 as n>
-    					   <option value="${n}" <#if n==item.oneGroup>selected=""</#if>>${n}</option>
+    					   <option value="${n}" <#if item.oneGroup??&&n==item.oneGroup>selected=""</#if>>${n}</option>
     					</#list>
     				</select>
     			</td>
@@ -532,7 +532,7 @@
                 <td>
                     <select onChange="changeGroup('${item_index}');" id="${item_index}_twoGroup" <#if item.isGrade==true>disabled=""</#if>>
                         <#list 0..5 as n>
-                           <option value="${n}" <#if n==item.twoGroup>selected=""</#if>>${n}</option>
+                           <option value="${n}" <#if item.twoGroup??&& n==item.twoGroup>selected=""</#if>>${n}</option>
                         </#list>
                     </select>
                 </td>
@@ -546,7 +546,7 @@
         			<td>
         				<select onChange="changeGroup('${item_index}');" id="${item_index}_threeGroup" <#if item.isGrade==true>disabled=""</#if>>
         				    <#list 0..5 as n>
-        					   <option value="${n}" <#if n==item.threeGroup>selected=""</#if>>${n}</option>
+        					   <option value="${n}" <#if item.threeGroup??&&n==item.threeGroup>selected=""</#if>>${n}</option>
         					</#list>
         				</select>
         			</td>

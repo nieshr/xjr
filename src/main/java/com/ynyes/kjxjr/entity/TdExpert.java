@@ -47,6 +47,11 @@ public class TdExpert {
     @Column
     private Long statusId;
     
+    // 是否被选择
+    @Column
+    private Boolean isSelect;
+    
+    
     // 登录名
     @Column
     private String username;
@@ -134,6 +139,14 @@ public class TdExpert {
 
 	public void setInCharge(String inCharge) {
 		this.inCharge = inCharge;
+	}
+
+	public Boolean getIsSelect() {
+		return isSelect;
+	}
+
+	public void setIsSelect(Boolean isSelect) {
+		this.isSelect = isSelect;
 	}
 
  
