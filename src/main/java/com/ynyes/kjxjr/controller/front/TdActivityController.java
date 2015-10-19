@@ -24,6 +24,7 @@ import com.ynyes.kjxjr.entity.TdActivityExpert;
 import com.ynyes.kjxjr.entity.TdEnterprise;
 import com.ynyes.kjxjr.entity.TdEnterpriseGrade;
 import com.ynyes.kjxjr.entity.TdExpert;
+import com.ynyes.kjxjr.entity.TdExpertCoachEnterprise;
 import com.ynyes.kjxjr.entity.TdUser;
 import com.ynyes.kjxjr.service.TdActivityEnterpriseService;
 import com.ynyes.kjxjr.service.TdActivityExpertService;
@@ -34,6 +35,7 @@ import com.ynyes.kjxjr.service.TdCouponService;
 import com.ynyes.kjxjr.service.TdEnterpriseGradeService;
 import com.ynyes.kjxjr.service.TdEnterpriseService;
 import com.ynyes.kjxjr.service.TdEnterpriseTypeService;
+import com.ynyes.kjxjr.service.TdExpertCoachEnterpriseService;
 import com.ynyes.kjxjr.service.TdExpertService;
 import com.ynyes.kjxjr.service.TdOrderService;
 import com.ynyes.kjxjr.service.TdRegionService;
@@ -83,6 +85,9 @@ public class TdActivityController {
 	
 	@Autowired
 	TdEnterpriseGradeService tdEnterpriseGradeService;
+	
+	@Autowired
+	TdExpertCoachEnterpriseService tdExpertCoachEnterpriseService;
 
 	   /**
      * 企业填写资料
@@ -1087,5 +1092,52 @@ public class TdActivityController {
 			}
     	}
     	return "/client/total_grade";
+    }
+    
+    @RequestMapping(value = "/getCoach")
+    public String getCoach(Long enterpriseId,Long activityId,ModelMap map,HttpServletRequest req,String keywords,Integer page){
+    	String activityUsername = (String) req.getSession().getAttribute("activityUsername");
+    	if(null == activityUsername){
+    		return "/client/login";
+    	}
+    	
+    	if(null == page){
+    		page = 0;
+    	}
+    	
+    	Page<TdExpert>ExpertPage = null;
+        if (null != keywords && !keywords.isEmpty())
+        {
+        	 ExpertPage = tdExpertService.findBySearch(keywords,page, ClientConstant.pageSize);
+        }
+        else
+        {
+			ExpertPage = tdExpertService.findAllOrderBySortIdAsc(page, ClientConstant.pageSize);
+        }
+    	map.addAttribute("keywords", keywords);
+    	map.addAttribute("page", page);
+    	map.addAttribute("ExpertPage", ExpertPage);
+    	map.addAttribute("enterpriseId", enterpriseId);
+    	map.addAttribute("activityId", activityId);
+    	return "/client/activity_coach_expert";
+    }
+    
+    @RequestMapping(value="/addCoach")
+    public String addCoach(Long expertId,Long enterpriseId,Long activityId,HttpServletRequest req){
+    	String activityUsername = (String) req.getSession().getAttribute("activityUsername");
+    	if(null == activityUsername){
+    		return "/client/login";
+    	}
+    	
+    	TdEnterprise enterprise = tdEnterpriseService.findOne(enterpriseId);
+    	TdExpert expert = tdExpertService.findOne(expertId);
+    	TdExpertCoachEnterprise coach = new TdExpertCoachEnterprise();
+    	coach.setEnterpriseId(enterpriseId);
+    	coach.setEnterpriseName(enterprise.getTitle());
+    	coach.setIsGrade(false);
+    	coach.setAddr(enterprise.getAddress());
+    	coach.setExpertName(expert.getName());
+    	tdExpertCoachEnterpriseService.save(coach);
+    	return "redirect:/activity/edit?id="+activityId;
     }
 }
