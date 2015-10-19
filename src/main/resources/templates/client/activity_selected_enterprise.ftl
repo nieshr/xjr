@@ -1,10 +1,10 @@
 	<div class="list_base2" id="selectedEnterprise">			
 				<table class="new_list">
 		        	<tr class="list_title">
-		        		<th width="30%">ÒÑÑ¡ÔñÁĞ±í</th>
-		        		<th width="25%">µØÇø</th>
-		        		<th width="25%">ĞĞÒµ¹éÊô</th>
-		        		<th width="20%">²Ù×÷</th>
+		        		<th width="30%">å·²é€‰æ‹©åˆ—è¡¨</th>
+		        		<th width="25%">åœ°åŒº</th>
+		        		<th width="25%">æ‰€å±ç±»åˆ«</th>
+		        		<th width="20%">æ“ä½œ</th>
 		        	</tr>
 		        <#if selected_enterprise_list??>
 		        	<#list selected_enterprise_list as item>
@@ -13,7 +13,7 @@
 			        		<td><a href="/activity/enterprise/check/${item.enterpriseId?c!''}" target=_blank >${item.enterpriseTitle!''}</a></td>
 			        		<td style="color:#0ab2cb;">${item.area!''}</td>
 			        		<td style="color:#e67817;">${item.type!''}</td>
-			        		<td><a href="javascript:removeEnterprise(${item.id?c!''},${activityId?c!''});">È¡Ïû</a></td>
+			        		<td><a href="javascript:removeEnterprise(${item.id?c!''},${activityId?c!''});">å–æ¶ˆ</a></td>
 			        	</tr>
 		        	</#list>
 		        </#if>	   

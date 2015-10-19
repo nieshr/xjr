@@ -183,7 +183,7 @@ public class TdExpertController {
 			return "/client/login";
 		}
 		TdExpert expert = tdExpertService.findbyUsername(expertUsername);
-		List<TdEnterpriseGrade> grade_list = tdEnterpriseGradeService.findByExpertIdAndActivityId(expert.getId(),
+		List<TdEnterpriseGrade> grade_list = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderByNumberAsc(expert.getId(),
 				activityId);
 		map.addAttribute("grade_list", grade_list);
 		map.addAttribute("activityId", activityId);

@@ -10,8 +10,12 @@ import com.ynyes.kjxjr.entity.TdEnterpriseGrade;
 public interface TdEnterpriseGradeRepo
 		extends PagingAndSortingRepository<TdEnterpriseGrade, Long>, JpaSpecificationExecutor<TdEnterpriseGrade> {
 
-	List<TdEnterpriseGrade> findByExpertIdAndActivityId(Long expertId,Long activityId);
+	List<TdEnterpriseGrade> findByExpertIdAndActivityIdOrderByNumberAsc(Long expertId,Long activityId);
 	List<TdEnterpriseGrade> findByEnterpriseIdAndActivityIdOrderByExpertIdAsc(Long enterpriseId,Long activityId);
+	List<TdEnterpriseGrade> findByActivityIdOrderByIdAsc(Long activityId);
+	
 	
 	TdEnterpriseGrade findByExpertIdAndActivityIdAndNumber(Long expertId,Long activityId,String number);
+	TdEnterpriseGrade findByExpertIdAndActivityId(Long expertId,Long activityId);
+	
 }

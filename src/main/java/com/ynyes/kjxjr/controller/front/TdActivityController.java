@@ -22,6 +22,7 @@ import com.ynyes.kjxjr.entity.TdActivity;
 import com.ynyes.kjxjr.entity.TdActivityEnterprise;
 import com.ynyes.kjxjr.entity.TdActivityExpert;
 import com.ynyes.kjxjr.entity.TdEnterprise;
+import com.ynyes.kjxjr.entity.TdEnterpriseGrade;
 import com.ynyes.kjxjr.entity.TdExpert;
 import com.ynyes.kjxjr.entity.TdUser;
 import com.ynyes.kjxjr.service.TdActivityEnterpriseService;
@@ -30,6 +31,7 @@ import com.ynyes.kjxjr.service.TdActivityService;
 import com.ynyes.kjxjr.service.TdActivityTypeService;
 import com.ynyes.kjxjr.service.TdCommonService;
 import com.ynyes.kjxjr.service.TdCouponService;
+import com.ynyes.kjxjr.service.TdEnterpriseGradeService;
 import com.ynyes.kjxjr.service.TdEnterpriseService;
 import com.ynyes.kjxjr.service.TdEnterpriseTypeService;
 import com.ynyes.kjxjr.service.TdExpertService;
@@ -78,6 +80,9 @@ public class TdActivityController {
 	
 	@Autowired
 	TdActivityExpertService tdActivityExpertService;
+	
+	@Autowired
+	TdEnterpriseGradeService tdEnterpriseGradeService;
 	   /**
      * 企业填写资料
      * @author Zhangji
@@ -814,6 +819,24 @@ public class TdActivityController {
         		tdActivityExpertService.save(ActivityExpert);
         	}
         	
+        	//同时创建评分表数据
+        	TdEnterpriseGrade enterpriseGrade = tdEnterpriseGradeService.findByExpertIdAndActivityId(activityId,id);
+        	if (null == enterpriseGrade)
+        	{
+        		for(int i =0;i<20;i++)
+        		{
+        		TdEnterpriseGrade newEnter =new  TdEnterpriseGrade();
+        		newEnter.setExpertId(id);
+        		newEnter.setActivityId(activity.getId());
+        		tdEnterpriseGradeService.save(newEnter);
+        		}
+        	}
+        	else
+        	{
+        		enterpriseGrade.setExpertId(id);
+        		tdActivityExpertService.save(ActivityExpert);
+        	}
+        	
         }
         
         map.addAttribute("activityId",activityId);
@@ -926,6 +949,58 @@ public class TdActivityController {
         return res;
     }
     
+    //区县审核项目，查看详情
+    @RequestMapping(value = "/enterprise/detail/{id}", method = RequestMethod.GET)
+    public String activityEnterpriseCheck(HttpServletRequest req, ModelMap map,@PathVariable Long id) {
+        String username = (String) req.getSession().getAttribute("activityUsername");
+
+        if (null == username) {
+            return "redirect:/login";
+        }
+        
+        if (null == id)
+        {
+        	return "/client/error_404";
+        }
+
+        tdCommonService.setHeader(map, req);
+
+        TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
+        TdEnterprise enterprise = tdEnterpriseService.findOne(id);
+        
+        //行业所属是多选。。。。
+        if (null != enterprise.getType())
+        {
+        	String type[] = enterprise.getType().split(",");
+        	map.addAttribute("enterpriseType", type);
+        }
+        
+        if (null != enterprise.getDataAble())
+        {
+        	String dataAble[] = enterprise.getDataAble().split(",");
+        	map.addAttribute("dataAble", dataAble);
+        }
+        
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.YEAR, -1);
+        Date lastyear1 = calendar.getTime();
+        map.addAttribute("lastyear1", lastyear1);
+        
+        calendar.add(Calendar.YEAR, -1);
+        Date lastyear2 = calendar.getTime();
+        map.addAttribute("lastyear2", lastyear2);
+        
+        calendar.add(Calendar.YEAR, -1);
+        Date lastyear3 = calendar.getTime();
+        map.addAttribute("lastyear3", lastyear3);
+        
+        map.addAttribute("enterprise", enterprise);
+        map.addAttribute("user", user);
+        map.addAttribute("usertype", "activity");
+        
+        return "/client/region_enterprise_check";
+    }
     
     @RequestMapping(value = "/submit", method = RequestMethod.POST)
     @ResponseBody

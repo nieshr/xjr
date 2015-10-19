@@ -215,9 +215,9 @@ window.onload=done;
 		    					<li>
 		    						<p class="p01">${item_index+1}.${item.enterpriseTitle!''}</p>
 		    						<a style="display:block;  width:100px;"></a>
-		    						<a href="#">查看</a>
+		    						<a href="/activity/enterprise/check/${item.enterpriseId?c!''}" target=_blank>查看</a>
 		                            <a>丨</a>
-		                            <a href="/enterprise/grade?activityId=${activity.id?c!''}&enterpriseId=${item.id?c!''}">得分</a>
+		                            <a href="/enterprise/grade/${item.activityId?c!''}?enterpriseId=${item.enterpriseId?c!''}">得分</a>
 		                            <a>丨</a>
 		                            <a href="#">分配路演辅导</a>
 		                            <a>丨</a>

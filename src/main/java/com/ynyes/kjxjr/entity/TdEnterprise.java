@@ -54,6 +54,10 @@ public class TdEnterprise {
     @Column
     private String area;
     
+    // 地址
+    @Column
+    private String address;
+    
     // 职工人数
     @Column
     private Double staffNumber;
@@ -687,6 +691,14 @@ public class TdEnterprise {
 
 	public void setDataAble(String dataAble) {
 		this.dataAble = dataAble;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 

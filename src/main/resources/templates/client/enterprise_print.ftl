@@ -81,6 +81,7 @@
                         </#if>  
     				</select>
     			</div>
+    			<div><span>地址：</span><input type="text" name="address" datatype="*"value="<#if enterprise.address??>${enterprise.address!''}</#if>"  disabled="" /></div>
     			<#if enterprise.formType == 0>
     			<div><span>职工人数：</span><input type="text" value="${enterprise.staffNumber!''}" disabled="" />&nbsp;&nbsp;(人)</div>
     			</#if>

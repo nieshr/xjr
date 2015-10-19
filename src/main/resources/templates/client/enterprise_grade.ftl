@@ -188,10 +188,10 @@
 		</tr>
 		<tr class="tr03">
 			<th>小计</th>
-			<#asign count = 0>
+			<#assign count = 0>
             <#list grade_list as item>
                 <td>${item.totalPoint!''}</td>
-                <#asign count = count+item.titalPoint>
+                <#assign count = count+item.titalPoint>
             </#list> 
 		</tr>
 		<tr class="tr03">

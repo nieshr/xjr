@@ -144,10 +144,10 @@ $(document).ready(function(){
         </div>
         <div style="margin-top:-10px;margin-bottom:-20px;">
           
-           <span class="span5"><b></b><font style="float:left;">重庆市科技小巨人企业培育专项行动网上平台验证码【科技小巨人】</font></span>
+          
         </div>
         
-        <div>
+        <div  style="margin-top:50px;">
         	<i class="i6"></i>
         	<input type="text" name="email" datatype="e" value="email" onfocus="this.type='text';if(this.value=='email'){this.value='';}" onblur="if(this.value==''){this.type='text';this.value='email'}"/>
             <!--

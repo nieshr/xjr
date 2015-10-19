@@ -66,13 +66,24 @@ public class TdEnterpriseGradeService {
 	 * 
 	 * @author dengxiao
 	 */
-	public List<TdEnterpriseGrade> findByExpertIdAndActivityId(Long expertId, Long activityId) {
+	public List<TdEnterpriseGrade> findByExpertIdAndActivityIdOrderByNumberAsc(Long expertId, Long activityId) {
 		if (null == expertId || null == activityId) {
 			return null;
 		}
-		return repository.findByExpertIdAndActivityId(expertId, activityId);
+		return repository.findByExpertIdAndActivityIdOrderByNumberAsc(expertId, activityId);
 	}
 
+	/**
+	 * 根据活动ID查找评分表
+	 * 
+	 * @author dengxiao
+	 */
+	public List<TdEnterpriseGrade> findByActivityIdOrderByIdAsc( Long activityId) {
+		if ( null == activityId) {
+			return null;
+		}
+		return repository.findByActivityIdOrderByIdAsc(activityId);
+	}
 	/**
 	 * 根据专家ID和活动ID还有项目编号查找评分表
 	 * 
@@ -84,6 +95,20 @@ public class TdEnterpriseGradeService {
 		}
 		return repository.findByExpertIdAndActivityIdAndNumber(expertId, activityId, number);
 	}
+	
+	/**
+	 * 根据专家ID和活动ID查找评分表
+	 * 
+	 * @author dengxiao
+	 */
+	public TdEnterpriseGrade findByExpertIdAndActivityId(Long expertId, Long activityId) {
+		if (null == expertId || null == activityId) {
+			return null;
+		}
+		return repository.findByExpertIdAndActivityId(expertId, activityId);
+	}
+	
+
 	
 	/**
 	 * 根据企业ID和活动ID查找评分表
