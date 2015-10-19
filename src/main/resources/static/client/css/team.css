@@ -112,6 +112,18 @@
 .team_showbox div{width:800px; height:400px; background: white;}
 .team_showbox div img{ width: 800px; height: 400px;}
 
+.team_title01{width:100%;float:left; height:40px;background:white; line-height:40px; font-size:16px;}
+.team_title01 input{margin-left:30px; margin-top:14px; float:left;}
+.team_title01 span{display:block; float:left; height:40px; margin-left:10px;}
+
+.team_title02{width:100%;float:left; height:50px;font-size:16px; margin-top:20px;}
+.team_title02 dt{float:left; height:30px;line-height:30px; font-size:14px;}
+.team_title02 dd{float:left;}
+.team_title02 dd input{width:220px;height:30px; margin-left:10px;}
+
+
+
+
 
 /*六、档案跟踪 = 修改资料*/
 .expert_date{width: 950px; margin-left:30px;height: auto; display: block; overflow: hidden; float: left;  margin-top: 30px;}

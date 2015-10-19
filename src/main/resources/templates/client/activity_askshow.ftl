@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>申请展示</title>
-<link rel="shortcut icon" href="images/icon.ico" />
+<link rel="shortcut icon" href="/client/images/icon.ico" />
 
 <link href="/client/css/base.css" rel="stylesheet" type="text/css" />
 <link href="/client/css/team.css" rel="stylesheet" type="text/css" />
@@ -38,7 +38,9 @@
         });
         
    });
-   
+function subActivity(){
+    
+}    
 </script>
 
 <body>
@@ -54,42 +56,45 @@
             <dd><a href="/enterprise/check">基本资料</a></dd>
             <dd><a href="/enterprise/activity/list">活动列表</a></dd>
             <dd><a href="/enterprise/project">申请展示</a></dd>
-
 		</dl>
 	</div>
 <!--right-->
+    <form action="/enterprise/article" method="post">
     <div class="right_content">
-    <div class="right_box">
-    	<dl class="crumb">
-        	<dt><a href="#"></a></dt>
-            <dd>
-            	<p>当前所在位置:</p>
-
-                <a href="">申请展示</a>
-            </dd>
-
-        </dl>
-        <div class="team_show">
-                  <input type="radio" name="categoryId" value="1">团队展
-        </div>
-        <ul class="team_showbox">
-        	<li>
-        		<a>展示标题 :</a>
-        		<input type="text" value="" id=""title/>
-        	</li>
-        	<li></li>
-        </ul>
-         <div>
-             <dl>
-                <dt>展示内容:</dt>
+        <div class="right_box">
+        	<dl class="crumb">
+            	<dt><a href="#"></a></dt>
                 <dd>
-                    <textarea name="content" id="content" class="editor" style="visibility:hidden;"></textarea>
+                	<p>当前所在位置:</p>
+                    <a href="">申请展示</a>
                 </dd>
             </dl>
-        </div>
-    </div>    
-    <input style="width:80px; height: 30px; border:none; background: #e67817; font-size: 14px; color: white; border-radius: 6px;margin-left: 30px; margin-top: 50px;" type="submit" value="提交" />
+            <dl class="team_title01">
+                <dt></dt>
+                <dd>
+                    <#if category_list??>
+                    <#list category_list as ca>
+                        <input type="radio" name="categoryId" value="${ca.id?c}" /><span>${ca.title!''}</span>
+                    </#list>
+                    </#if> 
+                </dd>
+            </dl>
+            <dl class="team_title02">
+                <dt>展示标题 :</dt>
+                <dd>
+                    <input type="text" value="" id="title" name="title"/>
+                </dd>
+            </dl>   
+            <dl style="float:left;">
+                <dt style="font-size:14px;float:left">内容描述：</dt>
+                <dd>
+                    <textarea name="content" class="editor" id="content" style="visibility:hidden;"></textarea>
+                </dd>
+            </dl>    
+        </div>    
+        <input style="width:80px; height: 30px; border:none; background: #e67817; font-size: 14px; color: white; border-radius: 6px;margin-left: 30px; margin-top: 50px;" type="submit" value="提交"/>
     </div>
+    </form>
 </div><!--content_end-->
 </div><!--main-->
 </body>

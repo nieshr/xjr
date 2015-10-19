@@ -97,22 +97,25 @@ function record(){
                             <div><span>股东结构：</span><textarea disabled="${enterprise.sharehodler!''}" ></textarea></div>
                             <div><span>所在地区：</span>
                             <select disabled="" >
-                                <option>江北</option>
-                                <option>南岸</option>
-                                <option>巴南</option>
-                                <option>合川</option>
-                                <option>荣昌</option>
+                                <option>${enterprise.area!''}</option>
                             </select>
                             </div>
                             <div><span>职工人数：</span><input type="text" value="${enterprise.staffNumber!'0'}" disabled="" />&nbsp;&nbsp;(人)</div>
                             <div>
                                 <span>行业归属：</span>
-                                <input style="margin-top: -3px; width:15px;" type="checkbox" value="" disabled="" ><p>电子信息</p>
-                                <input style="margin-top: -3px; width:15px;" type="checkbox" value="" disabled="" ><p>生物医药</p>
-                                <input style="margin-top: -3px; width:15px;" type="checkbox" value="" disabled="" ><p>光电一体化</p>
-                                <input style="margin-top: -3px; width:15px;" type="checkbox" value="" disabled="" ><p>资源与环境</p>
-                                <input style="margin-top: -3px; width:15px;" type="checkbox" value="" disabled="" ><p>新能源、新材料</p>
-                                <input style="margin-top: -3px; width:15px;" type="checkbox" value="" disabled="" ><p>其他</p>		
+                                <#if enterpriseType_list??>
+                                    <#list enterpriseType_list as item>
+                                        <input disabled="" style="margin-top: -3px; width:15px;" name="type" type="checkbox" value="${item.title!''}"
+                                            <#if enterprise.formType?? && enterpriseType??>
+                                                <#list enterpriseType as type>
+                                                    <#if type == item.title>
+                                                        checked="checked"
+                                                    </#if>
+                                                </#list>
+                                            </#if>                                      
+                                        /><p>${item.title!''}</p>
+                                    </#list>
+                                </#if>		
                             </div>
                             <div><span>邮箱：</span><input type="text" value="${enterprise.email!''}" disabled="" /></div>
                             <div><span>联系人：</span><input type="text" value="${enterprise.contact!''}" disabled="" /></div>
@@ -136,25 +139,25 @@ function record(){
                             <span style=" display: block; width:170px; text-align: center; margin-left: 20px; disabled="" ">毛利润</span>
                         </div>
                         <div>
-                            <span>2012</span>
-                            <input type="text" value="${enterprise.lastAssets3!''}"  disabled="" />
-                            <input type="text" value="${enterprise.lastNetAssets3!''}"  disabled="" />
-                            <input type="text" value="${enterprise.lastSale3!''}"  disabled="" />
-                            <input type="text" value="${enterprise.lastProfit3!''}"  disabled="" />
+                            <span><#if lastyear3??>${lastyear3?string("yyyy")}</#if></span>
+                            <input type="text" value="<#if enterprise.lastAssets3??>${enterprise.lastAssets3?c!''}</#if>"  disabled="" />
+                            <input type="text" value="<#if enterprise.lastNetAssets3??>${enterprise.lastNetAssets3?c!''}</#if>"  disabled="" />
+                            <input type="text" value="<#if enterprise.lastSale3??>${enterprise.lastSale3?c!''}</#if>"  disabled="" />
+                            <input type="text" value="<#if enterprise.lastProfit3??>${enterprise.lastProfit3?c!''}</#if>"  disabled="" />
                         </div>
                         <div>
-                            <span>2013</span>
-                            <input type="text" value="${enterprise.lastAssets2!''}"  disabled="" />
-                            <input type="text" value="${enterprise.lastNetAssets2!''}"  disabled="" />
-                            <input type="text" value="${enterprise.lastSale2!''}"  disabled="" />
-                            <input type="text" value="${enterprise.lastProfit2!''}"  disabled="" />
+                            <span><#if lastyear2??>${lastyear2?string("yyyy")}</#if></span>
+                            <input type="text" value="<#if enterprise.lastAssets2??>${enterprise.lastAssets2?c!''}</#if>"  disabled="" />
+                            <input type="text" value="<#if enterprise.lastNetAssets2??>${enterprise.lastNetAssets2?c!''}</#if>"  disabled="" />
+                            <input type="text" value="<#if enterprise.lastSale2??>${enterprise.lastSale2?c!''}</#if>"  disabled="" />
+                            <input type="text" value="<#if enterprise.lastProfit2??>${enterprise.lastProfit2?c!''}</#if>"  disabled="" />
                         </div>
                         <div>
-                            <span>2014</span>
-                            <input type="text" value="${enterprise.lastAssets!''}"  disabled="" />
-                            <input type="text" value="${enterprise.lastNetAssets!''}"  disabled="" />
-                            <input type="text" value="${enterprise.lastSale!''}"  disabled="" />
-                            <input type="text" value="${enterprise.lastProfit!''}"  disabled="" />
+                            <span><#if lastyear1??>${lastyear1?string("yyyy")}</#if></span>
+                            <input type="text" value="<#if enterprise.lastAssets1??>${enterprise.lastAssets1?c!''}</#if>"  disabled="" />
+                            <input type="text" value="<#if enterprise.lastNetAssets1??>${enterprise.lastNetAssets1?c!''}</#if>"  disabled="" />
+                            <input type="text" value="<#if enterprise.lastSale1??>${enterprise.lastSale1?c!''}</#if>"  disabled="" />
+                            <input type="text" value="<#if enterprise.lastProfit1??>${enterprise.lastProfit1?c!''}</#if>"  disabled="" />
                         </div>
                     </dd>
                     <dt class="dt03"><span>三、知识产权基本情况</span><br/><p>此信息将自动生成到报名表中</p></dt>
@@ -173,21 +176,21 @@ function record(){
                         </div>
                         <div>
                         <span>（一）股权融资</span>
-                        <input type="text" value="${enterprise.expectEquityDate?string('yyyy-MM-dd')}"  disabled="" />
-                        <input type="text" value="${enterprise.expectEquityAmount}"  disabled="" />
+                        <input type="text" value="<#if enterprise.expectEquityDate??>${enterprise.expectEquityDate?string("yyyy年MM月dd日")!''}</#if>"  disabled="" />
+                        <input type="text" value="<#if enterprise.expectEquityAmount??>${enterprise.expectEquityAmount?c!''}</#if>"  disabled="" />
                         <input type="text" value="${enterprise.expectEquityUse!''}"  disabled="" />
                         </div>
                         <div>
                         <span>（二）债权融资</span>
-                        <input type="text" value="${enterprise.expectBondDate?string('yyyy-MM-dd')}"  disabled="" />
-                        <input type="text" value="${enterprise.expectBondAmount}"  disabled="" />
+                        <input type="text" value="<#if enterprise.expectBondDate??>${enterprise.expectBondDate?string("yyyy年MM月dd日")!''}</#if>"  disabled="" />
+                        <input type="text" value="<#if enterprise.expectBondAmount??>${enterprise.expectBondAmount?c!''}</#if>"  disabled="" />
                         <input type="text" value="${enterprise.expectBondUse!''}"  disabled="" />
                         </div>
                         <div>
                         <p>是否愿意将贵公司所填以上信息向投资金融平台披露</p>
-                        <input style=" width:15px;"  type="radio"  <#if enterprise?? && enterprise.isShow>checked="checked"</#if> name="team" value="" disabled="" />
+                        <input style=" width:15px;"  type="radio" <#if enterprise.isShow?? &&enterprise.isShow> checked="checked" </#if>name="team" value="" disabled="" />
                         <span style=" width:auto; display: block; margin-left: 10px; margin-top: 3px; ">是（同意请加盖公司公章）</span>
-                        <input style=" width:15px;" type="radio"  name="team"<#if enterprise?? && enterprise.isShow><#else>checked="checked"</#if> value="" disabled="" />
+                        <input style=" width:15px;" type="radio" <#if !enterprise.isShow??|| enterprise.isShow??&&!enterprise.isShow> checked="checked" </#if>  name="team" value="" disabled="" />
                         <span style=" width:auto; display: block; margin-left: 10px; margin-top:3px;">否</span>
                         </div>
                     </dd>

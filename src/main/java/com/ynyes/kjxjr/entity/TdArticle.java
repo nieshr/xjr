@@ -313,6 +313,11 @@ public class TdArticle {
     public void setParamIsSearchable(Boolean paramIsSearchable) {
         this.paramIsSearchable = paramIsSearchable;
     }
+
+	@Override
+	public String toString() {
+		return "TdArticle [id=" + id + ", title=" + title + ", categoryId=" + categoryId + ", content=" + content + "]";
+	}
     
     
 }
