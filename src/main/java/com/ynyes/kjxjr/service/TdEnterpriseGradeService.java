@@ -72,6 +72,13 @@ public class TdEnterpriseGradeService {
 		}
 		return repository.findByExpertIdAndActivityId(expertId, activityId);
 	}
+	
+	public List<TdEnterpriseGrade> findByExpertIdAndActivityIdOrderByNumberAsc(Long expertId, Long activityId) {
+		if (null == expertId || null == activityId) {
+			return null;
+		}
+		return repository.findByExpertIdAndActivityIdOrderByNumberAsc(expertId, activityId);
+	}
 
 	/**
 	 * 根据专家ID和活动ID还有项目编号查找评分表
