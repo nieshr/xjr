@@ -767,7 +767,7 @@ public class TdEnterpriseController {
           {
 	          row= sheet1.createRow((int) 1);  
 	          cell = row.createCell((short) 0);  
-	          cell.setCellValue("（项目组）");  
+	          cell.setCellValue("（项目团队）");  
 	          cell.setCellStyle(title2);  
 	          cell = row.createCell((short) 1);
 	          cell.setCellStyle(title2);
@@ -808,7 +808,7 @@ public class TdEnterpriseController {
 	          cell = row.createCell((short) 2);
 	          cell.setCellStyle(style);
 	  		  cell = row.createCell((short) 3);
-	  		  cell.setCellValue("成立时间");
+	  		  cell.setCellValue("（拟）成立时间");
 	  		  cell.setCellStyle(style);  
 	  		  cell = row.createCell((short) 4);
 	  		  cell.setCellValue(enterprise.getEstablish()); 
@@ -817,7 +817,7 @@ public class TdEnterpriseController {
          
           row= sheet1.createRow((int) 3); 
           cell = row.createCell((short) 0);  
-          cell.setCellValue("注册资本（万元）");  
+          cell.setCellValue("（拟）注册资本（万元）");  
           cell.setCellStyle(style);  
           cell = row.createCell((short) 1);
           cell.setCellValue(enterprise.getCapital());     
@@ -825,7 +825,7 @@ public class TdEnterpriseController {
           cell = row.createCell((short) 2);
           cell.setCellStyle(style);  
           cell = row.createCell((short) 3);
-          cell.setCellValue("法定代表人");
+          cell.setCellValue("（拟）法定代表人");
           cell.setCellStyle(style);  
           cell =row.createCell((short) 4);
           cell.setCellValue(enterprise.getRepresentative()); 
@@ -833,7 +833,7 @@ public class TdEnterpriseController {
           
           row= sheet1.createRow((int) 4); 
           cell = row.createCell((short) 0);  
-          cell.setCellValue("股东结构");  
+          cell.setCellValue("（拟）股东结构");  
           cell.setCellStyle(style2);  
           cell = row.createCell((short) 1);
           cell.setCellValue(enterprise.getShareholder());     
@@ -1279,8 +1279,101 @@ public class TdEnterpriseController {
               cell = row.createCell((short) 4);
               cell.setCellStyle(content); 
               
+              row= sheet1.createRow((int) 36); 
+	          cell = row.createCell((short) 0);  
+	          cell.setCellValue("近三年财务状况（万元）");  
+	          cell.setCellStyle(style2);  
+	          cell = row.createCell((short) 1);
+	          cell.setCellStyle(style2); 
+	          cell = row.createCell((short) 2);
+	          cell.setCellStyle(style2); 
+	          cell = row.createCell((short) 3);
+	          cell.setCellStyle(style2); 
+	          cell = row.createCell((short) 4);
+	          cell.setCellStyle(style2); 
+	          
+	    	  row= sheet1.createRow((int) 37); 
+	          cell = row.createCell((short) 0);  
+	          cell.setCellValue("年限");  
+	          cell.setCellStyle(style);  
+	          cell = row.createCell((short) 1);  
+	          cell.setCellValue("总资产");  
+	          cell.setCellStyle(style);  
+	          cell = row.createCell((short) 2);  
+	          cell.setCellValue("净资产");  
+	          cell.setCellStyle(style);  
+	          cell = row.createCell((short) 3);  
+	          cell.setCellValue("销售收入");  
+	          cell.setCellStyle(style);  
+	          cell = row.createCell((short) 4);  
+	          cell.setCellValue("毛利润");  
+	          cell.setCellStyle(style);  
+	          
+	          Calendar calendar = Calendar.getInstance();
+	          calendar.setTime(new Date());
+	          calendar.add(Calendar.YEAR, -1);
+	          Date lastyear1 = calendar.getTime();
+	          
+	          calendar.add(Calendar.YEAR, -1);
+	          Date lastyear2 = calendar.getTime();
+	          
+	          calendar.add(Calendar.YEAR, -1);
+	          Date lastyear3 = calendar.getTime();
+	          
+	    	  row= sheet1.createRow((int) 38); 
+	          cell = row.createCell((short) 0);  
+	          cell.setCellValue(lastyear3);  
+	          cell.setCellStyle(styleyear);  
+	          cell = row.createCell((short) 1);  
+	          cell.setCellValue(enterprise.getLastAssets3());  
+	          cell.setCellStyle(style);  
+	          cell = row.createCell((short) 2);  
+	          cell.setCellValue(enterprise.getLastNetAssets3());  
+	          cell.setCellStyle(style);  
+	          cell = row.createCell((short) 3);  
+	          cell.setCellValue(enterprise.getLastSale3());  
+	          cell.setCellStyle(style);  
+	          cell = row.createCell((short) 4);  
+	          cell.setCellValue(enterprise.getLastProfit3());  
+	          cell.setCellStyle(style);  
+	          
+	    	  row= sheet1.createRow((int) 39); 
+	          cell = row.createCell((short) 0);  
+	          cell.setCellValue(lastyear2);  
+	          cell.setCellStyle(styleyear);  
+	          cell = row.createCell((short) 1);  
+	          cell.setCellValue(enterprise.getLastAssets2());  
+	          cell.setCellStyle(style);  
+	          cell = row.createCell((short) 2);  
+	          cell.setCellValue(enterprise.getLastNetAssets2());  
+	          cell.setCellStyle(style);  
+	          cell = row.createCell((short) 3);  
+	          cell.setCellValue(enterprise.getLastSale2());  
+	          cell.setCellStyle(style);  
+	          cell = row.createCell((short) 4);  
+	          cell.setCellValue(enterprise.getLastProfit2());  
+	          cell.setCellStyle(style);  
+	
+	    	  row= sheet1.createRow((int) 40); 
+	          cell = row.createCell((short) 0);  
+	          cell.setCellValue(lastyear1);  
+	          cell.setCellStyle(styleyear);  
+	          cell = row.createCell((short) 1);  
+	          cell.setCellValue(enterprise.getLastAssets1());  
+	          cell.setCellStyle(style);  
+	          cell = row.createCell((short) 2);  
+	          cell.setCellValue(enterprise.getLastNetAssets1());  
+	          cell.setCellStyle(style);  
+	          cell = row.createCell((short) 3);  
+	          cell.setCellValue(enterprise.getLastSale1());  
+	          cell.setCellStyle(style);  
+	          cell = row.createCell((short) 4);  
+	          cell.setCellValue(enterprise.getLastProfit1());  
+	          cell.setCellStyle(style);  
+	          
+              
 
-              row = sheet1.createRow((int) 36);  
+              row = sheet1.createRow((int) 41);  
               cell = row.createCell((short) 0);  
               cell.setCellValue("知识产权基本情况");  
               cell.setCellStyle(style2);
@@ -1293,7 +1386,8 @@ public class TdEnterpriseController {
               cell = row.createCell((short) 4);  
               cell.setCellStyle(style2);
               
-              row = sheet1.createRow((int) 37);  
+              
+              row = sheet1.createRow((int) 42);  
               cell = row.createCell((short) 0);  
               cell.setCellStyle(style2);
               cell = row.createCell((short) 1);  
@@ -1305,7 +1399,7 @@ public class TdEnterpriseController {
               cell = row.createCell((short) 4);  
               cell.setCellStyle(style2);
               
-              row = sheet1.createRow((int) 38);  
+              row = sheet1.createRow((int) 43);  
               cell = row.createCell((short) 0);  
               if (null != enterprise.getInventiPatent() && null != enterprise.getNewPatent() && null != enterprise.getDesignPatent())
               {
@@ -1323,7 +1417,7 @@ public class TdEnterpriseController {
               
           
               
-              row = sheet1.createRow((int) 39);  
+              row = sheet1.createRow((int) 44);  
               cell = row.createCell((short) 0);  
               cell.setCellValue("融资信息（万元）");
               cell.setCellStyle(style2);
@@ -1337,7 +1431,7 @@ public class TdEnterpriseController {
               cell.setCellStyle(style2);
               
               
-              row = sheet1.createRow((int) 40);  
+              row = sheet1.createRow((int) 45);  
               cell = row.createCell((short) 0);  
               cell.setCellStyle(style2);
               cell = row.createCell((short) 1);  
@@ -1351,7 +1445,7 @@ public class TdEnterpriseController {
               
              
              
-              row = sheet1.createRow((int) 41);  
+              row = sheet1.createRow((int) 46);  
               cell = row.createCell((short) 0);  
               cell.setCellValue("期望融资方式");  
               cell.setCellStyle(style);
@@ -1371,28 +1465,29 @@ public class TdEnterpriseController {
               cell.setCellStyle(styledate);
               
               
-              row = sheet1.createRow((int) 42);  
+              row = sheet1.createRow((int) 47);  
               cell = row.createCell((short) 0);  
               cell.setCellValue("期望融资金额");  
-              cell.setCellStyle(style);
+              cell.setCellStyle(style2);
               cell = row.createCell((short) 1);  
               if (null != enterprise.getExpectEquityAmount() )
               {
             	  cell.setCellValue(enterprise.getExpectEquityAmount());  
               }
-              cell.setCellStyle(style);
+              cell.setCellStyle(style2);
               cell = row.createCell((short) 2);  
               cell.setCellValue("融资用途");  
-              cell.setCellStyle(style);
+              cell.setCellStyle(style2);
               cell = row.createCell((short) 3);  
               if (null != enterprise.getExpectEquityUse())
               {
             	  cell.setCellValue(enterprise.getExpectEquityUse()); 
               }
+              cell.setCellStyle(style2);
               cell = row.createCell((short) 4);  
-              cell.setCellStyle(style);
+              cell.setCellStyle(style2);
               
-	          row = sheet1.createRow((int) 43);  
+	          row = sheet1.createRow((int) 48);  
 	          cell = row.createCell((short) 0);  
 	          cell.setCellStyle(style);
 	          cell = row.createCell((short) 1);  
@@ -1404,7 +1499,7 @@ public class TdEnterpriseController {
 	          cell = row.createCell((short) 4);  
 	          cell.setCellStyle(style);
               
-              row = sheet1.createRow((int) 44);  
+              row = sheet1.createRow((int) 49);  
               cell = row.createCell((short) 0);  
               cell.setCellValue("期望融资方式");  
               cell.setCellStyle(style);
@@ -1423,28 +1518,29 @@ public class TdEnterpriseController {
               cell = row.createCell((short) 4);  
               cell.setCellStyle(styledate);
               
-              row = sheet1.createRow((int) 45);  
+              row = sheet1.createRow((int) 50);  
               cell = row.createCell((short) 0);  
               cell.setCellValue("期望融资金额");  
-              cell.setCellStyle(style);
+              cell.setCellStyle(style2);
               cell = row.createCell((short) 1);  
               if (null != enterprise.getExpectBondAmount() )
               {
             	  cell.setCellValue(enterprise.getExpectBondAmount());  
               }
-              cell.setCellStyle(style);
+              cell.setCellStyle(style2);
               cell = row.createCell((short) 2);  
               cell.setCellValue("融资用途");  
-              cell.setCellStyle(style);
+              cell.setCellStyle(style2);
               cell = row.createCell((short) 3);  
               if (null != enterprise.getExpectBondUse())
               {
             	  cell.setCellValue(enterprise.getExpectBondUse()); 
               }
+              cell.setCellStyle(style2);
               cell = row.createCell((short) 4);  
-              cell.setCellStyle(style);
+              cell.setCellStyle(style2);
          
-	          row = sheet1.createRow((int) 46);  
+	          row = sheet1.createRow((int) 51);  
 	          cell = row.createCell((short) 0);  
 	          cell.setCellStyle(style);
 	          cell = row.createCell((short) 1);  
@@ -1452,11 +1548,11 @@ public class TdEnterpriseController {
 	          cell = row.createCell((short) 2);  
 	          cell.setCellStyle(style);
 	          cell = row.createCell((short) 3);  
-	          cell.setCellStyle(style);
+	          cell.setCellStyle(style2);
 	          cell = row.createCell((short) 4);  
-	          cell.setCellStyle(style);
+	          cell.setCellStyle(style2);
               
-              row = sheet1.createRow((int) 47);  
+              row = sheet1.createRow((int) 52);  
               cell = row.createCell((short) 0);  
               cell.setCellValue("项目可供资料");  
               cell.setCellStyle(style);
@@ -1470,7 +1566,7 @@ public class TdEnterpriseController {
               cell = row.createCell((short) 4);  
               cell.setCellStyle(style);
               
-              row = sheet1.createRow((int) 48);  
+              row = sheet1.createRow((int) 53);  
               cell = row.createCell((short) 0);  
               if (enterprise.getFormType() == 0)
               {
@@ -1513,7 +1609,7 @@ public class TdEnterpriseController {
                   cell.setCellStyle(style2);
               }
 
-              row = sheet1.createRow((int) 49);  
+              row = sheet1.createRow((int) 54);  
               cell = row.createCell((short) 0);  
               cell.setCellStyle(content);
               cell = row.createCell((short) 1);  
@@ -1525,7 +1621,7 @@ public class TdEnterpriseController {
               cell = row.createCell((short) 4);  
               cell.setCellStyle(style2);
               
-              row = sheet1.createRow((int) 50);  
+              row = sheet1.createRow((int) 55);  
               cell = row.createCell((short) 0);  
               cell.setCellStyle(content);
               cell = row.createCell((short) 1);  
@@ -1537,7 +1633,7 @@ public class TdEnterpriseController {
               cell = row.createCell((short) 4);  
               cell.setCellStyle(style2);
               
-              row = sheet1.createRow((int) 51);  
+              row = sheet1.createRow((int) 56);  
               cell = row.createCell((short) 0);  
               cell.setCellStyle(content);
               cell = row.createCell((short) 1);  
@@ -1549,7 +1645,7 @@ public class TdEnterpriseController {
               cell = row.createCell((short) 4);  
               cell.setCellStyle(style2);
               
-              row = sheet1.createRow((int) 52);  
+              row = sheet1.createRow((int) 57);  
               cell = row.createCell((short) 0);  
               cell.setCellStyle(content);
               cell = row.createCell((short) 1);  
@@ -1561,7 +1657,7 @@ public class TdEnterpriseController {
               cell = row.createCell((short) 4);  
               cell.setCellStyle(style2);
               
-              row = sheet1.createRow((int) 53);  
+              row = sheet1.createRow((int) 58);  
               cell = row.createCell((short) 0);  
               cell.setCellStyle(content);
               cell = row.createCell((short) 1);  

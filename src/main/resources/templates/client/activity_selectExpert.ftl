@@ -18,6 +18,17 @@
 
 <script src="/client/js/jquery-1.9.1.min.js"></script>
 <script src="/client/js/main.js"></script>
+<script>
+<#if msg??>
+function warnMsg()
+{
+    alert("${msg}");
+}
+
+window.onload=warnMsg;
+</#if>
+
+</script>
 </head>
 <body>
 <!--main-->

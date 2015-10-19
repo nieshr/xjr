@@ -313,6 +313,15 @@ public class TdActivityController {
 
         tdCommonService.setHeader(map, req);
         
+        List<TdActivityExpert> sum = tdActivityExpertService.findByActivityId(id);
+        //限制数量为20个
+        if (sum.size() < 20)
+        {
+        	map.addAttribute("msg", "请选择20个企业！");
+        	return "redirect:/activity/selectEnterprise";
+        }
+        
+        
         TdActivity activity = tdActivityService.findOne(id);
         Long statusId = activity.getStatusId();
         if(0 == statusId)
@@ -345,6 +354,13 @@ public class TdActivityController {
         }
 
         tdCommonService.setHeader(map, req);
+        List<TdActivityExpert> sum = tdActivityExpertService.findByActivityId(id);
+        //限制数量为7个
+        if (sum.size() < 7)
+        {
+        	map.addAttribute("msg", "专家数量为7个！");
+        	return "redirect:/activity/selectExpert";
+        }
         
         TdActivity activity = tdActivityService.findOne(id);
         if(0L ==activity.getStatusId())

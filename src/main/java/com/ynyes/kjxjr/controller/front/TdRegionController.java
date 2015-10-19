@@ -443,20 +443,21 @@ public String  regionAddEnterprise(HttpServletRequest req,Long id,Long activityI
     		{
 	        	List<TdEnterpriseGrade> enterpriseGradeList = tdEnterpriseGradeService.findByActivityIdOrderByIdAsc(activityId);
 	        	int i = 0;
-	        	int j =20;
-	        	for (TdEnterpriseGrade grade:enterpriseGradeList)
+	       
+	        	for (TdEnterpriseGrade grade : enterpriseGradeList)
 	        	{
-	        		if(null != grade.getNumber())
-	        		{
-	        			i = i+1;
-	        		}
 	        		
-	        		if (  i % j == 0&& null == grade.getNumber())
+	        		if (  i % 20== 0)
+	        			if(null == grade.getNumber())
 	        		{
 	        			grade.setNumber(enterprise.getNumber());
 	        			grade.setEnterpriseId(activityenterprise.getEnterpriseId());
 	        			grade.setActivityId(activityId);
 	        			tdEnterpriseGradeService.save(grade);
+	        		}
+	        		else if (null != grade.getNumber())
+	        		{
+	        			i = i-1;
 	        		}
 	        		i = i+1; 
 	        	}

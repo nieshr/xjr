@@ -219,7 +219,7 @@ window.onload=done;
 		                            <a>丨</a>
 		                            <a href="/enterprise/grade/${item.activityId?c!''}?enterpriseId=${item.enterpriseId?c!''}">得分</a>
 		                            <a>丨</a>
-		                            <a href="#">分配路演辅导</a>
+		                            <a href="/activity/getCoach?enterpriseId=${item.enterpriseId?c!''}&activityId=${item.activityId?c!''}">分配路演辅导</a>
 		                            <a>丨</a>
 		                            <a href="#">下载</a>
 		                            <a style="display:block;  width:80px;"></a>
