@@ -288,4 +288,11 @@ public class TdEnterpriseService {
     	return (repository.findByUsername(username)); 	
     }
     
+    public TdEnterprise findByNumber(String number){
+    	if(null == number){
+    		return null;
+    	}
+    	return repository.findByNumber(number);
+    }
+    
 }

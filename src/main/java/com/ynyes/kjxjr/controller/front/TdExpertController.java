@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -73,7 +74,7 @@ public class TdExpertController {
 
 	@Autowired
 	private TdEnterpriseService tdEnterpriseService;
-
+	
 	@RequestMapping(value = "/enterprise/list")
 	public String execute(HttpServletRequest req, ModelMap map) {
 		String expertUsername = (String) req.getSession().getAttribute("expertUsername");
@@ -195,13 +196,50 @@ public class TdExpertController {
 	@ResponseBody
 	public Map<String, Object> gradeSure(TdEnterpriseGrade grade, String number, Long activityId,
 			HttpServletRequest req) {
+		Map<String, Object> res = new HashMap<>();
+		res.put("status", -1);
 		String expertUsername = (String) req.getSession().getAttribute("expertUsername");
 		TdExpert expert = tdExpertService.findbyUsername(expertUsername);
+		TdEnterprise enterprise = tdEnterpriseService.findByNumber(number);
 		TdEnterpriseGrade theGrade = tdEnterpriseGradeService.findByExpertIdAndActivityIdAndNumber(expert.getId(),
 				activityId, number);
-		grade.setTotalPoint(grade.getTotalExpression() + grade.getTotalFeasibility() + grade.getTotalMarketValue()
+		theGrade.setTotalPoint(grade.getTotalExpression() + grade.getTotalFeasibility() + grade.getTotalMarketValue()
 				+ grade.getTotalTechnology() + grade.getTotalGroup());
-		return null;
+		theGrade.setExpertId(grade.getExpertId());
+		theGrade.setEnterpriseId(enterprise.getId());
+		theGrade.setActivityId(activityId);
+		theGrade.setNumber(number);
+		theGrade.setTotalExpression(grade.getTotalExpression());
+		theGrade.setOneExpression(grade.getOneExpression());
+		theGrade.setTwoExpression(grade.getTwoExpression());
+		theGrade.setThreeExpression(grade.getThreeExpression());
+		theGrade.setFourExpression(grade.getFourExpression());
+		theGrade.setTotalFeasibility(grade.getTotalFeasibility());
+		theGrade.setOneFeasibility(grade.getOneFeasibility());
+		theGrade.setTwoFeasibility(grade.getTwoFeasibility());
+		theGrade.setThreeFeasibility(grade.getThreeFeasibility());
+		theGrade.setFourFeasibility(grade.getFourExpression());
+		theGrade.setTotalMarketValue(grade.getTotalMarketValue());
+		theGrade.setOneMarketValue(grade.getOneMarketValue());
+		theGrade.setTwoMarketValue(grade.getTwoMarketValue());
+		theGrade.setThreeMarketValue(grade.getThreeMarketValue());
+		theGrade.setFourMarketValue(grade.getFourMarketValue());
+		theGrade.setTotalTechnology(grade.getTotalTechnology());
+		theGrade.setOneTechnology(grade.getOneTechnology());
+		theGrade.setTwoTechnology(grade.getTwoTechnology());
+		theGrade.setThreeTechnology(grade.getThreeTechnology());
+		theGrade.setFourTechnology(grade.getFourTechnology());
+		theGrade.setFiveTechnology(grade.getFiveTechnology());
+		theGrade.setTotalPoint(grade.getTotalPoint());
+		theGrade.setOneGroup(grade.getOneGroup());
+		theGrade.setTwoGroup(grade.getTwoGroup());
+		theGrade.setThreeGroup(grade.getThreeGroup());
+		
+		TdExpertCoachEnterprise expertCoachEnterprise = tdExpertCoachEnterpriseService.findByExpertIdAndEnterpriseId(expert.getId(), enterprise.getId());
+		expertCoachEnterprise.setIsGrade(true);
+		tdExpertCoachEnterpriseService.save(expertCoachEnterprise);
+		res.put("status", 0);
+		return res;
 	}
 
 	@RequestMapping(value = "/enterprises")
