@@ -33,6 +33,7 @@ import com.ynyes.kjxjr.service.TdManagerLogService;
 import com.ynyes.kjxjr.service.TdOrderService;
 import com.ynyes.kjxjr.service.TdPayTypeService;
 import com.ynyes.kjxjr.service.TdProductCategoryService;
+import com.ynyes.kjxjr.service.TdRegionService;
 import com.ynyes.kjxjr.service.TdUserService;
 import com.ynyes.kjxjr.util.SMSUtil;
 import com.ynyes.kjxjr.util.SiteMagConstant;
@@ -76,6 +77,9 @@ public class TdManagerOrderController {
     
     @Autowired
     TdDemandService tdDemandService;
+    
+    @Autowired
+    TdRegionService tdRegionService;
     
     // 订单设置
     @RequestMapping(value="/setting/{type}/list")
@@ -252,6 +256,7 @@ public class TdManagerOrderController {
                     map.addAttribute("diy_site", tdDiySiteService.findOne(id));
                 }
                 
+                map.addAttribute("region_list", tdRegionService.findByIsEnableTrueOrderBySortIdAsc());
                 return "/site_mag/diy_site_edit";
             }
         }

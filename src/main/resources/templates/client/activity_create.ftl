@@ -264,18 +264,18 @@ window.onload=done;
 		</div>
 		</form>
 		</#if>
-		<div>
-			<span style="margin-top: 10px;">相关下载：</span>
-			<ul class="active_add_file">
-			<#if activity??>
-				<li>
-					<img src="/client/images/active_file.png" />
-					<p class="p01">${activity.fileUrl!''}</p>
-					<a href="/download/data?name=${activity.fileUrl!''}">下载</a>
-				</li>
-			</#if>	
-			</ul>
-		</div>
+		<#if activity?? && activity.fileUrl??>
+			<div>
+				<span style="margin-top: 10px;">相关下载：</span>
+				<ul class="active_add_file">
+					<li>
+						<img src="/client/images/active_file.png" />
+						<p class="p01">${activity.fileUrl!''}</p>
+						<a href="/download/data?name=${activity.fileUrl!''}">下载</a>
+					</li>
+				</ul>
+			</div>
+	    </#if>	
 		</dl>
 		
 		

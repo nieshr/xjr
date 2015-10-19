@@ -189,7 +189,7 @@ public class TdRegController {
 		TdEnterprise enterprise = new TdEnterprise();
 		enterprise.setUsername(username);
 		enterprise.setPassword(password);
-		enterprise.setEmail(email);
+		enterprise.setUseremail(email);
 		enterprise.setUsermobile(mobile);
 		tdEnterpriseService.save(enterprise);
 		request.getSession().setAttribute("enterpriseUsername", username);

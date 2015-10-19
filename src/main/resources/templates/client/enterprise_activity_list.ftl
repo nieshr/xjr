@@ -65,7 +65,7 @@
 		        		<td>${item.activityType!''}</td>
 		        		<td style="color:#0ab2cb;">${item.activityTitle!''}</td>
 		        		<td style="color:#e67817;"><#if item.date??>${item.date?string("yyyy-MM-dd")!''}</#if></td>
-		        		<td><a href="/enterprise/activity/check?id=${item.activityId?c!''}">详情查看</a>丨<a href="/activity/check?id=${item.id?c!''}">下载模板</a>丨<a  href="/activity/delete?id=${item.id?c!''}">上传</a></td>
+		        		<td><a href="/enterprise/activity/check?id=${item.activityId?c!''}">详情查看</a></td>
 		        	</tr>
 	        	</#list>
 	        </#if>	   

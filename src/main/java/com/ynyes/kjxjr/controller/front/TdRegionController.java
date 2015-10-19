@@ -127,9 +127,36 @@ public class TdRegionController {
         tdCommonService.setHeader(map, req);
 
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
-        TdEnterprise Enterprise = tdEnterpriseService.findOne(id);
+        TdEnterprise enterprise = tdEnterpriseService.findOne(id);
         
-        map.addAttribute("enterprise", Enterprise);
+        //行业所属是多选。。。。
+        if (null != enterprise.getType())
+        {
+        	String type[] = enterprise.getType().split(",");
+        	map.addAttribute("enterpriseType", type);
+        }
+        
+        if (null != enterprise.getDataAble())
+        {
+        	String dataAble[] = enterprise.getDataAble().split(",");
+        	map.addAttribute("dataAble", dataAble);
+        }
+        
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.YEAR, -1);
+        Date lastyear1 = calendar.getTime();
+        map.addAttribute("lastyear1", lastyear1);
+        
+        calendar.add(Calendar.YEAR, -1);
+        Date lastyear2 = calendar.getTime();
+        map.addAttribute("lastyear2", lastyear2);
+        
+        calendar.add(Calendar.YEAR, -1);
+        Date lastyear3 = calendar.getTime();
+        map.addAttribute("lastyear3", lastyear3);
+        
+        map.addAttribute("enterprise", enterprise);
         map.addAttribute("user", user);
 
         return "/client/region_enterprise_check";
@@ -153,9 +180,11 @@ public class TdRegionController {
 
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
         TdEnterprise Enterprise = tdEnterpriseService.findOne(id);
-        
-        Enterprise.setStatusId(1L);
-        tdEnterpriseService.save(Enterprise);
+        if (Enterprise.getStatusId()==0||Enterprise.getStatusId()==3)
+        {
+            Enterprise.setStatusId(1L);
+            tdEnterpriseService.save(Enterprise);
+        }
         
         map.addAttribute("enterprise", Enterprise);
         map.addAttribute("user", user);
@@ -181,11 +210,12 @@ public class TdRegionController {
 
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
         TdEnterprise Enterprise = tdEnterpriseService.findOne(id);
-        if (Enterprise.getStatusId()==1)
+        if (Enterprise.getStatusId()==1 ||Enterprise.getStatusId()==0)
         {
-	        Enterprise.setStatusId(0L);
+	        Enterprise.setStatusId(3L);
 	        tdEnterpriseService.save(Enterprise);
         }
+
         map.addAttribute("enterprise", Enterprise);
         map.addAttribute("user", user);
 
@@ -210,7 +240,7 @@ public class TdRegionController {
 
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
         TdEnterprise Enterprise = tdEnterpriseService.findOne(id);
-        if (Enterprise.getStatusId()==2)
+        if (Enterprise.getStatusId()==1 ||Enterprise.getStatusId()==2)
         {
 	        Enterprise.setStatusId(0L);
 	        tdEnterpriseService.save(Enterprise);
