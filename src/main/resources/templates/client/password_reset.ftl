@@ -28,14 +28,29 @@
             <!--left-->
             <div class="leftbar">
                 <dl class="nav">
-                    <dt><a href="#">企业/团队</a></dt>
-                    <dd><a href="#">基本资料</a></dd>
-                    <dd><a href="#">活动列表</a></dd>
-                    <dd><a href="#">申请展示</a></dd>
-                    <dt><a href="#">企业/团队</a></dt>
-                    <dd><a href="#">基本资料</a></dd>
-                    <dd><a href="#">活动列表</a></dd>
-                    <dd><a href="#">申请展示</a></dd>
+                <#if user?? && user.roleId??>
+                    <#switch user.roleId>
+                        <#case 1>
+                            <dd><a href="/enterprise/check">基本资料</a></dd>
+                            <dd><a href="/enterprise/activity/list">活动列表</a></dd>
+                            <dd><a href="/enterprise/project">申请展示</a></dd>
+                            <#break>
+                        <#case 2>
+                            <dd><a href="/region/enterprise/list">企业列表</a></dd>
+                            <dd><a href="/region/activity/list">活动列表</a></dd>
+                            <dd><a href="#">档案跟踪</a></dd>
+                            <#break>
+                        <#case 3>
+                            <dd><a href="/expert/enterprise/list">活动列表</a></dd>
+                            <dd><a href="/expert/enterprises">辅导企业</a></dd>
+                            <dd><a href="/expert/lyfd">路演辅导</a></dd>
+                            <#break>
+                        <#case 4>
+                             <dd><a href="/activity/create">创建活动</a></dd>
+                            <dd><a href="/activity/list">活动列表</a></dd> 
+                            <#break>
+                       </#switch>
+                </#if>
                 </dl>
             </div>
             <!--right-->
@@ -49,6 +64,7 @@
                         </dl>
                         <dl class="password">
                     <form id="reset" action="/user/password/save" method="post">
+                    
                             <dd><p>当前密码 :</p><input datatype="*" ajaxurl="/user/check/oldpassword" type="password" value="" /></dd>
                             <dd><p>新密码 : </p><input name="newPassword" id="newPassword" datatype="*6-25" type="password" value="" /></dd>
                             <dd><p>确认密码 :</p><input name="rePassword" id="rePassword" recheck="newPassword" datatype="*6-25" type="password" value="" /></dd>
