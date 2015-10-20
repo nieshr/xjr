@@ -772,6 +772,13 @@ public class TdManagerOrderController {
                 }
                 else if (type.equalsIgnoreCase("diysite"))
                 {
+                    TdDiySite e = tdDiySiteService.findOne(id);
+                    String username = e.getUsername(); 
+                    TdUser user = tdUserService.findByUsername(username);
+                    if (null != user)
+                    {
+                    	tdUserService.delete(user);
+                    }
                     tdDiySiteService.delete(id);
                 }
             }

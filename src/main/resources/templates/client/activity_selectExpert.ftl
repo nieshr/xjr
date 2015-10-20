@@ -38,10 +38,12 @@ function addExpert(id,activityId)
         data:{"id":id,"activityId":activityId},
         success:function(data){
             $("#selectedExpert").html(data);
-            <#if !errormsg??>
-            alert("添加成功！");
-            </#if>
-            location.reload();
+            <#if errormsg??>
+            	alert("${errormsg!''}")
+			<#else>
+				location.reload();
+			</#if>
+           
         }
     });
 }

@@ -61,19 +61,19 @@ function removeEnterprise(id,activityId)
 }
 
 
-//添加筛选专家
-function addExpert(id,activityId)
-{
-    $.ajax({
-        type:"post",
-        url:"/activity/addExpert",
-        data:{"id":id,"activityId":activityId},
-        success:function(data){
-            $("#selectedExpert").html(data);
-            location.reload();
-        }
-    });
-}
+////添加筛选专家
+//function addExpert(id,activityId)
+//{
+//    $.ajax({
+//        type:"post",
+//        url:"/activity/addExpert",
+//        data:{"id":id,"activityId":activityId},
+//        success:function(data){
+//            $("#selectedExpert").html(data);
+//            location.reload();
+//        }
+//    });
+//}
 
 //取消筛选专家
 function removeExpert(id,activityId)

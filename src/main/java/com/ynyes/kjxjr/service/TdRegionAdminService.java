@@ -116,6 +116,7 @@ public class TdRegionAdminService {
         regionAdmin.setStatusId(statusId); 
         regionAdmin.setInCharge(inCharge);
         regionAdmin.setRegion(region);
+        regionAdmin.setTitle(region);
         
         return regionAdmin;
     }

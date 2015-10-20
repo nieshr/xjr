@@ -55,9 +55,9 @@ $(function () {
         $("#roleId").change(function(){      
         var select_role = $(this).children('option:selected').val();  
         if(select_role == '2'){  
-        	$("#region").css("display","block");
+        	$(".region").css("display","block");
          }else{  
-         	$("#region").css("display","none");
+         	$(".region").css("display","none");
          }  
         
      });  
@@ -118,17 +118,17 @@ $(function () {
            </div>
        </dd>
   </dl>
-    <dl  id="region"  style= "display:none;">
+    <dl  class="region" <#if diy_site?? && !diy_site.region?? || !diy_site?? || diy_site?? &&diy_site.region="">style= "display:none;"</#if>>
       <dt>区县</dt>
       <dd>
            <div class="rule-single-select">
-                <select name="region"  sucmsg=" ">
-                <#--
+                <select id="region" name="region"  sucmsg=" "  >
+               
                      <option value="" <#if !diy_site?? || !diy_site.region??>selected="selected"</#if>>请选择...</option>
-                    -->
+
                      <#if region_list??>
                      	<#list region_list as item>
-                     		<option value="${item.tite!''}" <#if diy_site?? && diy_site.region?? && diy_site.region==item.title>selected="selected"</#if>>${item.title!''}</option> 
+                     		<option value="${item.title!''}" <#if diy_site?? && diy_site.region?? && diy_site.region==item.title>selected="selected"</#if>>${item.title!''}</option> 
           				</#list>
           			</#if>            
                 </select>

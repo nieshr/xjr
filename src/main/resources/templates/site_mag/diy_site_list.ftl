@@ -88,7 +88,7 @@ function __doPostBack(eventTarget, eventArgument) {
                 <#--><td>${item.city!""}</td>
                 <td>${item.address!""}</td>-->
                 <td><input name="listSortId" type="text" value="${item.sortId!""}" class="sort" onkeydown="return checkNumber(event);"></td>
-                <td align="center"><#if item.isEnable?? && item.isEnable>是<#else>否</#if></td>
+                <td align="center"><#if item.statusId?? && item.statusId == 1>是<#else>否</#if></td>
                 <td align="center">
                     <a href="/Verwalter/order/setting/diysite/edit?id=${item.id}">修改</a>
                 </td>

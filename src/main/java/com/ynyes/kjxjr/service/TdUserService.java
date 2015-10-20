@@ -57,6 +57,15 @@ public class TdUserService {
     @Autowired
     TdSettingService tdSettingService;
     
+    @Autowired
+    TdRegionAdminService tdRegionAdminService;
+    
+    @Autowired
+    TdExpertService tdExpertService;
+    
+    @Autowired
+    TdActivityAdminService tdActivityAdminService;
+    
     /**
      * 删除用户数据
      * @param username
@@ -243,6 +252,19 @@ public class TdUserService {
     {
         if (null != e)
         {
+        	if (e.getRoleId() == 2 )
+        	{
+        		tdRegionAdminService.delete(tdRegionAdminService.findbyUsername(e.getUsername()));
+        	}
+        	if (e.getRoleId() == 3 )
+        	{
+        		tdExpertService.delete(tdExpertService.findbyUsername(e.getUsername()));
+        	}
+        	if (e.getRoleId() == 4 )
+        	{
+        		tdActivityAdminService.delete(tdActivityAdminService.findbyUsername(e.getUsername()));
+        	}
+        	
             userDataDelete(e.getUsername());
             repository.delete(e);
         }

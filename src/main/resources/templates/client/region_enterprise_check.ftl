@@ -69,12 +69,28 @@
         <dt class="dt01"><span>一、基本信息</span><br/><p>此信息将自动生成到报名表中</p></dt>
         <dd>
 
-                <div><span><#if enterprise.formType == 0>企业名称<#else> 项目名称</#if>：</span><input type="text" value="${enterprise.title!''}" disabled="" /></div>
-                <div><span>编号：</span><input type="text" value="${enterprise.number!''}" disabled="" /></div>
-                <div><span>成立时间：</span><input type="text" value="${enterprise.establish?string("yyyy年MM月dd日")!''}" disabled="" /></div>
-                <div><span>注册资本：</span><input type="text" value="${enterprise.capital?c!''}" disabled="" />&nbsp;&nbsp;(万元)</div>
-                <div><span>法定代表人：</span><input type="text" value="${enterprise.representative!''}" disabled="" /></div>
-                <div><span>股东结构：</span><textarea disabled="" >${enterprise.shareholder!''}</textarea></div>
+    			<div><span><#if enterprise.formType??&&enterprise.formType==1>企业名称<#else> 项目名称</#if>：</span><input type="text" value="${enterprise.title!''}" disabled="" /></div>
+    			<div><span>编号：</span><input type="text" value="${enterprise.number!''}" disabled="" /></div>
+    			<div>
+	    			<span class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>">成立时间：</span>
+    				<span class="pro <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>hide</#if>">（拟）成立时间：</span>
+	    			<input type="text" value="<#if enterprise??&&enterprise.establish??>${enterprise.establish?string("yyyy年MM月dd日")!''}</#if>" disabled="" />
+    			</div>
+    			<div>
+	    			<span class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>">注册资本<b style="color:#999;font-size:0.6em;">(万元)</b>：</span>
+	    			<span class="pro <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>hide</#if>">（拟）注册资本<b style="color:#999;font-size:0.6em;">(万元)</b>：</span>
+    				<input type="text" value="<#if enterprise??&&enterprise.capital??>${enterprise.capital?c!''}</#if>" disabled="" />&nbsp;&nbsp;(万元)
+    			</div>
+    			<div>
+	    			<span class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>">法定代表人：</span>
+	    			<span  class="pro <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>hide</#if>">（拟）法定代表人：</span>
+    				<input type="text" value="${enterprise.representative!''}" disabled="" />
+    			</div>
+    			<div>
+	    			<span class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>">股东结构：</span>
+	    			<span class="pro <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>hide</#if>">（拟）股东结构：</span>
+	    			<textarea disabled="" >${enterprise.shareholder!''}</textarea>
+    			</div>
                 <div><span>所在地区：</span>
                     <select disabled="" >
                         <#if region_list??>
