@@ -31,6 +31,7 @@ function done()
 <#if done?? &&done == 1>
 window.onload=done;
 </#if>
+
 </script>
 </head>
 <body>
@@ -155,6 +156,7 @@ window.onload=done;
         
         
         <div class="list_base2" id="selectedEnterprise">
+        
             <#include "/client/region_selected_enterprise.ftl" />
         </div>
         <div class="area_add_btn">

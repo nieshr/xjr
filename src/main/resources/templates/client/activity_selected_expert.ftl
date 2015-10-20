@@ -14,7 +14,7 @@
 		        	<#list selected_expert_list as item>
 			        	<tr>
 			        		<!--<td><input style="width:15px;height:15px;float:left; margin:0 0 0 10px ;" type="checkbox" value=""/></td>-->
-			        		<td>${item_index+1!''}.${item.name!''}</td>
+			        		<td><b style="float:left;margin-left:10px;">${item_index+1!''}.</b>${item.name!''}</td>
 			        		<td style="color:#0ab2cb;">${item.usermobile!''}</td>
 			        		<td style="color:#e67817;">${item.email!''}</td>
 			        		<td><a href="javascript:removeExpert(${item.id?c!''},${activityId?c!''});">取消</a></td>

@@ -926,8 +926,8 @@ public class TdActivityController {
         	expert.setIsSelect(false);
         	tdExpertService.save(expert);
         	
-        	//同时创建评分表数据
-        	List<TdEnterpriseGrade> enterpriseGradeList = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderByNumberAsc(activityId,ActivityExpert.getExpertId());
+        	//同时删除评分表数据
+        	List<TdEnterpriseGrade> enterpriseGradeList = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderByNumberAsc(ActivityExpert.getExpertId() , activityId);
         	if (null != enterpriseGradeList)
         	{
         		for(TdEnterpriseGrade item : enterpriseGradeList)

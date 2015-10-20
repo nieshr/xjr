@@ -493,17 +493,12 @@ public String  regionRemoveEnterprise(HttpServletRequest req,Long id,Long activi
 		if (2 == statusId)
 		{
         	List<TdEnterpriseGrade> enterpriseGradeList = tdEnterpriseGradeService.findByEnterpriseIdAndActivityId(activityEnterprise.getEnterpriseId(), activityId);
-        	int i = 0;
+        
         	for (TdEnterpriseGrade grade:enterpriseGradeList)
         	{
-        		if (i%20 == 0&& null != grade.getNumber())
-        		{
         			grade.setNumber(null);
         			grade.setEnterpriseId(null);
-        			grade.setActivityId(activityId);
         			tdEnterpriseGradeService.save(grade);
-        		}
-        		i = i+1;
         	}
 		}
     }
@@ -772,7 +767,7 @@ public String exportRecommend(
  public Boolean download(HSSFWorkbook wb, String exportUrl, HttpServletResponse resp){
  	 try  
       {  
-	          FileOutputStream fout = new FileOutputStream(exportUrl+"activityEnterprise.xls");  
+	          FileOutputStream fout = new FileOutputStream(exportUrl+"cqkjxjr02.xls");  
 //	          OutputStreamWriter writer = new OutputStreamWriter(fout, "utf8");	                       	     
 	          wb.write(fout);  
 	          fout.close();
@@ -783,14 +778,14 @@ public String exportRecommend(
  	 OutputStream os;
 		 try {
 				os = resp.getOutputStream();
-				File file = new File(exportUrl + "activityEnterprise.xls");
+				File file = new File(exportUrl + "cqkjxjr02.xls");
               
           if (file.exists())
               {
                 try {
                       resp.reset();
                       resp.setHeader("Content-Disposition", "attachment; filename="
-                              + "activityEnterprise.xls");
+                              + "cqkjxjr02.xls");
                       resp.setContentType("application/octet-stream; charset=utf-8");
                       os.write(FileUtils.readFileToByteArray(file));
                       os.flush();

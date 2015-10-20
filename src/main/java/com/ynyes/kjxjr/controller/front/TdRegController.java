@@ -299,7 +299,7 @@ public class TdRegController {
 		String smscode = random.nextInt(9000) + 1000 + "";
 		HttpSession session = request.getSession();
 		session.setAttribute("SMSCODE", smscode);
-		String info = "您的验证码为" + smscode + "，请在页面中输入以完成验证【科技小巨人】。";
+		String info = "您的验证码为" + smscode + "，请在页面中输入以完成验证。【科技小巨人】";
 		System.err.println(smscode);
 		String content = null;
 		try {
