@@ -100,7 +100,7 @@
 			        		<td style="color:#0ab2cb;">${item.area!''}</td>
 			        		<td style="color:#e67817;">${item.type!''}</td>
 			        		<td>
-			        		<#if item.isSelect??&&item.isSelect>
+			        		<#if item.isSelect??&&item.isSelect&&item.selectActivityId??&&item.selectActivityId==activityId>
 				        		<p>已添加</p>
 				        	<#else>
 			        			<a class="add${item.id?c}" href="javascript:addEnterprise(${item.id?c!''},${activityId?c!''});">添加</a>

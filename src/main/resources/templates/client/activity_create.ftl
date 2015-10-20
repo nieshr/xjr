@@ -96,6 +96,31 @@ $(function(){
     });
 });
 
+function submitCheck()
+{
+    var filedata = $("#file").val();
+
+    if (filedata == "")
+    {
+        alert("请添加文件！")
+    }
+    else{
+        $("#upload").submit();
+    }   
+}
+
+function pptSubmitCheck()
+{
+    var filedata = $("#pptfile").val();
+
+    if (filedata == "")
+    {
+        alert("请添加文件！")
+    }
+    else{
+        $("#pptupload").submit();
+    }   
+}
 
 function done()
 {
@@ -213,7 +238,7 @@ window.onload=done;
     				    <#if selected_enterprise_list??>
     				        <#list selected_enterprise_list as item>
 		    					<li>
-		    						<p class="p01">${item_index+1}.${item.enterpriseTitle!''}</p>
+		    						<p class="p01" style="width: 130px; float: left;text-align:left;">${item_index+1}.${item.enterpriseTitle!''}</p>
 		    						<a style="display:block;  width:100px;"></a>
 		    						<a href="/activity/enterprise/check/${item.enterpriseId?c!''}" target=_blank>查看</a>
 		                            <a>丨</a>
@@ -274,7 +299,7 @@ window.onload=done;
 		<div>
 			<span>添加文件：</span>
 			<input name="Filedata" type="file" id="file" value="" />
-			<input  style="margin-left:20px;" class="area_save_btn" type="button" onclick="javascript:submitCheck();" value="上传" />
+			<input  style="margin-left:20px;    border-radius: 8px;" class="area_save_btn" type="button" onclick="javascript:submitCheck();" value="上传" />
 		</div>
 		</form>
 		</#if>
@@ -291,7 +316,47 @@ window.onload=done;
 			</div>
 	    </#if>	
 		</dl>
+		
+		<#if pagetype??&&pagetype == "check">
+    <dl class="active_content">
+        <dd>
+        <input type="button" value="PPT模板下载" onclick="location.href='/download/data?name=${activity.pptUrl!''}'"  style="margin:10px 0 30px 48px;    border-radius: 8px;
+                                                float: left;
+                                                height: 26px;
+                                                line-height: 26px;
+                                                width: 170px;"></input>
+        </dd>
+        </dl>
+		<#else>
+		    <dl class="active_content" style="margin-top:50px;">
+        <dd>
+		<form id="pptupload" enctype="multipart/form-data" action="/client/activity/pptupload" method="post">
+        <input type="hidden" id="id" name="id" <#if activity??>value="${activity.id?c}"</#if>></input>
+        <div>
+            <span>添加PPT模板：</span>
+            <input name="Filedata" type="file" id="pptfile" value="" />
+            <input type="button" value="PPT模板上传" onclick="javascript:pptSubmitCheck();"  style="margin:-5px 0 30px 48px;
+                                                             border-radius: 8px;
+			                                                float: left;
+			                                                height: 26px;
+			                                                line-height: 26px;
+			                                                width: 170px;"></input>
+        
+        </div>
+        </form>
+             <div>
+                <span style="margin-top: 10px;">已上传PPT模板：</span>
+                <ul class="active_add_file">
+                    <li>
+                        <img src="/client/images/active_file.png" />
+                        <p class="p01">${activity.pptUrl!''}</p>
+                        <a href="/download/data?name=${activity.pptUrl!''}">下载</a>
+                    </li>
+                </ul>
+            </div>
+
 		</#if>
+	</#if>
 		
     </div>
 </div><!--content_end-->

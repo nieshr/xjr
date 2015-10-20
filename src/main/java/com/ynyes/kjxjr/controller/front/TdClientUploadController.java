@@ -177,4 +177,53 @@ public class TdClientUploadController {
         		+"&id="+id;
 
     }
+	
+	
+	@RequestMapping(value = "/activity/pptupload", method = RequestMethod.POST)
+    public String activityPptUpload(String action,Long id,
+            @RequestParam MultipartFile Filedata, ModelMap map, HttpServletRequest req) {
+		
+        String username = (String) req.getSession().getAttribute("activityUsername");
+        
+        if (null == username) {
+            return "redirect:/login";
+        }
+        
+        String name = Filedata.getOriginalFilename();
+//        String contentType = Filedata.getContentType();
+
+        String ext = name.substring(name.lastIndexOf("."));
+
+        try {
+            byte[] bytes = Filedata.getBytes();
+
+            Date dt = new Date(System.currentTimeMillis());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+            String fileName = sdf.format(dt) + ext;
+
+            String uri = ImageRoot + "/" + fileName;
+
+            File file = new File(uri);
+
+            BufferedOutputStream stream = new BufferedOutputStream(
+                    new FileOutputStream(file));
+            stream.write(bytes);
+            stream.close();
+            TdActivity activity = tdActivityService.findOne(id);
+            if(null == activity){
+            	activity = new TdActivity();
+            }
+            activity.setPptUrl(fileName);
+            tdActivityService.save(activity);
+      
+
+        } catch (Exception e) {
+        	e.printStackTrace();
+        }
+        
+        Long done = 1L;
+        return "redirect:/activity/create?done="+done
+        		+"&id="+id;
+
+    }	
 }

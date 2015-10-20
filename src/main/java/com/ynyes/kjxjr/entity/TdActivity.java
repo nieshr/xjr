@@ -109,6 +109,10 @@ public class TdActivity {
     // 下载
     @Column
     private String download;
+    
+    // ppt
+    @Column
+    private String pptUrl;
 
 	public Long getId() {
 		return id;
@@ -276,6 +280,14 @@ public class TdActivity {
 
 	public void setDownload(String download) {
 		this.download = download;
+	}
+
+	public String getPptUrl() {
+		return pptUrl;
+	}
+
+	public void setPptUrl(String pptUrl) {
+		this.pptUrl = pptUrl;
 	}
 
 	

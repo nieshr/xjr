@@ -108,7 +108,10 @@ public class TdActivityEnterprise {
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date createTime;
     
-
+    //PPT
+    @Column
+    private String pptUrl;
+    
     //推荐理由
     @Column
     private String reason;
@@ -287,6 +290,14 @@ public class TdActivityEnterprise {
 
 	public void setFileUrl(String fileUrl) {
 		this.fileUrl = fileUrl;
+	}
+
+	public String getPptUrl() {
+		return pptUrl;
+	}
+
+	public void setPptUrl(String pptUrl) {
+		this.pptUrl = pptUrl;
 	}
 
 	

@@ -32,6 +32,15 @@ function done()
 window.onload=done;
 </#if>
 
+function warnmsg()
+{
+    alert("上传成功！");
+    location.reload();
+}
+<#if warnmsg??>
+window.onload=done;
+</#if>
+
 </script>
 </head>
 <body>
@@ -90,7 +99,7 @@ window.onload=done;
                                 <input type="hidden" name="listId" id="listId" value="${item.id}">
                             </td>
                             -->
-                            <td>${item.enterpriseTitle!''}</td>
+                            <td><a href="/region/enterprise/check/${item.enterpriseId?c!''}" target=_blank>${item.enterpriseTitle!''}</a></td>
                             <td style="color:#0ab2cb;">${item.area!''}</td>
                             <td style="color:#e67817;">${item.type!''}</td>
                             <#if statusId??&&statusId == 2>

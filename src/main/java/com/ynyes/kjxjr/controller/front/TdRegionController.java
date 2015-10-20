@@ -562,6 +562,13 @@ public String exportRecommend(
         return "redirect:/login";
     }
 
+    List<TdActivityEnterprise> selectedEnter = tdActivityEnterpriseService.findByActivityIdAndStatusId(activityId, 2L);
+    if (selectedEnter.size() != 20)
+    {
+    	map.addAttribute("warnmsg", "请选出20个推荐项目！");
+    	map.addAttribute("statusId", 2);
+    	return "redirect:/region/recommendEnterprise"+"?id="+activityId;
+    }
         	exportUrl = SiteMagConstant.backupPath;
     
 			if (null != exportUrl) {

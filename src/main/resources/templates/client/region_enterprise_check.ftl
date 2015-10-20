@@ -101,7 +101,7 @@
                     </select>
                 </div>
                 <div><span>地址：</span><input type="text" name="address" datatype="*"value="<#if enterprise.address??>${enterprise.address!''}</#if>"  disabled="" /></div>
-                <#if enterprise.formType == 0>
+                <#if enterprise.formType?? &&enterprise.formType == 0>
                 <div><span>职工人数：</span><input type="text" value="${enterprise.staffNumber?c!''}" disabled="" />&nbsp;&nbsp;(人)</div>
                 </#if>
                 <div><span>行业归属：</span>
@@ -119,7 +119,7 @@
     					</#list>
     				</#if>	
                 </div>
-                <#if enterprise.formType == 1>
+                <#if enterprise.formType??&&enterprise.formType == 1>
                     <div><span>主要负责人：</span><input type="text"  name="inCharge" datatype="*" ignore="ignore" value="${enterprise.inCharge!''}" /></div>
                 </#if>
                 <div><span>邮箱：</span><input type="text" value="${enterprise.email!''}" disabled="" /></div>
@@ -129,8 +129,8 @@
                 <div><span>传真：</span><input type="text" value="${enterprise.fax!''}" disabled="" /></div>
                 <div><span>QQ/MSN：</span><input type="text" value="${enterprise.chat!''}" disabled="" /></div>
                 <div><span>手机：</span><input type="text" value="${enterprise.mobile!''}" disabled="" /></div>
-                <div><span><#if enterprise.formType == 0>企业简介<#else>团队简介</#if>：</span><textarea disabled="" >${enterprise.profile!''}</textarea><span>(200字以内)</span></div>
-                <#if enterprise.formType == 0>
+                <div><span><#if  enterprise.formType??&&enterprise.formType == 0>企业简介<#else>团队简介</#if>：</span><textarea disabled="" >${enterprise.profile!''}</textarea><span>(200字以内)</span></div>
+                <#if enterprise.formType??&& enterprise.formType == 0>
                     <div><span>公司团队：</span><textarea disabled="" >${enterprise.teamIntroduction!''}</textarea><span>(200字以内)</span></div>
                 </#if>
                 <div><span>技术特点及优势：</span><textarea disabled="" >${enterprise.advantage!''}</textarea><span>(200字以内)</span></div>
@@ -237,7 +237,7 @@
                     <p>是否愿意将贵公司所填以上信息向投资金融平台披露</p>
                 <input style=" width:15px;"  type="radio" <#if enterprise.isShow?? &&enterprise.isShow> checked="checked" </#if>name="team" value="" disabled="" />
                 <span style=" width:auto; display: block; margin-left: 10px; margin-top: 3px; ">是（同意请加盖公司公章）</span>
-                <input style=" width:15px;" type="radio" <#if !enterprise.isShow|| !enterprise.isShow> checked="checked" </#if>  name="team" value="" disabled="" />
+                <input style=" width:15px;" type="radio" <#if !enterprise.isShow??|| !enterprise.isShow> checked="checked" </#if>  name="team" value="" disabled="" />
                 <span style=" width:auto; display: block; margin-left: 10px; margin-top:3px;">否</span>
                 </div>
         </dd>

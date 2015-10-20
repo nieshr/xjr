@@ -51,6 +51,9 @@ public class TdExpert {
     @Column
     private Boolean isSelect;
     
+    // 被选择的活动ID
+    @Column
+    private Long selectActivityId;
     
     // 登录名
     @Column
@@ -147,6 +150,14 @@ public class TdExpert {
 
 	public void setIsSelect(Boolean isSelect) {
 		this.isSelect = isSelect;
+	}
+
+	public Long getSelectActivityId() {
+		return selectActivityId;
+	}
+
+	public void setSelectActivityId(Long selectActivityId) {
+		this.selectActivityId = selectActivityId;
 	}
 
  

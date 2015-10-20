@@ -231,11 +231,12 @@ public class TdExpertController {
 		theGrade.setThreeTechnology(grade.getThreeTechnology());
 		theGrade.setFourTechnology(grade.getFourTechnology());
 		theGrade.setFiveTechnology(grade.getFiveTechnology());
-		theGrade.setTotalPoint(grade.getTotalPoint());
+//		theGrade.setTotalPoint(grade.getTotalPoint());   zhangji 注释掉
 		theGrade.setOneGroup(grade.getOneGroup());
 		theGrade.setTwoGroup(grade.getTwoGroup());
 		theGrade.setThreeGroup(grade.getThreeGroup());
-		
+		theGrade.setTotalGroup(grade.getTotalGroup()); //zhangji
+		tdEnterpriseGradeService.save(theGrade);
 //		TdExpertCoachEnterprise expertCoachEnterprise = tdExpertCoachEnterpriseService.findByExpertIdAndEnterpriseId(expert.getId(), enterprise.getId());
 //		if(null == expertCoachEnterprise){
 //			expertCoachEnterprise = new TdExpertCoachEnterprise();

@@ -253,6 +253,11 @@ public class TdEnterprise {
     @Column
     private Boolean isSelect;
     
+    //被选择活动的ID
+    @Column
+    private Long SelectActivityId;
+    
+    
     //可供资料
     @Column
     private String dataAble;
@@ -711,6 +716,14 @@ public class TdEnterprise {
 
 	public void setIsSelect(Boolean isSelect) {
 		this.isSelect = isSelect;
+	}
+
+	public Long getSelectActivityId() {
+		return SelectActivityId;
+	}
+
+	public void setSelectActivityId(Long selectActivityId) {
+		SelectActivityId = selectActivityId;
 	}
 
 

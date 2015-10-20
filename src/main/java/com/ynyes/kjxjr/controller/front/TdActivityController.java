@@ -595,6 +595,7 @@ public class TdActivityController {
         	if (null != enterprise)
         	{
         		enterprise.setIsSelect(true);
+        		enterprise.setSelectActivityId(activityId);
         		tdEnterpriseService.save(enterprise);
         	}
         	
@@ -852,6 +853,7 @@ public class TdActivityController {
         	if (null != expert)
         	{
         		expert.setIsSelect(true);
+        		expert.setSelectActivityId(activityId);
         		tdExpertService.save(expert);
         	}
         	TdActivity activity = tdActivityService.findOne(activityId);
