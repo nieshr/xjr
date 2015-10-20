@@ -935,7 +935,8 @@ public class TdManagerUserController {
                 
                 if (type.equalsIgnoreCase("user")) // 用户
                 {
-                    tdUserService.delete(id);
+                	
+                    tdUserService.delete(tdUserService.findOne(id));
                     
                 }
                 else if (type.equalsIgnoreCase("level")) // 用户等级

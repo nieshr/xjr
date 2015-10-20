@@ -17,7 +17,8 @@
 <form name="form1" method="post" action="/Verwalter/setting/region/save" id="form1">
 <div>
 <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="${__VIEWSTATE!""}">
-<input name="serviceItemId" type="text" value='<#if region??>${region.id}</#if>' style="display:none">
+<input name="serviceItemId" type="text" value='<#if region??>${region.id}</#if>' >
+<input type="hidden" name="id"  value="<#if region??>${region.id}</#if>">
 </div>
 
 <!--导航栏-->

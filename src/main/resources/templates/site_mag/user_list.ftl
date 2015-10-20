@@ -82,7 +82,6 @@ var theForm = document.forms['form1'];
     <th align="center" width="12%">邮箱</th>
     <th width="12%">手机号</th>
     <th width="8%">最近登录</th>
-    <th width="8%">粮草</th>
     <th width="6%">状态</th>
     <th width="6%">操作</th>
   </tr>
@@ -103,8 +102,9 @@ var theForm = document.forms['form1'];
                 </td>
                 <td>
                   <div class="user-box">
-                    <h4><b>${user.username!""}</b> (姓名：${user.realName!""})</h4>
+                    <h4><b>${user.username!""}</b><#if user.inCharge??> (姓名：${user.inCharge!""}) </#if></h4>
                     <i>注册时间：${user.registerTime!""}</i>
+                    <#--
                     <span>
                       <a class="amount" href="/Verwalter/user/point/list?userId=${user.id}" title="粮草">粮草</a>
                       <a class="point" href="/Verwalter/user/collect/list?userId=${user.id}" title="收藏商品">收藏商品</a>
@@ -113,14 +113,25 @@ var theForm = document.forms['form1'];
                           <a class="sms" href="/Verwalter/user/reward/list?userId=${user.id}" title="返现记录">返现记录</a>
                       </#if>
                     </span>
+                    -->
                   </div>
                 </td>
-                <td><#if user.roleId?? && user.roleId==0>普通会员<#elseif user.roleId?? && user.roleId==1>同盟店</#if></td>
+                <td>
+	                <#if user.roleId?? && user.roleId==1>
+	                企业/项目
+	                <#elseif user.roleId?? && user.roleId==2>
+	                区县管理
+	                <#elseif user.roleId?? && user.roleId==3>
+	                专家
+	                <#elseif user.roleId?? && user.roleId==4>
+	                活动管理	                            
+	                </#if>
+	                
+                </td>
                 <td align="center">${user.email!""}</td>
                 <td align="center">${user.mobile!""}</td>
                 <td align="center">${user.lastLoginTime!""}</td>
-                <td align="center">${user.totalPoints!""}                    
-                </td>
+
                 <td align="center"><#if user.statusId??><#if user.statusId==0>待审核<#elseif user.statusId==1>正常</#if></#if></td>
                 <td align="center">
                     <a href="/Verwalter/user/edit?id=${user.id}&roleId=${roleId!""}">修改</a> | 

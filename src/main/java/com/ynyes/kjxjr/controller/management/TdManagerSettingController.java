@@ -118,7 +118,7 @@ public class TdManagerSettingController {
         {
             if (__EVENTTARGET.equalsIgnoreCase("btnDelete"))
             {
-                btnDelete(listId, listChkId);
+                btnDeleteRegion(listId, listChkId);
                 
                 tdManagerLogService.addLog("edit", "删除活动区域", req);
             }
@@ -157,7 +157,7 @@ public class TdManagerSettingController {
         {
             if (__EVENTTARGET.equalsIgnoreCase("btnDelete"))
             {
-                btnDelete(listId, listChkId);
+                btnDeleteActivityType(listId, listChkId);
                 
                 tdManagerLogService.addLog("edit", "删除活动类型", req);
             }
@@ -196,7 +196,7 @@ public class TdManagerSettingController {
         {
             if (__EVENTTARGET.equalsIgnoreCase("btnDelete"))
             {
-                btnDelete(listId, listChkId);
+                btnDeleteEnterpriseType(listId, listChkId);
                 
                 tdManagerLogService.addLog("edit", "删除项目所属类型", req);
             }
@@ -634,6 +634,81 @@ public class TdManagerSettingController {
                 Long id = ids[chkId];
                 
                 tdUserSuggestionService.delete(id);
+            }
+        }
+    }
+    /**
+     * 删除活动区域
+     * @author Zhangji
+     * @param ids
+     * @param chkIds
+     */
+    private void btnDeleteRegion(Long[] ids, Integer[] chkIds)
+    {
+    	if (null == ids || null == chkIds
+                || ids.length < 1 || chkIds.length < 1)
+        {
+            return;
+        }
+        
+        for (int chkId : chkIds)
+        {
+            if (chkId >=0 && ids.length > chkId)
+            {
+                Long id = ids[chkId];
+                
+                tdRegionService.delete(id);
+            }
+        }
+    }
+    
+    /**
+     * 删除活动类型
+     * @author Zhangji
+     * @param ids
+     * @param chkIds
+     */
+    private void btnDeleteActivityType(Long[] ids, Integer[] chkIds)
+    {
+    	if (null == ids || null == chkIds
+                || ids.length < 1 || chkIds.length < 1)
+        {
+            return;
+        }
+        
+        for (int chkId : chkIds)
+        {
+            if (chkId >=0 && ids.length > chkId)
+            {
+                Long id = ids[chkId];
+                
+                tdActivityTypeService.delete(id);
+            }
+        }
+    }
+    
+    
+    /**
+     * 删除项目类别
+     * @author Zhangji
+     * @param ids
+     * @param chkIds
+     */
+    private void btnDeleteEnterpriseType(Long[] ids, Integer[] chkIds)
+    {
+    	if (null == ids || null == chkIds
+                || ids.length < 1 || chkIds.length < 1)
+        {
+            return;
+        }
+        
+        for (int chkId : chkIds)
+        {
+            if (chkId >=0 && ids.length > chkId)
+            {
+                Long id = ids[chkId];
+                
+                tdEnterpriseTypeService.delete(id);
             }
         }
     }

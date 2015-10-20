@@ -3,7 +3,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
         <title>活动列表</title>
-        <link rel="shortcut icon" href="/images/icon.ico" />
+        <link rel="shortcut icon" href="/client/images/icon.ico" />
         <link href="/client/css/base.css" rel="stylesheet" type="text/css" />
         <link href="/client/css/expert.css" rel="stylesheet" type="text/css" />
         <script src="/client/js/jquery-1.9.1.min.js"></script>

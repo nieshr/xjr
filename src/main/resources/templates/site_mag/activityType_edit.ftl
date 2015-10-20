@@ -72,6 +72,7 @@
       <span class="Validform_checktip">*数字，越小越向前</span>
     </dd>
   </dl>
+  <#--
  	<dl>
 	    <dt>颜色</dt>
 	    <dd>
@@ -96,6 +97,7 @@
 	        </#if>
 	    </dd>
 	</dl>   
+	-->
 </div>
 <!--/内容-->
 

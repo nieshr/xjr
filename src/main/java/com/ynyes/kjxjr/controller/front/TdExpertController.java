@@ -203,9 +203,10 @@ public class TdExpertController {
 		TdEnterprise enterprise = tdEnterpriseService.findByNumber(number);
 		TdEnterpriseGrade theGrade = tdEnterpriseGradeService.findByExpertIdAndActivityIdAndNumber(expert.getId(),
 				activityId, number);
+		System.err.println(grade);
 		theGrade.setTotalPoint(grade.getTotalExpression() + grade.getTotalFeasibility() + grade.getTotalMarketValue()
 				+ grade.getTotalTechnology() + grade.getTotalGroup());
-		theGrade.setExpertId(grade.getExpertId());
+		theGrade.setExpertId(expert.getId());
 		theGrade.setEnterpriseId(enterprise.getId());
 		theGrade.setActivityId(activityId);
 		theGrade.setNumber(number);
@@ -235,9 +236,12 @@ public class TdExpertController {
 		theGrade.setTwoGroup(grade.getTwoGroup());
 		theGrade.setThreeGroup(grade.getThreeGroup());
 		
-		TdExpertCoachEnterprise expertCoachEnterprise = tdExpertCoachEnterpriseService.findByExpertIdAndEnterpriseId(expert.getId(), enterprise.getId());
-		expertCoachEnterprise.setIsGrade(true);
-		tdExpertCoachEnterpriseService.save(expertCoachEnterprise);
+//		TdExpertCoachEnterprise expertCoachEnterprise = tdExpertCoachEnterpriseService.findByExpertIdAndEnterpriseId(expert.getId(), enterprise.getId());
+//		if(null == expertCoachEnterprise){
+//			expertCoachEnterprise = new TdExpertCoachEnterprise();
+//		}
+//		expertCoachEnterprise.setIsGrade(true);
+//		tdExpertCoachEnterpriseService.save(expertCoachEnterprise);
 		res.put("status", 0);
 		return res;
 	}

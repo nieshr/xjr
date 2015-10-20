@@ -31,6 +31,8 @@
             var totalTechnologyValue = document.getElementById(code+"_totalTechnology").innerHTML;
             var totalGroupValue = document.getElementById(code+"_totalGroup").innerHTML;
             
+            console.debug(code+"_totalPoint");
+             console.debug(document.getElementById(code+"_totalPoint"));
             document.getElementById(code+"_totalPoint").innerHTML = parseInt(totalExpressionValue)+parseInt(totalFeasibilityValue)+parseInt(totalMarketValue)+parseInt(totalTechnologyValue)+parseInt(totalGroupValue);
         }
         
@@ -561,7 +563,7 @@
     			     <#if item.totalPoint??>
     			         <td id="${item_index}_totalPoint">${item.totalPoint?string("0")}</td>
     			     <#else>
-    			         <td id="${item_index}_totalPonit">0</td>
+    			         <td id="${item_index}_totalPoint">0</td>
     			     </#if>
     			</#list>
 			</#if>
