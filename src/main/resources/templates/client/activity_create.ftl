@@ -30,6 +30,11 @@ $(document).ready(function(){
                 }
              }
     });
+    
+    <#if upload??&&upload == 1>
+        var height = $(window).height();
+       $('html,body').animate({scrollTop:height+'px'},100);
+    </#if>    
 });
 
 $(function(){
@@ -168,9 +173,9 @@ window.onload=done;
 	        </dl>
 	   <#elseif mark?? && mark == "enterprise">
 			<dl class="nav">
-	            <dd><a href="/enterprise/check">基本资料</a></dd>
-	            <dd><a href="#">活动列表</a></dd>
-	            <dd><a href="#">申请展示</a></dd>
+            <dd><a href="/enterprise/check">基本资料</a></dd>
+            <dd><a href="/enterprise/activity/list">活动列表</a></dd>
+            <dd><a href="/enterprise/project">申请展示</a></dd>
 			</dl>	        
 	   <#else>
 			<dl class="nav">

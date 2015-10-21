@@ -1,9 +1,16 @@
 package com.ynyes.kjxjr.controller.front;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -11,9 +18,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -42,6 +51,7 @@ import com.ynyes.kjxjr.entity.TdEnterpriseGrade;
 import com.ynyes.kjxjr.entity.TdRegion;
 import com.ynyes.kjxjr.entity.TdRegionAdmin;
 import com.ynyes.kjxjr.entity.TdUser;
+import com.ynyes.kjxjr.entity.TdUserMessage;
 import com.ynyes.kjxjr.service.TdActivityEnterpriseService;
 import com.ynyes.kjxjr.service.TdActivityExpertService;
 import com.ynyes.kjxjr.service.TdActivityService;
@@ -51,6 +61,7 @@ import com.ynyes.kjxjr.service.TdEnterpriseGradeService;
 import com.ynyes.kjxjr.service.TdEnterpriseService;
 import com.ynyes.kjxjr.service.TdRegionAdminService;
 import com.ynyes.kjxjr.service.TdRegionService;
+import com.ynyes.kjxjr.service.TdUserMessageService;
 import com.ynyes.kjxjr.service.TdUserService;
 import com.ynyes.kjxjr.util.ClientConstant;
 import com.ynyes.kjxjr.util.SMSUtil;
@@ -90,6 +101,9 @@ public class TdRegionController {
 	
 	@Autowired
 	TdActivityExpertService tdActivityExpertService;
+	
+	@Autowired
+	TdUserMessageService tdUserMessageService;
 
     @RequestMapping(value = "/enterprise/list", method = RequestMethod.GET)
     public String EnterpriseList(HttpServletRequest req, ModelMap map,Integer page) {
@@ -172,7 +186,7 @@ public class TdRegionController {
     
     //通过审核
     @RequestMapping(value = "/enterprise/pass/{id}", method = RequestMethod.GET)
-    public String userEnterprisePass(HttpServletRequest req, ModelMap map,@PathVariable Long id) {
+    public String userEnterprisePass(HttpServletRequest req,HttpServletResponse res , ModelMap map,@PathVariable Long id) {
         String username = (String) req.getSession().getAttribute("regionUsername");
 
         if (null == username) {
@@ -192,6 +206,22 @@ public class TdRegionController {
         {
             Enterprise.setStatusId(1L);
             tdEnterpriseService.save(Enterprise);
+            
+            //短信提醒
+            smsPass(Enterprise.getUsermobile(),res,req);
+            
+            //站内信
+            TdRegionAdmin admin = tdRegionAdminService.findbyUsername(username);
+            TdUserMessage message = new TdUserMessage();
+            message.setEnterpriseId(id);
+            message.setRegionAdminId(admin.getId());
+            message.setContent("【审核】恭喜您通过"+admin.getRegion()+"地区的审核，请登录个人中心查看详情！");
+            message.setTitle("通过审核");
+            message.setStatusId(0L);
+            message.setSpeaker(1L);
+            message.setTime(new Date());
+            tdUserMessageService.save(message);
+            
         }
         
         map.addAttribute("enterprise", Enterprise);
@@ -199,6 +229,83 @@ public class TdRegionController {
 
         return "redirect:/region/enterprise/list";
     }
+    
+    //发短信【过审核】
+	public Map<String, Object> smsPass(String mobile, HttpServletResponse response, HttpServletRequest request) {
+		Map<String, Object> res = new HashMap<>();
+		res.put("status", -1);
+
+
+		HttpSession session = request.getSession();
+
+		String info = "您已通过区县审核，查看详情请登录个人中心。【科技小巨人】";
+		System.err.println("errormsg");
+		String content = null;
+		try {
+			content = URLEncoder.encode(info, "GB2312");
+			System.err.println(content);
+		} catch (Exception e) {
+			e.printStackTrace();
+			res.put("message", "发送失败！");
+			return res;
+		}
+		String url = "http://www.ht3g.com/htWS/BatchSend.aspx?CorpID=CQDL00059&Pwd=644705&Mobile=" + mobile
+				+ "&Content=" + content;
+		StringBuffer fanhui = null;
+		try {
+			URL u = new URL(url);
+			URLConnection connection = u.openConnection();
+			HttpURLConnection httpConn = (HttpURLConnection) connection;
+			httpConn.setRequestProperty("Content-type", "text/html");
+			httpConn.setRequestProperty("Accept-Charset", "utf-8");
+			httpConn.setRequestProperty("contentType", "utf-8");
+			InputStream inputStream = null;
+			InputStreamReader inputStreamReader = null;
+			BufferedReader reader = null;
+			StringBuffer resultBuffer = new StringBuffer();
+			String tempLine = null;
+
+			if (httpConn.getResponseCode() >= 300) {
+				res.put("message", "HTTP Request is not success, Response code is " + httpConn.getResponseCode());
+				return res;
+			}
+
+			try {
+				inputStream = httpConn.getInputStream();
+				inputStreamReader = new InputStreamReader(inputStream);
+				reader = new BufferedReader(inputStreamReader);
+
+				while ((tempLine = reader.readLine()) != null) {
+					resultBuffer.append(tempLine);
+				}
+
+				fanhui = resultBuffer;
+
+			} finally {
+
+				if (reader != null) {
+					reader.close();
+				}
+
+				if (inputStreamReader != null) {
+					inputStreamReader.close();
+				}
+
+				if (inputStream != null) {
+					inputStream.close();
+				}
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			res.put("message", "发送失败！");
+			return res;
+		}
+		res.put("status", 0);
+		res.put("message", fanhui);
+		return res;
+	}
+
     
     //取消审核
     @RequestMapping(value = "/enterprise/cancel/{id}", method = RequestMethod.GET)

@@ -81,7 +81,7 @@
 
     			<div>
     			<span class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>">企业名称</span>
-    			<span  class="pro <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>hide</#if>">企业名称</span>
+    			<span  class="pro <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>hide</#if>">项目名称</span>
     			<input type="text" value="${enterprise.title!''}" disabled="" /></div>
     			<div><span>编号：</span><input type="text" value="${enterprise.number!''}" disabled="" /></div>
     			<div>
@@ -91,8 +91,8 @@
     			</div>
     			<div>
 	    			<span class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>">注册资本<b style="color:#999;font-size:0.6em;">(万元)</b>：</span>
-	    			<span class="pro <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>hide</#if>">（拟）注册资本<b style="color:#999;font-size:0.6em;">(万元)</b>：</span>
-    				<input type="text" value="<#if enterprise??&&enterprise.capital??>${enterprise.capital?c!''}</#if>" disabled="" />&nbsp;&nbsp;(万元)
+	    			<span class="pro <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>hide</#if>">（拟）注册资本：</span>
+    				<input type="text" value="<#if enterprise??&&enterprise.capital??>${enterprise.capital?c!''}</#if>" disabled="" />&nbsp;&nbsp;<b style="color:#999;font-size:0.6em;">(万元)</b>
     			</div>
     			<div>
 	    			<span class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>">法定代表人：</span>

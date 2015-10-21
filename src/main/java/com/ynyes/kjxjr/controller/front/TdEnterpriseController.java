@@ -38,6 +38,7 @@ import com.ynyes.kjxjr.entity.TdArticle;
 import com.ynyes.kjxjr.entity.TdEnterprise;
 import com.ynyes.kjxjr.entity.TdEnterpriseGrade;
 import com.ynyes.kjxjr.entity.TdUser;
+import com.ynyes.kjxjr.entity.TdUserMessage;
 import com.ynyes.kjxjr.service.TdActivityEnterpriseService;
 import com.ynyes.kjxjr.service.TdActivityExpertService;
 import com.ynyes.kjxjr.service.TdActivityService;
@@ -47,6 +48,7 @@ import com.ynyes.kjxjr.service.TdCommonService;
 import com.ynyes.kjxjr.service.TdCouponService;
 import com.ynyes.kjxjr.service.TdEnterpriseGradeService;
 import com.ynyes.kjxjr.service.TdEnterpriseService;
+import com.ynyes.kjxjr.service.TdUserMessageService;
 import com.ynyes.kjxjr.service.TdUserService;
 import com.ynyes.kjxjr.util.ClientConstant;
 import com.ynyes.kjxjr.util.SiteMagConstant;
@@ -86,6 +88,9 @@ public class TdEnterpriseController {
     
     @Autowired
     TdArticleService tdArticleService;
+    
+    @Autowired
+    TdUserMessageService tdUserMessageService;
 
 	
 	   /**
@@ -414,7 +419,7 @@ public class TdEnterpriseController {
     
     //查看活动
     @RequestMapping(value = "/activity/check", method = RequestMethod.GET)
-    public String activityCheck(HttpServletRequest req, ModelMap map,Long id , Long done) {
+    public String activityCheck(HttpServletRequest req, ModelMap map,Long id , Long done , Long upload) {
         String username = (String) req.getSession().getAttribute("enterpriseUsername");
 
         if (null == username) {
@@ -438,6 +443,10 @@ public class TdEnterpriseController {
         if (null !=done)
         {
             map.addAttribute("done", done);
+        }
+        if (null !=upload)
+        {
+            map.addAttribute("upload", upload);
         }
    
         map.addAttribute("user", user);
@@ -497,6 +506,122 @@ public class TdEnterpriseController {
          
          map.addAttribute("category_list", tdArticleCategoryService.findByMenuId(11L));
     	return "/client/activity_askshow";
+    }
+    /**
+     * 站内信息页面
+     * @param req
+     * @param map
+     * @return
+     */
+    @RequestMapping(value = "/message", method = RequestMethod.GET)
+    public String userEnterpriseMessage(HttpServletRequest req, ModelMap map , Integer page) {
+        String username = (String) req.getSession().getAttribute("enterpriseUsername");
+
+        if (null == username) {
+            return "redirect:/login";
+        }
+
+        tdCommonService.setHeader(map, req);
+
+        if (null == page)
+        {
+        	page =0;
+        }
+        TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
+        TdEnterprise enterprise = tdEnterpriseService.findbyUsername(username);
+        
+        Page<TdUserMessage> messagePage = tdUserMessageService.findByEnterpriseIdAndSpeakerOrderByTimeDesc(enterprise.getId(), 1L, page, ClientConstant.pageSize);
+        map.addAttribute("message_page", messagePage);
+
+        map.addAttribute("enterprise", enterprise);
+        map.addAttribute("user", user);
+
+        
+        return "/client/enterprise_message";
+    }
+    
+    /**
+     * 站内信息详情
+     * @param req
+     * @param map
+     * @return
+     */
+    @RequestMapping(value = "/message/detail", method = RequestMethod.GET)
+    public String MessageDetail(HttpServletRequest req, ModelMap map , Long id) {
+        String username = (String) req.getSession().getAttribute("enterpriseUsername");
+
+        if (null == username) {
+            return "redirect:/login";
+        }
+
+        tdCommonService.setHeader(map, req);
+
+        TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
+        TdEnterprise enterprise = tdEnterpriseService.findbyUsername(username);
+        
+        //处理新信息
+        TdUserMessage message = tdUserMessageService.findOne(id);
+        message.setStatusId(1L);
+        tdUserMessageService.save(message);
+        
+        //根据企业id和区县id查找信息页面
+        List<TdUserMessage> messageList = tdUserMessageService.findByEnterpriseIdAndRegionAdminIdOrderByTimeAsc(enterprise.getId(), message.getRegionAdminId());
+        for (TdUserMessage item:messageList)
+        {
+        	item.setStatusId(1L);
+        	tdUserMessageService.save(item);
+        }
+        	
+        map.addAttribute("message_list", messageList);
+        map.addAttribute("message", message);
+        map.addAttribute("enterprise", enterprise);
+        map.addAttribute("user", user);
+
+        
+        return "/client/enterprise_message_detail";
+    }
+    /**
+     * 企业站内信息回复
+     * @param req
+     * @param map
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/message/reply", method = RequestMethod.GET)
+    public String MessageReply(HttpServletRequest req, ModelMap map , Long regionAdminId , TdUserMessage message) {
+        String username = (String) req.getSession().getAttribute("enterpriseUsername");
+
+        if (null == username) {
+            return "redirect:/login";
+        }
+
+        tdCommonService.setHeader(map, req);
+
+        TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
+        TdEnterprise enterprise = tdEnterpriseService.findbyUsername(username);
+        
+        //创建新信息
+        message.setStatusId(1L);
+        message.setName(enterprise.getTitle());
+        message.setEnterpriseId(enterprise.getId());
+        message.setTime(new Date());
+        tdUserMessageService.save(message);
+        
+        //根据企业id和区县id查找信息页面
+        List<TdUserMessage> messageList = tdUserMessageService.findByEnterpriseIdAndRegionAdminIdOrderByTimeAsc(enterprise.getId(), regionAdminId);
+        for (TdUserMessage item:messageList)
+        {
+        	item.setStatusId(1L);
+        	tdUserMessageService.save(item);
+        }
+        	
+        map.addAttribute("message_list", messageList);
+        map.addAttribute("message", message);
+        map.addAttribute("enterprise", enterprise);
+        map.addAttribute("user", user);
+
+        
+        return "redirect:/enterprise/message/detail?id="+message.getId();
     }
 
     

@@ -14,6 +14,28 @@
 .apply_content .hide{display:none;}
 .apply_content dd div span .hide{display:none;}
 </style>
+
+<script type="">
+fucntion pass(id)
+{
+    $.ajax({
+        type:"post",
+        url:"/region/enterprise/pass/",
+        data:{"id":id},
+        success:function(data){
+            if (data.statusId == 0)
+{
+    alert("chenggong")
+}
+else
+{
+    alert("shibai")
+}
+          
+        }
+    });
+}
+</script>
 </head>
 <script src="/client/js/jquery-1.9.1.min.js"></script>
 <script src="/client/js/main.js"></script>

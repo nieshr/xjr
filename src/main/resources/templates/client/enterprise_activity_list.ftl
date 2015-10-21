@@ -33,7 +33,7 @@
 		<dl class="nav">
             <dd><a href="/enterprise/check">基本资料</a></dd>
             <dd><a href="/enterprise/activity/list">活动列表</a></dd>
-            <dd><a href="#">申请展示</a></dd>
+            <dd><a href="/enterprise/project">申请展示</a></dd>
 
 		</dl>
 	</div>
@@ -68,7 +68,7 @@
 		        		<td>
 		        		<a href="/enterprise/activity/check?id=${item.activityId?c!''}">详情查看</a>
 		        		  | <a <#if item.pptUrl??> href="/download/data?name=${item.pptUrl!''}" <#else> style="color:#999999;"</#if>>下载模板</a>
-                        | <a href="">上传PPT</a> 
+                        | <a href="/enterprise/activity/check?id=${item.activityId?c!''}&upload=1">上传PPT</a> 
 		        		</td>
 		        	</tr>
 	        	</#list>
