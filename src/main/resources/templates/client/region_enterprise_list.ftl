@@ -98,7 +98,22 @@
         	<#list enterprise_page.content as item>
 	        	<tr>
 	        		<td>${item.number!''}</td>
-	        		<td>${item.title!''}<td>
+	        		<td>
+	        		<#if item.formType??&&item.formType == 0>
+	        			<#if item.statusId ?? && item.statusId == 1>
+	        				<img src="/client/images/n0.png"  title="已过审企业"/>
+	        			<#else>
+	        				<img src="/client/images/n00.gif"  title="未过审企业"/>
+	        			</#if>
+	        		<#elseif item.formType??&&item.formType == 1>
+	        			<#if item.statusId ?? && item.statusId == 1>
+	        				<img src="/client/images/n1.png"  title="已过审项目"/>
+	        			<#else>
+	        				<img src="/client/images/n11.gif"  title="未过审项目"/>
+	        			</#if>	      
+	        		</#if>	  					
+	        		${item.title!''}
+	        		<td>
 	        		<td>${item.area!''}</td>
 	        		<td style="color:#529c15;"><#if item.capital??>${item.capital?c!''}</#if>万元</td>
 	        		<td style="color:#e67817;">${item.representative!''}</td>

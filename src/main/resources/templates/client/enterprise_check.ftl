@@ -58,7 +58,7 @@
 	    	</#if>
 	        <#if  enterprise.statusId?? && enterprise.statusId == 3>
 	    		<span>审核状态：未通过</span>
-	    		<input style="cursor:pointer;" type="button" value="申请重新审核" onclick="location.href='/enterprise/recall'"/>
+	    		<input style="cursor:pointer;" type="button" value="重新申请" onclick="location.href='/enterprise/info'"/>
 	    	</#if>	   		    	
 	    	<#if !enterprise.statusId?? || enterprise.statusId?? && enterprise.statusId == 4>
 	    		<span>状态：尚未完善资料</span>
@@ -79,7 +79,10 @@
     	<dt class="dt01"><span>一、基本信息</span><br/><p>此信息将自动生成到报名表中</p></dt>
     	<dd>
 
-    			<div><span><#if enterprise.formType??&&enterprise.formType==1>企业名称<#else> 项目名称</#if>：</span><input type="text" value="${enterprise.title!''}" disabled="" /></div>
+    			<div>
+    			<span class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>">企业名称</span>
+    			<span  class="pro <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>hide</#if>">企业名称</span>
+    			<input type="text" value="${enterprise.title!''}" disabled="" /></div>
     			<div><span>编号：</span><input type="text" value="${enterprise.number!''}" disabled="" /></div>
     			<div>
 	    			<span class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>">成立时间：</span>

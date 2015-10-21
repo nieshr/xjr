@@ -36,9 +36,9 @@ var theForm = document.forms['form1'];
   <a href="javascript:history.back(-1);" class="back"><i></i><span>返回上一页</span></a>
   <a href="/Verwalter/center" class="home"><i></i><span>首页</span></a>
   <i class="arrow"></i>
-  <span>会员管理</span>
+  <span>企业管理</span>
   <i class="arrow"></i>
-  <span>会员列表</span>  
+  <span>企业列表</span>  
 </div>
 <!--/导航栏-->
 
@@ -117,14 +117,12 @@ var theForm = document.forms['form1'];
                   </div>
                 </td>
                 <td>
-	                <#if user.roleId?? && user.roleId==1>
+	                <#if user.roleId?? && user.roleId==1 && user.formType??&&user.formType == 0>
+	                企业
+	                <#elseif user.roleId?? && user.roleId==1&& user.formType??&&user.formType == 1>
+	                项目
+	                <#else>
 	                企业/项目
-	                <#elseif user.roleId?? && user.roleId==2>
-	                区县管理
-	                <#elseif user.roleId?? && user.roleId==3>
-	                专家
-	                <#elseif user.roleId?? && user.roleId==4>
-	                活动管理	                            
 	                </#if>
 	                
                 </td>

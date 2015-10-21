@@ -54,7 +54,17 @@ function showPro(){
 	$(".enter").css("display","none");
 }
 
+function forbidsubmit()
+{
+	$("#submitbutton").attr("disabled",true);
+	$("#submitbutton").css("background","#666666");
+}
 
+function allowsubmit()
+{
+	$("#submitbutton").removeAttr("disabled");
+	$("#submitbutton").css("background","#e67817");
+}
 </script>
 </head>
 
@@ -173,7 +183,7 @@ function showPro(){
 				<div class="pro <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>hide</#if>"><span>主要负责人：</span><input type="text"  name="inCharge" datatype="*" ignore="ignore" value="<#if enterprise.formType??>${enterprise.inCharge!''}</#if>" /></div>
 				<div><span>邮箱：</span><input type="text" name="email" datatype="e"  ignore="ignore" value="<#if enterprise.formType??>${enterprise.email!''}</#if>" errormsg="请填写邮箱"/></div>
     			<div><span>联系人：</span><input type="text"  name="contact" datatype="*"  value="<#if enterprise.formType??>${enterprise.contact!''}</#if>" /></div>
-    			<div><span>公司网站：</span><input type="text" name="website" datatype="url"  ignore="ignore" value="<#if enterprise.formType??>${enterprise.website!''}</#if>" /></div>
+    			<div><span>网站：</span><input type="text" name="website" datatype="url"  ignore="ignore" value="<#if enterprise.formType??>${enterprise.website!''}</#if>" /></div>
     			<div><span>联系电话：</span><input type="text"  name="telephone" datatype="*" value="<#if enterprise.formType??>${enterprise.telephone!''}</#if>" /></div>
     			<div><span>传真：</span><input type="text"  name="fax" datatype="*"  ignore="ignore" value="<#if enterprise.formType??>${enterprise.fax!''}</#if>" /></div>
     			<div><span>QQ/MSN：</span><input type="text" name="chat" datatype="*" ignore="ignore"  value="<#if enterprise.formType??>${enterprise.chat!''}</#if>" /></div>
@@ -184,7 +194,11 @@ function showPro(){
     			</div>
     			<div  class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>"><span>公司团队：</span><textarea name="teamIntroduction" datatype="*5-199" ignore="ignore" errormsg="输入5到200字"  tip="200字以内"><#if enterprise.formType??>${enterprise.teamIntroduction!''}</#if></textarea></div>
     			<div><span>技术特点及优势：</span><textarea name="advantage" datatype="*5-200" errormsg="输入5到200字"  tip="200字以内"><#if enterprise.formType??>${enterprise.advantage!''}</#if></textarea></div>
-    			<div><span>市场规模行业地位：</span><textarea name="size" datatype="*5-200" errormsg="输入5到200字" tip="200字以内"><#if enterprise.formType??>${enterprise.size!''}</#if></textarea></div>
+    			<div><
+    			<span class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>">市场规模行业地位：</span>
+    			<span class="pro <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>hide</#if>">预期市场前景：</span>
+    			
+    			<textarea name="size" datatype="*5-200" errormsg="输入5到200字" tip="200字以内"><#if enterprise.formType??>${enterprise.size!''}</#if></textarea></div>
 
     	</dd>
     	<dt class="dt02 enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>"><span>二、近三年财务状况（单位：万元）</span><br/><p>此信息将自动生成到报名表中</p></dt>
@@ -254,7 +268,7 @@ function showPro(){
     			  	<input id="expectEquityDate" name="expectEquityDate" value="<#if enterprise.expectEquityDate??>${enterprise.expectEquityDate?string("yyyy-MM-dd")!''}</#if>" type="hidden" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}$/" errormsg="填写正确格式" sucmsg=" " />
     				
     				<input type="text" name="expectEquityAmount" value="<#if enterprise.formType??><#if enterprise.expectEquityAmount??>${enterprise.expectEquityAmount?c}</#if></#if>"  ignore="ignore" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  errormsg="请填写数字！"/>
-    				<input type="text" style="width:400px;" name="expectEquityUse" datatype="*2-100" ignore="ignore" value="<#if enterprise.formType??>${enterprise.expectEquityUse!''}</#if>"  />
+    				<input type="text" style="width:400px;" name="expectEquityUse" datatype="*2-100"  errormsg="输入2到100字"  ignore="ignore" value="<#if enterprise.formType??>${enterprise.expectEquityUse!''}</#if>"  />
     			</div>
     			<div>
     				<span>（二）债权融资</span>
@@ -262,7 +276,7 @@ function showPro(){
     			  	<input id="expectBondDate" name="expectBondDate" value="<#if enterprise.expectBondDate??>${enterprise.expectBondDate?string("yyyy-MM-dd")!''}</#if>" type="hidden" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}$/" errormsg="填写正确格式" sucmsg=" " />
     				
     				<input type="text" name="expectBondAmount" value="<#if enterprise.formType??><#if enterprise.expectBondAmount??>${enterprise.expectBondAmount?c}</#if></#if>" ignore="ignore" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  errormsg="请填写数字！" />
-    				<input type="text" style="width:400px;" name="expectBondUse" datatype="*2-100" ignore="ignore" value="<#if enterprise.formType??>${enterprise.expectBondUse!''}</#if>"  />
+    				<input type="text" style="width:400px;" name="expectBondUse" datatype="*2-100" errormsg="输入2到100字" ignore="ignore" value="<#if enterprise.formType??>${enterprise.expectBondUse!''}</#if>"  />
     			</div>
     			
     			<div>
@@ -302,15 +316,17 @@ function showPro(){
     			</div>
     			
     			<div>
-    				<p>是否愿意将贵公司所填以上信息向投资金融平台披露</p>
-    			<input style=" width:15px;"  type="radio" <#if enterprise.formType??&& enterprise.isShow ||!enterprise.formType??> checked="checked"</#if> name="isShow" value="true" />
-    			<span style=" width:auto; display: block; margin-left: 10px; margin-top: 3px; ">是（同意请加盖公司公章）</span>
-        		<input style=" width:15px;" type="radio"  <#if enterprise.formType??&& !enterprise.isShow> checked="checked"</#if> name="isShow" value="false" />
+    				<p class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>">是否愿意将贵公司所填以上信息向投资金融平台披露</p>
+    				<p  class="pro <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>hide</#if>">是否愿意将团队所填以上信息向投资金融平台披露</p>
+    			<input style=" width:15px;"  type="radio" <#if enterprise.formType??&& enterprise.isShow ||!enterprise.formType??> checked="checked"</#if> name="isShow" value="true" onclick="javascript:allowsubmit();"/>
+    			<span  class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>" style=" width:auto; margin-left: 10px; margin-top: 3px; ">是（同意请加盖公司公章）</span>
+    			<span  class="pro <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>hide</#if>" style=" width:auto; margin-left: 10px; margin-top: 3px; ">是（同意请签字）</span>
+        		<input style=" width:15px;" type="radio"  <#if enterprise.formType??&& !enterprise.isShow> checked="checked"</#if> name="isShow" value="false" onclick="javascript:forbidsubmit();"/>
         		<span style=" width:auto; display: block; margin-left: 10px; margin-top:3px;">否</span>
     			</div>
     	</dd>
     	<dt class="dt05">
-    		<input type="submit" style="cursor:pointer;" value="确定" />
+    		<input id="submitbutton"  type="submit" <#if enterprise.isShow??&& !enterprise.isShow>style="background:#666666" <#else>style="cursor:pointer;"</#if> value="保存" <#if enterprise.isShow??&& !enterprise.isShow> disabled="disabled"</#if> />
     	</dt>
     	</form>
     </dl>

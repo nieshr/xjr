@@ -361,6 +361,7 @@ public String  recommendEnterprise(HttpServletRequest req,
 		ModelMap map,
 		Integer page,
 		Long id,
+		Long numwarn,
 		Long isDone,
 		String keywords) {
     String username = (String) req.getSession().getAttribute("regionUsername");
@@ -392,6 +393,18 @@ public String  recommendEnterprise(HttpServletRequest req,
 	    {
 	    	map.addAttribute("done", isDone);
 	    }
+	    
+	   if ( tdActivityEnterpriseService.findByActivityIdAndStatusId(activityId,2L).size() ==20)
+	   {
+		   map.addAttribute("numfull", 1);
+		   if (null != numwarn&& numwarn == 1)
+		   {
+			   map.addAttribute("numwarn", 1);
+		   }
+	   }
+	    
+	    
+	    
 	    map.addAttribute("keywords", keywords);
 	   	map.addAttribute("activity", activity);
 	   	map.addAttribute("activityId", activityId);
@@ -414,11 +427,8 @@ public String  regionAddEnterprise(HttpServletRequest req,Long id,Long activityI
     
 	if (statusId == 2 &&selectedEnterpriseList.size() >19)
 	{
-		map.addAttribute("msg", "最多添加20个项目！！");
-	    map.addAttribute("statusId", statusId);
-	    map.addAttribute("activityId",activityId);
-	    map.addAttribute("selected_enterprise_list", selectedEnterpriseList);
-	    return "/client/region_selected_enterprise";
+		Long numwarn = 1L;
+	    return "redirect:/region/recommendEnterprise"+"?id="+activityId+"&numwarn="+numwarn;
 	}
   
     if(null != id&&null !=activityId&&null !=statusId)

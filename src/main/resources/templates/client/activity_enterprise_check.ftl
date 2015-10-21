@@ -53,8 +53,11 @@
     <dl class="apply_change">
         <dt class="dt01"><span>一、基本信息</span><br/><p>此信息将自动生成到报名表中</p></dt>
         <dd>
-
-    			<div><span><#if enterprise.formType??&&enterprise.formType==1>企业名称<#else> 项目名称</#if>：</span><input type="text" value="${enterprise.title!''}" disabled="" /></div>
+    			<div>
+    			<span class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>">企业名称：</span>
+    			<span  class="pro <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>hide</#if>">项目名称：</span>
+    			<input type="text" value="${enterprise.title!''}" disabled="" />
+    			</div>
     			<div><span>编号：</span><input type="text" value="${enterprise.number!''}" disabled="" /></div>
     			<div>
 	    			<span class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>">成立时间：</span>
@@ -110,7 +113,7 @@
                 </#if>
                 <div><span>邮箱：</span><input type="text" value="${enterprise.email!''}" disabled="" /></div>
                 <div><span>联系人：</span><input type="text" value="${enterprise.contact!''}" disabled="" /></div>
-                <div><span>公司网站：</span><input type="text" value="${enterprise.website!''}" disabled="" /></div>
+                <div><span>网站：</span><input type="text" value="${enterprise.website!''}" disabled="" /></div>
                 <div><span>联系电话：</span><input type="text" value="${enterprise.telephone!''}" disabled="" /></div>
                 <div><span>传真：</span><input type="text" value="${enterprise.fax!''}" disabled="" /></div>
                 <div><span>QQ/MSN：</span><input type="text" value="${enterprise.chat!''}" disabled="" /></div>
@@ -120,7 +123,10 @@
                     <div><span>公司团队：</span><textarea disabled="" >${enterprise.teamIntroduction!''}</textarea><span>(200字以内)</span></div>
                 </#if>
                 <div><span>技术特点及优势：</span><textarea disabled="" >${enterprise.advantage!''}</textarea><span>(200字以内)</span></div>
-                <div><span>市场规模行业地位：</span><textarea disabled="" >${enterprise.size!''}</textarea><span>(200字以内)</span></div>
+                <div>
+                <span class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>">市场规模行业地位：</span>
+    			<span class="pro <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>hide</#if>">预期市场前景：</span>
+                <textarea disabled="" >${enterprise.size!''}</textarea><span>(200字以内)</span></div>
 
         </dd>
         <dt class="dt02 enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>"><span>二、近三年财务状况（单位：万元）</span><br/><p>此信息将自动生成到报名表中</p></dt>

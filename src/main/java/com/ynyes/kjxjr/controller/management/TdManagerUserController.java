@@ -1,7 +1,9 @@
 package com.ynyes.kjxjr.controller.management;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +20,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ynyes.kjxjr.entity.TdActivityType;
 import com.ynyes.kjxjr.entity.TdDemand;
+import com.ynyes.kjxjr.entity.TdEnterprise;
+import com.ynyes.kjxjr.entity.TdEnterpriseType;
+import com.ynyes.kjxjr.entity.TdRegion;
 import com.ynyes.kjxjr.entity.TdUser;
 import com.ynyes.kjxjr.entity.TdUserComment;
 import com.ynyes.kjxjr.entity.TdUserConsult;
@@ -26,7 +32,10 @@ import com.ynyes.kjxjr.entity.TdUserLevel;
 import com.ynyes.kjxjr.entity.TdUserPoint;
 import com.ynyes.kjxjr.entity.TdUserReturn;
 import com.ynyes.kjxjr.service.TdDemandService;
+import com.ynyes.kjxjr.service.TdEnterpriseService;
+import com.ynyes.kjxjr.service.TdEnterpriseTypeService;
 import com.ynyes.kjxjr.service.TdManagerLogService;
+import com.ynyes.kjxjr.service.TdRegionService;
 import com.ynyes.kjxjr.service.TdUserCashRewardService;
 import com.ynyes.kjxjr.service.TdUserCollectService;
 import com.ynyes.kjxjr.service.TdUserCommentService;
@@ -84,6 +93,16 @@ public class TdManagerUserController {
     
     @Autowired
     TdManagerLogService tdManagerLogService;
+    
+    //企业 zhangji 2015年10月21日9:14:52
+    @Autowired
+    TdEnterpriseService tdEnterpriseService;
+    
+    @Autowired
+    TdRegionService tdRegionService;
+    
+    @Autowired
+    TdEnterpriseTypeService tdEnterpriseTypeService;
     
     @RequestMapping(value="/check", method = RequestMethod.POST)
     @ResponseBody
@@ -177,28 +196,38 @@ public class TdManagerUserController {
 
         Page<TdUser> userPage = null;
         
-        if (null == roleId)
-        {
-            if (null == keywords || "".equalsIgnoreCase(keywords))
-            {
-                userPage = tdUserService.findAllOrderBySortIdAsc(page, size);
-            }
-            else
-            {
-                userPage = tdUserService.searchAndOrderByIdDesc(keywords, page, size);
-            }
-        }
-        else
-        {
-            if (null == keywords || "".equalsIgnoreCase(keywords))
-            {
-                userPage = tdUserService.findByRoleIdOrderByIdDesc(roleId, page, size);
-            }
-            else
-            {
-                userPage = tdUserService.searchAndFindByRoleIdOrderByIdDesc(keywords, roleId, page, size);
-            }
-        }
+//        if (null == roleId)
+//        {
+//            if (null == keywords || "".equalsIgnoreCase(keywords))
+//            {
+//                userPage = tdUserService.findAllOrderBySortIdAsc(page, size);
+//            }
+//            else
+//            {
+//                userPage = tdUserService.searchAndOrderByIdDesc(keywords, page, size);
+//            }
+//        }
+//        else
+//        {
+//            if (null == keywords || "".equalsIgnoreCase(keywords))
+//            {
+//                userPage = tdUserService.findByRoleIdOrderByIdDesc(roleId, page, size);
+//            }
+//            else
+//            {
+//                userPage = tdUserService.searchAndFindByRoleIdOrderByIdDesc(keywords, roleId, page, size);
+//            }
+//        }
+        
+        //只查找企业
+      if (null == keywords || "".equalsIgnoreCase(keywords))
+      {
+          userPage = tdUserService.findByRoleIdOrderByIdDesc(1L, page, size);
+      }
+      else
+      {
+          userPage = tdUserService.searchAndFindByRoleIdOrderByIdDesc(keywords, 1L, page, size);
+      }
         
         map.addAttribute("user_page", userPage);
         
@@ -207,8 +236,6 @@ public class TdManagerUserController {
     
     @RequestMapping(value="/edit")
     public String orderEdit(Long id,
-                        Long roleId,
-                        String action,
                         String __VIEWSTATE,
                         ModelMap map,
                         HttpServletRequest req){
@@ -218,13 +245,138 @@ public class TdManagerUserController {
             return "redirect:/Verwalter/login";
         }
         
+        
         map.addAttribute("__VIEWSTATE", __VIEWSTATE);
-        map.addAttribute("roleId", roleId);
+      
         if (null != id)
         {
+        	
             map.addAttribute("user", tdUserService.findOne(id));
+            
+            //查看企业资料信息
+            TdEnterprise enterprise = tdEnterpriseService.findbyUsername(tdUserService.findOne(id).getUsername());
+            
+            //行业所属是多选。。。。
+            if (null != enterprise.getType())
+            {
+            	String type[] = enterprise.getType().split(",");
+            	map.addAttribute("enterpriseType", type);
+            }
+            
+            if (null != enterprise.getDataAble())
+            {
+            	String dataAble[] = enterprise.getDataAble().split(",");
+            	map.addAttribute("dataAble", dataAble);
+            }
+            
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(new Date());
+            calendar.add(Calendar.YEAR, -1);
+            Date lastyear1 = calendar.getTime();
+            map.addAttribute("lastyear1", lastyear1);
+            
+            calendar.add(Calendar.YEAR, -1);
+            Date lastyear2 = calendar.getTime();
+            map.addAttribute("lastyear2", lastyear2);
+            
+            calendar.add(Calendar.YEAR, -1);
+            Date lastyear3 = calendar.getTime();
+            map.addAttribute("lastyear3", lastyear3);
+            map.addAttribute("enterprise", enterprise);
+            
+            //活动地区
+            List<TdRegion> regionList = tdRegionService.findByIsEnableTrueOrderBySortIdAsc();
+            map.addAttribute("region_list", regionList);
+            
+            //项目归属类别
+            List<TdEnterpriseType> enterpriseTypeList = tdEnterpriseTypeService.findByIsEnableTrueOrderBySortIdAsc();
+            map.addAttribute("enterpriseType_list", enterpriseTypeList);
         }
         return "/site_mag/user_edit";
+    }
+    
+    /**
+     * 超级管理员修改企业资料
+     * @param req
+     * @param tdEnterprise
+     * @param map
+     * @return
+     */
+    @RequestMapping(value = "/info/submit", method = RequestMethod.POST)
+    @ResponseBody
+    public  Map<String, Object> enterpriseInfoSubmit(HttpServletRequest req,TdEnterprise tdEnterprise,
+    		ModelMap map) {
+        Map<String, Object> res = new HashMap<String, Object>();
+        res.put("code", 1);
+    	
+        String username = (String) req.getSession().getAttribute("manager");
+
+        if (null == username) {
+        	res.put("msg", "请先登录！");
+        	res.put("check", 0);
+            return res;
+        }
+        
+//        if (null != tdEnterprise.getStatusId()&&1 == tdEnterprise.getStatusId())
+//        {
+//        	res.put("msg", "资料已审核，如需修改请申请重新审核！");
+//        	res.put("check", 1);
+//        	return res;
+//        }
+        
+        TdUser user = tdUserService.findByUsername(tdEnterprise.getUsername());
+    
+        
+        
+        Long id = tdEnterprise.getId();
+        String number = String.format("%04d", id);
+        
+        tdEnterprise.setNumber(number);
+        tdEnterprise.setCreateTime(new Date());
+        tdEnterprise.setPassword(user.getPassword());
+       	tdEnterpriseService.save(tdEnterprise);
+       
+        res.put("code", 0);
+        return res;
+    }
+    
+    /**
+     * 超级管理员修改审核状态
+     * @param req
+     * @param map
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/enterprise/status", method = RequestMethod.POST)
+    public  Map<String, Object> userEnterpriseStatus(HttpServletRequest req, ModelMap map, Long id , Long statusId) {
+        Map<String, Object> res = new HashMap<String, Object>();
+        res.put("code", 1);
+    	
+        String username = (String) req.getSession().getAttribute("manager");
+
+        if (null == username) {
+        	res.put("msg", "请先登录！");
+        	res.put("check", 0);
+            return res;
+        }
+        
+        if (null == id)
+        {
+        	return res;
+        }
+
+
+        
+        TdEnterprise Enterprise = tdEnterpriseService.findOne(id);
+        if (null != statusId)
+        {
+	        Enterprise.setStatusId(statusId);
+	        tdEnterpriseService.save(Enterprise);
+        }
+        map.addAttribute("enterprise", Enterprise);
+
+        res.put("code", 0);
+        return res;
     }
     
     @RequestMapping(value="/save")

@@ -414,7 +414,7 @@ public class TdEnterpriseController {
     
     //查看活动
     @RequestMapping(value = "/activity/check", method = RequestMethod.GET)
-    public String activityCheck(HttpServletRequest req, ModelMap map,Long id) {
+    public String activityCheck(HttpServletRequest req, ModelMap map,Long id , Long done) {
         String username = (String) req.getSession().getAttribute("enterpriseUsername");
 
         if (null == username) {
@@ -435,9 +435,15 @@ public class TdEnterpriseController {
 //        Page<TdActivity> activityPage = tdActivityService.findAllOrderByIdDesc(page,  ClientConstant.pageSize);
         
 //        map.addAttribute("activity_page", activityPage);
+        if (null !=done)
+        {
+            map.addAttribute("done", done);
+        }
+   
         map.addAttribute("user", user);
         map.addAttribute("mark", "enterprise");
         map.addAttribute("pagetype", "check");
+        map.addAttribute("enterprise", tdEnterpriseService.findbyUsername(username));
         return "/client/activity_create";
     }
     

@@ -51,7 +51,7 @@ public class TdUser {
 	@Column
 	private String qqUserId;	
 
-	// 所属同盟店ID
+	// 所属同盟店ID  
     @Column
     private Long upperDiySiteId;
 	

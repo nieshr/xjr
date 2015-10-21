@@ -122,6 +122,20 @@ function pptSubmitCheck()
     }   
 }
 
+
+function enterpptSubmitCheck()
+{
+    var filedata = $("#enterpptfile").val();
+
+    if (filedata == "")
+    {
+        alert("请添加文件！")
+    }
+    else{
+        $("#enterpptupload").submit();
+    }   
+}
+
 function done()
 {
 	alert("上传成功！");
@@ -356,6 +370,37 @@ window.onload=done;
             </div>
 
 		</#if>
+		<#if mark??&&mark == "enterprise">
+		<dl class="active_content" style="margin-top:50px;">
+        <dd>
+		<form id="enterpptupload" enctype="multipart/form-data" action="/client/enterprise/pptupload" method="post">
+        <input type="hidden" name="id" <#if enterprise??>value="${enterprise.id?c}"</#if>></input>
+         <input type="hidden"  name="activityId" <#if activity??>value="${activity.id?c}"</#if>></input>
+        <div>
+            <span>上传PPT：</span>
+            <input name="Filedata" type="file" id="enterpptfile" value="" />
+            <input type="button" value="PPT上传" onclick="javascript:enterpptSubmitCheck();"  style="margin:-5px 0 30px 48px;
+                                                             border-radius: 8px;
+			                                                float: left;
+			                                                height: 26px;
+			                                                line-height: 26px;
+			                                                width: 170px;"></input>
+        
+        </div>
+        </form>
+        	<#if enterprise.pptUrl??>
+             <div>
+                <span style="margin-top: 10px;">已上传PPT模板：</span>
+                <ul class="active_add_file">
+                    <li>
+                        <img src="/client/images/active_file.png" />
+                        <p class="p01">${enterprise.pptUrl!''}</p>
+                        <a href="/download/data?name=${enterprise.pptUrl!''}">下载</a>
+                    </li>
+                </ul>
+            </div>
+            </#if>
+        </#if>
 	</#if>
 		
     </div>

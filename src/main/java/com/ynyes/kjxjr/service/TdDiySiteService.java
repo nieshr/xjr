@@ -178,6 +178,44 @@ public class TdDiySiteService {
             else
             {
                 user.setPassword(e.getPassword());
+                
+                Long roleId = e.getRoleId();
+                if (roleId ==2)
+                {
+                	TdRegionAdmin item = tdRegionAdminService.findbyUsername(e.getUsername());
+                	item.setPassword(e.getPassword());
+                	item.setUsermobile(e.getMobile());
+                	item.setEmail(e.getEmail());
+                	item.setInCharge(e.getInCharge());
+                	item.setStatusId(e.getStatusId());
+                	item.setTitle(e.getRegion());
+                	item.setRegion(e.getRegion());
+                	tdRegionAdminService.save(item);
+                }
+                
+                if (roleId ==3)
+                {
+                	TdExpert item = tdExpertService.findbyUsername(e.getUsername());
+                	item.setPassword(e.getPassword());
+                	item.setUsermobile(e.getMobile());
+                	item.setEmail(e.getEmail());
+                	item.setInCharge(e.getInCharge());
+                	item.setStatusId(e.getStatusId());
+                	item.setName(e.getInCharge());
+                	tdExpertService.save(item);
+}
+
+                if (roleId == 4)
+                {
+                	TdActivityAdmin item = tdActivityAdminService.findbyUsername(e.getUsername());
+                	item.setPassword(e.getPassword());
+                	item.setUsermobile(e.getMobile());
+                	item.setEmail(e.getEmail());
+                	item.setInCharge(e.getInCharge());
+                	item.setStatusId(e.getStatusId());
+                	item.setTitle(e.getInCharge());
+                	tdActivityAdminService.save(item);
+                }
             }
             
             tdUserService.save(user);

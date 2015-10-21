@@ -178,7 +178,7 @@ public class TdClientUploadController {
 
     }
 	
-	
+	//上传ppt模板
 	@RequestMapping(value = "/activity/pptupload", method = RequestMethod.POST)
     public String activityPptUpload(String action,Long id,
             @RequestParam MultipartFile Filedata, ModelMap map, HttpServletRequest req) {
@@ -224,6 +224,59 @@ public class TdClientUploadController {
         Long done = 1L;
         return "redirect:/activity/create?done="+done
         		+"&id="+id;
+
+    }	
+	
+	
+	@RequestMapping(value = "/enterprise/pptupload", method = RequestMethod.POST)
+    public String enterprisePptUpload(String action,Long id, Long activityId,
+            @RequestParam MultipartFile Filedata, ModelMap map, HttpServletRequest req) {
+		
+        String username = (String) req.getSession().getAttribute("enterpriseUsername");
+        
+        if (null == username) {
+            return "redirect:/login";
+        }
+        
+        String name = Filedata.getOriginalFilename();
+//        String contentType = Filedata.getContentType();
+
+        String ext = name.substring(name.lastIndexOf("."));
+
+        try {
+            byte[] bytes = Filedata.getBytes();
+
+            Date dt = new Date(System.currentTimeMillis());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+            String fileName = sdf.format(dt) + ext;
+
+            String uri = ImageRoot + "/" + fileName;
+
+            File file = new File(uri);
+
+            BufferedOutputStream stream = new BufferedOutputStream(
+                    new FileOutputStream(file));
+            stream.write(bytes);
+            stream.close();
+            TdEnterprise enterprise = tdEnterpriseService.findOne(id);
+            if(null == enterprise){
+            	enterprise = new TdEnterprise();
+            }
+            if (enterprise.getStatusId()==1 &&null != enterprise.getIsSelect() && enterprise.getIsSelect())
+            {
+                enterprise.setPptUrl(fileName);
+                tdEnterpriseService.save(enterprise);
+            }
+
+      
+
+        } catch (Exception e) {
+        	e.printStackTrace();
+        }
+        
+        Long done = 1L;
+        return "redirect:/enterprise/activity/check?done="+done
+        		+"&id="+activityId;
 
     }	
 }

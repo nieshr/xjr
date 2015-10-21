@@ -32,14 +32,41 @@ function done()
 window.onload=done;
 </#if>
 
+function numwarn()
+{
+	alert("推荐数已达20个！");
+}
+<#if numwarn??&&numwarn == 1>
+window.onload=numwarn;
+</#if>
+
 function warnmsg()
 {
     alert("上传成功！");
     location.reload();
 }
 <#if warnmsg??>
-window.onload=done;
+window.onload=warnmsg;
 </#if>
+
+//添加预选企业
+function addEnterprise1(id,activityId,statusId)
+{
+	var reason = $("#reason"+id).val();
+	
+  $.ajax({
+      type:"post",
+      url:"/region/addEnterprise",
+      data:{"id":id,"activityId":activityId,"statusId":statusId,"reason":reason},
+      success:function(data){
+      <#if !numfull??>
+          $("#selectedEnterprise").html(data);
+        
+          location.reload();
+            </#if>
+      }
+  });
+}
 
 </script>
 </head>
@@ -66,7 +93,6 @@ window.onload=done;
             <dt><a href="#"></a></dt>
             <dd>
                 <p>当前所在位置:</p>
-
                 <a href="#">区县管理</a>
                 <p>&gt;</p>
                 <#if statusId??&&statusId == 1>

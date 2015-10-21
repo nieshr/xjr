@@ -261,6 +261,11 @@ public class TdEnterprise {
     //可供资料
     @Column
     private String dataAble;
+    
+    //ppt
+    @Column
+    private String pptUrl;
+    
 
 	public Long getId() {
 		return id;
@@ -724,6 +729,14 @@ public class TdEnterprise {
 
 	public void setSelectActivityId(Long selectActivityId) {
 		SelectActivityId = selectActivityId;
+	}
+
+	public String getPptUrl() {
+		return pptUrl;
+	}
+
+	public void setPptUrl(String pptUrl) {
+		this.pptUrl = pptUrl;
 	}
 
 
