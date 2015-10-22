@@ -112,7 +112,7 @@
 	        				<img src="/client/images/n11.gif" alt="待审核项目"   title="待审核项目"/>
 	        			</#if>	      
 	        		</#if>	  					
-	        		${item.title!''}
+	        		<a href="/region/enterprise/check/${item.id?c!''}">${item.title!''}</a>
 	        		<td>
 	        		<td>${item.area!''}</td>
 	        		<td style="color:#529c15;"><#if item.capital??>${item.capital?c!''}</#if>万元</td>

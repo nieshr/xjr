@@ -19,7 +19,23 @@
         .page .page_next{ width: 60px;}
         .page .page_last{width: 40px;}
         .page p{  margin-left: 10px;}
+        .hide{display:none;}
     </style>
+    
+<script>
+$(document).ready(function(){
+
+    $("#form1").Validform({
+            tiptype:4
+    });
+});
+
+function showmore()
+{
+  //	$(".messagelist").css("display","block");
+	$(".messagelist").slideDown("slow");
+	}
+</script>
 <body>
 <!--main-->
 <div class="main">
@@ -51,22 +67,25 @@
             </dd>
             <dt class="crumb_back"><a  href="javascript:history.go(-1);">返回上一页</a></dt>
         </dl>
+                    <#if message_list?size gt 10>
+                        <a style=" color: #66660F;align:center;margin:10px 0 10px 45%;display:block;" href="javascript:showmore();">显示更多</a>
+                    </#if>
             <#if message_list??>
                 <#list message_list as item>
-                    <div style="float:left;width:100%;display:block;">
+                    <div class="messagelist" style="float:left;width:100%;<#if (message_list?size-item_index) gt 10>display:none;<#else>display:block;</#if>">
                     <#if item.speaker?? && item.speaker == 1>
-                        <span style="display:block;float:left;">${item.region!''}区县：</span>
-                        <span style="display:block;float:left;background:#f3f3f3;margin-bottom:12px;border-radius:20px; ">
+                        <span style="display:block;float:left;">#${item_index!''}&nbsp;${item.region!''}管理员：</span>
+                        <span style="display:block;float:left;background:#DDDDD1;margin-bottom:12px;border-radius:20px; ">
                             <h3 style="text-align:center;margin-top:5px;">${item.title!''}</h3>
                             <h4 style="text-align:right;margin-bottom:10px;right:10px;">${item.time!''}</h4>
-                            <textarea style="background:#f3f3f3;border:none;margin-bottom:18px;" rows="" cols="80">${item.content!''}</textarea>
+                            <textarea style="background:#DDDDD1;border:none;margin-bottom:18px;" rows="3" disabled="" cols="80">${item.content!''}</textarea>
                         </span>
                     <#else>
-                        <span style="display:block;float:right;">：${item.name!''}</span>
-                        <span style="display:block;float:right;background:#ccc;margin-bottom:12px;border-radius:20px;">
+                        <span style="display:block;float:right;">：${item.name!''}&nbsp;#${item_index!''}</span>
+                        <span style="display:block;float:right;background:#DDDDD1;margin-bottom:12px;border-radius:20px;">
                             <h3 style="text-align:center;margin-top:5px;">${item.title!''}</h3>
                             <h4 style="text-align:right;margin-bottom:10px;right:10px;">${item.time!''}</h4>
-                            <textarea style="background:#ccc;border:none;margin-bottom:18px;" rows="" cols="80">${item.content!''}</textarea>
+                            <textarea style="background:#DDDDD1;border:none;margin-bottom:18px;" rows="3" cols="80" disabled="">${item.content!''}</textarea>
                         </span>
                     </#if>    
                     </div>
@@ -74,19 +93,19 @@
             </#if>    
             
             <dl class="team_mes_list">
-                <form action="/enterprise/message/reply">
+                <form action="/enterprise/message/reply" id="form1">
                     <input type="hidden" name="regionAdminId" value="${message.regionAdminId?c!''}"></input>
                     <input type="hidden" name="statusE" value="1"></input>
                     <input type="hidden" name="speaker" value="0"></input>
                     <input type="hidden" name="region" value="${message.region!''}"></input>
 	                <dd style=" margin-top: 20px;">
-	                    <a>标题：</a><input name="title" type="text" value="" />
+	                    <a>标题：</a><input name="title" type="text" value=""/>
 	                </dd>
 	                <dd style=" margin-top: 20px;">
 	                    <a>内容：</a><textarea name="content" ></textarea>
 	                </dd>
 	                <dd>
-	                    <input style=" margin-top: 20px; width:60px;border: none; border-radius: 6px; background: #e67817;height: 30px; line-height: 30px; color: white; margin-left: 40px;" type="submit" value="发表" />
+	                    <input datatype="*0-120" style=" margin:20px 0 20px 0; width:60px;border: none; border-radius: 6px; background: #e67817;height: 30px; line-height: 30px; color: white; margin-left: 40px;" type="submit" value="发表" />
 	                </dd>
                 </form>
             </dl>

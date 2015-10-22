@@ -49,6 +49,19 @@ function warnmsg()
 window.onload=warnmsg;
 </#if>
 
+function recommendSubmitCheck()
+{
+    var filedata = $("#recommendfile").val();
+
+    if (filedata == "")
+    {
+        alert("请添加文件！")
+    }
+    else{
+        $("#upload").submit();
+    }   
+}
+
 //添加预选企业
 function addEnterprise1(id,activityId,statusId)
 {
@@ -218,9 +231,9 @@ function addEnterprise1(id,activityId,statusId)
 			    <dd><input onclick="location.href='/region/export/recommend?activityId=${activityId?c!''}'" class="area_save_btn01" type="button" value="生成并下载《区县推荐项目汇总表》" /></dd>
 			    <dd>
 			        <span style="font-size: 14px; margin-left: 20px;">添加文件：</span>
-			        <input id="file" style="margin-left: 20px; margin-top: 20px;" name="Filedata" type="file" value="" />
+			        <input id="recommendfile" style="margin-left: 20px; margin-top: 20px;" name="Filedata" type="file" value="" />
 			    </dd>
-			    <dd><input  style="margin-left:20px;" class="area_save_btn" type="submit" value="上传" /></dd>
+			    <dd><input onclick="javascript:recommendSubmitCheck();" style="margin-left:20px;" class="area_save_btn" type="button" value="上传" /></dd>
 			</dl>
 		  </form>	
 		</#if>	

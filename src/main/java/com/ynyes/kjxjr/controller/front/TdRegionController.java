@@ -326,7 +326,7 @@ public class TdRegionController {
     }
   
     @RequestMapping(value = "/activity/list", method = RequestMethod.GET)
-    public String ActivitytList(HttpServletRequest req, ModelMap map,Integer page) {
+    public String ActivitytList(HttpServletRequest req, ModelMap map,Integer page , Long sms) {
         String username = (String) req.getSession().getAttribute("regionUsername");
 
         if (null == username) {
@@ -337,6 +337,42 @@ public class TdRegionController {
         {
         	page = 0;
         }
+
+
+        tdCommonService.setHeader(map, req);
+
+        TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
+        TdRegionAdmin regionAdmin = tdRegionAdminService.findbyUsername(username);
+        Page<TdActivity> activityPage = tdActivityService.findByRegionAndStatusIdAndPrepareOffAfterAndPrepareOnBeforeOrderByIdDesc(regionAdmin.getTitle() , 1L ,page, ClientConstant.pageSize);
+        
+        
+        map.addAttribute("activity_page", activityPage);
+        map.addAttribute("user", user);
+
+        return "/client/region_activity_list";
+    }
+    
+    @RequestMapping(value = "/activity/finish", method = RequestMethod.GET)
+    public String Activitytfinish(HttpServletRequest req,HttpServletResponse res, ModelMap map,Integer page , Long id) {
+        String username = (String) req.getSession().getAttribute("regionUsername");
+
+        if (null == username) {
+            return "redirect:/login";
+        }
+        
+        if (null ==page)
+        {
+        	page = 0;
+        }
+
+        //短信提醒
+        List<TdActivityEnterprise> aelist = tdActivityEnterpriseService.findByActivityIdAndStatusId(id, 2L);
+        for (TdActivityEnterprise item : aelist)
+        {
+        	TdEnterprise enterprise = tdEnterpriseService.findOne(item.getEnterpriseId());
+        	smsRecommend(enterprise.getUsermobile(),item.getArea() ,item.getActivityTitle() , enterprise.getTitle() , res,req);
+        }
+        	 
 
         tdCommonService.setHeader(map, req);
 
@@ -984,6 +1020,8 @@ public String  regionRemoveEnterprise(HttpServletRequest req,Long id,Long activi
 		{
 			info = "尊敬的"+enterpriseTitle +"，您的资料审核状态已重置，您可以登录个人中心修改资料并重新提交。【科技小巨人】";
 		}
+
+		
 		System.err.println("errormsg");
 		String content = null;
 		try {
@@ -1053,6 +1091,89 @@ public String  regionRemoveEnterprise(HttpServletRequest req,Long id,Long activi
 
 		return res;
 	}
+
+	//发短信【推荐】
+		public Map<String, Object> smsRecommend(String mobile, String region, String activityTitle , String enterpriseTitle ,HttpServletResponse response, HttpServletRequest request) {
+			Map<String, Object> res = new HashMap<>();
+			res.put("status", -1);
+
+
+			HttpSession session = request.getSession();
+			String  info = "【科技小巨人】";
+
+				 info = "尊敬的"+enterpriseTitle +"，您已被选中参加"+region+activityTitle+"活动，请登录个人中心查看详情。【科技小巨人】";
+
+
+			
+			System.err.println("errormsg");
+			String content = null;
+			try {
+				content = URLEncoder.encode(info, "GB2312");
+				System.err.println(content);
+			} catch (Exception e) {
+				e.printStackTrace();
+				res.put("message", "发送失败！");
+				return res;
+			}
+			
+			String url = "http://www.ht3g.com/htWS/BatchSend.aspx?CorpID=CQDL00059&Pwd=644705&Mobile=" + mobile
+					+ "&Content=" + content;
+			StringBuffer fanhui = null;
+			try {
+				URL u = new URL(url);
+				URLConnection connection = u.openConnection();
+				HttpURLConnection httpConn = (HttpURLConnection) connection;
+				httpConn.setRequestProperty("Content-type", "text/html");
+				httpConn.setRequestProperty("Accept-Charset", "utf-8");
+				httpConn.setRequestProperty("contentType", "utf-8");
+				InputStream inputStream = null;
+				InputStreamReader inputStreamReader = null;
+				BufferedReader reader = null;
+				StringBuffer resultBuffer = new StringBuffer();
+				String tempLine = null;
+
+				if (httpConn.getResponseCode() >= 300) {
+					res.put("message", "HTTP Request is not success, Response code is " + httpConn.getResponseCode());
+					return res;
+				}
+
+				try {
+					inputStream = httpConn.getInputStream();
+					inputStreamReader = new InputStreamReader(inputStream);
+					reader = new BufferedReader(inputStreamReader);
+
+					while ((tempLine = reader.readLine()) != null) {
+						resultBuffer.append(tempLine);
+					}
+
+					fanhui = resultBuffer;
+
+				} finally {
+
+					if (reader != null) {
+						reader.close();
+					}
+
+					if (inputStreamReader != null) {
+						inputStreamReader.close();
+					}
+
+					if (inputStream != null) {
+						inputStream.close();
+					}
+
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				res.put("message", "发送失败！");
+				return res;
+			}
+			
+			res.put("status", 0);
+			res.put("message", fanhui);
+
+			return res;
+		}
 
     
 //导出
