@@ -72,19 +72,22 @@ else
 			   <dt class="crumb_back"><a  href="javascript:history.go(-1);">返回上一页</a></dt>
         </dl>
         <div class="change_inform">
-            <#if enterprise.statusId??&&enterprise.statusId == 0>
+            <#if enterprise.statusId??&&enterprise.statusId == 0 >
             <span>审核状态： 待审核</span>
             <input style="cursor:pointer;" type="button" value="审核通过 " onclick="location.href='/region/enterprise/pass/${enterprise.id?c!''}'"/>          
             <input style="cursor:pointer;" type="button" value="审核未通过 " onclick="location.href='/region/enterprise/cancel/${enterprise.id?c!''}'"/>         
             <#elseif enterprise.statusId??&& enterprise.statusId == 1>
             <span>审核状态：已通过</span>
-            <input style="cursor:pointer;" type="button" value="取消审核 " onclick="location.href='/region/enterprise/recall/${enterprise.id?c!''}'"/>
+            <input style="cursor:pointer;" type="button" value="重新审核 " onclick="location.href='/region/enterprise/recall/${enterprise.id?c!''}'"/>
+            <input style="cursor:pointer;" type="button" value="审核未通过 " onclick="location.href='/region/enterprise/cancel/${enterprise.id?c!''}'"/>       
             <#elseif enterprise.statusId??&& enterprise.statusId == 2>
             <span>审核状态： 用户申请了重新审核</span>
             <input style="cursor:pointer;" type="button" value="重新审核 " onclick="location.href='/region/enterprise/recall/${enterprise.id?c!''}'"/> 
              <#elseif  enterprise.statusId??&&enterprise.statusId == 3>
             <span>审核状态：未通过</span>
+            <input style="cursor:pointer;" type="button" value="重新审核 " onclick="location.href='/region/enterprise/recall/${enterprise.id?c!''}'"/>
             <input style="cursor:pointer;" type="button" value="审核通过 " onclick="location.href='/region/enterprise/pass/${enterprise.id?c!''}'"/> 
+            
               <#else>
              <span>用户未完善资料</span>
             </#if>
@@ -107,6 +110,8 @@ else
     			<input type="text" value="${enterprise.title!''}" disabled="" />
     			</div>
     			<div><span>编号：</span><input type="text" value="${enterprise.number!''}" disabled="" /></div>
+    			<div><span>账号：</span><input type="text" value="${enterprise.username!''}" disabled="" /></div>
+    			<div><span>注册手机：</span><input type="text" value="${enterprise.usermobile!''}" disabled="" /></div>
     			<div>
 	    			<span class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>">成立时间：</span>
     				<span class="pro <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>hide</#if>">（拟）成立时间：</span>

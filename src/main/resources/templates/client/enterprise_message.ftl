@@ -63,7 +63,7 @@
             <#if message_page??>
                 <#list message_page.content as item>
                     <tr>
-                        <td><#if item.statusId?? && item.statusId == 1>已查看<#else>未查看</#if></td>
+                        <td><#if item.statusE?? && item.statusE == 1>已查看<#else>未查看</#if></td>
                         <td style="color:#0ab2cb;">${item.title!''}</td>
                         <td style="color:#e67817;"><#if item.time??>${item.time?string("yyyy-MM-dd HH:mm:ss")!''}</#if></td>
                         <td>

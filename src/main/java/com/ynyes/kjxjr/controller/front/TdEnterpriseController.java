@@ -561,14 +561,14 @@ public class TdEnterpriseController {
         
         //处理新信息
         TdUserMessage message = tdUserMessageService.findOne(id);
-        message.setStatusId(1L);
+        message.setStatusE(1L);
         tdUserMessageService.save(message);
         
         //根据企业id和区县id查找信息页面
         List<TdUserMessage> messageList = tdUserMessageService.findByEnterpriseIdAndRegionAdminIdOrderByTimeAsc(enterprise.getId(), message.getRegionAdminId());
         for (TdUserMessage item:messageList)
         {
-        	item.setStatusId(1L);
+        	item.setStatusE(1L);
         	tdUserMessageService.save(item);
         }
         	
@@ -601,7 +601,7 @@ public class TdEnterpriseController {
         TdEnterprise enterprise = tdEnterpriseService.findbyUsername(username);
         
         //创建新信息
-        message.setStatusId(1L);
+        message.setStatusE(1L);
         message.setName(enterprise.getTitle());
         message.setEnterpriseId(enterprise.getId());
         message.setTime(new Date());
@@ -611,7 +611,7 @@ public class TdEnterpriseController {
         List<TdUserMessage> messageList = tdUserMessageService.findByEnterpriseIdAndRegionAdminIdOrderByTimeAsc(enterprise.getId(), regionAdminId);
         for (TdUserMessage item:messageList)
         {
-        	item.setStatusId(1L);
+        	item.setStatusE(1L);
         	tdUserMessageService.save(item);
         }
         	

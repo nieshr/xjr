@@ -53,9 +53,13 @@ public class TdUserMessage {
 	@Column
 	private Long speaker;
 	
-    // 状态：【0：未查看；1：已查看】
+    // 区县方状态：【0：未查看；1：已查看】
     @Column
-    private Long statusId;
+    private Long statusR;
+    
+    //企业方 状态：【0：未查看；1：已查看】
+    @Column
+    private Long statusE;
 
 	public Long getId() {
 		return id;
@@ -114,12 +118,20 @@ public class TdUserMessage {
 		this.speaker = speaker;
 	}
 
-	public Long getStatusId() {
-		return statusId;
+	public Long getStatusR() {
+		return statusR;
 	}
 
-	public void setStatusId(Long statusId) {
-		this.statusId = statusId;
+	public void setStatusR(Long statusR) {
+		this.statusR = statusR;
+	}
+
+	public Long getStatusE() {
+		return statusE;
+	}
+
+	public void setStatusE(Long statusE) {
+		this.statusE = statusE;
 	}
 
 	public Long getEnterpriseId() {

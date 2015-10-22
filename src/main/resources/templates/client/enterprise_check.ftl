@@ -47,11 +47,11 @@
         <div class="change_inform">
             <#if  enterprise.statusId?? && enterprise.statusId == 0>
                 <span>审核状态：待审核</span>
-                <input style="cursor:pointer;" type="button" value="申请修改资料" onclick="location.href='/enterprise/recall'"/>
+               <#-- <input style="cursor:pointer;" type="button" value="申请修改资料" onclick="location.href='/enterprise/recall'"/>-->
             </#if>  
 	        <#if  enterprise.statusId?? && enterprise.statusId == 1>
 	    		<span>审核状态：已通过</span> 
-	    		 <input style="cursor:pointer;" type="button" value="申请修改资料" onclick="location.href='/enterprise/recall'"/>
+	    		<#-- <input style="cursor:pointer;" type="button" value="申请修改资料" onclick="location.href='/enterprise/recall'"/> -->
 	    	</#if>
 	        <#if   enterprise.statusId?? && enterprise.statusId == 2>
 	    		<span>审核状态：已申请重新审核，等待区县管理员处理</span>

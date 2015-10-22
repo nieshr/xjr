@@ -290,6 +290,17 @@ public class TdActivityController {
         if (null != activity)
         {
         	tdActivityService.delete(id);
+        	//删除活动相关的表
+        	List<TdActivityEnterprise> activityEnterprise = tdActivityEnterpriseService.findByActivityId(id);
+        	tdActivityEnterpriseService.delete(activityEnterprise);
+        	
+        	List<TdActivityExpert> activityExpert = tdActivityExpertService.findByActivityId(id);
+        	tdActivityExpertService.delete(activityExpert);
+        	
+        	List<TdEnterpriseGrade> enterpriseGrade = tdEnterpriseGradeService.findByActivityIdOrderByIdAsc(id);
+        	tdEnterpriseGradeService.delete(enterpriseGrade);
+        	
+        	
         }
 
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
@@ -361,40 +372,29 @@ public class TdActivityController {
     
     
     //完成项目选择
-    @RequestMapping(value = "/expert/finish", method = RequestMethod.GET)
-    public String enxpertFinish(HttpServletRequest req, ModelMap map,Long id) {
+    @RequestMapping(value = "/expert/finish")
+    @ResponseBody
+    public Map<String, Object>enxpertFinish(HttpServletRequest req, ModelMap map,Long activityId) {
+    	 Map<String, Object> res = new HashMap<String, Object>();
+    	    res.put("code", 1);
+    	
         String username = (String) req.getSession().getAttribute("activityUsername");
 
         if (null == username) {
-            return "redirect:/login";
+        	res.put("msg", "请先登录！");
+            return res;
         }
 
         tdCommonService.setHeader(map, req);
-        List<TdActivityExpert> sum = tdActivityExpertService.findByActivityId(id);
+        List<TdActivityExpert> sum = tdActivityExpertService.findByActivityId(activityId);
         //限制数量为7个
         if (sum.size() < 7)
         {
-        	map.addAttribute("errormsg", "专家数量为7个！");
-
-           int  	page = 0;
-
-            //搜索
-            Page<TdExpert>ExpertPage = null;
-
-    			ExpertPage = tdExpertService.findAllOrderBySortIdAsc(page, ClientConstant.pageSize);
-
-            
-            TdActivity activity = tdActivityService.findByStatusId(0L);
-            Long activityId = activity.getId();
-           	map.addAttribute("activity", activity);
-           	map.addAttribute("activityId", activityId);
-         	map.addAttribute("statusId", 0);
-         	map.addAttribute("Expert_page", ExpertPage);
-         	map.addAttribute("selected_expert_list", tdActivityExpertService.findByActivityId(activityId));
-            return "/client/activity_selectExpert";
+        	res.put("msg", "请选出7个专家！");
+        	return res;	
         }
         
-        TdActivity activity = tdActivityService.findOne(id);
+        TdActivity activity = tdActivityService.findOne(activityId);
         if(0L ==activity.getStatusId())
         {
         	activity.setStatusEx(1L);
@@ -409,9 +409,8 @@ public class TdActivityController {
 //        Page<TdActivity> activityPage = tdActivityService.findAllOrderByIdDesc(page,  ClientConstant.pageSize);
         
 //        map.addAttribute("activity_page", activityPage);
-        map.addAttribute("user", user);
-
-        return "/client/activity_create";
+        res.put("code", 0);
+        return res;
     }
     /*
      * 创建活动:选项目
@@ -828,22 +827,24 @@ public class TdActivityController {
     }
 
     @RequestMapping(value = "/addExpert")
-    public String  addExpert(HttpServletRequest req,Long id,Long activityId,
+    @ResponseBody
+    public Map<String , Object>  addExpert(HttpServletRequest req,Long id,Long activityId,
     		ModelMap map) {
+    	Map <String , Object> res = new HashMap<String , Object>();
+    	res.put("code",1);
         String username = (String) req.getSession().getAttribute("activityUsername");
 
         if (null == username) {
-            return "redirect:/login";
+        	res.put("msg", "请先登录！");
+        	return res;
         }
         
         List<TdActivityExpert> expertList = tdActivityExpertService.findByActivityId(activityId);
         if (expertList.size() > 6)
         {
-        	map.addAttribute("errormsg", "最大添加人数为7人！！");
-        	
-            map.addAttribute("activityId",activityId);
-            map.addAttribute("selected_expert_list", expertList);
-        	return "/client/activity_selected_expert";
+        	res.put("msg", "最大添加人数为7人！！");
+        	return res;
+          
         }
         
       
@@ -904,16 +905,22 @@ public class TdActivityController {
         
         map.addAttribute("activityId",activityId);
         map.addAttribute("selected_expert_list", tdActivityExpertService.findByActivityId(activityId));
-        return "/client/activity_selected_expert";
+        res.put("code", 0);
+        return res;
     }
 
     @RequestMapping(value = "/removeExpert")
-    public String  removeExpert(HttpServletRequest req,Long id,Long activityId,
+    @ResponseBody
+    public Map<String ,Object>  removeExpert(HttpServletRequest req,Long id,Long activityId,
     		ModelMap map) {
+    	Map <String , Object> res = new HashMap<String , Object>();
+    	 res.put("code", 1);
+    	 
         String username = (String) req.getSession().getAttribute("activityUsername");
 
         if (null == username) {
-            return "redirect:/login";
+         	res.put("msg", "请先登录！");
+         	return res;
         }
       
         if(null != id)
@@ -925,7 +932,7 @@ public class TdActivityController {
         	}
         	
         	TdExpert expert = tdExpertService.findOne(ActivityExpert.getExpertId());
-        	expert.setIsSelect(false);
+        	expert.setSelectActivityId(null);
         	tdExpertService.save(expert);
         	
         	//同时删除评分表数据
@@ -937,15 +944,12 @@ public class TdActivityController {
         			tdEnterpriseGradeService.delete(item.getId());
         		}
         	}
-        
-        	
        
         }
-      
-        
         map.addAttribute("activityId",activityId);
         map.addAttribute("selected_expert_list", tdActivityExpertService.findByActivityId(activityId));
-        return "/client/activity_selected_expert";
+        res.put("code", 0);
+        return res;
     }
   /////////////////////////////////////选择专家  end 、、、/////////////////////////
     /*

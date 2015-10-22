@@ -83,12 +83,38 @@ function removeExpert(id,activityId)
         url:"/activity/removeExpert",
         data:{"id":id,"activityId":activityId},
         success:function(data){
-            $("#selectedExpert").html(data);
-            location.reload();
+        	if(data.code == 0)
+        		{
+        			location.reload();
+        		}
+        	else{
+        		alert(data.msg);
+        	}
         }
     });
 }
 
+//添加预选企业
+function candidateAddEnterprise(id,activityId)
+{
+	
+  $.ajax({
+      type:"post",
+      url:"/region/candidateAddEnterprise",
+      data:{"id":id,"activityId":activityId},
+      success:function(data){
+    	  if (data.code == 0)
+    		  {
+    		  	alert("sucess");
+    		  	location.reload();
+    		  }
+    	  else
+    		  {
+    		  	alert(date.msg);
+    		  }
+      }
+  });
+}
 
 
 //添加预选企业

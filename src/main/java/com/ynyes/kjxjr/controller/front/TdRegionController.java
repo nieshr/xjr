@@ -59,6 +59,7 @@ import com.ynyes.kjxjr.service.TdCommonService;
 import com.ynyes.kjxjr.service.TdCouponService;
 import com.ynyes.kjxjr.service.TdEnterpriseGradeService;
 import com.ynyes.kjxjr.service.TdEnterpriseService;
+import com.ynyes.kjxjr.service.TdEnterpriseTypeService;
 import com.ynyes.kjxjr.service.TdRegionAdminService;
 import com.ynyes.kjxjr.service.TdRegionService;
 import com.ynyes.kjxjr.service.TdUserMessageService;
@@ -104,6 +105,9 @@ public class TdRegionController {
 	
 	@Autowired
 	TdUserMessageService tdUserMessageService;
+	
+	@Autowired
+	TdEnterpriseTypeService tdEnterpriseTypeService;
 
     @RequestMapping(value = "/enterprise/list", method = RequestMethod.GET)
     public String EnterpriseList(HttpServletRequest req, ModelMap map,Integer page) {
@@ -202,13 +206,13 @@ public class TdRegionController {
 
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
         TdEnterprise Enterprise = tdEnterpriseService.findOne(id);
-        if (Enterprise.getStatusId()==0||Enterprise.getStatusId()==3)
+        if (Enterprise.getStatusId()==0||Enterprise.getStatusId()==3 ||Enterprise.getStatusId() == 4)
         {
             Enterprise.setStatusId(1L);
             tdEnterpriseService.save(Enterprise);
             
             //短信提醒
-            smsPass(Enterprise.getUsermobile(),res,req);
+            smsPass(Enterprise.getUsermobile(), 1L , Enterprise.getTitle() , res,req);
             
             //站内信
             TdRegionAdmin admin = tdRegionAdminService.findbyUsername(username);
@@ -217,7 +221,7 @@ public class TdRegionController {
             message.setRegionAdminId(admin.getId());
             message.setContent("【审核】恭喜您通过"+admin.getRegion()+"地区的审核，请登录个人中心查看详情！");
             message.setTitle("通过审核");
-            message.setStatusId(0L);
+            message.setStatusE(0L);
             message.setSpeaker(1L);
             message.setTime(new Date());
             tdUserMessageService.save(message);
@@ -230,86 +234,12 @@ public class TdRegionController {
         return "redirect:/region/enterprise/list";
     }
     
-    //发短信【过审核】
-	public Map<String, Object> smsPass(String mobile, HttpServletResponse response, HttpServletRequest request) {
-		Map<String, Object> res = new HashMap<>();
-		res.put("status", -1);
-
-
-		HttpSession session = request.getSession();
-
-		String info = "您已通过区县审核，查看详情请登录个人中心。【科技小巨人】";
-		System.err.println("errormsg");
-		String content = null;
-		try {
-			content = URLEncoder.encode(info, "GB2312");
-			System.err.println(content);
-		} catch (Exception e) {
-			e.printStackTrace();
-			res.put("message", "发送失败！");
-			return res;
-		}
-		String url = "http://www.ht3g.com/htWS/BatchSend.aspx?CorpID=CQDL00059&Pwd=644705&Mobile=" + mobile
-				+ "&Content=" + content;
-		StringBuffer fanhui = null;
-		try {
-			URL u = new URL(url);
-			URLConnection connection = u.openConnection();
-			HttpURLConnection httpConn = (HttpURLConnection) connection;
-			httpConn.setRequestProperty("Content-type", "text/html");
-			httpConn.setRequestProperty("Accept-Charset", "utf-8");
-			httpConn.setRequestProperty("contentType", "utf-8");
-			InputStream inputStream = null;
-			InputStreamReader inputStreamReader = null;
-			BufferedReader reader = null;
-			StringBuffer resultBuffer = new StringBuffer();
-			String tempLine = null;
-
-			if (httpConn.getResponseCode() >= 300) {
-				res.put("message", "HTTP Request is not success, Response code is " + httpConn.getResponseCode());
-				return res;
-			}
-
-			try {
-				inputStream = httpConn.getInputStream();
-				inputStreamReader = new InputStreamReader(inputStream);
-				reader = new BufferedReader(inputStreamReader);
-
-				while ((tempLine = reader.readLine()) != null) {
-					resultBuffer.append(tempLine);
-				}
-
-				fanhui = resultBuffer;
-
-			} finally {
-
-				if (reader != null) {
-					reader.close();
-				}
-
-				if (inputStreamReader != null) {
-					inputStreamReader.close();
-				}
-
-				if (inputStream != null) {
-					inputStream.close();
-				}
-
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			res.put("message", "发送失败！");
-			return res;
-		}
-		res.put("status", 0);
-		res.put("message", fanhui);
-		return res;
-	}
+ 
 
     
-    //取消审核
+    //未通过审核
     @RequestMapping(value = "/enterprise/cancel/{id}", method = RequestMethod.GET)
-    public String userEnterpriseCancel(HttpServletRequest req, ModelMap map,@PathVariable Long id) {
+    public String userEnterpriseCancel(HttpServletRequest req, HttpServletResponse res , ModelMap map,@PathVariable Long id) {
         String username = (String) req.getSession().getAttribute("regionUsername");
 
         if (null == username) {
@@ -325,10 +255,25 @@ public class TdRegionController {
 
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
         TdEnterprise Enterprise = tdEnterpriseService.findOne(id);
-        if (Enterprise.getStatusId()==1 ||Enterprise.getStatusId()==0)
+        if (Enterprise.getStatusId()==1 ||Enterprise.getStatusId()==0||Enterprise.getStatusId()==4)
         {
 	        Enterprise.setStatusId(3L);
 	        tdEnterpriseService.save(Enterprise);
+	        
+            //短信提醒
+            smsPass(Enterprise.getUsermobile(),3L , Enterprise.getTitle() , res,req);
+	        
+            //站内信
+            TdRegionAdmin admin = tdRegionAdminService.findbyUsername(username);
+            TdUserMessage message = new TdUserMessage();
+            message.setEnterpriseId(id);
+            message.setRegionAdminId(admin.getId());
+            message.setContent("【审核】您未通过"+admin.getRegion()+"地区的审核，请登录个人中心重新填写资料申请！");
+            message.setTitle("未通过审核");
+            message.setStatusE(0L);
+            message.setSpeaker(1L);
+            message.setTime(new Date());
+            tdUserMessageService.save(message);
         }
 
         map.addAttribute("enterprise", Enterprise);
@@ -339,7 +284,7 @@ public class TdRegionController {
     
     //重新审核
     @RequestMapping(value = "/enterprise/recall/{id}", method = RequestMethod.GET)
-    public String userEnterpriseRecall(HttpServletRequest req, ModelMap map,@PathVariable Long id) {
+    public String userEnterpriseRecall(HttpServletRequest req, HttpServletResponse res ,ModelMap map,@PathVariable Long id) {
         String username = (String) req.getSession().getAttribute("regionUsername");
 
         if (null == username) {
@@ -355,11 +300,25 @@ public class TdRegionController {
 
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
         TdEnterprise Enterprise = tdEnterpriseService.findOne(id);
-        if (Enterprise.getStatusId()==1 ||Enterprise.getStatusId()==2)
-        {
+
 	        Enterprise.setStatusId(4L);
 	        tdEnterpriseService.save(Enterprise);
-        }
+	        
+            //短信提醒
+            smsPass(Enterprise.getUsermobile(),4L , Enterprise.getTitle() , res,req);
+	        
+            //站内信
+            TdRegionAdmin admin = tdRegionAdminService.findbyUsername(username);
+            TdUserMessage message = new TdUserMessage();
+            message.setEnterpriseId(id);
+            message.setRegionAdminId(admin.getId());
+            message.setContent("【审核】您在"+admin.getRegion()+"地区的审核已撤销，请登录个人中心修改资料并重新提交！");
+            message.setTitle("重新审核");
+            message.setStatusE(0L);
+            message.setSpeaker(1L);
+            message.setTime(new Date());
+            tdUserMessageService.save(message);
+
         map.addAttribute("enterprise", Enterprise);
         map.addAttribute("user", user);
 
@@ -392,6 +351,95 @@ public class TdRegionController {
         return "/client/region_activity_list";
     }
     
+    /**
+     * 站内信息详情
+     * @author Zhangji
+     * @param req
+     * @param map
+     * @return
+     */
+    @RequestMapping(value = "/message", method = RequestMethod.GET)
+    public String MessageDetail(HttpServletRequest req, ModelMap map , Long id) {
+        String username = (String) req.getSession().getAttribute("regionUsername");
+
+        if (null == username) {
+            return "redirect:/login";
+        }
+
+        tdCommonService.setHeader(map, req);
+
+        TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
+        TdEnterprise enterprise = tdEnterpriseService.findOne(id);
+        
+        
+        //根据企业id和区县id查找信息页面
+        List<TdUserMessage> messageList = tdUserMessageService.findByEnterpriseIdAndRegionAdminIdOrderByTimeAsc(id, tdRegionAdminService.findbyUsername(username).getId());
+        for (TdUserMessage item:messageList)
+        {
+        	item.setStatusR(1L);
+        	tdUserMessageService.save(item);
+        }
+        	
+        map.addAttribute("regionAdmin", tdRegionAdminService.findbyUsername(username));
+        map.addAttribute("message_list", messageList);
+        map.addAttribute("enterprise", enterprise);
+        map.addAttribute("user", user);
+
+        
+        return "/client/region_message";
+    }
+    /**
+     * 企业站内信息回复
+     * @param req
+     * @param map
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/message/reply", method = RequestMethod.GET)
+    public String MessageReply(HttpServletRequest req, ModelMap map , Long regionAdminId , TdUserMessage message) {
+        String username = (String) req.getSession().getAttribute("enterpriseUsername");
+
+        if (null == username) {
+            return "redirect:/login";
+        }
+
+        tdCommonService.setHeader(map, req);
+
+        TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
+        TdEnterprise enterprise = tdEnterpriseService.findbyUsername(username);
+        
+        //创建新信息
+        message.setStatusR(1L);
+        message.setName(enterprise.getTitle());
+        message.setEnterpriseId(enterprise.getId());
+        message.setTime(new Date());
+        tdUserMessageService.save(message);
+        
+        //根据企业id和区县id查找信息页面
+        List<TdUserMessage> messageList = tdUserMessageService.findByEnterpriseIdAndRegionAdminIdOrderByTimeAsc(enterprise.getId(), regionAdminId);
+        for (TdUserMessage item:messageList)
+        {
+        	item.setStatusR(1L);
+        	tdUserMessageService.save(item);
+        }
+        	
+        map.addAttribute("message_list", messageList);
+        map.addAttribute("message", message);
+        map.addAttribute("enterprise", enterprise);
+        map.addAttribute("user", user);
+
+        
+        return "redirect:/enterprise/message/detail?id="+message.getId();
+    }
+    
+    /**
+     * 查看活动详情
+     * @author Zhangji
+     * @param req
+     * @param map
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "/activity/detail", method = RequestMethod.GET)
     public String ActivitytDetail(HttpServletRequest req, ModelMap map,Long id) {
         String username = (String) req.getSession().getAttribute("regionUsername");
@@ -587,7 +635,259 @@ public String  regionAddEnterprise(HttpServletRequest req,Long id,Long activityI
     map.addAttribute("selected_enterprise_list",  tdActivityEnterpriseService.findByActivityIdAndStatusId(activityId,statusId));
     return "/client/region_selected_enterprise";
 }
+/*
+ * 预选选项目页面-筛选
+ * 
+ */
+@RequestMapping(value = "/candidateEnterprise/{activityId}")
+public String  selectEnterprise(HttpServletRequest req,
+		ModelMap map,
+		@PathVariable Long activityId,
+		Integer page,
+		String keywords,
+		String area,
+		String type,
+		Long formType) {
+    String username = (String) req.getSession().getAttribute("regionUsername");
 
+    if (null == username) {
+        return "redirect:/login";
+    }
+    
+    if (null == page)
+    {
+    	page = 0;
+    }
+    //搜索
+    Page<TdEnterprise>enterprisePage = null;
+    if (null != keywords && !keywords.isEmpty())
+    {
+    	if(null != area && !area.isEmpty())
+    	{
+    		if (null != type && !type.isEmpty())
+    		{
+    			if(null != formType)
+    			{
+    				//123
+    				enterprisePage = tdEnterpriseService.findByAreaAndTypeAndFormTypeAndStatusIdAndSearch(area, type, formType, 1L, keywords, page, ClientConstant.pageSize);
+    			}
+    			else
+    			{
+    				//12
+    				enterprisePage = tdEnterpriseService.findByAreaAndTypeAndStatusIdAndSearch(area, type,  1L, keywords, page, ClientConstant.pageSize);
+    			}
+    		}
+        	else
+        	{
+        		if(null != formType)
+        		{
+        			//13
+        			enterprisePage = tdEnterpriseService.findByAreaAndFormTypeAndStatusIdAndSearch(area,formType,  1L, keywords, page, ClientConstant.pageSize);
+        		}
+        		else
+        		{
+        			//1
+        			enterprisePage = tdEnterpriseService.findByAreaAndStatusIdAndSearch(area,  1L, keywords, page, ClientConstant.pageSize);
+        		}
+        	}
+    	}
+    	else
+    	{
+    		if(null != type && !type.isEmpty())
+        	{
+        		if(null != formType)
+        		{
+        			//23
+        			enterprisePage = tdEnterpriseService.findByTypeAndFormTypeAndStatusIdAndSearch(type,formType  ,1L, keywords, page, ClientConstant.pageSize);
+        		}
+        		else
+        		{
+        			//2
+        			enterprisePage = tdEnterpriseService.findByTypeAndStatusIdAndSearch(type,  1L,  keywords, page, ClientConstant.pageSize);
+        		}
+        	}
+    		else
+    		{
+    			if (null != formType )
+    			{
+    				//3
+    				enterprisePage = tdEnterpriseService.findByFormTypeAndStatusIdAndSearch(formType,   1L, keywords, page, ClientConstant.pageSize);
+    			}
+    			else
+    			{
+    				//0
+    				enterprisePage = tdEnterpriseService.findByStatusIdAndSearch( 1L, keywords,page, ClientConstant.pageSize);
+    			}
+    		}
+    	}
+    }
+    else
+    {
+    	if(null != area && !area.isEmpty())
+    	{
+    		if (null != type && !type.isEmpty())
+    		{
+    			if(null != formType)
+    			{
+    				//123
+    				enterprisePage = tdEnterpriseService.findByAreaAndTypeAndFormTypeAndStatusId(area, type, formType,   1L, page, ClientConstant.pageSize);
+    			}
+    			else
+    			{
+    				//12
+    				enterprisePage = tdEnterpriseService.findByAreaAndTypeAndStatusId(area, type, 1L,  page, ClientConstant.pageSize);
+    			}
+    		}
+        	else
+        	{
+        		if(null != formType)
+        		{
+        			//13
+        			enterprisePage = tdEnterpriseService.findByAreaAndFormTypeAndStatusId(area,formType,  1L, page, ClientConstant.pageSize);
+        		}
+        		else
+        		{
+        			//1
+        			enterprisePage = tdEnterpriseService.findByAreaAndStatusId(area, 1L,   page,  ClientConstant.pageSize);
+        		}
+        	}
+    	}
+    	else
+    	{
+    		if(null != type && !type.isEmpty())
+        	{
+        		if(null != formType)
+        		{
+        			//23
+        			enterprisePage = tdEnterpriseService.findByTypeAndFormTypeAndStatusId(type,formType,  1L, page, ClientConstant.pageSize);
+        		}
+        		else
+        		{
+        			//2
+        			enterprisePage = tdEnterpriseService.findByTypeAndStatusId(type,  1L,  page, ClientConstant.pageSize);
+        		}
+        	}
+    		else
+    		{
+    			if (null != formType )
+    			{
+    				//3
+    				enterprisePage = tdEnterpriseService.findByFormTypeAndStatusId(formType,  1L,  page, ClientConstant.pageSize);
+    			}
+    			else
+    			{
+    				//0
+    				enterprisePage = tdEnterpriseService.findByStatusId( 1L, page, ClientConstant.pageSize);
+    			}
+    		}
+    	}
+    }    	
+  
+   
+    	
+  
+    
+    TdActivity activity = tdActivityService.findOne(activityId);
+    map.addAttribute("keywords", keywords);
+    map.addAttribute("area", area);
+    map.addAttribute("type", type);
+    map.addAttribute("formType", formType);
+   	map.addAttribute("activity", activity);
+   	map.addAttribute("activityId", activityId);
+ 	map.addAttribute("statusId", 0);
+ 	map.addAttribute("enterprise_page", enterprisePage);
+ 	map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityId(activityId));
+ 	map.addAttribute("region_list", tdRegionService.findByIsEnableTrueOrderBySortIdAsc());
+ 	map.addAttribute("enterpriseType_list", tdEnterpriseTypeService.findByIsEnableTrueOrderBySortIdAsc());
+    return "/client/region_candidateEnterprise";
+}
+
+
+/**
+ * 预选企业
+ * @param req
+ * @param id
+ * @param activityId
+ * @param map
+ * @return
+ */
+@RequestMapping(value = "/candidateAddEnterprise")
+@ResponseBody
+public Map<String, Object>  candidateEnterprise(HttpServletRequest req,Long id,Long activityId,
+		ModelMap map) {
+    Map<String, Object> res = new HashMap<String, Object>();
+    res.put("code", 1);
+	
+    String username = (String) req.getSession().getAttribute("regionUsername");
+
+    if (null == username) {
+    	res.put("msg", "请先登录！");
+        return res;
+    }
+  
+    if(null != id&&null !=activityId)
+    {
+    	TdEnterprise enterprise = tdEnterpriseService.findOne(id);
+    	if (null != enterprise)
+    	{
+    		enterprise.setIsSelect(true);
+    		enterprise.setSelectActivityId(activityId);
+    		tdEnterpriseService.save(enterprise);
+    	}
+    	
+    	TdActivity activity = tdActivityService.findOne(activityId);
+    	
+    	TdActivityEnterprise activityEnterprise = tdActivityEnterpriseService.findByActivityIdAndEnterpriseId(activityId,id);
+    	if (null == activityEnterprise)
+    	{
+    		TdActivityEnterprise newEnter =new  TdActivityEnterprise();
+    		newEnter.setEnterpriseId(id);
+    		newEnter.setCreateTime(new Date());
+    		newEnter.setEnterpriseTitle(enterprise.getTitle());
+    		newEnter.setActivityId(activity.getId());
+    		newEnter.setActivityType(activity.getActivityType());
+    		newEnter.setDate(activity.getDate());
+    		newEnter.setPrepareOn(activity.getPrepareOn());
+    		newEnter.setPrepareOff(activity.getPrepareOff());
+    		newEnter.setActivityTitle(activity.getTitle());
+    		newEnter.setArea(enterprise.getArea());
+    		newEnter.setType(enterprise.getType());
+    		newEnter.setNumber(enterprise.getNumber());
+    		newEnter.setEnterpriseTitle(enterprise.getTitle());
+    		newEnter.setContact(enterprise.getContact());
+    		newEnter.setMobile(enterprise.getMobile());
+    		newEnter.setQQ(enterprise.getChat());
+    		newEnter.setProfile(enterprise.getProfile());
+    		newEnter.setStatusId(0L);
+    		tdActivityEnterpriseService.save(newEnter);
+    	}
+    	else
+    	{
+    		activityEnterprise.setCreateTime(new Date());
+    		activityEnterprise.setEnterpriseTitle(enterprise.getTitle());
+    		activityEnterprise.setActivityType(activity.getActivityType());
+    		activityEnterprise.setDate(activity.getDate());
+    		activityEnterprise.setPrepareOn(activity.getPrepareOn());
+    		activityEnterprise.setPrepareOff(activity.getPrepareOff());
+    		activityEnterprise.setActivityTitle(activity.getTitle());
+    		activityEnterprise.setArea(enterprise.getArea());
+    		activityEnterprise.setType(enterprise.getType());
+    		activityEnterprise.setNumber(enterprise.getNumber());
+    		activityEnterprise.setEnterpriseTitle(enterprise.getTitle());
+    		activityEnterprise.setContact(enterprise.getContact());
+    		activityEnterprise.setMobile(enterprise.getMobile());
+    		activityEnterprise.setQQ(enterprise.getChat());
+    		activityEnterprise.setProfile(enterprise.getProfile());
+    		tdActivityEnterpriseService.save(activityEnterprise);
+    	}
+    	
+    }
+    
+    map.addAttribute("activityId",activityId);
+    map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityId(activityId));
+    res.put("code", 0);
+    return res;
+}
 
 @RequestMapping(value = "/removeEnterprise")
 public String  regionRemoveEnterprise(HttpServletRequest req,Long id,Long activityId,Long statusId,
@@ -663,6 +963,97 @@ public String  regionRemoveEnterprise(HttpServletRequest req,Long id,Long activi
 			
 			    return "redirect:/region/activity/list";
 		}
+
+//发短信【审核】
+	public Map<String, Object> smsPass(String mobile, Long  statusId,  String enterpriseTitle ,HttpServletResponse response, HttpServletRequest request) {
+		Map<String, Object> res = new HashMap<>();
+		res.put("status", -1);
+
+
+		HttpSession session = request.getSession();
+		String  info = "【科技小巨人】";
+		if (statusId == 1)
+		{
+			 info = "尊敬的"+enterpriseTitle +"，您已通过区县审核，请登录个人中心查看详情。【科技小巨人】";
+		}
+		else if (statusId == 3)
+		{
+			info = "尊敬的"+enterpriseTitle +"，您未通过区县的审核，您可以登录个人中心重新填写资料申请。【科技小巨人】";
+		}
+		else if (statusId == 4)
+		{
+			info = "尊敬的"+enterpriseTitle +"，您的资料审核状态已重置，您可以登录个人中心修改资料并重新提交。【科技小巨人】";
+		}
+		System.err.println("errormsg");
+		String content = null;
+		try {
+			content = URLEncoder.encode(info, "GB2312");
+			System.err.println(content);
+		} catch (Exception e) {
+			e.printStackTrace();
+			res.put("message", "发送失败！");
+			return res;
+		}
+		
+		String url = "http://www.ht3g.com/htWS/BatchSend.aspx?CorpID=CQDL00059&Pwd=644705&Mobile=" + mobile
+				+ "&Content=" + content;
+		StringBuffer fanhui = null;
+		try {
+			URL u = new URL(url);
+			URLConnection connection = u.openConnection();
+			HttpURLConnection httpConn = (HttpURLConnection) connection;
+			httpConn.setRequestProperty("Content-type", "text/html");
+			httpConn.setRequestProperty("Accept-Charset", "utf-8");
+			httpConn.setRequestProperty("contentType", "utf-8");
+			InputStream inputStream = null;
+			InputStreamReader inputStreamReader = null;
+			BufferedReader reader = null;
+			StringBuffer resultBuffer = new StringBuffer();
+			String tempLine = null;
+
+			if (httpConn.getResponseCode() >= 300) {
+				res.put("message", "HTTP Request is not success, Response code is " + httpConn.getResponseCode());
+				return res;
+			}
+
+			try {
+				inputStream = httpConn.getInputStream();
+				inputStreamReader = new InputStreamReader(inputStream);
+				reader = new BufferedReader(inputStreamReader);
+
+				while ((tempLine = reader.readLine()) != null) {
+					resultBuffer.append(tempLine);
+				}
+
+				fanhui = resultBuffer;
+
+			} finally {
+
+				if (reader != null) {
+					reader.close();
+				}
+
+				if (inputStreamReader != null) {
+					inputStreamReader.close();
+				}
+
+				if (inputStream != null) {
+					inputStream.close();
+				}
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			res.put("message", "发送失败！");
+			return res;
+		}
+		
+		res.put("status", 0);
+		res.put("message", fanhui);
+
+		return res;
+	}
+
     
 //导出
 // 区县科委推荐项目汇总表

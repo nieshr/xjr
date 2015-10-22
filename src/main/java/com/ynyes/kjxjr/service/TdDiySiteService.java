@@ -178,11 +178,15 @@ public class TdDiySiteService {
             else
             {
                 user.setPassword(e.getPassword());
+                user.setMobile(e.getMobile());
+                user.setEmail(e.getEmail());
+                user.setUsername(e.getUsername());
                 
                 Long roleId = e.getRoleId();
                 if (roleId ==2)
                 {
                 	TdRegionAdmin item = tdRegionAdminService.findbyUsername(e.getUsername());
+                	item.setUsername(e.getUsername());
                 	item.setPassword(e.getPassword());
                 	item.setUsermobile(e.getMobile());
                 	item.setEmail(e.getEmail());
@@ -196,6 +200,7 @@ public class TdDiySiteService {
                 if (roleId ==3)
                 {
                 	TdExpert item = tdExpertService.findbyUsername(e.getUsername());
+                	item.setUsername(e.getUsername());
                 	item.setPassword(e.getPassword());
                 	item.setUsermobile(e.getMobile());
                 	item.setEmail(e.getEmail());
@@ -208,6 +213,7 @@ public class TdDiySiteService {
                 if (roleId == 4)
                 {
                 	TdActivityAdmin item = tdActivityAdminService.findbyUsername(e.getUsername());
+                	item.setUsername(e.getUsername());
                 	item.setPassword(e.getPassword());
                 	item.setUsermobile(e.getMobile());
                 	item.setEmail(e.getEmail());

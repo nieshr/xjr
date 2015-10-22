@@ -363,6 +363,7 @@ window.onload=done;
         
         </div>
         </form>
+        <#if activity??&&activity.pptUrl??>
              <div>
                 <span style="margin-top: 10px;">已上传PPT模板：</span>
                 <ul class="active_add_file">
@@ -373,6 +374,7 @@ window.onload=done;
                     </li>
                 </ul>
             </div>
+        </#if>
 
 		</#if>
 		<#if mark??&&mark == "enterprise">

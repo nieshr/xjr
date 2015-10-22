@@ -48,15 +48,15 @@ public class TdUserMessageService {
     }
     
 	
-    public List<TdUserMessage> findByStatusId(Long statusId){
-    	return repository.findByStatusId(statusId);
+    public List<TdUserMessage> findBystatusE(Long statusE){
+    	return repository.findByStatusE(statusE);
     }
 
-    public Page<TdUserMessage> findByStatusIdOrderByIdDesc(long statusId, int page, int size)
+    public Page<TdUserMessage> findBystatusEOrderByIdDesc(long statusE, int page, int size)
     {
         PageRequest pageRequest = new PageRequest(page, size);
         
-        return repository.findByStatusIdOrderByIdDesc(statusId, pageRequest);
+        return repository.findByStatusEOrderByIdDesc(statusE, pageRequest);
     }
     
     /**
@@ -96,13 +96,13 @@ public class TdUserMessageService {
         return repository.findAll(pageRequest);
     }
 	
-	//筛选statusId为1L的
-    public List<TdUserMessage> findByStatusIdAndIsShowable()
+	//筛选statusE为1L的
+    public List<TdUserMessage> findByStatusEAndIsShowable()
     {
 
        
         
-        return repository.findByStatusIdOrderByIdDesc(1L);
+        return repository.findByStatusEOrderByIdDesc(1L);
     }
     
 

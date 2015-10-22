@@ -129,15 +129,17 @@ function addEnterprise1(id,activityId,statusId)
                             <td style="color:#0ab2cb;">${item.area!''}</td>
                             <td style="color:#e67817;">${item.type!''}</td>
                             <#if statusId??&&statusId == 2>
-                            <td><input style="width: 98%;height: 30px;" type="text" id="reason${item.id?c!''}"/></td>
-                            </#if>
-                            <td>
-	                            <#if item.statusId == 2>
-	                           	 	<p>已添加</p>
-	                            <#else>
-	                          	  	<a href="javascript:addEnterprise1(${item.id?c!''},${activityId?c!''},${statusId!''});">添加推荐</a>
-	                        	</#if>
-                        	</td>
+	                            <td><input style="width: 98%;height: 30px;" type="text" id="reason${item.id?c!''}"/></td>
+	                            <td>
+		                            <#if item.statusId == 2>
+		                           	 	<p>已添加</p>
+		                            <#else>
+		                          	  	<a href="javascript:addEnterprise1(${item.id?c!''},${activityId?c!''},${statusId!''});">添加</a>
+		                        	</#if>
+	                        	</td>
+	                        <#elseif  statusId??&&statusId == 1>
+	                        	
+                        	</#if>
                         </tr>
                     </#list>
                 </#if>     
@@ -154,7 +156,11 @@ function addEnterprise1(id,activityId,statusId)
                  <#if PAGE_DATA.number+1 == 1>
                       <a disabled="disabled"  class="page_next">上一页</a>               
                  <#else>
-                     <a href="/region/recommendEnterprise?page=${PAGE_DATA.number-1}&id=${activityId?c!''}"  class="page_next">上一页</a>                
+                 	  <#if statusId??&&statusId == 2>
+                     	  <a href="/region/recommendEnterprise?page=${PAGE_DATA.number-1}&id=${activityId?c!''}"  class="page_next">上一页</a>     
+                      <#elseif statusId??&&statusId == 1>    
+                           <a href="/region/chooseEnterprise?page=${PAGE_DATA.number-1}&id=${activityId?c!''}"  class="page_next">上一页</a>   
+                       </#if>
                  </#if>
                  
                  <#assign continueEnter=false>
@@ -165,7 +171,11 @@ function addEnterprise1(id,activityId,statusId)
                              <#if page == PAGE_DATA.number+1>
                                  <a  class ="current" style="color:#e67817;">${page }</a>
                              <#else>
-                                 <a href="/region/recommendEnterprise?page=${page-1}&id=${activityId?c!''}">${page}</a> 
+                             	 <#if statusId??&&statusId == 2>
+                                 	<a href="/region/recommendEnterprise?page=${page-1}&id=${activityId?c!''}">${page}</a> 
+                                 <#elseif statusId??&&statusId == 1>	
+                                 	<a href="/region/chooseEnterprise?page=${page-1}&id=${activityId?c!''}">${page}</a>
+                                 </#if> 
                              </#if>
                              <#assign continueEnter=false>
                          <#else>
@@ -181,7 +191,11 @@ function addEnterprise1(id,activityId,statusId)
                  <#if PAGE_DATA.number+1 == PAGE_DATA.totalPages || PAGE_DATA.totalPages==0>
                      <a disabled="disabled" class="page_last">下一页</a> 
                  <#else>
-                     <a href="/region/recommendEnterprise?page=${PAGE_DATA.number+1}&id=${activityId?c!''}" class="page_last">下一页</a> 
+                 	 <#if statusId??&&statusId == 2>
+                     	<a href="/region/recommendEnterprise?page=${PAGE_DATA.number+1}&id=${activityId?c!''}" class="page_last">下一页</a> 
+                     <#elseif statusId??&&statusId == 1>
+                     	<a href="/region/chooseEnterprise?page=${PAGE_DATA.number+1}&id=${activityId?c!''}" class="page_last">下一页</a> 
+                     </#if>
                  </#if>
              </#if>
             <p>共${PAGE_DATA.totalPages!'1'}页  ${PAGE_DATA.totalElements!'1'}条</p>

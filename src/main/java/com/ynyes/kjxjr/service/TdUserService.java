@@ -66,6 +66,9 @@ public class TdUserService {
     @Autowired
     TdActivityAdminService tdActivityAdminService;
     
+    @Autowired
+    TdEnterpriseService tdEnterpriseService;
+    
     /**
      * 删除用户数据
      * @param username
@@ -252,6 +255,10 @@ public class TdUserService {
     {
         if (null != e)
         {
+        	if (e.getRoleId() == 1)
+        	{
+        		tdEnterpriseService.delete(tdEnterpriseService.findbyUsername(e.getUsername()));
+        	}
         	if (e.getRoleId() == 2 )
         	{
         		tdRegionAdminService.delete(tdRegionAdminService.findbyUsername(e.getUsername()));

@@ -101,15 +101,15 @@
 	        		<td>
 	        		<#if item.formType??&&item.formType == 0>
 	        			<#if item.statusId ?? && item.statusId == 1>
-	        				<img src="/client/images/n0.png"  title="已过审企业"/>
-	        			<#else>
-	        				<img src="/client/images/n00.gif"  title="未过审企业"/>
+	        				<img src="/client/images/n0.png" alt="已过审企业"  title="已过审企业"/>
+	        			<#elseif item.statusId ?? && item.statusId == 0 >
+	        				<img src="/client/images/n00.gif"   alt="待审核企业"  title="待审核企业"/>
 	        			</#if>
 	        		<#elseif item.formType??&&item.formType == 1>
 	        			<#if item.statusId ?? && item.statusId == 1>
-	        				<img src="/client/images/n1.png"  title="已过审项目"/>
-	        			<#else>
-	        				<img src="/client/images/n11.gif"  title="未过审项目"/>
+	        				<img src="/client/images/n1.png" alt="已过审项目"   title="已过审项目"/>
+	        			<#elseif item.statusId ?? && item.statusId == 0 >
+	        				<img src="/client/images/n11.gif" alt="待审核项目"   title="待审核项目"/>
 	        			</#if>	      
 	        		</#if>	  					
 	        		${item.title!''}
@@ -119,7 +119,7 @@
 	        		<td style="color:#e67817;">${item.representative!''}</td>
 	        		<td>
 	        		     <a href="/region/enterprise/check/${item.id?c!''}">详情</a>
-	        		     | <a href="#">站内信</a>
+	        		     | <a href="/region/message?enterpriseId=${item.id?c!''}">站内信</a>
 	        		</td>
 	        	</tr>
         	</#list>

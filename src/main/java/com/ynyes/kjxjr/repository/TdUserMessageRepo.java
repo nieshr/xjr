@@ -18,11 +18,11 @@ public interface TdUserMessageRepo extends
            PagingAndSortingRepository<TdUserMessage, Long>,
            JpaSpecificationExecutor<TdUserMessage> 
 {
-   List<TdUserMessage> findByStatusId(Long statusId);
-   List<TdUserMessage> findByStatusIdOrderByIdDesc(Long statusId);
+   List<TdUserMessage> findByStatusE(Long statusE);
+   List<TdUserMessage> findByStatusEOrderByIdDesc(Long statusE);
    List<TdUserMessage> findByEnterpriseIdAndRegionAdminIdOrderByTimeAsc(Long enterpriseId,Long regionAdminId);
    
-   Page<TdUserMessage> findByStatusIdOrderByIdDesc(Long statusId, Pageable page);
+   Page<TdUserMessage> findByStatusEOrderByIdDesc(Long statusE, Pageable page);
    Page<TdUserMessage> findByEnterpriseIdAndRegionAdminIdOrderByTimeDesc(Long enterpriseId,Long regionAdminId , Pageable page);
    Page<TdUserMessage> findByEnterpriseIdAndSpeakerOrderByTimeDesc(Long enterpriseId,Long speaker , Pageable page);
 } 

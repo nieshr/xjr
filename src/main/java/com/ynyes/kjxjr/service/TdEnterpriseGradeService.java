@@ -39,6 +39,18 @@ public class TdEnterpriseGradeService {
 			repository.delete(id);
 		}
 	}
+	
+	/**
+	 * 删整个list
+	 * @author Zhangji
+	 */
+	public void delete(List<TdEnterpriseGrade> entities)
+	{
+		if (null != entities)
+		{
+			repository.delete(entities);
+		}
+	}
 
 	/**
 	 * 查询一个
@@ -60,6 +72,8 @@ public class TdEnterpriseGradeService {
 	public List<TdEnterpriseGrade> findAll() {
 		return (List<TdEnterpriseGrade>) repository.findAll();
 	}
+	
+
 
 	/**
 	 * 根据专家ID和活动ID查找评分表

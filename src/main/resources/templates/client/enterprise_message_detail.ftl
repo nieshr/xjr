@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
-<title>导出表格</title>
+<title>站内信息</title>
 <link rel="shortcut icon" href="/client/images/icon.ico" />
 <link href="/client/css/base.css" rel="stylesheet" type="text/css" />
 <link href="/client/css/team.css" rel="stylesheet" type="text/css" />
@@ -56,15 +56,15 @@
                     <div style="float:left;width:100%;display:block;">
                     <#if item.speaker?? && item.speaker == 1>
                         <span style="display:block;float:left;">${item.region!''}区县：</span>
-                        <span style="display:block;float:left;background:#ccc;margin-bottom:12px;border-radius:20px; ">
-                            <h3 style="text-align:center;">${item.title!''}</h3>
+                        <span style="display:block;float:left;background:#f3f3f3;margin-bottom:12px;border-radius:20px; ">
+                            <h3 style="text-align:center;margin-top:5px;">${item.title!''}</h3>
                             <h4 style="text-align:right;margin-bottom:10px;right:10px;">${item.time!''}</h4>
-                            <textarea style="background:#ccc;border:none;margin-bottom:18px;" rows="" cols="80">${item.content!''}</textarea>
+                            <textarea style="background:#f3f3f3;border:none;margin-bottom:18px;" rows="" cols="80">${item.content!''}</textarea>
                         </span>
                     <#else>
                         <span style="display:block;float:right;">：${item.name!''}</span>
                         <span style="display:block;float:right;background:#ccc;margin-bottom:12px;border-radius:20px;">
-                            <h3 style="text-align:center;">${item.title!''}</h3>
+                            <h3 style="text-align:center;margin-top:5px;">${item.title!''}</h3>
                             <h4 style="text-align:right;margin-bottom:10px;right:10px;">${item.time!''}</h4>
                             <textarea style="background:#ccc;border:none;margin-bottom:18px;" rows="" cols="80">${item.content!''}</textarea>
                         </span>
@@ -76,7 +76,7 @@
             <dl class="team_mes_list">
                 <form action="/enterprise/message/reply">
                     <input type="hidden" name="regionAdminId" value="${message.regionAdminId?c!''}"></input>
-                    <input type="hidden" name="statusId" value="1"></input>
+                    <input type="hidden" name="statusE" value="1"></input>
                     <input type="hidden" name="speaker" value="0"></input>
                     <input type="hidden" name="region" value="${message.region!''}"></input>
 	                <dd style=" margin-top: 20px;">

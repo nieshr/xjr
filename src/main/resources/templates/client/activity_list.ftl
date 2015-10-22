@@ -71,7 +71,7 @@ function deledeConfirm() {
 		        		<th width="30%">操作</th>
 		        	</tr>
 		        		<td>${unfinish.title!''}</td>
-		        		<td style="color:#0ab2cb;">${unfinish.address!''}</td>
+		        		<td style="color:#0ab2cb;">${unfinish.region!''}</td>
 		        		<td style="color:#e67817;">${unfinish.activityType!''}</td>
 		        		<td><a href="/activity/edit?id=${unfinish.id?c!''}">管理</a>丨<a href="/activity/check?id=${unfinish.id?c!''}">查看</a>丨<a  href="/activity/delete?id=${unfinish.id?c!''}">删除</a></td>
 			        </tr>

@@ -63,6 +63,10 @@ $(function () {
      });  
    });  
  
+ 	function addcheck()
+ 	{
+ 		$(this).attr("ajaxUrl","/reg/check/username");
+ 	}
 
 </script>
 </head>
@@ -138,7 +142,7 @@ $(function () {
   <dl>
     <dt>登录名</dt>
     <dd>
-        <input name="username" type="text" value="<#if diy_site??>${diy_site.username!""}</#if>" class="input normal" <#if !diy_site??>ajaxurl="/Verwalter/order/setting/diysite/check<#if diy_site??>?id=${diy_site.id}</#if>"</#if> datatype="*6-100" sucmsg=" "> 
+        <input name="username" type="text"<#if diy_site??>value="${diy_site.username!""}"  </#if>class="input normal" ajaxurl="/Verwalter/order/setting/diysite/check/username<#if diy_site??>?id=${diy_site.id}</#if>" datatype="*6-100" sucmsg=" "> 
         <span class="Validform_checktip">*登录账号</span>
     </dd>
   </dl>
@@ -159,7 +163,7 @@ $(function () {
   <dl>
     <dt>手机号</dt>
     <dd>
-        <input name="mobile" type="text" value="<#if diy_site??>${diy_site.mobile!""}</#if>" class="input normal" datatype="m" sucmsg=" "> 
+        <input name="mobile" type="text" <#if diy_site??>value="${diy_site.mobile!""}" <#else>value=""  </#if> class="input normal" ajaxurl="/Verwalter/order/setting/diysite/check/mobile<#if diy_site??>?id=${diy_site.id}</#if>"  datatype="m" sucmsg=" "> 
         <span class="Validform_checktip">*用于接收通知短信</span>
     </dd>
   </dl>

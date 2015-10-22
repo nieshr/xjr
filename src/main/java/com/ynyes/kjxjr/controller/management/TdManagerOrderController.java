@@ -265,51 +265,95 @@ public class TdManagerOrderController {
     }
     
     // 角色用户添加编辑
-    @RequestMapping(value = "/setting/diysite/check", method = RequestMethod.POST)
+    @RequestMapping(value = "/setting/diysite/check/{type}", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, String> validateForm(String param, Long id) {
+    public Map<String, String> validateForm(@PathVariable String type ,String param, Long id) {
         Map<String, String> res = new HashMap<String, String>();
 
         res.put("status", "n");
 
-        if (null == param || param.isEmpty()) {
-            res.put("info", "该字段不能为空");
-            return res;
+        if (type.equalsIgnoreCase("username")) 
+        {
+	        if (null == param || param.isEmpty()) {
+	            res.put("info", "该字段不能为空");
+	            return res;
+	        }
+	        
+	        TdUser tdUser = tdUserService.findByUsername(param);
+	        
+	        if (null == id) // 新增
+	        {
+	            if (null != tdUser) {
+	                res.put("info", "该登录名已被注册");
+	                return res;
+	            }
+	        } 
+	        else // 修改，查找除当前ID的所有
+	        {
+	            TdDiySite dSite = tdDiySiteService.findOne(id);
+	            
+	            if (null == dSite)
+	            {
+	                if (null != tdUser) {
+	                    res.put("info", "该登录名已被使用");
+	                    return res;
+	                }
+	            }
+	            else
+	            {
+	                if ( null != tdUser && !tdUser.getUsername().equals(dSite.getUsername())  ) 
+	                {
+	                    res.put("info", "该登录名已被使用");
+	                    return res;
+	                }
+	            }
+	        }
         }
         
-        TdUser tdUser = tdUserService.findByUsername(param);
         
-        if (null == id) // 新增
+        if (type.equalsIgnoreCase("mobile")) 
         {
-            if (null != tdUser) {
-                res.put("info", "该登录名不能使用");
-                return res;
-            }
-        } 
-        else // 修改，查找除当前ID的所有
-        {
-            TdDiySite dSite = tdDiySiteService.findOne(id);
-            
-            if (null == dSite)
-            {
-                if (null != tdUser && tdUser.getRoleId() == 2L) {
-                    res.put("info", "该登录名不能使用");
-                    return res;
-                }
-            }
-            else
-            {
-                if (null != tdUser && tdUser.getUsername() != dSite.getUsername() && tdUser.getRoleId()!=2L) {
-                    res.put("info", "该登录名不能使用");
-                    return res;
-                }
-            }
-        }
+	        if (null == param || param.isEmpty()) {
+	            res.put("info", "该字段不能为空");
+	            return res;
+	        }
+	        
+	        TdUser tdUser = tdUserService.findByMobile(param);
+	        
+	        if (null == id) // 新增
+	        {
+	            if (null != tdUser) {
+	                res.put("info", "该手机号不能使用");
+	                return res;
+	            }
+	        } 
+	        else // 修改，查找除当前ID的所有
+	        {
+	            TdDiySite dSite = tdDiySiteService.findOne(id);
+	            
+	            if (null == dSite)
+	            {
+	                if (null != tdUser) {
+	                    res.put("info", "该手机号不能使用");
+	                    return res;
+	                }
+	            }
+	            else
+	            {
+	                if (null != tdUser && !tdUser.getMobile().equals(dSite.getMobile())  ) {
+	                    res.put("info", "该手机号已被使用");
+	                    return res;
+	                }
+	            }
+	        }
 
+        }
         res.put("status", "y");
 
         return res;
     }
+    
+    
     
     @RequestMapping(value="/edit")
     public String orderEdit(Long id,

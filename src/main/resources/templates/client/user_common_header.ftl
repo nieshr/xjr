@@ -2,24 +2,24 @@
     <a href="/"><div class="logo" style="background-image:url('/client/images/logo01.png')"></div></a>
     <form>
     <div class="search">
-    	<input type="text" value=" &nbsp;璇疯緭鍏ユ悳绱㈠唴瀹�" />
+    	<input type="text" value=" &nbsp;璇疯緭鍏ユ悳绱㈠唴瀹�" />
         <input style="width:40px; background:url(/client/images/search.png) no-repeat center;" type="submit" value="" />
     </div>
     </form>
     <dl class="porfile">
-    	<dt><a>帮助</a></dt>
-        <dt><a href="/enterprise/message">站内信息</a></dt>
+    	<dt><a>甯姪</a></dt>
+        <dt><a href="/enterprise/message">绔欏唴淇℃伅</a></dt>
         <dd>
         	<div><img src="/client/images/porfile_img.png" /></div>
         	<span>${username!''}</span>
-            <p>管理</p>
+            <p>绠＄悊</p>
             <span id="nav_guide"></span>
         </dd>
         <ul id="porfile_subnav">
         	<#--<li><a href="#">甯愬彿璧勬枡</a></li>-->
             <#--<li><a href="#">澶村儚璁剧疆</a></li>-->
-            <li><a href="/user/password">修改密码</a></li>
-            <li><a href="/logout">退出</a></li>     
+            <li><a href="/user/password">淇敼瀵嗙爜</a></li>
+            <li><a href="/logout">娉ㄩ攢</a></li>     
         </ul>
     </dl>
 </div>

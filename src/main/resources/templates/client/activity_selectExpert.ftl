@@ -37,12 +37,34 @@ function addExpert(id,activityId)
         url:"/activity/addExpert",
         data:{"id":id,"activityId":activityId},
         success:function(data){
-            $("#selectedExpert").html(data);
-            <#if errormsg??>
-            	alert("${errormsg!''}")
-			<#else>
+			if (data.code == 0)
+			{
 				location.reload();
-			</#if>
+			}
+			else
+			{
+				alert(data.msg);
+			}
+           
+        }
+    });
+}
+
+function expertFinish(activityId)
+{
+	    $.ajax({
+        type:"post",
+        url:"/activity/expert/finish",
+        data:{"activityId":activityId},
+        success:function(data){
+			if (data.code == 0)
+			{
+				location.href='/activity/create?id='+activityId;
+			}
+			else
+			{
+				alert(data.msg);
+			}
            
         }
     });
@@ -173,7 +195,7 @@ function addExpert(id,activityId)
         <div class="area_add_btn">
 		<!--	<input style="cursor:pointer;"  type="button" value="批量取消预选" />-->
 		</div>
-		<input style="cursor:pointer;" class="area_save_btn" style="margin-left:45%;"type="button" onclick="location.href='/activity/expert/finish?id=${activityId?c!''}'" value="保存" />
+		<input style="cursor:pointer;" class="area_save_btn" style="margin-left:45%;"type="button" onclick="javasctipt:expertFinish(${activityId?c!''});" value="保存" />
     </div> 
     </div>
 </div><!--content_end-->

@@ -288,6 +288,16 @@ public class TdEnterpriseService {
     	return (repository.findByUsername(username)); 	
     }
     
+    /**
+     * 手机登陆使用
+     * @param usermobile
+     * @return
+     */
+    public TdEnterprise findbyUsermobile(String usermobile){
+		
+    	return (repository.findByUsermobile(usermobile)); 	
+    }
+    
     public TdEnterprise findByNumber(String number){
     	if(null == number){
     		return null;
