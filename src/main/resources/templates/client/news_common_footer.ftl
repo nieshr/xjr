@@ -12,8 +12,21 @@
 	</ul>
 </div>
 <div class="footlist-body">
-	<h5>联系电话：${site.telephone!''}</h5>
-	<h5>传真：${site.fax!''}</h5>
+	<h5>联系电话：
+	<#list site.telephone?split(",") as item>
+		<#if item !="">
+			${item!''} &nbsp;
+		</#if>
+	</#list>		
+	</h5>
+	<h5>邮箱：${site.adminEmail!''}</h5>
+	<h5>传真：
+	<#list site.fax?split(",") as item>
+		<#if item !="">	
+			${item!''} &nbsp;
+		</#if>
+	</#list>					
+	</h5>
 	<h5>地址：${site.address!''}</h5>
 	<h5>${site.copyright!''}</h5> 
 	<div class="footercode"> 

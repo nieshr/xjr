@@ -46,6 +46,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ibm.icu.text.DateFormat;
 import com.ynyes.kjxjr.entity.TdActivity;
 import com.ynyes.kjxjr.entity.TdActivityEnterprise;
+import com.ynyes.kjxjr.entity.TdActivityExpert;
 import com.ynyes.kjxjr.entity.TdEnterprise;
 import com.ynyes.kjxjr.entity.TdEnterpriseGrade;
 import com.ynyes.kjxjr.entity.TdRegion;
@@ -365,12 +366,25 @@ public class TdRegionController {
         	page = 0;
         }
 
-        //短信提醒
+       
         List<TdActivityEnterprise> aelist = tdActivityEnterpriseService.findByActivityIdAndStatusId(id, 2L);
         for (TdActivityEnterprise item : aelist)
         {
+        	 //短信提醒
         	TdEnterprise enterprise = tdEnterpriseService.findOne(item.getEnterpriseId());
         	smsRecommend(enterprise.getUsermobile(),item.getArea() ,item.getActivityTitle() , enterprise.getTitle() , res,req);
+        	
+            //站内信
+            TdRegionAdmin admin = tdRegionAdminService.findbyUsername(username);
+            TdUserMessage message = new TdUserMessage();
+            message.setEnterpriseId(id);
+            message.setRegionAdminId(admin.getId());
+            message.setContent("【"+item.getActivityType()+"】您被邀请参加"+admin.getRegion()+item.getActivityTitle()+"活动，请登录个人中心查看详情！");
+            message.setTitle("活动邀请");
+            message.setStatusE(0L);
+            message.setSpeaker(1L);
+            message.setTime(new Date());
+            tdUserMessageService.save(message);
         }
         	 
 
@@ -395,7 +409,7 @@ public class TdRegionController {
      * @return
      */
     @RequestMapping(value = "/message", method = RequestMethod.GET)
-    public String MessageDetail(HttpServletRequest req, ModelMap map , Long id) {
+    public String MessageDetail(HttpServletRequest req, ModelMap map , Long enterpriseId) {
         String username = (String) req.getSession().getAttribute("regionUsername");
 
         if (null == username) {
@@ -405,11 +419,11 @@ public class TdRegionController {
         tdCommonService.setHeader(map, req);
 
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
-        TdEnterprise enterprise = tdEnterpriseService.findOne(id);
+        TdEnterprise enterprise = tdEnterpriseService.findOne(enterpriseId);
         
         
         //根据企业id和区县id查找信息页面
-        List<TdUserMessage> messageList = tdUserMessageService.findByEnterpriseIdAndRegionAdminIdOrderByTimeAsc(id, tdRegionAdminService.findbyUsername(username).getId());
+        List<TdUserMessage> messageList = tdUserMessageService.findByEnterpriseIdAndRegionAdminIdOrderByTimeAsc(enterpriseId, tdRegionAdminService.findbyUsername(username).getId());
         for (TdUserMessage item:messageList)
         {
         	item.setStatusR(1L);
@@ -431,9 +445,9 @@ public class TdRegionController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/message/reply", method = RequestMethod.GET)
-    public String MessageReply(HttpServletRequest req, ModelMap map , Long regionAdminId , TdUserMessage message) {
-        String username = (String) req.getSession().getAttribute("enterpriseUsername");
+    @RequestMapping(value = "/message/reply")
+    public String MessageReply(HttpServletRequest req, ModelMap map , Long enterpriseId , TdUserMessage message) {
+        String username = (String) req.getSession().getAttribute("regionUsername");
 
         if (null == username) {
             return "redirect:/login";
@@ -442,17 +456,20 @@ public class TdRegionController {
         tdCommonService.setHeader(map, req);
 
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
-        TdEnterprise enterprise = tdEnterpriseService.findbyUsername(username);
+        TdRegionAdmin admin = tdRegionAdminService.findbyUsername(username);
+        TdEnterprise enterprise = tdEnterpriseService.findOne(enterpriseId);
         
         //创建新信息
-        message.setStatusR(1L);
+        message.setStatusE(0L);
         message.setName(enterprise.getTitle());
-        message.setEnterpriseId(enterprise.getId());
+        message.setEnterpriseId(enterpriseId);
+        message.setRegion(admin.getRegion());
+        message.setRegionAdminId(admin.getId());
         message.setTime(new Date());
         tdUserMessageService.save(message);
         
         //根据企业id和区县id查找信息页面
-        List<TdUserMessage> messageList = tdUserMessageService.findByEnterpriseIdAndRegionAdminIdOrderByTimeAsc(enterprise.getId(), regionAdminId);
+        List<TdUserMessage> messageList = tdUserMessageService.findByEnterpriseIdAndRegionAdminIdOrderByTimeAsc(enterpriseId, admin.getId());
         for (TdUserMessage item:messageList)
         {
         	item.setStatusR(1L);
@@ -628,6 +645,49 @@ public String  regionAddEnterprise(HttpServletRequest req,Long id,Long activityI
     	TdEnterprise enterprise = tdEnterpriseService.findOne(activityenterprise.getEnterpriseId());
     	TdActivity activity = tdActivityService.findOne(activityId);
     	
+    	//由于创建活动的选专家步骤就生成了一个不带企业字段空评分表，这边选推荐时需要重新刷新一下。不然万一那边又改动了，中间表就对不上了。
+    	 List<TdActivityEnterprise> aenlist = tdActivityEnterpriseService.findByActivityIdAndStatusId(activityId,statusId);
+    	 List<TdActivityExpert> aexlist = tdActivityExpertService.findByActivityId(activityId);
+    	for (TdActivityExpert aex:aexlist)
+    	{
+    		List<TdEnterpriseGrade> gradelist = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderByNumberAsc(aex.getExpertId(), activityId);
+    		//清空评分表的企业数据
+    		for (TdEnterpriseGrade grade:gradelist)
+    		{
+    			grade.setEnterpriseId(null);
+    			grade.setNumber(null);
+    			tdEnterpriseGradeService.save(grade);
+    		}
+    	}	
+    	if (null != aenlist)
+    	{
+    		for (TdActivityEnterprise ae : aenlist)
+    		{
+    			//重新填数据
+            	List<TdEnterpriseGrade> enterpriseGradeList = tdEnterpriseGradeService.findByActivityIdOrderByIdAsc(activityId);
+            	int i = 0;
+           
+            	for (TdEnterpriseGrade grade : enterpriseGradeList)
+            	{
+            		//每隔20个写入一次
+            		if (  i % 20== 0)
+            			if(null == grade.getNumber())
+            		{
+            			grade.setNumber(ae.getNumber());
+            			grade.setEnterpriseId(ae.getEnterpriseId());
+            			grade.setActivityId(activityId);
+            			tdEnterpriseGradeService.save(grade);
+            		}
+            		else if (null != grade.getNumber())
+            		{
+            			i = i-1;
+            		}
+            		i = i+1; 
+            	}
+    		}
+    	}
+    		
+    	
     	
     	if (null != activityenterprise)
     	{
@@ -647,7 +707,7 @@ public String  regionAddEnterprise(HttpServletRequest req,Long id,Long activityI
 	       
 	        	for (TdEnterpriseGrade grade : enterpriseGradeList)
 	        	{
-	        		
+	        		//每隔20个写入一次
 	        		if (  i % 20== 0)
 	        			if(null == grade.getNumber())
 	        		{

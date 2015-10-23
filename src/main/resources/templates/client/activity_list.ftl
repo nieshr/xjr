@@ -27,7 +27,7 @@ function unfinish()
 window.onload=unfinish;
 </#if>
 
-function deledeConfirm() {
+function deleteConfirm() {
     if (!confirm("确认删除活动？")) {
         window.event.returnValue = false;
     }
@@ -73,7 +73,7 @@ function deledeConfirm() {
 		        		<td>${unfinish.title!''}</td>
 		        		<td style="color:#0ab2cb;">${unfinish.region!''}</td>
 		        		<td style="color:#e67817;">${unfinish.activityType!''}</td>
-		        		<td><a href="/activity/edit?id=${unfinish.id?c!''}">管理</a>丨<a href="/activity/check?id=${unfinish.id?c!''}">查看</a>丨<a  href="/activity/delete?id=${unfinish.id?c!''}">删除</a></td>
+		        		<td><a href="/activity/edit?id=${unfinish.id?c!''}">管理</a>丨<a href="/activity/check?id=${unfinish.id?c!''}">查看</a>丨<a onclick="javascript:deleteConfirm();"  href="/activity/delete?id=${unfinish.id?c!''}">删除</a></td>
 			        </tr>
 		        </table>
 	        </div>
@@ -99,7 +99,7 @@ function deledeConfirm() {
 		        		<td>${item.title!''}</td>
 		        		<td style="color:#0ab2cb;">${item.address!''}</td>
 		        		<td style="color:#e67817;">${item.activityType!''}</td>
-		        		<td><a href="/activity/edit?id=${item.id?c!''}">管理</a>丨<a href="/activity/check?id=${item.id?c!''}">查看</a>丨<a  onclick="javascript:deledeConfirm();" href="/activity/delete?id=${item.id?c!''}">删除</a></td>
+		        		<td><a href="/activity/edit?id=${item.id?c!''}">管理</a>丨<a href="/activity/check?id=${item.id?c!''}">查看</a>丨<a  onclick="javascript:deleteConfirm();" href="/activity/delete?id=${item.id?c!''}">删除</a></td>
 		        	</tr>
 	        	</#list>
 	        </#if>	   

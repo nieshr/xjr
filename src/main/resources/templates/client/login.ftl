@@ -105,13 +105,13 @@ function saveUserInfo() {
 <div class="head">
 	<div class="logo">
     	<!--LOGO 尺寸：173*240-->
-    	<a href="/"><img src="/client/images/index_logo.png" alt="科技小巨人LOGO" /></a>
+    	<a href="/"><img src="/client/images/index_logo.png" alt="科技小巨人LOGO" width="118px"; height="163px";  /></a>
         <p>科技小巨人&nbsp;&nbsp;&nbsp;&nbsp;开创新未来</p>
     </div>
     <ul>
     	<li class="sel whitebutton" id="present"><a href="/login">登&nbsp;&nbsp;录</a><i></i></li>
         <li class="whitebutton"><a href="/reg">注&nbsp;&nbsp;册</a><i></i></li>
-        <li class="whitebutton"><a href="#">浏&nbsp;&nbsp;览</a><i></i></li>
+        <li class="whitebutton"><a href="/">浏&nbsp;&nbsp;览</a><i></i></li>
     </ul>
 </div>
 <!--头部END-->

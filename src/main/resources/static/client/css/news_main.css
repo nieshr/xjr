@@ -143,6 +143,58 @@ a:hover { color: #c36; text-decoration: underline; }
 /*找回密码end*/
 
 
+/*右侧浮动导航*/
+.floatbox {
+	z-index:89;
+	position:fixed;
+	width:42px;
+	top:40%;
+	right:5%;
+	_display:none;
+}
+.floatbox a {
+	display:block;
+	width:42px;
+	height:42px;
+	margin-bottom:2px;
+	filter:alpha(Opacity=50);
+	-moz-opacity:0.5;
+	opacity: 0.5;
+}
+.floatbox .qr {
+	position:absolute;
+	right:45px;
+	top:132px;
+	display:none;
+}
+
+.floatbox .phone_num {
+	position:absolute;
+	right:45px;
+	top:176px;
+	display:none;
+	width:140px;
+    height:42px;
+    line-height:42px;
+    background:#fff;
+    color:#cc0000;
+    font-size:16px;
+	font-family:"SimHei";
+	font-weight:700;
+	text-align:center;
+}
+.floatbox a:hover {
+	filter:alpha(Opacity=100);
+	-moz-opacity:1;
+	opacity:1;
+}
+.floatbox a:hover span {
+	display:block;
+}
+@media screen and (max-width:1150px) {
+	.floatbox { display:none;}
+}
+/*This chapter end*/
 
 
 

@@ -3,11 +3,16 @@
 <head>
 	<meta charset="UTF-8">
 	<title>联系我们</title>
+	<link rel="shortcut icon" href="/client/images/icon.ico" />
 	<link rel="stylesheet" href="/client/css/news_base.css">
 	<link rel="stylesheet" href="/client/css/news_main.css">
 	<script src="/client/js/l_main.js"></script>
 	<script src="/client/js/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript" src="/client/js/Validform_v5.3.2_min.js"></script>		
+	<style type="text/css">
+		#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+	</style>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=2CRkBB0Hh3ux5pookBULG1Px"></script>
 <script>
 $(document).ready(function(){
 	$("#form1").Validform({
@@ -44,11 +49,37 @@ function show2()
 	$(".contactussmall2").removeClass("hide");
 }
 </script>
+<script type="text/javascript">
+$(document).ready(function(){
+        loadMap(${site.longitude!'102.718072'}, ${site.latitude!'25.048034'});
+});
+
+function loadMap(x, y)
+{
+    // 百度地图API功能
+    /*
+    var map = new BMap.Map("allmap");    // 创建Map实例
+    map.centerAndZoom(new BMap.Point(x, y), 16);  // 初始化地图,设置中心点坐标和地图级别
+    
+    map.setCurrentCity("重庆");          // 设置地图显示的城市 此项是必须设置的
+    
+    map.addOverlay(new BMap.Marker(new BMap.Point(x, y)); // 创建点
+    */
+    
+    var map = new BMap.Map("allmap");
+    var point = new BMap.Point(x, y);
+    map.centerAndZoom(point, 16);
+    map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+    map.addControl(new BMap.MapTypeControl());   //添加地图类型控件
+    var marker = new BMap.Marker(new BMap.Point(x, y)); // 创建点
+    map.addOverlay(marker);
+}
+</script>
 </head>
 <body>
 <!-- head  -->
 <#include "/client/contact_common_header.ftl" />
-<!-- head end -->
+ 
 <!-- contend -->
 <div class="titlelist">
 	<div id="titlelist">
@@ -65,10 +96,24 @@ function show2()
 		<div class="contactus">
 			<#if site??>
 				<h1>${site.title!''}</h1>
-				<h3 class="contactustel">电话：${site.telephone!''}</h3>
+				<h3 class="contactustel">
+				电话：
+				<#list site.telephone?split(",") as item>
+					<#if item !="">
+						${item!''} &nbsp;
+					</#if>
+				</#list>	
+				</h3>
 				<h3 class="contactusaddress">地址：${site.address!''}</h3>
 				<h3 class="contactusqq">QQ：${site.qq1!''}</h3>
 				<h3 class="contactusemail">邮箱：${site.adminEmail!''}</h3>
+				<h3 class="contactusemail">传真：
+				<#list site.fax?split(",") as item>
+					<#if item !="">
+						${item!''} &nbsp;
+					</#if>
+				</#list>	
+				</h3>
 				<h3 class="contactusleft">线路：${site.busRoute!''}</h3>
 				<h3 class="contactusleft2">${site.addressDetail!''}</h3>
 				<h3 class="contactuswechat">扫描添加微信：</h3>
@@ -76,7 +121,9 @@ function show2()
 			</#if>	
 		</div>
 		<div class="map">
-			<iframe src="map.html" frameborder="0"></iframe>
+		<#--	<iframe src="map.html" frameborder="0"></iframe> -->
+			<div id="allmap"></div>
+
 		</div>
 	</div>
 	<div class="contactussmall2 hide">
@@ -94,7 +141,7 @@ function show2()
 			<br>
 			<input type="submit" id="btn_submit" class="button" value="提交" />
 			<div class="map" style="margin-top:-210px;">
-				<iframe src="map.html" frameborder="0"></iframe>
+				<div id="allmap"></div>
 			</div>
 		</div>
 		

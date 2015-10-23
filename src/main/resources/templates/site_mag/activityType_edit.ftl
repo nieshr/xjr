@@ -18,6 +18,7 @@
 <div>
 <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="${__VIEWSTATE!""}">
 <input name="serviceItemId" type="text" value='<#if activityType??>${activityType.id}</#if>' style="display:none">
+<input type="hidden" name="id"  value="<#if activityType??>${activityType.id}</#if>">
 </div>
 
 <!--导航栏-->
@@ -51,7 +52,6 @@
         <span class="Validform_checktip">*名称</span>
     </dd>
   </dl>
-
   <dl>
     <dt>是否启用</dt>
     <dd>

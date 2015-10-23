@@ -8,9 +8,15 @@
     </form>
     <dl class="porfile">
     	<dt><a>帮助</a></dt>
-        <dt><a href="/enterprise/message">站内信息</a></dt>
+    	<#if user??>
+    		<#if user.roleId == 1>
+        		<dt><a href="/enterprise/message">站内信息</a></dt>
+        	<#elseif user.roleId == 2>
+        		<dt><a href="/region/message">站内信息</a></dt>
+        	</#if>	
+        </#if>
         <dd>
-        	<div><img src="/client/images/porfile_img.png" /></div>
+        	<div><img src="/client/images/user.png" /></div>
         	<span>${username!''}</span>
             <p>管理</p>
             <span id="nav_guide"></span>

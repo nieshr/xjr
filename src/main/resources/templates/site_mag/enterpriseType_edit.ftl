@@ -18,6 +18,7 @@
 <div>
 <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="${__VIEWSTATE!""}">
 <input name="serviceItemId" type="text" value='<#if enterpriseType??>${enterpriseType.id}</#if>' style="display:none">
+<input type="hidden" name="id"  value="<#if enterpriseType??>${enterpriseType.id}</#if>">
 </div>
 
 <!--导航栏-->

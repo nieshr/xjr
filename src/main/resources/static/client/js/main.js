@@ -105,7 +105,6 @@ function candidateAddEnterprise(id,activityId)
       success:function(data){
     	  if (data.code == 0)
     		  {
-    		  	alert("sucess");
     		  	location.reload();
     		  }
     	  else

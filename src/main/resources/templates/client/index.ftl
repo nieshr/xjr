@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <!--网页左上角小图标-->
-<link rel="shortcut icon" href="l_images/icon.ico" />
+	<link rel="shortcut icon" href="/client/images/icon.ico" />
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
@@ -19,6 +19,7 @@
         
     }
 </script>
+
 </head>
 <body>
  
@@ -32,11 +33,11 @@
                   <a href="/"><li class="active">首页</li></a>
                   <a href="#"><li>专项行动</li></a>
                   <a href="#"><li>培育活动</li></a>
-                  <a href="/info/index"><li>新闻动态</li></a>
-                  <a href="/info/projectshow"><li>企业项目</li></a>
-                  <a href="/info/resource"><li>专家资源</li></a>
+                  <a href="#"><li>新闻动态</li></a>
+                  <a href="#"><li>企业项目</li></a>
+                  <a href="#"><li>专家资源</li></a>
                   <a href="#"><li>合作机构</li></a>
-                  <a href="/info/contact"><li>联系方式</li></a>
+                  <a href="#"><li>联系方式</li></a>
                 </ul>
                 <#if username??>
                     <div class="logoin"><a href="/user" style="color:#ff4040;">${username}</a><span>|</span><a href="/logout">退出</a></div>
@@ -51,13 +52,13 @@
             <div class="banner1">
                 <img src="/client/l_images/QR_code.png" alt="二维码" />
                 <div style="position:absolute; left:0px; top:723px; width:100%;" >
-                    <a style="margin:0 auto; border:white 2px solid;height:64px;width:280px; display:block;line-height: 64px; border-radius: 10px; color:white; font-size:38px;" href="#">在线征集</a>
+                    <a style="margin:0 auto; border:white 2px solid;height:64px;width:280px; display:block;line-height: 64px; border-radius: 10px; color:white; font-size:38px;" href="/enterprise/check">在线征集</a>
                 </div>
             </div>
 
         </div>
             </div>
-
+<!--  
         <div class="clear"></div>
 
         <div class="swiper-slide" id="s2">
@@ -324,7 +325,7 @@ function showVideo${item_index}(){
                 <!-- 底部end -->
             </div>
         </div>
-
+-->
 
     </div>
     <!--右侧按钮-->

@@ -243,7 +243,7 @@ $(function () {
         <dl>
             <dt>传真号码</dt>
             <dd>
-                <input name="fax" type="text" value="<#if setting??>${setting.fax!""}</#if>" class="input normal" datatype="n0-100|-" sucmsg=" ">
+                <input name="fax" type="text" value="<#if setting??>${setting.fax!""}</#if>" class="input normal" datatype="*0-100" sucmsg=" ">
                 <span class="Validform_checktip"></span>
             </dd>
         </dl>
@@ -286,7 +286,7 @@ $(function () {
         <dl>
             <dt>网站备案号</dt>
             <dd>
-                <input name="icpNumber" type="text" value="<#if setting??>${setting.icpNumber!""}</#if>" class="input normal" datatype="n0-100" sucmsg=" ">
+                <input name="icpNumber" type="text" value="<#if setting??>${setting.icpNumber!""}</#if>" class="input normal" datatype="*0-100" sucmsg=" ">
                 <span class="Validform_checktip"></span>
             </dd>
         </dl>

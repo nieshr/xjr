@@ -4,21 +4,22 @@
 /****注册register****/
 .head{
 	width:100%;
-	height:380px;
+	height:320px;
 	background:url(../images/regist_bg1.png) no-repeat center top;
 }
 .head .logo img{
 	margin-top:30px;
+
 }
 .head .logo p{
-	margin-top:20px;
+	margin-top:10px;
 	font-size:16px;
 	color:#fefefe;
 }
 .head ul{
 	overflow:hidden;
 	margin:0 auto;
-	margin-top:30px;
+	margin-top:20px;
 	width:540px;
 }
 .head ul li{
@@ -46,13 +47,13 @@
 .head ul .sel i{
 	display:block;
 	margin:0 56px;
-	margin-top:16px;
+	margin-top:10px;
 	width:38px;
 	height:21px;
 	background:url(../images/triangle.png) no-repeat center bottom;
 }
 .register{
-	padding:20px 0;
+	padding:10px 0;
 	width:1200px;
 	height:680px;
 }
