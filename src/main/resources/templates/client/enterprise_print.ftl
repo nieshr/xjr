@@ -56,7 +56,7 @@
         	<dd><input style="display:block;"  type="button" value="生成表格并下载打印" onclick="location.href='/enterprise/export/enter'"/></dd>
         </dl>
         <dl class="apply_step2" style="margin-top:20px ; ">
-        	<dd><input style="background:#529c15;" type="button" value="上传报名表" onclick="location.href='/enterprise/upload'"/></dd>
+        	<dd><input style="background:#529c15;" type="button" value="下一步" onclick="location.href='/enterprise/upload'"/></dd>
         </dl>
     </div>  
     

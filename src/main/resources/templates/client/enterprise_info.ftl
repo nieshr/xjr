@@ -187,7 +187,7 @@ function allowsubmit()
     			<div><span>联系电话：</span><input type="text"  name="telephone" datatype="*" value="<#if enterprise.formType??>${enterprise.telephone!''}</#if>" /></div>
     			<div><span>传真：</span><input type="text"  name="fax" datatype="*"  ignore="ignore" value="<#if enterprise.formType??>${enterprise.fax!''}</#if>" /></div>
     			<div><span>QQ/MSN：</span><input type="text" name="chat" datatype="*" ignore="ignore"  value="<#if enterprise.formType??>${enterprise.chat!''}</#if>" /></div>
-    			<div><span>手机：</span><input type="text"  name="mobile" datatype="m"  value="<#if enterprise.formType??>${enterprise.mobile!''}</#if>" errormsg="请填写手机！"/></div>
+    			<div><span>手机：</span><input type="text"  name="mobile" datatype="m|/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/"  value="<#if enterprise.formType??>${enterprise.mobile!''}</#if>" errormsg="请填写手机！"/></div>
     			<div>
 	    			<span class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>">企业简介：</span>
 	    			<span class="pro <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>hide</#if>">团队简介：</span><textarea name="profile" datatype="*5-199"  errormsg="输入5到200字" tip="200字以内"><#if enterprise.formType??>${enterprise.profile!''}</#if></textarea>
@@ -326,7 +326,7 @@ function allowsubmit()
     			</div>
     	</dd>
     	<dt class="dt05">
-    		<input id="submitbutton"  type="submit" <#if enterprise.isShow??&& !enterprise.isShow>style="background:#666666" <#else>style="cursor:pointer;"</#if> value="保存" <#if enterprise.isShow??&& !enterprise.isShow> disabled="disabled"</#if> />
+    		<input id="submitbutton"  type="submit" <#if enterprise.isShow??&& !enterprise.isShow>style="background:#666666" <#else>style="cursor:pointer;"</#if> value="下一步" <#if enterprise.isShow??&& !enterprise.isShow> disabled="disabled"</#if> />
     	</dt>
     	</form>
     </dl>

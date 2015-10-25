@@ -163,7 +163,7 @@ $(function () {
   <dl>
     <dt>手机号</dt>
     <dd>
-        <input name="mobile" type="text" <#if diy_site??>value="${diy_site.mobile!""}" <#else>value=""  </#if> class="input normal" ajaxurl="/Verwalter/order/setting/diysite/check/mobile<#if diy_site??>?id=${diy_site.id}</#if>"  datatype="m" sucmsg=" "> 
+        <input name="mobile" type="text" <#if diy_site??>value="${diy_site.mobile!""}" <#else>value=""  </#if> class="input normal" ajaxurl="/Verwalter/order/setting/diysite/check/mobile<#if diy_site??>?id=${diy_site.id}</#if>"  datatype="m|/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/" sucmsg=" "> 
         <span class="Validform_checktip">*用于接收通知短信</span>
     </dd>
   </dl>
