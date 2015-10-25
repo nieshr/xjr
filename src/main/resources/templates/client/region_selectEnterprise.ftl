@@ -42,10 +42,10 @@ window.onload=numwarn;
 
 function warnmsg()
 {
-    alert("上传成功！");
-    location.reload();
+    alert("请选择20个项目！");
+    
 }
-<#if warnmsg??>
+<#if numwarn??&&numwarn ==2>
 window.onload=warnmsg;
 </#if>
 

@@ -611,7 +611,10 @@ public String  recommendEnterprise(HttpServletRequest req,
 		   }
 	   }
 	    
-	    
+	    if (null != numwarn&& 2 == numwarn)
+	    {
+	    	map.addAttribute("numwarn", 2);
+	    }
 	    
 	    map.addAttribute("keywords", keywords);
 	   	map.addAttribute("activity", activity);
@@ -1254,9 +1257,8 @@ public String exportRecommend(
     List<TdActivityEnterprise> selectedEnter = tdActivityEnterpriseService.findByActivityIdAndStatusId(activityId, 2L);
     if (selectedEnter.size() != 20)
     {
-    	map.addAttribute("warnmsg", "请选出20个推荐项目！");
-    	map.addAttribute("statusId", 2);
-    	return "redirect:/region/recommendEnterprise"+"?id="+activityId;
+    	Long numwarn = 2L;
+    	return "redirect:/region/recommendEnterprise"+"?id="+activityId+"&numwarn="+numwarn;
     }
         	exportUrl = SiteMagConstant.backupPath;
     

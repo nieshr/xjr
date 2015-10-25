@@ -131,7 +131,7 @@ function expertFinish(activityId)
 			        		<td style="color:#0ab2cb;">${item.usermobile!''}</td>
 			        		<td style="color:#e67817;">${item.email!''}</td>
 			        		<td>
-			        		${activityId}
+			        		
 				        		<#if item.isSelect??&&item.isSelect&&item.selectActivityId??&&item.selectActivityId==activityId>
 				        			<p>已添加</p>
 				        		<#else>

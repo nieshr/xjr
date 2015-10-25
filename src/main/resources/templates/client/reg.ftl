@@ -132,7 +132,7 @@ $(document).ready(function(){
         </div>
         <div>
         	<i class="i4"></i>
-        	<input type="text" name="mobile" id="txt_regMobile" value="手机" ajaxUrl="/reg/check/mobile" datatype="m" onfocus="if(this.value=='手机'){this.value='';}" onblur="if(this.value==''){this.value='手机'}"/>
+        	<input type="text" name="mobile" id="txt_regMobile" value="手机" ajaxUrl="/reg/check/mobile" datatype="m|/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/" onfocus="if(this.value=='手机'){this.value='';}" onblur="if(this.value==''){this.value='手机'}"/>
         </div>
         <div>
         	<i class="i5"></i>
