@@ -12,7 +12,7 @@ textarea { resize:none;}
 table { border-collapse:collapse;border-spacing:0;}
 th , td { text-align:left;}
 b,strong{font-weight:normal;}
-div{ margin:0 auto;}
+div{ margin:0 auto;text-align:center;}
 .wrapper{ width:1200px; display:block; overflow:hidden;background: url(../images/logo.png) no-repeat;height: 75px;}
 .w100{ width:100%; display:block; overflow:hidden;}
 /*头部*/

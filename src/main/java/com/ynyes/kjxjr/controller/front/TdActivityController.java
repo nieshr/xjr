@@ -111,10 +111,10 @@ public class TdActivityController {
         tdCommonService.setHeader(map, req);
 
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
-        TdActivity unfinish = tdActivityService.findByStatusId(0L);
+//        TdActivity unfinish = tdActivityService.findByStatusId(0L);
         
-        map.addAttribute("unfinish", unfinish);
-        map.addAttribute("activity_page", tdActivityService.findByStatusIdOrderByIdDesc(1L,page, ClientConstant.pageSize));
+//        map.addAttribute("unfinish", unfinish);
+        map.addAttribute("activity_page", tdActivityService.findAllOrderByIdDesc(page, ClientConstant.pageSize));
         map.addAttribute("user", user);
 
         return "/client/activity_list";
@@ -130,18 +130,21 @@ public class TdActivityController {
 
         tdCommonService.setHeader(map, req);
         
-        TdActivity activity = tdActivityService.findByStatusId(0L);
-        if (null != activity)
-        {
-	        map.addAttribute("activity", activity);
-	        map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityId(activity.getId()));
-	        map.addAttribute("selected_expert_list", tdActivityExpertService.findByActivityId(activity.getId()));
-        }
+//        TdActivity activity = tdActivityService.findByStatusId(0L);
+//        if (null != activity)
+//        {
+//	        map.addAttribute("activity", activity);
+//	        map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityId(activity.getId()));
+//	        map.addAttribute("selected_expert_list", tdActivityExpertService.findByActivityId(activity.getId()));
+//        }
+        
+
 
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
 //        Page<TdActivity> activityPage = tdActivityService.findAllOrderByIdDesc(page,  ClientConstant.pageSize);
         
 //        map.addAttribute("activity_page", activityPage);
+
         map.addAttribute("user", user);
         map.addAttribute("pagetype", "create");
         map.addAttribute("done", done);
@@ -245,16 +248,16 @@ public class TdActivityController {
 
         
         //检查是否有未完成的创建
-        TdActivity unfinish = tdActivityService.findByStatusId(0L);
-        if (null != unfinish && unfinish.getId() != id)
-        {
-        	map.addAttribute("alert", 1);
-            map.addAttribute("activity_page", tdActivityService.findByStatusIdOrderByIdDesc(1L,0, ClientConstant.pageSize));
-            map.addAttribute("unfinish", unfinish);
-            map.addAttribute("user", user);
-
-            return "/client/activity_list";
-        }
+//        TdActivity unfinish = tdActivityService.findByStatusId(0L);
+//        if (null != unfinish && unfinish.getId() != id)
+//        {
+//        	map.addAttribute("alert", 1);
+//            map.addAttribute("activity_page", tdActivityService.findByStatusIdOrderByIdDesc(1L,0, ClientConstant.pageSize));
+//            map.addAttribute("unfinish", unfinish);
+//            map.addAttribute("user", user);
+//
+//            return "/client/activity_list";
+//        }
         
         TdActivity activity = tdActivityService.findOne(id);
         if (null != activity)
@@ -418,6 +421,7 @@ public class TdActivityController {
      */
     @RequestMapping(value = "/selectEnterprise")
     public String  selectEnterprise(HttpServletRequest req,
+    		Long activityId,
     		ModelMap map,
     		Integer page,
     		String keywords,
@@ -563,8 +567,7 @@ public class TdActivityController {
         	
       
         
-        TdActivity activity = tdActivityService.findByStatusId(0L);
-        Long activityId = activity.getId();
+        TdActivity activity = tdActivityService.findOne(activityId);
         map.addAttribute("keywords", keywords);
         map.addAttribute("area", area);
         map.addAttribute("type", type);
@@ -791,6 +794,7 @@ public class TdActivityController {
   
     @RequestMapping(value = "/selectExpert")
     public String  selectExpert(HttpServletRequest req,
+    		Long activityId,
     		ModelMap map,
     		Integer page,
     		String keywords) {
@@ -815,8 +819,8 @@ public class TdActivityController {
 			ExpertPage = tdExpertService.findAllOrderBySortIdAsc(page, ClientConstant.pageSize);
         }    	
         
-        TdActivity activity = tdActivityService.findByStatusId(0L);
-        Long activityId = activity.getId();
+        TdActivity activity = tdActivityService.findOne(activityId);
+       
         map.addAttribute("keywords", keywords);
        	map.addAttribute("activity", activity);
        	map.addAttribute("activityId", activityId);
@@ -982,24 +986,51 @@ public class TdActivityController {
             return res;
         }
         
-        if (null == title || null == activityType || null == region 
-        	|| null == date || null == address || null == theme || null == introduction 
+        if (null == title || title.equals("") || null == activityType || activityType.equals("") || null == region || region.equals("")
+        	|| null == date || null == address || address.equals("") || null == theme || theme.equals("")  || null == introduction || introduction.equals("") 
         	||null == prepareOn || null == prepareOff ||null == eventEnd)
         {
         	res.put("msg", "请先填写完整资料！");
         	return res;
         }
         
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date dateF = sdf.parse(date);
-        Date prepareOnF = sdf.parse(prepareOn);
-        Date prepareOffF = sdf.parse(prepareOff);
-        Date eventEndF = sdf.parse(eventEnd);
+
         
-        TdActivity unfinish = tdActivityService.findByStatusId(0L);
-        if (null!=unfinish)
-        {
-        	TdActivity activity = tdActivityService.findOne(id);
+//        TdActivity unfinish = tdActivityService.findByStatusId(0L);
+//        if (null!=unfinish)
+//        {
+//        	TdActivity activity = tdActivityService.findOne(id);
+//        	activity.setTitle(title);
+//        	activity.setActivityType(activityType);
+//        	activity.setRegion(region);
+//        	activity.setDate(dateF);
+//        	activity.setAddress(address);
+//        	activity.setTheme(theme);
+//        	activity.setIntroduction(introduction);
+//        	activity.setPrepareOn(prepareOnF);
+//        	activity.setPrepareOff(prepareOffF);
+//        	activity.setEventEnd(eventEndF);
+//        	activity.setStatusId(0L);
+//        	tdActivityService.save(activity);
+//        }
+//        else
+//        {
+    	TdActivity activity = null;
+    	if (null == id)
+    	{
+    		activity = new TdActivity();
+    	}
+    	else
+    	{
+    		activity = tdActivityService.findOne(id);
+    	}
+    	if (null != date)
+    	{
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date dateF = sdf.parse(date);
+            Date prepareOnF = sdf.parse(prepareOn);
+            Date prepareOffF = sdf.parse(prepareOff);
+            Date eventEndF = sdf.parse(eventEnd);
         	activity.setTitle(title);
         	activity.setActivityType(activityType);
         	activity.setRegion(region);
@@ -1012,24 +1043,12 @@ public class TdActivityController {
         	activity.setEventEnd(eventEndF);
         	activity.setStatusId(0L);
         	tdActivityService.save(activity);
-        }
-        else
-        {
-        	TdActivity activity = new TdActivity();
-        	activity.setTitle(title);
-        	activity.setActivityType(activityType);
-        	activity.setRegion(region);
-        	activity.setDate(dateF);
-        	activity.setAddress(address);
-        	activity.setTheme(theme);
-        	activity.setIntroduction(introduction);
-        	activity.setPrepareOn(prepareOnF);
-        	activity.setPrepareOff(prepareOffF);
-        	activity.setEventEnd(eventEndF);
-        	activity.setStatusId(0L);
-        	tdActivityService.save(activity);
-        }
+    	}
+
+
+//        }
        
+        res.put("activityId", activity.getId());	
         res.put("code", 0);
         return res;
     }
@@ -1102,18 +1121,18 @@ public class TdActivityController {
         }
         
         
-        if (null == tdActivity.getStatusEn()|| null ==  tdActivity.getStatusEx())
-        {
-        	res.put("msg", "请先选择项目和专家！");
-        	return res;
-        }
-        else if (1 == tdActivity.getStatusEn()&&1 == tdActivity.getStatusEx())
+//        if (null == tdActivity.getStatusEn()|| null ==  tdActivity.getStatusEx())
+//        {
+//        	res.put("msg", "请先选择项目和专家！");
+//        	return res;
+//        }
+        else if (/*null != tdActivity.getStatusEn()&&1 == tdActivity.getStatusEn()&&*/null != tdActivity.getStatusEx()&&1 == tdActivity.getStatusEx())
     	{
     		tdActivity.setStatusId(1L);     //同时选择过项目和专家后，创建活动成功
     	}
         else
         {
-        	res.put("msg", "请先选择项目和专家！");
+        	res.put("msg", "请先选择专家评委！");
         	return res;
         }
         tdActivity.setCreateTime(new Date());

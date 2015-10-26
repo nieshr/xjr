@@ -122,7 +122,7 @@
 				 <#if PAGE_DATA.number+1 == 1>
 			          <a disabled="disabled"  class="page_next">上一页</a>               
 			     <#else>
-			         <a href="/activity/selectEnterprise?page=${PAGE_DATA.number-1}"  class="page_next">上一页</a>                
+			         <a href="/activity/selectEnterprise?activityId=${activityId?c!''}&page=${PAGE_DATA.number-1}"  class="page_next">上一页</a>                
 			     </#if>
 			     
 			     <#assign continueEnter=false>
@@ -133,7 +133,7 @@
 			                 <#if page == PAGE_DATA.number+1>
 			                     <a  class ="current" style="color:#e67817;">${page }</a>
 			                 <#else>
-			                     <a href="/activity/selectEnterprise?page=${page-1}">${page}</a> 
+			                     <a href="/activity/selectEnterprise?activityId=${activityId?c!''}&page=${page-1}">${page}</a> 
 			                 </#if>
 			                 <#assign continueEnter=false>
 			             <#else>
@@ -149,7 +149,7 @@
 			     <#if PAGE_DATA.number+1 == PAGE_DATA.totalPages || PAGE_DATA.totalPages==0>
 			         <a disabled="disabled" class="page_last">下一页</a> 
 			     <#else>
-			         <a href="/activity/selectEnterprise?page=${PAGE_DATA.number+1}" class="page_last">下一页</a> 
+			         <a href="/activity/selectEnterprise?activityId=${activityId?c!''}&page=${PAGE_DATA.number+1}" class="page_last">下一页</a> 
 			     </#if>
 			 </#if>
 		  	<p>共${PAGE_DATA.totalPages!'1'}页  ${PAGE_DATA.totalElements!'1'}条</p>

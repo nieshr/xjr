@@ -19,6 +19,7 @@
 <script src="/client/js/jquery-1.9.1.min.js"></script>
 <script src="/client/js/main.js"></script>
 <script>
+<!--
 function unfinish()
 {
 	alert("有未完成创建的活动！");
@@ -26,7 +27,7 @@ function unfinish()
 <#if alert?? &&alert == 1>
 window.onload=unfinish;
 </#if>
-
+-->
 function deleteConfirm() {
     if (!confirm("确认删除活动？")) {
         window.event.returnValue = false;
@@ -61,6 +62,7 @@ function deleteConfirm() {
                 <a href="#">活动列表</a>
             </dd>
         </dl>
+        <!--
        <#if unfinish??>
 	       <div class="list_base2" style="padding-top:0;">
 				<table class="new_list">
@@ -78,7 +80,7 @@ function deleteConfirm() {
 		        </table>
 	        </div>
 	    </#if>    
-        
+        -->
         <div class="list_base2" style="padding-top:0;">
 			<table class="new_list">
 	        	<tr class="list_title">
@@ -96,7 +98,7 @@ function deleteConfirm() {
 			        		<input type="hidden" name="listId" id="listId" value="${item.id}">
 		        		</td>
 		        		-->
-		        		<td>${item.title!''}</td>
+		        		<td>${item.title!''}<#if item.statusId == 0>（未完成）</#if></td>
 		        		<td style="color:#0ab2cb;">${item.address!''}</td>
 		        		<td style="color:#e67817;">${item.activityType!''}</td>
 		        		<td><a href="/activity/edit?id=${item.id?c!''}">管理</a>丨<a href="/activity/check?id=${item.id?c!''}">查看</a>丨<a  onclick="javascript:deleteConfirm();" href="/activity/delete?id=${item.id?c!''}">删除</a></td>
