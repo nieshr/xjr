@@ -39,6 +39,15 @@ $(document).ready(function(){
 
 $(function(){
     $('#selectEnterprise').click(function(){
+    var activitydate = $("#date").val()
+    var  prepareOn = $("#prepareOn").val()
+    var  prepareOff = $("#prepareOff").val()
+    var  eventEnd  = $("#eventEnd").val()
+    if (activitydate == ""||prepareOn == ""||prepareOff == "" || eventEnd == "")
+    {
+    	alert("请完整填写资料！")
+    }
+    else{    
          $.ajax({
              type: "GET",
              url: "/activity/bufferEn",
@@ -58,7 +67,7 @@ $(function(){
              success: function(data){
 		                 if (data.code == 0)
 		                 {
-		                     location.href="/activity/selectEnterprise";
+		                     location.href="/activity/selectEnterprise?activityId="+data.activityId;
 		                 }
 		                 else 
 		                 {
@@ -66,11 +75,21 @@ $(function(){
 		                 }
                       }
          });
+     }    
     });
 });
 
 $(function(){
     $('#selectExpert').click(function(){
+    var activitydate = $("#date").val()
+    var  prepareOn = $("#prepareOn").val()
+    var  prepareOff = $("#prepareOff").val()
+    var  eventEnd  = $("#eventEnd").val()
+    if (activitydate == ""||prepareOn == ""||prepareOff == "" || eventEnd == "")
+    {
+    	alert("请完整填写资料！")
+    }
+    else{
          $.ajax({
              type: "GET",
              url: "/activity/bufferEn",
@@ -90,7 +109,7 @@ $(function(){
              success: function(data){
                          if (data.code == 0)
                          {
-                             location.href="/activity/selectExpert";
+                             location.href="/activity/selectExpert?activityId="+data.activityId;
                          }
                          else 
                          {
@@ -98,6 +117,7 @@ $(function(){
                          }
                       }
          });
+    } 
     });
 });
 
@@ -294,7 +314,7 @@ window.onload=done;
     					</#if>    
                         <#if pagetype??&& pagetype == "check">
                         <#else>
-    					   <input id="selectExpert" style="cursor:pointer;width:100px; height:30px; line-height: 30px; border: none;background:white url(images/active_add_project.png) no-repeat 10px; padding-left: 13px;" type="button" onclick="location.href='/activity/selectExpert'" value="添加评委" />
+    					   <input id="selectExpert" style="cursor:pointer;width:100px; height:30px; line-height: 30px; border: none;background:white url(images/active_add_project.png) no-repeat 10px; padding-left: 13px;" type="button"  value="添加评委" />
     				    </#if>
     				</ul>
     			</div>

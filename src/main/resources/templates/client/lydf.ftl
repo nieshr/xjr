@@ -54,11 +54,12 @@
                                     </#if>
                             </dl>
                             <dl>
-                                <dt>行业归属</dt>
-                                <dd class="list_color_blue"><a href="#">每周行</a></dd>
-                                <dd class="list_color_yellow"><a href="#">训练营</a></dd>
-                                <dd class="list_color_green"><a href="#">年度秀</a></dd>
-                                <dd class="list_color_green"><a href="#">年度秀</a></dd>
+                                <dt>活动类型</dt>
+                                <#if grade_false_list??>                                
+                                    <#list grade_false_list as item>
+                                        <dd class="list_color_blue"><a href="#">${item.activityType!''}</a></dd>
+                                    </#list>
+                                </#if>
                             </dl>
                             <dl>
                                 <dt>行业归属</dt>
@@ -96,11 +97,12 @@
                                 </#if>
                             </dl>
                             <dl>
-                                <dt>行业归属</dt>
-                                <dd class="list_color_blue"><a href="#">每周行</a></dd>
-                                <dd class="list_color_yellow"><a href="#">训练营</a></dd>
-                                <dd class="list_color_green"><a href="#">年度秀</a></dd>
-                                <dd class="list_color_green"><a href="#">年度秀</a></dd>
+                                <dt>活动类型</dt>
+                                <#if grade_true_list??>
+                                    <#list grade_true_list as item>
+                                        <dd><a href="#">${item.activityType!''}</a></dd>
+                                    </#list>
+                                </#if>
                             </dl>
                             <dl>
                                 <dt>行业归属</dt>

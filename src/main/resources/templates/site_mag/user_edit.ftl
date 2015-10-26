@@ -247,7 +247,7 @@ $(function () {
     			<div><span>地址：</span><input type="text" name="address" datatype="*"value="<#if enterprise.address??>${enterprise.address!''}</#if>" /></div>
     			<div><span  class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>">职工人数：</span>
     			        <span  class="pro  <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>hide</#if>">团队人数：</span>
-    				<input type="text" name="staffNumber" datatype="n"  value="<#if enterprise.formType??>${enterprise.staffNumber!''}</#if>" /></div>
+    				<input type="text" name="staffNumber" datatype="n"  value="<#if enterprise.staffNumber??>${enterprise.staffNumber?c!''}</#if>" /></div>
     			<div><span>行业归属：</span>
     				<#if enterpriseType_list??>
     					<#list enterpriseType_list as item>
