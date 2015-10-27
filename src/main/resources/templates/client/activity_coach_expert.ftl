@@ -71,8 +71,8 @@
 		        		<th width="25%">邮箱</th>
 		        		<th width="20%">操作</th>
 		        	</tr>
-		        <#if Expert_page??>
-		        	<#list Expert_page.content as item>
+		        <#if ExpertPage??>
+		        	<#list ExpertPage.content as item>
 			        	<tr>
 			        		<#--
 			        		<td>

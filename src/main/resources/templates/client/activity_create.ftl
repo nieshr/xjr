@@ -15,7 +15,7 @@
 <script>
 $(document).ready(function(){
 
-    $("#form1").Validform({
+    $("#form1").Validform({ 
             tiptype:4,
             ajaxPost:true,
             callback: function (data) { 
@@ -155,7 +155,6 @@ function sortUp(id , activityId)
              success: function(data){
                          if (data.code == 0)
                          {
-                             alert("排序成功！");
                              location.reload();
                          }
                          else 
@@ -177,7 +176,6 @@ function sortDown(id , activityId)
              success: function(data){
                          if (data.code == 0)
                          {
-                             alert("排序成功！");
                              location.reload();
                          }
                          else 
@@ -291,7 +289,7 @@ window.onload=done;
         </dl>
         
     </div>  
-    <form action="/activity/submit" id="form1" method="post">
+    <form action="/activity/submit" id="form1">
     <dl class="active_content">
     	<dd>
             <#if activity??>
@@ -391,7 +389,7 @@ window.onload=done;
 		                           	 	<a href="javascript:sortUp(${item.id?c!''} , ${item.activityId?c!''});">+</a>
 		                            </#if>
 		                            <a style="display:block;  width:80px;"></a>
-		                            <p class="p02">辅导专家，李专家</p>
+		                            <p class="p02"><#if item.coachName??>辅导专家，${item.coachName!''}</#if></p>
 		    						
 		    					</li>
     					    </#list>

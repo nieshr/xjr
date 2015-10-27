@@ -267,6 +267,7 @@ public class TdExpertController {
 		theGrade.setTwoGroup(grade.getTwoGroup());
 		theGrade.setThreeGroup(grade.getThreeGroup());
 		theGrade.setTotalGroup(grade.getTotalGroup()); //zhangji
+		theGrade.setIsGrade(true);
 		tdEnterpriseGradeService.save(theGrade);
 		TdActivityEnterprise activityEnterprise = tdActivityEnterpriseService.findByActivityIdAndEnterpriseId(activityId, enterprise.getId());
 		activityEnterprise.setIsGrade(true);

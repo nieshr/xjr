@@ -326,9 +326,10 @@ public class TdActivityController {
             		//清空评分表的企业数据
             		for (TdEnterpriseGrade grade:gradelist)
             		{
-            			grade.setEnterpriseId(null);
-            			grade.setNumber(null);
-            			tdEnterpriseGradeService.save(grade);
+            			tdEnterpriseGradeService.delete(grade.getId());
+//            			grade.setEnterpriseId(null);
+//            			grade.setNumber(null);
+//            			tdEnterpriseGradeService.save(grade);
             		}
             		//创建评分表
             		for(int i =0;i<20;i++)
@@ -547,12 +548,12 @@ public class TdActivityController {
         }
         
         TdActivity activity = tdActivityService.findOne(activityId);
-        if(0L ==activity.getStatusId())
-        {
+//        if(0L ==activity.getStatusId())
+//        {
         	activity.setStatusEx(1L);
 
         	tdActivityService.save(activity);
-        }
+//    }
         map.addAttribute("activity", activity);
         map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityId(activity.getId()));
         map.addAttribute("selected_expert_list", tdActivityExpertService.findByActivityId(activity.getId()));
@@ -1255,7 +1256,7 @@ public class TdActivityController {
         return "/client/region_enterprise_check";
     }
     
-    @RequestMapping(value = "/submit", method = RequestMethod.POST)
+    @RequestMapping(value = "/submit")
     @ResponseBody
     public  Map<String, Object> activitySubmit(HttpServletRequest req,
     		Long id,
@@ -1264,13 +1265,13 @@ public class TdActivityController {
     		String title,
     		String activityType,
     		String region,
-    		Date date,
+    		String date,
     		String address,
     		String theme,
     		String introduction,
-    		Date prepareOn,
-    		Date prepareOff,
-    		Date eventEnd,
+    		String prepareOn,
+    		String prepareOff,
+    		String eventEnd,
     		ModelMap map) {
         Map<String, Object> res = new HashMap<String, Object>();
         res.put("code", 1);
@@ -1287,19 +1288,36 @@ public class TdActivityController {
         {
         	tdActivity = new TdActivity();
         }
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        
+        Date date1 = new Date();
+        Date prepareOn1 = new Date();
+        Date prepareOff1 = new Date();
+        Date eventEnd1 = new Date();
+        
+        try {
+			date1 = sdf.parse(date);
+			prepareOn1 = sdf.parse(prepareOn);
+			prepareOff1 = sdf.parse(prepareOff);
+			eventEnd1 = sdf.parse(eventEnd);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        
         tdActivity.setCreateTime(new Date());
         tdActivity.setStatusEx(statusEx);
         tdActivity.setStatusEn(statusEn);
         tdActivity.setTitle(title);
         tdActivity.setActivityType(activityType);
         tdActivity.setRegion(region);
-        tdActivity.setDate(date);
+        tdActivity.setDate(date1);
         tdActivity.setAddress(address);
         tdActivity.setTheme(theme);
         tdActivity.setIntroduction(introduction);
-        tdActivity.setPrepareOn(prepareOn);
-        tdActivity.setPrepareOff(prepareOff);
-        tdActivity.setEventEnd(eventEnd);
+        tdActivity.setPrepareOn(prepareOn1);
+        tdActivity.setPrepareOff(prepareOff1);
+        tdActivity.setEventEnd(eventEnd1);
        
        	tdActivityService.save(tdActivity);
        
@@ -1400,6 +1418,9 @@ public class TdActivityController {
     	coach.setAddr(enterprise.getAddress());
     	coach.setExpertName(expert.getName());
     	tdExpertCoachEnterpriseService.save(coach);
-    	return "redirect:/activity/edit?id="+activityId;
+    	TdActivityEnterprise tdActivityEnterprise = tdActivityEnterpriseService.findByActivityIdAndEnterpriseId(activityId, enterpriseId);
+    	tdActivityEnterprise.setCoachName(expert.getName());
+    	tdActivityEnterpriseService.save(tdActivityEnterprise);
+    	return "redirect:/activity/check?id="+activityId;
     }
 }

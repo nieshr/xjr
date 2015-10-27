@@ -222,7 +222,7 @@ public class TdClientUploadController {
         }
         
         Long done = 1L;
-        return "redirect:/activity/create?done="+done
+        return "redirect:/activity/edit?done="+done
         		+"&id="+id;
 
     }	
