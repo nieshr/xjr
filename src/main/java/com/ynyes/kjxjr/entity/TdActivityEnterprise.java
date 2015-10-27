@@ -86,6 +86,13 @@ public class TdActivityEnterprise {
     @Column
     private String profile;
     
+	//是否已经打分
+	@Column
+	private Boolean isGrade;
+	
+	//辅导专家
+	@Column
+	private String coachName;
     
     // 项目地区
     @Column
@@ -298,6 +305,22 @@ public class TdActivityEnterprise {
 
 	public void setPptUrl(String pptUrl) {
 		this.pptUrl = pptUrl;
+	}
+
+	public Boolean getIsGrade() {
+		return isGrade;
+	}
+
+	public void setIsGrade(Boolean isGrade) {
+		this.isGrade = isGrade;
+	}
+
+	public String getCoachName() {
+		return coachName;
+	}
+
+	public void setCoachName(String coachName) {
+		this.coachName = coachName;
 	}
 
 	

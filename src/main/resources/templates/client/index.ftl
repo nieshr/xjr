@@ -126,7 +126,7 @@
                                 <#if ("organization_level1_"+item.id)?eval??>
                                     <#list ("organization_level1_"+item.id)?eval as article>
                                         <#if article_index < 6>
-                                            <p>${atricle.title!''}</p>
+                                            <p>${article.title!''}</p>
                                         </#if>
                                     </#list>
                                 </#if>                                
@@ -136,7 +136,7 @@
                                 <#if ("organization_level1_"+item.id)?eval??>
                                     <#list ("organization_level1_"+item.id)?eval as article>
                                         <#if article_index gt 5>
-                                            <p>${atricle.title!''}</p>
+                                            <p>${article.title!''}</p>
                                         </#if>
                                     </#list>
                                 </#if>                                
@@ -147,7 +147,7 @@
                                 <#if ("organization_level1_"+item.id)?eval??>
                                     <#list ("organization_level1_"+item.id)?eval as article>
                                         <#if article_index < 6>
-                                            <p>${atricle.title!''}</p>
+                                            <p>${article.title!''}</p>
                                         </#if>
                                     </#list>
                                 </#if>
