@@ -302,6 +302,7 @@ window.onload=done;
 		    						<p class="p01" style="width: 130px; float: left;text-align:left;">${item_index+1}.${item.enterpriseTitle!''}</p>
 		    						<a style="display:block;  width:100px;"></a>
 		    						<a href="/activity/enterprise/check/${item.enterpriseId?c!''}" target=_blank>查看</a>
+		    						<#--
 		                            <a>丨</a>
 		                            <a href="/enterprise/grade/${item.activityId?c!''}?enterpriseId=${item.enterpriseId?c!''}">得分</a>
 		                            <a>丨</a>
@@ -310,7 +311,7 @@ window.onload=done;
 		                            <a href="#">下载</a>
 		                            <a style="display:block;  width:80px;"></a>
 		                            <p class="p02">辅导专家，李专家</p>
-		    						
+		    						-->
 		    					</li>
     					    </#list>
     					</#if>    
@@ -324,8 +325,8 @@ window.onload=done;
     			<div>
     				<span style="margin-top: 10px;">推荐项目：</span>
     				<ul class="active_project_text">
-    				    <#if selected_enterprise_list??>
-    				        <#list selected_enterprise_list as item>
+    				    <#if recommend_list??>
+    				        <#list recommend_list as item>
 		    					<li>
 		    						<p class="p01" style="width: 130px; float: left;text-align:left;">${item_index+1}.${item.enterpriseTitle!''}</p>
 		    						<a style="display:block;  width:100px;"></a>
@@ -394,7 +395,7 @@ window.onload=done;
 		</div>
 		</form>
 		</#if>
-		<#if activity?? && activity.fileUrl??>
+		<#if activity?? && activity.download??>
 			<div>
 				<span style="margin-top: 10px;">相关下载：</span>
 				<ul class="active_add_file">

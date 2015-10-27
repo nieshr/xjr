@@ -1056,11 +1056,11 @@ public String  regionRemoveEnterprise(HttpServletRequest req,Long id,Long activi
 			    	tdActivityService.save(activity);
 			    }
 			    
-			    if (null != activity.getStatusChoose() && 1 == activity.getStatusChoose()&&null != activity.getStatusRecommend() && 1 == activity.getStatusRecommend())
-			    {
-			    	activity.setRegionStatusId(1L);
-			    	tdActivityService.save(activity);
-			    }
+//			    if (null != activity.getStatusChoose() && 1 == activity.getStatusChoose()&&null != activity.getStatusRecommend() && 1 == activity.getStatusRecommend())
+//			    {
+//			    	activity.setRegionStatusId(1L);
+//			    	tdActivityService.save(activity);
+//			    }
 			    map.addAttribute("activity", activity);
 			    
 			    TdUser user = tdUserService.findByUsernameAndIsEnabled(username);

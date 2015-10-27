@@ -102,11 +102,11 @@ public class TdActivity {
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date eventEnd;
     
-    // 文件
+    // 推荐表
     @Column
     private String fileUrl;
     
-    // 下载
+    // 相关下载
     @Column
     private String download;
     
