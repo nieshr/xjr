@@ -10,6 +10,7 @@
     <table class="score">
         <caption>项目得分汇总表</caption>
         <tr class="tr01">
+        <td></td>
             <#if expert0_grade??>
                 <#list expert0_grade as item>
                     <td>${item.number!''}</td>

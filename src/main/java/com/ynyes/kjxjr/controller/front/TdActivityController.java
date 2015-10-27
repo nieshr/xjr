@@ -1,5 +1,9 @@
 package com.ynyes.kjxjr.controller.front;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -8,7 +12,17 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.usermodel.HSSFPrintSetup;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.Region;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -41,6 +55,7 @@ import com.ynyes.kjxjr.service.TdOrderService;
 import com.ynyes.kjxjr.service.TdRegionService;
 import com.ynyes.kjxjr.service.TdUserService;
 import com.ynyes.kjxjr.util.ClientConstant;
+import com.ynyes.kjxjr.util.SiteMagConstant;
 
 
 @Controller
@@ -1423,4 +1438,292 @@ public class TdActivityController {
     	tdActivityEnterpriseService.save(tdActivityEnterprise);
     	return "redirect:/activity/check?id="+activityId;
     }
+ 
+ //评分汇总表导出
+// @SuppressWarnings("deprecation")
+// @RequestMapping(value="/export/grade")
+// public String exportGrade(
+//                             Long activityId,
+//                             ModelMap map,
+//                             String exportUrl,
+//                             HttpServletResponse resp,
+//                             HttpServletRequest req){
+//
+//	 /*------------------------------------*/
+//
+//	 
+//	 /*-------------------------------------*/
+//	 
+//
+//         	exportUrl = SiteMagConstant.backupPath;
+//     
+// 			if (null != exportUrl) {
+// 				List<TdActivityExpert> activity_experts = tdActivityExpertService.findByActivityId(activityId);
+// 		    	if(null != activity_experts){
+// 		    		if(0 < activity_experts.size()){
+// 		    			List<TdEnterpriseGrade> experts0_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderByNumberAsc(activity_experts.get(0).getExpertId(), activityId);
+// 		    			map.addAttribute("expert0_grade", experts0_grade);
+// 		    			map.addAttribute("expert0", activity_experts.get(0).getName());
+// 		    		}
+// 		    		
+// 					if(1 < activity_experts.size()){
+// 						List<TdEnterpriseGrade> experts1_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderByNumberAsc(activity_experts.get(1).getExpertId(), activityId);
+// 		    			map.addAttribute("expert1_grade", experts1_grade);
+// 		    			map.addAttribute("expert1", activity_experts.get(1).getName());		
+// 		    		}
+// 					
+// 					if(2 < activity_experts.size()){
+// 						List<TdEnterpriseGrade> experts2_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderByNumberAsc(activity_experts.get(2).getExpertId(), activityId);
+// 		    			map.addAttribute("expert2_grade", experts2_grade);
+// 		    			map.addAttribute("expert2", activity_experts.get(2).getName());
+// 					}
+// 					
+// 					if(3 < activity_experts.size()){
+// 						List<TdEnterpriseGrade> experts3_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderByNumberAsc(activity_experts.get(3).getExpertId(), activityId);
+// 		    			map.addAttribute("expert3_grade", experts3_grade);
+// 		    			map.addAttribute("expert3", activity_experts.get(3).getName());
+// 					}
+// 					
+// 					if(4 < activity_experts.size()){
+// 						List<TdEnterpriseGrade> experts4_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderByNumberAsc(activity_experts.get(4).getExpertId(), activityId);
+// 		    			map.addAttribute("expert4_grade", experts4_grade);
+// 		    			map.addAttribute("expert4", activity_experts.get(4).getName());
+// 					}
+// 					
+// 					if(5 < activity_experts.size()){
+// 						List<TdEnterpriseGrade> experts5_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderByNumberAsc(activity_experts.get(5).getExpertId(), activityId);
+// 		    			map.addAttribute("expert5_grade", experts5_grade);
+// 		    			map.addAttribute("expert5", activity_experts.get(5).getName());
+// 					}
+// 					
+// 					if(6 < activity_experts.size()){
+// 						List<TdEnterpriseGrade> experts6_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderByNumberAsc(activity_experts.get(6).getExpertId(), activityId);
+// 		    			map.addAttribute("expert6_grade", experts6_grade);
+// 		    			map.addAttribute("expert6", activity_experts.get(6).getName());
+// 					}
+// 		    	}
+// 		
+//     /**  
+// 		 * @author lc
+// 		 * @注释：根据不同条件导出excel文件
+// 		 */
+//       // 第一步，创建一个webbook，对应一个Excel文件  
+//       HSSFWorkbook wb = new HSSFWorkbook();  
+//       // 第二步，在webbook中添加一个sheet,对应Excel文件中的sheet  
+//       HSSFSheet sheet = wb.createSheet("totalGrade");  
+//       
+//       //打印设置
+//       HSSFPrintSetup ps = sheet.getPrintSetup();
+//       ps.setLandscape(true); //打印方向，true:横向，false:纵向
+//       ps.setPaperSize(HSSFPrintSetup.A4_PAPERSIZE); //纸张
+//       sheet.setMargin(HSSFSheet.BottomMargin, (double)0.3); //页边距（下）
+//       sheet.setMargin(HSSFSheet.LeftMargin, (double)0.3); //页边距（左）
+//       sheet.setMargin(HSSFSheet.RightMargin, (double)0.3); //页边距（右）
+//       sheet.setMargin(HSSFSheet.TopMargin, (double)0.3); //页边距（上）
+//       sheet.setHorizontallyCenter(true); //设置打印页面为水平居中
+//       sheet.setVerticallyCenter(true); //设置打印页面为垂直居中
+//       
+//       //列宽
+//       sheet.setDefaultColumnWidth(6*256);
+//       sheet.setColumnWidth((short) 0 , 8*256);
+//       
+//       
+//       // 第三步，在sheet中添加表头第0行,注意老版本poi对Excel的行数列数有限制short  
+//       HSSFRow row = sheet.createRow((int) 0);  
+//       
+//       sheet.addMergedRegion(new Region((short) 0 , (short) 0 , (short) 2 , (short) 20));     //标题
+//       // 第四步，创建单元格，并设置值表头 设置表头居中  
+//       HSSFCellStyle style = wb.createCellStyle();  
+//       style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+//       style.setBorderBottom(HSSFCellStyle.BORDER_THIN);    //设置边框样式
+//       style.setBorderRight(HSSFCellStyle.BORDER_THIN);
+//       style.setBorderLeft(HSSFCellStyle.BORDER_THIN);  
+//       style.setBorderTop(HSSFCellStyle.BORDER_THIN);  
+//       
+//       
+//       HSSFCellStyle style1 = wb.createCellStyle();  
+//       style1.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
+//       style1.setBorderBottom(HSSFCellStyle.BORDER_THIN);    //设置边框样式
+//       style1.setBorderRight(HSSFCellStyle.BORDER_THIN);
+//       style1.setBorderLeft(HSSFCellStyle.BORDER_THIN);  
+//       style1.setBorderTop(HSSFCellStyle.BORDER_THIN);  
+//       
+//       
+//       HSSFCellStyle style2 = wb.createCellStyle();  
+//       style2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
+//       style2.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+//       style2.setBorderBottom(HSSFCellStyle.BORDER_THIN);    //设置边框样式
+//       style2.setBorderRight(HSSFCellStyle.BORDER_THIN);
+//       style2.setBorderLeft(HSSFCellStyle.BORDER_THIN);  
+//       style2.setBorderTop(HSSFCellStyle.BORDER_THIN);  
+//       
+//       HSSFCellStyle title = wb.createCellStyle();  
+//       title.setBorderBottom(HSSFCellStyle.BORDER_NONE);    //设置边框样式
+//       title.setBorderRight(HSSFCellStyle.BORDER_NONE);
+//       title.setBorderLeft(HSSFCellStyle.BORDER_NONE);  
+//       title.setBorderTop(HSSFCellStyle.BORDER_NONE);  
+//       title.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
+//       title.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 居中格式
+//       HSSFFont font = wb.createFont();
+//       font.setFontName("黑体");
+//       font.setFontHeightInPoints((short) 12);//设置字体大小
+//       font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);//粗体显示
+//       title.setFont(font);//选择需要用到的字体格式
+//       
+//       //盖章
+//       HSSFCellStyle left = wb.createCellStyle();  
+//       left.setBorderBottom(HSSFCellStyle.BORDER_THIN);    //设置边框样式
+//       left.setAlignment(HSSFCellStyle.ALIGN_LEFT); // 居格式
+//       
+//       //日期
+//       HSSFCellStyle right = wb.createCellStyle();  
+//       right.setBorderBottom(HSSFCellStyle.BORDER_THIN);    //设置边框样式
+//       right.setAlignment(HSSFCellStyle.ALIGN_RIGHT); // 格式
+//       
+//       
+//       HSSFCell cell = row.createCell((short) 0);  
+//       cell.setCellValue("项目得分汇总表");  
+//       cell.setCellStyle(title);
+//       cell = row.createCell((short) 1);
+//       cell = row.createCell((short) 2);
+//       cell = row.createCell((short) 3);
+//       cell = row.createCell((short) 4);
+//       cell = row.createCell((short) 5);
+//       cell = row.createCell((short) 6);
+//       cell = row.createCell((short) 7);
+//       cell = row.createCell((short) 8);
+//       cell = row.createCell((short) 9);
+//       cell = row.createCell((short) 10);
+//       cell = row.createCell((short) 11);
+//       cell = row.createCell((short) 12);
+//       cell = row.createCell((short) 13);
+//       cell = row.createCell((short) 14);
+//       cell = row.createCell((short) 15);
+//       cell = row.createCell((short) 16);
+//       cell = row.createCell((short) 17);
+//       cell = row.createCell((short) 18);
+//       cell = row.createCell((short) 19);
+//       cell = row.createCell((short) 20);
+//       
+//       row =sheet.createRow((int) 1);
+//       cell = row.createCell((short) 0);
+//       cell = row.createCell((short) 1);
+//       cell = row.createCell((short) 2);
+//       cell = row.createCell((short) 3);
+//       cell = row.createCell((short) 4);
+//       cell = row.createCell((short) 5);
+//       cell = row.createCell((short) 6);
+//       cell = row.createCell((short) 7);
+//       cell = row.createCell((short) 8);
+//       cell = row.createCell((short) 9);
+//       cell = row.createCell((short) 10);
+//       cell = row.createCell((short) 11);
+//       cell = row.createCell((short) 12);
+//       cell = row.createCell((short) 13);
+//       cell = row.createCell((short) 14);
+//       cell = row.createCell((short) 15);
+//       cell = row.createCell((short) 16);
+//       cell = row.createCell((short) 17);
+//       cell = row.createCell((short) 18);
+//       cell = row.createCell((short) 19);
+//       cell = row.createCell((short) 20);
+//       
+//       row =sheet.createRow((int) 2);
+//       cell = row.createCell((short) 0);  
+//       cell = row.createCell((short) 1);  
+// 			
+// 		if (null != exportUrl) {
+// 			if (ImportData(activityEnterpriseList, row, cell, sheet,style)) {
+// 				download(wb, username, resp);
+// 			}         
+// 		}  
+// 			}
+//     return "/redirect:/region/activity/list";
+// }
+//
+// /**
+// 	 * @author lc
+// 	 * @注释：将page中的订单数据存入excel表格中
+// 	 */
+//  @SuppressWarnings("deprecation")
+// 	public boolean ImportData(List<TdActivityEnterprise> activityEnterpriseList, HSSFRow row, HSSFCell cell, HSSFSheet sheet ,HSSFCellStyle style){
+// 	 	
+//         	for (int i = 0; i < activityEnterpriseList.size(); i++)  
+//             {  
+//         	 				
+//                 row = sheet.createRow((int) i + 4);  
+//                 TdActivityEnterprise tdActivityEnterprise = activityEnterpriseList.get(i);  
+//                 //获取用户信息
+////                 TdUser tdUser = tdUserService.findByUsername(tdOrder.getUsername());
+//                 // 第四步，创建单元格，并设置值  
+//                 cell = row.createCell((short) 0);
+//                 cell.setCellValue(i+1);
+//                 cell.setCellStyle(style); 
+//                 cell = row.createCell((short) 1);
+//                 cell.setCellValue(tdActivityEnterprise.getNumber());
+//                 cell.setCellStyle(style);
+//                 cell = row.createCell((short) 2);
+//                 cell.setCellStyle(style);
+//                 cell.setCellValue(tdActivityEnterprise.getEnterpriseTitle()); 
+//                 cell = row.createCell((short) 3);
+//                 cell.setCellStyle(style);
+//                 cell.setCellValue(tdActivityEnterprise.getContact()); 
+//                 cell = row.createCell((short) 4);
+//                 cell.setCellStyle(style);
+//                 cell.setCellValue(tdActivityEnterprise.getMobile());
+//                 cell = row.createCell((short) 5);
+//                 cell.setCellStyle(style);
+//                 cell.setCellValue(tdActivityEnterprise.getQQ());
+//                 cell = row.createCell((short) 6);
+//                 cell.setCellStyle(style);
+//                 cell.setCellValue(tdActivityEnterprise.getProfile());
+//                 cell = row.createCell((short) 7);
+//                 cell.setCellValue(tdActivityEnterprise.getReason()); 
+//                 cell.setCellStyle(style);
+//              
+//             } 
+//  	return true;
+//  }
+//  /**
+// 	 * @author lc
+// 	 * @注释：文件写入和下载
+// 	 */
+//  public Boolean download(HSSFWorkbook wb, String exportUrl, HttpServletResponse resp){
+//  	 try  
+//       {  
+// 	          FileOutputStream fout = new FileOutputStream(exportUrl+"cqkjxjr02.xls");  
+//// 	          OutputStreamWriter writer = new OutputStreamWriter(fout, "utf8");	                       	     
+// 	          wb.write(fout);  
+// 	          fout.close();
+//       }catch (Exception e)  
+//       {  
+//           e.printStackTrace();  
+//       } 
+//  	 OutputStream os;
+// 		 try {
+// 				os = resp.getOutputStream();
+// 				File file = new File(exportUrl + "cqkjxjr02.xls");
+//               
+//           if (file.exists())
+//               {
+//                 try {
+//                       resp.reset();
+//                       resp.setHeader("Content-Disposition", "attachment; filename="
+//                               + "cqkjxjr02.xls");
+//                       resp.setContentType("application/octet-stream; charset=utf-8");
+//                       os.write(FileUtils.readFileToByteArray(file));
+//                       os.flush();
+//                   } finally {
+//                       if (os != null) {
+//                           os.close();
+//                       }
+//                   }
+//           }
+// 			} catch (IOException e) {
+// 				// TODO Auto-generated catch block
+// 				e.printStackTrace();
+// 		 }
+// 		 return true;	
+//  }
+//   
 }

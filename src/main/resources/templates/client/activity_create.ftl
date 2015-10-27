@@ -423,7 +423,17 @@ window.onload=done;
     				    </#if>
     				</ul>
     			</div>
-    			
+            <!-- 评分汇总 -->
+                    <div>
+                        <span style="margin-top: 6px;">路演结果：</span>
+                        <ul class="active_project_text">
+                            <li>
+                                <a href="/activity/getGrade?activityId=${activity.id?c!''}" target=_blank class="p01">查看排名</a>
+                                <a style="display:block;  width:60px;"></a>
+                            </li>
+                        </ul>
+                    </div>
+    			<!-- 评分汇总 end-->
      <#if pagetype?? && pagetype == "check">
      <#else>
     	<dt style=" margin-top: 40px;" class="dt05">
