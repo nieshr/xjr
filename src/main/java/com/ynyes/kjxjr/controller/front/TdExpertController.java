@@ -268,12 +268,15 @@ public class TdExpertController {
 		theGrade.setThreeGroup(grade.getThreeGroup());
 		theGrade.setTotalGroup(grade.getTotalGroup()); //zhangji
 		tdEnterpriseGradeService.save(theGrade);
-//		TdExpertCoachEnterprise expertCoachEnterprise = tdExpertCoachEnterpriseService.findByExpertIdAndEnterpriseId(expert.getId(), enterprise.getId());
-//		if(null == expertCoachEnterprise){
-//			expertCoachEnterprise = new TdExpertCoachEnterprise();
-//		}
-//		expertCoachEnterprise.setIsGrade(true);
-//		tdExpertCoachEnterpriseService.save(expertCoachEnterprise);
+		TdActivityEnterprise activityEnterprise = tdActivityEnterpriseService.findByActivityIdAndEnterpriseId(activityId, enterprise.getId());
+		activityEnterprise.setIsGrade(true);
+		tdActivityEnterpriseService.save(activityEnterprise);
+		TdExpertCoachEnterprise expertCoachEnterprise = tdExpertCoachEnterpriseService.findByEnterpriseId(enterprise.getId());
+		if(null == expertCoachEnterprise){
+			expertCoachEnterprise = new TdExpertCoachEnterprise();
+		}
+		expertCoachEnterprise.setIsGrade(true);
+		tdExpertCoachEnterpriseService.save(expertCoachEnterprise);
 		res.put("status", 0);
 		return res;
 	}
