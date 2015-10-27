@@ -621,7 +621,7 @@ public String  recommendEnterprise(HttpServletRequest req,
 	   	map.addAttribute("activityId", activityId);
 		map.addAttribute("statusId", statusId);   //选择类型   1：预选；2：推荐
 	 	map.addAttribute("enterprise_page", enterprisePage);
-	 	map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityIdAndStatusId(activityId,2L));
+	 	map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityIdAndStatusIdOrderBySortIdAsc(activityId,2L));
 	    return "/client/region_selectEnterprise";
 }
 
@@ -695,7 +695,20 @@ public  Map<String, Object> regionAddEnterprise(HttpServletRequest req,Long id,L
 //    		}
 //    	}
     		
+    	//排序
+    	List<TdActivityEnterprise> ae = tdActivityEnterpriseService.findByActivityIdAndStatusIdOrderBySortIdAsc(activityId, 2L);
+    	if (null != ae)
+    	{
+    		Long i = 1L ;
+    		for(TdActivityEnterprise item : ae )
+    		{
+    			item.setSortId(i);
+    			i++;
+    			tdActivityEnterpriseService.save(item);
+    		}
+    	}
     	
+    	Long num  = (long)ae.size();
     	
     	if (null != activityenterprise)
     	{
@@ -706,6 +719,7 @@ public  Map<String, Object> regionAddEnterprise(HttpServletRequest req,Long id,L
     		activityenterprise.setType(enterprise.getType());
     		activityenterprise.setStatusId(statusId);
     		activityenterprise.setReason(reason);
+    		activityenterprise.setSortId(num+1);
     		tdActivityEnterpriseService.save(activityenterprise);
     		
 //    		if (2 == statusId)
@@ -1009,20 +1023,34 @@ public String  regionRemoveEnterprise(HttpServletRequest req,Long id,Long activi
     	if (null != activityEnterprise)
     	{
     		activityEnterprise.setStatusId(0L);
+    		activityEnterprise.setSortId(null);
     		tdActivityEnterpriseService.save(activityEnterprise);
     	}
     	
-		if (2 == statusId)
-		{
-        	List<TdEnterpriseGrade> enterpriseGradeList = tdEnterpriseGradeService.findByEnterpriseIdAndActivityId(activityEnterprise.getEnterpriseId(), activityId);
-        
-        	for (TdEnterpriseGrade grade:enterpriseGradeList)
-        	{
-        			grade.setNumber(null);
-        			grade.setEnterpriseId(null);
-        			tdEnterpriseGradeService.save(grade);
-        	}
-		}
+    	//排序
+    	List<TdActivityEnterprise> ae = tdActivityEnterpriseService.findByActivityIdAndStatusIdOrderBySortIdAsc(activityId, 2L);
+    	if (null != ae)
+    	{
+    		Long i = 1L ;
+    		for(TdActivityEnterprise item : ae )
+    		{
+    			item.setSortId(i);
+    			tdActivityEnterpriseService.save(item);
+    			i++;
+    		}
+    	}
+    	
+//		if (2 == statusId)
+//		{
+//        	List<TdEnterpriseGrade> enterpriseGradeList = tdEnterpriseGradeService.findByEnterpriseIdAndActivityId(activityEnterprise.getEnterpriseId(), activityId);
+//        
+//        	for (TdEnterpriseGrade grade:enterpriseGradeList)
+//        	{
+//        			grade.setNumber(null);
+//        			grade.setEnterpriseId(null);
+//        			tdEnterpriseGradeService.save(grade);
+//        	}
+//		}
     }
     
     map.addAttribute("statusId",statusId);

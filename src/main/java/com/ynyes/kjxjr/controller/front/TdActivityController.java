@@ -204,6 +204,67 @@ public class TdActivityController {
         return "/client/activity_enterprise_check";
     }
     
+    //活动排序上升
+    @RequestMapping(value = "/sortUp")
+    @ResponseBody
+    public  Map<String, Object> sortUp(HttpServletRequest req,Long id,Long activityId,
+    		ModelMap map) {
+        Map<String, Object> res = new HashMap<String, Object>();
+        res.put("code", 1);
+    	
+        String username = (String) req.getSession().getAttribute("activityUsername");
+
+        if (null == username) {
+           res.put("msg", "请先登陆");
+           return res;
+        }
+        
+        
+        TdActivityEnterprise activityEnterprise = tdActivityEnterpriseService.findOne(id);
+        Long sortId = activityEnterprise.getSortId(); 
+        TdActivityEnterprise lastActivityEnterprise = tdActivityEnterpriseService.findByActivityIdAndSortId(activityId, sortId-1);
+
+        if( sortId> 1)
+        {
+	        activityEnterprise.setSortId(sortId - 1);
+	        tdActivityEnterpriseService.save(activityEnterprise);
+
+	        lastActivityEnterprise.setSortId(sortId);
+	        tdActivityEnterpriseService.save(lastActivityEnterprise);
+        }
+        res.put("code", 0);
+        return res;
+    }
+    
+    //活动排序下降
+    @RequestMapping(value = "/sortDown")
+    @ResponseBody
+    public  Map<String, Object> sortDown(HttpServletRequest req,Long id,Long activityId,
+    		ModelMap map) {
+        Map<String, Object> res = new HashMap<String, Object>();
+        res.put("code", 1);
+    	
+        String username = (String) req.getSession().getAttribute("activityUsername");
+
+        if (null == username) {
+           res.put("msg", "请先登陆");
+           return res;
+        }
+        
+        
+        TdActivityEnterprise activityEnterprise = tdActivityEnterpriseService.findOne(id);
+        Long sortId = activityEnterprise.getSortId(); 
+        TdActivityEnterprise nextActivityEnterprise = tdActivityEnterpriseService.findByActivityIdAndSortId(activityId, sortId+1);
+
+        activityEnterprise.setSortId(sortId + 1);
+        tdActivityEnterpriseService.save(activityEnterprise);
+
+        nextActivityEnterprise.setSortId(sortId);
+        tdActivityEnterpriseService.save(nextActivityEnterprise);
+
+        res.put("code", 0);
+        return res;
+    }
     
     //查看活动
     @RequestMapping(value = "/check", method = RequestMethod.GET)
@@ -220,7 +281,7 @@ public class TdActivityController {
         if (null != activity)
         {
 	        map.addAttribute("activity", activity);
-	        map.addAttribute("recommend_list" , tdActivityEnterpriseService.findByActivityIdAndStatusId(id, 2L));
+	        map.addAttribute("recommend_list" , tdActivityEnterpriseService.findByActivityIdAndStatusIdOrderBySortIdAsc(id, 2L));
 	        map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityId(id));
 	        map.addAttribute("selected_expert_list", tdActivityExpertService.findByActivityId(id));
         }
@@ -399,10 +460,10 @@ public class TdActivityController {
         
 //        map.addAttribute("activity_page", activityPage);
         
-        TdActivity unfinish = tdActivityService.findByStatusId(0L);
+//        TdActivity unfinish = tdActivityService.findByStatusId(0L);
         
-        map.addAttribute("unfinish", unfinish);
-        map.addAttribute("activity_page", tdActivityService.findByStatusIdOrderByIdDesc(1L,0, ClientConstant.pageSize));
+//        map.addAttribute("unfinish", unfinish);
+        map.addAttribute("activity_page", tdActivityService.findAllOrderByIdDesc(0, ClientConstant.pageSize));
         map.addAttribute("user", user);
         map.addAttribute("pagetype", "delete");
 

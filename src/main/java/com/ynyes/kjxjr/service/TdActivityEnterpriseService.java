@@ -79,6 +79,15 @@ public class TdActivityEnterpriseService {
     	}
     	return repository.findByActivityIdAndEnterpriseId(activityId,enterpriseId);
     }
+    
+    public TdActivityEnterprise findByActivityIdAndSortId(Long activityId,Long sortId)
+    {
+    	if (null == sortId || null ==activityId )
+    	{
+    		return null;
+    	}
+    	return repository.findByActivityIdAndSortId(activityId,sortId);
+    }
     /**
      * 查找
      * 
@@ -100,6 +109,12 @@ public class TdActivityEnterpriseService {
     public List<TdActivityEnterprise> findByActivityIdAndStatusId(Long activityId , Long statusId)
     {
         return (List<TdActivityEnterprise>) repository.findByActivityIdAndStatusId(activityId , statusId);
+    }
+    
+    //区县管理，推荐列表排序
+    public List<TdActivityEnterprise> findByActivityIdAndStatusIdOrderBySortIdAsc(Long activityId , Long statusId)
+    {
+        return (List<TdActivityEnterprise>) repository.findByActivityIdAndStatusIdOrderBySortIdAsc(activityId , statusId);
     }
     
     public Page<TdActivityEnterprise> findAllOrderBySortIdAsc(int page, int size)

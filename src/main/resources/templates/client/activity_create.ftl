@@ -143,6 +143,52 @@ function activityPass(activityId)
          });
 }
 
+
+function sortUp(id , activityId)
+{
+         $.ajax({
+             type: "GET",
+             url: "/activity/sortUp",
+             contentType: "application/json; charset=utf-8",
+             data: {"id":id ,"activityId" : activityId},
+             dataType: "json",
+             success: function(data){
+                         if (data.code == 0)
+                         {
+                             alert("排序成功！");
+                             location.reload();
+                         }
+                         else 
+                         {
+                             alert(data.msg);
+                         }
+                      }
+         });
+}
+
+function sortDown(id , activityId)
+{
+         $.ajax({
+             type: "GET",
+             url: "/activity/sortDown",
+             contentType: "application/json; charset=utf-8",
+             data: {"id":id ,"activityId" : activityId},
+             dataType: "json",
+             success: function(data){
+                         if (data.code == 0)
+                         {
+                             alert("排序成功！");
+                             location.reload();
+                         }
+                         else 
+                         {
+                             alert(data.msg);
+                         }
+                      }
+         });
+}
+
+
 function submitCheck()
 {
     var filedata = $("#file").val();
@@ -321,7 +367,7 @@ window.onload=done;
     				    </#if>
     				</ul>
     			</div>
- 
+ 				<#if recommend_list??>
     			<div>
     				<span style="margin-top: 10px;">推荐项目：</span>
     				<ul class="active_project_text">
@@ -337,6 +383,13 @@ window.onload=done;
 		                            <a href="/activity/getCoach?enterpriseId=${item.enterpriseId?c!''}&activityId=${item.activityId?c!''}">分配路演辅导</a>
 		                            <a>丨</a>
 		                            <a <#if item.pptUrl??>href="${item.pptUrl}" <#else>style="color:#666;"</#if>>下载PPT</a>
+		                            <a>丨</a>
+		                            <#if item_has_next>
+		                           	 	<a href="javascript:sortDown(${item.id?c!''} , ${item.activityId?c!''});">-</a>
+		                            </#if>		                            
+		                            <#if item_index != 0>
+		                           	 	<a href="javascript:sortUp(${item.id?c!''} , ${item.activityId?c!''});">+</a>
+		                            </#if>
 		                            <a style="display:block;  width:80px;"></a>
 		                            <p class="p02">辅导专家，李专家</p>
 		    						
@@ -347,11 +400,13 @@ window.onload=done;
                         	<input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#e67817;color:#fff;" type="button" onclick="location.href='/download/data?name=${activity.fileUrl!''}'" value="推荐表下载" />
                         	<input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#e67817;color:#fff; " type="button" onclick="javascript:activityPass(${activity.id?c!''});" value="通过审核" />
                         <#else>
-    					   <input id="selectEnterprise" style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background:white url(images/active_add_project.png) no-repeat 10px; padding-left: 13px;" type="button" value="添加项目" />
+                        	
+    					    	<input id="selectEnterprise" style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background:white url(images/active_add_project.png) no-repeat 10px; padding-left: 13px;" type="button" value="添加项目" />
+    				    
     				    </#if>
     				</ul>
     			</div> 
-    			
+    			</#if>
     			<div style="margin-top:50px;">
     				<span style="margin-top: 10px;">评委专家：</span>
     				<ul class="active_project_text">
