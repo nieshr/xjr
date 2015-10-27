@@ -441,13 +441,13 @@ public class TdActivityController {
         
         
         TdActivity activity = tdActivityService.findOne(id);
-        Long statusId = activity.getStatusId();
-        if(0 == statusId)
-        {
+//        Long statusId = activity.getStatusId();
+//        if(0 == statusId)
+//        {
         	activity.setStatusEn(1L);
 
         	tdActivityService.save(activity);
-        }
+//        }
         map.addAttribute("activity", activity);
         map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityId(activity.getId()));
         map.addAttribute("selected_expert_list", tdActivityExpertService.findByActivityId(activity.getId()));
