@@ -81,7 +81,7 @@
   <!-- banner -->
   <div class="banner1">
     <a href="/enterprise/check">在线征集</a>
-    <img src="images/QR_code.png" alt="二维码" />
+    <img src="/client/l_images/QR_code.png" alt="二维码" />
   </div>
   <!-- banner END -->
 
@@ -89,7 +89,7 @@
   
 
 
- 
+
   <div class="section sect2">
             <div class="section1">
                 <div class="div1">
@@ -105,7 +105,7 @@
                                 <#if ("organization_level1_"+item.id)?eval??>
                                     <#list ("organization_level1_"+item.id)?eval as article>
                                         <#if article_index < 1>
-                                            <p>${atricle.title!''}</p>
+                                            <p>${article.title!''}</p>
                                         </#if>
                                     </#list>
                                 </#if>
@@ -115,7 +115,7 @@
                             <#if ("organization_level1_"+item.id)?eval??>
                                   <#list ("organization_level1_"+item.id)?eval as article>
                                         <#if article_index < 5>
-                                            <p>${atricle.title!''}</p>
+                                            <p>${article.title!''}</p>
                                         </#if>
                                   </#list>
                             </#if>                              

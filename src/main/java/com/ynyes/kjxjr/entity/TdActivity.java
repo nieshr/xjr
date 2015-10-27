@@ -58,7 +58,7 @@ public class TdActivity {
     @Column
     private String theme;
     
-    //活动创建状态： 0未完成；1已完成；
+    //活动状态： 0未审核；1已审核；
     @Column
     private Long statusId;
     

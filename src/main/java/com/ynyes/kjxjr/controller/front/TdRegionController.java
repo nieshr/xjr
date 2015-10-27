@@ -344,7 +344,7 @@ public class TdRegionController {
 
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
         TdRegionAdmin regionAdmin = tdRegionAdminService.findbyUsername(username);
-        Page<TdActivity> activityPage = tdActivityService.findByRegionAndStatusIdAndPrepareOffAfterAndPrepareOnBeforeOrderByIdDesc(regionAdmin.getTitle() , 1L ,page, ClientConstant.pageSize);
+        Page<TdActivity> activityPage = tdActivityService.findByRegionAndPrepareOffAfterAndPrepareOnBeforeOrderByIdDesc(regionAdmin.getTitle() , page, ClientConstant.pageSize);
         
         
         map.addAttribute("activity_page", activityPage);
@@ -627,19 +627,24 @@ public String  recommendEnterprise(HttpServletRequest req,
 
 
 @RequestMapping(value = "/addEnterprise")
-public String  regionAddEnterprise(HttpServletRequest req,Long id,Long activityId,Long statusId,String reason,
+@ResponseBody
+public  Map<String, Object> regionAddEnterprise(HttpServletRequest req,Long id,Long activityId,Long statusId,String reason,
 		ModelMap map) {
+    Map<String, Object> res = new HashMap<String, Object>();
+    res.put("code", 1);
+	
     String username = (String) req.getSession().getAttribute("regionUsername");
 
     if (null == username) {
-        return "redirect:/login";
+       res.put("msg", "请先登陆");
+       return res;
     }
 	List<TdActivityEnterprise> selectedEnterpriseList = tdActivityEnterpriseService.findByActivityIdAndStatusId(activityId,statusId);
     
 	if (statusId == 2 &&selectedEnterpriseList.size() >19)
 	{
-		Long numwarn = 1L;
-	    return "redirect:/region/recommendEnterprise"+"?id="+activityId+"&numwarn="+numwarn;
+		res.put("msg", "推荐最大数量为20！");
+		return res;
 	}
   
     if(null != id&&null !=activityId&&null !=statusId)
@@ -648,47 +653,47 @@ public String  regionAddEnterprise(HttpServletRequest req,Long id,Long activityI
     	TdEnterprise enterprise = tdEnterpriseService.findOne(activityenterprise.getEnterpriseId());
     	TdActivity activity = tdActivityService.findOne(activityId);
     	
-    	//由于创建活动的选专家步骤就生成了一个不带企业字段空评分表，这边选推荐时需要重新刷新一下。不然万一那边又改动了，中间表就对不上了。
-    	 List<TdActivityEnterprise> aenlist = tdActivityEnterpriseService.findByActivityIdAndStatusId(activityId,statusId);
-    	 List<TdActivityExpert> aexlist = tdActivityExpertService.findByActivityId(activityId);
-    	for (TdActivityExpert aex:aexlist)
-    	{
-    		List<TdEnterpriseGrade> gradelist = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderByNumberAsc(aex.getExpertId(), activityId);
-    		//清空评分表的企业数据
-    		for (TdEnterpriseGrade grade:gradelist)
-    		{
-    			grade.setEnterpriseId(null);
-    			grade.setNumber(null);
-    			tdEnterpriseGradeService.save(grade);
-    		}
-    	}	
-    	if (null != aenlist)
-    	{
-    		for (TdActivityEnterprise ae : aenlist)
-    		{
-    			//重新填数据
-            	List<TdEnterpriseGrade> enterpriseGradeList = tdEnterpriseGradeService.findByActivityIdOrderByIdAsc(activityId);
-            	int i = 0;
-           
-            	for (TdEnterpriseGrade grade : enterpriseGradeList)
-            	{
-            		//每隔20个写入一次
-            		if (  i % 20== 0)
-            			if(null == grade.getNumber())
-            		{
-            			grade.setNumber(ae.getNumber());
-            			grade.setEnterpriseId(ae.getEnterpriseId());
-            			grade.setActivityId(activityId);
-            			tdEnterpriseGradeService.save(grade);
-            		}
-            		else if (null != grade.getNumber())
-            		{
-            			i = i-1;
-            		}
-            		i = i+1; 
-            	}
-    		}
-    	}
+//    	//由于创建活动的选专家步骤就生成了一个不带企业字段空评分表，这边选推荐时需要重新刷新一下。不然万一那边又改动了，中间表就对不上了。
+//    	 List<TdActivityEnterprise> aenlist = tdActivityEnterpriseService.findByActivityIdAndStatusId(activityId,statusId);
+//    	 List<TdActivityExpert> aexlist = tdActivityExpertService.findByActivityId(activityId);
+//    	for (TdActivityExpert aex:aexlist)
+//    	{
+//    		List<TdEnterpriseGrade> gradelist = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderByNumberAsc(aex.getExpertId(), activityId);
+//    		//清空评分表的企业数据
+//    		for (TdEnterpriseGrade grade:gradelist)
+//    		{
+//    			grade.setEnterpriseId(null);
+//    			grade.setNumber(null);
+//    			tdEnterpriseGradeService.save(grade);
+//    		}
+//    	}	
+//    	if (null != aenlist)
+//    	{
+//    		for (TdActivityEnterprise ae : aenlist)
+//    		{
+//    			//重新填数据
+//            	List<TdEnterpriseGrade> enterpriseGradeList = tdEnterpriseGradeService.findByActivityIdOrderByIdAsc(activityId);
+//            	int i = 0;
+//           
+//            	for (TdEnterpriseGrade grade : enterpriseGradeList)
+//            	{
+//            		//每隔20个写入一次
+//            		if (  i % 20== 0)
+//            			if(null == grade.getNumber())
+//            		{
+//            			grade.setNumber(ae.getNumber());
+//            			grade.setEnterpriseId(ae.getEnterpriseId());
+//            			grade.setActivityId(activityId);
+//            			tdEnterpriseGradeService.save(grade);
+//            		}
+//            		else if (null != grade.getNumber())
+//            		{
+//            			i = i-1;
+//            		}
+//            		i = i+1; 
+//            	}
+//    		}
+//    	}
     		
     	
     	
@@ -703,36 +708,37 @@ public String  regionAddEnterprise(HttpServletRequest req,Long id,Long activityI
     		activityenterprise.setReason(reason);
     		tdActivityEnterpriseService.save(activityenterprise);
     		
-    		if (2 == statusId)
-    		{
-	        	List<TdEnterpriseGrade> enterpriseGradeList = tdEnterpriseGradeService.findByActivityIdOrderByIdAsc(activityId);
-	        	int i = 0;
-	       
-	        	for (TdEnterpriseGrade grade : enterpriseGradeList)
-	        	{
-	        		//每隔20个写入一次
-	        		if (  i % 20== 0)
-	        			if(null == grade.getNumber())
-	        		{
-	        			grade.setNumber(enterprise.getNumber());
-	        			grade.setEnterpriseId(activityenterprise.getEnterpriseId());
-	        			grade.setActivityId(activityId);
-	        			tdEnterpriseGradeService.save(grade);
-	        		}
-	        		else if (null != grade.getNumber())
-	        		{
-	        			i = i-1;
-	        		}
-	        		i = i+1; 
-	        	}
-    		}
+//    		if (2 == statusId)
+//    		{
+//	        	List<TdEnterpriseGrade> enterpriseGradeList = tdEnterpriseGradeService.findByActivityIdOrderByIdAsc(activityId);
+//	        	int i = 0;
+//	       
+//	        	for (TdEnterpriseGrade grade : enterpriseGradeList)
+//	        	{
+//	        		//每隔20个写入一次
+//	        		if (  i % 20== 0)
+//	        			if(null == grade.getNumber())
+//	        		{
+//	        			grade.setNumber(enterprise.getNumber());
+//	        			grade.setEnterpriseId(activityenterprise.getEnterpriseId());
+//	        			grade.setActivityId(activityId);
+//	        			tdEnterpriseGradeService.save(grade);
+//	        		}
+//	        		else if (null != grade.getNumber())
+//	        		{
+//	        			i = i-1;
+//	        		}
+//	        		i = i+1; 
+//	        	}
+//    		}
     	}
     }
     
-    map.addAttribute("statusId", statusId);
-    map.addAttribute("activityId",activityId);
-    map.addAttribute("selected_enterprise_list",  tdActivityEnterpriseService.findByActivityIdAndStatusId(activityId,statusId));
-    return "/client/region_selected_enterprise";
+//    map.addAttribute("statusId", statusId);
+//    map.addAttribute("activityId",activityId);
+//    map.addAttribute("selected_enterprise_list",  tdActivityEnterpriseService.findByActivityIdAndStatusId(activityId,statusId));
+    res.put("code", 0);
+    return res;
 }
 /*
  * 预选选项目页面-筛选

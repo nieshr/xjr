@@ -35,6 +35,7 @@ window.onload=done;
 function numwarn()
 {
 	alert("推荐数已达20个！");
+	location.href='/region/recommendEnterprise?id='+${activityId?c!''};
 }
 <#if numwarn??&&numwarn == 1>
 window.onload=numwarn;
@@ -43,7 +44,7 @@ window.onload=numwarn;
 function warnmsg()
 {
     alert("请选择20个项目！");
-    
+    location.href='/region/recommendEnterprise?id='+${activityId?c!''};
 }
 <#if numwarn??&&numwarn ==2>
 window.onload=warnmsg;
@@ -72,11 +73,13 @@ function addEnterprise1(id,activityId,statusId)
       url:"/region/addEnterprise",
       data:{"id":id,"activityId":activityId,"statusId":statusId,"reason":reason},
       success:function(data){
-      <#if !numfull??>
-          $("#selectedEnterprise").html(data);
-        
-          location.reload();
-            </#if>
+		if (data.code == 1)
+		{
+			alert(data.msg);
+		}
+		else{
+			location.reload();
+		}
       }
   });
 }

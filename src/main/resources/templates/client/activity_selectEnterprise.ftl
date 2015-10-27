@@ -50,6 +50,7 @@
         </dl>
         <div class="area_choice">
         	<form action="/activity/selectEnterprise" >
+        	<input type="hidden" name="activityId" value="${activityId?c!''}" />
         		<span>关键字:</span>
         		<input style="margin:0 14px 0 0;" class="area_text" name="keywords" type="text" value="<#if keywords??&&keywords?length gt 0>${keywords}</#if>" />
         		<select name="area" style="margin-left: 0px;">

@@ -164,7 +164,7 @@ public class TdClientUploadController {
             if(null == activity){
             	activity = new TdActivity();
             }
-            activity.setFileUrl(fileName);
+            activity.setDownload(fileName);
             tdActivityService.save(activity);
       
 

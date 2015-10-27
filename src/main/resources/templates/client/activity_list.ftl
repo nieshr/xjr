@@ -85,8 +85,9 @@ function deleteConfirm() {
 			<table class="new_list">
 	        	<tr class="list_title">
 	        		<th width="30%">活动</th>
-	        		<th width="20%">地区</th>
-	        		<th width="20%">活动类型</th>
+	        		<th width="13%">地址</th>
+	        		<th width="13%">活动类型</th>
+	        		<th width="13%">状态</th>
 	        		<th width="30%">操作</th>
 	        	</tr>
 	        <#if activity_page??>
@@ -98,9 +99,14 @@ function deleteConfirm() {
 			        		<input type="hidden" name="listId" id="listId" value="${item.id}">
 		        		</td>
 		        		-->
-		        		<td>${item.title!''}<#if item.statusId == 0>（未完成）</#if></td>
+		        		<td>${item.title!''}<#if item.statusEx??&&item.statusEx == 0 || !item.statusEx??><img src="/client/images/n11.gif" style="top:2px;left:3px;" title="未选择评委" alt="未选择评委" /></#if></td>
 		        		<td style="color:#0ab2cb;">${item.address!''}</td>
 		        		<td style="color:#e67817;">${item.activityType!''}</td>
+		        		<#if item.statusId?? && item.statusId == 1>
+		        			<td style="color:green;">已审核 </td>
+		        		<#else>
+		        			<td style="color:purple;"> 待审核 </td>
+		        		</#if>
 		        		<td><a href="/activity/edit?id=${item.id?c!''}">管理</a>丨<a href="/activity/check?id=${item.id?c!''}">查看</a>丨<a  onclick="javascript:deleteConfirm();" href="/activity/delete?id=${item.id?c!''}">删除</a></td>
 		        	</tr>
 	        	</#list>
