@@ -117,6 +117,7 @@ public class TdLoginController {
 
 			System.err.println(user);
 			Integer roleId = user.getRoleId().intValue();
+			request.getSession().setMaxInactiveInterval(60 * 60 * 2);
 			switch (roleId) {
 			// 企业项目
 			case 1:
