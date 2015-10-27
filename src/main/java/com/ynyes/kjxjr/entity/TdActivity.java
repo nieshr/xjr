@@ -58,7 +58,7 @@ public class TdActivity {
     @Column
     private String theme;
     
-    //活动创建状态： 0未完成；1已完成；
+    //活动状态： 0未审核；1已审核；
     @Column
     private Long statusId;
     
@@ -102,11 +102,11 @@ public class TdActivity {
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date eventEnd;
     
-    // 文件
+    // 推荐表
     @Column
     private String fileUrl;
     
-    // 下载
+    // 相关下载
     @Column
     private String download;
     

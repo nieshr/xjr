@@ -51,6 +51,10 @@ public class TdExpertCoachEnterprise {
 	@Column
 	private String type;
 	
+	//活动类型
+	@Column
+	private String activityType;
+	
 	public String getType() {
 		return type;
 	}
@@ -121,6 +125,14 @@ public class TdExpertCoachEnterprise {
 
 	public void setPantent(String pantent) {
 		this.pantent = pantent;
+	}
+
+	public String getActivityType() {
+		return activityType;
+	}
+
+	public void setActivityType(String activityType) {
+		this.activityType = activityType;
 	}
 
 }

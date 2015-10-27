@@ -164,7 +164,7 @@ public class TdClientUploadController {
             if(null == activity){
             	activity = new TdActivity();
             }
-            activity.setFileUrl(fileName);
+            activity.setDownload(fileName);
             tdActivityService.save(activity);
       
 
@@ -173,7 +173,7 @@ public class TdClientUploadController {
         }
         
         Long done = 1L;
-        return "redirect:/activity/create?done="+done
+        return "redirect:/activity/edit?done="+done
         		+"&id="+id;
 
     }
@@ -222,7 +222,7 @@ public class TdClientUploadController {
         }
         
         Long done = 1L;
-        return "redirect:/activity/create?done="+done
+        return "redirect:/activity/edit?done="+done
         		+"&id="+id;
 
     }	

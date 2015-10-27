@@ -61,7 +61,13 @@
         <#if activity_page??>
             <#list activity_page.content as item>
                 <tr>
-                    <td>${item.title!''}</td>
+                    <td>${item.title!''} 
+                    <#if item.statusId??&&item.statusId == 0>
+                    	<img src="/client/images/n00.gif" style="top:2px;left:3px;" title="未审核" alt="未审核" />
+                    <#elseif  item.statusId??&&item.statusId == 1>
+                    	<img src="/client/images/n0.png" style="top:2px;left:3px;" title="已审核" alt="已审核" />
+                    </#if>
+                    </td>
                     <td style="color:#0ab2cb;">${item.date?string("yyyy-MM-dd")!''}<td>
                     <td style="color:#e67817;">${item.prepareOn?string("MM-dd HH:mm")!''}</td>
                     <td style="color:#529c15;">${item.prepareOff?string("MM-dd HH:mm")!''}</td>

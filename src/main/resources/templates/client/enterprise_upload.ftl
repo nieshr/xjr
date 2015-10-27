@@ -23,13 +23,33 @@ function submitCheck()
 {
 	var filedata = $("#file").val();
 
+	var target = document.getElementById("file");	
+	var isIE = /msie/i.test(navigator.userAgent) && !window.opera;
+	var fileSize = 0;
+	if (isIE && !target.files)
+	{
+		var filePath = target.value;
+		var fileSystem = new ActiveXObject("Scripting.FileSystemObject");
+		var file = fileSystem.GetFile (filePath);
+		fileSize = file.Size;
+	} else {
+		fileSize = target.files[0].size;	
+	}
+
+
 	if (filedata == "")
 	{
 		alert("请添加文件！")
 	}
 	else{
+		if (fileSize >= 1024*1024)
+		{
+			alert("上传文件不能大于1M！");
+		}else{
 		$("#upload").submit();
+		}
 	}	
+
 }
 </script>
 <body>
@@ -75,7 +95,7 @@ function submitCheck()
         <form id="upload" enctype="multipart/form-data" action="/client/enterprise/upload" method="post">
         <dl class="apply_step2" >
             <input type="hidden" id="id" name="id" value="<#if id??>${id?c!''}</#if>"></input>
-				<dt>*点击选择文件，上传已经打印并盖章的报名表扫描文件</dt>
+				<dt>*点击选择文件，上传已经打印并盖章的报名表扫描文件(小于1M)</dt>
 				<dd ><input id="file" style="margin-top: 20px ; background : #fff;color:#333;" name="Filedata" type="file" value="" /></dd>
 		</dl>	
 		<dl class="apply_step2" style="margin-top:20px ; ">

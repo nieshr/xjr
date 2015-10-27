@@ -9,24 +9,54 @@
 <title>科技小巨人-首页</title>
 <!--css-->
 <link rel="shortcut icon" href="/images/icon.ico" />
-<link href="/client/css/swiper.min.css" rel="stylesheet" type="text/css" >
 <link href="/client/css/l_base.css" rel="stylesheet" type="text/css" />
-<link href="/client/css/l_main.css" rel="stylesheet" type="text/css" />
+<link href="/client/css/jquery.fullPage.css" rel="stylesheet" type="text/css" />
+<link href="/client/css/index.css" rel="stylesheet" type="text/css" />
 
-<script type="text/javascript" src="/client/js/jquery-1.9.1.min.js"></script>
-<script type="text/javascript">
-    function collectOnline(){
-        
-    }
-</script>
 
 </head>
 <body>
  
-<div class="swiper-container">
-    <div class="swiper-wrapper">
-        <div class="swiper-slide" id="s1">
-        <div id="go_top" class="first">
+<!--代码部分begin-->
+
+<!-- 右侧圆点 -->
+<ul id="menu">
+  <li data-menuanchor="page1" class="active"><a href="#page1">1</a></li>
+  <li data-menuanchor="page2"><a href="#page2">2</a></li>
+  <li data-menuanchor="page3"><a href="#page3">3</a></li>
+  <li data-menuanchor="page4"><a href="#page4">4</a></li>
+  <li data-menuanchor="page5"><a href="#page5">5</a></li>
+</ul>
+<!-- 右侧圆点 END-->
+
+ <!--右侧按钮-->
+    <div class="swiper-pagination"></div>
+    <!--右侧浮动导航开始-->
+    <div class="floatbox">
+      <a id="BizQQWPA" href="http://wpa.qq.com/msgrd?v=3&uin=1981148933&site=qq&menu=yes" target="_blank" title="申报入口">
+        <img src="/client/l_images/float_ico02.png" width="42" height="42" alt="申报入口">
+      </a>
+      <a href="http://weibo.com/ynsite" title="搜索" target="_blank" rel="nofollow">
+        <img src="/client/l_images/float_ico01.png" width="42" height="42" alt="搜索">
+      </a>
+      <a id="BizQQWPA" href="http://wpa.qq.com/msgrd?v=3&uin=1981148933&site=qq&menu=yes" target="_blank" title="在线客服">
+        <img src="/client/l_images/float_ico06.png" width="42" height="42" alt="在线客服">
+      </a>
+      <a href="javascript:loginWinOpen('weixin_win','myselfbox',200);" title="官方微信">
+        <img src="/client/l_images/float_ico03.png" width="42" height="42" alt="官方微信">
+        <span class="qr"><img src="/client/l_images/QR_code.png"></span>
+      </a>
+      
+      <a title="客服电话">
+        <img src="/client/l_images/float_ico04.png" width="42" height="42" alt="客服电话">
+        <span class="phone_num">023-8888 8888</span>
+      </a>
+      <a href="#go_top" title="到顶部">
+        <img src="/client/l_images/float_ico05.png" width="42" height="42" alt="到顶部">
+      </a>
+    </div>
+    <!--右侧浮动导航结束-->
+<div class="section sect1">
             <!-- 导航 -->
               <div class="wrapper">
                 <ul class="wrapper-nav" id="wrapper-nav">
@@ -48,21 +78,19 @@
             <!-- 导航end -->
 
             <div class="clear"></div>
+  <!-- banner -->
+  <div class="banner1">
+    <a href="/enterprise/check">在线征集</a>
+    <img src="/client/l_images/QR_code.png" alt="二维码" />
+  </div>
+  <!-- banner END -->
 
-            <div class="banner1">
-                <img src="/client/l_images/QR_code.png" alt="二维码" />
-                <div style="position:absolute; left:0px; top:723px; width:100%;" >
-                    <a style="margin:0 auto; border:white 2px solid;height:64px;width:280px; display:block;line-height: 64px; border-radius: 10px; color:white; font-size:38px;" href="/enterprise/check">在线征集</a>
-                </div>
-            </div>
+</div>
+  
 
-        </div>
-            </div>
-<!--  
-        <div class="clear"></div>
 
-        <div class="swiper-slide" id="s2">
-        <div class="second">
+
+  <div class="section sect2">
             <div class="section1">
                 <div class="div1">
                     <p class="p1">组织体系</p>
@@ -77,7 +105,7 @@
                                 <#if ("organization_level1_"+item.id)?eval??>
                                     <#list ("organization_level1_"+item.id)?eval as article>
                                         <#if article_index < 1>
-                                            <p>${atricle.title!''}</p>
+                                            <p>${article.title!''}</p>
                                         </#if>
                                     </#list>
                                 </#if>
@@ -87,7 +115,7 @@
                             <#if ("organization_level1_"+item.id)?eval??>
                                   <#list ("organization_level1_"+item.id)?eval as article>
                                         <#if article_index < 5>
-                                            <p>${atricle.title!''}</p>
+                                            <p>${article.title!''}</p>
                                         </#if>
                                   </#list>
                             </#if>                              
@@ -98,7 +126,7 @@
                                 <#if ("organization_level1_"+item.id)?eval??>
                                     <#list ("organization_level1_"+item.id)?eval as article>
                                         <#if article_index < 6>
-                                            <p>${atricle.title!''}</p>
+                                            <p>${article.title!''}</p>
                                         </#if>
                                     </#list>
                                 </#if>                                
@@ -108,7 +136,7 @@
                                 <#if ("organization_level1_"+item.id)?eval??>
                                     <#list ("organization_level1_"+item.id)?eval as article>
                                         <#if article_index gt 5>
-                                            <p>${atricle.title!''}</p>
+                                            <p>${article.title!''}</p>
                                         </#if>
                                     </#list>
                                 </#if>                                
@@ -119,7 +147,7 @@
                                 <#if ("organization_level1_"+item.id)?eval??>
                                     <#list ("organization_level1_"+item.id)?eval as article>
                                         <#if article_index < 6>
-                                            <p>${atricle.title!''}</p>
+                                            <p>${article.title!''}</p>
                                         </#if>
                                     </#list>
                                 </#if>
@@ -144,10 +172,9 @@
                 </div>
             </div>
         </div>
-        </div>
 
-        <div class="swiper-slide" id="s3">
-            <div class="three">
+
+	<div class="section sect3">
                 <div class="section1">
                     <!-- <div>speed</div> -->
                     <div class="parnet">
@@ -248,10 +275,8 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="swiper-slide" id="s4">
-            <div class="four">
+	<div class="section sect4">
                 <div class="sect1">
                     <div class="div1">
                         <p class="p1">新闻动态</p>
@@ -316,65 +341,27 @@ function showVideo${item_index}(){
                     </ol>
                 </div>
             </div>
-        </div>
 
-        <div class="swiper-slide footer" id="s5" >
-            <div class="five">
+
+ 	<div class="section sect5">
                 <!-- 底部 -->
                 <#include "/client/news_common_footer.ftl" />
                 <!-- 底部end -->
             </div>
-        </div>
--->
 
-    </div>
-    <!--右侧按钮-->
-    <div class="swiper-pagination"></div>
-    <!--右侧浮动导航开始-->
-    <div class="floatbox">
-      <a id="BizQQWPA" href="http://wpa.qq.com/msgrd?v=3&uin=1981148933&site=qq&menu=yes" target="_blank" title="申报入口">
-        <img src="/client/l_images/float_ico02.png" width="42" height="42" alt="申报入口">
-      </a>
-      <a href="http://weibo.com/ynsite" title="搜索" target="_blank" rel="nofollow">
-        <img src="/client/l_images/float_ico01.png" width="42" height="42" alt="搜索">
-      </a>
-      <a id="BizQQWPA" href="http://wpa.qq.com/msgrd?v=3&uin=1981148933&site=qq&menu=yes" target="_blank" title="在线客服">
-        <img src="/client/l_images/float_ico06.png" width="42" height="42" alt="在线客服">
-      </a>
-      <a href="javascript:loginWinOpen('weixin_win','myselfbox',200);" title="官方微信">
-        <img src="/client/l_images/float_ico03.png" width="42" height="42" alt="官方微信">
-        <span class="qr"><img src="/client/l_images/QR_code.png"></span>
-      </a>
-      
-      <a title="客服电话">
-        <img src="/client/l_images/float_ico04.png" width="42" height="42" alt="客服电话">
-        <span class="phone_num">023-8888 8888</span>
-      </a>
-      <a href="#go_top" title="到顶部">
-        <img src="/client/l_images/float_ico05.png" width="42" height="42" alt="到顶部">
-      </a>
-    </div>
-    <!--右侧浮动导航结束-->
-</div>
-    <!--底部按钮-->
-    <div class="swiper-button-next">
-        <div class="next-but-arraw"><img src="/client/l_images/btn-next.png"></div>
-    </div>
- 
-    <script src="/client/js/swiper.min.js"></script>
-    <script type="text/javascript">
-        var swiper = new Swiper('.swiper-container', {
-            pagination: '.swiper-pagination',
-            paginationClickable: true,
-            direction: 'vertical',
-    		// 如果需要前进后退按钮
-    		nextButton:'.swiper-button-next',
-    		keyboardControl:true,
-    		mousewheelControl:true,
-    		direction:'vertical',
-    		mousewheelForceToAxis:true,
-    		//自动滚动 autoplay:3000
-        });
-    </script>
+<script src="/client/js/jquery.min.js"></script>
+<script src="/client/js/jquery-ui-1.10.3.min.js"></script>
+<script src="/client/js/jquery.fullPage.min.js"></script>
+<script>
+  $(function(){
+    $.fn.fullpage({
+      // slidesColor: ['#009999', '#CC6600', '#CCCC00', '#66CC66', '#CC3366'],
+      anchors: ['page1', 'page2', 'page3', 'page4', 'page5'],
+      menu: '#menu'
+    });
+  });
+</script>
+<!--代码部分end-->
+
 </body>
 </html>

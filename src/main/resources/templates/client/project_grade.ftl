@@ -572,7 +572,7 @@
 			<th></th>
 			<#if grade_list??>
     			<#list grade_list as item>
-    			     <td><input type="button" onClick="submitPoint('${item_index}','${item.number}');" value="确定" /></td>
+    			     <td><input type="button" onClick="submitPoint('${item_index}','${item.number!''}');" value="确定" /></td>
     			</#list>
 		    </#if>
 		</tr>	

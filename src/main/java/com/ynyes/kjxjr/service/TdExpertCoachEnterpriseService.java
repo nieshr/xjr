@@ -61,4 +61,11 @@ public class TdExpertCoachEnterpriseService {
 		}
 		return repository.findByExpertIdAndEnterpriseId(expertId, enterpriseId);
 	}
+	
+	public TdExpertCoachEnterprise findByEnterpriseId(Long enterpriseId){
+		if(null == enterpriseId){
+			return null;
+		}
+		return repository.findByEnterpriseId(enterpriseId);
+	}
 }

@@ -31,15 +31,18 @@ import com.ynyes.kjxjr.entity.TdEnterprise;
 import com.ynyes.kjxjr.entity.TdEnterpriseGrade;
 import com.ynyes.kjxjr.entity.TdExpert;
 import com.ynyes.kjxjr.entity.TdExpertCoachEnterprise;
+import com.ynyes.kjxjr.entity.TdUser;
 import com.ynyes.kjxjr.service.TdActivityEnterpriseService;
 import com.ynyes.kjxjr.service.TdActivityExpertService;
 import com.ynyes.kjxjr.service.TdActivityService;
 import com.ynyes.kjxjr.service.TdActivityTypeService;
 import com.ynyes.kjxjr.service.TdCoachContentService;
+import com.ynyes.kjxjr.service.TdCommonService;
 import com.ynyes.kjxjr.service.TdEnterpriseGradeService;
 import com.ynyes.kjxjr.service.TdEnterpriseService;
 import com.ynyes.kjxjr.service.TdExpertCoachEnterpriseService;
 import com.ynyes.kjxjr.service.TdExpertService;
+import com.ynyes.kjxjr.service.TdUserService;
 import com.ynyes.kjxjr.util.SiteMagConstant;
 
 @Controller
@@ -75,6 +78,12 @@ public class TdExpertController {
 	@Autowired
 	private TdEnterpriseService tdEnterpriseService;
 	
+	@Autowired
+	private TdUserService tdUserService;
+	
+	@Autowired
+	private TdCommonService tdCommonService;
+	
 	@RequestMapping(value = "/enterprise/list")
 	public String execute(HttpServletRequest req, ModelMap map) {
 		String expertUsername = (String) req.getSession().getAttribute("expertUsername");
@@ -102,17 +111,39 @@ public class TdExpertController {
 		if (null == expertUsername) {
 			return "/client/login";
 		}
-		List<TdActivityType> all_type = tdActivityTypeService.findAll();
+		
+		tdCommonService.setHeader(map, req);
+		
+		TdUser user = tdUserService.findByUsernameAndIsEnabled(expertUsername);
+		TdExpert expert = tdExpertService.findbyUsername(expertUsername);
+		
 		TdActivity activity = tdActivityService.findOne(id);
-		List<TdActivityEnterprise> enterprise_resources = tdActivityEnterpriseService
-				.findByActivityId(activity.getId());
-		List<TdActivityExpert> experts = tdActivityExpertService.findByActivityId(activity.getId());
-		map.addAttribute("experts", experts);
-		map.addAttribute("enterprise_resources", enterprise_resources);
-		map.addAttribute("resources", activity.getDownload());
-		map.addAttribute("all_type", all_type);
-		map.addAttribute("activity", activity);
-		return "/client/expert_activity_detail";
+        if (null != activity)
+        {
+	        map.addAttribute("activity", activity);
+	        map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityId(id));
+	        map.addAttribute("selected_expert_list", tdActivityExpertService.findByActivityId(id));
+        }
+		
+//		List<TdActivityType> all_type = tdActivityTypeService.findAll();
+//		TdActivity activity = tdActivityService.findOne(id);
+//		List<TdActivityEnterprise> enterprise_resources = tdActivityEnterpriseService
+//				.findByActivityId(activity.getId());
+//		List<TdActivityExpert> experts = tdActivityExpertService.findByActivityId(activity.getId());
+        
+        map.addAttribute("user", user);
+        map.addAttribute("mark", "expert");
+        map.addAttribute("pagetype", "check");
+        map.addAttribute("expert", expert);
+        return "/client/activity_create";
+        
+        
+//		map.addAttribute("experts", expert);
+//		map.addAttribute("enterprise_resources", enterprise_resources);
+//		map.addAttribute("resources", activity.getDownload());
+//		map.addAttribute("all_type", all_type);
+//		map.addAttribute("activity", activity);
+//		return "/client/expert_activity_detail";
 	}
 
 	@RequestMapping(value = "/download", method = RequestMethod.GET)
@@ -236,13 +267,17 @@ public class TdExpertController {
 		theGrade.setTwoGroup(grade.getTwoGroup());
 		theGrade.setThreeGroup(grade.getThreeGroup());
 		theGrade.setTotalGroup(grade.getTotalGroup()); //zhangji
+		theGrade.setIsGrade(true);
 		tdEnterpriseGradeService.save(theGrade);
-//		TdExpertCoachEnterprise expertCoachEnterprise = tdExpertCoachEnterpriseService.findByExpertIdAndEnterpriseId(expert.getId(), enterprise.getId());
-//		if(null == expertCoachEnterprise){
-//			expertCoachEnterprise = new TdExpertCoachEnterprise();
-//		}
-//		expertCoachEnterprise.setIsGrade(true);
-//		tdExpertCoachEnterpriseService.save(expertCoachEnterprise);
+		TdActivityEnterprise activityEnterprise = tdActivityEnterpriseService.findByActivityIdAndEnterpriseId(activityId, enterprise.getId());
+		activityEnterprise.setIsGrade(true);
+		tdActivityEnterpriseService.save(activityEnterprise);
+		TdExpertCoachEnterprise expertCoachEnterprise = tdExpertCoachEnterpriseService.findByEnterpriseId(enterprise.getId());
+		if(null == expertCoachEnterprise){
+			expertCoachEnterprise = new TdExpertCoachEnterprise();
+		}
+		expertCoachEnterprise.setIsGrade(true);
+		tdExpertCoachEnterpriseService.save(expertCoachEnterprise);
 		res.put("status", 0);
 		return res;
 	}
@@ -328,5 +363,15 @@ public class TdExpertController {
 		List<TdCoachContent> content_list = tdCoachContentService.findByExpertIdAndEnterpriseIdOrderByCoachDateAsc(expert.getId(), enterpriseId);
 		map.addAttribute("content_list", content_list);
 		return "/client/coach_log";
+	}
+	
+	@RequestMapping(value = "/search/grade")
+	public String searchGrade(Long activityId,Long expertId,ModelMap map){
+		TdExpert expert = tdExpertService.findOne(expertId);
+		List<TdEnterpriseGrade> grade_list = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderByNumberAsc(expert.getId(),
+				activityId);
+		map.addAttribute("grade_list", grade_list);
+		map.addAttribute("activityId", activityId);
+		return "/client/project_grade";
 	}
 }

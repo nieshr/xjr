@@ -164,7 +164,7 @@ function allowsubmit()
     			<div><span>地址：</span><input type="text" name="address" datatype="*"value="<#if enterprise.address??>${enterprise.address!''}</#if>" /></div>
     			<div><span  class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>">职工人数：</span>
     			        <span  class="pro  <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>hide</#if>">团队人数：</span>
-    				<input type="text" name="staffNumber" datatype="n"  value="<#if enterprise.formType??>${enterprise.staffNumber!''}</#if>" /></div>
+    				<input type="text" name="staffNumber" datatype="n"  value="<#if enterprise.staffNumber??>${enterprise.staffNumber?c!''}</#if>" /></div>
     			<div><span>行业归属：</span>
     				<#if enterpriseType_list??>
     					<#list enterpriseType_list as item>
@@ -194,7 +194,7 @@ function allowsubmit()
     			</div>
     			<div  class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>"><span>公司团队：</span><textarea name="teamIntroduction" datatype="*5-199" ignore="ignore" errormsg="输入5到200字"  tip="200字以内"><#if enterprise.formType??>${enterprise.teamIntroduction!''}</#if></textarea></div>
     			<div><span>技术特点及优势：</span><textarea name="advantage" datatype="*5-200" errormsg="输入5到200字"  tip="200字以内"><#if enterprise.formType??>${enterprise.advantage!''}</#if></textarea></div>
-    			<div><
+    			<div>
     			<span class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>">市场规模行业地位：</span>
     			<span class="pro <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>hide</#if>">预期市场前景：</span>
     			

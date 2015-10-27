@@ -160,6 +160,15 @@ public class TdExpert {
 		this.selectActivityId = selectActivityId;
 	}
 
+	@Override
+	public String toString() {
+		return "TdExpert [id=" + id + ", sortId=" + sortId + ", name=" + name + ", inCharge=" + inCharge + ", email="
+				+ email + ", telephone=" + telephone + ", usermobile=" + usermobile + ", statusId=" + statusId
+				+ ", isSelect=" + isSelect + ", selectActivityId=" + selectActivityId + ", username=" + username
+				+ ", password=" + password + "]";
+	}
+
+	
  
 }
   

@@ -127,6 +127,20 @@ public class TdActivityService {
         return repository.findByRegionAndStatusIdAndPrepareOffAfterAndPrepareOnBefore(region , statusId , new Date() ,new Date() , pageRequest);
     }
     
+    /**
+     * 查找该区县有效期内的活动
+     * @param region
+     * @param page
+     * @param size
+     * @return
+     */
+    public Page<TdActivity> findByRegionAndPrepareOffAfterAndPrepareOnBeforeOrderByIdDesc(String region , int page, int size)
+    {
+        PageRequest pageRequest = new PageRequest(page, size, new Sort(Direction.DESC, "id"));
+        
+        return repository.findByRegionAndPrepareOffAfterAndPrepareOnBefore(region , new Date() ,new Date() , pageRequest);
+    }
+    
     public Page<TdActivity> searchAllOrderBySortIdAsc(String keywords, int page, int size)
     {
         PageRequest pageRequest = new PageRequest(page, size);

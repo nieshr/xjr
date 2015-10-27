@@ -15,7 +15,7 @@
 <script>
 $(document).ready(function(){
 
-    $("#form1").Validform({
+    $("#form1").Validform({ 
             tiptype:4,
             ajaxPost:true,
             callback: function (data) { 
@@ -39,6 +39,15 @@ $(document).ready(function(){
 
 $(function(){
     $('#selectEnterprise').click(function(){
+    var activitydate = $("#date").val()
+    var  prepareOn = $("#prepareOn").val()
+    var  prepareOff = $("#prepareOff").val()
+    var  eventEnd  = $("#eventEnd").val()
+    if (activitydate == ""||prepareOn == ""||prepareOff == "" || eventEnd == "")
+    {
+    	alert("请完整填写资料！")
+    }
+    else{    
          $.ajax({
              type: "GET",
              url: "/activity/bufferEn",
@@ -58,7 +67,7 @@ $(function(){
              success: function(data){
 		                 if (data.code == 0)
 		                 {
-		                     location.href="/activity/selectEnterprise";
+		                     location.href="/activity/selectEnterprise?activityId="+data.activityId+"&area="+$("#region").val();
 		                 }
 		                 else 
 		                 {
@@ -66,11 +75,21 @@ $(function(){
 		                 }
                       }
          });
+     }    
     });
 });
 
 $(function(){
     $('#selectExpert').click(function(){
+    var activitydate = $("#date").val()
+    var  prepareOn = $("#prepareOn").val()
+    var  prepareOff = $("#prepareOff").val()
+    var  eventEnd  = $("#eventEnd").val()
+    if (activitydate == ""||prepareOn == ""||prepareOff == "" || eventEnd == "")
+    {
+    	alert("请完整填写资料！")
+    }
+    else{
          $.ajax({
              type: "GET",
              url: "/activity/bufferEn",
@@ -90,7 +109,7 @@ $(function(){
              success: function(data){
                          if (data.code == 0)
                          {
-                             location.href="/activity/selectExpert";
+                             location.href="/activity/selectExpert?activityId="+data.activityId;
                          }
                          else 
                          {
@@ -98,8 +117,75 @@ $(function(){
                          }
                       }
          });
+    } 
     });
 });
+
+function activityPass(activityId)
+{
+         $.ajax({
+             type: "GET",
+             url: "/activity/pass",
+             contentType: "application/json; charset=utf-8",
+             data: {"activityId" : activityId},
+             dataType: "json",
+             success: function(data){
+                         if (data.code == 0)
+                         {
+                             alert("审核成功！");
+                             location.reload();
+                         }
+                         else 
+                         {
+                             alert(data.msg);
+                         }
+                      }
+         });
+}
+
+
+function sortUp(id , activityId)
+{
+         $.ajax({
+             type: "GET",
+             url: "/activity/sortUp",
+             contentType: "application/json; charset=utf-8",
+             data: {"id":id ,"activityId" : activityId},
+             dataType: "json",
+             success: function(data){
+                         if (data.code == 0)
+                         {
+                             location.reload();
+                         }
+                         else 
+                         {
+                             alert(data.msg);
+                         }
+                      }
+         });
+}
+
+function sortDown(id , activityId)
+{
+         $.ajax({
+             type: "GET",
+             url: "/activity/sortDown",
+             contentType: "application/json; charset=utf-8",
+             data: {"id":id ,"activityId" : activityId},
+             dataType: "json",
+             success: function(data){
+                         if (data.code == 0)
+                         {
+                             location.reload();
+                         }
+                         else 
+                         {
+                             alert(data.msg);
+                         }
+                      }
+         });
+}
+
 
 function submitCheck()
 {
@@ -167,7 +253,7 @@ window.onload=done;
 	<div class="leftbar">
 	   <#if mark?? && mark == "region">
 		   <dl class="nav">
-	            <dd><a href="/region/enterprise/create">企业列表</a></dd>
+	            <dd><a href="/region/enterprise/list">企业列表</a></dd>
 	            <dd><a href="/region/activity/list">活动列表</a></dd>
 	            <dd><a href="">档案跟踪</a></dd>
 	        </dl>
@@ -203,7 +289,7 @@ window.onload=done;
         </dl>
         
     </div>  
-    <form action="/activity/submit" id="form1" method="post">
+    <form action="/activity/submit" id="form1">
     <dl class="active_content">
     	<dd>
             <#if activity??>
@@ -252,7 +338,7 @@ window.onload=done;
                     <input <#if pagetype??&& pagetype == "check">disabled=""</#if> name="eventEnd" id="eventEnd" type="text" value="<#if activity??>${activity.eventEnd!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="填写正确格式" sucmsg=" ">
     			</div>
     			<div>
-    				<span style="margin-top: 10px;">项目列表：</span>
+    				<span style="margin-top: 10px;">预选项目：</span>
     				<ul class="active_project_text">
     				    <#if selected_enterprise_list??>
     				        <#list selected_enterprise_list as item>
@@ -260,15 +346,16 @@ window.onload=done;
 		    						<p class="p01" style="width: 130px; float: left;text-align:left;">${item_index+1}.${item.enterpriseTitle!''}</p>
 		    						<a style="display:block;  width:100px;"></a>
 		    						<a href="/activity/enterprise/check/${item.enterpriseId?c!''}" target=_blank>查看</a>
+		    						<#--
 		                            <a>丨</a>
-		                            <a href="/enterprise/grade/${item.activityId?c!''}?enterpriseId=${item.enterpriseId?c!''}">得分</a>
+		                            <a href="/enterprise/grade?activityId=${item.activityId?c!''}&enterpriseId=${item.enterpriseId?c!''}">得分</a>
 		                            <a>丨</a>
 		                            <a href="/activity/getCoach?enterpriseId=${item.enterpriseId?c!''}&activityId=${item.activityId?c!''}">分配路演辅导</a>
 		                            <a>丨</a>
 		                            <a href="#">下载</a>
 		                            <a style="display:block;  width:80px;"></a>
 		                            <p class="p02">辅导专家，李专家</p>
-		    						
+		    						-->
 		    					</li>
     					    </#list>
     					</#if>    
@@ -278,7 +365,46 @@ window.onload=done;
     				    </#if>
     				</ul>
     			</div>
-    			
+ 				<#if recommend_list??>
+    			<div>
+    				<span style="margin-top: 10px;">推荐项目：</span>
+    				<ul class="active_project_text">
+    				    <#if recommend_list??>
+    				        <#list recommend_list as item>
+		    					<li>
+		    						<p class="p01" style="width: 130px; float: left;text-align:left;">${item_index+1}.${item.enterpriseTitle!''}</p>
+		    						<a style="display:block;  width:100px;"></a>
+		    						<a href="/activity/enterprise/check/${item.enterpriseId?c!''}" target=_blank>查看</a>
+		                            <a>丨</a>
+		                            <a <#if item.isGrade??&&item.isGrade> href="/enterprise/grade/?activityId=${item.activityId?c!''}&enterpriseId=${item.enterpriseId?c!''}"<#else>style="color:#666;" </#if>>得分</a>
+		                            <a>丨</a>
+		                            <a href="/activity/getCoach?enterpriseId=${item.enterpriseId?c!''}&activityId=${item.activityId?c!''}">分配路演辅导</a>
+		                            <a>丨</a>
+		                            <a <#if item.pptUrl??>href="${item.pptUrl}" <#else>style="color:#666;"</#if>>下载PPT</a>
+		                            <a>丨</a>
+		                            <#if item_has_next>
+		                           	 	<a href="javascript:sortDown(${item.id?c!''} , ${item.activityId?c!''});">-</a>
+		                            </#if>		                            
+		                            <#if item_index != 0>
+		                           	 	<a href="javascript:sortUp(${item.id?c!''} , ${item.activityId?c!''});">+</a>
+		                            </#if>
+		                            <a style="display:block;  width:80px;"></a>
+		                            <p class="p02"><#if item.coachName??>辅导专家，${item.coachName!''}</#if></p>
+		    						
+		    					</li>
+    					    </#list>
+    					</#if>    
+                        <#if pagetype??&& pagetype == "check">
+                        	<input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#e67817;color:#fff;" type="button" onclick="location.href='/download/data?name=${activity.fileUrl!''}'" value="推荐表下载" />
+                        	<input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#e67817;color:#fff; " type="button" onclick="javascript:activityPass(${activity.id?c!''});" value="通过审核" />
+                        <#else>
+                        	
+    					    	<input id="selectEnterprise" style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background:white url(images/active_add_project.png) no-repeat 10px; padding-left: 13px;" type="button" value="添加项目" />
+    				    
+    				    </#if>
+    				</ul>
+    			</div> 
+    			</#if>
     			<div style="margin-top:50px;">
     				<span style="margin-top: 10px;">评委专家：</span>
     				<ul class="active_project_text">
@@ -287,14 +413,13 @@ window.onload=done;
 		    					<li>
 		    						<p class="p01">${item_index+1}.${item.name!''}</p>
 		    						<a style="display:block;  width:100px;"></a>
-                                    <a href="#">评分情况</a>
-		    						
+                                    <a href="/expert/search/grade?activityId=${activity.id?c!''}&expertId=${item.expertId?c!''}">评分情况</a>
 		    					</li>
     					    </#list>
     					</#if>    
                         <#if pagetype??&& pagetype == "check">
                         <#else>
-    					   <input id="selectExpert" style="cursor:pointer;width:100px; height:30px; line-height: 30px; border: none;background:white url(images/active_add_project.png) no-repeat 10px; padding-left: 13px;" type="button" onclick="location.href='/activity/selectExpert'" value="添加评委" />
+    					   <input id="selectExpert" style="cursor:pointer;width:100px; height:30px; line-height: 30px; border: none;background:white url(images/active_add_project.png) no-repeat 10px; padding-left: 13px;" type="button"  value="添加评委" />
     				    </#if>
     				</ul>
     			</div>
@@ -322,14 +447,14 @@ window.onload=done;
 		</div>
 		</form>
 		</#if>
-		<#if activity?? && activity.fileUrl??>
+		<#if activity?? && activity.download??>
 			<div>
 				<span style="margin-top: 10px;">相关下载：</span>
 				<ul class="active_add_file">
 					<li>
 						<img src="/client/images/active_file.png" />
-						<p class="p01">${activity.fileUrl!''}</p>
-						<a href="/download/data?name=${activity.fileUrl!''}">下载</a>
+						<p class="p01">${activity.download!''}</p>
+						<a href="/download/data?name=${activity.download!''}">下载</a>
 					</li>
 				</ul>
 			</div>
