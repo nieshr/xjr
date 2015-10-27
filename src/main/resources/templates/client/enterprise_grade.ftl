@@ -13,8 +13,8 @@
 		<caption>项目得分表</caption>
 		<tr class="tr01">
 			<th>标题</th>
-			    <#list grade_list as item>
-			       <td>${item.expertId!''}</td>
+			    <#list experts as item>
+			       <td>${item.name!''}</td>
 			    </#list>
 		</tr>
 		<tr class="tr02">
@@ -191,7 +191,9 @@
 			<#assign count = 0>
             <#list grade_list as item>
                 <td>${item.totalPoint!''}</td>
-                <#assign count = count+item.titalPoint>
+                <#if item.totalPoint??>
+                    <#assign count = count+item.titalPoint>
+                </#if>
             </#list> 
 		</tr>
 		<tr class="tr03">

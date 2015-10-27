@@ -360,4 +360,14 @@ public class TdExpertController {
 		map.addAttribute("content_list", content_list);
 		return "/client/coach_log";
 	}
+	
+	@RequestMapping(value = "/search/grade")
+	public String searchGrade(Long activityId,Long expertId,ModelMap map){
+		TdExpert expert = tdExpertService.findOne(expertId);
+		List<TdEnterpriseGrade> grade_list = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderByNumberAsc(expert.getId(),
+				activityId);
+		map.addAttribute("grade_list", grade_list);
+		map.addAttribute("activityId", activityId);
+		return "/client/project_grade";
+	}
 }

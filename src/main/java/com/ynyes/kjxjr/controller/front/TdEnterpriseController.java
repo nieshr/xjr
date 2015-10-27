@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -36,6 +37,7 @@ import com.ynyes.kjxjr.entity.TdActivityEnterprise;
 import com.ynyes.kjxjr.entity.TdArticle;
 import com.ynyes.kjxjr.entity.TdEnterprise;
 import com.ynyes.kjxjr.entity.TdEnterpriseGrade;
+import com.ynyes.kjxjr.entity.TdExpert;
 import com.ynyes.kjxjr.entity.TdUser;
 import com.ynyes.kjxjr.entity.TdUserMessage;
 import com.ynyes.kjxjr.service.TdActivityEnterpriseService;
@@ -47,6 +49,7 @@ import com.ynyes.kjxjr.service.TdCommonService;
 import com.ynyes.kjxjr.service.TdCouponService;
 import com.ynyes.kjxjr.service.TdEnterpriseGradeService;
 import com.ynyes.kjxjr.service.TdEnterpriseService;
+import com.ynyes.kjxjr.service.TdExpertService;
 import com.ynyes.kjxjr.service.TdUserMessageService;
 import com.ynyes.kjxjr.service.TdUserService;
 import com.ynyes.kjxjr.util.ClientConstant;
@@ -90,6 +93,9 @@ public class TdEnterpriseController {
     
     @Autowired
     TdUserMessageService tdUserMessageService;
+    
+    @Autowired
+    TdExpertService tdExpertService;
 
 	
 	   /**
@@ -369,7 +375,15 @@ public class TdEnterpriseController {
         
         
         List<TdEnterpriseGrade> gradeList = tdEnterpriseGradeService.findByEnterpriseIdAndActivityId(enterpriseId, activityId);
-
+        
+        List<TdExpert> experts = new ArrayList<>(); 
+        
+        for (TdEnterpriseGrade item : gradeList) {
+			TdExpert expert = tdExpertService.findOne(item.getExpertId());
+			experts.add(expert);
+		}
+        
+        map.addAttribute("experts", experts);
         map.addAttribute("grade_list", gradeList);
         	
         return "/client/enterprise_grade";

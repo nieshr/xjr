@@ -360,8 +360,7 @@ window.onload=done;
 		    					<li>
 		    						<p class="p01">${item_index+1}.${item.name!''}</p>
 		    						<a style="display:block;  width:100px;"></a>
-                                    <a href="#">评分情况</a>
-		    						
+                                    <a href="/expert/search/grade?activityId=${activity.id?c!''}&expertId=${item.expertId?c!''}">评分情况</a>
 		    					</li>
     					    </#list>
     					</#if>    
