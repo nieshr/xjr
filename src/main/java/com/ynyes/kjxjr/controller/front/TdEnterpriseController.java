@@ -364,14 +364,8 @@ public class TdEnterpriseController {
     }
     
     //查看评分
-    @RequestMapping(value = "/grade/{activityId}", method = RequestMethod.GET)
-    public String enterGrade(HttpServletRequest req, ModelMap map,@PathVariable Long activityId , Long enterpriseId) {
-        String username = (String) req.getSession().getAttribute("enterpriseUsername");
-
-        if (null == username) {
-            return "redirect:/login";
-        }
-
+    @RequestMapping(value = "/grade")
+    public String enterGrade(HttpServletRequest req, ModelMap map,Long activityId , Long enterpriseId) {
         tdCommonService.setHeader(map, req);
         
         

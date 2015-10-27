@@ -304,7 +304,7 @@ window.onload=done;
 		    						<a href="/activity/enterprise/check/${item.enterpriseId?c!''}" target=_blank>查看</a>
 		    						<#--
 		                            <a>丨</a>
-		                            <a href="/enterprise/grade/${item.activityId?c!''}?enterpriseId=${item.enterpriseId?c!''}">得分</a>
+		                            <a href="/enterprise/grade?activityId=${item.activityId?c!''}&enterpriseId=${item.enterpriseId?c!''}">得分</a>
 		                            <a>丨</a>
 		                            <a href="/activity/getCoach?enterpriseId=${item.enterpriseId?c!''}&activityId=${item.activityId?c!''}">分配路演辅导</a>
 		                            <a>丨</a>
