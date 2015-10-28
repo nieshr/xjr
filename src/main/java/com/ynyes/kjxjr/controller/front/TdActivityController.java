@@ -356,7 +356,7 @@ public class TdActivityController {
         	 {
              	for (TdActivityExpert aex:aexlist)
             	{
-            		List<TdEnterpriseGrade> gradelist = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderByNumberAsc(aex.getExpertId(), activityId);
+            		List<TdEnterpriseGrade> gradelist = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderBySordIdAsc(aex.getExpertId(), activityId);
             		//清空评分表的企业数据
             		for (TdEnterpriseGrade grade:gradelist)
             		{
@@ -416,6 +416,7 @@ public class TdActivityController {
                 			grade.setNumber(ae.getNumber());
                 			grade.setEnterpriseId(ae.getEnterpriseId());
                 			grade.setActivityId(activityId);
+                			grade.setSordId(ae.getSortId());    //排序
                 			tdEnterpriseGradeService.save(grade);
                 		}
                 		else if (null != grade.getNumber())
@@ -1469,43 +1470,43 @@ public class TdActivityController {
     	List<TdActivityExpert> activity_experts = tdActivityExpertService.findByActivityId(activityId);
     	if(null != activity_experts){
     		if(0 < activity_experts.size()){
-    			List<TdEnterpriseGrade> experts0_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderByNumberAsc(activity_experts.get(0).getExpertId(), activityId);
+    			List<TdEnterpriseGrade> experts0_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderBySordIdAsc(activity_experts.get(0).getExpertId(), activityId);
     			map.addAttribute("expert0_grade", experts0_grade);
     			map.addAttribute("expert0", activity_experts.get(0).getName());
     		}
     		
 			if(1 < activity_experts.size()){
-				List<TdEnterpriseGrade> experts1_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderByNumberAsc(activity_experts.get(1).getExpertId(), activityId);
+				List<TdEnterpriseGrade> experts1_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderBySordIdAsc(activity_experts.get(1).getExpertId(), activityId);
     			map.addAttribute("expert1_grade", experts1_grade);
     			map.addAttribute("expert1", activity_experts.get(1).getName());		
     		}
 			
 			if(2 < activity_experts.size()){
-				List<TdEnterpriseGrade> experts2_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderByNumberAsc(activity_experts.get(2).getExpertId(), activityId);
+				List<TdEnterpriseGrade> experts2_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderBySordIdAsc(activity_experts.get(2).getExpertId(), activityId);
     			map.addAttribute("expert2_grade", experts2_grade);
     			map.addAttribute("expert2", activity_experts.get(2).getName());
 			}
 			
 			if(3 < activity_experts.size()){
-				List<TdEnterpriseGrade> experts3_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderByNumberAsc(activity_experts.get(3).getExpertId(), activityId);
+				List<TdEnterpriseGrade> experts3_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderBySordIdAsc(activity_experts.get(3).getExpertId(), activityId);
     			map.addAttribute("expert3_grade", experts3_grade);
     			map.addAttribute("expert3", activity_experts.get(3).getName());
 			}
 			
 			if(4 < activity_experts.size()){
-				List<TdEnterpriseGrade> experts4_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderByNumberAsc(activity_experts.get(4).getExpertId(), activityId);
+				List<TdEnterpriseGrade> experts4_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderBySordIdAsc(activity_experts.get(4).getExpertId(), activityId);
     			map.addAttribute("expert4_grade", experts4_grade);
     			map.addAttribute("expert4", activity_experts.get(4).getName());
 			}
 			
 			if(5 < activity_experts.size()){
-				List<TdEnterpriseGrade> experts5_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderByNumberAsc(activity_experts.get(5).getExpertId(), activityId);
+				List<TdEnterpriseGrade> experts5_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderBySordIdAsc(activity_experts.get(5).getExpertId(), activityId);
     			map.addAttribute("expert5_grade", experts5_grade);
     			map.addAttribute("expert5", activity_experts.get(5).getName());
 			}
 			
 			if(6 < activity_experts.size()){
-				List<TdEnterpriseGrade> experts6_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderByNumberAsc(activity_experts.get(6).getExpertId(), activityId);
+				List<TdEnterpriseGrade> experts6_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderBySordIdAsc(activity_experts.get(6).getExpertId(), activityId);
     			map.addAttribute("expert6_grade", experts6_grade);
     			map.addAttribute("expert6", activity_experts.get(6).getName());
 			}

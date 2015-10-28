@@ -77,14 +77,14 @@ public class TdEnterpriseGradeService {
 
 	/**
 	 * 根据专家ID和活动ID查找评分表
-	 * 
-	 * @author dengxiao
+	 * 改成了排序的顺序 zhangji
+ 	 * @author dengxiao
 	 */
-	public List<TdEnterpriseGrade> findByExpertIdAndActivityIdOrderByNumberAsc(Long expertId, Long activityId) {
+	public List<TdEnterpriseGrade> findByExpertIdAndActivityIdOrderBySordIdAsc(Long expertId, Long activityId) {
 		if (null == expertId || null == activityId) {
 			return null;
 		}
-		return repository.findByExpertIdAndActivityIdOrderByNumberAsc(expertId, activityId);
+		return repository.findByExpertIdAndActivityIdOrderBySordIdAsc(expertId, activityId);
 	}
 	
 

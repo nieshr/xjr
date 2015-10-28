@@ -9,6 +9,9 @@
 	<script src="/client/js/jquery-1.9.1.min.js"></script>
     <script src="/client/js/Validform_v5.3.2_min.js"></script>
 	<script src="/client/js/main.js"></script>
+	<style>
+	
+	</style>
 
 <script>
 $(document).ready(function(){
@@ -38,10 +41,9 @@ $(document).ready(function(){
 	<div class="lookpswbodytitle lookpswbodytitle-four">修改成功</div>
 </div>
 <form action="/login/retrieve_step" class="lookpsw-form" method="post" id="form1">
-	<input type="text" id="mobile"  name="mobile" ajaxurl="/login/check/mobile" datatype="m"><span class="Validform_checktip Validform_wrong"></span>
+	<input type="text" id="mobile" value="请输入手机号"  name="mobile" ajaxurl="/login/check/mobile" onfocus="if(this.value=='请输入手机号'){this.value='';}" onblur="if(this.value==''){this.value='请输入手机号'}" datatype="m|/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/"><span class="Validform_checktip Validform_wrong"></span>
 	<div class="verification-body">
 	   <input type="text" datatype="*" id="code" class="verification" ajaxurl="/login/check/code">
-	   <span class="Validform_checktip Validform_wrong"></span>
 	   <div class="verificationimg">
 	   <img src="/verify" width="122px" height=46px alt="验证码" onclick="this.src = '/verify?date='+Math.random();" id="yzm" />
 	   </div>
