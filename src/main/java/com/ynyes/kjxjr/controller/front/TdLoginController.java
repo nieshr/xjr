@@ -1,11 +1,20 @@
 package com.ynyes.kjxjr.controller.front;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,9 +24,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ynyes.kjxjr.entity.TdActivityAdmin;
+import com.ynyes.kjxjr.entity.TdEnterprise;
+import com.ynyes.kjxjr.entity.TdExpert;
+import com.ynyes.kjxjr.entity.TdRegionAdmin;
 import com.ynyes.kjxjr.entity.TdUser;
+import com.ynyes.kjxjr.service.TdActivityAdminService;
 import com.ynyes.kjxjr.service.TdCommonService;
 import com.ynyes.kjxjr.service.TdEnterpriseService;
+import com.ynyes.kjxjr.service.TdExpertService;
+import com.ynyes.kjxjr.service.TdRegionAdminService;
 import com.ynyes.kjxjr.service.TdUserService;
 import com.ynyes.kjxjr.util.VerifServlet;
 
@@ -35,6 +51,19 @@ public class TdLoginController {
 
 	@Autowired
 	private TdEnterpriseService tdEnterpriseService;
+	
+	@Autowired
+	private TdRegionAdminService tdRegionAdminService;
+
+	@Autowired
+	private TdExpertService tdExpertService;
+
+	// 企业资料
+	@Autowired
+	private TdEnterpriseService tdentErpriseService;
+
+	@Autowired
+	private TdActivityAdminService tdActivityAdminService;
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(HttpServletRequest req, ModelMap map) {
@@ -248,13 +277,20 @@ public class TdLoginController {
 			return res;
 		}
 
+		if(type.equalsIgnoreCase("mobile")){
+        	TdUser user = tdUserService.findByMobileAndIsEnabled(param);
+        	if(null == user){
+        		res.put("info", "手机号不存在");
+        		return res;
+        	}
+        }
 		if (type.equalsIgnoreCase("code")) {
 			if (null == param || param.isEmpty()) {
 				res.put("info", "请输入验证码");
 				return res;
 			}
 
-			TdUser user = tdUserService.findByUsername(param);
+//			TdUser user = tdUserService.findByUsername(param);
 			String codeBack = (String) request.getSession().getAttribute("RANDOMVALIDATECODEKEY");
 			if (!codeBack.equalsIgnoreCase(param)) {
 				res.put("info", "验证码错误");
@@ -307,54 +343,63 @@ public class TdLoginController {
 		return res;
 	}
 
-	@RequestMapping(value = "/login/retrieve_step2", method = RequestMethod.GET)
-	public String Step2(Integer errCode, HttpServletRequest req, ModelMap map) {
-		tdCommonService.setHeader(map, req);
-		String username = (String) req.getSession().getAttribute("retrieve_username");
-		TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
-
-		if (null != errCode) {
-			if (errCode.equals(1)) {
-				map.addAttribute("error", "验证码错误");
-			}
-
-			map.addAttribute("errCode", errCode);
-		}
-
-		map.put("user", user);
-
+	@RequestMapping(value = "/login/retrieve_step", method = RequestMethod.POST)
+	public String Step2(String mobile, HttpServletRequest req,HttpServletResponse resp, ModelMap map) {
+		smsCode(mobile, resp, req);
+		System.err.println(mobile);
+		map.addAttribute("mobile", mobile);
+		
 		return "/client/user_retrieve_step2";
 	}
-
+	
+	
 	@RequestMapping(value = "/login/retrieve_step2", method = RequestMethod.POST)
-	public String Step2(String smsCode, HttpServletRequest req, ModelMap map) {
-		if (null == smsCode) {
-			return "redirect:/login/retrieve_step2?errCode=4";
-		}
-		String smsCodeSave = (String) req.getSession().getAttribute("SMSCODE");
-		if (!smsCodeSave.equalsIgnoreCase(smsCode)) {
-			return "redirect:/login/retrieve_step2?errCode=4";
-		}
-		String username = (String) req.getSession().getAttribute("retrieve_username");
-		map.put("retrieve_username", username);
+	public String Step2(String smsCode,String mobile,HttpServletResponse resp, HttpServletRequest req, ModelMap map) {
 		tdCommonService.setHeader(map, req);
-
+		String code = (String)req.getSession().getAttribute("SMSCODE");
+		
+		map.addAttribute("mobile", mobile);
+		if(null !=smsCode){
+			if(!smsCode.equalsIgnoreCase(code)){
+				smsCode(mobile, resp, req);
+				map.addAttribute("msg","短信验证码错误！已重新发送");
+				return "/client/user_retrieve_step2";
+			}
+		}
+		TdUser user = tdUserService.findByMobile(mobile);
+		map.addAttribute("user",user);
+		req.getSession().setAttribute("retrieve_username", user.getUsername());
 		return "/client/user_retrieve_step3";
 	}
+
 
 	@RequestMapping(value = "/login/retrieve_step3", method = RequestMethod.POST)
 	public String Step3(String password, HttpServletRequest req, ModelMap map) {
 		String username = (String) req.getSession().getAttribute("retrieve_username");
 		TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
-		if (null != password) {
-			user.setPassword(password);
-			tdUserService.save(user);
-			tdCommonService.setHeader(map, req);
-			req.getSession().setAttribute("username", user.getUsername());
-			req.getSession().setAttribute("usermobile", user.getMobile());
-			return "/client/user_retrieve_ok";
+		user.setPassword(password);
+		tdUserService.save(user);
+		if (1L == user.getRoleId()) {
+			TdEnterprise enterprise = tdentErpriseService.findbyUsername(username);
+			enterprise.setPassword(password);
+			tdentErpriseService.save(enterprise);
 		}
-		return "/client/error_404";
+		if (2L == user.getRoleId()) {
+			TdRegionAdmin regionAdmin = tdRegionAdminService.findbyUsername(username);
+			regionAdmin.setPassword(password);
+			tdRegionAdminService.save(regionAdmin);
+		}
+		if (3L == user.getRoleId()) {
+			TdExpert expert = tdExpertService.findbyUsername(username);
+			expert.setPassword(password);
+			tdExpertService.save(expert);
+		}
+		if (4L == user.getRoleId()) {
+			TdActivityAdmin activityAdmin = tdActivityAdminService.findbyUsername(username);
+			activityAdmin.setPassword(password);
+			tdActivityAdminService.save(activityAdmin);
+		}
+		return "/client/user_retrieve_step4";
 	}
 
 	/**
@@ -404,4 +449,80 @@ public class TdLoginController {
 		VerifServlet randomValidateCode = new VerifServlet();
 		randomValidateCode.getRandcode(request, response);
 	}
+	
+	public Map<String, Object> smsCode(String mobile, HttpServletResponse response, HttpServletRequest request) {
+		Map<String, Object> res = new HashMap<>();
+		res.put("status", -1);
+		Random random = new Random();
+		String smscode = random.nextInt(9000) + 1000 + "";
+		HttpSession session = request.getSession();
+		session.setAttribute("SMSCODE", smscode);
+		String info = "您的验证码为" + smscode + "，请在页面中输入以完成验证。【科技小巨人】";
+		System.err.println(smscode);
+		String content = null;
+		try {
+			content = URLEncoder.encode(info, "GB2312");
+			System.err.println(content);
+		} catch (Exception e) {
+			e.printStackTrace();
+			res.put("message", "验证码生成失败！");
+			return res;
+		}
+		String url = "http://www.ht3g.com/htWS/BatchSend.aspx?CorpID=CQDL00059&Pwd=644705&Mobile=" + mobile
+				+ "&Content=" + content;
+		StringBuffer fanhui = null;
+		try {
+			URL u = new URL(url);
+			URLConnection connection = u.openConnection();
+			HttpURLConnection httpConn = (HttpURLConnection) connection;
+			httpConn.setRequestProperty("Content-type", "text/html");
+			httpConn.setRequestProperty("Accept-Charset", "utf-8");
+			httpConn.setRequestProperty("contentType", "utf-8");
+			InputStream inputStream = null;
+			InputStreamReader inputStreamReader = null;
+			BufferedReader reader = null;
+			StringBuffer resultBuffer = new StringBuffer();
+			String tempLine = null;
+
+			if (httpConn.getResponseCode() >= 300) {
+				res.put("message", "HTTP Request is not success, Response code is " + httpConn.getResponseCode());
+				return res;
+			}
+
+			try {
+				inputStream = httpConn.getInputStream();
+				inputStreamReader = new InputStreamReader(inputStream);
+				reader = new BufferedReader(inputStreamReader);
+
+				while ((tempLine = reader.readLine()) != null) {
+					resultBuffer.append(tempLine);
+				}
+
+				fanhui = resultBuffer;
+
+			} finally {
+
+				if (reader != null) {
+					reader.close();
+				}
+
+				if (inputStreamReader != null) {
+					inputStreamReader.close();
+				}
+
+				if (inputStream != null) {
+					inputStream.close();
+				}
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			res.put("message", "验证码生成失败！");
+			return res;
+		}
+		res.put("status", 0);
+		res.put("message", fanhui);
+		return res;
+	}
+	
 }

@@ -139,7 +139,7 @@ function saveUserInfo() {
         </div>
         <div class="sure">
             <span class="span6 span7">  <input id="rmbUser" type="checkbox" style="width:20px;height:20px;"/>&nbsp;记住密码</span>
-        	<span class="span6 span7"><a href="#">忘记密码？</a></span>
+        	<span class="span6 span7"><a href="/login/password_retrieve">忘记密码？</a></span>
             <span class="span6 "><a href="/reg">注册账号></a></span>
         </div>
         <div>
