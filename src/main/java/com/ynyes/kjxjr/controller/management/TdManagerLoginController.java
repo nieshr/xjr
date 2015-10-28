@@ -65,7 +65,7 @@ public class TdManagerLoginController {
                     if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
                         ip = request.getRemoteAddr();
                     }
-                    
+                	request.getSession().setMaxInactiveInterval(60 * 60 * 2);   //设置session zhangji
                     manager.setIp(ip);
                     manager.setLoginTime(new Date());
                     

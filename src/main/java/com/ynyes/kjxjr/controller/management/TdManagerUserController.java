@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ynyes.kjxjr.entity.TdActivityType;
 import com.ynyes.kjxjr.entity.TdDemand;
+import com.ynyes.kjxjr.entity.TdDiySite;
 import com.ynyes.kjxjr.entity.TdEnterprise;
 import com.ynyes.kjxjr.entity.TdEnterpriseType;
 import com.ynyes.kjxjr.entity.TdRegion;
@@ -136,6 +137,56 @@ public class TdManagerUserController {
         
         res.put("status", "y");
         
+        return res;
+    }
+    
+    
+    
+    //企业添加编辑 检验重复电话
+    @RequestMapping(value = "/check/mobile", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, String> validateFormMobile(String param, Long id) {
+        Map<String, String> res = new HashMap<String, String>();
+
+        res.put("status", "n");
+
+	        if (null == param || param.isEmpty()) {						
+	            res.put("info", "该字段不能为空");
+	            return res;
+	        }
+	        
+	        TdUser tdUser = tdUserService.findByMobile(param);
+	        
+	        if (null == id) // 新增
+	        {
+	            if (null != tdUser) {
+	                res.put("info", "该手机号不能使用");
+	                return res;
+	            }
+	        } 
+	        else // 修改，查找除当前ID的所有
+	        {
+	            TdUser thisUser = tdUserService.findOne(id);
+	            
+	            if (null == thisUser)
+	            {
+	                if (null != tdUser) {
+	                    res.put("info", "该手机号不能使用");
+	                    return res;
+	                }
+	            }
+	            else
+	            {
+	                if (null != tdUser && !tdUser.getMobile().equals(thisUser.getMobile())  ) {
+	                    res.put("info", "该手机号已被使用");
+	                    return res;
+	                }
+	            }
+	        }
+
+        
+        res.put("status", "y");
+
         return res;
     }
     

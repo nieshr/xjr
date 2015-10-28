@@ -380,13 +380,13 @@ window.onload=done;
 		                            <a>丨</a>
 		                            <a href="/activity/getCoach?enterpriseId=${item.enterpriseId?c!''}&activityId=${item.activityId?c!''}">分配路演辅导</a>
 		                            <a>丨</a>
-		                            <a <#if item.pptUrl??>href="${item.pptUrl}" <#else>style="color:#666;"</#if>>下载PPT</a>
+		                            <a <#if item.pptUrl??>href="${item.pptUrl}" <#else>style="color:#666;"</#if>>PPT下载</a>
 		                            <a>丨</a>
 		                            <#if item_has_next>
-		                           	 	<a href="javascript:sortDown(${item.id?c!''} , ${item.activityId?c!''});">-</a>
+		                           	 	<a href="javascript:sortDown(${item.id?c!''} , ${item.activityId?c!''});"><img style="width:10px;height:13px;margin-top: 8px;"src="/client/images/down1.png" alt="下移" title="下移排序"/></a>
 		                            </#if>		                            
 		                            <#if item_index != 0>
-		                           	 	<a href="javascript:sortUp(${item.id?c!''} , ${item.activityId?c!''});">+</a>
+		                           	 	<a href="javascript:sortUp(${item.id?c!''} , ${item.activityId?c!''});"><img style="width:10px;height:13px;margin-top: 8px; <#if item_has_next>margin-left:3px;</#if>" src="/client/images/up1.png" alt="上移" title="上移排序"/></a>
 		                            </#if>
 		                            <a style="display:block;  width:80px;"></a>
 		                            <p class="p02"><#if item.coachName??>辅导专家，${item.coachName!''}</#if></p>
@@ -395,8 +395,16 @@ window.onload=done;
     					    </#list>
     					</#if>    
                         <#if pagetype??&& pagetype == "check">
-                        	<input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#e67817;color:#fff;" type="button" onclick="location.href='/download/data?name=${activity.fileUrl!''}'" value="推荐表下载" />
-                        	<input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#e67817;color:#fff; " type="button" onclick="javascript:activityPass(${activity.id?c!''});" value="通过审核" />
+                        	<#if activity??&&activity.fileUrl??>
+	                        	<input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#e67817;color:#fff;" type="button" onclick="location.href='/download/data?name=${activity.fileUrl!''}'" value="推荐表下载" />
+                        	<#else>
+                        		<input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#666;color:#fff;" type="button"  value="推荐表下载" />
+                        	</#if>	
+                        	<#if activity??&&activity.statusId==1>
+                        		<input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#666;color:#fff; " type="button"  value="已审核" />
+                        	<#else>	
+                        		<input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#e67817;color:#fff; " type="button" onclick="javascript:activityPass(${activity.id?c!''});" value="通过审核" />
+                        	</#if>
                         <#else>
                         	
     					    	<input id="selectEnterprise" style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background:white url(images/active_add_project.png) no-repeat 10px; padding-left: 13px;" type="button" value="添加项目" />

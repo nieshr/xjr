@@ -168,7 +168,7 @@ public class TdEnterpriseController {
         res.put("code", 1);
     	
         String username = (String) req.getSession().getAttribute("enterpriseUsername");
-
+       
         if (null == username) {
         	res.put("msg", "请先登录！");
         	res.put("check", 0);
@@ -1536,6 +1536,7 @@ public class TdEnterpriseController {
 	          cell.setCellValue(lastyear3);  
 	          cell.setCellStyle(styleyear);  
 	          cell = row.createCell((short) 1);  
+	          
 	          cell.setCellValue(enterprise.getLastAssets3());  
 	          cell.setCellStyle(fillin);  
 	          cell = row.createCell((short) 2);  
