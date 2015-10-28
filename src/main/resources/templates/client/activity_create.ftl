@@ -455,7 +455,7 @@ window.onload=done;
     				</ul>
     			</div>
             <!-- 评分汇总 -->
-            	<#if activity??>
+            	<#if activity??&&activity.statusId==1>
                     <div>
                         <span style="margin-top: 6px;">路演结果：</span>
                         <ul class="active_project_text">

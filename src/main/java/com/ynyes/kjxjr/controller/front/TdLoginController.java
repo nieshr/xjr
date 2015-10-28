@@ -361,8 +361,8 @@ public class TdLoginController {
 		map.addAttribute("mobile", mobile);
 		if(null !=smsCode){
 			if(!smsCode.equalsIgnoreCase(code)){
-				smsCode(mobile, resp, req);
-				map.addAttribute("msg","短信验证码错误！已重新发送");
+//				smsCode(mobile, resp, req);
+				map.addAttribute("msg","短信验证码错误！");
 				return "/client/user_retrieve_step2";
 			}
 		}

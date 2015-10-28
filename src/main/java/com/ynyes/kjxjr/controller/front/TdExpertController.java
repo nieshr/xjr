@@ -216,7 +216,7 @@ public class TdExpertController {
 			return "/client/login";
 		}
 		TdExpert expert = tdExpertService.findbyUsername(expertUsername);
-		List<TdEnterpriseGrade> grade_list = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderByNumberAsc(expert.getId(),
+		List<TdEnterpriseGrade> grade_list = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderBySordIdAsc(expert.getId(),
 				activityId);
 		map.addAttribute("grade_list", grade_list);
 		map.addAttribute("activityId", activityId);
@@ -368,7 +368,7 @@ public class TdExpertController {
 	@RequestMapping(value = "/search/grade")
 	public String searchGrade(Long activityId,Long expertId,ModelMap map){
 		TdExpert expert = tdExpertService.findOne(expertId);
-		List<TdEnterpriseGrade> grade_list = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderByNumberAsc(expert.getId(),
+		List<TdEnterpriseGrade> grade_list = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderBySordIdAsc(expert.getId(),
 				activityId);
 		map.addAttribute("grade_list", grade_list);
 		map.addAttribute("activityId", activityId);
