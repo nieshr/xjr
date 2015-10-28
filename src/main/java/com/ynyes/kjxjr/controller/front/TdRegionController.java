@@ -220,6 +220,8 @@ public class TdRegionController {
             TdUserMessage message = new TdUserMessage();
             message.setEnterpriseId(id);
             message.setRegionAdminId(admin.getId());
+            message.setName(Enterprise.getTitle());
+            message.setRegion(admin.getTitle());
             message.setContent("【审核】恭喜您通过"+admin.getRegion()+"地区的审核，请登录个人中心查看详情！");
             message.setTitle("通过审核");
             message.setStatusE(0L);
@@ -269,6 +271,8 @@ public class TdRegionController {
             TdUserMessage message = new TdUserMessage();
             message.setEnterpriseId(id);
             message.setRegionAdminId(admin.getId());
+            message.setName(Enterprise.getTitle());
+            message.setRegion(admin.getTitle());
             message.setContent("【审核】您未通过"+admin.getRegion()+"地区的审核，请登录个人中心重新填写资料申请！");
             message.setTitle("未通过审核");
             message.setStatusE(0L);
@@ -402,14 +406,49 @@ public class TdRegionController {
     }
     
     /**
+     * 区县站内信列表
+     * @param req
+     * @param map
+     * @param page
+     * @return
+     */
+    @RequestMapping(value = "/message", method = RequestMethod.GET)
+    public String userEnterpriseMessage(HttpServletRequest req, ModelMap map , Integer page) {
+        String username = (String) req.getSession().getAttribute("regionUsername");
+
+        if (null == username) {
+            return "redirect:/login";
+        }
+
+        tdCommonService.setHeader(map, req);
+
+        if (null == page)
+        {
+        	page =0;
+        }
+        TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
+        TdRegionAdmin regionAdmin = tdRegionAdminService.findbyUsername(username);
+        
+        Page<TdUserMessage> messagePage = tdUserMessageService.findByRegionAdminIdAndSpeakerOrderByTimeDesc(regionAdmin.getId(), 0L, page, ClientConstant.pageSize);
+        map.addAttribute("message_page", messagePage);
+
+        map.addAttribute("regionAdmin", regionAdmin);
+        map.addAttribute("user", user);
+
+        
+        return "/client/region_message";
+    }
+    
+    
+    /**
      * 站内信息详情
      * @author Zhangji
      * @param req
      * @param map
      * @return
      */
-    @RequestMapping(value = "/message", method = RequestMethod.GET)
-    public String MessageDetail(HttpServletRequest req, ModelMap map , Long enterpriseId) {
+    @RequestMapping(value = "/message/detail", method = RequestMethod.GET)
+    public String MessageDetail(HttpServletRequest req, ModelMap map , Long enterpriseId , Long id) {
         String username = (String) req.getSession().getAttribute("regionUsername");
 
         if (null == username) {
@@ -419,24 +458,50 @@ public class TdRegionController {
         tdCommonService.setHeader(map, req);
 
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
-        TdEnterprise enterprise = tdEnterpriseService.findOne(enterpriseId);
+        TdRegionAdmin regionAdmin = tdRegionAdminService.findbyUsername(username);
         
-        
-        //根据企业id和区县id查找信息页面
-        List<TdUserMessage> messageList = tdUserMessageService.findByEnterpriseIdAndRegionAdminIdOrderByTimeAsc(enterpriseId, tdRegionAdminService.findbyUsername(username).getId());
-        for (TdUserMessage item:messageList)
+        //从企业列表进入
+        if (null != enterpriseId && null == id)
         {
-        	item.setStatusR(1L);
-        	tdUserMessageService.save(item);
+	        //根据企业id和区县id查找信息页面
+        	 TdEnterprise enterprise = tdEnterpriseService.findOne(enterpriseId);
+	        List<TdUserMessage> messageList = tdUserMessageService.findByEnterpriseIdAndRegionAdminIdOrderByTimeAsc(enterpriseId, tdRegionAdminService.findbyUsername(username).getId());
+	        for (TdUserMessage item:messageList)
+	        {
+	        	item.setStatusR(1L);
+	        	tdUserMessageService.save(item);
+	        }
+	        	
+	        map.addAttribute("regionAdmin", tdRegionAdminService.findbyUsername(username));
+	        map.addAttribute("message_list", messageList);
+	        map.addAttribute("regionAdmin", regionAdmin);
+	        map.addAttribute("enterprise", enterprise);
         }
-        	
-        map.addAttribute("regionAdmin", tdRegionAdminService.findbyUsername(username));
-        map.addAttribute("message_list", messageList);
-        map.addAttribute("enterprise", enterprise);
+        //从站内信列表进入
+        if (null != id && null == enterpriseId)
+        {
+            //处理新信息
+            TdUserMessage message = tdUserMessageService.findOne(id);
+            message.setStatusR(1L);
+            tdUserMessageService.save(message);
+            
+            TdEnterprise enterprise  = tdEnterpriseService.findOne(message.getEnterpriseId());
+            
+            //根据企业id和区县id查找信息页面
+            List<TdUserMessage> messageList = tdUserMessageService.findByEnterpriseIdAndRegionAdminIdOrderByTimeAsc(message.getEnterpriseId() , message.getRegionAdminId());
+            for (TdUserMessage item:messageList)
+            {
+            	item.setStatusR(1L);
+            	tdUserMessageService.save(item);
+            }
+            	
+            map.addAttribute("message_list", messageList);
+            map.addAttribute("message", message);
+            map.addAttribute("regionAdmin", regionAdmin);
+            map.addAttribute("enterprise", enterprise);
+        }
         map.addAttribute("user", user);
-
-        
-        return "/client/region_message";
+        return "/client/region_message_detail";
     }
     /**
      * 企业站内信息回复
@@ -458,11 +523,12 @@ public class TdRegionController {
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
         TdRegionAdmin admin = tdRegionAdminService.findbyUsername(username);
         TdEnterprise enterprise = tdEnterpriseService.findOne(enterpriseId);
+        TdRegionAdmin regionAdmin = tdRegionAdminService.findbyUsername(username);
         
         //创建新信息
         message.setStatusE(0L);
         message.setName(enterprise.getTitle());
-        message.setEnterpriseId(enterpriseId);
+        message.setEnterpriseId(enterprise.getId());
         message.setRegion(admin.getRegion());
         message.setRegionAdminId(admin.getId());
         message.setTime(new Date());
@@ -482,7 +548,7 @@ public class TdRegionController {
         map.addAttribute("user", user);
 
         
-        return "redirect:/enterprise/message/detail?id="+message.getId();
+        return "redirect:/region/message/detail?id="+message.getId();
     }
     
     /**
@@ -512,6 +578,7 @@ public class TdRegionController {
         map.addAttribute("activity", activity);
         map.addAttribute("user", user);
         
+        map.addAttribute("recommend_list" , tdActivityEnterpriseService.findByActivityIdAndStatusIdOrderBySortIdAsc(id, 2L));
         map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityId(activity.getId()));
         map.addAttribute("selected_expert_list", tdActivityExpertService.findByActivityId(activity.getId()));
 

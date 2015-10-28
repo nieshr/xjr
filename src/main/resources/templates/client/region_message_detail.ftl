@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
-<title>站内信息</title>
+<title>站内信详情</title>
 <link rel="shortcut icon" href="/client/images/icon.ico" />
 <link href="/client/css/base.css" rel="stylesheet" type="text/css" />
 <link href="/client/css/team.css" rel="stylesheet" type="text/css" />
@@ -19,14 +19,13 @@
         .page .page_next{ width: 60px;}
         .page .page_last{width: 40px;}
         .page p{  margin-left: 10px;}
-        .hide{display:none;}
     </style>
     
 <script>
 $(document).ready(function(){
 
     $("#form1").Validform({
-            tiptype:1
+            tiptype:4
     });
 });
 
@@ -35,7 +34,7 @@ function showmore()
   //	$(".messagelist").css("display","block");
 	$(".messagelist").slideDown("slow");
 	}
-</script>
+</script>    
 <body>
 <!--main-->
 <div class="main">
@@ -47,9 +46,9 @@ function showmore()
 <!--left-->
     <div class="leftbar">
         <dl class="nav">
-            <dd><a href="/enterprise/check">基本资料</a></dd>
-            <dd><a href="/enterprise/activity/list">活动列表</a></dd>
-            <dd><a href="/enterprise/project">申请展示</a></dd>
+            <dd><a href="/region/enterprise/list">企业列表</a></dd>
+            <dd><a href="/region/activity/list">活动列表</a></dd>
+            <dd><a href="#">档案跟踪</a></dd>
 
         </dl>
     </div>
@@ -60,9 +59,9 @@ function showmore()
             <dt><a href="#"></a></dt>
             <dd>
                 <p>当前所在位置:</p>
-                <a href="#">企业/团队</a>
+                <a href="#">企业列表</a>
                 <p>&gt;</p>
-                <a href="#">站内信息</a>
+                <a href="#">站内信</a>
 
             </dd>
             <dt class="crumb_back"><a  href="javascript:history.go(-1);">返回上一页</a></dt>
@@ -81,7 +80,7 @@ function showmore()
                             <textarea style="background:#DDDDD1;border:none;display:block;min-height:45px;"disabled="" cols="80">${item.content!''}</textarea>
                         </span>
                     <#else>
-                        <span style="display:block;float:right;padding-top:10px;">：${item.name!''}&nbsp;#${item_index+1!''}</span>
+                        <span style="display:block;float:right;padding-top:10px;">：<a href="/region/enterprise/check/${item.enterpriseId?c!''}" target=_blank title="查看资料">${item.name!''}&nbsp;#${item_index+1!''}</a></span>
                         <span style="display:block;float:right;background:#DDDDD1;border-radius:20px; -moz-border-radius:20px;-webkit-border-radius:20px;padding:20px; ">
                             <h3 style="text-align:center;margin-top:5px;">${item.title!''}</h3>
                             <h4 style="text-align:right;margin-bottom:10px;right:10px;">${item.time!''}</h4>
@@ -93,11 +92,10 @@ function showmore()
             </#if>    
             
             <dl class="team_mes_list">
-                <form action="/enterprise/message/reply" id="form1">
-                    <input type="hidden" name="regionAdminId" value="${message.regionAdminId?c!''}"></input>
-                    <input type="hidden" name="statusE" value="1"></input>
-                    <input type="hidden" name="speaker" value="0"></input>
-                    <input type="hidden" name="region" value="${message.region!''}"></input>
+                <form action="/region/message/reply" id="form1">
+                    <input type="hidden" name="statusR" value="1"></input>
+                    <input type="hidden" name="speaker" value="1"></input>
+                    <input type="hidden" name="enterpriseId" value="<#if enterprise??>${enterprise.id?c!''}</#if>"></input>
 	                <dd style=" margin-top: 20px;">
 	                    <a>标题：</a><input name="title" type="text" value=""/>
 	                </dd>
@@ -105,7 +103,7 @@ function showmore()
 	                    <a>内容：</a><textarea name="content" datatype="*1-120"></textarea>
 	                </dd>
 	                <dd>
-	                    <input  style=" margin:20px 0 20px 0; width:60px;border: none; border-radius: 6px; background: #e67817;height: 30px; line-height: 30px; color: white; margin-left: 40px;" type="submit" value="发表" />
+	                    <input  sucmsg="" style=" margin:20px 0 20px 0; width:60px;border: none; border-radius: 6px; background: #e67817;height: 30px; line-height: 30px; color: white; margin-left: 40px;" type="submit" value="发表" />
 	                </dd>
                 </form>
             </dl>

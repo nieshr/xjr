@@ -47,6 +47,32 @@ public class TdUserMessageService {
         return repository.findByEnterpriseIdAndRegionAdminIdOrderByTimeAsc(enterpriseId , regionAdminId);
     }
     
+    /**
+     * 查找企业未读信息
+     * @param enterpriseId
+     * @param statusE
+     * @param page
+     * @param size
+     * @return
+     */
+    public List<TdUserMessage> findByEnterpriseIdAndStatusEOrderByTimeAsc(Long enterpriseId , Long statusE )
+    {
+        return repository.findByEnterpriseIdAndStatusEOrderByTimeAsc(enterpriseId , statusE );
+    }
+    
+    /**
+     * 查找区县管理未读信息
+     * @param enterpriseId
+     * @param statusE
+     * @param page
+     * @param size
+     * @return
+     */
+    public List<TdUserMessage> findByRegionAdminIdAndStatusROrderByTimeAsc(Long regionAdminId , Long statusR )
+    {
+        return repository.findByRegionAdminIdAndStatusROrderByTimeAsc(regionAdminId , statusR );
+    }
+    
 	
     public List<TdUserMessage> findBystatusE(Long statusE){
     	return repository.findByStatusE(statusE);
@@ -74,6 +100,7 @@ public class TdUserMessageService {
         return repository.findByEnterpriseIdAndRegionAdminIdOrderByTimeDesc(enterpriseId , regionAdminId ,pageRequest);
     }
     
+    
     /**
      * 根据发起方和企业id查找
      * @param enterpriseId
@@ -88,6 +115,22 @@ public class TdUserMessageService {
         
         return repository.findByEnterpriseIdAndSpeakerOrderByTimeDesc(enterpriseId , speaker ,pageRequest);
     }
+    
+    /**
+     * 根据发起方和区县管理员id查找
+     * @param enterpriseId
+     * @param speaker
+     * @param page
+     * @param size
+     * @return
+     */
+    public Page<TdUserMessage> findByRegionAdminIdAndSpeakerOrderByTimeDesc(Long regionAdminId , Long speaker ,int page, int size)
+    {
+        PageRequest pageRequest = new PageRequest(page, size, new Sort(Direction.DESC, "time"));
+        
+        return repository.findByRegionAdminIdAndSpeakerOrderByTimeDesc(regionAdminId , speaker ,pageRequest);
+    }
+    
     
     public Page<TdUserMessage> findAllOrderByIdDesc(int page, int size)
     {

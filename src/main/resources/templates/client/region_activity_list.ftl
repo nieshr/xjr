@@ -73,8 +73,13 @@
                     <td style="color:#529c15;">${item.prepareOff?string("MM-dd HH:mm")!''}</td>
                     <td>
                          <a href="/region/activity/detail?id=${item.id?c!''}">详情</a>
-                         | <a href="/region/candidateEnterprise/${item.id?c!''}">预选</a>
-                         | <a href="/region/recommendEnterprise?id=${item.id?c!''}">推荐企业</a>
+                         <#if  item.statusId??&&item.statusId == 1>
+	                         | <a href="" style="color: #666;" title="已审核，无法修改">预选</a>
+	                         | <a href=""  style="color: #666;"  title="已审核，无法修改">推荐企业</a>
+                         <#else>
+	                         | <a href="/region/candidateEnterprise/${item.id?c!''}">预选</a>
+	                         | <a href="/region/recommendEnterprise?id=${item.id?c!''}">推荐企业</a>    
+                         </#if>                    
                          | <a <#if item.pptUrl??> href="/download/data?name=${item.pptUrl!''}" <#else> style="color:#999999;"</#if>>下载模板</a>
                         <#-- | <a href="">上传推荐表</a> -->
                      </td>

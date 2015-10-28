@@ -22,6 +22,12 @@ window.onload=done;
 function submitCheck()
 {
 	var filedata = $("#file").val();
+	if (filedata == "")
+	{
+		alert("请添加文件！")
+	}
+<#--
+	var filedata = $("#file").val();
 
 	var target = document.getElementById("file");	
 	var isIE = /msie/i.test(navigator.userAgent) && !window.opera;
@@ -37,18 +43,13 @@ function submitCheck()
 	}
 
 
-	if (filedata == "")
-	{
-		alert("请添加文件！")
-	}
-	else{
 		if (fileSize >= 1024*1024)
 		{
 			alert("上传文件不能大于1M！");
 		}else{
 		$("#upload").submit();
 		}
-	}	
+	-->
 
 }
 </script>

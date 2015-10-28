@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
-<title>导出表格</title>
+<title>站内信</title>
 <link rel="shortcut icon" href="/client/images/icon.ico" />
 <link href="/client/css/base.css" rel="stylesheet" type="text/css" />
 <link href="/client/css/team.css" rel="stylesheet" type="text/css" />
@@ -20,21 +20,6 @@
         .page .page_last{width: 40px;}
         .page p{  margin-left: 10px;}
     </style>
-    
-<script>
-$(document).ready(function(){
-
-    $("#form1").Validform({
-            tiptype:4
-    });
-});
-
-function showmore()
-{
-  //	$(".messagelist").css("display","block");
-	$(".messagelist").slideDown("slow");
-	}
-</script>    
 <body>
 <!--main-->
 <div class="main">
@@ -59,54 +44,79 @@ function showmore()
             <dt><a href="#"></a></dt>
             <dd>
                 <p>当前所在位置:</p>
-                <a href="#">企业列表</a>
+                <a href="#">区县管理</a>
                 <p>&gt;</p>
-                <a href="#">站内信</a>
+                <a href="#">站内信息</a>
 
             </dd>
             <dt class="crumb_back"><a  href="javascript:history.go(-1);">返回上一页</a></dt>
         </dl>
-                    <#if message_list?size gt 10>
-                        <a style=" color: #66660F;text-align:center;display:block;width:100%;padding:10px 0;background:#dddddd;float:left;margin-top:20px;" href="javascript:showmore();">显示更多</a>
-                    </#if>
-            <#if message_list??>
-                <#list message_list as item>
-                    <div class="messagelist" style="float:left;width:100%;margin-top:20px;<#if (message_list?size-item_index) gt 10>display:none;<#else>display:block;</#if>">
-                    <#if item.speaker?? && item.speaker == 1>
-                        <span style="display:block;float:left;padding-top:30px;">#${item_index+1!''}&nbsp;${item.region!''}管理员：</span>
-                        <span style="display:block;float:left;background:#DDDDD1;border-radius:20px; -moz-border-radius:20px;-webkit-border-radius:20px;padding:20px; ">
-                            <h3 style="text-align:center;">${item.title!''}</h3>
-                            <h4 style="text-align:right;margin-bottom:10px;right:10px;">${item.time!''}</h4>
-                            <textarea style="background:#DDDDD1;border:none;display:block;min-height:45px;"disabled="" cols="80">${item.content!''}</textarea>
-                        </span>
-                    <#else>
-                        <span style="display:block;float:right;padding-top:10px;">：${item.name!''}&nbsp;#${item_index+1!''}</span>
-                        <span style="display:block;float:right;background:#DDDDD1;border-radius:20px; -moz-border-radius:20px;-webkit-border-radius:20px;padding:20px; ">
-                            <h3 style="text-align:center;margin-top:5px;">${item.title!''}</h3>
-                            <h4 style="text-align:right;margin-bottom:10px;right:10px;">${item.time!''}</h4>
-                            <textarea style="background:#DDDDD1;border:none;margin-bottom:18px;" rows="3" cols="80" disabled="">${item.content!''}</textarea>
-                        </span>
-                    </#if>    
-                    </div>
+		<div class="btwz_1">站内消息</div> 
+             <div class="list_base2" style="padding-top:0;">
+                <table class="new_list">
+                <tr class="list_title">
+                    <th width="20%">状态</th>
+                    <th width="30%">标题</th>
+                    <th width="20%">时间</th>
+                    <th width="30%">操作</th>
+                </tr>
+            <#if message_page??>
+                <#list message_page.content as item>
+                    <tr>
+                        <td><#if item.statusR?? && item.statusR == 1>已查看<#else>未查看</#if></td>
+                        <td style="color:#0ab2cb;">${item.title!''}</td>
+                        <td style="color:#e67817;"><#if item.time??>${item.time?string("yyyy-MM-dd HH:mm:ss")!''}</#if></td>
+                        <td>
+                        <a href="/region/message/detail?id=${item.id?c!''}">查看</a>
+                        </td>
+                    </tr>
                 </#list>
-            </#if>    
-            
-            <dl class="team_mes_list">
-                <form action="/region/message/reply" id="form1">
-                    <input type="hidden" name="statusR" value="1"></input>
-                    <input type="hidden" name="speaker" value="1"></input>
-                    <input type="hidden" name="enterpriseId" value="${enterprise.id?c!''}"></input>
-	                <dd style=" margin-top: 20px;">
-	                    <a>标题：</a><input name="title" type="text" value=""/>
-	                </dd>
-	                <dd style=" margin-top: 20px;">
-	                    <a>内容：</a><textarea name="content" ></textarea>
-	                </dd>
-	                <dd>
-	                    <input datatype="*1-120" sucmsg="" style=" margin:20px 0 20px 0; width:60px;border: none; border-radius: 6px; background: #e67817;height: 30px; line-height: 30px; color: white; margin-left: 40px;" type="submit" value="发表" />
-	                </dd>
-                </form>
-            </dl>
+            </#if>     
+            </table>
+    
+       <div class="page">
+        <#if message_page??>
+        <#assign PAGE_DATA = message_page>
+             <#if PAGE_DATA??>
+                 <#if PAGE_DATA.number+1 == 1>
+                      <a disabled="disabled"  class="page_next">上一页</a>               
+                 <#else>
+                     <a href="/region/message?page=${PAGE_DATA.number-1}"  class="page_next">上一页</a>                
+                 </#if>
+                 
+                 <#assign continueEnter=false>
+                 
+                 <#if PAGE_DATA.totalPages gt 0>
+                     <#list 1..PAGE_DATA.totalPages as page>
+                         <#if page <= 3 || (PAGE_DATA.totalPages-page) < 3 || (PAGE_DATA.number+1-page)?abs<3 >
+                             <#if page == PAGE_DATA.number+1>
+                                 <a  class ="current" style="color:#e67817;">${page }</a>
+                             <#else>
+                                 <a href="/region/message?page=${page-1}">${page}</a> 
+                             </#if>
+                             <#assign continueEnter=false>
+                         <#else>
+                             <#if !continueEnter>
+                                 ...
+                                 <#assign continueEnter=true>
+                             </#if>
+                         </#if>
+                     </#list>
+                 </#if>
+                 
+                 <#if PAGE_DATA.number+1 == PAGE_DATA.totalPages || PAGE_DATA.totalPages==0>
+                     <a disabled="disabled" class="page_last">下一页</a> 
+                 <#else>
+                     <a href="/region/message?page=${PAGE_DATA.number+1}" class="page_last">下一页</a> 
+                 </#if>
+             </#if>
+            <p>共${PAGE_DATA.totalPages!'1'}页  ${PAGE_DATA.totalElements!'1'}条</p>
+            </#if>
+          </div>
+        </div>           
+        
+        
+			
     </div> 
 
     </div>

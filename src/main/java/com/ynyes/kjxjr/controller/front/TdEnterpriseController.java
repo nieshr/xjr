@@ -608,6 +608,7 @@ public class TdEnterpriseController {
         TdEnterprise enterprise = tdEnterpriseService.findbyUsername(username);
         
         //创建新信息
+        message.setStatusR(0L);
         message.setStatusE(1L);
         message.setName(enterprise.getTitle());
         message.setEnterpriseId(enterprise.getId());
@@ -1536,17 +1537,28 @@ public class TdEnterpriseController {
 	          cell.setCellValue(lastyear3);  
 	          cell.setCellStyle(styleyear);  
 	          cell = row.createCell((short) 1);  
-	          
-	          cell.setCellValue(enterprise.getLastAssets3());  
+	          if (null != enterprise.getLastAssets3())
+	          {
+	        	  cell.setCellValue(enterprise.getLastAssets3());  
+	          }
 	          cell.setCellStyle(fillin);  
 	          cell = row.createCell((short) 2);  
-	          cell.setCellValue(enterprise.getLastNetAssets3());  
+	          if (null != enterprise.getLastNetAssets3())
+	          {
+	        	  cell.setCellValue(enterprise.getLastNetAssets3());  
+	          }
 	          cell.setCellStyle(fillin);  
 	          cell = row.createCell((short) 3);  
-	          cell.setCellValue(enterprise.getLastSale3());  
+	          if (null != enterprise.getLastSale3())
+	          {
+	        	  cell.setCellValue(enterprise.getLastSale3());  
+	          }
 	          cell.setCellStyle(fillin);  
 	          cell = row.createCell((short) 4);  
-	          cell.setCellValue(enterprise.getLastProfit3());  
+	          if (null != enterprise.getLastProfit3())
+	          {
+	        	  cell.setCellValue(enterprise.getLastProfit3());  
+	          }
 	          cell.setCellStyle(fillin);  
 	          
 	    	  row= sheet1.createRow((int) 39); 
@@ -1554,16 +1566,28 @@ public class TdEnterpriseController {
 	          cell.setCellValue(lastyear2);  
 	          cell.setCellStyle(styleyear);  
 	          cell = row.createCell((short) 1);  
-	          cell.setCellValue(enterprise.getLastAssets2());  
+	          if (null != enterprise.getLastAssets2())
+	          {
+	        	  cell.setCellValue(enterprise.getLastAssets2());  
+	          }
 	          cell.setCellStyle(fillin);  
 	          cell = row.createCell((short) 2);  
-	          cell.setCellValue(enterprise.getLastNetAssets2());  
+	          if (null != enterprise.getLastNetAssets2())
+	          {
+	        	  cell.setCellValue(enterprise.getLastNetAssets2());  
+	          }
 	          cell.setCellStyle(fillin);  
 	          cell = row.createCell((short) 3);  
-	          cell.setCellValue(enterprise.getLastSale2());  
+	          if (null != enterprise.getLastSale2())
+	          {
+	        	  cell.setCellValue(enterprise.getLastSale2());  
+	          }
 	          cell.setCellStyle(fillin);  
 	          cell = row.createCell((short) 4);  
-	          cell.setCellValue(enterprise.getLastProfit2());  
+	          if (null != enterprise.getLastProfit2())
+	          {
+	        	  cell.setCellValue(enterprise.getLastProfit2());  
+	          }
 	          cell.setCellStyle(fillin);  
 	
 	    	  row= sheet1.createRow((int) 40); 
@@ -1571,16 +1595,28 @@ public class TdEnterpriseController {
 	          cell.setCellValue(lastyear1);  
 	          cell.setCellStyle(styleyear);  
 	          cell = row.createCell((short) 1);  
-	          cell.setCellValue(enterprise.getLastAssets1());  
+	          if (null != enterprise.getLastAssets1())
+	          {
+	        	  cell.setCellValue(enterprise.getLastAssets1());  
+	          }
 	          cell.setCellStyle(fillin);  
 	          cell = row.createCell((short) 2);  
-	          cell.setCellValue(enterprise.getLastNetAssets1());  
+	          if (null != enterprise.getLastNetAssets3())
+	          {
+	        	  cell.setCellValue(enterprise.getLastNetAssets1());  
+	          }
 	          cell.setCellStyle(fillin);  
 	          cell = row.createCell((short) 3);  
-	          cell.setCellValue(enterprise.getLastSale1());  
+	          if (null != enterprise.getLastSale1())
+	          {
+	        	  cell.setCellValue(enterprise.getLastSale1());  
+	          }
 	          cell.setCellStyle(fillin);  
 	          cell = row.createCell((short) 4);  
-	          cell.setCellValue(enterprise.getLastProfit1());  
+	          if (null != enterprise.getLastProfit1())
+	          {
+	        	  cell.setCellValue(enterprise.getLastProfit1());  
+	          }
 	          cell.setCellStyle(fillin);  
 	          
               

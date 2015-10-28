@@ -447,18 +447,18 @@ public class TdManagerUserController {
 		 * @author lc
 		 * @注释：手动修改用户积分
 		 */
-        if (null != totalPoints) {
-			tdUser.setTotalPoints(totalPoints);
-			TdUserPoint userPoint = new TdUserPoint();
-	        
-	        userPoint.setTotalPoint(totalPoints);
-	        userPoint.setUsername(tdUser.getUsername());
-	        userPoint.setPoint(totalPoints);
-			if (null !=totalPointsRemarks) {	
-		        userPoint.setDetail(totalPointsRemarks);   
-			}
-			userPoint = tdUserPointService.save(userPoint);
-		}
+//        if (null != totalPoints) {
+//			tdUser.setTotalPoints(totalPoints);
+//			TdUserPoint userPoint = new TdUserPoint();
+//	        
+//	        userPoint.setTotalPoint(totalPoints);
+//	        userPoint.setUsername(tdUser.getUsername());
+//	        userPoint.setPoint(totalPoints);
+//			if (null !=totalPointsRemarks) {	
+//		        userPoint.setDetail(totalPointsRemarks);   
+//			}
+//			userPoint = tdUserPointService.save(userPoint);
+//		}
         
         if (null == tdUser.getId())
         {
@@ -470,6 +470,15 @@ public class TdManagerUserController {
         }
         
         tdUserService.save(tdUser);
+        
+        if (tdUser.getRoleId()==1)
+        {
+        	TdEnterprise enterprise = tdEnterpriseService.findbyUsername(tdUser.getUsername());
+        	enterprise.setUsermobile(tdUser.getMobile());
+        	enterprise.setUseremail(tdUser.getEmail());
+        	enterprise.setPassword(tdUser.getPassword());
+        	tdEnterpriseService.save(enterprise);
+        }
         
         return "redirect:/Verwalter/user/list/";
     }

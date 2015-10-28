@@ -119,7 +119,7 @@
 	        		<td style="color:#e67817;">${item.representative!''}</td>
 	        		<td>
 	        		     <a href="/region/enterprise/check/${item.id?c!''}">详情</a>
-	        		     | <a href="/region/message?enterpriseId=${item.id?c!''}">站内信</a>
+	        		     | <a href="/region/message/detail?enterpriseId=${item.id?c!''}">站内信</a>
 	        		</td>
 	        	</tr>
         	</#list>

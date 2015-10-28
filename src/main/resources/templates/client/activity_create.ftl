@@ -132,7 +132,7 @@ function activityPass(activityId)
              success: function(data){
                          if (data.code == 0)
                          {
-                             alert("审核成功！");
+                             alert("审核成功，已向各企业发送活动通知！");
                              location.reload();
                          }
                          else 
@@ -141,6 +141,29 @@ function activityPass(activityId)
                          }
                       }
          });
+}
+
+function passCheck(activityId) {
+    if (confirm("已审核过该推荐表，点击将更新列表到评分表并重新发送通知，确认吗？")) {
+         $.ajax({
+             type: "GET",
+             url: "/activity/pass",
+             contentType: "application/json; charset=utf-8",
+             data: {"activityId" : activityId},
+             dataType: "json",
+             success: function(data){
+                         if (data.code == 0)
+                         {
+                             alert("推荐列表更新成功，已向各企业发送活动通知！");
+                             location.reload();
+                         }
+                         else 
+                         {
+                             alert(data.msg);
+                         }
+                      }
+         });
+    }
 }
 
 
@@ -400,9 +423,9 @@ window.onload=done;
                         	<#else>
                         		<input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#666;color:#fff;" type="button"  value="推荐表下载" />
                         	</#if>	
-                        	<#if activity??&&activity.statusId==1>
-                        		<input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#666;color:#fff; " type="button"  value="已审核" />
-                        	<#else>	
+                        	<#if activity??&&activity.statusId??&&activity.statusId==1>
+                        		<input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#666;color:#fff; " type="button" onclick="javascript:passCheck(${activity.id?c!''});"  value="已审核" />
+                        	<#elseif activity??&&activity.statusId??&&activity.statusId==0>	
                         		<input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#e67817;color:#fff; " type="button" onclick="javascript:activityPass(${activity.id?c!''});" value="通过审核" />
                         	</#if>
                         <#else>
@@ -432,6 +455,7 @@ window.onload=done;
     				</ul>
     			</div>
             <!-- 评分汇总 -->
+            	<#if activity??>
                     <div>
                         <span style="margin-top: 6px;">路演结果：</span>
                         <ul class="active_project_text">
@@ -441,6 +465,7 @@ window.onload=done;
                             </li>
                         </ul>
                     </div>
+                </#if>    
     			<!-- 评分汇总 end-->
      <#if pagetype?? && pagetype == "check">
      <#else>

@@ -74,6 +74,20 @@ public class TdRegionAdminService {
         
         return repository.findOne(id);
     }
+    /**
+     * 根据区域查找
+     * @param title
+     * @return
+     */
+    public TdRegionAdmin findByTitle(String title)
+    {
+        if (null == title)
+        {
+            return null;
+        }
+        
+        return repository.findByTitle(title);
+    }
     
     /**
      * 查找

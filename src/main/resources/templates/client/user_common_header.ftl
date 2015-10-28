@@ -10,9 +10,9 @@
     	<dt><a>帮助</a></dt>
     	<#if user??>
     		<#if user.roleId == 1>
-        		<dt><a href="/enterprise/message">站内信息</a></dt>
+        		<dt><a href="/enterprise/message">站内信息<#if message_num??&&message_num gt 0><b style="float:right;  color: darkorange; margin: 1px 12px 0 0;">${message_num!''}</b></#if></a></dt>
         	<#elseif user.roleId == 2>
-        		<dt><a href="/region/message">站内信息</a></dt>
+        		<dt><a href="/region/message">站内信息<#if message_num??&&message_num gt 0><b style="float:right;  color: darkorange; margin: 1px 12px 0 0;">${message_num!''}</b></#if></a></dt>
         	</#if>	
         </#if>
         <dd>

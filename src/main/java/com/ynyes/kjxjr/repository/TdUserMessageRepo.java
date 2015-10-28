@@ -21,8 +21,11 @@ public interface TdUserMessageRepo extends
    List<TdUserMessage> findByStatusE(Long statusE);
    List<TdUserMessage> findByStatusEOrderByIdDesc(Long statusE);
    List<TdUserMessage> findByEnterpriseIdAndRegionAdminIdOrderByTimeAsc(Long enterpriseId,Long regionAdminId);
+   List<TdUserMessage> findByEnterpriseIdAndStatusEOrderByTimeAsc(Long enterpriseId,Long statusE);
+   List<TdUserMessage> findByRegionAdminIdAndStatusROrderByTimeAsc(Long regionAdminId,Long statusR);
    
    Page<TdUserMessage> findByStatusEOrderByIdDesc(Long statusE, Pageable page);
    Page<TdUserMessage> findByEnterpriseIdAndRegionAdminIdOrderByTimeDesc(Long enterpriseId,Long regionAdminId , Pageable page);
    Page<TdUserMessage> findByEnterpriseIdAndSpeakerOrderByTimeDesc(Long enterpriseId,Long speaker , Pageable page);
+   Page<TdUserMessage> findByRegionAdminIdAndSpeakerOrderByTimeDesc(Long regionAdminId,Long speaker , Pageable page);
 } 

@@ -1,9 +1,16 @@
 package com.ynyes.kjxjr.controller.front;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -13,6 +20,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -39,7 +47,9 @@ import com.ynyes.kjxjr.entity.TdEnterprise;
 import com.ynyes.kjxjr.entity.TdEnterpriseGrade;
 import com.ynyes.kjxjr.entity.TdExpert;
 import com.ynyes.kjxjr.entity.TdExpertCoachEnterprise;
+import com.ynyes.kjxjr.entity.TdRegionAdmin;
 import com.ynyes.kjxjr.entity.TdUser;
+import com.ynyes.kjxjr.entity.TdUserMessage;
 import com.ynyes.kjxjr.service.TdActivityEnterpriseService;
 import com.ynyes.kjxjr.service.TdActivityExpertService;
 import com.ynyes.kjxjr.service.TdActivityService;
@@ -52,7 +62,9 @@ import com.ynyes.kjxjr.service.TdEnterpriseTypeService;
 import com.ynyes.kjxjr.service.TdExpertCoachEnterpriseService;
 import com.ynyes.kjxjr.service.TdExpertService;
 import com.ynyes.kjxjr.service.TdOrderService;
+import com.ynyes.kjxjr.service.TdRegionAdminService;
 import com.ynyes.kjxjr.service.TdRegionService;
+import com.ynyes.kjxjr.service.TdUserMessageService;
 import com.ynyes.kjxjr.service.TdUserService;
 import com.ynyes.kjxjr.util.ClientConstant;
 import com.ynyes.kjxjr.util.SiteMagConstant;
@@ -103,6 +115,12 @@ public class TdActivityController {
 	
 	@Autowired
 	TdExpertCoachEnterpriseService tdExpertCoachEnterpriseService;
+	
+	@Autowired
+	TdRegionAdminService tdRegionAdminService;
+	
+	@Autowired
+	TdUserMessageService tdUserMessageService;
 
 	   /**
      * 企业填写资料
@@ -295,6 +313,7 @@ public class TdActivityController {
         TdActivity activity = tdActivityService.findOne(id);
         if (null != activity)
         {
+            map.addAttribute("mark", "activity");
 	        map.addAttribute("activity", activity);
 	        map.addAttribute("recommend_list" , tdActivityEnterpriseService.findByActivityIdAndStatusIdOrderBySortIdAsc(id, 2L));
 	        map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityId(id));
@@ -315,7 +334,7 @@ public class TdActivityController {
     //活动通过审核
     @RequestMapping(value = "/pass")
     @ResponseBody
-    public  Map<String, Object> regionAddEnterprise(HttpServletRequest req,Long activityId ,
+    public  Map<String, Object> regionAddEnterprise(HttpServletRequest req, HttpServletResponse ressonse, Long activityId ,
     		ModelMap map) {
         Map<String, Object> res = new HashMap<String, Object>();
         res.put("code", 1);
@@ -362,6 +381,28 @@ public class TdActivityController {
         	{
         		for (TdActivityEnterprise ae : aenlist)
         		{
+               	 //短信提醒
+                	TdEnterprise enterprise = tdEnterpriseService.findOne(ae.getEnterpriseId());
+                	smsRecommend(enterprise.getUsermobile(),ae.getArea() ,ae.getActivityTitle() , ae.getDate() , enterprise.getTitle() , ressonse , req);
+                	
+                    //站内信
+                    TdRegionAdmin admin = tdRegionAdminService.findByTitle(ae.getArea());
+                    TdUserMessage message = new TdUserMessage();
+                    
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH点mm分");
+                    
+                    message.setEnterpriseId(ae.getEnterpriseId());
+                    message.setRegionAdminId(admin.getId());
+                    message.setName(ae.getEnterpriseTitle());
+                    message.setRegion(admin.getTitle());
+                    message.setContent("【"+ae.getActivityType()+"】尊敬的"+ae.getEnterpriseTitle()+"，您被邀请参加"+admin.getRegion()+"”"+ae.getActivityTitle()+"“"+"活动。请登录个人中心查看详情！");
+                    message.setTitle("活动邀请");
+                    message.setStatusE(0L);
+                    message.setSpeaker(1L);
+                    message.setTime(new Date());
+                    tdUserMessageService.save(message);
+        			
+        			
         			//重新填数据
                 	List<TdEnterpriseGrade> enterpriseGradeList = tdEnterpriseGradeService.findByActivityIdOrderByIdAsc(activityId);
                 	int i = 0;
@@ -394,6 +435,89 @@ public class TdActivityController {
         res.put("code", 0);
         return res;
     }
+    
+	//发短信【推荐】
+	public Map<String, Object> smsRecommend(String mobile, String region, String activityTitle , Date date , String enterpriseTitle ,HttpServletResponse response, HttpServletRequest request) {
+		Map<String, Object> res = new HashMap<>();
+		res.put("status", -1);
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH点mm分");
+		
+		HttpSession session = request.getSession();
+		String  info = "【科技小巨人】";
+
+			 info = "尊敬的"+enterpriseTitle +"，您被邀请参加"+region+"”"+activityTitle+"“活动，活动时间定为"+sdf.format(date)+"。请登录个人中心查看详情。【科技小巨人】";
+
+		
+		System.err.println("errormsg");
+		String content = null;
+		try {
+			content = URLEncoder.encode(info, "GB2312");
+			System.err.println(content);
+		} catch (Exception e) {
+			e.printStackTrace();
+			res.put("message", "发送失败！");
+			return res;
+		}
+		
+		String url = "http://www.ht3g.com/htWS/BatchSend.aspx?CorpID=CQDL00059&Pwd=644705&Mobile=" + mobile
+				+ "&Content=" + content;
+		StringBuffer fanhui = null;
+		try {
+			URL u = new URL(url);
+			URLConnection connection = u.openConnection();
+			HttpURLConnection httpConn = (HttpURLConnection) connection;
+			httpConn.setRequestProperty("Content-type", "text/html");
+			httpConn.setRequestProperty("Accept-Charset", "utf-8");
+			httpConn.setRequestProperty("contentType", "utf-8");
+			InputStream inputStream = null;
+			InputStreamReader inputStreamReader = null;
+			BufferedReader reader = null;
+			StringBuffer resultBuffer = new StringBuffer();
+			String tempLine = null;
+
+			if (httpConn.getResponseCode() >= 300) {
+				res.put("message", "HTTP Request is not success, Response code is " + httpConn.getResponseCode());
+				return res;
+			}
+
+			try {
+				inputStream = httpConn.getInputStream();
+				inputStreamReader = new InputStreamReader(inputStream);
+				reader = new BufferedReader(inputStreamReader);
+
+				while ((tempLine = reader.readLine()) != null) {
+					resultBuffer.append(tempLine);
+				}
+
+				fanhui = resultBuffer;
+
+			} finally {
+
+				if (reader != null) {
+					reader.close();
+				}
+
+				if (inputStreamReader != null) {
+					inputStreamReader.close();
+				}
+
+				if (inputStream != null) {
+					inputStream.close();
+				}
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			res.put("message", "发送失败！");
+			return res;
+		}
+		
+		res.put("status", 0);
+		res.put("message", fanhui);
+
+		return res;
+	}
     
     //管理活动
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
