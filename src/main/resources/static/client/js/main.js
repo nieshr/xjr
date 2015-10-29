@@ -115,6 +115,19 @@ function candidateAddEnterprise(id,activityId)
   });
 }
 
+//取消取消筛选企业
+function candidateRemoveEnterprise(id,activityId)
+{
+    $.ajax({
+        type:"post",
+        url:"/region/candidateRemoveEnterprise",
+        data:{"id":id,"activityId":activityId},
+        success:function(data){
+            $("#selectedEnterprise").html(data);
+        }
+    });
+}
+
 
 //添加预选企业
 function addEnterprise1(id,activityId,statusId)

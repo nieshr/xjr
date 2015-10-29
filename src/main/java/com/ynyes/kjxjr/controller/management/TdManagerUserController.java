@@ -287,6 +287,7 @@ public class TdManagerUserController {
     
     @RequestMapping(value="/edit")
     public String orderEdit(Long id,
+    					Long done,
                         String __VIEWSTATE,
                         ModelMap map,
                         HttpServletRequest req){
@@ -296,28 +297,36 @@ public class TdManagerUserController {
             return "redirect:/Verwalter/login";
         }
         
+        if(null != done)
+        {
+        	map.addAttribute("done", done);
+        }
         
         map.addAttribute("__VIEWSTATE", __VIEWSTATE);
       
         if (null != id)
         {
-        	
-            map.addAttribute("user", tdUserService.findOne(id));
+        	TdUser user = tdUserService.findOne(id);
+            map.addAttribute("user",user);
+            map.addAttribute("id",id);
+            map.addAttribute("enterpriseId", tdEnterpriseService.findbyUsername(user.getUsername()).getId());
             
             //查看企业资料信息
             TdEnterprise enterprise = tdEnterpriseService.findbyUsername(tdUserService.findOne(id).getUsername());
-            
-            //行业所属是多选。。。。
-            if (null != enterprise.getType())
+            if (null != enterprise)
             {
-            	String type[] = enterprise.getType().split(",");
-            	map.addAttribute("enterpriseType", type);
-            }
-            
-            if (null != enterprise.getDataAble())
-            {
-            	String dataAble[] = enterprise.getDataAble().split(",");
-            	map.addAttribute("dataAble", dataAble);
+	            //行业所属是多选。。。。
+	            if (null != enterprise.getType() && !enterprise.getType().equals(""))
+	            {
+	            	String type[] = enterprise.getType().split(",");
+	            	map.addAttribute("enterpriseType", type);
+	            }
+	            
+	            if (null != enterprise.getDataAble() && !enterprise.getDataAble().equals(""))
+	            {
+	            	String dataAble[] = enterprise.getDataAble().split(",");
+	            	map.addAttribute("dataAble", dataAble);
+	            }
             }
             
             Calendar calendar = Calendar.getInstance();
@@ -342,6 +351,7 @@ public class TdManagerUserController {
             //项目归属类别
             List<TdEnterpriseType> enterpriseTypeList = tdEnterpriseTypeService.findByIsEnableTrueOrderBySortIdAsc();
             map.addAttribute("enterpriseType_list", enterpriseTypeList);
+            
         }
         return "/site_mag/user_edit";
     }
@@ -399,6 +409,7 @@ public class TdManagerUserController {
      * @return
      */
     @RequestMapping(value = "/enterprise/status", method = RequestMethod.POST)
+    @ResponseBody
     public  Map<String, Object> userEnterpriseStatus(HttpServletRequest req, ModelMap map, Long id , Long statusId) {
         Map<String, Object> res = new HashMap<String, Object>();
         res.put("code", 1);
@@ -415,13 +426,15 @@ public class TdManagerUserController {
         {
         	return res;
         }
-
-
         
         TdEnterprise Enterprise = tdEnterpriseService.findOne(id);
         if (null != statusId)
         {
 	        Enterprise.setStatusId(statusId);
+	        tdEnterpriseService.save(Enterprise);
+        }
+        else{
+	        Enterprise.setStatusId(null);
 	        tdEnterpriseService.save(Enterprise);
         }
         map.addAttribute("enterprise", Enterprise);
@@ -462,7 +475,7 @@ public class TdManagerUserController {
         
         if (null == tdUser.getId())
         {
-            tdManagerLogService.addLog("add", "修改用户", req);
+            tdManagerLogService.addLog("add", "创建用户", req);
         }
         else
         {
@@ -474,10 +487,24 @@ public class TdManagerUserController {
         if (tdUser.getRoleId()==1)
         {
         	TdEnterprise enterprise = tdEnterpriseService.findbyUsername(tdUser.getUsername());
-        	enterprise.setUsermobile(tdUser.getMobile());
-        	enterprise.setUseremail(tdUser.getEmail());
-        	enterprise.setPassword(tdUser.getPassword());
-        	tdEnterpriseService.save(enterprise);
+        	if (null != enterprise)
+        	{
+	        	enterprise.setUsermobile(tdUser.getMobile());
+	        	enterprise.setUseremail(tdUser.getEmail());
+	        	enterprise.setPassword(tdUser.getPassword());
+	        	tdEnterpriseService.save(enterprise);
+        	}
+        	else{
+        		TdEnterprise enterprise1 = new TdEnterprise();
+        		tdUser.setRegisterTime(new Date());
+        		tdUserService.save(tdUser);
+        		enterprise1.setUsername(tdUser.getUsername());
+	        	enterprise1.setUsermobile(tdUser.getMobile());
+	        	enterprise1.setUseremail(tdUser.getEmail());
+	        	enterprise1.setPassword(tdUser.getPassword());
+	        	tdEnterpriseService.save(enterprise1);
+        	}
+        	
         }
         
         return "redirect:/Verwalter/user/list/";

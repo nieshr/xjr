@@ -703,4 +703,22 @@ public class TdInfoController {
 	    
         return "/client/resource_detail";
     }
+	
+	// 合作机构
+	@RequestMapping(value="/organization")
+	public String organization(HttpServletRequest req,ModelMap map){
+		tdCommonService.setHeader(map, req);
+		
+		List<TdArticleCategory> category_list = tdArticleCategoryService.findByMenuId(8L);
+		
+		map.addAttribute("actegory_list", category_list);
+		for (int i = 0; i < category_list.size(); i++) {
+			TdArticleCategory category = category_list.get(i);
+			map.addAttribute("article_"+i+"_list", tdArticleService.findByMenuIdAndCategoryId(8L,category.getId(),0,ClientConstant.pageSize).getContent());
+		}
+		
+		
+		return "/client/organization";
+	}
+	
 }

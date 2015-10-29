@@ -114,10 +114,12 @@ function allowsubmit()
     <#if enterprise??>
     <dl class="apply_content">
              <form action="/enterprise/info/submit" id="step1" method="post">
-                 <input type="hidden" name="id" value="${enterprise.id?c!''}" />
+                <input type="hidden" name="id" value="${enterprise.id?c!''}" />
 			    <input type="hidden" name="username" value="${enterprise.username!''}"/>
 			    <input type="hidden" name="usermobile" value="${enterprise.usermobile!''}"/>
 			    <input type="hidden" name="useremail" value="${enterprise.useremail!''}"/>
+			    <input type="hidden" name="fileUrl" value="${enterprise.fileUrl!''}"/>
+	     	    <input type="hidden" name="pptUrl" value="${enterprise.pptUrl!''}"/>
         	<div style="margin: 20px 0 20px 50px ;width:100%;">
         		<input type="radio" <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>checked="checked"</#if> name="formType" value="0" onClick="javascript:showEnter();"/><span>企业组表格</span>
         		<input type="radio" <#if enterprise.formType??&&enterprise.formType==1>checked="checked"</#if> name="formType" value="1" onClick="javascript:showPro();"/><span>项目团队表格</span>
@@ -245,9 +247,9 @@ function allowsubmit()
     		<br/><p>此信息将自动生成到报名表中</p>
     	</dt>   	
     	<dd>
-    			<div><span>发明专利数量</span><input type="text" name="inventiPatent" datatype="n" style="width:40px;" value="<#if enterprise.formType??>${enterprise.inventiPatent!'0'}</#if>"  /></div>
-    			<div><span>实用新型专利数量</span><input type="text"name="newPatent" datatype="n"  style="width:40px;" value="<#if enterprise.formType??>${enterprise.newPatent!'0'}</#if>"  /></div>
-    			<div><span>外观设计专利数量</span><input type="text" name="designPatent" datatype="n" style="width:40px;" value="<#if enterprise.formType??>${enterprise.designPatent!'0'}</#if>"  /></div>
+    			<div><span>发明专利数量</span><input type="text" name="inventiPatent" datatype="n" style="width:40px;" value="<#if enterprise.formType??>${enterprise.inventiPatent!'0'}<#else>0</#if>"  /></div>
+    			<div><span>实用新型专利数量</span><input type="text"name="newPatent" datatype="n"  style="width:40px;" value="<#if enterprise.formType??>${enterprise.newPatent!'0'}<#else>0</#if>"  /></div>
+    			<div><span>外观设计专利数量</span><input type="text" name="designPatent" datatype="n" style="width:40px;" value="<#if enterprise.formType??>${enterprise.designPatent!'0'}<#else>0</#if>"  /></div>
     	</dd>
     	<dt class="dt04 enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>"><span>四、融资信息（单位：万元）</span>
     								<br/><p>此信息将自动生成到报名表中</p>

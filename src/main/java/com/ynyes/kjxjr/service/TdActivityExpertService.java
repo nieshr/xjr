@@ -111,6 +111,11 @@ public class TdActivityExpertService {
     {
         return (List<TdActivityExpert>) repository.findByActivityId(activityId);
     }
+    
+    public List<TdActivityExpert> findByActivityIdOrderByExpertIdAsc(Long activityId)
+    {
+        return (List<TdActivityExpert>) repository.findByActivityIdOrderByExpertIdAsc(activityId);
+    }
 
     
     /**

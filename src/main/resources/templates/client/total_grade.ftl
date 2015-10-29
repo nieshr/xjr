@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-    <title>Document</title>
+    <title>科技小巨人</title>
+	<link rel="shortcut icon" href="images/icon.ico" />    
     <link href="/client/css/form.css" rel="stylesheet" type="text/css" />
     <link href="/client/css/base.css" rel="stylesheet" type="text/css" />
 </head>
@@ -10,103 +11,31 @@
     <table class="score">
         <caption>项目得分汇总表</caption>
         <tr class="tr01">
-        <td></td>
-            <#if expert0_grade??>
-                <#list expert0_grade as item>
-                    <td>${item.number!''}</td>
+        	<td>名称</td>
+            <#if aex_list??>
+                <#list aex_list as item>
+                    <td>${item.name!''}</td>
                 </#list>
             </#if>
+            <td>总分</td>
         </tr>
+        <#if grade_list??>
+            <#list grade_list as item>
+		        <tr class="tr02">
+			        <td>${item.enterpriseTitle!''}</td>
+			        <#if ("expert_list_"+item_index)?eval??>
+			        	<#assign expertList=("expert_list_"+item_index)?eval>
+			        	<#list expertList as expert>
+			        		<td>${expert.totalPoint!''}</td>
+			        	</#list>
+			        </#if>		
+					<td>${item.totalPoint!''}</td>
+		        </tr>
+		    </#list>
+		</#if>        
         
-        <tr class="tr02">
-        <td>${expert0!''}</td>
-        <#if expert0_grade??>
-            <#list expert0_grade as item>
-                <#if item.totalPoint??>
-                    <td>${item.totalPoint?string("0.00")}</td>
-                <#else>
-                    <td></td>
-                </#if>
-            </#list>
-        </#if>
-        </tr>
-        
-        <tr class="tr02">
-        <td>${expert1!''}</td>
-        <#if expert1_grade??>
-            <#list expert1_grade as item>
-                <#if item.totalPoint??>
-                    <td>${item.totalPoint?string("0.00")}</td>
-                <#else>
-                    <td></td>
-                </#if>
-            </#list>
-        </#if>
-        </tr>
-        
-        <tr class="tr02">
-        <td>${expert2!''}</td>
-        <#if expert2_grade??>
-            <#list expert2_grade as item>
-                <#if item.totalPoint??>
-                    <td>${item.totalPoint?string("0.00")}</td>
-                <#else>
-                    <td></td>
-                </#if>
-            </#list>
-        </#if>
-        </tr>
-        
-        <tr class="tr02">
-        <td>${expert3!''}</td>
-        <#if expert3_grade??>
-            <#list expert3_grade as item>
-                <#if item.totalPoint??>
-                    <td>${item.totalPoint?string("0.00")}</td>
-                <#else>
-                    <td></td>
-                </#if>
-            </#list>
-        </#if>
-        </tr>
-        
-        <tr class="tr02">
-        <td>${expert4!''}</td>
-        <#if expert4_grade??>
-            <#list expert4_grade as item>
-                <#if item.totalPoint??>
-                    <td>${item.totalPoint?string("0.00")}</td>
-                <#else>
-                    <td></td>
-                </#if>
-            </#list>
-        </#if>
-        </tr>
-        
-        <tr class="tr02">
-        <td>${expert5!''}</td>
-        <#if expert5_grade??>
-            <#list expert5_grade as item>
-                <#if item.totalPoint??>
-                    <td>${item.totalPoint?string("0.00")}</td>
-                <#else>
-                    <td></td>
-                </#if>
-            </#list>
-        </#if>
-        </tr>
-        
-        <tr class="tr02">
-        <td>${expert6!''}</td>
-        <#if expert6_grade??>
-            <#list expert6_grade as item>
-                <#if item.totalPoint??>
-                    <td>${item.totalPoint?string("0.00")}</td>
-                <#else>
-                    <td></td>
-                </#if>
-            </#list>
-        </#if>
+     
+   
     </table>
     <input style="margin-left: 640px; margin-top: 20px; width:100px;height: 30px; font-size: 14px;" type="button" value="打印评分表" />
 </body>

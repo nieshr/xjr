@@ -17,6 +17,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -381,15 +383,22 @@ public class TdActivityController {
         	{
         		for (TdActivityEnterprise ae : aenlist)
         		{
-               	 //短信提醒
-                	TdEnterprise enterprise = tdEnterpriseService.findOne(ae.getEnterpriseId());
-                	smsRecommend(enterprise.getUsermobile(),ae.getArea() ,ae.getActivityTitle() , ae.getDate() , enterprise.getTitle() , ressonse , req);
+//               	 //短信提醒
+//                	TdEnterprise enterprise = tdEnterpriseService.findOne(ae.getEnterpriseId());
+//                	//验证手机号格式
+//                	Pattern p = Pattern.compile("/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/");
+//                	Matcher m = p.matcher(enterprise.getUsermobile());
+//                	if (m.matches())
+//                	{
+//                		smsRecommend(enterprise.getUsermobile(),ae.getArea() ,ae.getActivityTitle() , ae.getDate() , enterprise.getTitle() , ressonse , req);
+//                	}
+                 
                 	
                     //站内信
                     TdRegionAdmin admin = tdRegionAdminService.findByTitle(ae.getArea());
                     TdUserMessage message = new TdUserMessage();
                     
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH点mm分");
+//                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH点mm分");
                     
                     message.setEnterpriseId(ae.getEnterpriseId());
                     message.setRegionAdminId(admin.getId());
@@ -872,6 +881,7 @@ public class TdActivityController {
         return "/client/activity_selectEnterprise";
     }
 
+    //预选
     @RequestMapping(value = "/addEnterprise")
     public String  addEnterprise(HttpServletRequest req,Long id,Long activityId,
     		ModelMap map) {
@@ -1467,49 +1477,89 @@ public class TdActivityController {
   
     @RequestMapping(value = "/getGrade")
     public String getGrade(Long activityId,ModelMap map){
-    	List<TdActivityExpert> activity_experts = tdActivityExpertService.findByActivityId(activityId);
-    	if(null != activity_experts){
-    		if(0 < activity_experts.size()){
-    			List<TdEnterpriseGrade> experts0_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderBySordIdAsc(activity_experts.get(0).getExpertId(), activityId);
-    			map.addAttribute("expert0_grade", experts0_grade);
-    			map.addAttribute("expert0", activity_experts.get(0).getName());
+    	List<TdActivityEnterprise> activityEnterpriseList = tdActivityEnterpriseService.findByActivityIdAndStatusId(activityId, 2L);
+    	if(null != activityEnterpriseList){
+    		for (TdActivityEnterprise ae : activityEnterpriseList)
+    		{
+    			Long totalPoint = 0L;
+    			//找出每一个企业对应的得分列表
+    			List<TdEnterpriseGrade> enterpriseGradeList = tdEnterpriseGradeService.findByEnterpriseIdAndActivityId(ae.getEnterpriseId(), activityId);
+    			if (null != enterpriseGradeList)
+    			{
+    				//把每一个专家的评分加起来
+    				for (TdEnterpriseGrade grade : enterpriseGradeList)
+    				{
+    					if(null != grade.getTotalPoint())
+    					{
+    						totalPoint = (long)grade.getTotalPoint().intValue()+totalPoint;
+    					}
+    				}
+    				
+    			}
+    			ae.setTotalPoint(totalPoint);
+    			tdActivityEnterpriseService.save(ae);
+    		}
+    	//总分排序
+    		List<TdActivityEnterprise> gradeList = tdActivityEnterpriseService.findByActivityIdAndStatusIdOrderByTotalPointAsc(activityId, 2L);
+    		map.addAttribute("grade_list", gradeList);
+    		if (null != gradeList)
+    		{
+    			int index = 0 ;
+    			for (TdActivityEnterprise sortEnterprise : gradeList)
+    			{
+    				List<TdEnterpriseGrade> expertList = tdEnterpriseGradeService.findByEnterpriseIdAndActivityId(sortEnterprise.getEnterpriseId(), activityId);
+    				map.addAttribute("expert_list_"+index, expertList);
+    			}
     		}
     		
-			if(1 < activity_experts.size()){
-				List<TdEnterpriseGrade> experts1_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderBySordIdAsc(activity_experts.get(1).getExpertId(), activityId);
-    			map.addAttribute("expert1_grade", experts1_grade);
-    			map.addAttribute("expert1", activity_experts.get(1).getName());		
-    		}
-			
-			if(2 < activity_experts.size()){
-				List<TdEnterpriseGrade> experts2_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderBySordIdAsc(activity_experts.get(2).getExpertId(), activityId);
-    			map.addAttribute("expert2_grade", experts2_grade);
-    			map.addAttribute("expert2", activity_experts.get(2).getName());
-			}
-			
-			if(3 < activity_experts.size()){
-				List<TdEnterpriseGrade> experts3_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderBySordIdAsc(activity_experts.get(3).getExpertId(), activityId);
-    			map.addAttribute("expert3_grade", experts3_grade);
-    			map.addAttribute("expert3", activity_experts.get(3).getName());
-			}
-			
-			if(4 < activity_experts.size()){
-				List<TdEnterpriseGrade> experts4_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderBySordIdAsc(activity_experts.get(4).getExpertId(), activityId);
-    			map.addAttribute("expert4_grade", experts4_grade);
-    			map.addAttribute("expert4", activity_experts.get(4).getName());
-			}
-			
-			if(5 < activity_experts.size()){
-				List<TdEnterpriseGrade> experts5_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderBySordIdAsc(activity_experts.get(5).getExpertId(), activityId);
-    			map.addAttribute("expert5_grade", experts5_grade);
-    			map.addAttribute("expert5", activity_experts.get(5).getName());
-			}
-			
-			if(6 < activity_experts.size()){
-				List<TdEnterpriseGrade> experts6_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderBySordIdAsc(activity_experts.get(6).getExpertId(), activityId);
-    			map.addAttribute("expert6_grade", experts6_grade);
-    			map.addAttribute("expert6", activity_experts.get(6).getName());
-			}
+    		List<TdActivityExpert> expertList = tdActivityExpertService.findByActivityIdOrderByExpertIdAsc(activityId);
+    		map.addAttribute("aex_list" ,expertList);
+    		
+    		
+    		
+    		/*----------------------------------dengxiao **************************------------------*/
+//    		if(0 < activity_experts.size()){
+//    			List<TdEnterpriseGrade> experts0_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderBySordIdAsc(activity_experts.get(0).getExpertId(), activityId);
+//    			map.addAttribute("expert0_grade", experts0_grade);
+//    			map.addAttribute("expert0", activity_experts.get(0).getName());
+//    		}
+//    		
+//			if(1 < activity_experts.size()){
+//				List<TdEnterpriseGrade> experts1_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderBySordIdAsc(activity_experts.get(1).getExpertId(), activityId);
+//    			map.addAttribute("expert1_grade", experts1_grade);
+//    			map.addAttribute("expert1", activity_experts.get(1).getName());		
+//    		}
+//			
+//			if(2 < activity_experts.size()){
+//				List<TdEnterpriseGrade> experts2_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderBySordIdAsc(activity_experts.get(2).getExpertId(), activityId);
+//    			map.addAttribute("expert2_grade", experts2_grade);
+//    			map.addAttribute("expert2", activity_experts.get(2).getName());
+//			}
+//			
+//			if(3 < activity_experts.size()){
+//				List<TdEnterpriseGrade> experts3_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderBySordIdAsc(activity_experts.get(3).getExpertId(), activityId);
+//    			map.addAttribute("expert3_grade", experts3_grade);
+//    			map.addAttribute("expert3", activity_experts.get(3).getName());
+//			}
+//			
+//			if(4 < activity_experts.size()){
+//				List<TdEnterpriseGrade> experts4_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderBySordIdAsc(activity_experts.get(4).getExpertId(), activityId);
+//    			map.addAttribute("expert4_grade", experts4_grade);
+//    			map.addAttribute("expert4", activity_experts.get(4).getName());
+//			}
+//			
+//			if(5 < activity_experts.size()){
+//				List<TdEnterpriseGrade> experts5_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderBySordIdAsc(activity_experts.get(5).getExpertId(), activityId);
+//    			map.addAttribute("expert5_grade", experts5_grade);
+//    			map.addAttribute("expert5", activity_experts.get(5).getName());
+//			}
+//			
+//			if(6 < activity_experts.size()){
+//				List<TdEnterpriseGrade> experts6_grade = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderBySordIdAsc(activity_experts.get(6).getExpertId(), activityId);
+//    			map.addAttribute("expert6_grade", experts6_grade);
+//    			map.addAttribute("expert6", activity_experts.get(6).getName());
+//			}
+			/*----------------------------------dengxiao **************************------------------*/
     	}
     	return "/client/total_grade";
     }

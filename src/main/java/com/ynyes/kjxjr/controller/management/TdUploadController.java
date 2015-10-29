@@ -12,14 +12,17 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ynyes.kjxjr.entity.TdEnterprise;
 import com.ynyes.kjxjr.service.TdArticleCategoryService;
 import com.ynyes.kjxjr.service.TdArticleService;
+import com.ynyes.kjxjr.service.TdEnterpriseService;
 import com.ynyes.kjxjr.util.SiteMagConstant;
 
 /**
@@ -39,6 +42,9 @@ public class TdUploadController {
 
     @Autowired
     TdArticleService tdArticleService;
+    
+    @Autowired
+    TdEnterpriseService tdEnterpriseService;
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ResponseBody
@@ -198,6 +204,55 @@ public class TdUploadController {
         }
 
         return res;
+
+    }
+    
+    
+	@RequestMapping(value = "/enterprise/upload", method = RequestMethod.POST)
+    public String enterUpload(String action,Long enterpriseId, Long id,
+            @RequestParam MultipartFile Filedata, ModelMap map, HttpServletRequest req) {
+		
+        String username = (String) req.getSession().getAttribute("manager");
+        
+        if (null == username) {
+            return "redirect:/Verwalter/login";
+        }
+        
+        String name = Filedata.getOriginalFilename();
+//        String contentType = Filedata.getContentType();
+
+        String ext = name.substring(name.lastIndexOf("."));
+
+        try {
+            byte[] bytes = Filedata.getBytes();
+
+            Date dt = new Date(System.currentTimeMillis());
+            SimpleDateFormat sdf = new SimpleDateFormat("HHmmssSSS");
+            String fileName ="Num"+tdEnterpriseService.findOne(enterpriseId).getNumber()+"_"+ sdf.format(dt) + ext;
+
+            String uri = ImageRoot + "/" + fileName;
+
+            File file = new File(uri);
+
+            BufferedOutputStream stream = new BufferedOutputStream(
+                    new FileOutputStream(file));
+            stream.write(bytes);
+            stream.close();
+            
+            TdEnterprise enterprise = tdEnterpriseService.findOne(enterpriseId);
+            String fileUrl = enterprise.getFileUrl();
+            		
+            enterprise.setFileUrl(fileName);
+            tdEnterpriseService.save(enterprise);
+      
+
+        } catch (Exception e) {
+        	e.printStackTrace();
+        }
+        
+        Long done = 1L;
+        return "redirect:/Verwalter/user/edit?done="+done
+        		+"&id="+id;
 
     }
 

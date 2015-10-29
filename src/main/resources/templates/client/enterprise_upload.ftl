@@ -25,7 +25,9 @@ function submitCheck()
 	if (filedata == "")
 	{
 		alert("请添加文件！")
-	}
+		}else{
+		$("#upload").submit();
+		}
 <#--
 	var filedata = $("#file").val();
 

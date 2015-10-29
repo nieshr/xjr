@@ -7,6 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -183,6 +184,8 @@ public class TdRegController {
 		user.setPassword(password);
 		user.setMobile(mobile);
 		user.setEmail(email);
+		user.setStatusId(1L);
+		user.setRegisterTime(new Date());
 		user.setRoleId(1L);
 		tdUserService.save(user);
 		

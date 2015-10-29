@@ -122,6 +122,10 @@ public class TdActivityEnterprise {
     //推荐理由
     @Column
     private String reason;
+    
+    //总分
+    @Column
+    private Long totalPoint;
 
     public String getDownload() {
 		return download;
@@ -321,6 +325,14 @@ public class TdActivityEnterprise {
 
 	public void setCoachName(String coachName) {
 		this.coachName = coachName;
+	}
+
+	public Long getTotalPoint() {
+		return totalPoint;
+	}
+
+	public void setTotalPoint(Long totalPoint) {
+		this.totalPoint = totalPoint;
 	}
 
 	
