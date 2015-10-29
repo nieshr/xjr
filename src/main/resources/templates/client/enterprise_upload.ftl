@@ -96,7 +96,7 @@ function submitCheck()
         <form id="upload" enctype="multipart/form-data" action="/client/enterprise/upload" method="post">
         <dl class="apply_step2" >
             <input type="hidden" id="id" name="id" value="<#if id??>${id?c!''}</#if>"></input>
-				<dt>*点击选择文件，上传已经打印并盖章的报名表扫描文件(小于1M)</dt>
+				<dt>*点击选择文件，上传已经打印并盖章的报名表扫描文件</dt>
 				<dd ><input id="file" style="margin-top: 20px ; background : #fff;color:#333;" name="Filedata" type="file" value="" /></dd>
 		</dl>	
 		<dl class="apply_step2" style="margin-top:20px ; ">

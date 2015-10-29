@@ -251,7 +251,7 @@ $(function () {
     			<div><span>行业归属：</span>
     				<#if enterpriseType_list??>
     					<#list enterpriseType_list as item>
-    						<input style="margin-top: 3px; width:15px;" name="type" type="checkbox" value="${item.title!''}" 
+    						<input style="margin-top: 3px; width:15px;" name="type" type="checkbox"  datatype="*" value="${item.title!''}" 
     							<#if enterprise.formType?? && enterpriseType??>
 	    			     			<#list enterpriseType as type>
 	    			     				<#if type == item.title>

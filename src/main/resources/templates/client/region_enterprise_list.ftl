@@ -89,7 +89,7 @@
         	<tr class="list_title">
         		<th width="10%">编号</th>
         		<th>名称<th>
-        		<th width="15%">地区</th>
+        		<th width="15%">手机</th>
         		<th width="15%">注册资本</th>
         		<th width="15%">法人代表</th>
         		<th width="15%">操作</th>
@@ -114,7 +114,7 @@
 	        		</#if>	  					
 	        		<a href="/region/enterprise/check/${item.id?c!''}">${item.title!''}</a>
 	        		<td>
-	        		<td>${item.area!''}</td>
+	        		<td>${item.usermobile!''}</td>
 	        		<td style="color:#529c15;"><#if item.capital??>${item.capital?c!''}</#if>万元</td>
 	        		<td style="color:#e67817;">${item.representative!''}</td>
 	        		<td>

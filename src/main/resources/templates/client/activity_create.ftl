@@ -401,7 +401,11 @@ window.onload=done;
 		                            <a>丨</a>
 		                            <a <#if item.isGrade??&&item.isGrade> href="/enterprise/grade/?activityId=${item.activityId?c!''}&enterpriseId=${item.enterpriseId?c!''}"<#else>style="color:#666;" </#if>>得分</a>
 		                            <a>丨</a>
-		                            <a href="/activity/getCoach?enterpriseId=${item.enterpriseId?c!''}&activityId=${item.activityId?c!''}">分配路演辅导</a>
+		                            <#if item.statusId??&&item.statusId==1>
+		                              <a href="/activity/getCoach?enterpriseId=${item.enterpriseId?c!''}&activityId=${item.activityId?c!''}">分配路演辅导</a>
+		                            <#else>
+		                              <a style="color:#666;" href="javascript:void(0)">分配路演辅导</a>
+		                            </#if> 
 		                            <a>丨</a>
 		                            <a <#if item.pptUrl??>href="${item.pptUrl}" <#else>style="color:#666;"</#if>>PPT下载</a>
 		                            <a>丨</a>

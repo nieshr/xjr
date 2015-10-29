@@ -80,8 +80,8 @@
 	                         | <a href="/region/candidateEnterprise/${item.id?c!''}">预选</a>
 	                         | <a href="/region/recommendEnterprise?id=${item.id?c!''}">推荐企业</a>    
                          </#if>                    
-                         | <a <#if item.pptUrl??> href="/download/data?name=${item.pptUrl!''}" <#else> style="color:#999999;"</#if>>下载模板</a>
-                        <#-- | <a href="">上传推荐表</a> -->
+                       <#--  | <a <#if item.pptUrl??> href="/download/data?name=${item.pptUrl!''}" <#else> style="color:#999999;"</#if>>下载模板</a>
+                         | <a href="">上传推荐表</a> -->
                      </td>
                 </tr>
             </#list>

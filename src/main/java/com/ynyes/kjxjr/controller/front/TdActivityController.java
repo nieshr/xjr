@@ -395,7 +395,7 @@ public class TdActivityController {
                     message.setRegionAdminId(admin.getId());
                     message.setName(ae.getEnterpriseTitle());
                     message.setRegion(admin.getTitle());
-                    message.setContent("【"+ae.getActivityType()+"】尊敬的"+ae.getEnterpriseTitle()+"，您被邀请参加"+admin.getRegion()+"”"+ae.getActivityTitle()+"“"+"活动。请登录个人中心查看详情！");
+                    message.setContent("【"+ae.getActivityType()+"】尊敬的"+ae.getEnterpriseTitle()+"，您被邀请参加"+admin.getRegion()+"”"+ae.getActivityTitle()+"“"+"活动。请登录查看详情！");
                     message.setTitle("活动邀请");
                     message.setStatusE(0L);
                     message.setSpeaker(1L);
