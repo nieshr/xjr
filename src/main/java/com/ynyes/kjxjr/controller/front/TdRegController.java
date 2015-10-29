@@ -184,6 +184,7 @@ public class TdRegController {
 		user.setPassword(password);
 		user.setMobile(mobile);
 		user.setEmail(email);
+		user.setStatusId(1L);
 		user.setRegisterTime(new Date());
 		user.setRoleId(1L);
 		tdUserService.save(user);

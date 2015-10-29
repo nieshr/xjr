@@ -1075,6 +1075,29 @@ public Map<String, Object>  candidateEnterprise(HttpServletRequest req,Long id,L
     return res;
 }
 
+@RequestMapping(value = "/candidaterRemoveEnterprise")
+public String  removeEnterprise(HttpServletRequest req,Long id,Long activityId,
+		ModelMap map) {
+    String username = (String) req.getSession().getAttribute("regionUsername");
+
+    if (null == username) {
+        return "redirect:/login";
+    }
+  
+    if(null != id)
+    {
+    	TdActivityEnterprise ActivityEnterprise = tdActivityEnterpriseService.findOne(id);
+    	if (null != ActivityEnterprise)
+    	{
+    		tdActivityEnterpriseService.delete(ActivityEnterprise);
+    	}
+    }
+    
+    map.addAttribute("activityId",activityId);
+    map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityId(activityId));
+    return "/client/region_selected_enterprise";
+}
+
 @RequestMapping(value = "/removeEnterprise")
 public String  regionRemoveEnterprise(HttpServletRequest req,Long id,Long activityId,Long statusId,
 		ModelMap map) {

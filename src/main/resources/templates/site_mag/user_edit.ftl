@@ -23,6 +23,7 @@
 .apply_content dd .hide{display:none;}
 .apply_content dt .hide{display:none;}
 .apply_content .hide{display:none;}
+
 </style>
 <script>
 $(document).ready(function(){
@@ -61,6 +62,18 @@ function showPro(){
 	$(".enter").css("display","none");
 }
 
+function forbidsubmit()
+{
+	$("#submitbutton").attr("disabled",true);
+	$("#submitbutton").css("background","#666666");
+}
+
+function allowsubmit()
+{
+	$("#submitbutton").removeAttr("disabled");
+	$("#submitbutton").css("background","#e67817");
+}
+
 function setStatusId(id , statusId)
 {
 	
@@ -73,8 +86,31 @@ function setStatusId(id , statusId)
            {
             	location.reload();
             }
+            else{
+            	alert(msg);
+            	location.href='/Verwalter/login';
+            }
         }
     });
+}
+
+function done()
+{
+    alert("上传资料成功！");	
+}
+<#if done?? &&done == 1>
+window.onload=done;
+</#if>
+
+function submitCheck()
+{
+	var filedata = $("#file").val();
+	if (filedata == "")
+	{
+		alert("请添加文件！")
+		}else{
+		$("#upload").submit();
+		}
 }
 </script>
 <script type="text/javascript">
@@ -131,7 +167,11 @@ $(function () {
   <i class="arrow"></i>
   <span>企业管理</span>
   <i class="arrow"></i>
-  <span>编辑企业信息</span>
+  <#if enterprise??>
+  	<span>编辑企业信息</span>
+  <#else>
+  	<span>创建企业账号</span>
+  </#if>
 </div>
 <div class="line10"></div>
 <!--/导航栏-->
@@ -142,7 +182,7 @@ $(function () {
     <div class="content-tab-ul-wrap">
       <ul>
       <#if enterprise??>  <li><a href="javascript:;" onclick="tabs(this);" class="selected">基本资料</a></li> </#if>
-        <li><a href="javascript:;" onclick="tabs(this);" class="selected">安全设置</a></li>
+        <li><a href="javascript:;" onclick="tabs(this);">安全设置</a></li>
         <#--
         <li><a href="javascript:;" onclick="tabs(this);">账户信息</a></li>
         -->
@@ -160,38 +200,59 @@ $(function () {
 <div class="content">
     <div class="right_content">
     <div class="right_box">
-    <#--
-        <div class="change_inform">
-            <#if enterprise.statusId == 0>
-            <span>审核状态： 待审核</span>
-            <input style="cursor:pointer;" type="button" value="审核通过 " onclick="location.href='/region/enterprise/pass/${enterprise.id?c!''}'"/>          
-            <input style="cursor:pointer;" type="button" value="审核未通过 " onclick="location.href='/region/enterprise/cancel/${enterprise.id?c!''}'"/>         
-            <#elseif enterprise.statusId == 1>
-            <span>审核状态：已通过</span>
-            <input style="cursor:pointer;" type="button" value="取消审核 " onclick="location.href='/region/enterprise/recall/${enterprise.id?c!''}'"/>
-            <#elseif enterprise.statusId == 2>
-            <span>审核状态： 用户申请了重新审核</span>
-            <input style="cursor:pointer;" type="button" value="重新审核 " onclick="location.href='/region/enterprise/recall/${enterprise.id?c!''}'"/> 
-             <#elseif enterprise.statusId == 3>
-            <span>审核状态：未通过</span>
-            <input style="cursor:pointer;" type="button" value="审核通过 " onclick="location.href='/region/enterprise/pass/${enterprise.id?c!''}'"/>   
-             <#else>
-             <span>用户未完善资料</span>                    
-            </#if>
-            
-                <select id="setStatusId" onchange="javascript:setStatusId(${enterprise.id!''},this.value);">
-                     <option value="" <#if !enterprise?? || !enterprise.statusId??>selected="selected"</#if>>请选择...</option>
-                     <option value="0" <#if enterprise?? && enterprise.statusId?? &&enterprise.statusId==0>selected="selected"</#if>>待审核</option> 
-                      <option value="1" <#if enterprise?? && enterprise.statusId?? &&enterprise.statusId==1>selected="selected"</#if>>已通过</option>
-                      <option value="2" <#if enterprise?? && enterprise.statusId?? &&enterprise.statusId==2>selected="selected"</#if>>申请重新审核</option>
-                       <option value="3" <#if enterprise?? && enterprise.statusId?? &&enterprise.statusId==3>selected="selected"</#if>>未通过</option>                 
-                </select>
-        </div>
-        -->
-        <div class="change_inform">
-        	<span>
-        	<#if enterprise??&& enterprise.fileUrl??>	<a style="font-size:12px;  text-decoration: underline;" href="/download/data?name=${enterprise.fileUrl!''}">【申请表附件下载】</a></#if>
-        	</span>
+
+    <div class="change_inform">
+      <dl>
+  		<dt>
+        <#if enterprise??&&enterprise.statusId??&&enterprise.statusId == 0>
+        审核状态： 待审核
+        <#elseif enterprise??&&enterprise.statusId??&&enterprise.statusId == 1>
+        审核状态：已通过
+        <#elseif enterprise??&&enterprise.statusId??&&enterprise.statusId == 2>
+       审核状态： 用户申请了重新审核
+         <#elseif enterprise??&&enterprise.statusId??&&enterprise.statusId == 3>
+       审核状态：未通过
+         <#else>
+         用户未完善资料                    
+        </#if>
+        </dt>
+   		<dd>
+	      <div class="rule-single-select">
+	            <select id="setStatusId" onchange="javascript:setStatusId(${enterprise.id!''},this.value);">
+	                <option value="" <#if !enterprise?? || enterprise??&& !enterprise.statusId??>selected="selected"</#if>>请选择...</option>
+	                <option value="0" <#if enterprise?? && enterprise.statusId?? &&enterprise.statusId==0>selected="selected"</#if>>待审核</option> 
+	                <option value="1" <#if enterprise?? && enterprise.statusId?? &&enterprise.statusId==1>selected="selected"</#if>>已通过</option>
+	                <option value="3" <#if enterprise?? && enterprise.statusId?? &&enterprise.statusId==3>selected="selected"</#if>>未通过</option>     
+	                <option value="4" <#if enterprise?? && enterprise.statusId?? &&enterprise.statusId==4>selected="selected"</#if>>重新审核</option>            
+	            </select>
+	        </div>    
+	    </dd>
+	</dl>        
+    </div>
+    <#--   上传-->
+        <div style="float:left;	">
+       		<#if enterprise??&&enterprise.fileUrl??>	
+	        	<dl>
+		        	<dt>
+		        		已上传资料：
+		        	</dt>
+		        	<dd>
+		        		<a style="font-size:12px;  text-decoration: underline;" href="/download/data?name=${enterprise.fileUrl!''}" title="${enterprise.fileUrl!''}">【附件下载】</a>
+		        	</dd>	
+	        	</dl>
+        	</#if>
+	        <form id="upload" enctype="multipart/form-data" action="/Verwalter/enterprise/upload" method="post">
+	        <dl class="apply_step2" >
+	        	<dt>上传资料</dt>
+	            <input type="hidden" name="enterpriseId" value="<#if enterpriseId??>${enterpriseId?c!''}</#if>"></input>
+	            <input type="hidden"  name="id" value="<#if id??>${id?c!''}</#if>"></input>
+					<dd ><input id="file" style="margin-top:10px ; background : #fff;color:#333;float:left;" name="Filedata" type="file" value="" /></dd>
+			</dl>	
+			<dl class="apply_step2" style="margin-top:20px ; ">
+					
+					<dd><input  style="background:#529c15;float:left;"  class="area_save_btn" type="button" value="上传报名表" onclick="javascript:submitCheck();"/></dd>
+			</dl>		
+	        </form>
         </div>
     </div>  
         <dl class="apply_content">
@@ -202,6 +263,8 @@ $(function () {
 			    <input type="hidden" name="username" value="${enterprise.username!''}"/>
 			    <input type="hidden" name="usermobile" value="${enterprise.usermobile!''}"/>
 			    <input type="hidden" name="useremail" value="${enterprise.useremail!''}"/>
+		        <input type="hidden" name="fileUrl" value="${enterprise.fileUrl!''}"/>
+			    <input type="hidden" name="pptUrl" value="${enterprise.pptUrl!''}"/>
 			</#if>    
         	<div style="margin: 20px 0 20px 50px ;width:100%;">
         		<input type="radio" <#if enterprise??&&enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>checked="checked"</#if> name="formType" value="0" onClick="javascript:showEnter();"/><span>企业组表格</span>
@@ -253,7 +316,7 @@ $(function () {
     			<div><span>行业归属：</span>
     				<#if enterpriseType_list??>
     					<#list enterpriseType_list as item>
-    						<input style="margin-top: 3px; width:15px;" name="type" type="checkbox" value="${item.title!''}" 
+    						<input style="margin-top: 3px; width:15px;" name="type" type="checkbox" datatype="*" value="${item.title!''}" 
     							<#if enterprise.formType?? && enterpriseType??>
 	    			     			<#list enterpriseType as type>
 	    			     				<#if type == item.title>
@@ -330,9 +393,9 @@ $(function () {
     		<br/><p>此信息将自动生成到报名表中</p>
     	</dt>   	
     	<dd style="margin-left: 62px;">
-    			<div><span>发明专利数量</span><input type="text" name="inventiPatent" datatype="n" style="width:40px;" value="<#if  enterprise??&&enterprise.formType??>${enterprise.inventiPatent!'0'}</#if>"  /></div>
-    			<div><span>实用新型专利数量</span><input type="text"name="newPatent" datatype="n"  style="width:40px;" value="<#if  enterprise??&&enterprise.formType??>${enterprise.newPatent!'0'}</#if>"  /></div>
-    			<div><span>外观设计专利数量</span><input type="text" name="designPatent" datatype="n" style="width:40px;" value="<#if  enterprise??&&enterprise.formType??>${enterprise.designPatent!'0'}</#if>"  /></div>
+    			<div><span>发明专利数量</span><input type="text" name="inventiPatent" datatype="n" style="width:40px;" value="<#if  enterprise??&&enterprise.formType??>${enterprise.inventiPatent!'0'}<#else>0</#if>"  /></div>
+    			<div><span>实用新型专利数量</span><input type="text"name="newPatent" datatype="n"  style="width:40px;" value="<#if  enterprise??&&enterprise.formType??>${enterprise.newPatent!'0'}<#else>0</#if>"  /></div>
+    			<div><span>外观设计专利数量</span><input type="text" name="designPatent" datatype="n" style="width:40px;" value="<#if  enterprise??&&enterprise.formType??>${enterprise.designPatent!'0'}<#else>0</#if>"  /></div>
     	</dd>
     	<dt class="dt04 enter <#if  enterprise??&&enterprise.formType??&&enterprise.formType==1>hide</#if>"  style="width: 1000px; text-align: left; height: 30px;"><span>四、融资信息（单位：万元）</span>
     								<br/><p>此信息将自动生成到报名表中</p>
@@ -401,15 +464,17 @@ $(function () {
     			</div>
     			
     			<div>
-    				<p>是否愿意将贵公司所填以上信息向投资金融平台披露</p>
-    			<input style=" width:15px;"  type="radio" <#if enterprise.formType??&& enterprise.isShow ||!enterprise.formType??> checked="checked"</#if> name="isShow" value="true" />
-    			<span style=" width:auto; display: block; margin-left: 10px; margin-top: 3px; ">是（同意请加盖公司公章）</span>
-        		<input style=" width:15px;" type="radio"  <#if enterprise.formType??&& !enterprise.isShow> checked="checked"</#if> name="isShow" value="false" />
+    				<p class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>">是否愿意将贵公司所填以上信息向投资金融平台披露</p>
+    				<p  class="pro <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>hide</#if>">是否愿意将团队所填以上信息向投资金融平台披露</p>
+    			<input style=" width:15px;"  type="radio" <#if enterprise.formType??&& enterprise.isShow ||!enterprise.formType??> checked="checked"</#if> name="isShow" value="true" onclick="javascript:allowsubmit();"/>
+    			<span  class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>" style=" width:auto; margin-left: 10px; margin-top: 3px; ">是（同意请加盖公司公章）</span>
+    			<span  class="pro <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>hide</#if>" style=" width:auto; margin-left: 10px; margin-top: 3px; ">是（同意请签字）</span>
+        		<input style=" width:15px;" type="radio"  <#if enterprise.formType??&& !enterprise.isShow> checked="checked"</#if> name="isShow" value="false" onclick="javascript:forbidsubmit();"/>
         		<span style=" width:auto; display: block; margin-left: 10px; margin-top:3px;">否</span>
     			</div>
     	</dd>
     	<dt class="dt05">
-    		<input type="submit" style="cursor:pointer;" value="确定" />
+    		<input id="submitbutton"  type="submit" <#if enterprise.isShow??&& !enterprise.isShow>style="background:#666666" <#else>style="cursor:pointer;"</#if> value="保存" <#if enterprise.isShow??&& !enterprise.isShow> disabled="disabled"</#if> />
     	</dt>
     	</form>
     	</dl>
@@ -420,11 +485,12 @@ $(function () {
 </#if>
 <!--安全设置-->
 <form name="form_user" method="post" action="/Verwalter/user/save" id="form_user">
-<div class="tab-content" style="display:none;">  
+<div class="tab-content" <#if enterprise??> style="display:none;"</#if>>  
 
 <div>
 <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="${__VIEWSTATE!""}" >
 <input type="hidden" name="userId" value="<#if user??>${user.id!""}</#if>" >
+<input type="hidden" name="roleId" value="<#if user??>${user.roleId!""}<#else>1</#if>" >
 </div>
  <dl>
     <dt>用户状态</dt>
@@ -465,7 +531,7 @@ $(function () {
   </dl>
   <dl>
     <dt>邮箱账号</dt>
-    <dd><input name="email" type="text" value="<#if user??>${user.email!""}</#if>" id="txtEmail" class="input normal" ignore="ignore" datatype="e" sucmsg=" " > </dd>
+    <dd><input name="email" type="text" value="<#if user??>${user.email!""}</#if>" id="txtEmail" class="input normal" datatype="e" sucmsg=" " > </dd>
   </dl>
   <dl>
     <dt>手机号码</dt>

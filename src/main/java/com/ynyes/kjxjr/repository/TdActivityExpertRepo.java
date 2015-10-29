@@ -21,6 +21,7 @@ public interface TdActivityExpertRepo extends
 { 
 	TdActivityExpert findByActivityIdAndExpertId(Long activityId,Long ExpertId);
 	List<TdActivityExpert> findByActivityId(Long activityId);
+	List<TdActivityExpert> findByActivityIdOrderByExpertIdAsc(Long activityId);
 
 	
 	List<TdActivityExpert> findByExpertIdAndCreateTimeAfterOrderByCreateTimeDesc(Long expertId,Date create);

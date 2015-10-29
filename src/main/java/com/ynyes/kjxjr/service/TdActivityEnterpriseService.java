@@ -117,6 +117,12 @@ public class TdActivityEnterpriseService {
         return (List<TdActivityEnterprise>) repository.findByActivityIdAndStatusIdOrderBySortIdAsc(activityId , statusId);
     }
     
+    //活动管理，评分列表排序
+    public List<TdActivityEnterprise> findByActivityIdAndStatusIdOrderByTotalPointAsc(Long activityId , Long statusId)
+    {
+        return (List<TdActivityEnterprise>) repository.findByActivityIdAndStatusIdOrderByTotalPointAsc(activityId , statusId);
+    }
+    
     public Page<TdActivityEnterprise> findAllOrderBySortIdAsc(int page, int size)
     {
         PageRequest pageRequest = new PageRequest(page, size, new Sort(Direction.ASC, "sortId"));
