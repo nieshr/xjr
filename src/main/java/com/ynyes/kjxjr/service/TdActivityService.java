@@ -97,7 +97,24 @@ public class TdActivityService {
         return (List<TdActivity>) repository.findAll(ids);
     }
     
+    /**
+     * 区县根据地区查找所有
+     * @param region
+     * @return
+     */
+    public List<TdActivity> findByRegion(String region)
+    {
+        return (List<TdActivity>) repository.findByRegion(region);
+    }
 
+    /**
+     * 活动管理员查找全部活动
+     * @return
+     */
+    public List<TdActivity> findAll()
+    {
+        return (List<TdActivity>) repository.findAll();
+    }
     
     public Page<TdActivity> findAllOrderBySortIdAsc(int page, int size)
     {

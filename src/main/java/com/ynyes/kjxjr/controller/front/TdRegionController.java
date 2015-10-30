@@ -343,15 +343,59 @@ public class TdRegionController {
         	page = 0;
         }
 
-
         tdCommonService.setHeader(map, req);
-
+        
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
         TdRegionAdmin regionAdmin = tdRegionAdminService.findbyUsername(username);
+        
+        //时间状态
+        Date now = new Date();
+        Calendar cn =  Calendar.getInstance();
+        cn.setTime(now);
+        List<TdActivity> allActivity = tdActivityService.findByRegion(regionAdmin.getTitle());
+        for(TdActivity activity: allActivity )
+        {
+        	Date prepareOn = activity.getPrepareOn();
+            Calendar on =  Calendar.getInstance();
+            on.setTime(prepareOn);
+        	Date prepareOff = activity.getPrepareOff();
+            Calendar off =  Calendar.getInstance();
+            off.setTime(prepareOff);
+        	Date eventDate = activity.getDate();
+            Calendar event =  Calendar.getInstance();
+            event.setTime(prepareOff);
+            
+            //待筹备
+            if (cn.before(on))
+            {
+            	activity.setTimeId(0L);
+            	tdActivityService.save(activity);
+            }
+            //筹备中
+            else if (cn.after(on)&&cn.before(off))
+            {
+            	activity.setTimeId(1L);
+            	tdActivityService.save(activity);
+            }
+            //超过筹备时间
+            else if (cn.after(off)&&cn.before(event))
+            {
+            	activity.setTimeId(2L);
+            	tdActivityService.save(activity);
+            }
+            //超过活动时间
+            else if (cn.after(event))
+            {
+            	activity.setTimeId(3L);
+            	tdActivityService.save(activity);
+            }
+        }
+        
+
         Page<TdActivity> activityPage = tdActivityService.findByRegionAndPrepareOffAfterAndPrepareOnBeforeOrderByIdDesc(regionAdmin.getTitle() , page, ClientConstant.pageSize);
+
         
-        
-        map.addAttribute("activity_page", activityPage);
+        map.addAttribute("activity_page",  activityPage);
         map.addAttribute("user", user);
 
         return "/client/region_activity_list";
@@ -708,11 +752,11 @@ public  Map<String, Object> regionAddEnterprise(HttpServletRequest req,Long id,L
     }
 	List<TdActivityEnterprise> selectedEnterpriseList = tdActivityEnterpriseService.findByActivityIdAndStatusId(activityId,statusId);
     
-	if (statusId == 2 &&selectedEnterpriseList.size() >19)
-	{
-		res.put("msg", "推荐最大数量为20！");
-		return res;
-	}
+//	if (statusId == 2 &&selectedEnterpriseList.size() >19)
+//	{
+//		res.put("msg", "推荐最大数量为20！");
+//		return res;
+//	}
   
     if(null != id&&null !=activityId&&null !=statusId)
     {
@@ -1075,7 +1119,7 @@ public Map<String, Object>  candidateEnterprise(HttpServletRequest req,Long id,L
     return res;
 }
 
-@RequestMapping(value = "/candidaterRemoveEnterprise")
+@RequestMapping(value = "/candidateRemoveEnterprise")
 public String  removeEnterprise(HttpServletRequest req,Long id,Long activityId,
 		ModelMap map) {
     String username = (String) req.getSession().getAttribute("regionUsername");
@@ -1090,6 +1134,11 @@ public String  removeEnterprise(HttpServletRequest req,Long id,Long activityId,
     	if (null != ActivityEnterprise)
     	{
     		tdActivityEnterpriseService.delete(ActivityEnterprise);
+    		
+    		TdEnterprise enterprise = tdEnterpriseService.findOne(ActivityEnterprise.getEnterpriseId());
+    		enterprise.setIsSelect(false);
+    		enterprise.setSelectActivityId(null);
+    		tdEnterpriseService.save(enterprise);
     	}
     }
     
@@ -1378,12 +1427,12 @@ public String exportRecommend(
         return "redirect:/login";
     }
 
-    List<TdActivityEnterprise> selectedEnter = tdActivityEnterpriseService.findByActivityIdAndStatusId(activityId, 2L);
-    if (selectedEnter.size() != 20)
-    {
-    	Long numwarn = 2L;
-    	return "redirect:/region/recommendEnterprise"+"?id="+activityId+"&numwarn="+numwarn;
-    }
+//    List<TdActivityEnterprise> selectedEnter = tdActivityEnterpriseService.findByActivityIdAndStatusId(activityId, 2L);
+//    if (selectedEnter.size() != 20)
+//    {
+//    	Long numwarn = 2L;
+//    	return "redirect:/region/recommendEnterprise"+"?id="+activityId+"&numwarn="+numwarn;
+//    }
         	exportUrl = SiteMagConstant.backupPath;
     
 			if (null != exportUrl) {

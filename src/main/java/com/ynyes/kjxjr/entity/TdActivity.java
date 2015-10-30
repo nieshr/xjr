@@ -102,6 +102,10 @@ public class TdActivity {
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date eventEnd;
     
+    //活动时间状态ID【0：筹备未开始 ；1：筹备中；2：超过筹备时间】 
+    @Column 
+    private Long timeId;
+    
     // 推荐表
     @Column
     private String fileUrl;
@@ -288,6 +292,14 @@ public class TdActivity {
 
 	public void setPptUrl(String pptUrl) {
 		this.pptUrl = pptUrl;
+	}
+
+	public Long getTimeId() {
+		return timeId;
+	}
+
+	public void setTimeId(Long timeId) {
+		this.timeId = timeId;
 	}
 
 	

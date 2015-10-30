@@ -31,7 +31,7 @@ function done()
 <#if done?? &&done == 1>
 window.onload=done;
 </#if>
-
+<#--
 function numwarn()
 {
 	alert("推荐数已达20个！");
@@ -51,7 +51,7 @@ function warnmsg()
 <#if numwarn??&&numwarn ==2>
 window.onload=warnmsg;
 </#if>
-
+-->
 function recommendSubmitCheck()
 {
     var filedata = $("#recommendfile").val();

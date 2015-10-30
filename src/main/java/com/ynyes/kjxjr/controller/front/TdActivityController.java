@@ -146,6 +146,51 @@ public class TdActivityController {
         tdCommonService.setHeader(map, req);
 
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
+        
+        
+        //时间状态
+        Date now = new Date();
+        Calendar cn =  Calendar.getInstance();
+        cn.setTime(now);
+        List<TdActivity> allActivity = tdActivityService.findAll();
+        for(TdActivity activity: allActivity )
+        {
+        	Date prepareOn = activity.getPrepareOn();
+            Calendar on =  Calendar.getInstance();
+            on.setTime(prepareOn);
+        	Date prepareOff = activity.getPrepareOff();
+            Calendar off =  Calendar.getInstance();
+            off.setTime(prepareOff);
+        	Date eventDate = activity.getDate();
+            Calendar event =  Calendar.getInstance();
+            event.setTime(prepareOff);
+            
+            //待筹备
+            if (cn.before(on))
+            {
+            	activity.setTimeId(0L);
+            	tdActivityService.save(activity);
+            }
+            //筹备中
+            else if (cn.after(on)&&cn.before(off))
+            {
+            	activity.setTimeId(1L);
+            	tdActivityService.save(activity);
+            }
+            //超过筹备时间
+            else if (cn.after(off)&&cn.before(event))
+            {
+            	activity.setTimeId(2L);
+            	tdActivityService.save(activity);
+            }
+            //超过活动时间
+            else if (cn.after(event))
+            {
+            	activity.setTimeId(3L);
+            	tdActivityService.save(activity);
+            }
+        }
+        
 //        TdActivity unfinish = tdActivityService.findByStatusId(0L);
         
 //        map.addAttribute("unfinish", unfinish);
@@ -354,10 +399,25 @@ public class TdActivityController {
         	//由于创建活动的选专家步骤就生成了一个不带企业字段空评分表，这边选推荐时需要重新刷新一下。不然万一那边又改动了，中间表就对不上了。
         	 List<TdActivityEnterprise> aenlist = tdActivityEnterpriseService.findByActivityIdAndStatusId(activityId,2L);
         	 List<TdActivityExpert> aexlist = tdActivityExpertService.findByActivityId(activityId);
+        	 
+        	 //推荐的企业个数
+        	 int enterpriseSize = aenlist.size();
+        	 
         	 if (null != aexlist)
         	 {
              	for (TdActivityExpert aex:aexlist)
             	{
+                  	 //专家短信提醒
+                   	TdExpert expert = tdExpertService.findOne(aex.getExpertId());
+                   	//验证手机号格式
+//                   	Pattern p = Pattern.compile("/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/");
+//                   	Matcher m = p.matcher(expert.getUsermobile());
+//                   	if (m.matches())
+//                   	{
+                   		smsRecommend(expert.getUsermobile() ,aex.getActivityTitle() ,  expert.getName() , ressonse , req);
+//                   	}
+             		
+             		
             		List<TdEnterpriseGrade> gradelist = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderBySordIdAsc(aex.getExpertId(), activityId);
             		//清空评分表的企业数据
             		for (TdEnterpriseGrade grade:gradelist)
@@ -368,7 +428,7 @@ public class TdActivityController {
 //            			tdEnterpriseGradeService.save(grade);
             		}
             		//创建评分表
-            		for(int i =0;i<20;i++)
+            		for(int i =0;i<enterpriseSize;i++)
             		{
             		TdEnterpriseGrade newEnter =new  TdEnterpriseGrade();
             		newEnter.setExpertId(aex.getExpertId());
@@ -383,14 +443,14 @@ public class TdActivityController {
         	{
         		for (TdActivityEnterprise ae : aenlist)
         		{
-//               	 //短信提醒
-//                	TdEnterprise enterprise = tdEnterpriseService.findOne(ae.getEnterpriseId());
-//                	//验证手机号格式
+               	 //企业短信提醒
+                	TdEnterprise enterprise = tdEnterpriseService.findOne(ae.getEnterpriseId());
+                	//验证手机号格式
 //                	Pattern p = Pattern.compile("/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/");
 //                	Matcher m = p.matcher(enterprise.getUsermobile());
 //                	if (m.matches())
 //                	{
-//                		smsRecommend(enterprise.getUsermobile(),ae.getArea() ,ae.getActivityTitle() , ae.getDate() , enterprise.getTitle() , ressonse , req);
+                		smsRecommend(enterprise.getUsermobile(),ae.getActivityTitle() , enterprise.getTitle() , ressonse , req);
 //                	}
                  
                 	
@@ -418,8 +478,8 @@ public class TdActivityController {
                
                 	for (TdEnterpriseGrade grade : enterpriseGradeList)
                 	{
-                		//每隔20个写入一次
-                		if (  i % 20== 0)
+                		//每隔enterpriseSize个写入一次
+                		if (  i % enterpriseSize== 0)
                 			if(null == grade.getNumber())
                 		{
                 			grade.setNumber(ae.getNumber());
@@ -447,7 +507,7 @@ public class TdActivityController {
     }
     
 	//发短信【推荐】
-	public Map<String, Object> smsRecommend(String mobile, String region, String activityTitle , Date date , String enterpriseTitle ,HttpServletResponse response, HttpServletRequest request) {
+	public Map<String, Object> smsRecommend(String mobile,  String activityTitle ,String name ,HttpServletResponse response, HttpServletRequest request) {
 		Map<String, Object> res = new HashMap<>();
 		res.put("status", -1);
 
@@ -456,7 +516,7 @@ public class TdActivityController {
 		HttpSession session = request.getSession();
 		String  info = "【科技小巨人】";
 
-			 info = "尊敬的"+enterpriseTitle +"，您被邀请参加"+region+"”"+activityTitle+"“活动，活动时间定为"+sdf.format(date)+"。请登录个人中心查看详情。【科技小巨人】";
+			 info = "尊敬的"+name +"，您被邀请参加"+"”"+activityTitle+"“活动，请登录个人中心查看详情。【科技小巨人】";
 
 		
 		System.err.println("errormsg");
@@ -687,14 +747,14 @@ public class TdActivityController {
             return res;
         }
 
-        tdCommonService.setHeader(map, req);
-        List<TdActivityExpert> sum = tdActivityExpertService.findByActivityId(activityId);
-        //限制数量为7个
-        if (sum.size() < 7)
-        {
-        	res.put("msg", "请选出7个专家！");
-        	return res;	
-        }
+//        tdCommonService.setHeader(map, req);
+//        List<TdActivityExpert> sum = tdActivityExpertService.findByActivityId(activityId);
+//        //限制数量为7个
+//        if (sum.size() < 7)
+//        {
+//        	res.put("msg", "请选出7个专家！");
+//        	return res;	
+//        }
         
         TdActivity activity = tdActivityService.findOne(activityId);
 //        if(0L ==activity.getStatusId())
@@ -1042,6 +1102,11 @@ public class TdActivityController {
         	if (null != ActivityEnterprise)
         	{
         		tdActivityEnterpriseService.delete(ActivityEnterprise);
+        		
+        		TdEnterprise enterprise = tdEnterpriseService.findOne(ActivityEnterprise.getEnterpriseId());
+        		enterprise.setIsSelect(false);
+        		enterprise.setSelectActivityId(null);
+        		tdEnterpriseService.save(enterprise);
         	}
         }
         
@@ -1143,13 +1208,13 @@ public class TdActivityController {
         	return res;
         }
         
-        List<TdActivityExpert> expertList = tdActivityExpertService.findByActivityId(activityId);
-        if (expertList.size() > 6)
-        {
-        	res.put("msg", "最大添加人数为7人！！");
-        	return res;
-          
-        }
+//        List<TdActivityExpert> expertList = tdActivityExpertService.findByActivityId(activityId);
+//        if (expertList.size() > 6)
+//        {
+//        	res.put("msg", "最大添加人数为7人！！");
+//        	return res;
+//          
+//        }
         
       
         if(null != id&&null !=activityId)
@@ -1500,7 +1565,7 @@ public class TdActivityController {
     			tdActivityEnterpriseService.save(ae);
     		}
     	//总分排序
-    		List<TdActivityEnterprise> gradeList = tdActivityEnterpriseService.findByActivityIdAndStatusIdOrderByTotalPointAsc(activityId, 2L);
+    		List<TdActivityEnterprise> gradeList = tdActivityEnterpriseService.findByActivityIdAndStatusIdOrderByTotalPointDesc(activityId, 2L);
     		map.addAttribute("grade_list", gradeList);
     		if (null != gradeList)
     		{
@@ -1509,6 +1574,7 @@ public class TdActivityController {
     			{
     				List<TdEnterpriseGrade> expertList = tdEnterpriseGradeService.findByEnterpriseIdAndActivityId(sortEnterprise.getEnterpriseId(), activityId);
     				map.addAttribute("expert_list_"+index, expertList);
+    				index++;
     			}
     		}
     		

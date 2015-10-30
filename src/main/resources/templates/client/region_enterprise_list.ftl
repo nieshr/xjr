@@ -88,8 +88,8 @@
 		<table class="new_list">
         	<tr class="list_title">
         		<th width="10%">编号</th>
-        		<th>名称<th>
-        		<th width="15%">地区</th>
+        		<th  style="text-align : left; padding-left:40px ;">名称<th>
+        		<th width="15%">手机</th>
         		<th width="15%">注册资本</th>
         		<th width="15%">法人代表</th>
         		<th width="15%">操作</th>
@@ -98,7 +98,7 @@
         	<#list enterprise_page.content as item>
 	        	<tr>
 	        		<td>${item.number!''}</td>
-	        		<td>
+	        		<td style="text-align : left; padding-left:40px ;">
 	        		<#if item.formType??&&item.formType == 0>
 	        			<#if item.statusId ?? && item.statusId == 1>
 	        				<img src="/client/images/n0.png" alt="已过审企业"  title="已过审企业"/>
@@ -114,7 +114,7 @@
 	        		</#if>	  					
 	        		<a href="/region/enterprise/check/${item.id?c!''}">${item.title!''}</a>
 	        		<td>
-	        		<td>${item.area!''}</td>
+	        		<td>${item.usermobile!''}</td>
 	        		<td style="color:#529c15;"><#if item.capital??>${item.capital?c!''}</#if>万元</td>
 	        		<td style="color:#e67817;">${item.representative!''}</td>
 	        		<td>

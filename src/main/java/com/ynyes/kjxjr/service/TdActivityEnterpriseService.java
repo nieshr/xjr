@@ -118,9 +118,9 @@ public class TdActivityEnterpriseService {
     }
     
     //活动管理，评分列表排序
-    public List<TdActivityEnterprise> findByActivityIdAndStatusIdOrderByTotalPointAsc(Long activityId , Long statusId)
+    public List<TdActivityEnterprise> findByActivityIdAndStatusIdOrderByTotalPointDesc(Long activityId , Long statusId)
     {
-        return (List<TdActivityEnterprise>) repository.findByActivityIdAndStatusIdOrderByTotalPointAsc(activityId , statusId);
+        return (List<TdActivityEnterprise>) repository.findByActivityIdAndStatusIdOrderByTotalPointDesc(activityId , statusId);
     }
     
     public Page<TdActivityEnterprise> findAllOrderBySortIdAsc(int page, int size)

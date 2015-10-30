@@ -126,7 +126,7 @@ public class TdRegController {
 	}
 
 	@RequestMapping("/reg")
-	public String reg(Integer errCode, Integer shareId, String name, String carCode, HttpServletRequest request,
+	public String reg(Integer errCode, Integer shareId, String name, Long error, String carCode, HttpServletRequest request,
 			ModelMap map) {
 		String username = (String) request.getSession().getAttribute("username");
 
@@ -144,6 +144,8 @@ public class TdRegController {
 
 				map.addAttribute("errCode", errCode);
 			}
+			map.addAttribute("error",error);
+			
 			map.addAttribute("username", name);
 			map.addAttribute("carCode", carCode);
 			return "/client/reg";
@@ -179,6 +181,17 @@ public class TdRegController {
 	@RequestMapping(value = "/reg", method = RequestMethod.POST)
 	public String reg(String username, String mobile, String password, String email, String smsCode, String code,
 			String carCode, Long shareId, HttpServletRequest request) {
+		
+		if (null == username ||username.equals("")
+				|| null == mobile || mobile.equals("")
+				|| null == password || password.equals("")
+				|| null == email || email.equals("")
+				)
+		{
+			Long error = 1L;
+			return "redirect:/reg?error="+error;
+		}
+		
 		TdUser user = new TdUser();
 		user.setUsername(username);
 		user.setPassword(password);

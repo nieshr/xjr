@@ -92,7 +92,32 @@ $(document).ready(function(){
     }
    }
    
-  
+ <#if error??>
+function warnmsg()
+{
+    alert("请填写完整资料！");
+}
+
+window.onload=warnmsg;
+</#if>
+
+function inputPwd()
+{
+	var isIE = /msie/i.test(navigator.userAgent) && !window.opera;
+	if (isIE && !target.files)
+	{
+		this.type='password';
+		if(this.value=='密码')
+		{
+			this.value='';
+		}
+	} else {
+		fileSize = target.files[0].size;	
+	}
+
+		
+		
+}
 </script>
 </head>
 
@@ -124,7 +149,7 @@ $(document).ready(function(){
         </div>
         <div>
         	<i class="i2"></i>
-        	<input type="text" name="password" id="txt_regPwd" value="密码" datatype="*6-25" onfocus="this.type='password';if(this.value=='密码'){this.value='';}" onblur="if(this.value==''){this.type='text';this.value='密码'}"/>
+        	<input type="text" name="password" id="txt_regPwd" value="密码" datatype="*6-25" onfocus="javascript:inputPwd();" onblur="if(this.value==''){this.type='text';this.value='密码'}"/>
         </div>
         <div>
         	<i class="i3"></i>
@@ -136,7 +161,7 @@ $(document).ready(function(){
         </div>
         <div>
         	<i class="i5"></i>
-        	<input class="inpt5" type="text" name="smsCode" ajaxUrl="/reg/check/smsCode" datatype="*" value="验证码（30分钟有效）" onfocus="this.type='text';if(this.value=='验证码（30分钟有效）'){this.value='';}" onblur="if(this.value==''){this.type='text';this.value='验证码（30分钟有效）'}"/>
+        	<input class="inpt5" type="text" name="smsCode" ajaxUrl="/reg/check/smsCode" datatype="*" value="验证码（30分钟有效）" onfocus="if(this.value=='验证码（30分钟有效）'){this.value='';}" onblur="if(this.value==''){this.value='验证码（30分钟有效）'}"/>
             <input class="inpt5_1"id="smsCodeBtn" style="background-color:#e77917;" onclick="javascript:;" readOnly="true"  type="submit" value="发送验证码" />
             <span class="Validform_checktip Validform_wrong" style=""></span>
             

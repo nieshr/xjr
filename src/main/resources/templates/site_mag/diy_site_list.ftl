@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="/mag/style/idialog.css" rel="stylesheet" id="lhgdialoglink">
-<title>配送方式</title>
+<title>角色列表</title>
 <script type="text/javascript" src="/mag/js/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="/mag/js/lhgdialog.js"></script>
 <script type="text/javascript" src="/mag/js/layout.js"></script>
@@ -51,10 +51,12 @@ function __doPostBack(eventTarget, eventArgument) {
         <li><a onclick="return ExePostBack('btnDelete');" id="btnDelete" class="del" href="javascript:__doPostBack('btnDelete','')"><i></i><span>删除</span></a></li>
       </ul>
     </div>
+    <#--
     <div class="r-list">
       <input name="keywords" type="text" class="keyword" value="${keywords!''}">
       <a id="lbtnSearch" class="btn-search" href="javascript:__doPostBack('btnSearch','')">查询</a>
     </div>
+    -->
   </div>
 </div>
 <!--/工具栏-->
@@ -66,10 +68,11 @@ function __doPostBack(eventTarget, eventArgument) {
   <tr class="odd_bg">
     <th width="8%">选择</th>
     <th align="left">登录名</th>
+    <th width="15%" align="left">所属</th>
     <th align="left">角色类型</th>
-    <#--><th align="left">地区</th>
-    <th align="left" width="37%">地理位置</th>-->
-    <th align="left" width="12%">排序</th>
+    <th align="left">手机</th>
+    <#--<th align="left" width="37%">地理位置</th>-->
+    <th align="left" width="5%">排序</th>
     <th width="8%">是否启用</th>
     <th width="10%">操作</th>
   </tr>
@@ -84,10 +87,12 @@ function __doPostBack(eventTarget, eventArgument) {
                     <input type="hidden" name="listId" id="listId" value="${item.id}">
                 </td>
                 <td><a href="/Verwalter/order/setting/diysite/edit?id=${item.id}">${item.username!""}</a></td>
+                <td>${item.region!''}</td>
                 <td>${item.title!""}</td>
+                <td>${item.mobile!''}</td>
                 <#--><td>${item.city!""}</td>
                 <td>${item.address!""}</td>-->
-                <td><input name="listSortId" type="text" value="${item.sortId!""}" class="sort" onkeydown="return checkNumber(event);"></td>
+                <td><input name="listSortId" type="text" value="${item.sortId!""}" disabled="" class="sort" onkeydown="return checkNumber(event);"></td>
                 <td align="center"><#if item.statusId?? && item.statusId == 1>是<#else>否</#if></td>
                 <td align="center">
                     <a href="/Verwalter/order/setting/diysite/edit?id=${item.id}">修改</a>

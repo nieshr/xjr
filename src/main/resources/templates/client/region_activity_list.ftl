@@ -56,7 +56,8 @@
                 <th width="12%">日期<th>
                 <th width="15%">筹备开始</th>
                 <th width="15%">筹备结束</th>
-                <th width="30%">操作</th>
+                <th width="10%">状态</th>
+                <th width="20%">操作</th>
             </tr>
         <#if activity_page??>
             <#list activity_page.content as item>
@@ -71,17 +72,34 @@
                     <td style="color:#0ab2cb;">${item.date?string("yyyy-MM-dd")!''}<td>
                     <td style="color:#e67817;">${item.prepareOn?string("MM-dd HH:mm")!''}</td>
                     <td style="color:#529c15;">${item.prepareOff?string("MM-dd HH:mm")!''}</td>
+                   
+                    <#if item.timeId??&&item.statusId??>
+	                    <#if item.statusId ==0 &&item.timeId ==0>
+	                    		 <td>待筹备</td>
+	                    <#elseif  item.statusId ==0 &&item.timeId ==1>
+	                    		 <td style="color:#0ab2cb;">筹备中</td>
+	                    <#elseif  item.statusId ==0 &&(item.timeId == 2 ||item.timeId == 3)>
+	                    		 <td  style="color:#e67817;">已过期</td>
+	                    <#elseif item.statusId ==1 &&( item.timeId ==0 || item.timeId ==1|| item.timeId ==2)>
+	                    		 <td  style="color:#529c15;">筹备就绪</td>
+	                    <#elseif item.statusId ==2>
+	                    	 <td style="color:purple;">活动已结束</td>
+	                    <#else>
+	                    	<td>&nbsp;</td>	 
+	                    </#if>			
+	                </#if>    
+                    
                     <td>
                          <a href="/region/activity/detail?id=${item.id?c!''}">详情</a>
                          <#if  item.statusId??&&item.statusId == 1>
 	                         | <a href="" style="color: #666;" title="已审核，无法修改">预选</a>
 	                         | <a href=""  style="color: #666;"  title="已审核，无法修改">推荐企业</a>
                          <#else>
-	                         | <a href="/region/candidateEnterprise/${item.id?c!''}">预选</a>
+	                         | <a href="/region/candidateEnterprise/${item.id?c!''}?area=${item.region!''}">预选</a>
 	                         | <a href="/region/recommendEnterprise?id=${item.id?c!''}">推荐企业</a>    
                          </#if>                    
-                         | <a <#if item.pptUrl??> href="/download/data?name=${item.pptUrl!''}" <#else> style="color:#999999;"</#if>>下载模板</a>
-                        <#-- | <a href="">上传推荐表</a> -->
+                     <#--     | <a <#if item.pptUrl??> href="/download/data?name=${item.pptUrl!''}" <#else> style="color:#999999;"</#if>>下载模板</a>
+                        | <a href="">上传推荐表</a> -->
                      </td>
                 </tr>
             </#list>

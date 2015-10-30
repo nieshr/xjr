@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
     <title>科技小巨人</title>
-	<link rel="shortcut icon" href="images/icon.ico" />    
+	<link rel="shortcut icon" href="/client/images/icon.ico" />    
     <link href="/client/css/form.css" rel="stylesheet" type="text/css" />
     <link href="/client/css/base.css" rel="stylesheet" type="text/css" />
 </head>
@@ -11,25 +11,29 @@
     <table class="score">
         <caption>项目得分汇总表</caption>
         <tr class="tr01">
-        	<td>名称</td>
+        	<td width="2%">排名</td>
+        	<td width="3%">编号</td>
+        	<td width="15%">名称</td>
+        	<td width="8%">总分</td>
             <#if aex_list??>
                 <#list aex_list as item>
-                    <td>${item.name!''}</td>
+                    <td width="5%">${item.name!''}</td>
                 </#list>
             </#if>
-            <td>总分</td>
         </tr>
         <#if grade_list??>
             <#list grade_list as item>
 		        <tr class="tr02">
+		        	<td>${item_index+1}</td>
+		        	<td>${item.number!''}</td>
 			        <td>${item.enterpriseTitle!''}</td>
+			        <td><#if item.totalPoint??>${item.totalPoint?c!''}</#if></td>
 			        <#if ("expert_list_"+item_index)?eval??>
 			        	<#assign expertList=("expert_list_"+item_index)?eval>
 			        	<#list expertList as expert>
-			        		<td>${expert.totalPoint!''}</td>
+			        		<td><#if expert.totalPoint??>${expert.totalPoint?c!''}</#if></td>
 			        	</#list>
 			        </#if>		
-					<td>${item.totalPoint!''}</td>
 		        </tr>
 		    </#list>
 		</#if>        

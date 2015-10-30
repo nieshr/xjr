@@ -21,6 +21,9 @@ public interface TdActivityRepo extends
 		PagingAndSortingRepository<TdActivity, Long>,
 		JpaSpecificationExecutor<TdActivity> 
 { 
+	List<TdActivity> findByRegion(String region);
+	
+	
     Page<TdActivity> findByTitleContainingOrderBySortIdAsc(String keywords, Pageable page);
     TdActivity findByStatusId(Long statusId);
     Page<TdActivity> findByStatusId(Long statusId, Pageable page);

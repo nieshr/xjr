@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-	<title>Document</title>
+	<title>评分</title>
 	<link rel="shortcut icon" href="/images/icon.ico" />
 	<link href="/client/css/form.css" rel="stylesheet" type="text/css" />
 	<script src="/client/js/jquery-1.9.1.min.js"></script>
@@ -175,6 +175,18 @@
             });
         }
 	</script>
+	<script>
+	$(document).ready(function(){
+
+     $(".mOn").hover(function() {
+        $(this).css({"background" : "#999"});
+    },  function() {
+        $(this).css({"background" : "#fff"});
+    })
+    
+});
+	
+	</script>
 	<style type="text/css">
 		.tr01 th{
 			position: relative;
@@ -210,25 +222,25 @@
 			     </#list>
 			</#if>
 		</tr>
-		<tr class="tr02">
+		<tr class="tr02 mOn">
 			<th>现场表现力(小计)</th>
 			<#if grade_list??>
 			     <#list grade_list as item>
 			         <#if item.totalExpression??>
 			             <td id="${item_index}_totalExpression">${item.totalExpression?string("0")}</td>
 			         <#else>
-			             <td id="${item_index}_totalExpression">0</td>
+			             <td id="${item_index}_totalExpression">4</td>
 			         </#if>
 			     </#list>
 			</#if>
 		</tr>
-		<tr class="tr03">
+		<tr class="tr03 mOn">
 			<th>DEMO发表方式的创新程度</th>
 			<#if grade_list??>
 			    <#list grade_list as item>
         			<td>
-        				<select onChange="changeExpression('${item_index}');" id="${item_index}_oneExpression" <#if item.isGrade>disabled=""</#if>>
-        				    <#list 0..5 as n>
+        				<select onChange="changeExpression('${item_index}');" id="${item_index}_oneExpression" <#if item.isGrade??&&item.isGrade>disabled="" style="background : #ddd;"</#if>>
+        				    <#list 1..5 as n>
         					   <option value="${n}" <#if item.oneExpression??&&n==item.oneExpression>selected=""</#if>>${n}</option>
         					</#list>
         				</select>
@@ -236,13 +248,13 @@
     			</#list>
 			</#if>
 		</tr>
-		<tr class="tr03">
+		<tr class="tr03 mOn">
 		    <th>团队解说效果</th>
 			<#if grade_list??>
 			    <#list grade_list as item>
         			<td>
-        				<select onChange="changeExpression('${item_index}');" id="${item_index}_twoExpression" <#if item.isGrade==true>disabled=""</#if>>
-        				    <#list 0..5 as n>
+        				<select onChange="changeExpression('${item_index}');" id="${item_index}_twoExpression" <#if item.isGrade??&&item.isGrade>disabled="" style="background : #ddd;"</#if>>
+        				    <#list 1..5 as n>
             					<option value="${n}" <#if item.twoExpression?? &&n==item.twoExpression>selected=""</#if>>${n}</option>
         					</#list>
         				</select>
@@ -250,13 +262,13 @@
     			</#list>
 			</#if>
 		</tr>
-		<tr class="tr03">
+		<tr class="tr03 mOn">
 			<th>现场营造效果</th>
 			<#if grade_list??>
 			    <#list grade_list as item>
         			<td>
-        				<select onChange="changeExpression('${item_index}');" id="${item_index}_threeExpression" <#if item.isGrade==true>disabled=""</#if>>
-        				    <#list 0..5 as n>
+        				<select onChange="changeExpression('${item_index}');" id="${item_index}_threeExpression" <#if item.isGrade??&&item.isGrade>disabled="" style="background : #ddd;"</#if>>
+        				    <#list 1..5 as n>
         					   <option value="${n}" <#if item.threeExpression?? &&n==item.threeExpression>selected=""</#if>>${n}</option>
         					</#list>
         				</select>
@@ -264,13 +276,13 @@
     			</#list>
 			</#if>
 		</tr> 
-		<tr class="tr03">
+		<tr class="tr03 mOn">
 			<th>项目吸引力</th>
 			<#if grade_list??>
 			     <#list grade_list as item>
     		        <td>
-        				<select onChange="changeExpression('${item_index}');" id="${item_index}_fourExpression" <#if item.isGrade==true>disabled=""</#if>>
-        				    <#list 0..5 as n>
+        				<select onChange="changeExpression('${item_index}');" id="${item_index}_fourExpression" <#if item.isGrade??&&item.isGrade>disabled="" style="background : #ddd;"</#if>>
+        				    <#list 1..5 as n>
         					   <option value="${n}" <#if item.fourExpression??&&n==item.fourExpression>selected=""</#if>>${n}</option>
         					</#list>
         				</select>
@@ -280,25 +292,25 @@
 		</tr>
 		
 			
-		<tr class="tr02">
+		<tr class="tr02 mOn">
 			<th>项目实现性(小计)</th>
 			<#if grade_list??>
 			     <#list grade_list as item>
 			         <#if item.totalFeasibility??>
 			             <td id="${item_index}_totalFeasibility">${item.totalFeasibility?string("0")}</td>
                      <#else>
-                         <td id="${item_index}_totalFeasibility">0</td>
+                         <td id="${item_index}_totalFeasibility">4</td>
                      </#if>			             
 			     </#list>
 			</#if>
 		</tr>
-		<tr class="tr03">
+		<tr class="tr03 mOn">
 			<th>行业环境</th>
 			<#if grade_list??>
 			    <#list grade_list as item>
         			<td>
-        				<select onChange="changeFeasibility('${item_index}');" id="${item_index}_oneFeasibility" <#if item.isGrade==true>disabled=""</#if>>
-        					<#list 0..5 as n>
+        				<select onChange="changeFeasibility('${item_index}');" id="${item_index}_oneFeasibility" <#if item.isGrade??&&item.isGrade>disabled="" style="background : #ddd;"</#if>>
+        					<#list 1..5 as n>
         					   <option value="${n}" <#if item.oneFeasibility??&&n==item.oneFeasibility>selected=""</#if>>${n}</option>
         					</#list>
         				</select>
@@ -306,13 +318,13 @@
     			</#list>
 			</#if>
 		</tr>
-		<tr class="tr03">
+		<tr class="tr03 mOn">
 			<th>现有基础条件能否支撑</th>
 			<#if grade_list??>	
 			    <#list grade_list as item>
         			<td>
-        				<select onChange="changeFeasibility('${item_index}');" id="${item_index}_twoFeasibility" <#if item.isGrade==true>disabled=""</#if>>
-        				    <#list 0..5 as n>
+        				<select onChange="changeFeasibility('${item_index}');" id="${item_index}_twoFeasibility" <#if item.isGrade??&&item.isGrade>disabled="" style="background : #ddd;"</#if>>
+        				    <#list 1..5 as n>
         					   <option value="${n}" <#if item.twoFeasibility??&&n==item.twoFeasibility>selected=""</#if>>${n}</option>
         					</#list>
         				</select>
@@ -320,13 +332,13 @@
     			</#list>
 			</#if>
 		</tr>
-		<tr class="tr03">
+		<tr class="tr03 mOn">
 			<th>技术可实现性</th>
 			<#if grade_list??>
 			    <#list grade_list as item>
         			<td>
-        				<select onChange="changeFeasibility('${item_index}');" id="${item_index}_threeFeasibility" <#if item.isGrade==true>disabled=""</#if>>
-        				    <#list 0..5 as n>
+        				<select onChange="changeFeasibility('${item_index}');" id="${item_index}_threeFeasibility" <#if item.isGrade??&&item.isGrade>disabled="" style="background : #ddd;"</#if>>
+        				    <#list 1..5 as n>
         					   <option value="${n}" <#if item.threeFeasibility??&&n==item.threeFeasibility>selected=""</#if>>${n}</option>
         					</#list>
         				</select>
@@ -334,13 +346,13 @@
     			</#list>
 			</#if>
 		</tr>
-		<tr class="tr03">
+		<tr class="tr03 mOn">
 			<th>市场接受度</th>
 			<#if grade_list??>
 			    <#list grade_list as item>
         			<td>
-        				<select onChange="changeFeasibility('${item_index}');" id="${item_index}_fourFeasibility" <#if item.isGrade==true>disabled=""</#if>>
-        				    <#list 0..5 as n>
+        				<select onChange="changeFeasibility('${item_index}');" id="${item_index}_fourFeasibility" <#if item.isGrade??&&item.isGrade>disabled="" style="background : #ddd;"</#if>>
+        				    <#list 1..5 as n>
         					   <option value="${n}" <#if item.fourFeasibility??&&n==item.fourFeasibility>selected=""</#if>>${n}</option>
         					</#list>
         				</select>
@@ -349,25 +361,25 @@
 			</#if>
 		</tr>
 		
-		<tr class="tr02">
+		<tr class="tr02 mOn">
 			<th>市场价值(小计)</th>
 			<#if grade_list??>
 			     <#list grade_list as item>
 			         <#if item.totalMarketValue??>
 			             <td id="${item_index}_totalMarketValue">${item.totalMarketValue?string("0")}</td>
 			         <#else>
-			             <td id="${item_index}_totalMarketValue">0</td>
+			             <td id="${item_index}_totalMarketValue">4</td>
 			         </#if>
 			     </#list>
 			</#if>
 		</tr>
-		<tr class="tr03">
+		<tr class="tr03 mOn">
 			<th>潜在市场规模大小与技术开发成本的评估</th>
 			<#if grade_list??>
 			    <#list grade_list as item>
         			<td>
-        				<select onChange="changeMarketValue('${item_index}');" id="${item_index}_oneMarketValue" <#if  item.isGrade??&&item.isGrade==true>disabled=""</#if>>
-        				    <#list 0..5 as n>
+        				<select onChange="changeMarketValue('${item_index}');" id="${item_index}_oneMarketValue" <#if item.isGrade??&&item.isGrade>disabled="" style="background : #ddd;"</#if>>
+        				    <#list 1..5 as n>
         					   <option value="${n}" <#if item.oneMarketValue??&&n==item.oneMarketValue>selected=""</#if>>${n}</option>
         					</#list>
         				</select>
@@ -375,13 +387,13 @@
     			</#list>
 			</#if>
 		</tr>
-		<tr class="tr03">
+		<tr class="tr03 mOn">
 			<th>现行成本与市场现状的评估</th>	
 			<#if grade_list??>
 			    <#list grade_list as item>
         			<td>
-        				<select onChange="changeMarketValue('${item_index}');" id="${item_index}_twoMarketValue" <#if item.isGrade==true>disabled=""</#if>>
-        				    <#list 0..5 as n>
+        				<select onChange="changeMarketValue('${item_index}');" id="${item_index}_twoMarketValue" <#if item.isGrade??&&item.isGrade>disabled="" style="background : #ddd;"</#if>>
+        				    <#list 1..5 as n>
         					   <option value="${n}" <#if item.twoMarketValue??&&n==item.twoMarketValue>selected=""</#if>>${n}</option>
         					</#list>
         				</select>
@@ -389,13 +401,13 @@
     			</#list>
 			</#if>
 		</tr>
-		<tr class="tr03">
+		<tr class="tr03 mOn">
 			<th>创意是否具有市场开发价值</th>
 			<#if grade_list??>
 			    <#list grade_list as item>
         			<td>
-        				<select onChange="changeMarketValue('${item_index}');" id="${item_index}_threeMarketValue" <#if item.isGrade==true>disabled=""</#if>>
-        				    <#list 0..5 as n>
+        				<select onChange="changeMarketValue('${item_index}');" id="${item_index}_threeMarketValue" <#if item.isGrade??&&item.isGrade>disabled="" style="background : #ddd;"</#if>>
+        				    <#list 1..5 as n>
         					<option value="${n}" <#if item.threeMarketValue??&&n==item.threeMarketValue>selected=""</#if>>${n}</option>
         					</#list>
         				</select>
@@ -403,13 +415,13 @@
 			    </#list>
 			</#if>
 		</tr>
-		<tr class="tr03">
+		<tr class="tr03 mOn">
 			<th>转成创业的机会</th>
 			<#if grade_list??>
 			    <#list grade_list as item>
         			<td>
-        				<select onChange="changeMarketValue('${item_index}');" id="${item_index}_fourMarketValue" <#if item.isGrade==true>disabled=""</#if>>
-        				    <#list 0..5 as n>
+        				<select onChange="changeMarketValue('${item_index}');" id="${item_index}_fourMarketValue" <#if item.isGrade??&&item.isGrade>disabled="" style="background : #ddd;"</#if>>
+        				    <#list 1..5 as n>
 			         		  <option value="${n}" <#if item.fourMarketValue??&&n==item.fourMarketValue>selected=""</#if>>${n}</option>
 			         		</#list>
         				</select>
@@ -419,25 +431,25 @@
 		</tr>
 		
 		
-		<tr class="tr02">
+		<tr class="tr02 mOn">
 			<th>技术开发(小计)</th>
 			<#if grade_list??>
 			     <#list grade_list as item>
 			         <#if item.totalTechnology??>
 			             <td id="${item_index}_totalTechnology">${item.totalTechnology?string("0")}</td>
 			         <#else>
-			             <td id="${item_index}_totalTechnology">0</td>
+			             <td id="${item_index}_totalTechnology">5</td>
 			         </#if>
 			     </#list>
 			</#if>
 		</tr>
-		<tr class="tr03">
+		<tr class="tr03 mOn">
 			<th>技术创新性与现有同类技术的差异性</th>
 			<#if grade_list??>
 			    <#list grade_list as item>
         			<td>
-        				<select onChange="changeTechnology('${item_index}');" id="${item_index}_oneTechnology" <#if item.isGrade==true>disabled=""</#if>>
-        				    <#list 0..5 as n>
+        				<select onChange="changeTechnology('${item_index}');" id="${item_index}_oneTechnology" <#if item.isGrade??&&item.isGrade>disabled="" style="background : #ddd;"</#if>>
+        				    <#list 1..5 as n>
         					   <option value="${n}" <#if item.oneTechnology??&&n==item.oneTechnology>selected=""</#if>>${n}</option>
         					</#list>
         				</select>
@@ -445,13 +457,13 @@
     			</#list>
 			</#if>
 		</tr>
-		<tr class="tr03">
+		<tr class="tr03 mOn">
 			<th>自身与竞争对手的SWOT分析评估</th>	
 			<#if grade_list??>
 			    <#list grade_list as item>
         			<td>
-        				<select onChange="changeTechnology('${item_index}');" id="${item_index}_twoTechnology" <#if item.isGrade==true>disabled=""</#if>>
-        				    <#list 0..5 as n>
+        				<select onChange="changeTechnology('${item_index}');" id="${item_index}_twoTechnology" <#if item.isGrade??&&item.isGrade>disabled="" style="background : #ddd;"</#if>>
+        				    <#list 1..5 as n>
         					   <option value="${n}" <#if item.twoTechnology??&&n==item.twoTechnology>selected=""</#if>>${n}</option>
         					</#list>
         				</select>
@@ -459,13 +471,13 @@
     			</#list>
 			</#if>
 		</tr>
-		<tr class="tr03">
+		<tr class="tr03 mOn">
 			<th>深度分析竞争对手的发展程度</th>
 			<#if grade_list??>
 			    <#list grade_list as item>
         			<td>
-        				<select onChange="changeTechnology('${item_index}');" id="${item_index}_threeTechnology" <#if item.isGrade==true>disabled=""</#if>>
-        				    <#list 0..5 as n>
+        				<select onChange="changeTechnology('${item_index}');" id="${item_index}_threeTechnology" <#if item.isGrade??&&item.isGrade>disabled="" style="background : #ddd;"</#if>>
+        				    <#list 1..5 as n>
         					   <option value="${n}" <#if item.threeTechnology??&&n==item.threeTechnology>selected=""</#if>>${n}</option>
         					</#list>
         				</select>
@@ -473,13 +485,13 @@
 			    </#list>
 			</#if>
 		</tr>
-		<tr class="tr03">
+		<tr class="tr03 mOn">
 			<th>自身竞争优势</th>
 			<#if grade_list??>
     			<#list grade_list as item>
         			<td>
-        				<select onChange="changeTechnology('${item_index}');" id="${item_index}_fourTechnology" <#if item.isGrade==true>disabled=""</#if>>
-        				    <#list 0..5 as n>
+        				<select onChange="changeTechnology('${item_index}');" id="${item_index}_fourTechnology" <#if item.isGrade??&&item.isGrade>disabled="" style="background : #ddd;"</#if>>
+        				    <#list 1..5 as n>
         					   <option value="${n}" <#if item.fourTechnology??&&n==item.fourTechnology>selected=""</#if>>${n}</option>
         					</#list>
         				</select>
@@ -487,13 +499,13 @@
     			</#list>
 			</#if>
 		</tr>
-		<tr class="tr03">
+		<tr class="tr03 mOn">
 			<th>其差异化程度与具有市场需求度的相互影响</th>
 			<#if grade_list??>
     			<#list grade_list as item>
         			<td>
-        				<select onChange="changeTechnology('${item_index}');" id="${item_index}_fiveTechnology" <#if item.isGrade==true>disabled=""</#if>>
-        				    <#list 0..5 as n>
+        				<select onChange="changeTechnology('${item_index}');" id="${item_index}_fiveTechnology" <#if item.isGrade??&&item.isGrade>disabled="" style="background : #ddd;"</#if>>
+        				    <#list 1..5 as n>
         					   <option value="${n}" <#if item.fiveTechnology??&&n==item.fiveTechnology>selected=""</#if>>${n}</option>
         					</#list>
         				</select>
@@ -501,25 +513,25 @@
 			    </#list>
 		    </#if>
 		</tr>
-		<tr class="tr02">
+		<tr class="tr02 mOn">
 			<th>团队能力(小计)</th>
 			<#if grade_list??>
 			     <#list grade_list as item>
 			         <#if item.totalGroup??>
 			             <td id="${item_index}_totalGroup">${item.totalGroup?string("0")}</td>
 			         <#else>
-			             <td id="${item_index}_totalGroup">0</td>
+			             <td id="${item_index}_totalGroup">3</td>
 			         </#if>
 			     </#list>
 			</#if>
 		</tr>
-		<tr class="tr03">
+		<tr class="tr03 mOn">
 			<th>团队人员分工是否合理及其专业能力</th>
 			<#if grade_list??>
     			<#list grade_list as item>
     			<td>
-    				<select onChange="changeGroup('${item_index}');" id="${item_index}_oneGroup" <#if item.isGrade==true>disabled=""</#if>>
-    				    <#list 0..5 as n>
+    				<select onChange="changeGroup('${item_index}');" id="${item_index}_oneGroup" <#if item.isGrade??&&item.isGrade>disabled="" style="background : #ddd;"</#if>>
+    				    <#list 1..5 as n>
     					   <option value="${n}" <#if item.oneGroup??&&n==item.oneGroup>selected=""</#if>>${n}</option>
     					</#list>
     				</select>
@@ -527,13 +539,13 @@
     			</#list>
 		    </#if>
 		</tr>
-		<tr class="tr03">
+		<tr class="tr03 mOn">
             <th>创业家精神及企业愿景</th>
             <#if grade_list??>
                 <#list grade_list as item>
                 <td>
-                    <select onChange="changeGroup('${item_index}');" id="${item_index}_twoGroup" <#if item.isGrade==true>disabled=""</#if>>
-                        <#list 0..5 as n>
+                    <select onChange="changeGroup('${item_index}');" id="${item_index}_twoGroup" <#if item.isGrade??&&item.isGrade>disabled="" style="background : #ddd;"</#if>>
+                        <#list 1..5 as n>
                            <option value="${n}" <#if item.twoGroup??&& n==item.twoGroup>selected=""</#if>>${n}</option>
                         </#list>
                     </select>
@@ -541,13 +553,13 @@
                 </#list>
             </#if>
         </tr>
-		<tr class="tr03">
+		<tr class="tr03 mOn">
 			<th>团队人员的沟通、信任和凝聚力</th>
 			<#if grade_list??>
     			<#list grade_list as item>
         			<td>
-        				<select onChange="changeGroup('${item_index}');" id="${item_index}_threeGroup" <#if item.isGrade==true>disabled=""</#if>>
-        				    <#list 0..5 as n>
+        				<select onChange="changeGroup('${item_index}');" id="${item_index}_threeGroup" <#if item.isGrade??&&item.isGrade>disabled="" style="background : #ddd;"</#if>>
+        				    <#list 1..5 as n>
         					   <option value="${n}" <#if item.threeGroup??&&n==item.threeGroup>selected=""</#if>>${n}</option>
         					</#list>
         				</select>
@@ -556,19 +568,19 @@
 			</#if>
 		</tr>
 		
-		<tr class="tr02">
+		<tr class="tr02 mOn">
 			<th>合计</th>
 			<#if grade_list??>
     			<#list grade_list as item>
     			     <#if item.totalPoint??>
     			         <td id="${item_index}_totalPoint">${item.totalPoint?string("0")}</td>
     			     <#else>
-    			         <td id="${item_index}_totalPoint">0</td>
+    			         <td id="${item_index}_totalPoint">16</td>
     			     </#if>
     			</#list>
 			</#if>
 		</tr>
-		<tr class="tr02">
+		<tr class="tr02 mOn">
 			<th></th>
 			<#if grade_list??>
     			<#list grade_list as item>

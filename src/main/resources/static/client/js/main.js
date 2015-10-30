@@ -56,6 +56,7 @@ function removeEnterprise(id,activityId)
         data:{"id":id,"activityId":activityId},
         success:function(data){
             $("#selectedEnterprise").html(data);
+            location.reload();
         }
     });
 }

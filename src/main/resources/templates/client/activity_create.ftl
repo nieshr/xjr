@@ -442,7 +442,7 @@ window.onload=done;
     		    	    <#if selected_expert_list??>
     				        <#list selected_expert_list as item>
 		    					<li>
-		    						<p class="p01">${item_index+1}.${item.name!''}</p>
+		    						<p class="p01" style="  width: 130px;float: left; text-align: left;">${item_index+1}.${item.name!''}</p>
 		    						<a style="display:block;  width:100px;"></a>
                                     <a href="/expert/search/grade?activityId=${activity.id?c!''}&expertId=${item.expertId?c!''}">评分情况</a>
 		    					</li>

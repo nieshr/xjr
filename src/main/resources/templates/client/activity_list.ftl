@@ -87,8 +87,9 @@ function deleteConfirm() {
 	        		<th width="30%">活动</th>
 	        		<th width="13%">地址</th>
 	        		<th width="13%">活动类型</th>
-	        		<th width="13%">状态</th>
-	        		<th width="30%">操作</th>
+	        		<th width="13%">审核</th>
+	        		<th width="10%">状态</th>
+	        		<th width="20%">操作</th>
 	        	</tr>
 	        <#if activity_page??>
 	        	<#list activity_page.content as item>
@@ -105,9 +106,26 @@ function deleteConfirm() {
 		        		<#if item.statusId?? && item.statusId == 1>
 		        			<td style="color:green;">已审核 </td>
 		        		<#else>
-		        			<td style="color:purple;"> 待审核 </td>
+		        			<td style="color:purple;"> 未审核 </td>
 		        		</#if>
-		        		<td><a href="/activity/edit?id=${item.id?c!''}">修改</a>丨<a href="/activity/check?id=${item.id?c!''}">操作</a>丨<a  onclick="javascript:deleteConfirm();" href="/activity/delete?id=${item.id?c!''}">删除</a></td>
+	                    <#if item.timeId??&&item.statusId??>
+		                    <#if item.statusId ==0 &&item.timeId ==0>
+		                    		 <td>待筹备</td>
+		                    <#elseif  item.statusId ==0 &&item.timeId ==1>
+		                    		 <td style="color:#0ab2cb;">筹备中</td>
+		                    <#elseif  item.statusId ==0 &&(item.timeId == 2 ||item.timeId == 3)>
+		                    		 <td  style="color:#e67817;">已过期</td>
+		                    <#elseif item.statusId ==1 &&( item.timeId ==0 || item.timeId ==1|| item.timeId ==2)>
+		                    		 <td  style="color:#529c15;">筹备就绪</td>
+		                    <#elseif item.statusId ==2>
+		                    	 <td style="color:purple;">活动已结束</td>
+		                    <#else>
+		                    	<td>&nbsp;</td>	 
+		                    </#if>			
+		                </#if>    		        		
+		        		<td>
+		        			<a <#if item.statusId?? && item.statusId == 1>href="javascript:void(0)" style="color : #666;"<#else> href="/activity/edit?id=${item.id?c!''}" </#if> >编辑信息</a>丨<a href="/activity/check?id=${item.id?c!''}">操作</a>丨<a  onclick="javascript:deleteConfirm();" href="/activity/delete?id=${item.id?c!''}">删除</a>
+		        		</td>
 		        	</tr>
 	        	</#list>
 	        </#if>	   
