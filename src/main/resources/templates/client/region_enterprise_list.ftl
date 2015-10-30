@@ -88,7 +88,11 @@
 		<table class="new_list">
         	<tr class="list_title">
         		<th width="10%">编号</th>
+<<<<<<< HEAD
         		<th  style="text-align : left; padding-left:40px ;">名称<th>
+=======
+        		<th>名称<th>
+>>>>>>> refs/remotes/origin/master
         		<th width="15%">手机</th>
         		<th width="15%">注册资本</th>
         		<th width="15%">法人代表</th>

@@ -98,8 +98,13 @@
 	                         | <a href="/region/candidateEnterprise/${item.id?c!''}?area=${item.region!''}">预选</a>
 	                         | <a href="/region/recommendEnterprise?id=${item.id?c!''}">推荐企业</a>    
                          </#if>                    
+<<<<<<< HEAD
                      <#--     | <a <#if item.pptUrl??> href="/download/data?name=${item.pptUrl!''}" <#else> style="color:#999999;"</#if>>下载模板</a>
                         | <a href="">上传推荐表</a> -->
+=======
+                       <#--  | <a <#if item.pptUrl??> href="/download/data?name=${item.pptUrl!''}" <#else> style="color:#999999;"</#if>>下载模板</a>
+                         | <a href="">上传推荐表</a> -->
+>>>>>>> refs/remotes/origin/master
                      </td>
                 </tr>
             </#list>

@@ -1115,7 +1115,10 @@ public class TdEnterpriseController {
           cell.setCellValue("行业归属");  
           cell.setCellStyle(style2);  
           cell = row.createCell((short) 1);
-          cell.setCellValue(enterprise.getType());     
+          if (null != enterprise.getType())
+          {
+        	 cell.setCellValue(enterprise.getType()); 
+          }
           cell.setCellStyle(fillin);  
           cell = row.createCell((short) 2);
           cell.setCellStyle(fillin);  
