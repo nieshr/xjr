@@ -81,7 +81,7 @@ function allowsubmit()
 		<dl class="nav">
             <dd><a href="/enterprise/info">基本资料</a></dd>
             <dd><a href="/enterprise/activity/list">活动列表</a></dd>
-            <dd><a href="#">申请展示</a></dd>
+            <dd><a href="/enterprise/project">申请展示</a></dd>
 
 		</dl>
 	</div>
@@ -135,13 +135,13 @@ function allowsubmit()
     			<div>
     			<span class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>">成立时间：</span>
     			<span class="pro <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>hide</#if>">（拟）成立时间：</span>
-    			  <input  type="text" id="date" value="<#if enterprise.establish??>${enterprise.establish?string("yyyy年MM月dd日")!''}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy年MM月dd日',vel:'date_2',lang:'zh-cn'})" datatype="*" / >
+    			  <input  type="text" id="date" value="<#if enterprise.establish??>${enterprise.establish?string("yyyy年MM月dd日")!''}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy年MM月dd日',vel:'date_2',lang:'zh-cn' ,<#--<#if enterprise.formType??&&enterprise.formType == 1> minDate:'%y-%M-%d' <#else>maxDate:'%y-%M-%d'</#if> --> })" datatype="*" / >
     			  <input id="date_2" name="establish" value="<#if enterprise.establish??>${enterprise.establish?string("yyyy-MM-dd")!''}</#if>" type="hidden" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}$/" errormsg="填写正确格式" sucmsg=" " />
     			<#--<input type="text" name="establish" value="<#if enterprise.formType??>${enterprise.establish!''}</#if>" datatype="*" ignore="ignore" /> -->
     			</div>
     			<div>
 	    			<span class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>">注册资本<b style="color:#999;font-size:0.6em;">(万元)</b>：</span>
-	    			<span class="pro <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>hide</#if>">（拟）注册资本<b style="color:#999;font-size:0.6em;">(万元)</b>：</span>
+	    			<span class="pro <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>hide</#if>" style="font-size:12px;">（拟）注册资本<b style="color:#999;font-size:0.6em;">(万元)</b>：</span>
 	    			<input type="text" name="capital" value="<#if enterprise.capital??>${enterprise.capital?c!''}</#if>" datatype="/^(([1-9]{1}\d*)|([0]{1}))(\.(\d){1,2})?$/"  errormsg="请填写数字！" />
     			</div>
     			<div>
@@ -261,7 +261,7 @@ function allowsubmit()
     			<div>
     				<span>期望融资方式</span>
     				<span style=" display: block; width:170px; text-align: center; margin-left: 20px;">期望获得资金的时间</span>
-    				<span style=" display: block; width:170px; text-align: center; margin-left: 20px;">期望融资金额</span>
+    				<span style=" display: block; width:170px; text-align: center; margin-left: 20px;">期望融资金额(万元)</span>
     				<span style=" display: block; width:170px; text-align: center; margin-left: 20px;">融资用途</span>
     			</div>
     			<div>

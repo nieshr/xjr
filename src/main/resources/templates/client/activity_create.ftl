@@ -280,12 +280,18 @@ window.onload=done;
 	            <dd><a href="/region/activity/list">活动列表</a></dd>
 	            <dd><a href="">档案跟踪</a></dd>
 	        </dl>
-	   <#elseif mark?? && mark == "enterprise">
+	   <#elseif mark?? && mark == "expert">
 			<dl class="nav">
-            <dd><a href="/enterprise/check">基本资料</a></dd>
-            <dd><a href="/enterprise/activity/list">活动列表</a></dd>
-            <dd><a href="/enterprise/project">申请展示</a></dd>
-			</dl>	        
+            <dd><a href="/expert/enterprise/list">活动列表</a></dd>
+            <dd><a href="/expert/enterprises">辅导企业</a></dd>
+            <dd><a href="/expert/lyfd">路演辅导</a></dd>
+			</dl>	   
+        <#elseif mark?? && mark == "enterprise">
+          <dl class="nav">
+          <dd><a href="/enterprise/check">基本资料</a></dd>
+          <dd><a href="/enterprise/activity/list">活动列表</a></dd>
+          <dd><a href="/enterprise/project">申请展示</a></dd>
+          </dl>   	     
 	   <#else>
 			<dl class="nav">
 	            <dd><a href="/activity/create">创建活动</a></dd>
@@ -400,21 +406,30 @@ window.onload=done;
 		    						<a href="/activity/enterprise/check/${item.enterpriseId?c!''}" target=_blank>查看</a>
 		                            <a>丨</a>
 		                            <a <#if item.isGrade??&&item.isGrade> href="/enterprise/grade/?activityId=${item.activityId?c!''}&enterpriseId=${item.enterpriseId?c!''}"<#else>style="color:#666;" </#if>>得分</a>
-		                            <a>丨</a>
-		                            <#if item.statusId??&&item.statusId==1>
-		                              <a href="/activity/getCoach?enterpriseId=${item.enterpriseId?c!''}&activityId=${item.activityId?c!''}">分配路演辅导</a>
-		                            <#else>
-		                              <a style="color:#666;" href="javascript:void(0)">分配路演辅导</a>
-		                            </#if> 
-		                            <a>丨</a>
-		                            <a <#if item.pptUrl??>href="${item.pptUrl}" <#else>style="color:#666;"</#if>>PPT下载</a>
-		                            <a>丨</a>
-		                            <#if item_has_next>
-		                           	 	<a href="javascript:sortDown(${item.id?c!''} , ${item.activityId?c!''});"><img style="width:10px;height:13px;margin-top: 8px;"src="/client/images/down1.png" alt="下移" title="下移排序"/></a>
-		                            </#if>		                            
-		                            <#if item_index != 0>
-		                           	 	<a href="javascript:sortUp(${item.id?c!''} , ${item.activityId?c!''});"><img style="width:10px;height:13px;margin-top: 8px; <#if item_has_next>margin-left:3px;</#if>" src="/client/images/up1.png" alt="上移" title="上移排序"/></a>
-		                            </#if>
+		                            <#if mark??&&mark="activity">
+			                            <a>丨</a>
+			                            <#if item.statusId??&&item.statusId==1>
+			                              <a href="/activity/getCoach?enterpriseId=${item.enterpriseId?c!''}&activityId=${item.activityId?c!''}">分配路演辅导</a>
+			                            <#else>
+			                              <a style="color:#666;" href="javascript:void(0)">分配路演辅导</a>
+			                            </#if> 
+			                            <a>丨</a>
+			                            <a <#if item.pptUrl??>href="${item.pptUrl}" <#else>style="color:#666;"</#if>>PPT下载</a>
+			                            <a>丨</a>
+			                            <#if activity??&&activity.statusId??&&activity.statusId==1>
+				                            <a href="/activity/sendSms?id=${item.enterpriseId?c!''}&activityId=${item.activityId?c!''}&roleId=1">短信通知</a>
+				                            <a>丨</a> 
+			                            </#if>
+			                            <#if item_has_next>
+			                           	 	<a href="javascript:sortDown(${item.id?c!''} , ${item.activityId?c!''});"><img style="width:10px;height:13px;margin-top: 8px;"src="/client/images/down1.png" alt="下移" title="下移排序"/></a>
+			                            </#if>		                            
+			                            <#if item_index != 0>
+			                           	 	<a href="javascript:sortUp(${item.id?c!''} , ${item.activityId?c!''});"><img style="width:10px;height:13px;margin-top: 8px; <#if item_has_next>margin-left:3px;</#if>" src="/client/images/up1.png" alt="上移" title="上移排序"/></a>
+			                            </#if>
+			                        <#else>
+			                            <a>丨</a>
+                                        <a <#if item.pptUrl??>href="${item.pptUrl}" <#else>style="color:#666;"</#if>>PPT下载</a>
+			                        </#if>    
 		                            <a style="display:block;  width:80px;"></a>
 		                            <p class="p02"><#if item.coachName??>辅导专家，${item.coachName!''}</#if></p>
 		    						
@@ -449,6 +464,10 @@ window.onload=done;
 		    						<p class="p01" style="  width: 130px;float: left; text-align: left;">${item_index+1}.${item.name!''}</p>
 		    						<a style="display:block;  width:100px;"></a>
                                     <a href="/expert/search/grade?activityId=${activity.id?c!''}&expertId=${item.expertId?c!''}">评分情况</a>
+                                    <#if activity??&&activity.statusId??&&activity.statusId==1&&mark??&&mark="activity">
+	                                    <a>丨</a> 
+	                                    <a href="/activity/sendSms?id=${item.expertId?c!''}&activityId=${item.activityId?c!''}&roleId=3">短信通知</a>
+                                    </#if>
 		    					</li>
     					    </#list>
     					</#if>    
@@ -459,7 +478,7 @@ window.onload=done;
     				</ul>
     			</div>
             <!-- 评分汇总 -->
-            	<#if activity??&&activity.statusId==1>
+            	<#if activity??&&activity.statusId??&&activity.statusId==1>
                     <div>
                         <span style="margin-top: 6px;">路演结果：</span>
                         <ul class="active_project_text">
