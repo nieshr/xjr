@@ -209,16 +209,16 @@
 <body>
 	
 	<table class="score">
-		<caption>项目得分表</caption>
+		<caption>评委评分表（<#if activity??>${activity.title!''}</#if>）</caption>
 		<tr class="tr01">
 			<th style="padding:0;margin:0;"><canvas id="canvas" style="width:100%;height:100%;;margin:0;padding:0;"></canvas>
 				<p class="tabletitle-one">得分</p>
-				<p class="tabletitle-two">项目编号</p>
+				<p class="tabletitle-two">项目序号</p>
 				<p class="tabletitle-three">评分项</p>
 			</th>
 			<#if grade_list??>
 			     <#list grade_list as item>
-			         <td>${item.number!''}</td>
+			         <td><a style="color:#333;text-decoration: none;" href="/activity/enterprise/check/${item.enterpriseId?c!''}" target="_blank" title="${item.number!''}">${item_index+1}</a></td>
 			     </#list>
 			</#if>
 		</tr>
@@ -584,7 +584,7 @@
 			<th></th>
 			<#if grade_list??>
     			<#list grade_list as item>
-    			     <td><input type="button" onClick="submitPoint('${item_index}','${item.number!''}');" value="确定" /></td>
+    			     <td><input <#if item.isGrade??&&item.isGrade>disabled="" style="background : #ddd;"</#if> type="button" onClick="submitPoint('${item_index}','${item.number!''}');" value="确定" /></td>
     			</#list>
 		    </#if>
 		</tr>	

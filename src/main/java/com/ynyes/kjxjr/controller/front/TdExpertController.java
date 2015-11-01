@@ -120,6 +120,7 @@ public class TdExpertController {
 		TdActivity activity = tdActivityService.findOne(id);
         if (null != activity)
         {
+        	map.addAttribute("recommend_list" , tdActivityEnterpriseService.findByActivityIdAndStatusIdOrderBySortIdAsc(id, 2L));
 	        map.addAttribute("activity", activity);
 	        map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityId(id));
 	        map.addAttribute("selected_expert_list", tdActivityExpertService.findByActivityId(id));
@@ -219,6 +220,7 @@ public class TdExpertController {
 		List<TdEnterpriseGrade> grade_list = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderBySordIdAsc(expert.getId(),
 				activityId);
 		map.addAttribute("grade_list", grade_list);
+		map.addAttribute("activity", tdActivityService.findOne(activityId));
 		map.addAttribute("activityId", activityId);
 		return "/client/project_grade";
 	}

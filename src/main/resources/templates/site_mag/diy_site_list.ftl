@@ -68,20 +68,11 @@ function __doPostBack(eventTarget, eventArgument) {
   <tr class="odd_bg">
     <th width="8%">选择</th>
     <th align="left">登录名</th>
-<<<<<<< HEAD
     <th width="15%" align="left">所属</th>
-=======
-    <th align="left">地区</th>
->>>>>>> refs/remotes/origin/master
     <th align="left">角色类型</th>
-<<<<<<< HEAD
-    <th align="left">手机</th>
-    <#--<th align="left" width="37%">地理位置</th>-->
-    <th align="left" width="5%">排序</th>
-=======
+
     <th align="left">手机号</th>
     <th align="left" width="12%">排序</th>
->>>>>>> refs/remotes/origin/master
     <th width="8%">是否启用</th>
     <th width="10%">操作</th>
   </tr>
@@ -96,21 +87,13 @@ function __doPostBack(eventTarget, eventArgument) {
                     <input type="hidden" name="listId" id="listId" value="${item.id}">
                 </td>
                 <td><a href="/Verwalter/order/setting/diysite/edit?id=${item.id}">${item.username!""}</a></td>
-<<<<<<< HEAD
                 <td>${item.region!''}</td>
-=======
-                <td>${item.region!""}</td>
->>>>>>> refs/remotes/origin/master
                 <td>${item.title!""}</td>
-<<<<<<< HEAD
                 <td>${item.mobile!''}</td>
                 <#--><td>${item.city!""}</td>
                 <td>${item.address!""}</td>-->
                 <td><input name="listSortId" type="text" value="${item.sortId!""}" disabled="" class="sort" onkeydown="return checkNumber(event);"></td>
-=======
-                <td>${item.mobile!""}</td>
-                <td><input name="listSortId" type="text" value="${item.sortId!""}" class="sort" onkeydown="return checkNumber(event);"></td>
->>>>>>> refs/remotes/origin/master
+
                 <td align="center"><#if item.statusId?? && item.statusId == 1>是<#else>否</#if></td>
                 <td align="center">
                     <a href="/Verwalter/order/setting/diysite/edit?id=${item.id}">修改</a>

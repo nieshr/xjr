@@ -234,12 +234,12 @@ public class TdActivityController {
     
     //区县审核项目，查看详情
     @RequestMapping(value = "/enterprise/check/{id}", method = RequestMethod.GET)
-    public String userEnterpriseCheck(HttpServletRequest req, ModelMap map,@PathVariable Long id) {
-        String username = (String) req.getSession().getAttribute("activityUsername");
-
-        if (null == username) {
-            return "redirect:/login";
-        }
+    public String userEnterpriseCheck(HttpServletRequest req, ModelMap map,@PathVariable Long id ) {
+//        String username = (String) req.getSession().getAttribute("activityUsername");
+//
+//        if (null == username) {
+//            return "redirect:/login";
+//        }
         
         if (null == id)
         {
@@ -248,7 +248,7 @@ public class TdActivityController {
 
         tdCommonService.setHeader(map, req);
 
-        TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
+//        TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
         TdEnterprise enterprise = tdEnterpriseService.findOne(id);
         
         //行业所属是多选。。。。
@@ -279,7 +279,22 @@ public class TdActivityController {
         map.addAttribute("lastyear3", lastyear3);
         
         map.addAttribute("enterprise", enterprise);
-        map.addAttribute("user", user);
+//        map.addAttribute("user", user);
+        
+//        if (null!=roleId && roleId == 2)
+//        {
+//        	map.addAttribute("mark", "region");
+//        }
+//        if (null!=roleId && roleId == 3)
+//        {
+//        	map.addAttribute("mark", "expert");
+//        }
+//        if (null!=roleId && roleId == 4)
+//        {
+//        	map.addAttribute("mark", "activity");
+//        }
+        
+      
 
         return "/client/activity_enterprise_check";
     }
@@ -505,6 +520,46 @@ public class TdActivityController {
         res.put("code", 0);
         return res;
     }
+    
+    //单个发短信
+    @RequestMapping(value = "/sendSms")
+    @ResponseBody
+    public  Map<String, Object> sendSms(HttpServletRequest req, HttpServletResponse response, Long activityId , Long id , Long roleId,
+    		ModelMap map) {
+        Map<String, Object> res = new HashMap<String, Object>();
+        res.put("code", 1);
+    	
+        String username = (String) req.getSession().getAttribute("activityUsername");
+
+        if (null == username) {
+           res.put("msg", "请先登陆");
+           return res;
+        }
+        
+        if (null == id || null == activityId || null == roleId)
+        {
+        	res.put("msg", "数据有误，发送失败。");
+        	return res;
+        }
+        
+        if (roleId == 1)
+        {
+        	TdEnterprise enterprise = tdEnterpriseService.findOne(id);
+        	TdActivity activity = tdActivityService.findOne(activityId);
+        	smsRecommend(enterprise.getUsermobile(),activity.getTitle() , enterprise.getTitle() , response , req);
+        }
+        if (roleId == 3)
+        {
+        	TdExpert expert = tdExpertService.findOne(id);
+        	TdActivity activity = tdActivityService.findOne(activityId);
+        	smsRecommend(expert.getUsermobile(),activity.getTitle() , expert.getName() , response , req);
+        }
+        
+        res.put("code", 0);
+        return res;
+    }
+       
+    
     
 	//发短信【推荐】
 	public Map<String, Object> smsRecommend(String mobile,  String activityTitle ,String name ,HttpServletResponse response, HttpServletRequest request) {

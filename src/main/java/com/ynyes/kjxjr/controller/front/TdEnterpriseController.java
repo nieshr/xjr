@@ -175,6 +175,26 @@ public class TdEnterpriseController {
             return res;
         }
         
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(tdEnterprise.getEstablish());
+        Date establish = tdEnterprise.getEstablish();
+        Date today = new Date();
+        if (null != establish&& null != today &&null != tdEnterprise.getFormType())
+        {
+        	if (tdEnterprise.getFormType()==0 && establish.after(today)){
+        		res.put("msg", "成立时间不能超过当前日期！");
+        		return res;
+        	}
+	    	if (tdEnterprise.getFormType()==1 && establish.before(today)){
+	    		res.put("msg", "（拟）成立时间不能早于当前日期！");
+	    		return res;
+	    	}
+        }
+        		
+        
+        
+        
+        
         if (null != tdEnterprise.getStatusId()&&1 == tdEnterprise.getStatusId())
         {
         	res.put("msg", "资料已审核，如需修改请申请重新审核！");
@@ -2461,7 +2481,7 @@ public class TdEnterpriseController {
           
 
 			if (null != exportUrl) {
-					download(wb, username, resp);
+					download(wb, exportUrl, resp);
 			}  
 			
     			}

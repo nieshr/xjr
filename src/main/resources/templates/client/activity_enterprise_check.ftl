@@ -19,11 +19,9 @@
 <!--content-->
 <div class="content">
 <!--left-->
-    <div class="leftbar">
-        <dl class="nav">
-                <dd><a href="/activity/create">创建活动</a></dd>
-                <dd><a href="/activity/list">活动列表</a></dd>
-        </dl>
+<div class="leftbar">
+           <dl class="nav">
+            </dl>
     </div>
 <!--right-->
     <div class="right_content">

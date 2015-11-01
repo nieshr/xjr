@@ -100,24 +100,27 @@ function warnmsg()
 
 window.onload=warnmsg;
 </#if>
-
+<#--
 function inputPwd()
 {
 	var isIE = /msie/i.test(navigator.userAgent) && !window.opera;
-	if (isIE && !target.files)
+	if (isIE)
 	{
-		this.type='password';
-		if(this.value=='密码')
-		{
-			this.value='';
-		}
+
+		$(.input_pwd).css("display","none");
+		$(.input_pwd2).css("display","block");
 	} else {
-		fileSize = target.files[0].size;	
+      this.type='password';
+        if(this.value=='密码')
+        {
+            this.value='';
+        }
 	}
 
 		
 		
 }
+-->
 </script>
 </head>
 
@@ -146,18 +149,22 @@ function inputPwd()
     	<div>
         	<i class="i1"></i>
         	<input type="text" name="username" id="txt_regId" value="用户名" ajaxUrl="/reg/check/username" datatype="*6-25" onfocus="if(this.value=='用户名'){this.value='';}" onblur="if(this.value==''){this.value='用户名'}"/>
+            <span>*用户名</span>
         </div>
         <div>
         	<i class="i2"></i>
-        	<input type="text" name="password" id="txt_regPwd" value="密码" datatype="*6-25" onfocus="javascript:inputPwd();" onblur="if(this.value==''){this.type='text';this.value='密码'}"/>
+        	<input class="input_pwd" type="password" name="password" id="txt_regPwd" value="" datatype="*6-25" <#--onfocus="javascript:inputPwd();" onblur="if(this.value==''){this.type='text';this.value='密码'}"-->/>
+        	<span>*密码</span>
         </div>
         <div>
         	<i class="i3"></i>
-        	<input type="text" id="txt_regPwdCfm" recheck="password" value="确认密码" datatype="*6-25" onfocus="this.type='password';if(this.value=='确认密码'){this.value='';}" onblur="if(this.value==''){this.type='text';this.value='确认密码'}" msg="两次密码不一致"/>
+        	<input class="input_pwd" type="password" id="txt_regPwdCfm" recheck="password" value="" datatype="*6-25" <#-- onfocus="this.type='password';if(this.value=='确认密码'){this.value='';}" onblur="if(this.value==''){this.type='text';this.value='确认密码'}"--> msg="两次密码不一致"/>
+            <span>*确认密码</span>
         </div>
         <div>
         	<i class="i4"></i>
         	<input type="text" name="mobile" id="txt_regMobile" value="手机" ajaxUrl="/reg/check/mobile" datatype="m|/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/" onfocus="if(this.value=='手机'){this.value='';}" onblur="if(this.value==''){this.value='手机'}"/>
+            <span>*注册手机号</span>
         </div>
         <div>
         	<i class="i5"></i>
@@ -178,6 +185,7 @@ function inputPwd()
             <!--
             <span><b></b>该用户名已被注册</span>
             -->
+            <span>*邮箱</span>
         </div>
         <div class="sure">
         	<input style="margin-top:7px" class="check" id="isCheck" type="checkbox" />
