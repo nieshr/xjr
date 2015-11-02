@@ -142,8 +142,13 @@ $(function () {
   <dl>
     <dt>登录名</dt>
     <dd>
+    <#if diy_site??&&diy_site.username??>
+    	 <span>${diy_site.username!''}</span>
+    	 <input type="hidden" name="username" value="${diy_site.username!''}">
+    <#else>	 
         <input name="username" type="text"<#if diy_site??>value="${diy_site.username!""}"  </#if>class="input normal" ajaxurl="/Verwalter/order/setting/diysite/check/username<#if diy_site??>?id=${diy_site.id}</#if>" datatype="*6-100" sucmsg=" "> 
-        <span class="Validform_checktip">*登录账号</span>
+    </#if>    
+       
     </dd>
   </dl>
   <dl>

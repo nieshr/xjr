@@ -65,6 +65,15 @@ function allowsubmit()
 	$("#submitbutton").removeAttr("disabled");
 	$("#submitbutton").css("background","#e67817");
 }
+
+function checkstatus()
+{
+    alert("待审核或已通过审核，暂时无法修改信息！");	
+    location.href='/enterprise/check';
+}
+<#if enterprise?? &&enterprise.statusId??&&(enterprise.statusId == 1 ||enterprise.statusId== 0)>
+window.onload=checkstatus;
+</#if>
 </script>
 </head>
 
@@ -79,7 +88,8 @@ function allowsubmit()
 <!--left-->
 	<div class="leftbar">
 		<dl class="nav">
-            <dd><a href="/enterprise/info">基本资料</a></dd>
+            <dd><a href="/enterprise/info">网上报名</a></dd>
+            <dd><a href="/enterprise/data">项目资料</a></dd>
             <dd><a href="/enterprise/activity/list">活动列表</a></dd>
             <dd><a href="/enterprise/project">申请展示</a></dd>
 
@@ -120,6 +130,9 @@ function allowsubmit()
 			    <input type="hidden" name="useremail" value="${enterprise.useremail!''}"/>
 			    <input type="hidden" name="fileUrl" value="${enterprise.fileUrl!''}"/>
 	     	    <input type="hidden" name="pptUrl" value="${enterprise.pptUrl!''}"/>
+	     	    <input type="hidden" name="dataBusiness" value="${enterprise.dataBusiness!''}"/>
+	     	    <input type="hidden" name="dataPossible" value="${enterprise.dataPossible!''}"/>
+	     	    <input type="hidden" name="dataOther" value="${enterprise.dataOther!''}"/>
         	<div style="margin: 20px 0 20px 50px ;width:100%;">
         		<input type="radio" <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>checked="checked"</#if> name="formType" value="0" onClick="javascript:showEnter();"/><span>企业组表格</span>
         		<input type="radio" <#if enterprise.formType??&&enterprise.formType==1>checked="checked"</#if> name="formType" value="1" onClick="javascript:showPro();"/><span>项目团队表格</span>

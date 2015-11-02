@@ -51,6 +51,10 @@ public class TdActivityExpert {
     @Column
     private String usermobile;
     
+    // 专家用户名
+    @Column
+    private String username;
+    
     // 创建时间
     @Column
     @DateTimeFormat(pattern="yyyy-MM-dd")
@@ -142,6 +146,16 @@ public class TdActivityExpert {
 
 	public void setExpertId(Long expertId) {
 		this.expertId = expertId;
+	}
+
+
+	public String getUsername() {
+		return username;
+	}
+
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 }

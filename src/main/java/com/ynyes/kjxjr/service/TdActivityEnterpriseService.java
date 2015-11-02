@@ -105,6 +105,12 @@ public class TdActivityEnterpriseService {
         return (List<TdActivityEnterprise>) repository.findByActivityId(activityId);
     }
     
+    //企业修改资料，同步到预选列表用
+    public List<TdActivityEnterprise> findByEnterpriseId(Long enterpriseId)
+    {
+        return (List<TdActivityEnterprise>) repository.findByEnterpriseId(enterpriseId);
+    }
+    
     //区县管理，预选列表
     public List<TdActivityEnterprise> findByActivityIdAndStatusId(Long activityId , Long statusId)
     {

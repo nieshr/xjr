@@ -62,9 +62,9 @@ $(function () {
         <dd>
             <div class="rule-multi-radio">
                 <span>
-                    <input type="radio" name="isEnable" value="1" <#if site_link?? && site_link.isEnable?? && site_link.isEnable==true>checked="checked"</#if>>
+                    <input type="radio" name="isEnable" value="1" <#if site_link??==false || site_link?? && site_link.isEnable?? && site_link.isEnable==true>checked="checked"</#if>>
                     <label>是</label>
-                    <input type="radio" name="isEnable" value="0" <#if site_link??==false || site_link.isEnable??==false || site_link.isEnable==false>checked="checked"</#if>>
+                    <input type="radio" name="isEnable" value="0" <#if  site_link??&&site_link.isEnable??==false ||  site_link??&&site_link.isEnable??&&site_link.isEnable==false>checked="checked"</#if>>
                     <label>否</label>
                 </span>
             </div>

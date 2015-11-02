@@ -139,7 +139,12 @@ public class TdActivityExpertService {
 	 */
 
     
-    
+    public List<TdActivityExpert> findByUsername(String username){
+    	if(null == username){
+    		return null;
+    	}
+    	return repository.findByUsername(username);
+    }
     
     
     

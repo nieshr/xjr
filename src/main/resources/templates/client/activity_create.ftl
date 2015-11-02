@@ -132,8 +132,29 @@ function activityPass(activityId)
              success: function(data){
                          if (data.code == 0)
                          {
-                             alert("审核成功，已向各企业发送活动通知！");
+                             alert("审核成功！");
                              location.reload();
+                         }
+                         else 
+                         {
+                             alert(data.msg);
+                         }
+                      }
+         });
+}
+
+function sendSms(id,activityId,roleId)
+{
+         $.ajax({
+             type: "GET",
+             url: "/activity/sendSms",
+             contentType: "application/json; charset=utf-8",
+             data: {"id":id,"activityId" : activityId,"roleId":roleId},
+             dataType: "json",
+             success: function(data){
+                         if (data.code == 0)
+                         {
+                             alert("已发送！");
                          }
                          else 
                          {
@@ -417,7 +438,7 @@ window.onload=done;
 			                            <a <#if item.pptUrl??>href="${item.pptUrl}" <#else>style="color:#666;"</#if>>PPT下载</a>
 			                            <a>丨</a>
 			                            <#if activity??&&activity.statusId??&&activity.statusId==1>
-				                            <a href="/activity/sendSms?id=${item.enterpriseId?c!''}&activityId=${item.activityId?c!''}&roleId=1">短信通知</a>
+				                            <a href="javascript:sendSms(${item.enterpriseId?c!''},${item.activityId?c!''},1);">短信通知</a>
 				                            <a>丨</a> 
 			                            </#if>
 			                            <#if item_has_next>
@@ -463,10 +484,10 @@ window.onload=done;
 		    					<li>
 		    						<p class="p01" style="  width: 130px;float: left; text-align: left;">${item_index+1}.${item.name!''}</p>
 		    						<a style="display:block;  width:100px;"></a>
-                                    <a href="/expert/search/grade?activityId=${activity.id?c!''}&expertId=${item.expertId?c!''}">评分情况</a>
+                                    <a href="/expert/search/grade?activityId=${activity.id?c!''}&expertId=${item.expertId?c!''}" title="查看该评委的评分详情" target="_blank">评分情况</a>
                                     <#if activity??&&activity.statusId??&&activity.statusId==1&&mark??&&mark="activity">
 	                                    <a>丨</a> 
-	                                    <a href="/activity/sendSms?id=${item.expertId?c!''}&activityId=${item.activityId?c!''}&roleId=3">短信通知</a>
+	                                    <a href="javascript:sendSms(${item.expertId?c!''},${item.activityId?c!''},3);">短信通知</a>
                                     </#if>
 		    					</li>
     					    </#list>

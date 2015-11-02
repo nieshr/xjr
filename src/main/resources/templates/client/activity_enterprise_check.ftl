@@ -31,11 +31,11 @@
             <dd>
                 <p>当前所在位置:</p>
 
-                <a href="#">添加企业</a>
+                <a href="#">详细资料</a>
                 <p>&gt;</p>
-                <a href="#">企业/项目详情</a>
+                <a href="#"></a>
             </dd>
-               <dt class="crumb_back"><a  href="javascript:history.go(-1);">返回上一页</a></dt>
+               <dt class="crumb_back"><a  href="javascript:history.go(-1);"></a></dt>
         </dl>
         <div class="change_inform">
             <span>审核状态：已通过</span>

@@ -130,6 +130,147 @@ public class TdClientUploadController {
 
     }
 	
+	//企业商业计划书
+	@RequestMapping(value = "/dataBusiness/upload", method = RequestMethod.POST)
+    public String dataBusiness(String action,Long id,
+            @RequestParam MultipartFile Filedata, ModelMap map, HttpServletRequest req) {
+		
+        String username = (String) req.getSession().getAttribute("enterpriseUsername");
+        
+        if (null == username) {
+            return "redirect:/login";
+        }
+        
+        String name = Filedata.getOriginalFilename();
+//        String contentType = Filedata.getContentType();
+
+        String ext = name.substring(name.lastIndexOf("."));
+
+        try {
+            byte[] bytes = Filedata.getBytes();
+
+            Date dt = new Date(System.currentTimeMillis());
+            SimpleDateFormat sdf = new SimpleDateFormat("HHmmssSSS");
+            String fileName ="Data"+tdEnterpriseService.findbyUsername(username).getNumber()+"_"+ sdf.format(dt) + ext;
+
+            String uri = ImageRoot + "/" + fileName;
+
+            File file = new File(uri);
+
+            BufferedOutputStream stream = new BufferedOutputStream(
+                    new FileOutputStream(file));
+            stream.write(bytes);
+            stream.close();
+            
+            TdEnterprise enterprise = tdEnterpriseService.findOne(id);
+            		
+            enterprise.setDataBusiness(fileName);
+            tdEnterpriseService.save(enterprise);
+      
+
+        } catch (Exception e) {
+        	e.printStackTrace();
+        }
+        
+        Long done = 1L;
+        return "redirect:/enterprise/data?done="+done
+        		+"&id="+id;
+    }
+	
+	//企业可行性报告
+	@RequestMapping(value = "/dataPossible/upload", method = RequestMethod.POST)
+    public String dataPossible(String action,Long id,
+            @RequestParam MultipartFile Filedata, ModelMap map, HttpServletRequest req) {
+		
+        String username = (String) req.getSession().getAttribute("enterpriseUsername");
+        
+        if (null == username) {
+            return "redirect:/login";
+        }
+        
+        String name = Filedata.getOriginalFilename();
+//        String contentType = Filedata.getContentType();
+
+        String ext = name.substring(name.lastIndexOf("."));
+
+        try {
+            byte[] bytes = Filedata.getBytes();
+
+            Date dt = new Date(System.currentTimeMillis());
+            SimpleDateFormat sdf = new SimpleDateFormat("HHmmssSSS");
+            String fileName ="Data"+tdEnterpriseService.findbyUsername(username).getNumber()+"_"+ sdf.format(dt) + ext;
+
+            String uri = ImageRoot + "/" + fileName;
+
+            File file = new File(uri);
+
+            BufferedOutputStream stream = new BufferedOutputStream(
+                    new FileOutputStream(file));
+            stream.write(bytes);
+            stream.close();
+            
+            TdEnterprise enterprise = tdEnterpriseService.findOne(id);
+            		
+            enterprise.setDataPossible(fileName);
+            tdEnterpriseService.save(enterprise);
+      
+
+        } catch (Exception e) {
+        	e.printStackTrace();
+        }
+        
+        Long done = 1L;
+        return "redirect:/enterprise/data?done="+done
+        		+"&id="+id;
+    }
+	
+	//企业其他
+	@RequestMapping(value = "/dataOther/upload", method = RequestMethod.POST)
+    public String dataOther(String action,Long id,
+            @RequestParam MultipartFile Filedata, ModelMap map, HttpServletRequest req) {
+		
+        String username = (String) req.getSession().getAttribute("enterpriseUsername");
+        
+        if (null == username) {
+            return "redirect:/login";
+        }
+        
+        String name = Filedata.getOriginalFilename();
+//        String contentType = Filedata.getContentType();
+
+        String ext = name.substring(name.lastIndexOf("."));
+
+        try {
+            byte[] bytes = Filedata.getBytes();
+
+            Date dt = new Date(System.currentTimeMillis());
+            SimpleDateFormat sdf = new SimpleDateFormat("HHmmssSSS");
+            String fileName ="Data"+tdEnterpriseService.findbyUsername(username).getNumber()+"_"+ sdf.format(dt) + ext;
+
+            String uri = ImageRoot + "/" + fileName;
+
+            File file = new File(uri);
+
+            BufferedOutputStream stream = new BufferedOutputStream(
+                    new FileOutputStream(file));
+            stream.write(bytes);
+            stream.close();
+            
+            TdEnterprise enterprise = tdEnterpriseService.findOne(id);
+            		
+            enterprise.setDataOther(fileName);
+            tdEnterpriseService.save(enterprise);
+      
+
+        } catch (Exception e) {
+        	e.printStackTrace();
+        }
+        
+        Long done = 1L;
+        return "redirect:/enterprise/data?done="+done
+        		+"&id="+id;
+    }
+	
 	@RequestMapping(value = "/activity/upload", method = RequestMethod.POST)
     public String activytyUpload(String action,Long id,
             @RequestParam MultipartFile Filedata, ModelMap map, HttpServletRequest req) {

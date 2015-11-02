@@ -5,7 +5,11 @@
 	    <#if site_link_list??>
 	        <#list site_link_list as link>
 	            <#if link_index lt 12> 
-	                <li><a href="${link.linkUri}" target="_blank" title="${link.title}">${link.title}</a></li>
+	            	<#if link_has_next>
+		                <li><a href="${link.linkUri}" target="_blank" title="${link.title}">${link.title}</a>   <span>|</span></li>
+	                <#else>
+	                	<li><a href="${link.linkUri}" target="_blank" title="${link.title}">${link.title}</a></li>
+	                </#if>
 	            </#if>
 	        </#list>
 	    </#if>        

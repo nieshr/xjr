@@ -171,6 +171,7 @@
             },function(res){
                 if(0 == res.status){
                     alert("评分成功！");
+                    location.reload();
                 }
             });
         }

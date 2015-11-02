@@ -87,7 +87,7 @@ function deleteConfirm() {
 	        		<th width="30%">活动</th>
 	        		<th width="13%">地址</th>
 	        		<th width="13%">活动类型</th>
-	        		<th width="13%">审核</th>
+	        	<#--	<th width="13%">审核</th> -->
 	        		<th width="10%">状态</th>
 	        		<th width="20%">操作</th>
 	        	</tr>
@@ -103,11 +103,13 @@ function deleteConfirm() {
 		        		<td>${item.title!''}<#if item.statusEx??&&item.statusEx == 0 || !item.statusEx??><img src="/client/images/n11.gif" style="top:2px;left:3px;" title="未选择评委" alt="未选择评委" /></#if></td>
 		        		<td style="color:#0ab2cb;">${item.address!''}</td>
 		        		<td style="color:#e67817;">${item.activityType!''}</td>
+		        		<#--
 		        		<#if item.statusId?? && item.statusId == 1>
 		        			<td style="color:green;">已审核 </td>
 		        		<#else>
 		        			<td style="color:purple;"> 未审核 </td>
 		        		</#if>
+		        		-->
 	                    <#if item.timeId??&&item.statusId??>
 		                    <#if item.statusId ==0 &&item.timeId ==0>
 		                    		 <td>待筹备</td>

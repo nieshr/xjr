@@ -25,4 +25,5 @@ public interface TdActivityExpertRepo extends
 
 	
 	List<TdActivityExpert> findByExpertIdAndCreateTimeAfterOrderByCreateTimeDesc(Long expertId,Date create);
+	List<TdActivityExpert> findByUsername(String username); 
 }

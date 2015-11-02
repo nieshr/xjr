@@ -423,13 +423,13 @@ public class TdActivityController {
              	for (TdActivityExpert aex:aexlist)
             	{
                   	 //专家短信提醒
-                   	TdExpert expert = tdExpertService.findOne(aex.getExpertId());
+//                   	TdExpert expert = tdExpertService.findOne(aex.getExpertId());
                    	//验证手机号格式
 //                   	Pattern p = Pattern.compile("/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/");
 //                   	Matcher m = p.matcher(expert.getUsermobile());
 //                   	if (m.matches())
 //                   	{
-                   		smsRecommend(expert.getUsermobile() ,aex.getActivityTitle() ,  expert.getName() , ressonse , req);
+//                   		smsRecommend(expert.getUsermobile() ,aex.getActivityTitle() ,  expert.getName() , ressonse , req);
 //                   	}
              		
              		
@@ -459,13 +459,13 @@ public class TdActivityController {
         		for (TdActivityEnterprise ae : aenlist)
         		{
                	 //企业短信提醒
-                	TdEnterprise enterprise = tdEnterpriseService.findOne(ae.getEnterpriseId());
+//                	TdEnterprise enterprise = tdEnterpriseService.findOne(ae.getEnterpriseId());
                 	//验证手机号格式
 //                	Pattern p = Pattern.compile("/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/");
 //                	Matcher m = p.matcher(enterprise.getUsermobile());
 //                	if (m.matches())
 //                	{
-                		smsRecommend(enterprise.getUsermobile(),ae.getActivityTitle() , enterprise.getTitle() , ressonse , req);
+//                		smsRecommend(enterprise.getUsermobile(),ae.getActivityTitle() , enterprise.getTitle() , ressonse , req);
 //                	}
                  
                 	
@@ -571,7 +571,7 @@ public class TdActivityController {
 		HttpSession session = request.getSession();
 		String  info = "【科技小巨人】";
 
-			 info = "尊敬的"+name +"，您被邀请参加"+"”"+activityTitle+"“活动，请登录个人中心查看详情。【科技小巨人】";
+			 info = "尊敬的"+name +"，您被邀请参加"+"”"+activityTitle+"“活动，请登录查看详情。【科技小巨人】";
 
 		
 		System.err.println("errormsg");
@@ -1294,6 +1294,7 @@ public class TdActivityController {
         		newEnter.setActivityTitle(activity.getTitle());
         		newEnter.setEmail(expert.getEmail());
         		newEnter.setUsermobile(expert.getUsermobile());
+        		newEnter.setUsername(expert.getUsername());
         		tdActivityExpertService.save(newEnter);
         	}
         	else
@@ -1303,6 +1304,7 @@ public class TdActivityController {
         		ActivityExpert.setActivityTitle(activity.getTitle());
         		ActivityExpert.setEmail(expert.getEmail());
         		ActivityExpert.setUsermobile(expert.getUsermobile());
+        		ActivityExpert.setUsername(expert.getUsername());
         		tdActivityExpertService.save(ActivityExpert);
         	}
         	
