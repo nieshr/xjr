@@ -395,10 +395,7 @@ public class TdExpertController {
 	                            String exportUrl,
 	                            HttpServletResponse resp,
 	                            HttpServletRequest req){
-	    String username = (String) req.getSession().getAttribute("regionUsername");
-	    if (null == username) {
-	        return "redirect:/login";
-	    }
+
 	        	exportUrl = SiteMagConstant.backupPath;
 	    
 		if (null != exportUrl) {
@@ -437,10 +434,11 @@ public class TdExpertController {
 	      
 	      
 	      // 第三步，在sheet中添加表头第0行,注意老版本poi对Excel的行数列数有限制short  
-	      HSSFRow row = sheet.createRow((int) 0);  
+	      HSSFRow row0 = sheet.createRow((int) 0);  
 	      
 	      sheet.addMergedRegion(new Region((short) 0 , (short) 0 , (short) 1 , (short) columnSize));     //标题1行
 	      sheet.addMergedRegion(new Region((short) 2 , (short) 0 , (short) 2 , (short) columnSize));     //标题2行
+	      sheet.addMergedRegion(new Region((short) 20 , (short) 0 , (short) 22 , (short) columnSize));   //专家签字
 //	      sheet.addMergedRegion(new Region((short) 3 , (short) 0 , (short) 4 , (short) 6));     //标题3行
 //	      sheet.addMergedRegion(new Region((short) 5 , (short) 0 , (short) 5, (short) 2));     //公章
 	      // 第四步，创建单元格，并设置值表头 设置表头居中  
@@ -513,70 +511,122 @@ public class TdExpertController {
 	      right.setAlignment(HSSFCellStyle.ALIGN_RIGHT); // 格式
 	      right.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
 	      
+	      //签名
+	      HSSFCellStyle bottom = wb.createCellStyle();  
+	      bottom.setBorderBottom(HSSFCellStyle.BORDER_NONE);    //设置边框样式
+	      bottom.setBorderRight(HSSFCellStyle.BORDER_NONE);
+	      bottom.setBorderLeft(HSSFCellStyle.BORDER_NONE);  
+	      bottom.setBorderTop(HSSFCellStyle.BORDER_NONE);  
+	      bottom.setVerticalAlignment(HSSFCellStyle.VERTICAL_BOTTOM);//垂直下
+	      bottom.setAlignment(HSSFCellStyle.ALIGN_RIGHT); // 居中格式
 	      
-	      HSSFCell cell = row.createCell((short) 0);  
+	      
+	      HSSFCell cell = row0.createCell((short) 0);  
 	      cell.setCellValue("创投每周行路演评分表");  
 	      cell.setCellStyle(title1);
 	      
-	      row =sheet.createRow((int) 2);
-	      cell = row.createCell((short) 0);  
+	      HSSFRow row2 =sheet.createRow((int) 2);
+	      cell = row2.createCell((short) 0);  
 	      cell.setCellValue(tdActivityService.findOne(enterpriseGradeList.get(0).getActivityId()).getTitle());  
 	      cell.setCellStyle(title);
 	      
 	      
-	      row =sheet.createRow((int) 3);
-	      cell = row.createCell((short) 0);  
+	      HSSFRow row3 =sheet.createRow((int) 3);
+	      cell = row3.createCell((short) 0);  
 	      cell.setCellValue("评分项目");  
 	      cell.setCellStyle(style);
-	      
-	      SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	      String date = sdf.format(new Date());
-	      cell = row.createCell((short) 6);  
-	      cell.setCellValue("日期："+date);  
-	      cell.setCellStyle(right);
-//	      cell = row.createCell((short) 6);  
-//	      cell.setCellValue(date);  
-//	      cell.setCellStyle(left);
-	      
-	      
-	      
-	      row =sheet.createRow((int) 6);
-	      row.setHeight((short) (20 * 20));  
-	      cell = row.createCell((short) 0);  
-	      cell.setCellValue("序号");  
+
+	      HSSFRow row4 =sheet.createRow((int) 4);
+	      cell = row3.createCell((short) 0);  
+	      cell.setCellValue("核心竞争力(小计)");  
 	      cell.setCellStyle(style);
 	      
-	      cell = row.createCell((short) 1);  
-	      cell.setCellValue("编号");  
-	      cell.setCellStyle(style);  
+	      HSSFRow row5 =sheet.createRow((int) 5);
+	      cell = row5.createCell((short) 0);  
+	      cell.setCellValue("技术、产品、服务、商业模式领先性、创新性");  
+	      cell.setCellStyle(style);
 	      
-	      cell = row.createCell((short) 2);  
-	      cell.setCellValue("公司（团队）名称");  
-	      cell.setCellStyle(style);  
+	      HSSFRow row6 =sheet.createRow((int) 6);
+	      cell = row6.createCell((short) 0);  
+	      cell.setCellValue("专利、商标、著作登记、双软、双高证书");  
+	      cell.setCellStyle(style);
 	      
-	      cell = row.createCell((short) 3);  
-	      cell.setCellValue("联系人");  
-	      cell.setCellStyle(style);  
+	      HSSFRow row7 =sheet.createRow((int) 7);
+	      cell = row7.createCell((short) 0);  
+	      cell.setCellValue("与竞争对手相比的优势程度");  
+	      cell.setCellStyle(style);
 	      
-	      cell = row.createCell((short) 4);  
-	      cell.setCellValue("手机");  
-	      cell.setCellStyle(style);  
-	    
-	      cell = row.createCell((short) 5);  
-	      cell.setCellValue("QQ/MSN");  
-	      cell.setCellStyle(style);  
+	      HSSFRow row8 =sheet.createRow((int) 8);
+	      cell = row8.createCell((short) 0);  
+	      cell.setCellValue("市场潜力(小计)");  
+	      cell.setCellStyle(style);
 	      
-//	      cell = row.createCell((short) 6);  
-//	      cell.setCellValue("项目简介");  
-//	      cell.setCellStyle(style);  
+	      HSSFRow row9 =sheet.createRow((int) 9);
+	      cell = row9.createCell((short) 0);  
+	      cell.setCellValue("潜在市场规模大小及已有的市场份额");  
+	      cell.setCellStyle(style);
 	      
-	      cell = row.createCell((short) 6);  
-	      cell.setCellValue("推荐理由");  
-	      cell.setCellStyle(style);  
+	      HSSFRow row10 =sheet.createRow((int) 10);
+	      cell = row10.createCell((short) 0);  
+	      cell.setCellValue("市场开发价值与开发成本");  
+	      cell.setCellStyle(style);
+	      
+	      HSSFRow row11 =sheet.createRow((int) 11);
+	      cell = row11.createCell((short) 0);  
+	      cell.setCellValue("团队能力(小计)");  
+	      cell.setCellStyle(style);
+	      
+	      HSSFRow row12 =sheet.createRow((int) 12);
+	      cell = row12.createCell((short) 0);  
+	      cell.setCellValue("核心领头人的专业能力及资源");  
+	      cell.setCellStyle(style);
+	      
+	      HSSFRow row13 =sheet.createRow((int) 13);
+	      cell = row13.createCell((short) 0);  
+	      cell.setCellValue("团队成员的专业能力及分工是否合理");  
+	      cell.setCellStyle(style);
+	      
+	      HSSFRow row14 =sheet.createRow((int) 14);
+	      cell = row14.createCell((short) 0);  
+	      cell.setCellValue("投资价值(小计)");  
+	      cell.setCellStyle(style);
+	      
+	      HSSFRow row15 =sheet.createRow((int) 15);
+	      cell = row15.createCell((short) 0);  
+	      cell.setCellValue("行业环境及现有基础条件能否支撑");  
+	      cell.setCellStyle(style);
+	      
+	      HSSFRow row16 =sheet.createRow((int) 16);
+	      cell = row16.createCell((short) 0);  
+	      cell.setCellValue("财务状况及融资条件");  
+	      cell.setCellStyle(style);
+	      
+	      HSSFRow row17 =sheet.createRow((int) 17);
+	      cell = row17.createCell((short) 0);  
+	      cell.setCellValue("现场表现力(小计)");  
+	      cell.setCellStyle(style);
+	      
+	      HSSFRow row18 =sheet.createRow((int) 18);
+	      cell = row18.createCell((short) 0);  
+	      cell.setCellValue("路演方式的创新程度及现场感染力");  
+	      cell.setCellStyle(style);
+	      
+	      HSSFRow row19 =sheet.createRow((int) 19);
+	      cell = row19.createCell((short) 0);  
+	      cell.setCellValue("合计");  
+	      cell.setCellStyle(style);
+	      
+	      HSSFRow row20 =sheet.createRow((int) 20);
+	      cell = row20.createCell((short) 0);  
+	      cell.setCellValue("专家签名_____________");  
+	      cell.setCellStyle(bottom);
+	      
+	      
+
 	      
 				
 			if (null != exportUrl) {
-				if (ImportData(activityEnterpriseList, row, cell, sheet,style)) {
+				if (ImportData(enterpriseGradeList, row0, cell, sheet,style)) {
 					download(wb, exportUrl, resp);
 				}         
 			}  
@@ -589,42 +639,152 @@ public class TdExpertController {
 		 * @注释：将page中的订单数据存入excel表格中
 		 */
 	 @SuppressWarnings("deprecation")
-		public boolean ImportData(List<TdActivityEnterprise> activityEnterpriseList, HSSFRow row, HSSFCell cell, HSSFSheet sheet ,HSSFCellStyle style){
+		public boolean ImportData(List<TdEnterpriseGrade> enterpriseGradeList, HSSFRow row, HSSFCell cell, HSSFSheet sheet ,HSSFCellStyle style){
 		 	
-	        	for (int i = 0; i < activityEnterpriseList.size(); i++)  
+	        	for (int i = 0; i < enterpriseGradeList.size(); i++)  
 	            {  
 	        	 				
-	                row = sheet.createRow((int) i + 7);  
+	                row = sheet.createRow((int) 3);  
 	                row.setHeight((short) (20 * 20));  
-	                TdActivityEnterprise tdActivityEnterprise = activityEnterpriseList.get(i);  
+	                TdEnterpriseGrade tdEnterpriseGrade = enterpriseGradeList.get(i);  
 	                //获取用户信息
 //	                TdUser tdUser = tdUserService.findByUsername(tdOrder.getUsername());
 	                // 第四步，创建单元格，并设置值  
-	                cell = row.createCell((short) 0);
-	                cell.setCellValue(i+1);
+	                cell = row.createCell((short) i+1);
+	                if(null != tdEnterpriseGrade.getTotalTechnology())
+	                {
+	                	 cell.setCellValue(tdEnterpriseGrade.getTotalTechnology());
+	                }
 	                cell.setCellStyle(style); 
-	                cell = row.createCell((short) 1);
-	                cell.setCellValue(tdActivityEnterprise.getNumber());
-	                cell.setCellStyle(style);
-	                cell = row.createCell((short) 2);
-	                cell.setCellStyle(style);
-	                cell.setCellValue(tdActivityEnterprise.getEnterpriseTitle()); 
-	                cell = row.createCell((short) 3);
-	                cell.setCellStyle(style);
-	                cell.setCellValue(tdActivityEnterprise.getContact()); 
-	                cell = row.createCell((short) 4);
-	                cell.setCellStyle(style);
-	                cell.setCellValue(tdActivityEnterprise.getMobile());
-	                cell = row.createCell((short) 5);
-	                cell.setCellStyle(style);
-	                cell.setCellValue(tdActivityEnterprise.getQQ());
-//	                cell = row.createCell((short) 6);
-//	                cell.setCellStyle(style);
-//	                cell.setCellValue(tdActivityEnterprise.getProfile());
-	                cell = row.createCell((short) 6);
-	                cell.setCellValue(tdActivityEnterprise.getReason()); 
-	                cell.setCellStyle(style);
-	             
+	                
+	                row = sheet.createRow((int) 4);  
+	                cell = row.createCell((short) i+1);
+	                if (null != tdEnterpriseGrade.getOneTechnology())
+	                {
+	                	cell.setCellValue(tdEnterpriseGrade.getOneTechnology());
+	                }
+	                cell.setCellStyle(style); 
+	                
+	                row = sheet.createRow((int) 5);  
+	                cell = row.createCell((short) i+1);
+	                if (null != tdEnterpriseGrade.getTwoTechnology())
+	                {
+	                	cell.setCellValue(tdEnterpriseGrade.getTwoTechnology());
+	                }
+	                cell.setCellStyle(style); 
+	                
+	                row = sheet.createRow((int) 6);  
+	                cell = row.createCell((short) i+1);
+	                if (null != tdEnterpriseGrade.getThreeTechnology())
+	                {
+	                	 cell.setCellValue(tdEnterpriseGrade.getThreeTechnology());
+	                }
+	                cell.setCellStyle(style); 
+	                
+	                row = sheet.createRow((int) 7);  
+	                cell = row.createCell((short) i+1);
+	                if (null != tdEnterpriseGrade.getThreeTechnology())
+	                {
+	                	 cell.setCellValue(tdEnterpriseGrade.getThreeTechnology());
+	                }
+	                cell.setCellStyle(style); 
+	                
+	                row = sheet.createRow((int) 8);  
+	                cell = row.createCell((short) i+1);
+	                if (null != tdEnterpriseGrade.getTotalFeasibility())
+	                {
+	                	 cell.setCellValue(tdEnterpriseGrade.getTotalFeasibility());
+	                }
+	                cell.setCellStyle(style); 
+	                
+	                row = sheet.createRow((int) 9);  
+	                cell = row.createCell((short) i+1);
+	                if (null != tdEnterpriseGrade.getOneFeasibility())
+	                {
+	                	 cell.setCellValue(tdEnterpriseGrade.getOneFeasibility());
+	                }
+	                cell.setCellStyle(style); 
+	                
+	                row = sheet.createRow((int) 10);  
+	                cell = row.createCell((short) i+1);
+	                if (null != tdEnterpriseGrade.getTwoFeasibility())
+	                {
+	                	 cell.setCellValue(tdEnterpriseGrade.getTwoFeasibility());
+	                }
+	                cell.setCellStyle(style); 
+	                
+	                row = sheet.createRow((int) 11);  
+	                cell = row.createCell((short) i+1);
+	                if (null != tdEnterpriseGrade.getTotalGroup())
+	                {
+	                	 cell.setCellValue(tdEnterpriseGrade.getTotalGroup());
+	                }
+	                cell.setCellStyle(style); 
+	                
+	                row = sheet.createRow((int) 12);  
+	                cell = row.createCell((short) i+1);
+	                if (null != tdEnterpriseGrade.getOneGroup())
+	                {
+	                	 cell.setCellValue(tdEnterpriseGrade.getOneGroup());
+	                }
+	                cell.setCellStyle(style); 
+	                
+	                row = sheet.createRow((int) 13);  
+	                cell = row.createCell((short) i+1);
+	                if (null != tdEnterpriseGrade.getTwoGroup())
+	                {
+	                	 cell.setCellValue(tdEnterpriseGrade.getTwoGroup());
+	                }
+	                cell.setCellStyle(style); 
+	                
+	                row = sheet.createRow((int) 14);  
+	                cell = row.createCell((short) i+1);
+	                if (null != tdEnterpriseGrade.getTotalMarketValue())
+	                {
+	                	 cell.setCellValue(tdEnterpriseGrade.getTotalMarketValue());
+	                }
+	                cell.setCellStyle(style); 
+	                
+	                row = sheet.createRow((int) 15);  
+	                cell = row.createCell((short) i+1);
+	                if (null != tdEnterpriseGrade.getOneMarketValue())
+	                {
+	                	 cell.setCellValue(tdEnterpriseGrade.getOneMarketValue());
+	                }
+	                cell.setCellStyle(style); 
+	                
+	                row = sheet.createRow((int) 16);  
+	                cell = row.createCell((short) i+1);
+	                if (null != tdEnterpriseGrade.getTwoMarketValue())
+	                {
+	                	 cell.setCellValue(tdEnterpriseGrade.getTwoMarketValue());
+	                }
+	                cell.setCellStyle(style); 
+	                
+	                row = sheet.createRow((int) 17);  
+	                cell = row.createCell((short) i+1);
+	                if (null != tdEnterpriseGrade.getTotalExpression())
+	                {
+	                	 cell.setCellValue(tdEnterpriseGrade.getTotalExpression());
+	                }
+	                cell.setCellStyle(style); 
+	                
+	                row = sheet.createRow((int) 18);  
+	                cell = row.createCell((short) i+1);
+	                if (null != tdEnterpriseGrade.getOneExpression())
+	                {
+	                	 cell.setCellValue(tdEnterpriseGrade.getOneExpression());
+	                }
+	                cell.setCellStyle(style); 
+	                
+	                row = sheet.createRow((int) 19);  
+	                cell = row.createCell((short) i+1);
+	                if (null != tdEnterpriseGrade.getTotalPoint())
+	                {
+	                	 cell.setCellValue(tdEnterpriseGrade.getTotalPoint());
+	                }
+	                cell.setCellStyle(style); 
+	                
 	            } 
 	 	return true;
 	 }
@@ -635,7 +795,7 @@ public class TdExpertController {
 	 public Boolean download(HSSFWorkbook wb, String exportUrl, HttpServletResponse resp){
 	 	 try  
 	      {  
-		          FileOutputStream fout = new FileOutputStream(exportUrl+"cqkjxjr02.xls");  
+		          FileOutputStream fout = new FileOutputStream(exportUrl+"cqkjxjr03.xls");  
 //		          OutputStreamWriter writer = new OutputStreamWriter(fout, "utf8");	                       	     
 		          wb.write(fout);  
 		          fout.close();
@@ -646,14 +806,14 @@ public class TdExpertController {
 	 	 OutputStream os;
 			 try {
 					os = resp.getOutputStream();
-					File file = new File(exportUrl + "cqkjxjr02.xls");
+					File file = new File(exportUrl + "cqkjxjr03.xls");
 	              
 	          if (file.exists())
 	              {
 	                try {
 	                      resp.reset();
 	                      resp.setHeader("Content-Disposition", "attachment; filename="
-	                              + "cqkjxjr02.xls");
+	                              + "cqkjxjr03.xls");
 	                      resp.setContentType("application/octet-stream; charset=utf-8");
 	                      os.write(FileUtils.readFileToByteArray(file));
 	                      os.flush();
