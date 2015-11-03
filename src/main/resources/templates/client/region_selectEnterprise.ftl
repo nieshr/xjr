@@ -31,16 +31,16 @@ function done()
 <#if done?? &&done == 1>
 window.onload=done;
 </#if>
-<#--
+
 function numwarn()
 {
-	alert("推荐数已达20个！");
-	location.href='/region/recommendEnterprise?id='+${activityId?c!''};
+	alert("推荐个数不能为0！");
+	location.href="/region/recommendEnterprise?id="+${activityId?c!''};
 }
 <#if numwarn??&&numwarn == 1>
 window.onload=numwarn;
 </#if>
-
+<#--
 function warnmsg()
 {
     alert("请选择20个项目！");
@@ -69,21 +69,27 @@ function recommendSubmitCheck()
 function addEnterprise1(id,activityId,statusId)
 {
 	var reason = $("#reason"+id).val();
-	
-  $.ajax({
-      type:"post",
-      url:"/region/addEnterprise",
-      data:{"id":id,"activityId":activityId,"statusId":statusId,"reason":reason},
-      success:function(data){
-		if (data.code == 1)
+	var reasonlength = reason.length;
+	if (reasonlength >26)
 		{
-			alert(data.msg);
+			alert("推荐理由最多输入26个字")
+		}	
+	else{
+		  $.ajax({
+		      type:"post",
+		      url:"/region/addEnterprise",
+		      data:{"id":id,"activityId":activityId,"statusId":statusId,"reason":reason},
+		      success:function(data){
+				if (data.code == 1)
+				{
+					alert(data.msg);
+				}
+				else{
+					location.reload();
+				}
+		      }
+		  });
 		}
-		else{
-			location.reload();
-		}
-      }
-  });
 }
 
 </script>
@@ -147,7 +153,7 @@ function addEnterprise1(id,activityId,statusId)
                             <td style="color:#0ab2cb;">${item.area!''}</td>
                             <td style="color:#e67817;">${item.type!''}</td>
                             <#if statusId??&&statusId == 2>
-	                            <td><input style="width: 98%;height: 30px;" type="text" id="reason${item.id?c!''}"/></td>
+	                            <td><input style="width: 98%;height: 30px;" type="text" id="reason${item.id?c!''}"    <#if item.statusId == 2>disabled==""</#if>/></td>
 	                            <td>
 		                            <#if item.statusId == 2>
 		                           	 	<p>已添加</p>

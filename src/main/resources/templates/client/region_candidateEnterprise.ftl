@@ -19,9 +19,9 @@
 <script src="/client/js/jquery-1.9.1.min.js"></script>
 <script src="/client/js/main.js"></script>
 <script>
-function selectSubmit()
+function searchSubmit()
 {
-	$("#selectEnterType").submit();
+	$("#searchform").submit();
 }
 
    document.onkeydown = function(event){
@@ -29,6 +29,17 @@ function selectSubmit()
 	        $("#selectSubmit").click();
 	    }
    }
+   
+//全选取消按钮函数
+function checkAll(chkobj) {
+    if ($(chkobj).text() == "全选") {
+        $(chkobj).children("span").text("取消");
+        $(".checkall input:enabled").prop("checked", true);
+    } else {
+        $(chkobj).children("span").text("全选");
+        $(".checkall input:enabled").prop("checked", false);
+    }
+}
 </script>
 </head>
 <body>
@@ -62,18 +73,21 @@ function selectSubmit()
             <dt class="crumb_back"><a  href="javascript:history.go(-1);">返回上一页</a></dt>
         </dl>
         <div class="area_choice">
-        	<form action="/region/candidateEnterprise/${activityId?c!''}" id="selectEnterType">
+        	<form action="/region/candidateEnterprise/${activityId?c!''}" id="searchform">
+        		<input type="hidden" name="area" value="${area!''}" />
         		<span>关键字:</span>
         		<input style="margin:0 14px 0 0;" class="area_text" name="keywords" type="text" value="<#if keywords??&&keywords?length gt 0>${keywords}</#if>" />
         		<select name="area" style="margin-left: 0px;"  disabled="">
-        			<option value="">区县</option>
+        			<option value=""><#if area??>${area}</#if></option>
+        			<#-->
         			<#if region_list??>
         				<#list region_list as item>
         					<option  value="${item.title!''}" <#if area??&&area?length gt 0&&area==item.title>selected="selected"</#if>>${item.title!''}</option>
         				</#list>
         			</#if>		
+        			-->
         		</select>
-        		<select name="type">
+        		<select name="type"  onchange="javascript:searchSubmit(this);">
         			<option value="" >行业归属</option>
         			<#if enterpriseType_list??>
         				<#list enterpriseType_list as item>
@@ -81,10 +95,10 @@ function selectSubmit()
         				</#list>
         			</#if>		
         		</select>
-        		<select name="formType" >
+        		<select name="formType" onchange="javascript:searchSubmit(this);">
         			<option value="" >类型</option>
         			<option value="0" <#if formType??&&formType == 0>selected="selected"</#if> >企业</option>
-        			<option value="1" <#if formType??&&formType == 1>selected="selected"</#if> >项目</option>
+        			<option value="1" <#if formType??&&formType == 1>selected="selected"</#if> >团队</option>
         		</select>
         		<input id="selectSubmit" style="cursor:pointer;" class="area_Btn02" type="submit" value="确认筛选" />
         	</form>

@@ -134,6 +134,12 @@ function candidateRemoveEnterprise(id,activityId)
 function addEnterprise1(id,activityId,statusId)
 {
 	var reason = $("#reason"+id).val();
+	var reasonlength = reason.length();
+	if (reasonlength >26)
+		{
+			alert("推荐理由最多输入26个字")
+		
+		}
 	
   $.ajax({
       type:"post",

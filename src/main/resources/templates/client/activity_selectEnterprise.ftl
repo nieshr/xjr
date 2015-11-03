@@ -18,6 +18,28 @@
 
 <script src="/client/js/jquery-1.9.1.min.js"></script>
 <script src="/client/js/main.js"></script>
+<script>
+function searchSubmit()
+{
+	$("#searchform").submit();
+}
+   document.onkeydown = function(event){
+	    if((event.keyCode || event.which) == 13){
+	        $("#selectSubmit").click();
+	    }
+   }
+   
+ //全选取消按钮函数
+function checkAll(chkobj) {
+    if ($(chkobj).text() == "全选") {
+        $(chkobj).children("span").text("取消");
+        $(".checkall input:enabled").prop("checked", true);
+    } else {
+        $(chkobj).children("span").text("全选");
+        $(".checkall input:enabled").prop("checked", false);
+    }
+}
+</script>
 </head>
 <body>
 <!--main-->
@@ -49,11 +71,11 @@
             <dt class="crumb_back"><a  href="javascript:history.go(-1);">返回上一页</a></dt>
         </dl>
         <div class="area_choice">
-        	<form action="/activity/selectEnterprise" >
+        	<form action="/activity/selectEnterprise" id="searchform">
         	<input type="hidden" name="activityId" value="${activityId?c!''}" />
         		<span>关键字:</span>
         		<input style="margin:0 14px 0 0;" class="area_text" name="keywords" type="text" value="<#if keywords??&&keywords?length gt 0>${keywords}</#if>" />
-        		<select name="area" style="margin-left: 0px;">
+        		<select name="area" style="margin-left: 0px;"  onchange="javascript:searchSubmit(this);">
         			<option value="">区县</option>
         			<#if region_list??>
         				<#list region_list as item>
@@ -61,7 +83,7 @@
         				</#list>
         			</#if>		
         		</select>
-        		<select name="type">
+        		<select name="type" onchange="javascript:searchSubmit(this);">
         			<option value="">行业归属</option>
         			<#if enterpriseType_list??>
         				<#list enterpriseType_list as item>
@@ -69,20 +91,29 @@
         				</#list>
         			</#if>		
         		</select>
-        		<select name="formType">
+        		<select name="formType"  onchange="javascript:searchSubmit(this);">
         			<option value="">类型</option>
         			<option value="0" <#if formType??&&formType == 0>selected="selected"</#if>>企业</option>
-        			<option value="1" <#if formType??&&formType == 1>selected="selected"</#if>>项目</option>
+        			<option value="1" <#if formType??&&formType == 1>selected="selected"</#if>>团队</option>
         		</select>
-        		<input style="cursor:pointer;" class="area_Btn02" type="submit" value="确认筛选" />
+        		<input style="cursor:pointer;" id="selectSubmit" class="area_Btn02" type="submit" value="确认筛选" />
         	</form>
         </div>
         
         
        <!-- <form name="addEnterprise" action="/activity/addEnterprises">-->
 	        <div class="list_base2" style="padding-top:0;">
+	        	<form action="/activity/selectEnterprise" method=post>
+	        	<input type="hidden" name="keywords" value="<#if keywords??&&keywords?length gt 0>${keywords}</#if>">
+	        	<input type="hidden" name="area" value="<#if area??&&area?length gt 0>${area}</#if>">
+	        	<input type="hidden" name="type" value="<#if type??&&type?length gt 0>${type}</#if>">
+	        	<input type="hidden" name="formType" value="<#if formType??&&formType?length gt 0>${formType}</#if>">
+	        	<input type="hidden" name="__ACTION" value="candidate">
+	        	<input type="hidden" name="activityId" value="${activityId?c!''}">
+	        	<input type="hidden" name="page" value="<#if page??>${page!''}"</#if>>
 				<table class="new_list">
 		        	<tr class="list_title">
+		        		<th></th>
 		        		<th width="30%">备选企业列表</th>
 		        		<th width="25%">地区</th>
 		        		<th width="25%">行业归属</th>
@@ -91,12 +122,12 @@
 		        <#if enterprise_page??>
 		        	<#list enterprise_page.content as item>
 			        	<tr>
-			        		<#--
 			        		<td>
-				        		<input style="width:15px;height:15px;float:left; margin:0 0 0 10px ;" id="listChkId" type="checkbox" name="listChkId" value="${item_index}"/>
+			        		<span class="checkall" style="vertical-align:middle;">
+				        		<input style="width:15px;height:15px;float:left; margin:0 0 0 10px ;" <#if item.isSelect??&&item.isSelect&&item.selectActivityId??&&item.selectActivityId==activityId>disabled=""</#if> id="listChkId" type="checkbox" name="listChkId" value="${item_index}"/>
 				        		<input type="hidden" name="listId" id="listId" value="${item.id}">
+				        	</span>	
 			        		</td>
-			        		-->
 			        		<td><a href="/activity/enterprise/check/${item.id?c!''}" target=_blank >${item.title!''}</a></td>
 			        		<td style="color:#0ab2cb;">${item.area!''}</td>
 			        		<td style="color:#e67817;">${item.type!''}</td>
@@ -111,6 +142,9 @@
 		        	</#list>
 		        </#if>	   
 		        </table>
+		        <a class="all" style="margin-left:10px;" href="javascript:;" onclick="checkAll(this);"><i></i><span>全选</span></a>
+		        <input style="cursor:pointer;" class="area_batch" style="margin-left:5%;" type="submit"  value="批量添加" />
+		        </form>
 	        </div>
 	        <div class="area_add_btn">
 			<!--<input style=" margin-left: 0px; cursor:pointer;" type="submit" value="批量加入预选" />-->
@@ -123,7 +157,7 @@
 				 <#if PAGE_DATA.number+1 == 1>
 			          <a disabled="disabled"  class="page_next">上一页</a>               
 			     <#else>
-			         <a href="/activity/selectEnterprise?activityId=${activityId?c!''}&page=${PAGE_DATA.number-1}"  class="page_next">上一页</a>                
+			         <a href="/activity/selectEnterprise?activityId=${activityId?c!''}&page=${PAGE_DATA.number-1}&area=${area!''}&keywords=${keywords!''}&type=${type!''}&formType=${formType!''}"  class="page_next">上一页</a>                
 			     </#if>
 			     
 			     <#assign continueEnter=false>
@@ -134,7 +168,7 @@
 			                 <#if page == PAGE_DATA.number+1>
 			                     <a  class ="current" style="color:#e67817;">${page }</a>
 			                 <#else>
-			                     <a href="/activity/selectEnterprise?activityId=${activityId?c!''}&page=${page-1}">${page}</a> 
+			                     <a href="/activity/selectEnterprise?activityId=${activityId?c!''}&page=${page-1}&area=${area!''}&keywords=${keywords!''}&type=${type!''}&formType=${formType!''}">${page}</a> 
 			                 </#if>
 			                 <#assign continueEnter=false>
 			             <#else>
@@ -150,7 +184,7 @@
 			     <#if PAGE_DATA.number+1 == PAGE_DATA.totalPages || PAGE_DATA.totalPages==0>
 			         <a disabled="disabled" class="page_last">下一页</a> 
 			     <#else>
-			         <a href="/activity/selectEnterprise?activityId=${activityId?c!''}&page=${PAGE_DATA.number+1}" class="page_last">下一页</a> 
+			         <a href="/activity/selectEnterprise?activityId=${activityId?c!''}&page=${PAGE_DATA.number+1}&area=${area!''}&keywords=${keywords!''}&type=${type!''}&formType=${formType!''}" class="page_last">下一页</a> 
 			     </#if>
 			 </#if>
 		  	<p>共${PAGE_DATA.totalPages!'1'}页  ${PAGE_DATA.totalElements!'1'}条</p>

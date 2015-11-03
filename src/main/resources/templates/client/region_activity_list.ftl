@@ -75,18 +75,20 @@
                    
                     <#if item.timeId??&&item.statusId??>
 	                    <#if item.statusId ==0 &&item.timeId ==0>
-	                    		 <td>待筹备</td>
+	                    		 <td>未启动</td>
 	                    <#elseif  item.statusId ==0 &&item.timeId ==1>
 	                    		 <td style="color:#0ab2cb;">筹备中</td>
 	                    <#elseif  item.statusId ==0 &&(item.timeId == 2 ||item.timeId == 3)>
 	                    		 <td  style="color:#e67817;">已过期</td>
 	                    <#elseif item.statusId ==1 &&( item.timeId ==0 || item.timeId ==1|| item.timeId ==2)>
-	                    		 <td  style="color:#529c15;">筹备就绪</td>
+	                    		 <td  style="color:#529c15;">进行中</td>
 	                    <#elseif item.statusId ==2>
 	                    	 <td style="color:purple;">活动已结束</td>
 	                    <#else>
 	                    	<td>&nbsp;</td>	 
-	                    </#if>			
+	                    </#if>	
+	                <#else>
+	                	     <td>未启动</td>
 	                </#if>    
                     
                     <td>

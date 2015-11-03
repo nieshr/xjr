@@ -112,21 +112,23 @@ function deleteConfirm() {
 		        		-->
 	                    <#if item.timeId??&&item.statusId??>
 		                    <#if item.statusId ==0 &&item.timeId ==0>
-		                    		 <td>待筹备</td>
+		                    		 <td>未启动</td>
 		                    <#elseif  item.statusId ==0 &&item.timeId ==1>
 		                    		 <td style="color:#0ab2cb;">筹备中</td>
 		                    <#elseif  item.statusId ==0 &&(item.timeId == 2 ||item.timeId == 3)>
 		                    		 <td  style="color:#e67817;">已过期</td>
 		                    <#elseif item.statusId ==1 &&( item.timeId ==0 || item.timeId ==1|| item.timeId ==2)>
-		                    		 <td  style="color:#529c15;">筹备就绪</td>
+		                    		 <td  style="color:#529c15;">进行中</td>
 		                    <#elseif item.statusId ==2>
 		                    	 <td style="color:purple;">活动已结束</td>
 		                    <#else>
 		                    	<td>&nbsp;</td>	 
 		                    </#if>			
+		                <#else>
+		                	     <td>未启动</td>
 		                </#if>    		        		
 		        		<td>
-		        			<a <#if item.statusId?? && item.statusId == 1>href="javascript:void(0)" style="color : #666;"<#else> href="/activity/edit?id=${item.id?c!''}" </#if> >编辑信息</a>丨<a href="/activity/check?id=${item.id?c!''}">操作</a>丨<a  onclick="javascript:deleteConfirm();" href="/activity/delete?id=${item.id?c!''}">删除</a>
+		        			<a <#if item.statusId?? && item.statusId == 1>href="javascript:void(0)" style="color : #666;" title="已审核的活动无法修改"<#else> href="/activity/edit?id=${item.id?c!''}" </#if> >编辑信息</a>丨<a href="/activity/check?id=${item.id?c!''}">操作</a>丨<a  onclick="javascript:deleteConfirm();" href="/activity/delete?id=${item.id?c!''}">删除</a>
 		        		</td>
 		        	</tr>
 	        	</#list>

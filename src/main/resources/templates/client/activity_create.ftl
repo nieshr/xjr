@@ -463,10 +463,12 @@ window.onload=done;
                         	<#else>
                         		<input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#666;color:#fff;" type="button"  value="推荐表下载" />
                         	</#if>	
-                        	<#if activity??&&activity.statusId??&&activity.statusId==1>
-                        		<input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#666;color:#fff; " type="button" onclick="javascript:passCheck(${activity.id?c!''});"  value="已审核" />
-                        	<#elseif activity??&&activity.statusId??&&activity.statusId==0>	
-                        		<input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#e67817;color:#fff; " type="button" onclick="javascript:activityPass(${activity.id?c!''});" value="通过审核" />
+                        	<#if mark??&&mark="activity">
+	                        	<#if activity??&&activity.statusId??&&activity.statusId==1>
+	                        		<input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#666;color:#fff; " type="button" onclick="javascript:passCheck(${activity.id?c!''});"  value="已审核" />
+	                        	<#elseif activity??&&activity.statusId??&&activity.statusId==0>	
+	                        		<input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#e67817;color:#fff; " type="button" onclick="javascript:activityPass(${activity.id?c!''});" value="通过审核" />
+	                        	</#if>
                         	</#if>
                         <#else>
                         	

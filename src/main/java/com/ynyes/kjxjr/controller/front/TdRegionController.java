@@ -712,21 +712,8 @@ public String  recommendEnterprise(HttpServletRequest req,
 	    {
 	    	map.addAttribute("done", isDone);
 	    }
-	    
-	   if ( tdActivityEnterpriseService.findByActivityIdAndStatusId(activityId,2L).size() ==20)
-	   {
-		   map.addAttribute("numfull", 1);
-		   if (null != numwarn&& numwarn == 1)
-		   {
-			   map.addAttribute("numwarn", 1);
-		   }
-	   }
-	    
-	    if (null != numwarn&& 2 == numwarn)
-	    {
-	    	map.addAttribute("numwarn", 2);
-	    }
-	    
+
+	    map.addAttribute("numwarn", numwarn);
 	    map.addAttribute("keywords", keywords);
 	   	map.addAttribute("activity", activity);
 	   	map.addAttribute("activityId", activityId);
@@ -1438,6 +1425,11 @@ public String exportRecommend(
 			if (null != exportUrl) {
 				List<TdActivityEnterprise> activityEnterpriseList = tdActivityEnterpriseService.findByActivityIdAndStatusId(activityId, 2L);
 		
+				if (null ==activityEnterpriseList || activityEnterpriseList.size()==0)
+				{
+					Long numwarn = 1L;
+					return "redirect:/region/recommendEnterprise?id="+activityId+"&numwarn="+numwarn;
+				}
     /**  
 		 * @author lc
 		 * @注释：根据不同条件导出excel文件
@@ -1621,7 +1613,7 @@ public String exportRecommend(
 			}         
 		}  
 			}
-    return "/redirect:/region/activity/list";
+			return "redirect:/region/recommendEnterprise?id="+activityId;
 }
 
 /**
