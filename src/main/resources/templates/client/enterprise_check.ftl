@@ -25,7 +25,8 @@
 	<div class="leftbar">
 	
 		<dl class="nav">
-            <dd><a href="/enterprise/check">基本资料</a></dd>
+            <dd><a href="/enterprise/check">网上报名</a></dd>
+            <dd><a href="/enterprise/data">项目资料</a></dd>
             <dd><a href="/enterprise/activity/list">活动列表</a></dd>
             <dd><a href="/enterprise/project">申请展示</a></dd>
 
@@ -90,7 +91,7 @@
 	    			<input type="text" value="<#if enterprise??&&enterprise.establish??>${enterprise.establish?string("yyyy年MM月dd日")!''}</#if>" disabled="" />
     			</div>
     			<div>
-	    			<span class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>">注册资本<b style="color:#999;font-size:0.6em;">(万元)</b>：</span>
+	    			<span class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>">注册资本：</span>
 	    			<span class="pro <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>hide</#if>">（拟）注册资本：</span>
     				<input type="text" value="<#if enterprise??&&enterprise.capital??>${enterprise.capital?c!''}</#if>" disabled="" />&nbsp;&nbsp;<b style="color:#999;font-size:0.6em;">(万元)</b>
     			</div>

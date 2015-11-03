@@ -712,21 +712,8 @@ public String  recommendEnterprise(HttpServletRequest req,
 	    {
 	    	map.addAttribute("done", isDone);
 	    }
-	    
-	   if ( tdActivityEnterpriseService.findByActivityIdAndStatusId(activityId,2L).size() ==20)
-	   {
-		   map.addAttribute("numfull", 1);
-		   if (null != numwarn&& numwarn == 1)
-		   {
-			   map.addAttribute("numwarn", 1);
-		   }
-	   }
-	    
-	    if (null != numwarn&& 2 == numwarn)
-	    {
-	    	map.addAttribute("numwarn", 2);
-	    }
-	    
+
+	    map.addAttribute("numwarn", numwarn);
 	    map.addAttribute("keywords", keywords);
 	   	map.addAttribute("activity", activity);
 	   	map.addAttribute("activityId", activityId);
@@ -1438,6 +1425,11 @@ public String exportRecommend(
 			if (null != exportUrl) {
 				List<TdActivityEnterprise> activityEnterpriseList = tdActivityEnterpriseService.findByActivityIdAndStatusId(activityId, 2L);
 		
+				if (null ==activityEnterpriseList || activityEnterpriseList.size()==0)
+				{
+					Long numwarn = 1L;
+					return "redirect:/region/recommendEnterprise?id="+activityId+"&numwarn="+numwarn;
+				}
     /**  
 		 * @author lc
 		 * @注释：根据不同条件导出excel文件
@@ -1454,31 +1446,34 @@ public String exportRecommend(
       sheet.setMargin(HSSFSheet.BottomMargin, (double)0.3); //页边距（下）
       sheet.setMargin(HSSFSheet.LeftMargin, (double)0.3); //页边距（左）
       sheet.setMargin(HSSFSheet.RightMargin, (double)0.3); //页边距（右）
-      sheet.setMargin(HSSFSheet.TopMargin, (double)0.3); //页边距（上）
+      sheet.setMargin(HSSFSheet.TopMargin, (double)0.1); //页边距（上）
       sheet.setHorizontallyCenter(true); //设置打印页面为水平居中
       sheet.setVerticallyCenter(true); //设置打印页面为垂直居中
       
       //列宽
       sheet.setColumnWidth((short) 0 , 4*256);
       sheet.setColumnWidth((short) 1 , 6*256);
-      sheet.setColumnWidth((short) 2 , 30*256);
+      sheet.setColumnWidth((short) 2 , 46*256);
       sheet.setColumnWidth((short) 3 , 8*256);
       sheet.setColumnWidth((short) 4 , 13*256);
       sheet.setColumnWidth((short) 5 , 14*256);
       sheet.setColumnWidth((short) 6 , 50*256);
-      sheet.setColumnWidth((short) 7 , 16*256);
+//      sheet.setColumnWidth((short) 7 , 16*256);
       
-      
+      sheet.setDefaultRowHeightInPoints(20);  
       
       
       // 第三步，在sheet中添加表头第0行,注意老版本poi对Excel的行数列数有限制short  
       HSSFRow row = sheet.createRow((int) 0);  
       
-      sheet.addMergedRegion(new Region((short) 0 , (short) 0 , (short) 1 , (short) 7));     //标题
-      sheet.addMergedRegion(new Region((short) 2 , (short) 0 , (short) 2 , (short) 2));     //公章
+      sheet.addMergedRegion(new Region((short) 0 , (short) 0 , (short) 1 , (short) 6));     //标题1行
+      sheet.addMergedRegion(new Region((short) 2 , (short) 0 , (short) 2 , (short) 6));     //标题2行
+      sheet.addMergedRegion(new Region((short) 3 , (short) 0 , (short) 4 , (short) 6));     //标题3行
+      sheet.addMergedRegion(new Region((short) 5 , (short) 0 , (short) 5, (short) 2));     //公章
       // 第四步，创建单元格，并设置值表头 设置表头居中  
       HSSFCellStyle style = wb.createCellStyle();  
       style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+      style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
       style.setBorderBottom(HSSFCellStyle.BORDER_THIN);    //设置边框样式
       style.setBorderRight(HSSFCellStyle.BORDER_THIN);
       style.setBorderLeft(HSSFCellStyle.BORDER_THIN);  
@@ -1501,6 +1496,14 @@ public String exportRecommend(
       style2.setBorderLeft(HSSFCellStyle.BORDER_THIN);  
       style2.setBorderTop(HSSFCellStyle.BORDER_THIN);  
       
+      HSSFCellStyle title1 = wb.createCellStyle();  
+      title1.setBorderBottom(HSSFCellStyle.BORDER_NONE);    //设置边框样式
+      title1.setBorderRight(HSSFCellStyle.BORDER_NONE);
+      title1.setBorderLeft(HSSFCellStyle.BORDER_NONE);  
+      title1.setBorderTop(HSSFCellStyle.BORDER_NONE);  
+      title1.setVerticalAlignment(HSSFCellStyle.VERTICAL_BOTTOM);//垂直下
+      title1.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 居中格式
+      
       HSSFCellStyle title = wb.createCellStyle();  
       title.setBorderBottom(HSSFCellStyle.BORDER_NONE);    //设置边框样式
       title.setBorderRight(HSSFCellStyle.BORDER_NONE);
@@ -1508,28 +1511,52 @@ public String exportRecommend(
       title.setBorderTop(HSSFCellStyle.BORDER_NONE);  
       title.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
       title.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 居中格式
+      
+      HSSFCellStyle title3 = wb.createCellStyle();  
+      title3.setBorderBottom(HSSFCellStyle.BORDER_NONE);    //设置边框样式
+      title3.setBorderRight(HSSFCellStyle.BORDER_NONE);
+      title3.setBorderLeft(HSSFCellStyle.BORDER_NONE);  
+      title3.setBorderTop(HSSFCellStyle.BORDER_NONE);  
+      title3.setVerticalAlignment(HSSFCellStyle.VERTICAL_TOP);//垂直上
+      title3.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 居中格式
+      
       HSSFFont font = wb.createFont();
       font.setFontName("黑体");
       font.setFontHeightInPoints((short) 12);//设置字体大小
       font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);//粗体显示
+      title1.setFont(font);//选择需要用到的字体格式
       title.setFont(font);//选择需要用到的字体格式
+      title3.setFont(font);//选择需要用到的字体格式
       
       //盖章
       HSSFCellStyle left = wb.createCellStyle();  
       left.setBorderBottom(HSSFCellStyle.BORDER_THIN);    //设置边框样式
       left.setAlignment(HSSFCellStyle.ALIGN_LEFT); // 居格式
+      left.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
       
       //日期
       HSSFCellStyle right = wb.createCellStyle();  
       right.setBorderBottom(HSSFCellStyle.BORDER_THIN);    //设置边框样式
       right.setAlignment(HSSFCellStyle.ALIGN_RIGHT); // 格式
+      right.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
       
       
       HSSFCell cell = row.createCell((short) 0);  
-      cell.setCellValue("区县科委推荐项目汇总表"+"（"+activityEnterpriseList.get(0).getArea()+activityEnterpriseList.get(0).getActivityTitle()+"）");  
-      cell.setCellStyle(title);
+      cell = row.createCell((short) 0);  
+      cell.setCellValue("重庆科技小巨人培育专项行动");  
+      cell.setCellStyle(title1);
       
       row =sheet.createRow((int) 2);
+      cell = row.createCell((short) 0);  
+      cell.setCellValue(activityEnterpriseList.get(0).getActivityTitle());  
+      cell.setCellStyle(title);
+      
+      row =sheet.createRow((int) 3);
+      cell = row.createCell((short) 0);  
+      cell.setCellValue("区县科委推荐参赛路演项目汇总表");  
+      cell.setCellStyle(title3);
+      
+      row =sheet.createRow((int) 5);
       cell = row.createCell((short) 0);  
       cell.setCellValue("推荐单位（章）");  
       cell.setCellStyle(left);
@@ -1537,15 +1564,16 @@ public String exportRecommend(
       SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
       String date = sdf.format(new Date());
       cell = row.createCell((short) 6);  
-      cell.setCellValue("日期：");  
+      cell.setCellValue("日期："+date);  
       cell.setCellStyle(right);
-      cell = row.createCell((short) 7);  
-      cell.setCellValue(date);  
-      cell.setCellStyle(left);
+//      cell = row.createCell((short) 6);  
+//      cell.setCellValue(date);  
+//      cell.setCellStyle(left);
       
       
       
-      row =sheet.createRow((int) 3);
+      row =sheet.createRow((int) 6);
+      row.setHeight((short) (20 * 20));  
       cell = row.createCell((short) 0);  
       cell.setCellValue("序号");  
       cell.setCellStyle(style);
@@ -1570,22 +1598,22 @@ public String exportRecommend(
       cell.setCellValue("QQ/MSN");  
       cell.setCellStyle(style);  
       
-      cell = row.createCell((short) 6);  
-      cell.setCellValue("项目简介");  
-      cell.setCellStyle(style);  
+//      cell = row.createCell((short) 6);  
+//      cell.setCellValue("项目简介");  
+//      cell.setCellStyle(style);  
       
-      cell = row.createCell((short) 7);  
+      cell = row.createCell((short) 6);  
       cell.setCellValue("推荐理由");  
       cell.setCellStyle(style);  
       
 			
 		if (null != exportUrl) {
 			if (ImportData(activityEnterpriseList, row, cell, sheet,style)) {
-				download(wb, username, resp);
+				download(wb, exportUrl, resp);
 			}         
 		}  
 			}
-    return "/redirect:/region/activity/list";
+			return "redirect:/region/recommendEnterprise?id="+activityId;
 }
 
 /**
@@ -1598,7 +1626,8 @@ public String exportRecommend(
         	for (int i = 0; i < activityEnterpriseList.size(); i++)  
             {  
         	 				
-                row = sheet.createRow((int) i + 4);  
+                row = sheet.createRow((int) i + 7);  
+                row.setHeight((short) (20 * 20));  
                 TdActivityEnterprise tdActivityEnterprise = activityEnterpriseList.get(i);  
                 //获取用户信息
 //                TdUser tdUser = tdUserService.findByUsername(tdOrder.getUsername());
@@ -1621,10 +1650,10 @@ public String exportRecommend(
                 cell = row.createCell((short) 5);
                 cell.setCellStyle(style);
                 cell.setCellValue(tdActivityEnterprise.getQQ());
+//                cell = row.createCell((short) 6);
+//                cell.setCellStyle(style);
+//                cell.setCellValue(tdActivityEnterprise.getProfile());
                 cell = row.createCell((short) 6);
-                cell.setCellStyle(style);
-                cell.setCellValue(tdActivityEnterprise.getProfile());
-                cell = row.createCell((short) 7);
                 cell.setCellValue(tdActivityEnterprise.getReason()); 
                 cell.setCellStyle(style);
              

@@ -84,8 +84,8 @@ function loadMap(x, y)
 <div class="titlelist">
 	<div id="titlelist">
 	<div>
-		<a href="javascript:show1();" class="active">联系我们</a>
-		<a href="javascript:show2();">在线留言</a>
+		<a href="javascript:void(0);" class="active">联系我们</a>
+		<a href="javascript:void(0);">在线留言</a>
 </div>
 	</div>
 <div class="contactustitle">
@@ -126,7 +126,7 @@ function loadMap(x, y)
 
 		</div>
 	</div>
-	<div class="contactussmall2 hide">
+	<div class="contactussmall2">
 		<div class="contactustitle">
 			<span>在线留言</span>
 			<hr style="border-top:1px solid #DDDDDD;" />
@@ -140,9 +140,7 @@ function loadMap(x, y)
 			<textarea name="content" id="" cols="30" rows="10"></textarea>
 			<br>
 			<input type="submit" id="btn_submit" class="button" value="提交" />
-			<div class="map" style="margin-top:-210px;">
-				<div id="allmap"></div>
-			</div>
+
 		</div>
 		
 		</form>

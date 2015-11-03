@@ -49,8 +49,9 @@
 .area_add_btn input{ width:100px; height: 30px; border: none; border-radius: 6px; background: #e67817; color: white; margin-top: 20px; /*margin-left: 20px;*/ font-size: 14px; *+margin-left:40px;}
 
 .area_save_btn{cursor:pointer;width:60px; height: 30px; border: none; border-radius: 6px; background: #e67817; color: white; margin-top: 20px; margin-left: 45%; font-size: 14px;}   /*zhangji*/
-
-
+.area_save_btn:hover{background:#FF0F00;}
+.area_batch {cursor: pointer; width: 92px;height: 30px;  border: none;  border-radius: 6px;  background: #e67817;  color: white;  margin-top: 20px;  margin-left: 5%;  font-size: 14px;}
+.area_batch:hover{background:#FF0F00;}
 
 /*四、推荐项目*/
 .list_base3{width:98%; padding-left: 1%;padding-right: 1%; height: auto; display: block; overflow: hidden; padding-top: 30px;}

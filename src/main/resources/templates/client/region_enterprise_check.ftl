@@ -87,7 +87,8 @@ else
             <span>审核状态：未通过</span>
             <input style="cursor:pointer;" type="button" value="重新审核 " onclick="location.href='/region/enterprise/recall/${enterprise.id?c!''}'"/>
             <input style="cursor:pointer;" type="button" value="审核通过 " onclick="location.href='/region/enterprise/pass/${enterprise.id?c!''}'"/> 
-            
+             <#elseif  enterprise.statusId??&&enterprise.statusId == 4>
+             <span>审核状态：重新审核（更新中）</span>
               <#else>
              <span>用户未完善资料</span>
             </#if>

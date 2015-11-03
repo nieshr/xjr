@@ -249,6 +249,18 @@ public class TdEnterprise {
     @Column
     private String fileUrl;
     
+    //商业计划书
+    @Column
+    private String dataBusiness;
+    
+    //可行性报告
+    @Column
+    private String dataPossible;
+    
+    //其他
+    @Column
+    private String dataOther;
+    
     //是否被选择
     @Column
     private Boolean isSelect;
@@ -256,7 +268,6 @@ public class TdEnterprise {
     //被选择活动的ID
     @Column
     private Long SelectActivityId;
-    
     
     //可供资料
     @Column
@@ -737,6 +748,30 @@ public class TdEnterprise {
 
 	public void setPptUrl(String pptUrl) {
 		this.pptUrl = pptUrl;
+	}
+
+	public String getDataBusiness() {
+		return dataBusiness;
+	}
+
+	public void setDataBusiness(String dataBusiness) {
+		this.dataBusiness = dataBusiness;
+	}
+
+	public String getDataPossible() {
+		return dataPossible;
+	}
+
+	public void setDataPossible(String dataPossible) {
+		this.dataPossible = dataPossible;
+	}
+
+	public String getDataOther() {
+		return dataOther;
+	}
+
+	public void setDataOther(String dataOther) {
+		this.dataOther = dataOther;
 	}
 
 

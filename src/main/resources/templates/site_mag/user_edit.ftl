@@ -35,7 +35,10 @@ $(document).ready(function(){
 	            if (data.code == 0)
 	            {
 					alert("提交成功");
-					
+				    $(".menu").removeClass("selected");
+    				$(".menu").eq(1).addClass("selected");
+				    $(".tab-content").hide();
+    				$(".tab-content").eq(1).show();
 				}
 	            else 
 	            {
@@ -181,8 +184,8 @@ $(function () {
   <div id="floatHead" class="content-tab" style="position: static; top: 52px;">
     <div class="content-tab-ul-wrap">
       <ul>
-      <#if enterprise??>  <li><a href="javascript:;" onclick="tabs(this);" class="selected">基本资料</a></li> </#if>
-        <li><a href="javascript:;" onclick="tabs(this);">安全设置</a></li>
+      <#if enterprise??>  <li><a href="javascript:;" onclick="tabs(this);" class="selected menu">基本资料</a></li> </#if>
+        <li><a href="javascript:;" onclick="tabs(this);" class="menu">安全设置</a></li>
         <#--
         <li><a href="javascript:;" onclick="tabs(this);">账户信息</a></li>
         -->
@@ -265,6 +268,9 @@ $(function () {
 			    <input type="hidden" name="useremail" value="${enterprise.useremail!''}"/>
 		        <input type="hidden" name="fileUrl" value="${enterprise.fileUrl!''}"/>
 			    <input type="hidden" name="pptUrl" value="${enterprise.pptUrl!''}"/>
+	     	    <input type="hidden" name="dataBusiness" value="${enterprise.dataBusiness!''}"/>
+	     	    <input type="hidden" name="dataPossible" value="${enterprise.dataPossible!''}"/>
+	     	    <input type="hidden" name="dataOther" value="${enterprise.dataOther!''}"/>			    
 			</#if>    
         	<div style="margin: 20px 0 20px 50px ;width:100%;">
         		<input type="radio" <#if enterprise??&&enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>checked="checked"</#if> name="formType" value="0" onClick="javascript:showEnter();"/><span>企业组表格</span>

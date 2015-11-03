@@ -31,7 +31,8 @@
 <!--left-->
     <div class="leftbar">
         <dl class="nav">
-            <dd><a href="/enterprise/check">基本资料</a></dd>
+            <dd><a href="/enterprise/check">网上报名</a></dd>
+            <dd><a href="/enterprise/data">项目资料</a></dd>
             <dd><a href="/enterprise/activity/list">活动列表</a></dd>
             <dd><a href="/enterprise/project">申请展示</a></dd>
 

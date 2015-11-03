@@ -423,13 +423,13 @@ public class TdActivityController {
              	for (TdActivityExpert aex:aexlist)
             	{
                   	 //专家短信提醒
-                   	TdExpert expert = tdExpertService.findOne(aex.getExpertId());
+//                   	TdExpert expert = tdExpertService.findOne(aex.getExpertId());
                    	//验证手机号格式
 //                   	Pattern p = Pattern.compile("/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/");
 //                   	Matcher m = p.matcher(expert.getUsermobile());
 //                   	if (m.matches())
 //                   	{
-                   		smsRecommend(expert.getUsermobile() ,aex.getActivityTitle() ,  expert.getName() , ressonse , req);
+//                   		smsRecommend(expert.getUsermobile() ,aex.getActivityTitle() ,  expert.getName() , ressonse , req);
 //                   	}
              		
              		
@@ -459,13 +459,13 @@ public class TdActivityController {
         		for (TdActivityEnterprise ae : aenlist)
         		{
                	 //企业短信提醒
-                	TdEnterprise enterprise = tdEnterpriseService.findOne(ae.getEnterpriseId());
+//                	TdEnterprise enterprise = tdEnterpriseService.findOne(ae.getEnterpriseId());
                 	//验证手机号格式
 //                	Pattern p = Pattern.compile("/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/");
 //                	Matcher m = p.matcher(enterprise.getUsermobile());
 //                	if (m.matches())
 //                	{
-                		smsRecommend(enterprise.getUsermobile(),ae.getActivityTitle() , enterprise.getTitle() , ressonse , req);
+//                		smsRecommend(enterprise.getUsermobile(),ae.getActivityTitle() , enterprise.getTitle() , ressonse , req);
 //                	}
                  
                 	
@@ -571,7 +571,7 @@ public class TdActivityController {
 		HttpSession session = request.getSession();
 		String  info = "【科技小巨人】";
 
-			 info = "尊敬的"+name +"，您被邀请参加"+"”"+activityTitle+"“活动，请登录个人中心查看详情。【科技小巨人】";
+			 info = "尊敬的"+name +"，您被邀请参加"+"”"+activityTitle+"“活动，请登录查看详情。【科技小巨人】";
 
 		
 		System.err.println("errormsg");
@@ -833,9 +833,12 @@ public class TdActivityController {
      * 创建活动:选项目
      * 
      */
-    @RequestMapping(value = "/selectEnterprise")
+    @RequestMapping(value = "/selectEnterprise" )
     public String  selectEnterprise(HttpServletRequest req,
     		Long activityId,
+    		String __ACTION,
+            Long[] listId,
+            Integer[] listChkId,
     		ModelMap map,
     		Integer page,
     		String keywords,
@@ -846,6 +849,11 @@ public class TdActivityController {
 
         if (null == username) {
             return "redirect:/login";
+        }
+        
+        if (null != __ACTION&&__ACTION.equalsIgnoreCase("candidate"))
+        {
+        	  selectE(activityId , listId, listChkId);
         }
         
         if (null == page)
@@ -988,13 +996,88 @@ public class TdActivityController {
         map.addAttribute("formType", formType);
        	map.addAttribute("activity", activity);
        	map.addAttribute("activityId", activityId);
-     	map.addAttribute("statusId", 0);
+    	map.addAttribute("statusId", 0);
+    	map.addAttribute("page", page);
      	map.addAttribute("enterprise_page", enterprisePage);
      	map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityId(activityId));
      	map.addAttribute("region_list", tdRegionService.findByIsEnableTrueOrderBySortIdAsc());
      	map.addAttribute("enterpriseType_list", tdEnterpriseTypeService.findByIsEnableTrueOrderBySortIdAsc());
         return "/client/activity_selectEnterprise";
     }
+    
+    //批量添加
+    private void selectE(Long activityId ,Long[] ids, Integer[] chkIds)
+    {
+        if (null == ids || null == chkIds || null == activityId
+                || ids.length < 1 || chkIds.length < 1)
+        {
+            return;
+        }
+        
+        for (int chkId : chkIds)
+        {
+            if (chkId >=0 && ids.length > chkId)
+            {
+                Long id = ids[chkId];
+                /*添加*/
+            	TdEnterprise enterprise = tdEnterpriseService.findOne(id);
+            	if (null != enterprise)
+            	{
+            		enterprise.setIsSelect(true);
+            		enterprise.setSelectActivityId(activityId);
+            		tdEnterpriseService.save(enterprise);
+            	}
+            	
+            	TdActivity activity = tdActivityService.findOne(activityId);
+            	
+            	TdActivityEnterprise activityEnterprise = tdActivityEnterpriseService.findByActivityIdAndEnterpriseId(activityId,id);
+            	if (null == activityEnterprise)
+            	{
+            		TdActivityEnterprise newEnter =new  TdActivityEnterprise();
+            		newEnter.setEnterpriseId(id);
+            		newEnter.setCreateTime(new Date());
+            		newEnter.setEnterpriseTitle(enterprise.getTitle());
+            		newEnter.setActivityId(activity.getId());
+            		newEnter.setActivityType(activity.getActivityType());
+            		newEnter.setDate(activity.getDate());
+            		newEnter.setPrepareOn(activity.getPrepareOn());
+            		newEnter.setPrepareOff(activity.getPrepareOff());
+            		newEnter.setActivityTitle(activity.getTitle());
+            		newEnter.setArea(enterprise.getArea());
+            		newEnter.setType(enterprise.getType());
+            		newEnter.setNumber(enterprise.getNumber());
+            		newEnter.setEnterpriseTitle(enterprise.getTitle());
+            		newEnter.setContact(enterprise.getContact());
+            		newEnter.setMobile(enterprise.getMobile());
+            		newEnter.setQQ(enterprise.getChat());
+            		newEnter.setProfile(enterprise.getProfile());
+            		newEnter.setStatusId(0L);
+            		tdActivityEnterpriseService.save(newEnter);
+            	}
+            	else
+            	{
+            		activityEnterprise.setCreateTime(new Date());
+            		activityEnterprise.setEnterpriseTitle(enterprise.getTitle());
+            		activityEnterprise.setActivityType(activity.getActivityType());
+            		activityEnterprise.setDate(activity.getDate());
+            		activityEnterprise.setPrepareOn(activity.getPrepareOn());
+            		activityEnterprise.setPrepareOff(activity.getPrepareOff());
+            		activityEnterprise.setActivityTitle(activity.getTitle());
+            		activityEnterprise.setArea(enterprise.getArea());
+            		activityEnterprise.setType(enterprise.getType());
+            		activityEnterprise.setNumber(enterprise.getNumber());
+            		activityEnterprise.setEnterpriseTitle(enterprise.getTitle());
+            		activityEnterprise.setContact(enterprise.getContact());
+            		activityEnterprise.setMobile(enterprise.getMobile());
+            		activityEnterprise.setQQ(enterprise.getChat());
+            		activityEnterprise.setProfile(enterprise.getProfile());
+            		tdActivityEnterpriseService.save(activityEnterprise);
+            	}
+                /*添加 end*/
+            }
+        }
+    }
+
 
     //预选
     @RequestMapping(value = "/addEnterprise")
@@ -1294,6 +1377,7 @@ public class TdActivityController {
         		newEnter.setActivityTitle(activity.getTitle());
         		newEnter.setEmail(expert.getEmail());
         		newEnter.setUsermobile(expert.getUsermobile());
+        		newEnter.setUsername(expert.getUsername());
         		tdActivityExpertService.save(newEnter);
         	}
         	else
@@ -1303,6 +1387,7 @@ public class TdActivityController {
         		ActivityExpert.setActivityTitle(activity.getTitle());
         		ActivityExpert.setEmail(expert.getEmail());
         		ActivityExpert.setUsermobile(expert.getUsermobile());
+        		ActivityExpert.setUsername(expert.getUsername());
         		tdActivityExpertService.save(ActivityExpert);
         	}
         	

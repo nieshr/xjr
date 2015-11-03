@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ynyes.kjxjr.entity.TdActivityAdmin;
+import com.ynyes.kjxjr.entity.TdActivityExpert;
 import com.ynyes.kjxjr.entity.TdDiySite;
 import com.ynyes.kjxjr.entity.TdExpert;
 import com.ynyes.kjxjr.entity.TdRegionAdmin;
@@ -46,6 +47,9 @@ public class TdDiySiteService {
     
     @Autowired
     TdExpertService tdExpertService;
+    
+    @Autowired
+    TdActivityExpertService tdActivityExpertService;
     /**
      * 删除
      * 
@@ -209,6 +213,17 @@ public class TdDiySiteService {
                 	item.setName(e.getInCharge());
                 	tdExpertService.save(item);
 }
+                	List<TdActivityExpert> aex = tdActivityExpertService.findByUsername(e.getUsername());
+                	if(null != aex)
+                	{
+                		for (TdActivityExpert expert : aex)
+                		{
+                			expert.setEmail(e.getEmail());
+                			expert.setName(e.getInCharge());
+                			expert.setUsermobile(e.getMobile());
+                			tdActivityExpertService.save(expert);
+                		}
+                	}
 
                 if (roleId == 4)
                 {

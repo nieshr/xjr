@@ -30,105 +30,65 @@ public class TdEnterpriseGrade {
 	@Column
 	private String number;
 	
-	//现场表现力总分
-	@Column(scale=2)
-	private Double totalExpression;
-	
-	//现场表现力的第一项（DEMO发表方式的创新程度）得分
-	@Column(scale=2)
-	private Double oneExpression;
-	
-	//现场表现力的第二项（团队解说效果）得分
-	@Column(scale=2)
-	private Double twoExpression;
-	
-	//现场表现力的第三项得分（现场营造效果）得分
-	@Column(scale=2)
-	private Double threeExpression;
-	
-	//现场表现力的第四项（项目吸引力）得分
-	@Column(scale=2)
-	private Double fourExpression;
-	
-	//项目实施性总得分
-	@Column(scale=2)
-	private Double totalFeasibility;
-	
-	//项目实施性的第一项（行业环境）得分
-	@Column(scale=2)
-	private Double oneFeasibility;
-	
-	//项目实施性的第二项（现有基础条件能否支撑）得分
-	@Column(scale=2)
-	private Double twoFeasibility;
-	
-	//项目实施性第三项（技术可实现性）得分
-	@Column(scale=2)
-	private Double threeFeasibility;
-	
-	//项目实施性第四项（市场接受度）得分
-	@Column(scale=2)
-	private Double fourFeasibility;
-	
-	//市场价值总得分
-	@Column(scale=2)
-	private Double totalMarketValue;
-	
-	//市场价值第一项（潜在市场规模大小与技术开发成本的评估）得分
-	@Column(scale=2)
-	private Double oneMarketValue;
-	
-	//市场价值第二项（现行成本与市场现状的评估）得分
-	@Column(scale=2)
-	private Double twoMarketValue;
-	
-	//市场价值第三项（创意是否具有市场开发价值）得分
-	@Column(scale=2)
-	private Double threeMarketValue;
-	
-	//市场价值第四项（转成创业机会）得分
-	@Column(scale=2)
-	private Double fourMarketValue;
-	
-	//技术开发总得分
+	//核心竞争力总得分
 	@Column(scale=2)
 	private Double totalTechnology;
 	
-	//技术开发第一项（技术创新性与现有同类技术的差异性）得分
+	//核心竞争力第一项（技术、产品、服务、商业模式领先性、创新性）得分
 	@Column(scale=2)
 	private Double oneTechnology;
 	
-	//技术开发第二项（自身与竞争对手的SWOT分析评估）得分
+	//核心竞争力第二项（专利、商标、著作登记、双软、双高证书）得分
 	@Column(scale=2)
 	private Double twoTechnology;
 	
-	//技术开发第三项（深度分析竞争对手的发展程度）得分
+	//核心竞争力第三项（与竞争对手相比的优势程度）得分
 	@Column(scale=2)
 	private Double threeTechnology;
 	
-	//技术开发第四项（自身竞争优势）得分
+	//市场潜力总得分
 	@Column(scale=2)
-	private Double fourTechnology;
+	private Double totalFeasibility;
 	
-	//技术开发第五项（其差异化程度与具有市场需求度的相互影响）得分
+	//市场潜力的第一项（潜在市场规模大小及已有的市场份额）得分
 	@Column(scale=2)
-	private Double fiveTechnology;
+	private Double oneFeasibility;
+	
+	//市场潜力的第二项（市场开发价值与开发成本）得分
+	@Column(scale=2)
+	private Double twoFeasibility;
 	
 	//团队能力总得分
 	@Column(scale=2)
 	private Double totalGroup;
 	
-	//团队能力第一项（团队人员分工是否合理及其专业能力）得分
+	//团队能力第一项（核心领头人的专业能力及资源）得分
 	@Column(scale=2)
 	private Double oneGroup;
 	
-	//团队能力第二项（创业家精神及企业愿景）得分
+	//团队能力第二项（团队成员的专业能力及分工是否合理）得分
 	@Column(scale=2)
 	private Double twoGroup;
 	
-	//团队能力第三项（团队人员的沟通、信任和凝聚力）得分
+	//投资价值总得分
 	@Column(scale=2)
-	private Double threeGroup;
+	private Double totalMarketValue;
+	
+	//投资价值第一项（行业环境及现有基础条件能否支撑）得分
+	@Column(scale=2)
+	private Double oneMarketValue;
+	
+	//投资价值第二项（财务状况及融资条件）得分
+	@Column(scale=2)
+	private Double twoMarketValue;
+	
+	//现场表现力总分
+	@Column(scale=2)
+	private Double totalExpression;
+	
+	//现场表现力的第一项（路演方式的创新程度及现场感染力）得分
+	@Column(scale=2)
+	private Double oneExpression;
 	
 	//总分
 	@Column(scale=2)
@@ -141,14 +101,6 @@ public class TdEnterpriseGrade {
 	//排序号
 	@Column
 	private Long sordId;
-
-	public Long getSordId() {
-		return sordId;
-	}
-
-	public void setSordId(Long sordId) {
-		this.sordId = sordId;
-	}
 
 	public Long getId() {
 		return id;
@@ -182,124 +134,12 @@ public class TdEnterpriseGrade {
 		this.enterpriseId = enterpriseId;
 	}
 
-	public Double getTotalExpression() {
-		return totalExpression;
+	public String getNumber() {
+		return number;
 	}
 
-	public void setTotalExpression(Double totalExpression) {
-		this.totalExpression = totalExpression;
-	}
-
-	public Double getOneExpression() {
-		return oneExpression;
-	}
-
-	public void setOneExpression(Double oneExpression) {
-		this.oneExpression = oneExpression;
-	}
-
-	public Double getTwoExpression() {
-		return twoExpression;
-	}
-
-	public void setTwoExpression(Double twoExpression) {
-		this.twoExpression = twoExpression;
-	}
-
-	public Double getThreeExpression() {
-		return threeExpression;
-	}
-
-	public void setThreeExpression(Double threeExpression) {
-		this.threeExpression = threeExpression;
-	}
-
-	public Double getFourExpression() {
-		return fourExpression;
-	}
-
-	public void setFourExpression(Double fourExpression) {
-		this.fourExpression = fourExpression;
-	}
-
-	public Double getTotalFeasibility() {
-		return totalFeasibility;
-	}
-
-	public void setTotalFeasibility(Double totalFeasibility) {
-		this.totalFeasibility = totalFeasibility;
-	}
-
-	public Double getOneFeasibility() {
-		return oneFeasibility;
-	}
-
-	public void setOneFeasibility(Double oneFeasibility) {
-		this.oneFeasibility = oneFeasibility;
-	}
-
-	public Double getTwoFeasibility() {
-		return twoFeasibility;
-	}
-
-	public void setTwoFeasibility(Double twoFeasibility) {
-		this.twoFeasibility = twoFeasibility;
-	}
-
-	public Double getThreeFeasibility() {
-		return threeFeasibility;
-	}
-
-	public void setThreeFeasibility(Double threeFeasibility) {
-		this.threeFeasibility = threeFeasibility;
-	}
-
-	public Double getFourFeasibility() {
-		return fourFeasibility;
-	}
-
-	public void setFourFeasibility(Double fourFeasibility) {
-		this.fourFeasibility = fourFeasibility;
-	}
-
-	public Double getTotalMarketValue() {
-		return totalMarketValue;
-	}
-
-	public void setTotalMarketValue(Double totalMarketValue) {
-		this.totalMarketValue = totalMarketValue;
-	}
-
-	public Double getOneMarketValue() {
-		return oneMarketValue;
-	}
-
-	public void setOneMarketValue(Double oneMarketValue) {
-		this.oneMarketValue = oneMarketValue;
-	}
-
-	public Double getTwoMarketValue() {
-		return twoMarketValue;
-	}
-
-	public void setTwoMarketValue(Double twoMarketValue) {
-		this.twoMarketValue = twoMarketValue;
-	}
-
-	public Double getThreeMarketValue() {
-		return threeMarketValue;
-	}
-
-	public void setThreeMarketValue(Double threeMarketValue) {
-		this.threeMarketValue = threeMarketValue;
-	}
-
-	public Double getFourMarketValue() {
-		return fourMarketValue;
-	}
-
-	public void setFourMarketValue(Double fourMarketValue) {
-		this.fourMarketValue = fourMarketValue;
+	public void setNumber(String number) {
+		this.number = number;
 	}
 
 	public Double getTotalTechnology() {
@@ -334,20 +174,28 @@ public class TdEnterpriseGrade {
 		this.threeTechnology = threeTechnology;
 	}
 
-	public Double getFourTechnology() {
-		return fourTechnology;
+	public Double getTotalFeasibility() {
+		return totalFeasibility;
 	}
 
-	public void setFourTechnology(Double fourTechnology) {
-		this.fourTechnology = fourTechnology;
+	public void setTotalFeasibility(Double totalFeasibility) {
+		this.totalFeasibility = totalFeasibility;
 	}
 
-	public Double getFiveTechnology() {
-		return fiveTechnology;
+	public Double getOneFeasibility() {
+		return oneFeasibility;
 	}
 
-	public void setFiveTechnology(Double fiveTechnology) {
-		this.fiveTechnology = fiveTechnology;
+	public void setOneFeasibility(Double oneFeasibility) {
+		this.oneFeasibility = oneFeasibility;
+	}
+
+	public Double getTwoFeasibility() {
+		return twoFeasibility;
+	}
+
+	public void setTwoFeasibility(Double twoFeasibility) {
+		this.twoFeasibility = twoFeasibility;
 	}
 
 	public Double getTotalGroup() {
@@ -374,12 +222,44 @@ public class TdEnterpriseGrade {
 		this.twoGroup = twoGroup;
 	}
 
-	public Double getThreeGroup() {
-		return threeGroup;
+	public Double getTotalMarketValue() {
+		return totalMarketValue;
 	}
 
-	public void setThreeGroup(Double threeGroup) {
-		this.threeGroup = threeGroup;
+	public void setTotalMarketValue(Double totalMarketValue) {
+		this.totalMarketValue = totalMarketValue;
+	}
+
+	public Double getOneMarketValue() {
+		return oneMarketValue;
+	}
+
+	public void setOneMarketValue(Double oneMarketValue) {
+		this.oneMarketValue = oneMarketValue;
+	}
+
+	public Double getTwoMarketValue() {
+		return twoMarketValue;
+	}
+
+	public void setTwoMarketValue(Double twoMarketValue) {
+		this.twoMarketValue = twoMarketValue;
+	}
+
+	public Double getTotalExpression() {
+		return totalExpression;
+	}
+
+	public void setTotalExpression(Double totalExpression) {
+		this.totalExpression = totalExpression;
+	}
+
+	public Double getOneExpression() {
+		return oneExpression;
+	}
+
+	public void setOneExpression(Double oneExpression) {
+		this.oneExpression = oneExpression;
 	}
 
 	public Double getTotalPoint() {
@@ -398,12 +278,13 @@ public class TdEnterpriseGrade {
 		this.isGrade = isGrade;
 	}
 
-	public String getNumber() {
-		return number;
+	public Long getSordId() {
+		return sordId;
 	}
 
-	public void setNumber(String number) {
-		this.number = number;
+	public void setSordId(Long sordId) {
+		this.sordId = sordId;
 	}
+
 	
 }

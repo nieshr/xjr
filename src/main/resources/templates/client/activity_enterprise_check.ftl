@@ -31,11 +31,10 @@
             <dd>
                 <p>当前所在位置:</p>
 
-                <a href="#">添加企业</a>
-                <p>&gt;</p>
-                <a href="#">企业/项目详情</a>
+                <a href="#">项目详细资料</a>
+
             </dd>
-               <dt class="crumb_back"><a  href="javascript:history.go(-1);">返回上一页</a></dt>
+               <dt class="crumb_back"><a  href="javascript:history.go(-1);"></a></dt>
         </dl>
         <div class="change_inform">
             <span>审核状态：已通过</span>
@@ -44,6 +43,16 @@
             <span>
             <#if enterprise.fileUrl??>  <a style="font-size:12px;  text-decoration: underline;" href="/download/data?name=${enterprise.fileUrl!''}">【申请表附件下载】</a></#if>
             </span>
+            <span>
+            <#if enterprise.dataBusiness??>  <a style="font-size:12px;  text-decoration: underline;" href="/download/data?name=${enterprise.dataBusiness!''}">【商业计划书】</a></#if>
+            </span>
+            <span>
+            <#if enterprise.dataPossible??>  <a style="font-size:12px;  text-decoration: underline;" href="/download/data?name=${enterprise.dataPossible!''}">【可行性报告】</a></#if>
+            </span>
+            <span>
+            <#if enterprise.dataOther??>  <a style="font-size:12px;  text-decoration: underline;" href="/download/data?name=${enterprise.dataOther!''}">【其他资料】</a></#if>
+            </span>
+                        
         </div>
     </div>  
  

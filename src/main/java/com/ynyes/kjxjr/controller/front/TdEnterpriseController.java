@@ -211,6 +211,22 @@ public class TdEnterpriseController {
         tdEnterprise.setPassword(user.getPassword());
        	tdEnterpriseService.save(tdEnterprise);
        
+       	
+       	//同步信息到预选
+       	List<TdActivityEnterprise> aeList = tdActivityEnterpriseService.findByEnterpriseId(tdEnterprise.getId());
+       	if (null != aeList)
+       	{
+       		for (TdActivityEnterprise ae : aeList)
+       		{
+       			ae.setEnterpriseTitle(tdEnterprise.getTitle());
+       			ae.setType(tdEnterprise.getType());
+       			ae.setQQ(tdEnterprise.getChat());
+       			ae.setArea(tdEnterprise.getArea());
+       			ae.setContact(tdEnterprise.getContact());
+       			ae.setMobile(tdEnterprise.getMobile());
+       			tdActivityEnterpriseService.save(ae);
+       		}
+       	}
         res.put("code", 0);
         return res;
     }
@@ -281,6 +297,29 @@ public class TdEnterpriseController {
         map.addAttribute("done", done);
 
         return "/client/enterprise_upload";
+    }
+    //上传项目资料
+    @RequestMapping(value = "/data", method = RequestMethod.GET)
+    public String enterpriseDataUpload(HttpServletRequest req, ModelMap map ,Long done) {
+        String username = (String) req.getSession().getAttribute("enterpriseUsername");
+
+        if (null == username) {
+            return "redirect:/login";
+        }
+
+        tdCommonService.setHeader(map, req);
+
+        TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
+        TdEnterprise Enterprise = tdEnterpriseService.findbyUsername(username);
+        
+        
+        
+        map.addAttribute("enterprise", Enterprise);
+        map.addAttribute("id", Enterprise.getId());
+        map.addAttribute("user", user);
+        map.addAttribute("done", done);
+
+        return "/client/enterprise_data";
     }
     
     @RequestMapping(value = "/check", method = RequestMethod.GET)
