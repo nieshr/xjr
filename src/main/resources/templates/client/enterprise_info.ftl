@@ -201,7 +201,7 @@ window.onload=checkstatus;
     			<div><span>网站：</span><input type="text" name="website" datatype="url"  ignore="ignore" value="<#if enterprise.formType??>${enterprise.website!''}</#if>" /></div>
     			<div><span>联系电话：</span><input type="text"  name="telephone" datatype="*" value="<#if enterprise.formType??>${enterprise.telephone!''}</#if>" /></div>
     			<div><span>传真：</span><input type="text"  name="fax" datatype="*"  ignore="ignore" value="<#if enterprise.formType??>${enterprise.fax!''}</#if>" /></div>
-    			<div><span>QQ/MSN：</span><input type="text" name="chat" datatype="*" ignore="ignore"  value="<#if enterprise.formType??>${enterprise.chat!''}</#if>" /></div>
+    			<div><span>QQ/MSN：</span><input type="text" name="chat" datatype="*"  value="<#if enterprise.formType??>${enterprise.chat!''}</#if>" /></div>
     			<div><span>手机：</span><input type="text"  name="mobile" datatype="m|/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/"  value="<#if enterprise.formType??>${enterprise.mobile!''}</#if>" errormsg="请填写手机！"/></div>
     			<div>
 	    			<span class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>">企业简介：</span>

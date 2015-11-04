@@ -28,6 +28,10 @@ public class TdEnterprise {
     @Column
     private Long  sortId;
     
+    //胜出
+    @Column
+    private Long win;
+    
     // 企业/项目名称
     @Column
     private String title;
@@ -772,6 +776,14 @@ public class TdEnterprise {
 
 	public void setDataOther(String dataOther) {
 		this.dataOther = dataOther;
+	}
+
+	public Long getWin() {
+		return win;
+	}
+
+	public void setWin(Long win) {
+		this.win = win;
 	}
 
 

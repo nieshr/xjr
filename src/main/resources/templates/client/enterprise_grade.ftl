@@ -192,7 +192,7 @@
             <#list grade_list as item>
                 <td>${item.totalPoint!''}</td>
                 <#if item.totalPoint??>
-                    <#assign count = count+item.titalPoint>
+                    <#assign count = count+item.totalPoint>
                 </#if>
             </#list> 
 		</tr>

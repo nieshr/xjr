@@ -860,6 +860,9 @@ public  Map<String, Object> regionAddEnterprise(HttpServletRequest req,Long id,L
 public String  selectEnterprise(HttpServletRequest req,
 		ModelMap map,
 		@PathVariable Long activityId,
+		String __ACTION,
+        Long[] listId,
+        Integer[] listChkId,
 		Integer page,
 		String keywords,
 		String area,
@@ -870,6 +873,20 @@ public String  selectEnterprise(HttpServletRequest req,
     if (null == username) {
         return "redirect:/login";
     }
+    
+    if (null != __ACTION)
+    {
+    	if (__ACTION.equalsIgnoreCase("candidate"))
+		{
+			selectE(activityId , listId, listChkId);
+		}
+    	if (__ACTION.equalsIgnoreCase("remove"))
+    	{
+    		removeE(activityId , listId, listChkId);
+    	}
+    }
+
+    
     
     if (null == page)
     {
@@ -1012,6 +1029,7 @@ public String  selectEnterprise(HttpServletRequest req,
    	map.addAttribute("activity", activity);
    	map.addAttribute("activityId", activityId);
  	map.addAttribute("statusId", 0);
+ 	map.addAttribute("page", page);
  	map.addAttribute("enterprise_page", enterprisePage);
  	map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityId(activityId));
  	map.addAttribute("region_list", tdRegionService.findByIsEnableTrueOrderBySortIdAsc());
@@ -1019,6 +1037,108 @@ public String  selectEnterprise(HttpServletRequest req,
     return "/client/region_candidateEnterprise";
 }
 
+//批量预选
+private void selectE(Long activityId ,Long[] ids, Integer[] chkIds)
+{
+    if (null == ids || null == chkIds || null == activityId
+            || ids.length < 1 || chkIds.length < 1)
+    {
+        return;
+    }
+    
+    for (int chkId : chkIds)
+    {
+        if (chkId >=0 && ids.length > chkId)
+        {
+            Long id = ids[chkId];
+            /*添加*/
+        	TdEnterprise enterprise = tdEnterpriseService.findOne(id);
+        	if (null != enterprise)
+        	{
+        		enterprise.setIsSelect(true);
+        		enterprise.setSelectActivityId(activityId);
+        		tdEnterpriseService.save(enterprise);
+        	}
+        	
+        	TdActivity activity = tdActivityService.findOne(activityId);
+        	
+        	TdActivityEnterprise activityEnterprise = tdActivityEnterpriseService.findByActivityIdAndEnterpriseId(activityId,id);
+        	if (null == activityEnterprise)
+        	{
+        		TdActivityEnterprise newEnter =new  TdActivityEnterprise();
+        		newEnter.setEnterpriseId(id);
+        		newEnter.setCreateTime(new Date());
+        		newEnter.setEnterpriseTitle(enterprise.getTitle());
+        		newEnter.setActivityId(activity.getId());
+        		newEnter.setActivityType(activity.getActivityType());
+        		newEnter.setDate(activity.getDate());
+        		newEnter.setPrepareOn(activity.getPrepareOn());
+        		newEnter.setPrepareOff(activity.getPrepareOff());
+        		newEnter.setActivityTitle(activity.getTitle());
+        		newEnter.setArea(enterprise.getArea());
+        		newEnter.setType(enterprise.getType());
+        		newEnter.setNumber(enterprise.getNumber());
+        		newEnter.setEnterpriseTitle(enterprise.getTitle());
+        		newEnter.setContact(enterprise.getContact());
+        		newEnter.setMobile(enterprise.getMobile());
+        		newEnter.setQQ(enterprise.getChat());
+        		newEnter.setProfile(enterprise.getProfile());
+        		newEnter.setStatusId(0L);
+        		tdActivityEnterpriseService.save(newEnter);
+        	}
+        	else
+        	{
+        		activityEnterprise.setCreateTime(new Date());
+        		activityEnterprise.setEnterpriseTitle(enterprise.getTitle());
+        		activityEnterprise.setActivityType(activity.getActivityType());
+        		activityEnterprise.setDate(activity.getDate());
+        		activityEnterprise.setPrepareOn(activity.getPrepareOn());
+        		activityEnterprise.setPrepareOff(activity.getPrepareOff());
+        		activityEnterprise.setActivityTitle(activity.getTitle());
+        		activityEnterprise.setArea(enterprise.getArea());
+        		activityEnterprise.setType(enterprise.getType());
+        		activityEnterprise.setNumber(enterprise.getNumber());
+        		activityEnterprise.setEnterpriseTitle(enterprise.getTitle());
+        		activityEnterprise.setContact(enterprise.getContact());
+        		activityEnterprise.setMobile(enterprise.getMobile());
+        		activityEnterprise.setQQ(enterprise.getChat());
+        		activityEnterprise.setProfile(enterprise.getProfile());
+        		tdActivityEnterpriseService.save(activityEnterprise);
+        	}
+            /*添加 end*/
+        }
+    }
+}
+
+//批量取消
+private void removeE(Long activityId ,Long[] ids, Integer[] chkIds)
+{
+  if (null == ids || null == chkIds || null == activityId
+          || ids.length < 1 || chkIds.length < 1)
+  {
+      return;
+  }
+  
+  for (int chkId : chkIds)
+  {
+      if (chkId >=0 && ids.length > chkId)
+      {
+          Long id = ids[chkId];
+          
+      	TdActivityEnterprise ActivityEnterprise = tdActivityEnterpriseService.findOne(id);
+      	if (null != ActivityEnterprise)
+      	{
+      		tdActivityEnterpriseService.delete(ActivityEnterprise);
+
+      		TdEnterprise enterprise = tdEnterpriseService.findOne(ActivityEnterprise.getEnterpriseId());
+      		enterprise.setIsSelect(false);
+      		enterprise.setSelectActivityId(null);
+      		tdEnterpriseService.save(enterprise);
+  
+      	}
+      }
+  }
+}
 
 /**
  * 预选企业

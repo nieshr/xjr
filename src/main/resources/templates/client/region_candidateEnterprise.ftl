@@ -30,7 +30,7 @@ function searchSubmit()
 	    }
    }
    
-//全选取消按钮函数
+//全选取消按钮函数-预选
 function checkAll(chkobj) {
     if ($(chkobj).text() == "全选") {
         $(chkobj).children("span").text("取消");
@@ -38,6 +38,17 @@ function checkAll(chkobj) {
     } else {
         $(chkobj).children("span").text("全选");
         $(".checkall input:enabled").prop("checked", false);
+    }
+}
+
+//全选取消按钮函数-取消
+function checkAll2(chkobj) {
+    if ($(chkobj).text() == "全选") {
+        $(chkobj).children("span").text("取消");
+        $(".checkall2 input:enabled").prop("checked", true);
+    } else {
+        $(chkobj).children("span").text("全选");
+        $(".checkall2 input:enabled").prop("checked", false);
     }
 }
 </script>
@@ -68,7 +79,10 @@ function checkAll(chkobj) {
                 <a href="#">区县管理</a>
                 <p>&gt;</p>
                 <a href="#">预选企业/团队</a>
-              
+                <#if activity??>
+	                <p>&gt;</p>
+	                <a href="#">${activity.title!''}</a>  
+                </#if>                       
             </dd>
             <dt class="crumb_back"><a  href="javascript:history.go(-1);">返回上一页</a></dt>
         </dl>
@@ -110,10 +124,17 @@ function selectSubmit()
 }
 </script>
         
-       <!-- <form name="addEnterprise" action="/activity/addEnterprises">-->
+       <form name="addEnterprise" action="/region/candidateEnterprise/${activityId?c!''}" method=post>
+       	        <input type="hidden" name="keywords" value="<#if keywords??&&keywords?length gt 0>${keywords}</#if>">
+	        	<input type="hidden" name="area" value="<#if area??&&area?length gt 0>${area}</#if>">
+	        	<input type="hidden" name="type" value="<#if type??&&type?length gt 0>${type}</#if>">
+	        	<input type="hidden" name="formType" value="<#if formType??&&formType?length gt 0>${formType}</#if>">
+	        	<input type="hidden" name="__ACTION" value="candidate">
+	        	<input type="hidden" name="page" value="<#if page??>${page!''}"</#if>>
 	        <div class="list_base2" style="padding-top:0;">
 				<table class="new_list">
 		        	<tr class="list_title">
+		        		<th></th>
 		        		<th width="30%">备选企业列表</th>
 		        		<th width="25%">地区</th>
 		        		<th width="25%">行业归属</th>
@@ -122,12 +143,12 @@ function selectSubmit()
 		        <#if enterprise_page??>
 		        	<#list enterprise_page.content as item>
 			        	<tr>
-			        		<#--
 			        		<td>
-				        		<input style="width:15px;height:15px;float:left; margin:0 0 0 10px ;" id="listChkId" type="checkbox" name="listChkId" value="${item_index}"/>
+			        		<span class="checkall" style="vertical-align:middle;">
+				        		<input style="width:15px;height:15px;float:left; margin:0 0 0 10px ;" <#if item.isSelect??&&item.isSelect&&item.selectActivityId??&&item.selectActivityId==activityId>disabled=""</#if> id="listChkId" type="checkbox" name="listChkId" value="${item_index}"/>
 				        		<input type="hidden" name="listId" id="listId" value="${item.id}">
-			        		</td>
-			        		-->
+				        	</span>	
+			        		</td>			        		
 			        		<td><a href="/region/enterprise/check/${item.id?c!''}" target=_blank >${item.title!''}</a></td>
 			        		<td style="color:#0ab2cb;">${item.area!''}</td>
 			        		<td style="color:#e67817;">${item.type!''}</td>
@@ -144,9 +165,10 @@ function selectSubmit()
 		        </table>
 	        </div>
 	        <div class="area_add_btn">
-			<!--<input style=" margin-left: 0px; cursor:pointer;" type="submit" value="批量加入预选" />-->
+	        <a class="all" style="margin-left:0px;" href="javascript:;" onclick="checkAll(this);"><i></i><span>全选</span></a>
+			<input style=" margin-left: 10px; cursor:pointer;" class="area_batch" type="submit" value="批量加入预选" />
 			</div>
-		<!--</form>-->
+		</form>
 		<div class="page">
 		<#if enterprise_page??>
 		<#assign PAGE_DATA = enterprise_page>

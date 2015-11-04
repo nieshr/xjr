@@ -102,7 +102,7 @@ public class TdActivityEnterprise {
     @Column
     private String type;
 
-    //活动中企业状态 :    0：创建活动选择；1：区县预选；2：区县推荐；
+    //活动中企业状态 :   【 0：创建活动选择；1：区县预选；2：区县推荐；3：入选】
     @Column
     private Long statusId;
 
@@ -126,6 +126,10 @@ public class TdActivityEnterprise {
     //总分
     @Column
     private Long totalPoint;
+    
+    //胜出
+    @Column
+    private Long win;
 
     public String getDownload() {
 		return download;
@@ -333,6 +337,14 @@ public class TdActivityEnterprise {
 
 	public void setTotalPoint(Long totalPoint) {
 		this.totalPoint = totalPoint;
+	}
+
+	public Long getWin() {
+		return win;
+	}
+
+	public void setWin(Long win) {
+		this.win = win;
 	}
 
 	

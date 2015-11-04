@@ -65,7 +65,13 @@
                                 <dt>操作</dt>
                                 <#if activities??>
                                     <#list activities as item>
-                                        <dd><a target="_blank" href="/expert/grade?activityId=${item.id?c}">评分</a>&nbsp;|&nbsp;<a href="/expert/detail/${item.id?c}">详情</a></dd>
+                                        <dd>
+	                                        <a target="_blank" href="/expert/grade?activityId=${item.id?c}">评分</a>
+	                                        &nbsp;|&nbsp;
+	                                        <a href="/expert/detail/${item.id?c}">详情</a>
+	                                        &nbsp;|&nbsp;
+	                                        <a href="/expert/export/grade?activityId=${item.id?c!''}&expertId=${expert.id?c!''}&isModule=1" title="下载并打印模板">评分表模板</a>
+	                                    </dd>
                                     </#list>
                                 </#if>
                             </dl>

@@ -26,6 +26,10 @@ public class TdEnterpriseGrade {
 	@Column
 	private Long enterpriseId;
 	
+	//项目名称
+	@Column
+	private String enterpriseTitle;
+	
 	//项目编码
 	@Column
 	private String number;
@@ -284,6 +288,14 @@ public class TdEnterpriseGrade {
 
 	public void setSordId(Long sordId) {
 		this.sordId = sordId;
+	}
+
+	public String getEnterpriseTitle() {
+		return enterpriseTitle;
+	}
+
+	public void setEnterpriseTitle(String enterpriseTitle) {
+		this.enterpriseTitle = enterpriseTitle;
 	}
 
 	

@@ -29,7 +29,7 @@ function searchSubmit()
 	    }
    }
    
- //全选取消按钮函数
+ //全选取消按钮函数-预选
 function checkAll(chkobj) {
     if ($(chkobj).text() == "全选") {
         $(chkobj).children("span").text("取消");
@@ -37,6 +37,17 @@ function checkAll(chkobj) {
     } else {
         $(chkobj).children("span").text("全选");
         $(".checkall input:enabled").prop("checked", false);
+    }
+}
+
+ //全选取消按钮函数-取消
+function checkAll2(chkobj) {
+    if ($(chkobj).text() == "全选") {
+        $(chkobj).children("span").text("取消");
+        $(".checkall2 input:enabled").prop("checked", true);
+    } else {
+        $(chkobj).children("span").text("全选");
+        $(".checkall2 input:enabled").prop("checked", false);
     }
 }
 </script>

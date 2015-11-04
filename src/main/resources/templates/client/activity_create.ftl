@@ -165,7 +165,7 @@ function sendSms(id,activityId,roleId)
 }
 
 function passCheck(activityId) {
-    if (confirm("已审核过该推荐表，点击将更新列表到评分表并重新发送通知，确认吗？")) {
+    if (confirm("点击将更新列表到评分表（需等待3秒）。确认吗？")) {
          $.ajax({
              type: "GET",
              url: "/activity/pass",
@@ -175,7 +175,30 @@ function passCheck(activityId) {
              success: function(data){
                          if (data.code == 0)
                          {
-                             alert("推荐列表更新成功，已向各企业发送活动通知！");
+                         	alert("更新成功！");
+                             location.reload();
+                         }
+                         else 
+                         {
+                             alert(data.msg);
+                         }
+                      }
+         });
+    }
+}
+
+function cancelCheck(activityId) {
+    if (confirm("取消审核后将可以修改活动信息，确认吗？")) {
+         $.ajax({
+             type: "GET",
+             url: "/activity/cancel",
+             contentType: "application/json; charset=utf-8",
+             data: {"activityId" : activityId},
+             dataType: "json",
+             success: function(data){
+                         if (data.code == 0)
+                         {
+                         	alert("取消成功！");
                              location.reload();
                          }
                          else 
@@ -393,9 +416,8 @@ window.onload=done;
     				    <#if selected_enterprise_list??>
     				        <#list selected_enterprise_list as item>
 		    					<li>
-		    						<p class="p01" style="width: 130px; float: left;text-align:left;">${item_index+1}.${item.enterpriseTitle!''}</p>
-		    						<a style="display:block;  width:100px;"></a>
-		    						<a href="/activity/enterprise/check/${item.enterpriseId?c!''}" target=_blank>查看</a>
+		    						<p class="p01" style="width: 550px; float: left;text-align:left;">${item_index+1}.${item.enterpriseTitle!''}</p>
+		    						<a href="/activity/enterprise/check/${item.enterpriseId?c!''}" style="float:right;margin-right:200px;" target=_blank>查看</a>
 		    						<#--
 		                            <a>丨</a>
 		                            <a href="/enterprise/grade?activityId=${item.activityId?c!''}&enterpriseId=${item.enterpriseId?c!''}">得分</a>
@@ -422,11 +444,17 @@ window.onload=done;
     				    <#if recommend_list??>
     				        <#list recommend_list as item>
 		    					<li>
-		    						<p class="p01" style="width: 130px; float: left;text-align:left;">${item_index+1}.${item.enterpriseTitle!''}</p>
-		    						<a style="display:block;  width:100px;"></a>
-		    						<a href="/activity/enterprise/check/${item.enterpriseId?c!''}" target=_blank>查看</a>
-		                            <a>丨</a>
-		                            <a <#if item.isGrade??&&item.isGrade> href="/enterprise/grade/?activityId=${item.activityId?c!''}&enterpriseId=${item.enterpriseId?c!''}"<#else>style="color:#666;" </#if>>得分</a>
+		                            <#if item.isGrade??&&item.isGrade>
+		                           		<a  href="/enterprise/grade/?activityId=${item.activityId?c!''}&enterpriseId=${item.enterpriseId?c!''}" title="查看该项目的得分"  style="float:right; margin-right:200px;"   target="_blank">得分</a>
+		                            <#else>
+		                             	<a   href="javascript:void(0)" title="评分尚未开始"  style="float:right;color:#666; margin-right:200px;" >得分</a>
+		                            </#if>		 
+		                            <a style="float:right;">丨</a>   					
+		    						<p class="p01" style="width: 250px; float: left;text-align:left;"><#if item.win??&&item.win==1><img src="/client/images/n0.png" style="width:10px; height:10px;" title="胜出项目" alt="胜出" /> </#if>${item_index+1}.${item.enterpriseTitle!''}</p>
+		    						<a href="/activity/enterprise/check/${item.enterpriseId?c!''}" style="float:right;"  target=_blank>查看</a>
+		                            
+
+		                            
 		                            <#if mark??&&mark="activity">
 			                            <a>丨</a>
 			                            <#if item.statusId??&&item.statusId==1>
@@ -465,7 +493,8 @@ window.onload=done;
                         	</#if>	
                         	<#if mark??&&mark="activity">
 	                        	<#if activity??&&activity.statusId??&&activity.statusId==1>
-	                        		<input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#666;color:#fff; " type="button" onclick="javascript:passCheck(${activity.id?c!''});"  value="已审核" />
+	                        		<input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#666;color:#fff; " type="button" onclick="javascript:passCheck(${activity.id?c!''});"  value="更新评分表" />
+	                        		<input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#666;color:#fff; " type="button" onclick="javascript:cancelCheck(${activity.id?c!''});"  value="取消审核" />
 	                        	<#elseif activity??&&activity.statusId??&&activity.statusId==0>	
 	                        		<input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#e67817;color:#fff; " type="button" onclick="javascript:activityPass(${activity.id?c!''});" value="通过审核" />
 	                        	</#if>
@@ -487,7 +516,11 @@ window.onload=done;
 		    						<p class="p01" style="  width: 130px;float: left; text-align: left;">${item_index+1}.${item.name!''}</p>
 		    						<a style="display:block;  width:100px;"></a>
 
-                                    <a href="/expert/search/grade?activityId=${activity.id?c!''}&expertId=${item.expertId?c!''}" title="查看该评委的评分详情" target="_blank">评分情况</a>
+                                    <#if activity.statusId==0>
+                                   	    <a href="javascript:void(0)" title="评分尚未开始" style="color:#666;" target="_blank">评分情况</a>
+                                    <#else>
+                                    	<a href="/expert/search/grade?activityId=${activity.id?c!''}&expertId=${item.expertId?c!''}" title="查看该评委的评分详情" target="_blank">评分情况</a>
+                                    </#if>
                                     <#if activity??&&activity.statusId??&&activity.statusId==1&&mark??&&mark="activity">
 	                                    <a>丨</a> 
 	                                    <a href="javascript:sendSms(${item.expertId?c!''},${item.activityId?c!''},3);">短信通知</a>
@@ -507,7 +540,7 @@ window.onload=done;
                         <span style="margin-top: 6px;">路演结果：</span>
                         <ul class="active_project_text">
                             <li>
-                                <a href="/activity/getGrade?activityId=${activity.id?c!''}" target=_blank class="p01">查看排名</a>
+                                <a href="/activity/getGrade?activityId=${activity.id?c!''}&mark=activity"  class="p01">查看排名</a>
                                 <a style="display:block;  width:60px;"></a>
                             </li>
                         </ul>
