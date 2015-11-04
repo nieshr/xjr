@@ -70,7 +70,7 @@ function checkAll(chkobj) {
         <a class="all" style="margin-left:10px;" href="javascript:;" onclick="checkAll(this);"><i></i><span>全选</span></a>
         <input style="cursor:pointer;" class="area_batch" style="margin-left:5%;" type="submit"  value="路演胜出" />
         </#if>
-        <input style="margin-left: 640px; margin-top: 20px; width:100px;height: 30px; font-size: 14px;" class="area_batch"  type="button" value="打印评分表" />
+        <input style="margin-left: 640px; margin-top: 20px; width:100px;height: 30px; font-size: 14px;" class="area_batch" onclick="location.href='/activity/export/totalGrade?activityId=<#if activityId??>${activityId?c!''}</#if>'"  type="button" value="打印评分表" />
 	</form>    
     
 </body>

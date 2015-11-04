@@ -389,7 +389,7 @@ public class TdActivityController {
         map.addAttribute("user", user);
         map.addAttribute("pagetype", "check");
 
-        return "/client/activity_create";
+        return "/client/activity_check";
     }
     
     
@@ -699,8 +699,8 @@ public class TdActivityController {
         TdActivity activity = tdActivityService.findOne(id);
         if (null != activity)
         {
-        	activity.setStatusId(0L);
-        	tdActivityService.save(activity);
+//        	activity.setStatusId(0L);
+//        	tdActivityService.save(activity);
 	        map.addAttribute("activity", activity);
 	        map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityId(id));
 	        map.addAttribute("selected_expert_list", tdActivityExpertService.findByActivityId(id));
