@@ -128,7 +128,7 @@ function deleteConfirm() {
 		                	     <td>未启动</td>
 		                </#if>    		        		
 		        		<td>
-		        			<a <#if item.statusId?? && item.statusId == 1>href="javascript:void(0)" style="color : #666;" title="已审核的活动无法修改"<#else> href="/activity/edit?id=${item.id?c!''}" </#if> >编辑信息</a>丨<a href="/activity/check?id=${item.id?c!''}">操作</a>丨<a  onclick="javascript:deleteConfirm();" href="/activity/delete?id=${item.id?c!''}">删除</a>
+		        			<a href="/activity/edit?id=${item.id?c!''}">编辑信息</a>丨<a href="/activity/check?id=${item.id?c!''}">操作</a>丨<a  onclick="javascript:deleteConfirm();" href="/activity/delete?id=${item.id?c!''}">删除</a>
 		        		</td>
 		        	</tr>
 	        	</#list>
