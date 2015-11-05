@@ -976,7 +976,7 @@ public class TdEnterpriseController {
        
           row = sheet1.createRow((int) 0);  
           HSSFCell cell = row.createCell((short) 0);  
-          cell.setCellValue("重庆市科技小巨人企业培育专项行动报名表");  
+          cell.setCellValue("重庆市科技小巨人培育专项行动报名表");  
           cell.setCellStyle(title);
           cell = row.createCell((short) 1);
           cell.setCellStyle(title);
@@ -1663,7 +1663,7 @@ public class TdEnterpriseController {
 	          }
 	          cell.setCellStyle(fillin);  
 	          cell = row.createCell((short) 2);  
-	          if (null != enterprise.getLastNetAssets3())
+	          if (null != enterprise.getLastNetAssets1())
 	          {
 	        	  cell.setCellValue(enterprise.getLastNetAssets1());  
 	          }

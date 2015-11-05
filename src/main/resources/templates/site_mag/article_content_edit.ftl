@@ -169,7 +169,7 @@
                 </div>
             </dd>
         </dl>
-        -->
+      
         <#if mid=12>
         <dl>
             <dt>推荐类型</dt>
@@ -184,6 +184,7 @@
             </dd>
         </dl>
         </#if>
+          -->
         <dl>
             <dt>内容标题</dt>
             <dd>
@@ -275,12 +276,21 @@
             </dd>
         </dl>
         <dl id="div_source">
+        <#if mid=12>
             <dt>
-                <span id="div_source_title">信息来源(作者)</span></dt>
+                <span id="div_source_title">投资机构名称</span></dt> 
+            <dd>
+                <input name="source" type="text" value="<#if article??>${article.source!""}</#if>" datatype="*" id="field_control_source" class="input normal">
+                <span id="div_source_tip" class="Validform_checktip">必填，与专家相关联</span>
+            </dd>        
+        <#else>
+            <dt>
+                <span id="div_source_title">信息来源</span></dt>
             <dd>
                 <input name="source" type="text" value="<#if article??>${article.source!""}<#else>本站</#if>" id="field_control_source" class="input normal">
                 <span id="div_source_tip" class="Validform_checktip">非必填，最多50个字符</span>
             </dd>
+        </#if>    
         </dl>
         
         <dl>

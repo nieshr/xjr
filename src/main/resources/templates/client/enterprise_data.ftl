@@ -103,7 +103,7 @@ function submitCheck3()
     <dl class="apply_content">
       	<form id="upload1" enctype="multipart/form-data" action="/client/dataBusiness/upload" method="post">
             <input type="hidden" name="id" value="${enterprise.id?c!''}" />
-	    	<dt class="dt01" style="background:#80a2c6;"><span>一、商务计划书</span><br/><p>报名表中勾选此项时上传</p></dt>
+	    	<dt class="dt01" style="background:#80a2c6;"><span>一、商业计划书</span><br/><p>报名表中勾选此项时上传</p></dt>
 	    	<dd>
 	    			<div>
 	    			     <span><input id="file1" style="margin: 20px 0 0 48px ;background : #fff;color:#333;" name="Filedata" type="file" value="" /></span>

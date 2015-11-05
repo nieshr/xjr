@@ -120,7 +120,7 @@ function deleteConfirm() {
 		                    <#elseif item.statusId ==1 &&( item.timeId ==0 || item.timeId ==1|| item.timeId ==2)>
 		                    		 <td  style="color:#529c15;">进行中</td>
 		                    <#elseif item.statusId ==2>
-		                    	 <td style="color:purple;">活动已结束</td>
+		                    	 <td style="color:purple;">已结束</td>
 		                    <#else>
 		                    	<td>&nbsp;</td>	 
 		                    </#if>			

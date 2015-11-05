@@ -41,6 +41,18 @@ public class TdExpertCoachEnterpriseService {
 		return (List<TdExpertCoachEnterprise>) repository.findAll();
 	}
 	
+	/**
+	 * 查找一个活动的路演辅导
+	 * @param enterpriseId
+	 * @return
+	 */
+	public List<TdExpertCoachEnterprise> findByEnterpriseIdOrderByExpertIdAsc(Long enterpriseId){
+		if(null == enterpriseId){
+			return null;
+		}
+		return repository.findByEnterpriseIdOrderByExpertIdAsc(enterpriseId);
+	}
+	
 	public List<TdExpertCoachEnterprise> findByExpertIdAndIsGradeIsFalse(Long expertId){
 		if(null == expertId){
 			return null;
@@ -55,12 +67,20 @@ public class TdExpertCoachEnterpriseService {
 		return repository.findByExpertIdAndIsGradeIsTrue(expertId);
 	}
 	
+	/**
+	 * 路演辅导改成了专家和活动的多对一
+	 * @param expertId
+	 * @param activityId
+	 * @return
+	 */
 	public TdExpertCoachEnterprise findByExpertIdAndEnterpriseId(Long expertId,Long enterpriseId){
 		if(null == expertId||null == enterpriseId){
 			return null;
 		}
 		return repository.findByExpertIdAndEnterpriseId(expertId, enterpriseId);
 	}
+	
+
 	
 	public TdExpertCoachEnterprise findByEnterpriseId(Long enterpriseId){
 		if(null == enterpriseId){

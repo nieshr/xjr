@@ -420,7 +420,7 @@ window.onload=done;
                     <input <#if pagetype??&& pagetype == "check" ||activity??&&activity.statusId??&&(activity.statusId==1||activity.statusId==2)>disabled=""</#if> name="eventEnd" id="eventEnd" type="text" value="<#if activity??>${activity.eventEnd!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="填写正确格式" sucmsg=" ">
     			</div>
     			<div>
-    				<span style="margin-top: 10px;">预选项目：</span>
+    				<span style="margin-top: 6px;">预选项目：</span>
     				<ul class="active_project_text">
     				    <#if selected_enterprise_list??>
     				        <#list selected_enterprise_list as item>
@@ -448,7 +448,7 @@ window.onload=done;
     			</div>
  				<#if recommend_list??>
     			<div>
-    				<span style="margin-top: 10px;">推荐项目：</span>
+    				<span style="margin-top: 6px;">推荐项目：</span>
     				<ul class="active_project_text">
     				    <#if recommend_list??>
     				        <#list recommend_list as item>
@@ -515,7 +515,7 @@ window.onload=done;
     			</div> 
     			</#if>
     			<div style="margin-top:50px;">
-    				<span style="margin-top: 10px;">评委专家：</span>
+    				<span style="margin-top: 6px;">评委专家：</span>
     				<ul class="active_project_text">
     		    	    <#if selected_expert_list??>
     				        <#list selected_expert_list as item>
@@ -541,6 +541,21 @@ window.onload=done;
     				    </#if>
     				</ul>
     			</div>
+    			<#-- 路演辅导列表 -->
+               <#if roadshow_list??>
+               <div style="margin-top:50px;">
+                    <span style="margin-top: 6px;">路演辅导：</span>
+                    <ul class="active_project_text">
+                            <#list roadshow_list as item>
+                                <li>
+                                    <p class="p01" style="  width: 250px;float: left; text-align: left;">${item_index+1}.${item.expertName!''}</p>
+                                    <a style="display:block;  width:100px;"></a>
+                                </li>
+                            </#list>
+                    </ul>
+                </div>
+                </#if>     	
+                <#-- 路演辅导列表  end -->		
             <!-- 评分汇总 -->
             	<#if activity??&&activity.statusId??&&activity.statusId==1>
                     <div>
@@ -555,7 +570,7 @@ window.onload=done;
                 </#if>    
     			<!-- 评分汇总 end-->
      <#if pagetype?? && pagetype == "check">
-     <#else>
+     <#elseif activity??&&activity.statusId??&&activity.statusId==0>
     	<dt style=" margin-top: 40px;" class="dt05">
     	   <input type="submit" value="保存" style="cursor:pointer;"/>
     	</dt>

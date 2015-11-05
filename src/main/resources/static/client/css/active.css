@@ -1,6 +1,6 @@
-/*二�1�7�活动创廄1�7*/
+/*二�1�7�活动创廄1�7*/
 
-.active_content{width＄1�70%; height:auto; display: block; overflow: hidden;}
+.active_content{width＄1�70%; height:auto; display: block; overflow: hidden;}
 .active_content dt{ width:100%; height: 40px; padding: 8px 0; margin-top: 20px;}
 .active_content .dt01{background: #01458d;}
 .active_content .dt02{background: #e67817;}
@@ -29,8 +29,8 @@
 .active_project_list li img{width:40px; float: left; margin-top: 10px;;}
 .active_project_list li .p01{ float: left; display: block; height:40px; line-height: 40px;}
 
-/*二�1�7�活动资斄1�7*/
-.active_text{width＄1�70%; height:auto; display: block; overflow: hidden;}
+/*二�1�7�活动资斄1�7*/
+.active_text{width＄1�70%; height:auto; display: block; overflow: hidden;}
 .active_text dt{ width:100%; height: 40px; padding: 8px 0; margin-top: 20px;}
 .active_text .dt01{background: #01458d;}
 .active_text .dt02{background: #e67817;}
@@ -64,7 +64,8 @@
 
 
 
-
+.area_batch {cursor: pointer; width: 92px;height: 30px;  border: none;  border-radius: 6px;  background: #e67817;  color: white;   margin-left: 5%;  font-size: 13px;}
+.area_batch:hover{background:#FF0F00;}
 
 
 

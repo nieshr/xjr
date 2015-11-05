@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 	<title>评分</title>
-	<link rel="shortcut icon" href="/images/icon.ico" />
+	<link rel="shortcut icon" href="/client/images/icon.ico" />
 	<link href="/client/css/form.css" rel="stylesheet" type="text/css" />
 	<script src="/client/js/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript">
@@ -148,11 +148,12 @@
 	<script>
 	$(document).ready(function(){
 
-     $(".mOn").hover(function() {
-        $(this).css({"background" : "#999"});
-    },  function() {
+     $(".mOn").mouseover(function(){
+        $(this).css({"background" : "#FFF3CD"});
+    });
+    	 $(".mOn").mouseout(function(){
         $(this).css({"background" : "#fff"});
-    })
+    });
     
 });
 	
@@ -181,7 +182,7 @@
 	<table class="score">
 		<caption>创投每周行路演评分表（<#if activity??>${activity.title!''}</#if>）</caption>
 		<tr class="tr01">
-			<th style="padding:0;margin:0;"><canvas id="canvas" style="width:100%;height:100%;;margin:0;padding:0;"></canvas>
+			<th style="padding:0;margin:0;"><canvas id="canvas" style="width:100%;height:80%;;margin:0;padding:0;"></canvas>
 				<p class="tabletitle-one">得分</p>
 				<p class="tabletitle-two">项目序号</p>
 				<p class="tabletitle-three">评分项</p>
@@ -193,7 +194,7 @@
 			</#if>
 		</tr>
 
-		<tr class="tr02 mOn">
+		<tr class="tr02 " style="background:#DFEBF7;">
 			<th>核心竞争力(小计)</th>
 			<#if grade_list??>
 			     <#list grade_list as item>
@@ -210,7 +211,7 @@
 			<#if grade_list??>
 			    <#list grade_list as item>
         			<td>
-        				<select onChange="changeTechnology('${item_index}');" id="${item_index}_oneTechnology" <#if item.isGrade??&&item.isGrade|| type??&&type=="check">disabled="" style="background : #ddd;"</#if>>
+        				<select onChange="changeTechnology('${item_index}');" id="${item_index}_oneTechnology" <#if item.isGrade??&&item.isGrade|| type??&&type=="check">disabled="" style="background : #EDEDED;"</#if>>
         				    <#list 0..10 as n>
         					   <option value="${n}" <#if item.oneTechnology??&&n==item.oneTechnology>selected=""</#if>>${n}</option>
         					</#list>
@@ -224,7 +225,7 @@
 			<#if grade_list??>
 			    <#list grade_list as item>
         			<td>
-        				<select onChange="changeTechnology('${item_index}');" id="${item_index}_twoTechnology" <#if item.isGrade??&&item.isGrade|| type??&&type=="check">disabled="" style="background : #ddd;"</#if>>
+        				<select onChange="changeTechnology('${item_index}');" id="${item_index}_twoTechnology" <#if item.isGrade??&&item.isGrade|| type??&&type=="check">disabled="" style="background : #EDEDED;"</#if>>
         				    <#list 0..10 as n>
         					   <option value="${n}" <#if item.twoTechnology??&&n==item.twoTechnology>selected=""</#if>>${n}</option>
         					</#list>
@@ -238,7 +239,7 @@
 			<#if grade_list??>
 			    <#list grade_list as item>
         			<td>
-        				<select onChange="changeTechnology('${item_index}');" id="${item_index}_threeTechnology" <#if item.isGrade??&&item.isGrade|| type??&&type=="check">disabled="" style="background : #ddd;"</#if>>
+        				<select onChange="changeTechnology('${item_index}');" id="${item_index}_threeTechnology" <#if item.isGrade??&&item.isGrade|| type??&&type=="check">disabled="" style="background : #EDEDED;"</#if>>
         				    <#list 0..10 as n>
         					   <option value="${n}" <#if item.threeTechnology??&&n==item.threeTechnology>selected=""</#if>>${n}</option>
         					</#list>
@@ -248,7 +249,7 @@
 			</#if>
 		</tr>				
 			
-		<tr class="tr02 mOn">
+		<tr class="tr02 " style="background:#DFEBF7;">
 			<th>市场潜力(小计)</th>
 			<#if grade_list??>
 			     <#list grade_list as item>
@@ -265,7 +266,7 @@
 			<#if grade_list??>
 			    <#list grade_list as item>
         			<td>
-        				<select onChange="changeFeasibility('${item_index}');" id="${item_index}_oneFeasibility" <#if item.isGrade??&&item.isGrade|| type??&&type=="check">disabled="" style="background : #ddd;"</#if>>
+        				<select onChange="changeFeasibility('${item_index}');" id="${item_index}_oneFeasibility" <#if item.isGrade??&&item.isGrade|| type??&&type=="check">disabled="" style="background : #EDEDED;"</#if>>
         					<#list 0..10 as n>
         					   <option value="${n}" <#if item.oneFeasibility??&&n==item.oneFeasibility>selected=""</#if>>${n}</option>
         					</#list>
@@ -279,7 +280,7 @@
 			<#if grade_list??>	
 			    <#list grade_list as item>
         			<td>
-        				<select onChange="changeFeasibility('${item_index}');" id="${item_index}_twoFeasibility" <#if item.isGrade??&&item.isGrade|| type??&&type=="check">disabled="" style="background : #ddd;"</#if>>
+        				<select onChange="changeFeasibility('${item_index}');" id="${item_index}_twoFeasibility" <#if item.isGrade??&&item.isGrade|| type??&&type=="check">disabled="" style="background : #EDEDED;"</#if>>
         				    <#list 0..10 as n>
         					   <option value="${n}" <#if item.twoFeasibility??&&n==item.twoFeasibility>selected=""</#if>>${n}</option>
         					</#list>
@@ -289,7 +290,7 @@
 			</#if>
 		</tr>
 
-		<tr class="tr02 mOn">
+		<tr class="tr02 " style="background:#DFEBF7;">
 			<th>团队能力(小计)</th>
 			<#if grade_list??>
 			     <#list grade_list as item>
@@ -306,7 +307,7 @@
 			<#if grade_list??>
     			<#list grade_list as item>
     			<td>
-    				<select onChange="changeGroup('${item_index}');" id="${item_index}_oneGroup" <#if item.isGrade??&&item.isGrade|| type??&&type=="check">disabled="" style="background : #ddd;"</#if>>
+    				<select onChange="changeGroup('${item_index}');" id="${item_index}_oneGroup" <#if item.isGrade??&&item.isGrade|| type??&&type=="check">disabled="" style="background : #EDEDED;"</#if>>
     				    <#list 0..10 as n>
     					   <option value="${n}" <#if item.oneGroup??&&n==item.oneGroup>selected=""</#if>>${n}</option>
     					</#list>
@@ -320,7 +321,7 @@
             <#if grade_list??>
                 <#list grade_list as item>
                 <td>
-                    <select onChange="changeGroup('${item_index}');" id="${item_index}_twoGroup" <#if item.isGrade??&&item.isGrade|| type??&&type=="check">disabled="" style="background : #ddd;"</#if>>
+                    <select onChange="changeGroup('${item_index}');" id="${item_index}_twoGroup" <#if item.isGrade??&&item.isGrade|| type??&&type=="check">disabled="" style="background : #EDEDED;"</#if>>
                         <#list 0..10 as n>
                            <option value="${n}" <#if item.twoGroup??&& n==item.twoGroup>selected=""</#if>>${n}</option>
                         </#list>
@@ -330,7 +331,7 @@
             </#if>
         </tr>		
 		
-		<tr class="tr02 mOn">
+		<tr class="tr02 " style="background:#DFEBF7;">
 			<th>投资价值(小计)</th>
 			<#if grade_list??>
 			     <#list grade_list as item>
@@ -347,7 +348,7 @@
 			<#if grade_list??>
 			    <#list grade_list as item>
         			<td>
-        				<select onChange="changeMarketValue('${item_index}');" id="${item_index}_oneMarketValue" <#if item.isGrade??&&item.isGrade|| type??&&type=="check">disabled="" style="background : #ddd;"</#if>>
+        				<select onChange="changeMarketValue('${item_index}');" id="${item_index}_oneMarketValue" <#if item.isGrade??&&item.isGrade|| type??&&type=="check">disabled="" style="background : #EDEDED;"</#if>>
         				    <#list 0..10 as n>
         					   <option value="${n}" <#if item.oneMarketValue??&&n==item.oneMarketValue>selected=""</#if>>${n}</option>
         					</#list>
@@ -361,7 +362,7 @@
 			<#if grade_list??>
 			    <#list grade_list as item>
         			<td>
-        				<select onChange="changeMarketValue('${item_index}');" id="${item_index}_twoMarketValue" <#if item.isGrade??&&item.isGrade|| type??&&type=="check">disabled="" style="background : #ddd;"</#if>>
+        				<select onChange="changeMarketValue('${item_index}');" id="${item_index}_twoMarketValue" <#if item.isGrade??&&item.isGrade|| type??&&type=="check">disabled="" style="background : #EDEDED;"</#if>>
         				    <#list 0..10 as n>
         					   <option value="${n}" <#if item.twoMarketValue??&&n==item.twoMarketValue>selected=""</#if>>${n}</option>
         					</#list>
@@ -371,7 +372,7 @@
 			</#if>
 		</tr>
 		
-		<tr class="tr02 mOn">
+		<tr class="tr02 " style="background:#DFEBF7;">
 			<th>现场表现力(小计)</th>
 			<#if grade_list??>
 			     <#list grade_list as item>
@@ -388,7 +389,7 @@
 			<#if grade_list??>
 			    <#list grade_list as item>
         			<td>
-        				<select onChange="changeExpression('${item_index}');" id="${item_index}_oneExpression" <#if item.isGrade??&&item.isGrade|| type??&&type=="check">disabled="" style="background : #ddd;"</#if>>
+        				<select onChange="changeExpression('${item_index}');" id="${item_index}_oneExpression" <#if item.isGrade??&&item.isGrade|| type??&&type=="check">disabled="" style="background : #EDEDED;"</#if>>
         				    <#list 0..10 as n>
         					   <option value="${n}" <#if item.oneExpression??&&n==item.oneExpression>selected=""</#if>>${n}</option>
         					</#list>
@@ -398,7 +399,7 @@
 			</#if>
 		</tr>		
 		
-		<tr class="tr02 mOn">
+		<tr class="tr02 "style="background:#DFEBF7;">
 			<th>合计</th>
 			<#if grade_list??>
     			<#list grade_list as item>
@@ -414,11 +415,11 @@
 			<th></th>
 			<#if grade_list??>
     			<#list grade_list as item>
-    			     <td><input <#if item.isGrade??&&item.isGrade || type??&&type=="check">disabled="" style="background : #ddd;"</#if> type="button" onClick="submitPoint('${item_index}','${item.number!''}');" value="确定" /></td>
+    			     <td><input <#if item.isGrade??&&item.isGrade || type??&&type=="check">disabled="" style="background : #EDEDED;"</#if> type="button" onClick="submitPoint('${item_index}','${item.number!''}');" value="确定" /></td>
     			</#list>
 		    </#if>
 		</tr>	
 	</table>
-	   <input style="margin-left: 640px; margin-top: 20px; width:100px;height: 30px; font-size: 14px;" type="button" onclick="location.href='/expert/export/grade?activityId=${activityId?c!''}&expertId=${expertId?c!''}'"  value="打印评分表" />
+	   <input style="margin-left: 640px; margin-top: 20px; width:100px;height: 30px; font-size: 14px;" type="button" class="area_batch" onclick="location.href='/expert/export/grade?activityId=${activityId?c!''}&expertId=${expertId?c!''}'"  value="打印评分表" />
 </body>
 </html>

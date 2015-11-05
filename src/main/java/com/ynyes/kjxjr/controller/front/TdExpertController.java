@@ -469,6 +469,7 @@ public class TdExpertController {
 	      
 	      
 	      HSSFCellStyle style1 = wb.createCellStyle();  
+	      style1.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
 	      style1.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
 	      style1.setBorderBottom(HSSFCellStyle.BORDER_THIN);    //设置边框样式
 	      style1.setBorderRight(HSSFCellStyle.BORDER_THIN);
@@ -515,6 +516,8 @@ public class TdExpertController {
 	      title1.setFont(font);//选择需要用到的字体格式
 	      title.setFont(font);//选择需要用到的字体格式
 	      title3.setFont(font);//选择需要用到的字体格式
+	      font.setFontHeightInPoints((short) 10);
+	      style1.setFont(font);
 	      
 	      
 	      //盖章
@@ -565,7 +568,7 @@ public class TdExpertController {
 	      row4.setHeight((short) (20 * 20));  
 	      cell = row4.createCell((short) 0);  
 	      cell.setCellValue("核心竞争力(小计)");  
-	      cell.setCellStyle(style);
+	      cell.setCellStyle(style1);
 	      
 	      HSSFRow row5 =sheet.createRow((int) 5);
 	      row5.setHeight((short) (20 * 20));  
@@ -589,7 +592,7 @@ public class TdExpertController {
 	      row8.setHeight((short) (20 * 20));  
 	      cell = row8.createCell((short) 0);  
 	      cell.setCellValue("市场潜力(小计)");  
-	      cell.setCellStyle(style);
+	      cell.setCellStyle(style1);
 	      
 	      HSSFRow row9 =sheet.createRow((int) 9);
 	      row9.setHeight((short) (20 * 20));  
@@ -607,7 +610,7 @@ public class TdExpertController {
 	      row11.setHeight((short) (20 * 20));  
 	      cell = row11.createCell((short) 0);  
 	      cell.setCellValue("团队能力(小计)");  
-	      cell.setCellStyle(style);
+	      cell.setCellStyle(style1);
 	      
 	      HSSFRow row12 =sheet.createRow((int) 12);
 	      row12.setHeight((short) (20 * 20));  
@@ -625,7 +628,7 @@ public class TdExpertController {
 	      row14.setHeight((short) (20 * 20));  
 	      cell = row14.createCell((short) 0);  
 	      cell.setCellValue("投资价值(小计)");  
-	      cell.setCellStyle(style);
+	      cell.setCellStyle(style1);
 	      
 	      HSSFRow row15 =sheet.createRow((int) 15);
 	      row15.setHeight((short) (20 * 20));  
@@ -643,7 +646,7 @@ public class TdExpertController {
 	      row17.setHeight((short) (20 * 20));  
 	      cell = row17.createCell((short) 0);  
 	      cell.setCellValue("现场表现力(小计)");  
-	      cell.setCellStyle(style);
+	      cell.setCellStyle(style1);
 	      
 	      HSSFRow row18 =sheet.createRow((int) 18);
 	      row18.setHeight((short) (20 * 20));  
@@ -655,12 +658,12 @@ public class TdExpertController {
 	      row19.setHeight((short) (20 * 20));  
 	      cell = row19.createCell((short) 0);  
 	      cell.setCellValue("合计");  
-	      cell.setCellStyle(style);
+	      cell.setCellStyle(style1);
 	      
 	      HSSFRow row20 =sheet.createRow((int) 20);
 	      row20.setHeight((short) (20 * 20));  
 	      cell = row20.createCell((short) 0);  
-	      cell.setCellValue("专家签名：_____________");  
+	      cell.setCellValue("专家签名：                         ");  
 	      cell.setCellStyle(bottom);
 	      
 	      HSSFRow[] array = new HSSFRow[]{row0,row0,row1,row3,row4,row5,row6,row7,row8,row9,row10,row11,row12,row13,row14,row15,row16,row17,row18,row19,row20};

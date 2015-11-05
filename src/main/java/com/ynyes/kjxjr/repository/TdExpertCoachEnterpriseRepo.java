@@ -15,6 +15,8 @@ public interface TdExpertCoachEnterpriseRepo extends PagingAndSortingRepository<
 
 	// 根据专家ID查找所有往期辅导企业
 	List<TdExpertCoachEnterprise> findByExpertIdAndIsGradeIsTrue(Long expertId);
+	
+	List<TdExpertCoachEnterprise> findByEnterpriseIdOrderByExpertIdAsc(Long enterpriseId);
 
 	TdExpertCoachEnterprise findByExpertIdAndEnterpriseId(Long expertId,Long enterpriseId);
 	

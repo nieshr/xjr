@@ -139,6 +139,26 @@ $(function () {
            </div>
        </dd>
   </dl>
+<#-- 专家归属的投资机构  -->
+  <dl  class="region" <#if diy_site?? && !diy_site.region?? || !diy_site?? || diy_site?? &&diy_site.region="">style= "display:none;"</#if>>
+      <dt>区县</dt>
+      <dd>
+           <div class="rule-single-select">
+                <select id="region" name="region"  sucmsg=" "  >
+               
+                     <option value="" <#if !diy_site?? || !diy_site.region??>selected="selected"</#if>>请选择...</option>
+
+                     <#if region_list??>
+                     	<#list region_list as item>
+                     		<option value="${item.title!''}" <#if diy_site?? && diy_site.region?? && diy_site.region==item.title>selected="selected"</#if>>${item.title!''}</option> 
+          				</#list>
+          			</#if>            
+                </select>
+           </div>
+       </dd>
+  </dl>
+
+  <#-- 专家归属的投资机构  end-->
   <dl>
     <dt>登录名</dt>
     <dd>

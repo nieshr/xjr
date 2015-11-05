@@ -12,6 +12,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -375,6 +376,7 @@ public class TdActivityController {
         TdActivity activity = tdActivityService.findOne(id);
         if (null != activity)
         {
+        	map.addAttribute("roadshow_list", tdExpertCoachEnterpriseService.findByEnterpriseIdOrderByExpertIdAsc(id));
             map.addAttribute("mark", "activity");
 	        map.addAttribute("activity", activity);
 	        map.addAttribute("recommend_list" , tdActivityEnterpriseService.findByActivityIdAndStatusIdOrderBySortIdAsc(id, 2L));
@@ -1837,7 +1839,7 @@ public class TdActivityController {
     }
     
     @RequestMapping(value = "/getCoach")
-    public String getCoach(Long enterpriseId,Long activityId,ModelMap map,HttpServletRequest req,String keywords,Integer page){
+    public String getCoach(Long activityId,ModelMap map,HttpServletRequest req,String keywords,Integer page){
     	String activityUsername = (String) req.getSession().getAttribute("activityUsername");
     	if(null == activityUsername){
     		return "/client/login";
@@ -1856,34 +1858,60 @@ public class TdActivityController {
         {
 			ExpertPage = tdExpertService.findAllOrderBySortIdAsc(page, ClientConstant.pageSize);
         }
+        map.addAttribute("activity", tdActivityService.findOne(activityId));
     	map.addAttribute("keywords", keywords);
     	map.addAttribute("page", page);
     	map.addAttribute("ExpertPage", ExpertPage);
-    	map.addAttribute("enterpriseId", enterpriseId);
     	map.addAttribute("activityId", activityId);
     	return "/client/activity_coach_expert";
     }
     
     @RequestMapping(value="/addCoach")
-    public String addCoach(Long expertId,Long enterpriseId,Long activityId,HttpServletRequest req){
+    @ResponseBody
+    public  Map<String, Object> addCoach(Long expertId,Long activityId,HttpServletRequest req){
+        Map<String, Object> res = new HashMap<String, Object>();
+        res.put("code", 1);
+        
     	String activityUsername = (String) req.getSession().getAttribute("activityUsername");
     	if(null == activityUsername){
-    		return "/client/login";
+        	res.put("msg", "请先登录！");
+            return res;
     	}
     	
-    	TdEnterprise enterprise = tdEnterpriseService.findOne(enterpriseId);
     	TdExpert expert = tdExpertService.findOne(expertId);
+    	expert.setRoadshowActivityId(activityId);
+    	tdExpertService.save(expert);
     	TdExpertCoachEnterprise coach = new TdExpertCoachEnterprise();
-    	coach.setEnterpriseId(enterpriseId);
-    	coach.setEnterpriseName(enterprise.getTitle());
+    	coach.setEnterpriseId(activityId);    //活动id
+    	coach.setEnterpriseName(tdActivityService.findOne(activityId).getTitle());		//活动名称
     	coach.setIsGrade(false);
-    	coach.setAddr(enterprise.getAddress());
     	coach.setExpertName(expert.getName());
+    	coach.setExpertId(expertId);
+       
     	tdExpertCoachEnterpriseService.save(coach);
-    	TdActivityEnterprise tdActivityEnterprise = tdActivityEnterpriseService.findByActivityIdAndEnterpriseId(activityId, enterpriseId);
-    	tdActivityEnterprise.setCoachName(expert.getName());
-    	tdActivityEnterpriseService.save(tdActivityEnterprise);
-    	return "redirect:/activity/check?id="+activityId;
+        res.put("code", 0);
+        return res;
+    }
+    //取消路演辅导
+    @RequestMapping(value="/removeCoach")
+    @ResponseBody
+    public  Map<String, Object> removeCoach(Long expertId,Long activityId,HttpServletRequest req){
+        Map<String, Object> res = new HashMap<String, Object>();
+        res.put("code", 1);
+        
+    	String activityUsername = (String) req.getSession().getAttribute("activityUsername");
+    	if(null == activityUsername){
+        	res.put("msg", "请先登录！");
+            return res;
+    	}
+    	
+    	TdExpert expert = tdExpertService.findOne(expertId);
+    	expert.setRoadshowActivityId(null);
+    	tdExpertService.save(expert);
+    	TdExpertCoachEnterprise coach = tdExpertCoachEnterpriseService.findByExpertIdAndEnterpriseId(expertId, activityId);
+    	tdExpertCoachEnterpriseService.delete(coach.getId());
+        res.put("code", 0);
+        return res;
     }
     
     /**
@@ -1956,7 +1984,7 @@ public class TdActivityController {
  
  //评分汇总表导出
  @SuppressWarnings("deprecation")
- @RequestMapping(value="/export/grade")
+ @RequestMapping(value="/export/totalGrade")
  public String exportGrade(
                              Long activityId,
                              ModelMap map,
@@ -1995,18 +2023,24 @@ public class TdActivityController {
  		    			ae.setTotalPoint(totalPoint);
  		    			tdActivityEnterpriseService.save(ae);
  		    		}
+ 		    		
  		    	//总分排序
+ 		    	    List<List<TdEnterpriseGrade>> expertGradeList = new ArrayList<List<TdEnterpriseGrade>>();    
+// 		    		List<Object> expertGradeList = new ArrayList<Object>();     //Object 可以装任何类型；【评委评分表的列表】
  		    		List<TdActivityEnterprise> gradeList = tdActivityEnterpriseService.findByActivityIdAndStatusIdOrderByTotalPointDesc(activityId, 2L);
  		    		map.addAttribute("grade_list", gradeList);
  		    		if (null != gradeList)
- 		    		{
+ 		    		{  
  		    			int index = 0 ;
+ 		    		
  		    			for (TdActivityEnterprise sortEnterprise : gradeList)
  		    			{
  		    				List<TdEnterpriseGrade> expertList = tdEnterpriseGradeService.findByEnterpriseIdAndActivityId(sortEnterprise.getEnterpriseId(), activityId);
  		    				map.addAttribute("expert_list_"+index, expertList);
+ 		    				expertGradeList.add(expertList);
  		    				index++;
  		    			}
+ 		    			
  		    		}
  		    		
  		    		List<TdActivityExpert> expertList = tdActivityExpertService.findByActivityIdOrderByExpertIdAsc(activityId);
@@ -2016,7 +2050,7 @@ public class TdActivityController {
  		    		map.addAttribute("activityId", activityId);
  		    		map.addAttribute("activity", activity);
  		    		
- 		    	}
+ 		  int  expertSize = expertList.size();
  		
      /**  
  		 * @author lc
@@ -2040,15 +2074,20 @@ public class TdActivityController {
        
        //列宽
        sheet.setDefaultColumnWidth(6*256);
-       sheet.setColumnWidth((short) 0 , 8*256);
+       sheet.setColumnWidth((short) 0 , 6*256);
+       sheet.setColumnWidth((short) 1 , 6*256);
+       sheet.setColumnWidth((short) 2 , 6*256);
+       sheet.setColumnWidth((short) 3 , 46*256);
        
        
        // 第三步，在sheet中添加表头第0行,注意老版本poi对Excel的行数列数有限制short  
        HSSFRow row = sheet.createRow((int) 0);  
        
-       sheet.addMergedRegion(new Region((short) 0 , (short) 0 , (short) 2 , (short) 20));     //标题
+       sheet.addMergedRegion(new Region((short) 0 , (short) 0 , (short) 1 , (short) (4+expertSize)));     //标题
+       sheet.addMergedRegion(new Region((short) 2 , (short) 0 , (short) 2 , (short) (4+expertSize)));     //标题
        // 第四步，创建单元格，并设置值表头 设置表头居中  
        HSSFCellStyle style = wb.createCellStyle();  
+       style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
        style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
        style.setBorderBottom(HSSFCellStyle.BORDER_THIN);    //设置边框样式
        style.setBorderRight(HSSFCellStyle.BORDER_THIN);
@@ -2079,11 +2118,23 @@ public class TdActivityController {
        title.setBorderTop(HSSFCellStyle.BORDER_NONE);  
        title.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
        title.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 居中格式
+       
+       HSSFCellStyle title2 = wb.createCellStyle();  
+       title2.setBorderBottom(HSSFCellStyle.BORDER_NONE);    //设置边框样式
+       title2.setBorderRight(HSSFCellStyle.BORDER_NONE);
+       title2.setBorderLeft(HSSFCellStyle.BORDER_NONE);  
+       title2.setBorderTop(HSSFCellStyle.BORDER_NONE);  
+       title2.setVerticalAlignment(HSSFCellStyle.VERTICAL_TOP);//垂直居中
+       title2.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 居中格式
+       
        HSSFFont font = wb.createFont();
        font.setFontName("黑体");
        font.setFontHeightInPoints((short) 12);//设置字体大小
        font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);//粗体显示
        title.setFont(font);//选择需要用到的字体格式
+       title2.setFont(font);
+       font.setFontHeightInPoints((short) 10);//设置字体大小
+       style2.setFont(font);
        
        //盖章
        HSSFCellStyle left = wb.createCellStyle();  
@@ -2099,61 +2150,49 @@ public class TdActivityController {
        HSSFCell cell = row.createCell((short) 0);  
        cell.setCellValue("项目得分汇总表");  
        cell.setCellStyle(title);
-       cell = row.createCell((short) 1);
-       cell = row.createCell((short) 2);
-       cell = row.createCell((short) 3);
-       cell = row.createCell((short) 4);
-       cell = row.createCell((short) 5);
-       cell = row.createCell((short) 6);
-       cell = row.createCell((short) 7);
-       cell = row.createCell((short) 8);
-       cell = row.createCell((short) 9);
-       cell = row.createCell((short) 10);
-       cell = row.createCell((short) 11);
-       cell = row.createCell((short) 12);
-       cell = row.createCell((short) 13);
-       cell = row.createCell((short) 14);
-       cell = row.createCell((short) 15);
-       cell = row.createCell((short) 16);
-       cell = row.createCell((short) 17);
-       cell = row.createCell((short) 18);
-       cell = row.createCell((short) 19);
-       cell = row.createCell((short) 20);
-       
-       row =sheet.createRow((int) 1);
-       cell = row.createCell((short) 0);
-       cell = row.createCell((short) 1);
-       cell = row.createCell((short) 2);
-       cell = row.createCell((short) 3);
-       cell = row.createCell((short) 4);
-       cell = row.createCell((short) 5);
-       cell = row.createCell((short) 6);
-       cell = row.createCell((short) 7);
-       cell = row.createCell((short) 8);
-       cell = row.createCell((short) 9);
-       cell = row.createCell((short) 10);
-       cell = row.createCell((short) 11);
-       cell = row.createCell((short) 12);
-       cell = row.createCell((short) 13);
-       cell = row.createCell((short) 14);
-       cell = row.createCell((short) 15);
-       cell = row.createCell((short) 16);
-       cell = row.createCell((short) 17);
-       cell = row.createCell((short) 18);
-       cell = row.createCell((short) 19);
-       cell = row.createCell((short) 20);
-       
+      
        row =sheet.createRow((int) 2);
+       cell = row.createCell((short) 0);
+       cell.setCellValue(activity.getTitle());  
+       cell.setCellStyle(title);
+       
+       row =sheet.createRow((int) 3);
+       row.setHeight((short) (20 * 20));  
        cell = row.createCell((short) 0);  
-       cell = row.createCell((short) 1);  
+       cell.setCellValue("胜出");
+       cell.setCellStyle(style2);
+       cell = row.createCell((short) 1);
+       cell.setCellValue("排名");
+       cell.setCellStyle(style2);
+       cell = row.createCell((short) 2);
+       cell.setCellValue("编号");
+       cell.setCellStyle(style2);
+       cell = row.createCell((short) 3);
+       cell.setCellValue("名称");
+       cell.setCellStyle(style2);
+       cell = row.createCell((short) 4);
+       cell.setCellValue("总分");
+       cell.setCellStyle(style2);
+       if (null != expertList || expertList.size() > 0)
+       {
+    	   int i = 0;
+    	   for (TdActivityExpert ae : expertList)
+           {
+               cell = row.createCell((short) 5+i);
+               cell.setCellValue(ae.getName());
+               cell.setCellStyle(style2);
+               i++;
+           }
+       }
  			
  		if (null != exportUrl) {
- 			if (ImportData(activityEnterpriseList, row, cell, sheet,style)) {
+ 			if (ImportData(expertGradeList , expertSize ,gradeList , row, cell, sheet,style)) {
  				download(wb, exportUrl, resp);
  			}         
  		}  
  			}
-     return "/redirect:/region/activity/list";
+ }
+     return "/client/total_grade";
  }
 
  /**
@@ -2161,44 +2200,47 @@ public class TdActivityController {
  	 * @注释：将page中的订单数据存入excel表格中
  	 */
   @SuppressWarnings("deprecation")
- 	public boolean ImportData(List<TdActivityEnterprise> activityEnterpriseList, HSSFRow row, HSSFCell cell, HSSFSheet sheet ,HSSFCellStyle style){
+ 	public boolean ImportData(List<List<TdEnterpriseGrade>> expertGradeList, int expertSize ,List<TdActivityEnterprise> gradeList , HSSFRow row, HSSFCell cell, HSSFSheet sheet ,HSSFCellStyle style){
  	 	
-         	for (int i = 0; i < activityEnterpriseList.size(); i++)  
+	  		int i = 0 ; 
+         	for (TdActivityEnterprise grade : gradeList )  
              {  
-         	 				
                  row = sheet.createRow((int) i + 4);  
-                 TdActivityEnterprise tdActivityEnterprise = activityEnterpriseList.get(i);  
-                 //获取用户信息
-//                 TdUser tdUser = tdUserService.findByUsername(tdOrder.getUsername());
-                 // 第四步，创建单元格，并设置值  
+                 row.setHeight((short) (20 * 20));  
                  cell = row.createCell((short) 0);
-                 cell.setCellValue(i+1);
+                 if (null != grade.getWin() && grade.getWin() == 1)
+                 {
+                	 cell.setCellValue("入选");
+                 }
                  cell.setCellStyle(style); 
                  cell = row.createCell((short) 1);
-                 cell.setCellValue(tdActivityEnterprise.getNumber());
+                 cell.setCellValue(i+1);
                  cell.setCellStyle(style);
                  cell = row.createCell((short) 2);
+                 cell.setCellValue(grade.getNumber()); 
                  cell.setCellStyle(style);
-                 cell.setCellValue(tdActivityEnterprise.getEnterpriseTitle()); 
                  cell = row.createCell((short) 3);
+                 cell.setCellValue(grade.getEnterpriseTitle()); 
                  cell.setCellStyle(style);
-                 cell.setCellValue(tdActivityEnterprise.getContact()); 
                  cell = row.createCell((short) 4);
+                 cell.setCellValue(grade.getTotalPoint());
                  cell.setCellStyle(style);
-                 cell.setCellValue(tdActivityEnterprise.getMobile());
-                 cell = row.createCell((short) 5);
-                 cell.setCellStyle(style);
-                 cell.setCellValue(tdActivityEnterprise.getQQ());
-                 cell = row.createCell((short) 6);
-                 cell.setCellStyle(style);
-                 cell.setCellValue(tdActivityEnterprise.getProfile());
-                 cell = row.createCell((short) 7);
-                 cell.setCellValue(tdActivityEnterprise.getReason()); 
-                 cell.setCellStyle(style);
-              
+                
+                for (int j = 0 ; j<expertSize ; j++)
+                {
+                    cell = row.createCell((short) j+5);
+                    if (null != expertGradeList.get(i).get(j).getTotalPoint())
+                    {
+                    	cell.setCellValue(expertGradeList.get(i).get(j).getTotalPoint());
+                    }
+                    cell.setCellStyle(style);
+                }
+              i++;
              } 
   	return true;
   }
+  
+  
   /**
  	 * @author lc
  	 * @注释：文件写入和下载

@@ -249,7 +249,7 @@ public class TdManagerOrderController {
                 
                 return "/site_mag/delivery_type_edit";
             }
-            else if (type.equalsIgnoreCase("diysite")) // 自提点
+            else if (type.equalsIgnoreCase("diysite")) // 
             {
                 if (null != id)
                 {
@@ -257,6 +257,7 @@ public class TdManagerOrderController {
                 }
                 
                 map.addAttribute("region_list", tdRegionService.findByIsEnableTrueOrderBySortIdAsc());
+                map.addAttribute("invest_list" , tdArticleService.findByMenuId(12L));
                 return "/site_mag/diy_site_edit";
             }
         }

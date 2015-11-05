@@ -186,9 +186,19 @@ function sortDown(id , activityId)
     <form action="/activity/submit" id="form1">
     <dl class="active_content">
         <dd>
+                <#if activity.statusId??>
+                    <#if activity.statusId==1>
+                        <div><h3 style="margin:0 0 10px 50px;">活动状态：已审核</h3></div>
+                    <#elseif activity.statusId==2>
+                        <div><h3 style="margin:0 0 10px 50px;">活动状态：已结束</h3></div>
+                    <#elseif activity.statusId==0>
+                        <div><h3 style="margin:0 0 10px 50px;">活动状态：未审核</h3></div>
+                    </#if>       
+                </#if>         
+                 
                 <#if recommend_list??>
                 <div>
-                    <span style="margin-top: 10px;"><#if activity.statusId??&&activity.statusId==1>路演项目：<#else>推荐项目：</#if></span>
+                    <span style="margin-top: 6px;"><#if activity.statusId??&&activity.statusId==0>推荐项目：<#else>路演项目：</#if></span>
                     <ul class="active_project_text">
                         <#if recommend_list??>
                             <#list recommend_list as item>
@@ -200,25 +210,30 @@ function sortDown(id , activityId)
                                         <a  href="/enterprise/grade/?activityId=${item.activityId?c!''}&enterpriseId=${item.enterpriseId?c!''}" title="查看该项目的得分"   target="_blank">得分</a>
                                     <#else>
                                         <a   href="javascript:void(0)" title="评分尚未开始"  style="color:#666; " >得分</a>
-                                    </#if>                                     
+                                    </#if>         
+                                    <#--                            
                                         <a>丨</a>
                                         <#if item.statusId??&&item.statusId==1>
                                           <a href="/activity/getCoach?enterpriseId=${item.enterpriseId?c!''}&activityId=${item.activityId?c!''}">分配路演辅导</a>
                                         <#else>
                                           <a style="color:#666;" href="javascript:void(0)">分配路演辅导</a>
                                         </#if> 
+                                      -->  
                                         <a>丨</a>
                                         <a <#if item.pptUrl??>href="${item.pptUrl}" <#else>style="color:#666;"</#if>>PPT下载</a>
                                         <a>丨</a>
                                         <#if activity??&&activity.statusId??&&activity.statusId==1>
                                             <a href="javascript:sendSms(${item.enterpriseId?c!''},${item.activityId?c!''},1);">短信通知</a>
-                                            <a>丨</a> 
+                                           
                                         </#if>
-                                        <#if item_has_next>
-                                            <a href="javascript:sortDown(${item.id?c!''} , ${item.activityId?c!''});"><img style="width:10px;height:13px;margin-top: 8px;"src="/client/images/down1.png" alt="下移" title="下移排序"/></a>
-                                        </#if>                                  
-                                        <#if item_index != 0>
-                                            <a href="javascript:sortUp(${item.id?c!''} , ${item.activityId?c!''});"><img style="width:10px;height:13px;margin-top: 8px; <#if item_has_next>margin-left:3px;</#if>" src="/client/images/up1.png" alt="上移" title="上移排序"/></a>
+                                        <#if activity.statusId??&&(activity.statusId==1|| activity.statusId == 0)>
+                                         <a>丨</a> 
+	                                        <#if item_has_next>
+	                                            <a href="javascript:sortDown(${item.id?c!''} , ${item.activityId?c!''});"><img style="width:10px;height:13px;margin-top: 8px;"src="/client/images/down1.png" alt="下移" title="下移排序"/></a>
+	                                        </#if>                                  
+	                                        <#if item_index != 0>
+	                                            <a href="javascript:sortUp(${item.id?c!''} , ${item.activityId?c!''});"><img style="width:10px;height:13px;margin-top: 8px; <#if item_has_next>margin-left:3px;</#if>" src="/client/images/up1.png" alt="上移" title="上移排序"/></a>
+	                                        </#if>
                                         </#if>
                                         <a style="display:block;  width:80px;"></a>
                                         <p class="p02"><#if item.coachName??>辅导专家，${item.coachName!''}</#if></p>
@@ -233,22 +248,21 @@ function sortDown(id , activityId)
                             </#if>  
                             <#if mark??&&mark="activity">
                                 <#if activity??&&activity.statusId??&&activity.statusId==1>
-                                    <input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#666;color:#fff; " type="button" onclick="javascript:passCheck(${activity.id?c!''});"  value="更新评分表" />
-                                    <input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#666;color:#fff; " type="button" onclick="javascript:cancelCheck(${activity.id?c!''});"  value="取消审核" />
+                                    <input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:green;color:#fff; " type="button" class="area_batch" onclick="location.href='/activity/getCoach?activityId=${activity.id?c!''}'"  value="分配路演辅导" />
+                                    <input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#E4574E;color:#fff; " type="button" onclick="javascript:cancelCheck(${activity.id?c!''});"  value="取消审核" />
                                 <#elseif activity??&&activity.statusId??&&activity.statusId==0> 
-                                    <input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#e67817;color:#fff; " type="button" onclick="javascript:activityPass(${activity.id?c!''});" value="通过审核" />
+                                    <input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:green;color:#fff; " type="button" class="area_batch" onclick="location.href='/activity/getCoach?activityId=${activity.id?c!''}'"  value="分配路演辅导" />
+                                    <input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#e67817;color:#fff; " type="button" class="area_batch" onclick="javascript:activityPass(${activity.id?c!''});" value="通过审核" />
                                 </#if>
                             </#if>
                         <#else>
-                            
                                 <input id="selectEnterprise" style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background:white url(images/active_add_project.png) no-repeat 10px; padding-left: 13px;" type="button" value="添加项目" />
-                        
                         </#if>
                     </ul>
                 </div> 
                 </#if>
                 <div style="margin-top:50px;">
-                    <span style="margin-top: 10px;">评委专家：</span>
+                    <span style="margin-top: 6px;">评委专家：</span>
                     <ul class="active_project_text">
                         <#if selected_expert_list??>
                             <#list selected_expert_list as item>
@@ -274,23 +288,46 @@ function sortDown(id , activityId)
                         </#if>
                     </ul>
                 </div>
+               <#if roadshow_list??>
+               <div style="margin-top:50px;">
+                    <span style="margin-top: 6px;">路演辅导：</span>
+                    <ul class="active_project_text">
+                            <#list roadshow_list as item>
+                                <li>
+                                    <p class="p01" style="  width: 250px;float: left; text-align: left;">${item_index+1}.${item.expertName!''}</p>
+                                    <a style="display:block;  width:100px;"></a>
+                                </li>
+                            </#list>
+                    </ul>
+                </div>
+                </#if> 
             <!-- 评分汇总 -->
                 <#if activity??&&activity.statusId??&&activity.statusId==1>
-                    <div>
-                        <span style="margin-top: 6px;">路演结果：</span>
+                    <div style="margin-top:20px;">
+                        <span style="margin-top: 6px;">评分结果：</span>
                         <ul class="active_project_text">
                             <li>
-                                <a href="/activity/getGrade?activityId=${activity.id?c!''}&mark=activity"  class="p01">查看排名</a>
+                                <input type="button" class="area_batch" onclick="location.href='/activity/getGrade?activityId=${activity.id?c!''}&mark=activity'"  class="p01" value="选择胜出项目" />
                                 <a style="display:block;  width:60px;"></a>
                             </li>
                         </ul>
                     </div>
+                <#elseif activity??&&activity.statusId??&&activity.statusId==2>
+                     <div style="margin-top:20px;">
+                        <span style="margin-top: 6px;">路演结果：</span>
+                        <ul class="active_project_text">
+                            <li>
+                                <input type="button" class="area_batch" onclick="location.href='/activity/getGrade?activityId=${activity.id?c!''}'"  class="p01" value="查看排名" />
+                                <a style="display:block;  width:60px;"></a>
+                            </li>
+                        </ul>
+                    </div>                   
                 </#if>    
                 <!-- 评分汇总 end-->
     </dl>
     </form>
     <#if activity??>
-     <h2 style="margin:0 0 20px 20px;">附件：</h2>
+     <h2 style="margin:20px 0 20px 20px;">附件：</h2>
     <dl class="active_content">
         <dd>
          <#if pagetype?? && pagetype == "check">

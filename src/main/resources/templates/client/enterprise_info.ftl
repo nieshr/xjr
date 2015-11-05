@@ -26,7 +26,7 @@ $(document).ready(function(){
             callback: function (data) { 
 	            if (data.code == 0)
 	            {
-					alert("提交成功");
+					
 					location.href="/enterprise/print";
 				}
 	            else 

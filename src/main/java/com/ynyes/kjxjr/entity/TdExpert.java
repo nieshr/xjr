@@ -51,9 +51,13 @@ public class TdExpert {
     @Column
     private Boolean isSelect;
     
-    // 被选择的活动ID
+    // 被选择的活动ID【评委】
     @Column
     private Long selectActivityId;
+    
+    // 被选择的活动ID【路演辅导】
+    @Column
+    private Long roadshowActivityId;
     
     // 登录名
     @Column
@@ -158,6 +162,15 @@ public class TdExpert {
 
 	public void setSelectActivityId(Long selectActivityId) {
 		this.selectActivityId = selectActivityId;
+	}
+	
+
+	public Long getRoadshowActivityId() {
+		return roadshowActivityId;
+	}
+
+	public void setRoadshowActivityId(Long roadshowActivityId) {
+		this.roadshowActivityId = roadshowActivityId;
 	}
 
 	@Override
