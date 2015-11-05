@@ -21,7 +21,7 @@ $(document).ready(function(){
             callback: function (data) { 
                 if (data.code == 0)
                 {
-                    alert("创建成功");
+                    
                     location.href="/activity/list";
                 }
                 else 
@@ -370,7 +370,7 @@ window.onload=done;
                 <input type="hidden" name="statusEn" id="statusEn" value="${activity.statusEn!''}"/>
                 <input type="hidden" name="statusEx" id="statusEx" value="${activity.statusEx!''}"/>
                 <input type="hidden" name="fileUrl" id="fileUrl" value="<#if activity.fileUrl??>${activity.fileUrl!''}</#if>"/>
-            </#if>
+            
                 <#if activity.statusId??>
                     <#if activity.statusId==1>
                         <div><h3 style="margin:0 0 10px 50px;">活动状态：已审核（不可修改资料）</h3></div>
@@ -379,7 +379,8 @@ window.onload=done;
                     <#elseif activity.statusId==0>
                         <div><h3 style="margin:0 0 10px 50px;">活动状态：未审核</h3></div>
                     </#if>       
-                </#if>         
+                </#if>    
+            </#if>         
     			<div><span>活动名称：</span><input <#if pagetype??&& pagetype == "check" ||activity??&&activity.statusId??&&(activity.statusId==1||activity.statusId==2)>disabled=""</#if> type="text" name="title" id="title" datatype="*"value="<#if activity??>${activity.title!''}</#if>" /></div>
     			<div>
     				<span>活动类型：</span>
@@ -425,7 +426,7 @@ window.onload=done;
     				    <#if selected_enterprise_list??>
     				        <#list selected_enterprise_list as item>
 		    					<li>
-		    						<p class="p01" style="width: 550px; float: left;text-align:left;">${item_index+1}.${item.enterpriseTitle!''}</p>
+		    						<p class="p01"  style="width: 550px; float: left;text-align:left;"><a style="color:#000;" target=_blank title="查看项目详情" href="/activity/enterprise/check/${item.enterpriseId?c!''}">${item_index+1}.${item.enterpriseTitle!''}</a></p>
 		    						<a href="/activity/enterprise/check/${item.enterpriseId?c!''}" target=_blank>查看</a>
 		    						<#--
 		                            <a>丨</a>
@@ -523,7 +524,7 @@ window.onload=done;
 		    						<p class="p01" style="  width: 250px;float: left; text-align: left;">${item_index+1}.${item.name!''}</p>
 		    						<a style="display:block;  width:100px;"></a>
 
-                                    <#if activity.statusId==0>
+                                    <#if activity.statusId??&&activity.statusId==0 || !activity.statusId??>
                                    	    <a href="javascript:void(0)" title="评分尚未开始" style="color:#666;" target="_blank">评分情况</a>
                                     <#else>
                                     	<a href="/expert/search/grade?activityId=${activity.id?c!''}&expertId=${item.expertId?c!''}" title="查看该评委的评分详情" target="_blank">评分情况</a>
@@ -570,7 +571,7 @@ window.onload=done;
                 </#if>    
     			<!-- 评分汇总 end-->
      <#if pagetype?? && pagetype == "check">
-     <#elseif activity??&&activity.statusId??&&activity.statusId==0>
+     <#elseif activity??&&activity.statusId??&&activity.statusId==0||!activity.statusId??>
     	<dt style=" margin-top: 40px;" class="dt05">
     	   <input type="submit" value="保存" style="cursor:pointer;"/>
     	</dt>

@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ynyes.kjxjr.entity.TdActivity;
+import com.ynyes.kjxjr.entity.TdActivityEnterprise;
 import com.ynyes.kjxjr.entity.TdEnterprise;
+import com.ynyes.kjxjr.service.TdActivityEnterpriseService;
 import com.ynyes.kjxjr.service.TdActivityService;
 import com.ynyes.kjxjr.service.TdEnterpriseService;
 import com.ynyes.kjxjr.util.SiteMagConstant;
@@ -35,6 +37,9 @@ public class TdClientUploadController {
 	TdActivityService tdActivityService;
 	@Autowired
 	TdEnterpriseService tdEnterpriseService;
+	
+	@Autowired
+	TdActivityEnterpriseService tdActivityEnterpriseService;
 	
 	@RequestMapping(value = "/recommend/upload", method = RequestMethod.POST)
     public String upload(String action,Long activityId,
@@ -68,6 +73,7 @@ public class TdClientUploadController {
             stream.close();
             TdActivity tdActivity = tdActivityService.findOne(activityId);
             tdActivity.setFileUrl(fileName);
+            tdActivity.setStatusId(0L);
             tdActivityService.save(tdActivity);
       
 
@@ -408,7 +414,10 @@ public class TdClientUploadController {
                 enterprise.setPptUrl(fileName);
                 tdEnterpriseService.save(enterprise);
             }
-
+            
+            TdActivityEnterprise ae = tdActivityEnterpriseService.findByActivityIdAndEnterpriseId(activityId, id);
+            ae.setPptUrl(fileName);
+            tdActivityEnterpriseService.save(ae);
       
 
         } catch (Exception e) {

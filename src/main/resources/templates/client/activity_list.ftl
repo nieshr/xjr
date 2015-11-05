@@ -117,7 +117,7 @@ function deleteConfirm() {
 		                    		 <td style="color:#0ab2cb;">筹备中</td>
 		                    <#elseif  item.statusId ==0 &&(item.timeId == 2 ||item.timeId == 3)>
 		                    		 <td  style="color:#e67817;">已过期</td>
-		                    <#elseif item.statusId ==1 &&( item.timeId ==0 || item.timeId ==1|| item.timeId ==2)>
+		                    <#elseif item.statusId ==1 &&( item.timeId ==0 || item.timeId ==1|| item.timeId ==2 || item.timeId == 3)>
 		                    		 <td  style="color:#529c15;">进行中</td>
 		                    <#elseif item.statusId ==2>
 		                    	 <td style="color:purple;">已结束</td>

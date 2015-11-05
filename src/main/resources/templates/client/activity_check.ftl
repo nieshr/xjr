@@ -198,7 +198,7 @@ function sortDown(id , activityId)
                  
                 <#if recommend_list??>
                 <div>
-                    <span style="margin-top: 6px;"><#if activity.statusId??&&activity.statusId==0>推荐项目：<#else>路演项目：</#if></span>
+                    <span style="margin-top: 6px;"><#if activity.statusId??&&activity.statusId==0||!activity.statusId??>推荐项目：<#else>路演项目：</#if></span>
                     <ul class="active_project_text">
                         <#if recommend_list??>
                             <#list recommend_list as item>
@@ -211,17 +211,8 @@ function sortDown(id , activityId)
                                     <#else>
                                         <a   href="javascript:void(0)" title="评分尚未开始"  style="color:#666; " >得分</a>
                                     </#if>         
-                                    <#--                            
-                                        <a>丨</a>
-                                        <#if item.statusId??&&item.statusId==1>
-                                          <a href="/activity/getCoach?enterpriseId=${item.enterpriseId?c!''}&activityId=${item.activityId?c!''}">分配路演辅导</a>
-                                        <#else>
-                                          <a style="color:#666;" href="javascript:void(0)">分配路演辅导</a>
-                                        </#if> 
-                                      -->  
                                         <a>丨</a>
                                         <a <#if item.pptUrl??>href="${item.pptUrl}" <#else>style="color:#666;"</#if>>PPT下载</a>
-                                        <a>丨</a>
                                         <#if activity??&&activity.statusId??&&activity.statusId==1>
                                             <a href="javascript:sendSms(${item.enterpriseId?c!''},${item.activityId?c!''},1);">短信通知</a>
                                            
@@ -270,7 +261,7 @@ function sortDown(id , activityId)
                                     <p class="p01" style="  width: 250px;float: left; text-align: left;">${item_index+1}.${item.name!''}</p>
                                     <a style="display:block;  width:100px;"></a>
 
-                                    <#if activity.statusId==0>
+                                    <#if activity.statusId??&&activity.statusId==0>
                                         <a href="javascript:void(0)" title="评分尚未开始" style="color:#666;" target="_blank">评分情况</a>
                                     <#else>
                                         <a href="/expert/search/grade?activityId=${activity.id?c!''}&expertId=${item.expertId?c!''}" title="查看该评委的评分详情" target="_blank">评分情况</a>

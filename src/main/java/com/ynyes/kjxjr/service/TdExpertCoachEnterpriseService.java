@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ynyes.kjxjr.entity.TdEnterpriseGrade;
 import com.ynyes.kjxjr.entity.TdExpertCoachEnterprise;
 import com.ynyes.kjxjr.repository.TdExpertCoachEnterpriseRepo;
 
@@ -27,6 +28,14 @@ public class TdExpertCoachEnterpriseService {
 	public void delete(Long id){
 		if(null != id){
 			repository.delete(id);
+		}
+	}
+	
+	public void delete(List<TdExpertCoachEnterprise> entities)
+	{
+		if (null != entities)
+		{
+			repository.delete(entities);
 		}
 	}
 	

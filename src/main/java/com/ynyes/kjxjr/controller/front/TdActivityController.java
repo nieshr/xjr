@@ -376,7 +376,11 @@ public class TdActivityController {
         TdActivity activity = tdActivityService.findOne(id);
         if (null != activity)
         {
-        	map.addAttribute("roadshow_list", tdExpertCoachEnterpriseService.findByEnterpriseIdOrderByExpertIdAsc(id));
+        	List<TdExpertCoachEnterprise> roadshowList = tdExpertCoachEnterpriseService.findByEnterpriseIdOrderByExpertIdAsc(id);
+        	if (null != roadshowList && roadshowList.size()>0)
+        	{
+        		map.addAttribute("roadshow_list", roadshowList);
+        	}
             map.addAttribute("mark", "activity");
 	        map.addAttribute("activity", activity);
 	        map.addAttribute("recommend_list" , tdActivityEnterpriseService.findByActivityIdAndStatusIdOrderBySortIdAsc(id, 2L));
@@ -746,6 +750,8 @@ public class TdActivityController {
         	List<TdEnterpriseGrade> enterpriseGrade = tdEnterpriseGradeService.findByActivityIdOrderByIdAsc(id);
         	tdEnterpriseGradeService.delete(enterpriseGrade);
         	
+        	List<TdExpertCoachEnterprise> coach = tdExpertCoachEnterpriseService.findByEnterpriseIdOrderByExpertIdAsc(id);
+        	tdExpertCoachEnterpriseService.delete(coach);
         	
         }
 
@@ -1087,6 +1093,8 @@ public class TdActivityController {
             		newEnter.setMobile(enterprise.getMobile());
             		newEnter.setQQ(enterprise.getChat());
             		newEnter.setProfile(enterprise.getProfile());
+            		newEnter.setPptUrl(activity.getPptUrl());
+            		newEnter.setFileUrl(activity.getFileUrl());
             		newEnter.setStatusId(0L);
             		tdActivityEnterpriseService.save(newEnter);
             	}
@@ -1107,6 +1115,8 @@ public class TdActivityController {
             		activityEnterprise.setMobile(enterprise.getMobile());
             		activityEnterprise.setQQ(enterprise.getChat());
             		activityEnterprise.setProfile(enterprise.getProfile());
+            		activityEnterprise.setPptUrl(activity.getPptUrl());
+            		activityEnterprise.setFileUrl(activity.getFileUrl());
             		tdActivityEnterpriseService.save(activityEnterprise);
             	}
                 /*添加 end*/
@@ -1187,6 +1197,8 @@ public class TdActivityController {
         		newEnter.setMobile(enterprise.getMobile());
         		newEnter.setQQ(enterprise.getChat());
         		newEnter.setProfile(enterprise.getProfile());
+        		newEnter.setPptUrl(activity.getPptUrl());
+        		newEnter.setFileUrl(activity.getFileUrl());
         		newEnter.setStatusId(0L);
         		tdActivityEnterpriseService.save(newEnter);
         	}
@@ -1207,6 +1219,8 @@ public class TdActivityController {
         		activityEnterprise.setMobile(enterprise.getMobile());
         		activityEnterprise.setQQ(enterprise.getChat());
         		activityEnterprise.setProfile(enterprise.getProfile());
+        		activityEnterprise.setPptUrl(activity.getPptUrl());
+        		activityEnterprise.setFileUrl(activity.getFileUrl());
         		tdActivityEnterpriseService.save(activityEnterprise);
         	}
         	
@@ -1565,26 +1579,6 @@ public class TdActivityController {
         }
         
 
-        
-//        TdActivity unfinish = tdActivityService.findByStatusId(0L);
-//        if (null!=unfinish)
-//        {
-//        	TdActivity activity = tdActivityService.findOne(id);
-//        	activity.setTitle(title);
-//        	activity.setActivityType(activityType);
-//        	activity.setRegion(region);
-//        	activity.setDate(dateF);
-//        	activity.setAddress(address);
-//        	activity.setTheme(theme);
-//        	activity.setIntroduction(introduction);
-//        	activity.setPrepareOn(prepareOnF);
-//        	activity.setPrepareOff(prepareOffF);
-//        	activity.setEventEnd(eventEndF);
-//        	activity.setStatusId(0L);
-//        	tdActivityService.save(activity);
-//        }
-//        else
-//        {
     	TdActivity activity = null;
     	if (null == id)
     	{
@@ -1593,6 +1587,7 @@ public class TdActivityController {
     	else
     	{
     		activity = tdActivityService.findOne(id);
+    		
     	}
     	if (null != date)
     	{
@@ -1613,6 +1608,24 @@ public class TdActivityController {
         	activity.setEventEnd(eventEndF);
 //        	activity.setStatusId(0L);
         	tdActivityService.save(activity);
+        	
+    		//同步企业活动的表
+    		List<TdActivityEnterprise> aeList = tdActivityEnterpriseService.findByActivityId(id);
+    		if (null != aeList && aeList.size()>0)
+    		{
+    			for (TdActivityEnterprise aeitem : aeList)
+    			{
+    				aeitem.setActivityTitle(title);
+    				aeitem.setActivityType(activityType);
+    				aeitem.setArea(region);
+    				aeitem.setDate(dateF);
+    				aeitem.setPrepareOn(prepareOnF);
+    				aeitem.setPrepareOff(prepareOffF);
+    				aeitem.setPptUrl(activity.getPptUrl());
+    				aeitem.setFileUrl(activity.getFileUrl());
+    				tdActivityEnterpriseService.save(aeitem);
+    			}
+    		}
     	}
 
 
@@ -1740,6 +1753,24 @@ public class TdActivityController {
         tdActivity.setEventEnd(eventEnd1);
        
        	tdActivityService.save(tdActivity);
+       	
+		//同步企业活动的表
+		List<TdActivityEnterprise> aeList = tdActivityEnterpriseService.findByActivityId(id);
+		if (null != aeList && aeList.size()>0)
+		{
+			for (TdActivityEnterprise aeitem : aeList)
+			{
+				aeitem.setActivityTitle(title);
+				aeitem.setActivityType(activityType);
+				aeitem.setArea(region);
+				aeitem.setDate(date1);
+				aeitem.setPrepareOn(prepareOn1);
+				aeitem.setPrepareOff(prepareOff1);
+				aeitem.setPptUrl(tdActivity.getPptUrl());
+				aeitem.setFileUrl(tdActivity.getFileUrl());
+				tdActivityEnterpriseService.save(aeitem);
+			}
+		}
        
         res.put("code", 0);
         return res;

@@ -622,7 +622,11 @@ public class TdRegionController {
         map.addAttribute("activity", activity);
         map.addAttribute("user", user);
         
-        map.addAttribute("recommend_list" , tdActivityEnterpriseService.findByActivityIdAndStatusIdOrderBySortIdAsc(id, 2L));
+        List<TdActivityEnterprise> recommendList = tdActivityEnterpriseService.findByActivityIdAndStatusIdOrderBySortIdAsc(id, 2L);
+        if (recommendList.size()>0)
+        {
+        	map.addAttribute("recommend_list" , recommendList);
+        }
         map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityId(activity.getId()));
         map.addAttribute("selected_expert_list", tdActivityExpertService.findByActivityId(activity.getId()));
 
@@ -818,6 +822,8 @@ public  Map<String, Object> regionAddEnterprise(HttpServletRequest req,Long id,L
     		activityenterprise.setStatusId(statusId);
     		activityenterprise.setReason(reason);
     		activityenterprise.setSortId(num+1);
+    		activityenterprise.setPptUrl(activity.getPptUrl());
+    		activityenterprise.setFileUrl(activity.getFileUrl());
     		tdActivityEnterpriseService.save(activityenterprise);
     		
 //    		if (2 == statusId)
@@ -1083,6 +1089,8 @@ private void selectE(Long activityId ,Long[] ids, Integer[] chkIds)
         		newEnter.setMobile(enterprise.getMobile());
         		newEnter.setQQ(enterprise.getChat());
         		newEnter.setProfile(enterprise.getProfile());
+        		newEnter.setPptUrl(activity.getPptUrl());
+        		newEnter.setFileUrl(activity.getFileUrl());
         		newEnter.setStatusId(0L);
         		tdActivityEnterpriseService.save(newEnter);
         	}
@@ -1103,6 +1111,8 @@ private void selectE(Long activityId ,Long[] ids, Integer[] chkIds)
         		activityEnterprise.setMobile(enterprise.getMobile());
         		activityEnterprise.setQQ(enterprise.getChat());
         		activityEnterprise.setProfile(enterprise.getProfile());
+        		activityEnterprise.setPptUrl(activity.getPptUrl());
+        		activityEnterprise.setFileUrl(activity.getFileUrl());
         		tdActivityEnterpriseService.save(activityEnterprise);
         	}
             /*添加 end*/
@@ -1195,6 +1205,8 @@ public Map<String, Object>  candidateEnterprise(HttpServletRequest req,Long id,L
     		newEnter.setMobile(enterprise.getMobile());
     		newEnter.setQQ(enterprise.getChat());
     		newEnter.setProfile(enterprise.getProfile());
+    		newEnter.setPptUrl(activity.getPptUrl());
+    		newEnter.setFileUrl(activity.getFileUrl());
     		newEnter.setStatusId(0L);
     		tdActivityEnterpriseService.save(newEnter);
     	}
@@ -1215,6 +1227,8 @@ public Map<String, Object>  candidateEnterprise(HttpServletRequest req,Long id,L
     		activityEnterprise.setMobile(enterprise.getMobile());
     		activityEnterprise.setQQ(enterprise.getChat());
     		activityEnterprise.setProfile(enterprise.getProfile());
+    		activityEnterprise.setPptUrl(activity.getPptUrl());
+    		activityEnterprise.setFileUrl(activity.getFileUrl());
     		tdActivityEnterpriseService.save(activityEnterprise);
     	}
     	
@@ -1327,6 +1341,7 @@ public String  regionRemoveEnterprise(HttpServletRequest req,Long id,Long activi
 			    else  if(2 == statusId)
 			    {
 			    	activity.setStatusRecommend(1L);
+			    	activity.setStatusId(0L);
 			    	tdActivityService.save(activity);
 			    }
 			    
