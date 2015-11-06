@@ -58,6 +58,10 @@ public class TdActivityEnterprise {
     @Column
     private String fileUrl;
     
+    //项目扫描件
+    @Column
+    private String enterpriseFileUrl;
+    
     // 项目/企业
     @Column
     private String enterpriseTitle;
@@ -345,6 +349,14 @@ public class TdActivityEnterprise {
 
 	public void setWin(Long win) {
 		this.win = win;
+	}
+
+	public String getEnterpriseFileUrl() {
+		return enterpriseFileUrl;
+	}
+
+	public void setEnterpriseFileUrl(String enterpriseFileUrl) {
+		this.enterpriseFileUrl = enterpriseFileUrl;
 	}
 
 	
