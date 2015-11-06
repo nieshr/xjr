@@ -112,7 +112,7 @@ function submitCheck3()
 	    		<#if enterprise.dataBusiness??>
 	    		    <div style="margin-top:20px;">
 	    		    	<span>已上传资料：</span>
-	    		    	<span><a href="/download/data?name=${enterprise.dataBusiness!''}" title="点击下载">【可行性报告】</a></span>
+	    		    	<a href="/download/data?name=${enterprise.dataBusiness!''}" title="点击下载">【商业计划书】${enterprise.dataBusiness!''}</a>
 	    		    </div>	    		    
     		    </#if>
 	    	</dd>
@@ -129,7 +129,7 @@ function submitCheck3()
     		    <#if enterprise.dataPossible??>
 	    		    <div style="margin-top:20px;">
 	    		    	<span>已上传资料：</span>
-	    		    	<span><a href="/download/data?name=${enterprise.dataPossible!''}" title="点击下载">【可行性报告】</a></span>
+	    		    	<a href="/download/data?name=${enterprise.dataPossible!''}" title="点击下载">【可行性报告】${enterprise.dataPossible!''}</a>
 	    		    </div>
     		    </#if>
     	</dd>
@@ -146,7 +146,7 @@ function submitCheck3()
     		    <#if enterprise.dataOther??>
 	    		    <div style="margin-top:20px;">
 	    		    	<span>已上传资料：</span>
-	    		    	<span><a href="/download/data?name=${enterprise.dataOther!''}" title="点击下载">【可行性报告】</a></span>
+	    		    	<a href="/download/data?name=${enterprise.dataOther!''}" title="点击下载">【其他资料】${enterprise.dataOther!''}</a>
 	    		    </div>    		    
     		    </#if>
     	</dd>

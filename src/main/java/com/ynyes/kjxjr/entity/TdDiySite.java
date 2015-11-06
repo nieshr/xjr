@@ -31,7 +31,7 @@ public class TdDiySite {
     @Column
     private String address;
     
-    // 付款方式
+    // 【科技小巨人】投资机构
     @Column
     private String payType;
     

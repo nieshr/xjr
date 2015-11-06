@@ -8,6 +8,7 @@
 <script type="text/javascript" src="/mag/js/Validform_v5.3.2_min.js"></script>
 <script type="text/javascript" src="/mag/js/lhgdialog.js"></script>
 <script type="text/javascript" src="/mag/js/swfupload.js"></script>
+<script type="text/javascript" charset="utf-8" src="/mag/js/kindeditor-min.js"></script>
 <script type="text/javascript" src="/mag/js/swfupload.queue.js"></script>
 <script type="text/javascript" src="/mag/js/swfupload.handlers.js"></script>
 <script type="text/javascript" src="/mag/js/layout.js"></script>
@@ -16,6 +17,16 @@
 $(function () {
     //初始化表单验证
     $("#form1").initValidform();
+    
+        //初始化编辑器
+    var editor = KindEditor.create('.editor', {
+        width: '98%',
+        height: '350px',
+        resizeType: 1,
+        uploadJson: '/Verwalter/editor/upload?action=EditorFile',
+        fileManagerJson: '/Verwalter/editor/upload?action=EditorFile',
+        allowFileManager: true
+    });
     
     //初始化上传控件
     $(".upload-img").each(function () {
@@ -58,6 +69,12 @@ $(function () {
         	$(".region").css("display","block");
          }else{  
          	$(".region").css("display","none");
+         }  
+         
+         if(select_role == '3'){  
+        	$(".invest").css("display","block");
+         }else{  
+         	$(".invest").css("display","none");
          }  
         
      });  
@@ -140,17 +157,17 @@ $(function () {
        </dd>
   </dl>
 <#-- 专家归属的投资机构  -->
-  <dl  class="region" <#if diy_site?? && !diy_site.region?? || !diy_site?? || diy_site?? &&diy_site.region="">style= "display:none;"</#if>>
-      <dt>区县</dt>
+  <dl  class="invest" <#if diy_site?? && !diy_site.payType?? || !diy_site?? || diy_site?? &&diy_site.payType="">style= "display:none;"</#if>>
+      <dt>所属投资机构</dt>
       <dd>
            <div class="rule-single-select">
-                <select id="region" name="region"  sucmsg=" "  >
+                <select id="invest" name="payType"  sucmsg=" "  >
                
-                     <option value="" <#if !diy_site?? || !diy_site.region??>selected="selected"</#if>>请选择...</option>
+                     <option value="" <#if !diy_site?? || !diy_site.payType??>selected="selected"</#if>>请选择...</option>
 
-                     <#if region_list??>
-                     	<#list region_list as item>
-                     		<option value="${item.title!''}" <#if diy_site?? && diy_site.region?? && diy_site.region==item.title>selected="selected"</#if>>${item.title!''}</option> 
+                     <#if invest_list??>
+                     	<#list invest_list as item>
+                     		<option value="${item.source!''}" <#if diy_site?? && diy_site.payType?? && diy_site.payType==item.source>selected="selected"</#if>>${item.source!''}</option> 
           				</#list>
           			</#if>            
                 </select>
@@ -230,10 +247,10 @@ $(function () {
     </dd>
   </dl>
   
-  <dl>
-    <dt>描述说明</dt>
+  <dl  class="invest" <#if diy_site?? && !diy_site.payType?? || !diy_site?? || diy_site?? &&diy_site.payType="">style= "display:none;"</#if>>
+    <dt>简介</dt>
     <dd>
-      <textarea name="info" rows="2" cols="20" class="input normal"><#if diy_site??>${diy_site.info!""}</#if></textarea>
+      <textarea name="info" class="editor" style="visibility:hidden;"><#if diy_site??>${diy_site.info!""}</#if></textarea>
       <span class="Validform_checktip"></span>
     </dd>
   </dl>

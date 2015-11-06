@@ -39,6 +39,18 @@ public class TdExpert {
     @Column
     private String telephone;
     
+    // 投资机构
+    @Column
+    private String invest;
+    
+    // 简介
+    @Column
+    private String profile;
+    
+    // 封面图片
+    @Column
+    private String imgUrl;
+    
     // 联系电话
     @Column
     private String usermobile;
@@ -171,6 +183,30 @@ public class TdExpert {
 
 	public void setRoadshowActivityId(Long roadshowActivityId) {
 		this.roadshowActivityId = roadshowActivityId;
+	}
+
+	public String getInvest() {
+		return invest;
+	}
+
+	public void setInvest(String invest) {
+		this.invest = invest;
+	}
+
+	public String getProfile() {
+		return profile;
+	}
+
+	public void setProfile(String profile) {
+		this.profile = profile;
+	}
+
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
 	}
 
 	@Override

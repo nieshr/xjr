@@ -332,9 +332,10 @@ window.onload=done;
 			</dl>	   
         <#elseif mark?? && mark == "enterprise">
           <dl class="nav">
-          <dd><a href="/enterprise/check">基本资料</a></dd>
-          <dd><a href="/enterprise/activity/list">活动列表</a></dd>
-          <dd><a href="/enterprise/project">申请展示</a></dd>
+        <dd><a href="/enterprise/info">网上报名</a></dd>
+        <dd><a href="/enterprise/data">项目资料</a></dd>
+        <dd><a href="/enterprise/activity/list">活动列表</a></dd>
+        <dd><a href="/enterprise/project">申请展示</a></dd>
           </dl>   	     
 	   <#else>
 			<dl class="nav">
@@ -350,7 +351,7 @@ window.onload=done;
         	<dt><a href="#"></a></dt>
             <dd>
             	<p>当前所在位置:</p>
-            	<#if mark?? && mark == "region">
+            	<#if mark?? && (mark == "region"||mark=="enterprise")>
             	   <a href="#">查看活动</a>
             	<#else>
                 <a href="#">创建活动</a>
@@ -373,52 +374,52 @@ window.onload=done;
             
                 <#if activity.statusId??>
                     <#if activity.statusId==1>
-                        <div><h3 style="margin:0 0 10px 50px;">活动状态：已审核（不可修改资料）</h3></div>
+                        <div><h3 style="margin:0 0 10px 50px;">活动状态：已审核</h3></div>
                     <#elseif activity.statusId==2>
-                        <div><h3 style="margin:0 0 10px 50px;">活动状态：已结束（不可修改资料）</h3></div>
+                        <div><h3 style="margin:0 0 10px 50px;">活动状态：已结束</h3></div>
                     <#elseif activity.statusId==0>
-                        <div><h3 style="margin:0 0 10px 50px;">活动状态：未审核</h3></div>
+                        <div><h3 style="margin:0 0 10px 50px;">活动状态：筹备中</h3></div>
                     </#if>       
                 </#if>    
             </#if>         
-    			<div><span>活动名称：</span><input <#if pagetype??&& pagetype == "check" ||activity??&&activity.statusId??&&(activity.statusId==1||activity.statusId==2)>disabled=""</#if> type="text" name="title" id="title" datatype="*"value="<#if activity??>${activity.title!''}</#if>" /></div>
+    			<div><span>活动名称：</span><input <#if pagetype??&& pagetype == "check">disabled=""</#if> type="text" name="title" id="title" datatype="*"value="<#if activity??>${activity.title!''}</#if>" /></div>
     			<div>
     				<span>活动类型：</span>
-    				<select name="activityType" id="activityType" <#if pagetype??&& pagetype == "check" ||activity??&&activity.statusId??&&(activity.statusId==1||activity.statusId==2)>disabled=""</#if>>
+    				<select name="activityType" id="activityType" <#if pagetype??&& pagetype == "check">disabled=""</#if>>
     				    <#if activityType_list??>
     				        <#list activityType_list as item>
-    					        <option value="${item.title!''}" <#if activity??&&activity.activityType?? &&activity.activityType == item.title>selected="selected"</#if> <#if pagetype??&& pagetype == "check" ||activity??&&activity.statusId??&&(activity.statusId==1||activity.statusId==2)>disabled=""</#if>>${item.title!''}</option>
+    					        <option value="${item.title!''}" <#if activity??&&activity.activityType?? &&activity.activityType == item.title>selected="selected"</#if> <#if pagetype??&& pagetype == "check">disabled=""</#if>>${item.title!''}</option>
     					    </#list>
     					</#if>        
     				</select>
     			</div>
     			<div>
     			    <span>地区 ：</span>
-                    <select name="region" id="region" <#if pagetype??&& pagetype == "check" ||activity??&&activity.statusId??&&(activity.statusId==1||activity.statusId==2)>disabled=""</#if>>
+                    <select name="region" id="region" <#if pagetype??&& pagetype == "check">disabled=""</#if>>
                         <#if region_list??>
                             <#list region_list as item>
-                                <option value="${item.title!''}" <#if activity?? &&activity.region == item.title>selected="selected"</#if>  <#if pagetype??&& pagetype == "check" ||activity??&&activity.statusId??&&(activity.statusId==1||activity.statusId==2)>disabled=""</#if>>${item.title!''}</option>
+                                <option value="${item.title!''}" <#if activity?? &&activity.region == item.title>selected="selected"</#if>  <#if pagetype??&& pagetype == "check">disabled=""</#if>>${item.title!''}</option>
                             </#list>
                         </#if>        
                     </select>
     			</div>
     			<div><span>日期：</span>
-	                    <input <#if pagetype??&& pagetype == "check" ||activity??&&activity.statusId??&&(activity.statusId==1||activity.statusId==2)>disabled=""</#if> name="date" type="text" id="date" value="<#if activity??>${activity.date!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="填写正确格式" sucmsg=" " >
+	                    <input <#if pagetype??&& pagetype == "check" >disabled=""</#if> name="date" type="text" id="date" value="<#if activity??>${activity.date!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="填写正确格式" sucmsg=" " >
 	            </div>    
     			
-    			<div><span>地址：</span><input <#if pagetype??&& pagetype == "check" ||activity??&&activity.statusId??&&(activity.statusId==1||activity.statusId==2)>disabled=""</#if> type="text" name="address" id="address" datatype="*" value="<#if activity??>${activity.address!''}</#if>" /></div>
-    			<div><span>主题：</span><input <#if pagetype??&& pagetype == "check" ||activity??&&activity.statusId??&&(activity.statusId==1||activity.statusId==2)>disabled=""</#if> type="text" name="theme" id="theme" datatype="*"  value="<#if activity??>${activity.theme!''}</#if>" /></div>
+    			<div><span>地址：</span><input <#if pagetype??&& pagetype == "check" >disabled=""</#if> type="text" name="address" id="address" datatype="*" value="<#if activity??>${activity.address!''}</#if>" /></div>
+    			<div><span>主题：</span><input <#if pagetype??&& pagetype == "check" >disabled=""</#if> type="text" name="theme" id="theme" datatype="*"  value="<#if activity??>${activity.theme!''}</#if>" /></div>
     			
-				<div><span>简介：</span><textarea <#if pagetype??&& pagetype == "check" ||activity??&&activity.statusId??&&(activity.statusId==1||activity.statusId==2)>disabled=""</#if> name="introduction" id="introduction" datatype="*" ><#if activity??>${activity.introduction!''}</#if></textarea></div>
+				<div><span>简介：</span><textarea <#if pagetype??&& pagetype == "check" >disabled=""</#if> name="introduction" id="introduction" datatype="*" ><#if activity??>${activity.introduction!''}</#if></textarea></div>
     			<div>
     				<span>筹备开始时刻：</span>
-                        <input <#if pagetype??&& pagetype == "check" ||activity??&&activity.statusId??&&(activity.statusId==1||activity.statusId==2)>disabled=""</#if> name="prepareOn" id="prepareOn" type="text"  value="<#if activity??>${activity.prepareOn!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="填写正确格式" sucmsg=" ">
+                        <input <#if pagetype??&& pagetype == "check">disabled=""</#if> name="prepareOn" id="prepareOn" type="text"  value="<#if activity??>${activity.prepareOn!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="填写正确格式" sucmsg=" ">
     				<span>筹备结束时刻：</span>
-                        <input <#if pagetype??&& pagetype == "check" ||activity??&&activity.statusId??&&(activity.statusId==1||activity.statusId==2)>disabled=""</#if> name="prepareOff" id="prepareOff" type="text" value="<#if activity??>${activity.prepareOff!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="填写正确格式" sucmsg=" ">
+                        <input <#if pagetype??&& pagetype == "check" >disabled=""</#if> name="prepareOff" id="prepareOff" type="text" value="<#if activity??>${activity.prepareOff!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="填写正确格式" sucmsg=" ">
     			</div>
     			<div>
     			    <span>活动结束时刻：</span>
-                    <input <#if pagetype??&& pagetype == "check" ||activity??&&activity.statusId??&&(activity.statusId==1||activity.statusId==2)>disabled=""</#if> name="eventEnd" id="eventEnd" type="text" value="<#if activity??>${activity.eventEnd!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="填写正确格式" sucmsg=" ">
+                    <input <#if pagetype??&& pagetype == "check" >disabled=""</#if> name="eventEnd" id="eventEnd" type="text" value="<#if activity??>${activity.eventEnd!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="填写正确格式" sucmsg=" ">
     			</div>
     			<div>
     				<span style="margin-top: 6px;">预选项目：</span>
@@ -426,8 +427,26 @@ window.onload=done;
     				    <#if selected_enterprise_list??>
     				        <#list selected_enterprise_list as item>
 		    					<li>
-		    						<p class="p01"  style="width: 550px; float: left;text-align:left;"><a style="color:#000;" target=_blank title="查看项目详情" href="/activity/enterprise/check/${item.enterpriseId?c!''}">${item_index+1}.${item.enterpriseTitle!''}</a></p>
-		    						<a href="/activity/enterprise/check/${item.enterpriseId?c!''}" target=_blank>查看</a>
+		    						<p class="p01"  style="width: 505px; float: left;text-align:left;"><a style="color:#000;" target=_blank title="查看项目详情" href="<#if mark??&&(mark=="activity"||mark="region"||mark=="expert")>/activity/enterprise/check/${item.enterpriseId?c!''}<#else>javascript:void(0)</#if>">${item_index+1}.${item.enterpriseTitle!''}</a></p>
+		    						<#if mark??&&(mark=="activity"||mark="region"||mark=="expert")>
+			    						<a href="/activity/enterprise/check/${item.enterpriseId?c!''}" target=_blank>查看</a>
+			    						<#if item.enterpriseFileUrl??>
+				    						<a>丨</a>
+				    						<a href="/download/data?name=${item.enterpriseFileUrl!''} " title="点击下载文件">扫描件</a>
+			    						</#if>
+			    						<#if item.dataBusiness??>
+				    						<a>丨</a>
+				    						<a href="/download/data?name=${item.dataBusiness!''}" title="点击下载文件">商业计划书</a>
+			    						</#if>
+			    						<#if item.dataPossible??>
+				    						<a>丨</a>
+				    						<a href="/download/data?name=${item.dataPossible!''}" title="点击下载文件">可行性报告</a>
+			    						</#if>
+			    						<#if item.dataOther??>
+				    						<a>丨</a>
+				    						<a href="/download/data?name=${item.dataOther!''}" title="点击下载文件">其他资料</a>
+			    						</#if>
+			    					</#if>	
 		    						<#--
 		                            <a>丨</a>
 		                            <a href="/enterprise/grade?activityId=${item.activityId?c!''}&enterpriseId=${item.enterpriseId?c!''}">得分</a>
@@ -454,94 +473,75 @@ window.onload=done;
     				    <#if recommend_list??>
     				        <#list recommend_list as item>
 		    					<li>
-		    					    <p class="p01" style="width: 550px; float: left;text-align:left;"><b style="float:left;">${item_index+1}.${item.enterpriseTitle!''}</b><#if item.win??&&item.win==1><img src="/client/images/n0.png" style="width:12px; height:12px;margin-left:3px;" title="胜出项目" alt="胜出" /> </#if></p> 
-		    					    <a href="/activity/enterprise/check/${item.enterpriseId?c!''}" target=_blank>查看</a> 
-		    					    <a>丨</a> 
+		    					    <p class="p01" style="width: 470px; float: left;text-align:left;"><b style="float:left;">${item_index+1}.${item.enterpriseTitle!''}</b><#if item.win??&&item.win==1><img src="/client/images/n0.png" style="width:12px; height:12px;margin-left:3px;" title="胜出项目" alt="胜出" /> </#if></p> 
 		                            <#if item.isGrade??&&item.isGrade>
 		                           		<a  href="/enterprise/grade/?activityId=${item.activityId?c!''}&enterpriseId=${item.enterpriseId?c!''}" title="查看该项目的得分"    target="_blank">得分</a>
 		                            <#else>
 		                             	<a   href="javascript:void(0)" title="评分尚未开始"  style="color:#666; " >得分</a>
 		                            </#if>		 
 		                            
-		                            <#if mark??&&mark="activity">
-			                            <a>丨</a>
-			                            <#if item.statusId??&&item.statusId==1>
-			                              <a href="/activity/getCoach?enterpriseId=${item.enterpriseId?c!''}&activityId=${item.activityId?c!''}">分配路演辅导</a>
-			                            <#else>
-			                              <a style="color:#666;" href="javascript:void(0)">分配路演辅导</a>
-			                            </#if> 
-			                            <a>丨</a>
-			                            <a <#if item.pptUrl??>href="${item.pptUrl}" <#else>style="color:#666;"</#if>>PPT下载</a>
-			                            <a>丨</a>
-			                            <#if activity??&&activity.statusId??&&activity.statusId==1>
-				                            <a href="javascript:sendSms(${item.enterpriseId?c!''},${item.activityId?c!''},1);">短信通知</a>
-				                            <a>丨</a> 
-			                            </#if>
-			                            <#if item_has_next>
-			                           	 	<a href="javascript:sortDown(${item.id?c!''} , ${item.activityId?c!''});"><img style="width:10px;height:13px;margin-top: 8px;"src="/client/images/down1.png" alt="下移" title="下移排序"/></a>
-			                            </#if>		                            
-			                            <#if item_index != 0>
-			                           	 	<a href="javascript:sortUp(${item.id?c!''} , ${item.activityId?c!''});"><img style="width:10px;height:13px;margin-top: 8px; <#if item_has_next>margin-left:3px;</#if>" src="/client/images/up1.png" alt="上移" title="上移排序"/></a>
-			                            </#if>
-			                        <#else>
-			                            <a>丨</a>
-                                        <a <#if item.pptUrl??>href="${item.pptUrl}" <#else>style="color:#666;"</#if>>PPT下载</a>
-			                        </#if>    
-		                            <a style="display:block;  width:80px;"></a>
-		                            <p class="p02"><#if item.coachName??>辅导专家，${item.coachName!''}</#if></p>
-		    						
+		    						<#if mark??&&(mark=="activity"||mark="region"||mark=="expert")>
+		    							<a>丨</a>
+			    						<a href="/activity/enterprise/check/${item.enterpriseId?c!''}" target=_blank>查看</a>
+			    						<#if item.enterpriseFileUrl??>
+				    						<a>丨</a>
+				    						<a href="/download/data?name=${item.enterpriseFileUrl!''} " title="点击下载文件">扫描件</a>
+			    						</#if>
+			    						<#if item.dataBusiness??>
+				    						<a>丨</a>
+				    						<a href="/download/data?name=${item.dataBusiness!''}" title="点击下载文件">商业计划书</a>
+			    						</#if>
+			    						<#if item.dataPossible??>
+				    						<a>丨</a>
+				    						<a href="/download/data?name=${item.dataPossible!''}" title="点击下载文件">可行性报告</a>
+			    						</#if>
+			    						<#if item.dataOther??>
+				    						<a>丨</a>
+				    						<a href="/download/data?name=${item.dataOther!''}" title="点击下载文件">其他资料</a>
+			    						</#if>
+			    					</#if>	
 		    					</li>
     					    </#list>
     					</#if>    
                         <#if pagetype??&& pagetype == "check">
-                        	<#if activity??&&activity.fileUrl??>
-	                        	<input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#e67817;color:#fff;margin-top:10px;" type="button" onclick="location.href='/download/data?name=${activity.fileUrl!''}'" value="推荐表下载" />
-                        	<#else>
-                        		<input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#666;color:#fff;margin-top:10px;" type="button"  value="推荐表下载" />
-                        	</#if>	
-                        	<#if mark??&&mark="activity">
-	                        	<#if activity??&&activity.statusId??&&activity.statusId==1>
-	                        		<input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#666;color:#fff; " type="button" onclick="javascript:passCheck(${activity.id?c!''});"  value="更新评分表" />
-	                        		<input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#666;color:#fff; " type="button" onclick="javascript:cancelCheck(${activity.id?c!''});"  value="取消审核" />
-	                        	<#elseif activity??&&activity.statusId??&&activity.statusId==0>	
-	                        		<input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#e67817;color:#fff; " type="button" onclick="javascript:activityPass(${activity.id?c!''});" value="通过审核" />
-	                        	</#if>
-                        	</#if>
+	                        <#if mark??&&(mark=="activity"||mark="region"||mark=="expert")>
+	                        	<#if activity??&&activity.fileUrl??>
+		                        	<input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#e67817;color:#fff;margin-top:10px;" type="button" onclick="location.href='/download/data?name=${activity.fileUrl!''}'" value="推荐表下载" />
+	                        	<#else>
+	                        		<input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#666;color:#fff;margin-top:10px;" type="button"  value="推荐表下载" />
+	                        	</#if>	
+	                        </#if>	
                         <#else>
-                        	
     					    	<input id="selectEnterprise" style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background:white url(images/active_add_project.png) no-repeat 10px; padding-left: 13px;" type="button" value="添加项目" />
-    				    
     				    </#if>
     				</ul>
     			</div> 
     			</#if>
-    			<div style="margin-top:50px;">
-    				<span style="margin-top: 6px;">评委专家：</span>
-    				<ul class="active_project_text">
-    		    	    <#if selected_expert_list??>
-    				        <#list selected_expert_list as item>
-		    					<li>
-		    						<p class="p01" style="  width: 250px;float: left; text-align: left;">${item_index+1}.${item.name!''}</p>
-		    						<a style="display:block;  width:100px;"></a>
-
-                                    <#if activity.statusId??&&activity.statusId==0 || !activity.statusId??>
-                                   	    <a href="javascript:void(0)" title="评分尚未开始" style="color:#666;" target="_blank">评分情况</a>
-                                    <#else>
-                                    	<a href="/expert/search/grade?activityId=${activity.id?c!''}&expertId=${item.expertId?c!''}" title="查看该评委的评分详情" target="_blank">评分情况</a>
-                                    </#if>
-                                    <#if activity??&&activity.statusId??&&activity.statusId==1&&mark??&&mark="activity">
-	                                    <a>丨</a> 
-	                                    <a href="javascript:sendSms(${item.expertId?c!''},${item.activityId?c!''},3);">短信通知</a>
-                                    </#if>
-		    					</li>
-    					    </#list>
-    					</#if>    
-                        <#if pagetype??&& pagetype == "check">
-                        <#else>
-    					   <input id="selectExpert" style="cursor:pointer;width:100px; height:30px; line-height: 30px; border: none;background:white url(images/active_add_project.png) no-repeat 10px; padding-left: 13px;" type="button" <#if pagetype??&& pagetype == "check" ||activity??&&activity.statusId??&&(activity.statusId==1||activity.statusId==2)>disabled=""</#if> value="添加评委" />
-    				    </#if>
-    				</ul>
-    			</div>
+    			<#if mark??&&(mark=="activity"||mark="region"||mark=="expert")||mark??&&mark=="enterprise"&&activity.statusId??&&activity.statusId==2>
+	    			<div style="margin-top:50px;">
+	    				<span style="margin-top: 6px;">评委专家：</span>
+	    				<ul class="active_project_text">
+	    		    	    <#if selected_expert_list??>
+	    				        <#list selected_expert_list as item>
+			    					<li>
+			    						<p class="p01" style="  width: 250px;float: left; text-align: left;">${item_index+1}.${item.name!''}</p>
+			    						<a style="display:block;  width:100px;"></a>
+	
+	                                    <#if activity.statusId??&&activity.statusId==0 || !activity.statusId??>
+	                                   	    <a href="javascript:void(0)" title="评分尚未开始" style="color:#666;" target="_blank">评分情况</a>
+	                                    <#else>
+	                                    	<a href="/expert/search/grade?activityId=${activity.id?c!''}&expertId=${item.expertId?c!''}" title="查看该评委的评分详情" target="_blank">评分情况</a>
+	                                    </#if>
+			    					</li>
+	    					    </#list>
+	    					</#if>    
+	                        <#if pagetype??&& pagetype == "check">
+	                        <#else>
+	    					   <input id="selectExpert" style="cursor:pointer;width:100px; height:30px; line-height: 30px; border: none;background:white url(images/active_add_project.png) no-repeat 10px; padding-left: 13px;" type="button" <#if pagetype??&& pagetype == "check" ||activity??&&activity.statusId??&&(activity.statusId==1||activity.statusId==2)>disabled=""</#if> value="添加评委" />
+	    				    </#if>
+	    				</ul>
+	    			</div>
+	    		</#if>	
     			<#-- 路演辅导列表 -->
                <#if roadshow_list??>
                <div style="margin-top:50px;">
@@ -558,7 +558,7 @@ window.onload=done;
                 </#if>     	
                 <#-- 路演辅导列表  end -->		
             <!-- 评分汇总 -->
-            	<#if activity??&&activity.statusId??&&activity.statusId==1>
+            	<#if activity??&&activity.statusId??&&(activity.statusId==1||activity.statusId==2)>
                     <div>
                         <span style="margin-top: 6px;">路演结果：</span>
                         <ul class="active_project_text">
@@ -571,7 +571,7 @@ window.onload=done;
                 </#if>    
     			<!-- 评分汇总 end-->
      <#if pagetype?? && pagetype == "check">
-     <#elseif activity??&&activity.statusId??&&activity.statusId==0||!activity.statusId??>
+     <#elseif activity??&&activity.statusId??&&activity.statusId==0 || activity?? && !activity.statusId?? || !activity??>
     	<dt style=" margin-top: 40px;" class="dt05">
     	   <input type="submit" value="保存" style="cursor:pointer;"/>
     	</dt>

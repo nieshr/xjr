@@ -106,6 +106,10 @@ public class TdActivity {
     @Column 
     private Long timeId;
     
+    //活动评分状态ID【0：未开始 ；1：已开始；2：超过时间】 
+    @Column 
+    private Long gradetimeId;
+    
     // 推荐表
     @Column
     private String fileUrl;
@@ -300,6 +304,14 @@ public class TdActivity {
 
 	public void setTimeId(Long timeId) {
 		this.timeId = timeId;
+	}
+
+	public Long getGradetimeId() {
+		return gradetimeId;
+	}
+
+	public void setGradetimeId(Long gradetimeId) {
+		this.gradetimeId = gradetimeId;
 	}
 
 	

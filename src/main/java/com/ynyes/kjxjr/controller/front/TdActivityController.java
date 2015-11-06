@@ -164,7 +164,11 @@ public class TdActivityController {
             off.setTime(prepareOff);
         	Date eventDate = activity.getDate();
             Calendar event =  Calendar.getInstance();
-            event.setTime(prepareOff);
+            event.setTime(eventDate);
+        	Date eventEnd = activity.getEventEnd();
+            Calendar eventOff =  Calendar.getInstance();
+            eventOff.setTime(eventEnd);
+            
             
             //待筹备
             if (cn.before(on))
@@ -179,13 +183,13 @@ public class TdActivityController {
             	tdActivityService.save(activity);
             }
             //超过筹备时间
-            else if (cn.after(off)&&cn.before(event))
+            else if (cn.after(off)&&cn.before(eventOff))
             {
             	activity.setTimeId(2L);
             	tdActivityService.save(activity);
             }
             //超过活动时间
-            else if (cn.after(event))
+            else if (cn.after(eventOff))
             {
             	activity.setTimeId(3L);
             	tdActivityService.save(activity);
@@ -229,6 +233,7 @@ public class TdActivityController {
         map.addAttribute("user", user);
         map.addAttribute("pagetype", "create");
         map.addAttribute("done", done);
+        map.addAttribute("mark", "activity");
 
         return "/client/activity_create";
     }
@@ -528,6 +533,29 @@ public class TdActivityController {
         return res;
     }
     
+	@RequestMapping(value = "/search/grade")
+	public String searchGrade(Long activityId,Long expertId,ModelMap map , HttpServletRequest req ){
+		 String username = (String) req.getSession().getAttribute("activityUsername");
+		 if (null == username)
+		 {
+			 return "redirect:/login";
+		 }
+		 
+		TdExpert expert = tdExpertService.findOne(expertId);
+		TdActivity activity = tdActivityService.findOne(activityId);
+		List<TdEnterpriseGrade> grade_list = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderBySordIdAsc(expert.getId(),
+				activityId);
+		
+		map.addAttribute("print", "print");
+		map.addAttribute("type", "check");
+		map.addAttribute("grade_list", grade_list);
+		map.addAttribute("activityId", activityId);
+		map.addAttribute("activity", activity);
+		map.addAttribute("expertId", expertId);
+		map.addAttribute("expert", expert);
+		return "/client/project_grade";
+	}
+    
     //活动取消审核
     @RequestMapping(value = "/cancel")
     @ResponseBody
@@ -719,6 +747,7 @@ public class TdActivityController {
         {
         	map.addAttribute("done", done);
         }
+        map.addAttribute("mark","activity");
         map.addAttribute("user", user);
         map.addAttribute("pagetype", "edit");
 
@@ -752,9 +781,52 @@ public class TdActivityController {
         	
         	List<TdExpertCoachEnterprise> coach = tdExpertCoachEnterpriseService.findByEnterpriseIdOrderByExpertIdAsc(id);
         	tdExpertCoachEnterpriseService.delete(coach);
+        
         	
         }
 
+        //时间状态
+        Date now = new Date();
+        Calendar cn =  Calendar.getInstance();
+        cn.setTime(now);
+        List<TdActivity> allActivity = tdActivityService.findAll();
+        for(TdActivity item: allActivity )
+        {
+        	Date prepareOn = item.getPrepareOn();
+            Calendar on =  Calendar.getInstance();
+            on.setTime(prepareOn);
+        	Date prepareOff = item.getPrepareOff();
+            Calendar off =  Calendar.getInstance();
+            off.setTime(prepareOff);
+        	Date eventDate = item.getDate();
+            Calendar event =  Calendar.getInstance();
+            event.setTime(eventDate);
+            
+            //待筹备
+            if (cn.before(on))
+            {
+            	item.setTimeId(0L);
+            	tdActivityService.save(item);
+            }
+            //筹备中
+            else if (cn.after(on)&&cn.before(off))
+            {
+            	item.setTimeId(1L);
+            	tdActivityService.save(item);
+            }
+            //超过筹备时间
+            else if (cn.after(off)&&cn.before(event))
+            {
+            	item.setTimeId(2L);
+            	tdActivityService.save(item);
+            }
+            //超过活动时间
+            else if (cn.after(event))
+            {
+            	item.setTimeId(3L);
+            	tdActivityService.save(item);
+            }
+        }
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
 //        Page<TdActivity> activityPage = tdActivityService.findAllOrderByIdDesc(page,  ClientConstant.pageSize);
         
@@ -818,7 +890,8 @@ public class TdActivityController {
         
 //        map.addAttribute("activity_page", activityPage);
         map.addAttribute("user", user);
-
+        map.addAttribute("mark", "activity");
+        
         return "/client/activity_create";
     }
     
@@ -1093,6 +1166,10 @@ public class TdActivityController {
             		newEnter.setMobile(enterprise.getMobile());
             		newEnter.setQQ(enterprise.getChat());
             		newEnter.setProfile(enterprise.getProfile());
+            		newEnter.setEnterpriseFileUrl(enterprise.getFileUrl());
+            		newEnter.setDataBusiness(enterprise.getDataBusiness());
+            		newEnter.setDataPossible(enterprise.getDataPossible());
+            		newEnter.setDataOther(enterprise.getDataOther());
             		newEnter.setPptUrl(activity.getPptUrl());
             		newEnter.setFileUrl(activity.getFileUrl());
             		newEnter.setStatusId(0L);
@@ -1115,6 +1192,10 @@ public class TdActivityController {
             		activityEnterprise.setMobile(enterprise.getMobile());
             		activityEnterprise.setQQ(enterprise.getChat());
             		activityEnterprise.setProfile(enterprise.getProfile());
+            		activityEnterprise.setDataBusiness(enterprise.getDataBusiness());
+            		activityEnterprise.setDataPossible(enterprise.getDataPossible());
+            		activityEnterprise.setDataOther(enterprise.getDataOther());
+            		activityEnterprise.setEnterpriseFileUrl(enterprise.getFileUrl());
             		activityEnterprise.setPptUrl(activity.getPptUrl());
             		activityEnterprise.setFileUrl(activity.getFileUrl());
             		tdActivityEnterpriseService.save(activityEnterprise);
@@ -1197,6 +1278,10 @@ public class TdActivityController {
         		newEnter.setMobile(enterprise.getMobile());
         		newEnter.setQQ(enterprise.getChat());
         		newEnter.setProfile(enterprise.getProfile());
+        		newEnter.setDataBusiness(enterprise.getDataBusiness());
+        		newEnter.setDataPossible(enterprise.getDataPossible());
+        		newEnter.setDataOther(enterprise.getDataOther());
+        		newEnter.setEnterpriseFileUrl(enterprise.getFileUrl());
         		newEnter.setPptUrl(activity.getPptUrl());
         		newEnter.setFileUrl(activity.getFileUrl());
         		newEnter.setStatusId(0L);
@@ -1219,6 +1304,10 @@ public class TdActivityController {
         		activityEnterprise.setMobile(enterprise.getMobile());
         		activityEnterprise.setQQ(enterprise.getChat());
         		activityEnterprise.setProfile(enterprise.getProfile());
+        		activityEnterprise.setDataBusiness(enterprise.getDataBusiness());
+        		activityEnterprise.setDataPossible(enterprise.getDataPossible());
+        		activityEnterprise.setDataOther(enterprise.getDataOther());
+        		activityEnterprise.setEnterpriseFileUrl(enterprise.getFileUrl());
         		activityEnterprise.setPptUrl(activity.getPptUrl());
         		activityEnterprise.setFileUrl(activity.getFileUrl());
         		tdActivityEnterpriseService.save(activityEnterprise);
@@ -1230,79 +1319,7 @@ public class TdActivityController {
         map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityId(activityId));
         return "/client/activity_selected_enterprise";
     }
-//    //批量增加
-//    @RequestMapping(value = "/addEnterprises")
-//    public String  addEnterprises(HttpServletRequest req, 
-//    		Long[] listId,
-//            Integer[] listChkId,
-//            Long activityId,
-//    		ModelMap map) {
-//        String username = (String) req.getSession().getAttribute("activityUsername");
-//
-//        if (null == username) {
-//            return "redirect:/login";
-//        }
-//      
-//        addEnterprise(listId, listChkId,activityId);
-//        
-//        
-//        TdActivity activity = tdActivityService.findByStatusId(0L);
-//      
-//     
-//       	map.addAttribute("activity", activity);
-//       	map.addAttribute("activityId", activityId);
-//     	map.addAttribute("statusId", 0);
-//     	map.addAttribute("enterprise_page", enterprisePage);
-//     	map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityId(activityId));
-//     	map.addAttribute("region_list", tdRegionService.findByIsEnableTrueOrderBySortIdAsc());
-//     	map.addAttribute("enterpriseType_list", tdEnterpriseTypeService.findByIsEnableTrueOrderBySortIdAsc());
-//        map.addAttribute("activityId",activityId);
-//        map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityId(activityId));
-//        return "/client/activity_selectEnterprise";
-//    }
-//    
-//    private void addEnterprise(Long[] ids, Integer[] chkIds,Long activityId)
-//    {
-//    	if (null == ids || null == chkIds
-//                || ids.length < 1 || chkIds.length < 1||null == activityId)
-//        {
-//            return;
-//        }
-//        
-//        for (int chkId : chkIds)
-//        {
-//            if (chkId >=0 && ids.length > chkId)
-//            {
-//                Long id = ids[chkId];
-//
-//            	TdEnterprise enterprise = tdEnterpriseService.findOne(id);
-//            	TdActivity activity = tdActivityService.findOne(activityId);
-//            	
-//            	TdActivityEnterprise ActivityEnterprise = tdActivityEnterpriseService.findByActivityIdAndEnterpriseId(activityId,id);
-//            	if (null == ActivityEnterprise)
-//            	{
-//            		TdActivityEnterprise newEnter =new  TdActivityEnterprise();
-//            		newEnter.setEnterpriseId(id);
-//            		newEnter.setCreateTime(new Date());
-//            		newEnter.setEnterpriseTitle(enterprise.getTitle());
-//            		newEnter.setActivityId(activity.getId());
-//            		newEnter.setActivityTitle(activity.getTitle());
-//            		newEnter.setArea(enterprise.getArea());
-//            		newEnter.setType(enterprise.getType());
-//            		tdActivityEnterpriseService.save(newEnter);
-//            	}
-//            	else
-//            	{
-//            		ActivityEnterprise.setCreateTime(new Date());
-//            		ActivityEnterprise.setEnterpriseTitle(enterprise.getTitle());
-//            		ActivityEnterprise.setActivityTitle(activity.getTitle());
-//            		ActivityEnterprise.setArea(enterprise.getArea());
-//            		ActivityEnterprise.setType(enterprise.getType());
-//            		tdActivityEnterpriseService.save(ActivityEnterprise);
-//            	}
-//            }
-//        }
-//    }
+
 
     @RequestMapping(value = "/removeEnterprise")
     public String  removeEnterprise(HttpServletRequest req,Long id,Long activityId,
@@ -1332,43 +1349,7 @@ public class TdActivityController {
         return "/client/activity_selected_enterprise";
     }
     
-//    //批量取消
-//    @RequestMapping(value = "/removeEnterprises")
-//    public String  removeEnterprises(HttpServletRequest req,
-//    		Long activityId,
-//    		Long[] listId,
-//            Integer[] listChkId,
-//    		ModelMap map) {
-//        String username = (String) req.getSession().getAttribute("activityUsername");
-//
-//        if (null == username) {
-//            return "redirect:/login";
-//        }
-//        removeEnterprise(listId, listChkId);
-//        
-//        map.addAttribute("activityId",activityId);
-//        map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityId(activityId));
-//        return "/client/activity_selectEnterprise";
-//    }
-//    
-//    private void removeEnterprise(Long[] ids, Integer[] chkIds)
-//    {
-//    	if (null == ids || null == chkIds
-//                || ids.length < 1 || chkIds.length < 1)
-//        {
-//            return;
-//        }
-//        
-//        for (int chkId : chkIds)
-//        {
-//            if (chkId >=0 && ids.length > chkId)
-//            {
-//                Long id = ids[chkId];
-//                
-//                tdActivityEnterpriseService.delete(id);
-//            }
-//        }
-//    }
+
     /*
      * 创建活动:选专家评委
      * 
@@ -1976,7 +1957,7 @@ public class TdActivityController {
     		}
         }
         
-        return "redirect:/activity/check?id="+activityId;
+        return "redirect:/activity/getGrade?activityId="+activityId+"&mark=activity";
     }
     
     
@@ -2001,10 +1982,10 @@ public class TdActivityController {
           	TdActivityEnterprise ActivityEnterprise = tdActivityEnterpriseService.findOne(id);
           	if (null != ActivityEnterprise)
           	{
-          		ActivityEnterprise.setWin(1L); 
+          		ActivityEnterprise.setWin(activityId); 
           		tdActivityEnterpriseService.save(ActivityEnterprise);
           		TdEnterprise enterprise = tdEnterpriseService.findOne(ActivityEnterprise.getEnterpriseId());
-          		enterprise.setWin(1L); 
+          		enterprise.setWin(activityId); 
           		tdEnterpriseService.save(enterprise);
       
           	}
@@ -2239,7 +2220,7 @@ public class TdActivityController {
                  row = sheet.createRow((int) i + 4);  
                  row.setHeight((short) (20 * 20));  
                  cell = row.createCell((short) 0);
-                 if (null != grade.getWin() && grade.getWin() == 1)
+                 if (null != grade.getWin() && grade.getWin() == grade.getActivityId())
                  {
                 	 cell.setCellValue("入选");
                  }

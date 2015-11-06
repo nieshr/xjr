@@ -363,7 +363,7 @@ public class TdRegionController {
             off.setTime(prepareOff);
         	Date eventDate = activity.getDate();
             Calendar event =  Calendar.getInstance();
-            event.setTime(prepareOff);
+            event.setTime(eventDate);
             
             //待筹备
             if (cn.before(on))
@@ -822,6 +822,10 @@ public  Map<String, Object> regionAddEnterprise(HttpServletRequest req,Long id,L
     		activityenterprise.setStatusId(statusId);
     		activityenterprise.setReason(reason);
     		activityenterprise.setSortId(num+1);
+    		activityenterprise.setDataBusiness(enterprise.getDataBusiness());
+    		activityenterprise.setDataPossible(enterprise.getDataPossible());
+    		activityenterprise.setDataOther(enterprise.getDataOther());
+    		activityenterprise.setEnterpriseFileUrl(enterprise.getFileUrl());
     		activityenterprise.setPptUrl(activity.getPptUrl());
     		activityenterprise.setFileUrl(activity.getFileUrl());
     		tdActivityEnterpriseService.save(activityenterprise);
@@ -1089,6 +1093,9 @@ private void selectE(Long activityId ,Long[] ids, Integer[] chkIds)
         		newEnter.setMobile(enterprise.getMobile());
         		newEnter.setQQ(enterprise.getChat());
         		newEnter.setProfile(enterprise.getProfile());
+        		newEnter.setDataBusiness(enterprise.getDataBusiness());
+        		newEnter.setDataPossible(enterprise.getDataPossible());
+        		newEnter.setDataOther(enterprise.getDataOther());
         		newEnter.setPptUrl(activity.getPptUrl());
         		newEnter.setFileUrl(activity.getFileUrl());
         		newEnter.setStatusId(0L);
@@ -1111,6 +1118,9 @@ private void selectE(Long activityId ,Long[] ids, Integer[] chkIds)
         		activityEnterprise.setMobile(enterprise.getMobile());
         		activityEnterprise.setQQ(enterprise.getChat());
         		activityEnterprise.setProfile(enterprise.getProfile());
+        		activityEnterprise.setDataBusiness(enterprise.getDataBusiness());
+        		activityEnterprise.setDataPossible(enterprise.getDataPossible());
+        		activityEnterprise.setDataOther(enterprise.getDataOther());
         		activityEnterprise.setPptUrl(activity.getPptUrl());
         		activityEnterprise.setFileUrl(activity.getFileUrl());
         		tdActivityEnterpriseService.save(activityEnterprise);
@@ -1205,6 +1215,9 @@ public Map<String, Object>  candidateEnterprise(HttpServletRequest req,Long id,L
     		newEnter.setMobile(enterprise.getMobile());
     		newEnter.setQQ(enterprise.getChat());
     		newEnter.setProfile(enterprise.getProfile());
+    		newEnter.setDataBusiness(enterprise.getDataBusiness());
+    		newEnter.setDataPossible(enterprise.getDataPossible());
+    		newEnter.setDataOther(enterprise.getDataOther());
     		newEnter.setPptUrl(activity.getPptUrl());
     		newEnter.setFileUrl(activity.getFileUrl());
     		newEnter.setStatusId(0L);
@@ -1227,6 +1240,9 @@ public Map<String, Object>  candidateEnterprise(HttpServletRequest req,Long id,L
     		activityEnterprise.setMobile(enterprise.getMobile());
     		activityEnterprise.setQQ(enterprise.getChat());
     		activityEnterprise.setProfile(enterprise.getProfile());
+    		activityEnterprise.setDataBusiness(enterprise.getDataBusiness());
+    		activityEnterprise.setDataPossible(enterprise.getDataPossible());
+    		activityEnterprise.setDataOther(enterprise.getDataOther());
     		activityEnterprise.setPptUrl(activity.getPptUrl());
     		activityEnterprise.setFileUrl(activity.getFileUrl());
     		tdActivityEnterpriseService.save(activityEnterprise);

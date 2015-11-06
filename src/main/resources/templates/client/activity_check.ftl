@@ -203,7 +203,7 @@ function sortDown(id , activityId)
                         <#if recommend_list??>
                             <#list recommend_list as item>
                                 <li>
-                                    <p class="p01" style="width: 550px; float: left;text-align:left;"><b style="float:left;">${item_index+1}.${item.enterpriseTitle!''}</b><#if item.win??&&item.win==1><img src="/client/images/n0.png" style="width:12px; height:12px;margin-left:3px;" title="胜出项目" alt="胜出" /> </#if></p>
+                                    <p class="p01" style="width: 380px; float: left;text-align:left;"><b style="float:left;">${item_index+1}.${item.enterpriseTitle!''}</b><#if item.win??&&item.win==1><img src="/client/images/n0.png" style="width:12px; height:12px;margin-left:3px;" title="胜出项目" alt="胜出" /> </#if></p>
                                     <a href="/activity/enterprise/check/${item.enterpriseId?c!''}"   target=_blank>查看</a>
                                     <a>丨</a>
                                     <#if item.isGrade??&&item.isGrade>
@@ -211,9 +211,8 @@ function sortDown(id , activityId)
                                     <#else>
                                         <a   href="javascript:void(0)" title="评分尚未开始"  style="color:#666; " >得分</a>
                                     </#if>         
-                                        <a>丨</a>
-                                        <a <#if item.pptUrl??>href="${item.pptUrl}" <#else>style="color:#666;"</#if>>PPT下载</a>
                                         <#if activity??&&activity.statusId??&&activity.statusId==1>
+                                        	  <a>丨</a> 
                                             <a href="javascript:sendSms(${item.enterpriseId?c!''},${item.activityId?c!''},1);">短信通知</a>
                                            
                                         </#if>
@@ -226,8 +225,23 @@ function sortDown(id , activityId)
 	                                            <a href="javascript:sortUp(${item.id?c!''} , ${item.activityId?c!''});"><img style="width:10px;height:13px;margin-top: 8px; <#if item_has_next>margin-left:3px;</#if>" src="/client/images/up1.png" alt="上移" title="上移排序"/></a>
 	                                        </#if>
                                         </#if>
-                                        <a style="display:block;  width:80px;"></a>
-                                        <p class="p02"><#if item.coachName??>辅导专家，${item.coachName!''}</#if></p>
+			    						<#if item.enterpriseFileUrl??>
+				    						<a>丨</a>
+				    						<a href="/download/data?name=${item.enterpriseFileUrl!''} " title="点击下载文件">扫描件</a>
+			    						</#if>
+			    						<#if item.dataBusiness??>
+				    						<a>丨</a>
+				    						<a href="/download/data?name=${item.dataBusiness!''}" title="点击下载文件">商业计划书</a>
+			    						</#if>
+			    						<#if item.dataPossible??>
+				    						<a>丨</a>
+				    						<a href="/download/data?name=${item.dataPossible!''}" title="点击下载文件">可行性报告</a>
+			    						</#if>
+			    						<#if item.dataOther??>
+				    						<a>丨</a>
+				    						<a href="/download/data?name=${item.dataOther!''}" title="点击下载文件">其他资料</a>
+			    						</#if>
+
                                 </li>
                             </#list>
                         </#if>    
@@ -264,7 +278,7 @@ function sortDown(id , activityId)
                                     <#if activity.statusId??&&activity.statusId==0>
                                         <a href="javascript:void(0)" title="评分尚未开始" style="color:#666;" target="_blank">评分情况</a>
                                     <#else>
-                                        <a href="/expert/search/grade?activityId=${activity.id?c!''}&expertId=${item.expertId?c!''}" title="查看该评委的评分详情" target="_blank">评分情况</a>
+                                        <a href="/activity/search/grade?activityId=${activity.id?c!''}&expertId=${item.expertId?c!''}" title="查看该评委的评分详情并导出表格" target="_blank">评分情况</a>
                                     </#if>
                                     <#if activity??&&activity.statusId??&&activity.statusId==1&&mark??&&mark="activity">
                                         <a>丨</a> 
@@ -308,7 +322,7 @@ function sortDown(id , activityId)
                         <span style="margin-top: 6px;">路演结果：</span>
                         <ul class="active_project_text">
                             <li>
-                                <input type="button" class="area_batch" onclick="location.href='/activity/getGrade?activityId=${activity.id?c!''}'"  class="p01" value="查看排名" />
+                                <input type="button" class="area_batch" onclick="location.href='/activity/getGrade?activityId=${activity.id?c!''}&mark=activity'"  class="p01" value="查看排名" />
                                 <a style="display:block;  width:60px;"></a>
                             </li>
                         </ul>

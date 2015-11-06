@@ -106,10 +106,45 @@ public class TdExpertController {
 		List<TdActivity> activities_list = new ArrayList<>();
 		for (TdActivityExpert item : ae_list) {
 			TdActivity activity = tdActivityService.findOne(item.getActivityId());
+			
+			/*评分时间检验*/
+	        	Date now = new Date();
+		        Calendar cn =  Calendar.getInstance();
+		        cn.setTime(now);
+	        	Date eventDate = activity.getDate();
+	            Calendar eventOn =  Calendar.getInstance();
+	            eventOn.setTime(eventDate);
+	        	Date eventEnd = activity.getEventEnd();
+	            Calendar eventOff =  Calendar.getInstance();
+	            eventOff.setTime(eventEnd);
+	            
+	            //未开始
+	            if (cn.before(eventOn))
+	            {
+	            	activity.setGradetimeId(0L);
+	            	tdActivityService.save(activity);
+	            }
+	            //可评
+	            else if (cn.after(eventOn)&&cn.before(eventOff))
+	            {
+	            	activity.setGradetimeId(1L);;
+	            	tdActivityService.save(activity);
+	            }
+	            //过期
+	            else if (cn.after(eventOff))
+	            {
+	            	activity.setGradetimeId(2L);
+	            	tdActivityService.save(activity);
+	            }
+			/** 评分时间检查 end*/
+	            
 			if (null != activity) {
 				activities_list.add(activity);
 			}
 		}
+
+		
+		
 		map.addAttribute("expert", expert);
 		map.addAttribute("activities", activities_list);
 		return "/client/expert_activities";
@@ -229,10 +264,49 @@ public class TdExpertController {
 		TdExpert expert = tdExpertService.findbyUsername(expertUsername);
 		List<TdEnterpriseGrade> grade_list = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderBySordIdAsc(expert.getId(),
 				activityId);
+		TdActivity activity = tdActivityService.findOne(activityId);
+		/*评分时间检验*/
+    	Date now = new Date();
+        Calendar cn =  Calendar.getInstance();
+        cn.setTime(now);
+    	Date eventDate = activity.getDate();
+        Calendar eventOn =  Calendar.getInstance();
+        eventOn.setTime(eventDate);
+    	Date eventEnd = activity.getEventEnd();
+        Calendar eventOff =  Calendar.getInstance();
+        eventOff.setTime(eventEnd);
+        
+        //未开始
+        if (cn.before(eventOn))
+        {
+        	activity.setGradetimeId(0L);
+        	tdActivityService.save(activity);
+        	map.addAttribute("type", "check");
+        	map.addAttribute("msg","活动未开始");
+        }
+        //可评
+        else if (cn.after(eventOn)&&cn.before(eventOff))
+        {
+        	activity.setGradetimeId(1L);;
+        	tdActivityService.save(activity);
+        }
+        //过期
+        else if (cn.after(eventOff))
+        {
+        	activity.setGradetimeId(2L);
+        	tdActivityService.save(activity);
+        	map.addAttribute("type", "check");
+        	map.addAttribute("msg","活动已结束");
+        }
+	/** 评分时间检查 end*/
+		
+        
+        
 		map.addAttribute("grade_list", grade_list);
-		map.addAttribute("activity", tdActivityService.findOne(activityId));
+		map.addAttribute("activity", activity);
 		map.addAttribute("activityId", activityId);
 		map.addAttribute("expertId", expert.getId());
+		map.addAttribute("expert", expert);
 		return "/client/project_grade";
 	}
 
@@ -380,6 +454,7 @@ public class TdExpertController {
 		map.addAttribute("activityId", activityId);
 		map.addAttribute("activity", activity);
 		map.addAttribute("expertId", expertId);
+		map.addAttribute("expert", expert);
 		return "/client/project_grade";
 	}
 	
@@ -455,7 +530,7 @@ public class TdExpertController {
 	      
 	      sheet.addMergedRegion(new Region((short) 0 , (short) 0 , (short) 0 , (short) columnSize));     //标题1行
 	      sheet.addMergedRegion(new Region((short) 1 , (short) 0 , (short) 2 , (short) columnSize));     //标题2行
-	      sheet.addMergedRegion(new Region((short) 20 , (short) 0 , (short) 22 , (short) columnSize));   //专家签字
+	      sheet.addMergedRegion(new Region((short) 21 , (short) 0 , (short) 23 , (short) columnSize));   //专家签字
 //	      sheet.addMergedRegion(new Region((short) 3 , (short) 0 , (short) 4 , (short) 6));     //标题3行
 //	      sheet.addMergedRegion(new Region((short) 5 , (short) 0 , (short) 5, (short) 2));     //公章
 	      // 第四步，创建单元格，并设置值表头 设置表头居中  
@@ -557,116 +632,121 @@ public class TdExpertController {
 	      }
 	      cell.setCellStyle(title3);
 	      
-	      
 	      HSSFRow row3 =sheet.createRow((int) 3);
 	      row3.setHeight((short) (20 * 20));  
 	      cell = row3.createCell((short) 0);  
-	      cell.setCellValue("项目编号");  
+	      cell.setCellValue("序号");  
 	      cell.setCellStyle(style);
-
+	      
 	      HSSFRow row4 =sheet.createRow((int) 4);
 	      row4.setHeight((short) (20 * 20));  
 	      cell = row4.createCell((short) 0);  
-	      cell.setCellValue("核心竞争力(小计)");  
-	      cell.setCellStyle(style1);
-	      
+	      cell.setCellValue("项目编号");  
+	      cell.setCellStyle(style);
+
 	      HSSFRow row5 =sheet.createRow((int) 5);
 	      row5.setHeight((short) (20 * 20));  
 	      cell = row5.createCell((short) 0);  
-	      cell.setCellValue("技术、产品、服务、商业模式领先性、创新性");  
-	      cell.setCellStyle(style);
+	      cell.setCellValue("核心竞争力(小计)");  
+	      cell.setCellStyle(style1);
 	      
 	      HSSFRow row6 =sheet.createRow((int) 6);
 	      row6.setHeight((short) (20 * 20));  
 	      cell = row6.createCell((short) 0);  
-	      cell.setCellValue("专利、商标、著作登记、双软、双高证书");  
+	      cell.setCellValue("技术、产品、服务、商业模式领先性、创新性");  
 	      cell.setCellStyle(style);
 	      
 	      HSSFRow row7 =sheet.createRow((int) 7);
 	      row7.setHeight((short) (20 * 20));  
 	      cell = row7.createCell((short) 0);  
-	      cell.setCellValue("与竞争对手相比的优势程度");  
+	      cell.setCellValue("专利、商标、著作登记、双软、双高证书");  
 	      cell.setCellStyle(style);
 	      
 	      HSSFRow row8 =sheet.createRow((int) 8);
 	      row8.setHeight((short) (20 * 20));  
 	      cell = row8.createCell((short) 0);  
-	      cell.setCellValue("市场潜力(小计)");  
-	      cell.setCellStyle(style1);
+	      cell.setCellValue("与竞争对手相比的优势程度");  
+	      cell.setCellStyle(style);
 	      
 	      HSSFRow row9 =sheet.createRow((int) 9);
 	      row9.setHeight((short) (20 * 20));  
 	      cell = row9.createCell((short) 0);  
-	      cell.setCellValue("潜在市场规模大小及已有的市场份额");  
-	      cell.setCellStyle(style);
+	      cell.setCellValue("市场潜力(小计)");  
+	      cell.setCellStyle(style1);
 	      
 	      HSSFRow row10 =sheet.createRow((int) 10);
 	      row10.setHeight((short) (20 * 20));  
 	      cell = row10.createCell((short) 0);  
-	      cell.setCellValue("市场开发价值与开发成本");  
+	      cell.setCellValue("潜在市场规模大小及已有的市场份额");  
 	      cell.setCellStyle(style);
 	      
 	      HSSFRow row11 =sheet.createRow((int) 11);
 	      row11.setHeight((short) (20 * 20));  
 	      cell = row11.createCell((short) 0);  
-	      cell.setCellValue("团队能力(小计)");  
-	      cell.setCellStyle(style1);
+	      cell.setCellValue("市场开发价值与开发成本");  
+	      cell.setCellStyle(style);
 	      
 	      HSSFRow row12 =sheet.createRow((int) 12);
 	      row12.setHeight((short) (20 * 20));  
 	      cell = row12.createCell((short) 0);  
-	      cell.setCellValue("核心领头人的专业能力及资源");  
-	      cell.setCellStyle(style);
+	      cell.setCellValue("团队能力(小计)");  
+	      cell.setCellStyle(style1);
 	      
 	      HSSFRow row13 =sheet.createRow((int) 13);
 	      row13.setHeight((short) (20 * 20));  
 	      cell = row13.createCell((short) 0);  
-	      cell.setCellValue("团队成员的专业能力及分工是否合理");  
+	      cell.setCellValue("核心领头人的专业能力及资源");  
 	      cell.setCellStyle(style);
 	      
 	      HSSFRow row14 =sheet.createRow((int) 14);
 	      row14.setHeight((short) (20 * 20));  
 	      cell = row14.createCell((short) 0);  
-	      cell.setCellValue("投资价值(小计)");  
-	      cell.setCellStyle(style1);
+	      cell.setCellValue("团队成员的专业能力及分工是否合理");  
+	      cell.setCellStyle(style);
 	      
 	      HSSFRow row15 =sheet.createRow((int) 15);
 	      row15.setHeight((short) (20 * 20));  
 	      cell = row15.createCell((short) 0);  
-	      cell.setCellValue("行业环境及现有基础条件能否支撑");  
-	      cell.setCellStyle(style);
+	      cell.setCellValue("投资价值(小计)");  
+	      cell.setCellStyle(style1);
 	      
 	      HSSFRow row16 =sheet.createRow((int) 16);
 	      row16.setHeight((short) (20 * 20));  
 	      cell = row16.createCell((short) 0);  
-	      cell.setCellValue("财务状况及融资条件");  
+	      cell.setCellValue("行业环境及现有基础条件能否支撑");  
 	      cell.setCellStyle(style);
 	      
 	      HSSFRow row17 =sheet.createRow((int) 17);
 	      row17.setHeight((short) (20 * 20));  
 	      cell = row17.createCell((short) 0);  
-	      cell.setCellValue("现场表现力(小计)");  
-	      cell.setCellStyle(style1);
+	      cell.setCellValue("财务状况及融资条件");  
+	      cell.setCellStyle(style);
 	      
 	      HSSFRow row18 =sheet.createRow((int) 18);
 	      row18.setHeight((short) (20 * 20));  
 	      cell = row18.createCell((short) 0);  
-	      cell.setCellValue("路演方式的创新程度及现场感染力");  
-	      cell.setCellStyle(style);
+	      cell.setCellValue("现场表现力(小计)");  
+	      cell.setCellStyle(style1);
 	      
 	      HSSFRow row19 =sheet.createRow((int) 19);
 	      row19.setHeight((short) (20 * 20));  
 	      cell = row19.createCell((short) 0);  
-	      cell.setCellValue("合计");  
-	      cell.setCellStyle(style1);
+	      cell.setCellValue("路演方式的创新程度及现场感染力");  
+	      cell.setCellStyle(style);
 	      
 	      HSSFRow row20 =sheet.createRow((int) 20);
 	      row20.setHeight((short) (20 * 20));  
 	      cell = row20.createCell((short) 0);  
+	      cell.setCellValue("合计");  
+	      cell.setCellStyle(style1);
+	      
+	      HSSFRow row21 =sheet.createRow((int) 21);
+	      row21.setHeight((short) (20 * 20));  
+	      cell = row21.createCell((short) 0);  
 	      cell.setCellValue("专家签名：                         ");  
 	      cell.setCellStyle(bottom);
 	      
-	      HSSFRow[] array = new HSSFRow[]{row0,row0,row1,row3,row4,row5,row6,row7,row8,row9,row10,row11,row12,row13,row14,row15,row16,row17,row18,row19,row20};
+	      HSSFRow[] array = new HSSFRow[]{row0,row0,row1,row3,row4,row5,row6,row7,row8,row9,row10,row11,row12,row13,row14,row15,row16,row17,row18,row19,row20,row21};
 		
 		
 		
@@ -700,11 +780,18 @@ public class TdExpertController {
 	                cell = array[3].createCell((short) i+1);
 	                if(null != tdEnterpriseGrade.getNumber())
 	                {
-	                	 cell.setCellValue(tdEnterpriseGrade.getNumber());
+	                	 cell.setCellValue(i+1);
 	                }
 	                cell.setCellStyle(style); 
 	                
 	                cell = array[4].createCell((short) i+1);
+	                if(null != tdEnterpriseGrade.getNumber())
+	                {
+	                	 cell.setCellValue(tdEnterpriseGrade.getNumber());
+	                }
+	                cell.setCellStyle(style); 
+	                
+	                cell = array[5].createCell((short) i+1);
 	                if(null != tdEnterpriseGrade.getTotalTechnology()&&null == isModule)
 	                {
 	                	 cell.setCellValue(tdEnterpriseGrade.getTotalTechnology());
@@ -712,7 +799,7 @@ public class TdExpertController {
 	                cell.setCellStyle(style); 
 	                
 	               
-	                cell = array[5].createCell((short) i+1);
+	                cell = array[6].createCell((short) i+1);
 	                if (null != tdEnterpriseGrade.getOneTechnology()&&null == isModule)
 	                {
 	                	cell.setCellValue(tdEnterpriseGrade.getOneTechnology());
@@ -720,7 +807,7 @@ public class TdExpertController {
 	                cell.setCellStyle(style); 
 	                
 	               
-	                cell = array[6].createCell((short) i+1);
+	                cell = array[7].createCell((short) i+1);
 	                if (null != tdEnterpriseGrade.getTwoTechnology()&&null == isModule)
 	                {
 	                	cell.setCellValue(tdEnterpriseGrade.getTwoTechnology());
@@ -728,7 +815,7 @@ public class TdExpertController {
 	                cell.setCellStyle(style); 
 	                
 	               
-	                cell = array[7].createCell((short) i+1);
+	                cell = array[8].createCell((short) i+1);
 	                if (null != tdEnterpriseGrade.getThreeTechnology()&&null == isModule)
 	                {
 	                	 cell.setCellValue(tdEnterpriseGrade.getThreeTechnology());
@@ -736,7 +823,7 @@ public class TdExpertController {
 	                cell.setCellStyle(style); 
 	                
 	               
-	                cell = array[8].createCell((short) i+1);
+	                cell = array[9].createCell((short) i+1);
 	                if (null != tdEnterpriseGrade.getTotalFeasibility()&&null == isModule)
 	                {
 	                	 cell.setCellValue(tdEnterpriseGrade.getTotalFeasibility());
@@ -744,7 +831,7 @@ public class TdExpertController {
 	                cell.setCellStyle(style); 
 	                
 	              
-	                cell = array[9].createCell((short) i+1);
+	                cell = array[10].createCell((short) i+1);
 	                if (null != tdEnterpriseGrade.getOneFeasibility()&&null == isModule)
 	                {
 	                	 cell.setCellValue(tdEnterpriseGrade.getOneFeasibility());
@@ -752,7 +839,7 @@ public class TdExpertController {
 	                cell.setCellStyle(style); 
 	                
 	              
-	                cell = array[10].createCell((short) i+1);
+	                cell = array[11].createCell((short) i+1);
 	                if (null != tdEnterpriseGrade.getTwoFeasibility()&&null == isModule)
 	                {
 	                	 cell.setCellValue(tdEnterpriseGrade.getTwoFeasibility());
@@ -760,42 +847,42 @@ public class TdExpertController {
 	                cell.setCellStyle(style); 
 	                
 	                
-	                cell = array[11].createCell((short) i+1);
+	                cell = array[12].createCell((short) i+1);
 	                if (null != tdEnterpriseGrade.getTotalGroup()&&null == isModule)
 	                {
 	                	 cell.setCellValue(tdEnterpriseGrade.getTotalGroup());
 	                }
 	                cell.setCellStyle(style); 
 	                
-	                cell = array[12].createCell((short) i+1);
+	                cell = array[13].createCell((short) i+1);
 	                if (null != tdEnterpriseGrade.getOneGroup()&&null == isModule)
 	                {
 	                	 cell.setCellValue(tdEnterpriseGrade.getOneGroup());
 	                }
 	                cell.setCellStyle(style); 
 	                
-	                cell = array[13].createCell((short) i+1);
+	                cell = array[14].createCell((short) i+1);
 	                if (null != tdEnterpriseGrade.getTwoGroup()&&null == isModule)
 	                {
 	                	 cell.setCellValue(tdEnterpriseGrade.getTwoGroup());
 	                }
 	                cell.setCellStyle(style); 
 	                
-	                cell = array[14].createCell((short) i+1);
+	                cell = array[15].createCell((short) i+1);
 	                if (null != tdEnterpriseGrade.getTotalMarketValue()&&null == isModule)
 	                {
 	                	 cell.setCellValue(tdEnterpriseGrade.getTotalMarketValue());
 	                }
 	                cell.setCellStyle(style); 
 	                
-	                cell = array[15].createCell((short) i+1);
+	                cell = array[16].createCell((short) i+1);
 	                if (null != tdEnterpriseGrade.getOneMarketValue()&&null == isModule)
 	                {
 	                	 cell.setCellValue(tdEnterpriseGrade.getOneMarketValue());
 	                }
 	                cell.setCellStyle(style); 
 	                
-	                cell = array[16].createCell((short) i+1);
+	                cell = array[17].createCell((short) i+1);
 	                if (null != tdEnterpriseGrade.getTwoMarketValue()&&null == isModule)
 	                {
 	                	 cell.setCellValue(tdEnterpriseGrade.getTwoMarketValue());
@@ -803,21 +890,21 @@ public class TdExpertController {
 	                cell.setCellStyle(style); 
 	                
 	             
-	                cell = array[17].createCell((short) i+1);
+	                cell = array[18].createCell((short) i+1);
 	                if (null != tdEnterpriseGrade.getTotalExpression()&&null == isModule)
 	                {
 	                	 cell.setCellValue(tdEnterpriseGrade.getTotalExpression());
 	                }
 	                cell.setCellStyle(style); 
 	                
-	                cell = array[18].createCell((short) i+1);
+	                cell = array[19].createCell((short) i+1);
 	                if (null != tdEnterpriseGrade.getOneExpression()&&null == isModule)
 	                {
 	                	 cell.setCellValue(tdEnterpriseGrade.getOneExpression());
 	                }
 	                cell.setCellStyle(style); 
 	                
-	                cell = array[19].createCell((short) i+1);
+	                cell = array[20].createCell((short) i+1);
 	                if (null != tdEnterpriseGrade.getTotalPoint()&&null == isModule)
 	                {
 	                	 cell.setCellValue(tdEnterpriseGrade.getTotalPoint());

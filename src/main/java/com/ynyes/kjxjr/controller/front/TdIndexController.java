@@ -85,34 +85,6 @@ public class TdIndexController {
 			map.addAttribute("news_list", tdArticles);
 		}
         
-        // 普通课程
-        map.addAttribute("course_page0", tdArticleService                   		
-        		.findByMenuIdAndRecommendIdOrderBySortIdAsc(12L,0L, 0, ClientConstant.pageSize));
-        
-        // 金牌课程
-        map.addAttribute("course_page1", tdArticleService                   		
-        		.findByMenuIdAndRecommendIdOrderBySortIdAsc(12L,1L, 0, ClientConstant.pageSize));
-        
-        // 热门课程
-        map.addAttribute("course_page2", tdArticleService                   		
-        		.findByMenuIdAndRecommendIdOrderBySortIdAsc(12L,2L, 0, ClientConstant.pageSize));   
-        
-        //最新课程
-        map.addAttribute("course_list", tdArticleService                   		
-        		.findByMenuIdOrderByCreateTime(12L));   
-      
-        //课程信息
-        List<TdArticleCategory> courseInfoList = tdArticleCategoryService
-                .findByMenuId(12L);
-        map.addAttribute("course_category_list",courseInfoList);        
-        
-        //前几个课程分类的内容    
-        map.addAttribute("course_category_page0",tdArticleService
-        		.findByCategoryId(courseInfoList.get(0).getId(), 0, ClientConstant.pageSize));        
-        map.addAttribute("course_category_page1",tdArticleService
-        		.findByCategoryId(courseInfoList.get(1).getId(), 0, ClientConstant.pageSize)); 
-        map.addAttribute("course_category_page2",tdArticleService
-        		.findByCategoryId(courseInfoList.get(2).getId(), 0, ClientConstant.pageSize)); 
         
         //新闻
 //        map.addAttribute("news_list", tdArticleService                   		

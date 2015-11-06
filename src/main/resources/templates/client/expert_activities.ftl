@@ -52,11 +52,11 @@
                                 </#if>
                             </dl>
                             <dl>
-                                <dt>日期</dt>
+                                <dt>时间</dt>
                                 <#if activities??>
                                     <#list activities as item>
                                         <#if item.date??>
-                                            <dd><a>${item.date?string("yyyy-MM-dd")}</a></dd>
+                                            <dd><a>${item.date?string("yyyy年MM月dd日   HH:mm")}</a></dd>
                                         </#if>
                                     </#list>
                                 </#if>
@@ -66,11 +66,30 @@
                                 <#if activities??>
                                     <#list activities as item>
                                         <dd>
-	                                        <a target="_blank" href="/expert/grade?activityId=${item.id?c}">评分</a>
+                                        <#--
+                                        	<#if item.gradetimeId??&&item.gradetimeId==0>
+                                        		<a title="活动未开始" href="javascript:void(0)" style="color:#666;">评分</a>
+                                        	<#elseif item.gradetimeId??&&item.gradetimeId==1>	
+	                                        	<a target="_blank" href="/expert/grade?activityId=${item.id?c}">评分</a>
+	                                        <#elseif item.gradetimeId??&&item.gradetimeId==2>
+	                                        	<a title="活动已结束" href="javascript:void(0)" style="color:#666;">评分</a>	
+	                                        </#if>
+	                                    -->
+	                                    	<a target="_blank" title="<#if item.gradetimeId??&&item.gradetimeId==0>
+	                                    												活动未开始
+	                                    												<#elseif item.gradetimeId??&&item.gradetimeId==1>
+	                                    												开始评分
+	                                    												 <#elseif item.gradetimeId??&&item.gradetimeId==2>
+	                                    												 活动已结束
+	                                    												 </#if>	" href="/expert/grade?activityId=${item.id?c}">评分</a>    
 	                                        &nbsp;|&nbsp;
 	                                        <a href="/expert/detail/${item.id?c}">详情</a>
 	                                        &nbsp;|&nbsp;
-	                                        <a href="/expert/export/grade?activityId=${item.id?c!''}&expertId=${expert.id?c!''}&isModule=1" title="下载并打印模板">评分表模板</a>
+	                                        <#if item.statusId??&&(item.statusId==1||item.statusId==2)>
+	                                        	<a href="/expert/export/grade?activityId=${item.id?c!''}&expertId=${expert.id?c!''}&isModule=1" title="下载并打印模板">评分表模板</a>
+	                                        <#else>
+	                                        	<a href="javascript:void(0)" title="活动还在筹备中" style="color:#666;">评分表模板</a>
+	                                        </#if>
 	                                    </dd>
                                     </#list>
                                 </#if>

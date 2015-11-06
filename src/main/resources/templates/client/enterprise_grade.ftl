@@ -10,157 +10,63 @@
 <body style="background: none;">
   <#if grade_list??>
 	<table class="score">
-		<caption>项目得分表</caption>
+		<caption>项目得分表——${enterprise.title!''}</caption>
+		
 		<tr class="tr01">
 			<th>标题</th>
 			    <#list experts as item>
 			       <td>${item.name!''}</td>
 			    </#list>
 		</tr>
-		<tr class="tr02">
-			<th>现场表现力(小计)</th>
-			<#list grade_list as item>
-			    <td>${item.totalExpression!''}</td>
-			</#list>         
-		</tr>
-		<tr class="tr03">
-			<th>DEMO发表方式的创新程度</th>
-            <#list grade_list as item>
-                <td>${item.oneExpression!''}</td>
-            </#list> 			
-		</tr>
-		<tr class="tr03">
-			<th>团队解说效果</th>	
-            <#list grade_list as item>
-                <td>${item.twoExpression!''}</td>
-            </#list>    
-		</tr>
-		<tr class="tr03">
-			<th>现场营造效果</th>
-            <#list grade_list as item>
-                <td>${item.threeExpression!''}</td>
-            </#list> 
-		</tr>
-		<tr class="tr03">
-			<th>项目吸引力</th>
-            <#list grade_list as item>
-                <td>${item.fourExpression!''}</td>
-            </#list> 
-		</tr>
-			
-		<tr class="tr02">
-			<th>项目实现性(小计)</th>
-            <#list grade_list as item>
-                <td>${item.totalFeasibility!''}</td>
-            </#list> 
-		</tr>
-		<tr class="tr03">
-			<th>行业环境</th>
-            <#list grade_list as item>
-                <td>${item.oneFeasibility!''}</td>
-            </#list> 
-		</tr>
-		<tr class="tr03">
-			<th>现有基础条件能否支撑</th>	
-            <#list grade_list as item>
-                <td>${item.twoFeasibility!''}</td>
-            </#list> 
-		</tr>
-		<tr class="tr03">
-			<th>技术可实现性</th>
-			
-	            <#list grade_list as item>
-                <td>${item.threeFeasibility!''}</td>
-            </#list> 
-		</tr>
-		<tr class="tr03">
-			<th>市场接受度</th>
-			
-	            <#list grade_list as item>
-                <td>${item.fourFeasibility!''}</td>
-            </#list> 
-		</tr>
-		
-		
-		<tr class="tr02">
-			<th>市场价值(小计)</th>
-	            <#list grade_list as item>
-                <td>${item.totalMarketValue!''}</td>
-            </#list> 
-			
-		</tr>
-		<tr class="tr03">
-			<th>潜在市场规模大小与技术开发成本的评估</th>
-			
-            <#list grade_list as item>
-                <td>${item.oneMarketValue!''}</td>
-            </#list> 
-		</tr>
-		<tr class="tr03">
-			<th>现行成本与市场现状的评估</th>	
-	            <#list grade_list as item>
-                <td>${item.twoMarketValue!''}</td>
-            </#list> 
-		</tr>
-		<tr class="tr03">
-			<th>创意是否具有市场开发价值</th>
-			
-            <#list grade_list as item>
-                <td>${item.threeMarketValue!''}</td>
-            </#list> 
-		</tr>
-		<tr class="tr03">
-			<th>转成创业的机会</th>
-			
-            <#list grade_list as item>
-                <td>${item.fourMarketValue!''}</td>
-            </#list> 
-		</tr>
-		
-		
-		<tr class="tr02">
-			<th>技术开发(小计)</th>
+
+		<tr class="tr02" style="background:#DFEBF7;">
+			<th>核心竞争力小计)</th>
             <#list grade_list as item>
                 <td>${item.totalTechnology!''}</td>
             </#list> 
 			
 		</tr>
 		<tr class="tr03">
-			<th>技术创新性与现有同类技术的差异性</th>
+			<th>技术、产品、服务、商业模式领先性、创新性</th>
 			
 	        <#list grade_list as item>
                 <td>${item.oneTechnology!''}</td>
             </#list> 
 		</tr>
 		<tr class="tr03">
-			<th>自身与竞争对手的SWOT分析评估</th>	
+			<th>专利、商标、著作登记、双软、双高证书</th>	
             <#list grade_list as item>
                 <td>${item.twoTechnology!''}</td>
             </#list> 
 		</tr>
 		<tr class="tr03">
-			<th>深度分析竞争对手的发展程度</th>
+			<th>与竞争对手相比的优势程度</th>
 			
             <#list grade_list as item>
                 <td>${item.threeTechnology!''}</td>
             </#list> 
 		</tr>
-		<tr class="tr03">
-			<th>自身竞争优势</th>
+
+		<tr class="tr02" style="background:#DFEBF7;">
+			<th>市场潜力(小计)</th>
             <#list grade_list as item>
-                <td>${item.fourTechnology!''}</td>
+                <td>${item.totalFeasibility!''}</td>
             </#list> 
 		</tr>
 		<tr class="tr03">
-			<th>其差异化程度与具有市场需求度的相互影响</th>
-			
-	            <#list grade_list as item>
-                <td>${item.fiveTechnology!''}</td>
+			<th>潜在市场规模大小及已有的市场份额</th>
+            <#list grade_list as item>
+                <td>${item.oneFeasibility!''}</td>
+            </#list> 
+		</tr>
+		<tr class="tr03">
+			<th>市场开发价值与开发成本</th>	
+            <#list grade_list as item>
+                <td>${item.twoFeasibility!''}</td>
             </#list> 
 		</tr>
 		
-		
-		<tr class="tr02">
+		<tr class="tr02" style="background:#DFEBF7;">
 			<th>团队能力(小计)</th>
             <#list grade_list as item>
                 <td>${item.totalGroup!''}</td>
@@ -168,25 +74,54 @@
 			
 		</tr>
 		<tr class="tr03">
-			<th>团队人员分工是否合理及其专业能力</th>
+			<th>核心领头人的专业能力及资源</th>
 			
             <#list grade_list as item>
                 <td>${item.oneGroup!''}</td>
             </#list> 
 		</tr>
 		<tr class="tr03">
-			<th>创业家精神及企业愿景</th>	
+			<th>团队成员的专业能力及分工是否合理</th>	
             <#list grade_list as item>
                 <td>${item.twoGroup!''}</td>
             </#list> 
 		</tr>
+		
+		<tr class="tr02" style="background:#DFEBF7;">
+			<th>投资价值(小计)</th>
+	            <#list grade_list as item>
+                <td>${item.totalMarketValue!''}</td>
+            </#list> 
+			
+		</tr>
 		<tr class="tr03">
-			<th>团队人员的沟通、信任和凝聚力</th>
+			<th>行业环境及现有基础条件能否支撑</th>
+			
             <#list grade_list as item>
-                <td>${item.threeGroup!''}</td>
+                <td>${item.oneMarketValue!''}</td>
             </#list> 
 		</tr>
 		<tr class="tr03">
+			<th>财务状况及融资条件</th>	
+	            <#list grade_list as item>
+                <td>${item.twoMarketValue!''}</td>
+            </#list> 
+		</tr>
+		
+		<tr class="tr02" style="background:#DFEBF7;">
+			<th>现场表现力(小计)</th>
+			<#list grade_list as item>
+			    <td>${item.totalExpression!''}</td>
+			</#list>         
+		</tr>
+		<tr class="tr03">
+			<th>路演方式的创新程度及现场感染力</th>
+            <#list grade_list as item>
+                <td>${item.oneExpression!''}</td>
+            </#list> 			
+		</tr>
+
+		<tr class="tr03" style="background:#DFEBF7;">
 			<th>小计</th>
 			<#assign count = 0>
             <#list grade_list as item>
@@ -196,14 +131,13 @@
                 </#if>
             </#list> 
 		</tr>
-		<tr class="tr03">
-			<th>合计</th>
+		<tr class="tr03" style="background:#FFF3CD;" >
+			<th >合计</th>
 			
 			<td colspan="20">${count!'0'}</td>
 			
 		</tr>
 	</table>
 	</#if>
-	<input style="margin-left: 640px; margin-top: 20px; width:100px;height: 30px; font-size: 14px;" type="button" value="打印评分表" />
 </body>
 </html>

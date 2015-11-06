@@ -112,9 +112,9 @@ public class TdExpertService {
     }
     
     
-    public TdExpert addNewUser(String username, String password, String mobile, String email ,String inCharge , Long statusId)
+    public TdExpert addNewUser(String username, String password, String mobile, String email ,String inCharge , String invest , String profile , Long statusId)
     {
-        if (null == username || null == password || username.isEmpty() || password.isEmpty()|| email.isEmpty() || inCharge.isEmpty())
+        if (null == username || null == password || username.isEmpty() || password.isEmpty()|| email.isEmpty() || inCharge.isEmpty() || invest.isEmpty() || profile.isEmpty())
         {
             return null;
         }
@@ -132,6 +132,8 @@ public class TdExpertService {
         expert.setEmail(email);
         expert.setStatusId(statusId); // 正常
         expert.setInCharge(inCharge);
+        expert.setInvest(invest);
+        expert.setProfile(profile);
         expert.setName(inCharge);
         
         return expert;

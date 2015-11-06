@@ -255,7 +255,6 @@ public class TdManagerOrderController {
                 {
                     map.addAttribute("diy_site", tdDiySiteService.findOne(id));
                 }
-                
                 map.addAttribute("region_list", tdRegionService.findByIsEnableTrueOrderBySortIdAsc());
                 map.addAttribute("invest_list" , tdArticleService.findByMenuId(12L));
                 return "/site_mag/diy_site_edit";

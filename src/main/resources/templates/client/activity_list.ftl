@@ -110,6 +110,7 @@ function deleteConfirm() {
 		        			<td style="color:purple;"> 未审核 </td>
 		        		</#if>
 		        		-->
+		        		<#--         状态
 	                    <#if item.timeId??&&item.statusId??>
 		                    <#if item.statusId ==0 &&item.timeId ==0>
 		                    		 <td>未启动</td>
@@ -126,7 +127,23 @@ function deleteConfirm() {
 		                    </#if>			
 		                <#else>
 		                	     <td>未启动</td>
-		                </#if>    		        		
+		                </#if>    		    
+		                -->    		
+	                    <#if item.timeId??>
+		                    <#if item.timeId ==0>
+		                    		 <td>未启动</td>
+		                    <#elseif item.timeId ==1>
+		                    		 <td style="color:#0ab2cb;">筹备中</td>
+		                    <#elseif item.timeId == 2>
+		                    		 <td  style="color:#529c15;">进行中</td>
+		                    <#elseif item.timeId ==3 >
+		                    	 <td style="color:purple;">已结束</td>
+		                    <#else>
+		                    	  <td>未启动</td>
+		                    </#if>			
+		                <#else>
+		                	    
+		                </#if>    		                
 		        		<td>
 		        			<a href="/activity/edit?id=${item.id?c!''}">编辑信息</a>丨<a href="/activity/check?id=${item.id?c!''}">操作</a>丨<a  onclick="javascript:deleteConfirm();" href="/activity/delete?id=${item.id?c!''}">删除</a>
 		        		</td>

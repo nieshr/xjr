@@ -62,6 +62,18 @@ public class TdActivityEnterprise {
     @Column
     private String enterpriseFileUrl;
     
+    //企业可提供资料【商业计划书】
+    @Column 
+    private String dataBusiness;
+    
+    //企业可提供资料【可行性方案】
+    @Column 
+    private String dataPossible;
+    
+    //企业可提供资料【其他】
+    @Column 
+    private String dataOther;
+    
     // 项目/企业
     @Column
     private String enterpriseTitle;
@@ -357,6 +369,30 @@ public class TdActivityEnterprise {
 
 	public void setEnterpriseFileUrl(String enterpriseFileUrl) {
 		this.enterpriseFileUrl = enterpriseFileUrl;
+	}
+
+	public String getDataBusiness() {
+		return dataBusiness;
+	}
+
+	public void setDataBusiness(String dataBusiness) {
+		this.dataBusiness = dataBusiness;
+	}
+
+	public String getDataPossible() {
+		return dataPossible;
+	}
+
+	public void setDataPossible(String dataPossible) {
+		this.dataPossible = dataPossible;
+	}
+
+	public String getDataOther() {
+		return dataOther;
+	}
+
+	public void setDataOther(String dataOther) {
+		this.dataOther = dataOther;
 	}
 
 	

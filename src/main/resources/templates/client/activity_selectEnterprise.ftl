@@ -125,8 +125,8 @@ function checkAll2(chkobj) {
 				<table class="new_list">
 		        	<tr class="list_title">
 		        		<th></th>
-		        		<th width="30%">备选企业列表</th>
-		        		<th width="25%">地区</th>
+		        		<th width="40%">备选企业列表</th>
+		        		<th width="15%">地区</th>
 		        		<th width="25%">行业归属</th>
 		        		<th width="20%">操作</th>
 		        	</tr>

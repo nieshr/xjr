@@ -167,7 +167,7 @@ public class TdDiySiteService {
                 
                 if (roleId ==3)
                 {
-                	TdExpert expert = tdExpertService.addNewUser(e.getUsername(), e.getPassword(), e.getMobile(), e.getEmail(), e.getInCharge()  , e.getStatusId());
+                	TdExpert expert = tdExpertService.addNewUser(e.getUsername(), e.getPassword(), e.getMobile(), e.getEmail(), e.getInCharge()  ,e.getPayType() , e.getInfo() ,  e.getStatusId());
 
                     tdExpertService.save(expert);
 }

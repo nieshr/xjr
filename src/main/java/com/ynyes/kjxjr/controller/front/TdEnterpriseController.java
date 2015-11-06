@@ -432,6 +432,7 @@ public class TdEnterpriseController {
     public String enterGrade(HttpServletRequest req, ModelMap map,Long activityId , Long enterpriseId) {
         tdCommonService.setHeader(map, req);
         
+        TdEnterprise enterprise = tdEnterpriseService.findOne(enterpriseId);
         
         List<TdEnterpriseGrade> gradeList = tdEnterpriseGradeService.findByEnterpriseIdAndActivityId(enterpriseId, activityId);
         
@@ -442,6 +443,7 @@ public class TdEnterpriseController {
 			experts.add(expert);
 		}
         
+        map.addAttribute("enterprise", enterprise);
         map.addAttribute("experts", experts);
         map.addAttribute("grade_list", gradeList);
         	
@@ -500,6 +502,7 @@ public class TdEnterpriseController {
 	        map.addAttribute("activity", activity);
 	        map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityId(id));
 	        map.addAttribute("selected_expert_list", tdActivityExpertService.findByActivityId(id));
+	        map.addAttribute("recommend_list" , tdActivityEnterpriseService.findByActivityIdAndStatusIdOrderBySortIdAsc(id, 2L));
         }
 
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
