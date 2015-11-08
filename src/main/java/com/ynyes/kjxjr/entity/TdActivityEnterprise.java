@@ -143,6 +143,26 @@ public class TdActivityEnterprise {
     @Column
     private Long totalPoint;
     
+    //核心竞争力小计
+    @Column
+    private Long totalTechnology;
+    
+    //市场潜力小计
+    @Column
+    private Long totalFeasibility;
+    
+    //团队能力小计
+    @Column
+    private Long totalGroup;
+    
+    //投资价值小计
+    @Column
+    private Long totalMarketValue;
+    
+    //现场表现力小计
+    @Column
+    private Long totalExpression;
+    
     //胜出
     @Column
     private Long win;
@@ -393,6 +413,46 @@ public class TdActivityEnterprise {
 
 	public void setDataOther(String dataOther) {
 		this.dataOther = dataOther;
+	}
+
+	public Long getTotalTechnology() {
+		return totalTechnology;
+	}
+
+	public void setTotalTechnology(Long totalTechnology) {
+		this.totalTechnology = totalTechnology;
+	}
+
+	public Long getTotalFeasibility() {
+		return totalFeasibility;
+	}
+
+	public void setTotalFeasibility(Long totalFeasibility) {
+		this.totalFeasibility = totalFeasibility;
+	}
+
+	public Long getTotalGroup() {
+		return totalGroup;
+	}
+
+	public void setTotalGroup(Long totalGroup) {
+		this.totalGroup = totalGroup;
+	}
+
+	public Long getTotalMarketValue() {
+		return totalMarketValue;
+	}
+
+	public void setTotalMarketValue(Long totalMarketValue) {
+		this.totalMarketValue = totalMarketValue;
+	}
+
+	public Long getTotalExpression() {
+		return totalExpression;
+	}
+
+	public void setTotalExpression(Long totalExpression) {
+		this.totalExpression = totalExpression;
 	}
 
 	

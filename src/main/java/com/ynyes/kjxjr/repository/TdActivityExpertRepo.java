@@ -23,7 +23,7 @@ public interface TdActivityExpertRepo extends
 	List<TdActivityExpert> findByActivityId(Long activityId);
 	List<TdActivityExpert> findByActivityIdOrderByExpertIdAsc(Long activityId);
 
-	
+	List<TdActivityExpert> findByExpertIdOrderByCreateTimeDesc(Long expertId);
 	List<TdActivityExpert> findByExpertIdAndCreateTimeAfterOrderByCreateTimeDesc(Long expertId,Date create);
 	List<TdActivityExpert> findByUsername(String username); 
 }

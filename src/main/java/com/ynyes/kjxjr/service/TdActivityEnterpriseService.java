@@ -123,11 +123,40 @@ public class TdActivityEnterpriseService {
         return (List<TdActivityEnterprise>) repository.findByActivityIdAndStatusIdOrderBySortIdAsc(activityId , statusId);
     }
     
-    //活动管理，评分列表排序
+    
+    
+    //活动管理，评分列表排序0
     public List<TdActivityEnterprise> findByActivityIdAndStatusIdOrderByTotalPointDesc(Long activityId , Long statusId)
     {
         return (List<TdActivityEnterprise>) repository.findByActivityIdAndStatusIdOrderByTotalPointDesc(activityId , statusId);
     }
+    //活动管理，评分列表排序1
+    public List<TdActivityEnterprise> findByActivityIdAndStatusIdOrderByTotalTechnologyDesc(Long activityId , Long statusId)
+    {
+        return (List<TdActivityEnterprise>) repository.findByActivityIdAndStatusIdOrderByTotalTechnologyDesc(activityId , statusId);
+    }
+    //活动管理，评分列表排序2
+    public List<TdActivityEnterprise> findByActivityIdAndStatusIdOrderByTotalFeasibilityDesc(Long activityId , Long statusId)
+    {
+        return (List<TdActivityEnterprise>) repository.findByActivityIdAndStatusIdOrderByTotalFeasibilityDesc(activityId , statusId);
+    }
+    //活动管理，评分列表排序3
+    public List<TdActivityEnterprise> findByActivityIdAndStatusIdOrderByTotalGroupDesc(Long activityId , Long statusId)
+    {
+        return (List<TdActivityEnterprise>) repository.findByActivityIdAndStatusIdOrderByTotalGroupDesc(activityId , statusId);
+    }
+    //活动管理，评分列表排序4
+    public List<TdActivityEnterprise> findByActivityIdAndStatusIdOrderByTotalMarketValueDesc(Long activityId , Long statusId)
+    {
+        return (List<TdActivityEnterprise>) repository.findByActivityIdAndStatusIdOrderByTotalMarketValueDesc(activityId , statusId);
+    }
+    //活动管理，评分列表排序5
+    public List<TdActivityEnterprise> findByActivityIdAndStatusIdOrderByTotalExpressionDesc(Long activityId , Long statusId)
+    {
+        return (List<TdActivityEnterprise>) repository.findByActivityIdAndStatusIdOrderByTotalExpressionDesc(activityId , statusId);
+    }
+    
+    
     
     public Page<TdActivityEnterprise> findAllOrderBySortIdAsc(int page, int size)
     {

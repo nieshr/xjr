@@ -582,6 +582,69 @@ public class TdActivityController {
         return res;
     }
     
+    //重置活动
+    @RequestMapping(value = "/reset")
+    @ResponseBody
+    public Map<String, Object> activityReset(HttpServletRequest req, ModelMap map,Long activityId) {
+        Map<String, Object> res = new HashMap<String, Object>();
+        res.put("code", 1);
+        String username = (String) req.getSession().getAttribute("activityUsername");
+        
+        if (null == username) {
+            res.put("msg", "请先登陆");
+            return res;
+         }
+
+        tdCommonService.setHeader(map, req);
+        
+        TdActivity activity = tdActivityService.findOne(activityId);
+        if (null != activity)
+        {
+        	activity.setStatusId(1L);
+        	tdActivityService.save(activity);
+        	//重置活动相关的表
+        	List<TdActivityEnterprise> activityEnterprise = tdActivityEnterpriseService.findByActivityId(activityId);
+        	for(TdActivityEnterprise aen:activityEnterprise)
+        	{
+        		aen.setWin(null);
+        		tdActivityEnterpriseService.save(aen);
+        	}
+        	
+        	
+        	List<TdEnterpriseGrade> enterpriseGrade = tdEnterpriseGradeService.findByActivityIdOrderByIdAsc(activityId);
+        	for(TdEnterpriseGrade theGrade : enterpriseGrade)
+        	{
+        		theGrade.setTotalPoint(null);
+				theGrade.setTotalExpression(null);
+				theGrade.setOneExpression(null);
+				theGrade.setTotalFeasibility(null);
+				theGrade.setOneFeasibility(null);
+				theGrade.setTwoFeasibility(null);
+				theGrade.setTotalMarketValue(null);
+				theGrade.setOneMarketValue(null);
+				theGrade.setTwoMarketValue(null);
+				theGrade.setTotalTechnology(null);
+				theGrade.setOneTechnology(null);
+				theGrade.setTwoTechnology(null);
+				theGrade.setThreeTechnology(null);
+		//		theGrade.setTotalPoint(grade.getTotalPoint());   zhangji 注释掉
+				theGrade.setOneGroup(null);
+				theGrade.setTwoGroup(null);
+				theGrade.setTotalGroup(null); //zhangji
+				theGrade.setIsGrade(null);
+				theGrade.setGradeAble(null);
+            	tdEnterpriseGradeService.save(theGrade);
+        	}
+        
+        	
+        }
+
+        res.put("code", 0);
+        return res;
+    }
+    
+    
+    
     //单个发短信
     @RequestMapping(value = "/sendSms")
     @ResponseBody
@@ -1758,12 +1821,17 @@ public class TdActivityController {
     }
   
     @RequestMapping(value = "/getGrade")
-    public String getGrade(Long activityId, String mark ,ModelMap map){
+    public String getGrade(Long activityId, String mark , Integer orderId , ModelMap map){
     	List<TdActivityEnterprise> activityEnterpriseList = tdActivityEnterpriseService.findByActivityIdAndStatusId(activityId, 2L);
     	if(null != activityEnterpriseList){
     		for (TdActivityEnterprise ae : activityEnterpriseList)
     		{
     			Long totalPoint = 0L;
+    			Long totalTechnology = 0L;
+    			Long totalFeasibility = 0L;
+    			Long totalGroup = 0L;
+    			Long totalMarketValue = 0L;
+    			Long totalExpression = 0L;
     			//找出每一个企业对应的得分列表
     			List<TdEnterpriseGrade> enterpriseGradeList = tdEnterpriseGradeService.findByEnterpriseIdAndActivityId(ae.getEnterpriseId(), activityId);
     			if (null != enterpriseGradeList)
@@ -1774,16 +1842,57 @@ public class TdActivityController {
     					if(null != grade.getTotalPoint())
     					{
     						totalPoint = (long)grade.getTotalPoint().intValue()+totalPoint;
+    						totalTechnology = (long)grade.getTotalTechnology().intValue()+totalTechnology;
+    						totalFeasibility = (long)grade.getTotalFeasibility().intValue()+totalFeasibility;
+    						totalGroup = (long)grade.getTotalGroup().intValue()+totalGroup;
+    						totalMarketValue = (long)grade.getTotalMarketValue().intValue()+totalMarketValue;
+    						totalExpression = (long)grade.getTotalExpression().intValue()+totalExpression;
     					}
     				}
     				
     			}
     			ae.setTotalPoint(totalPoint);
+    			ae.setTotalTechnology(totalTechnology);
+    			ae.setTotalFeasibility(totalFeasibility);
+    			ae.setTotalGroup(totalGroup);
+    			ae.setTotalMarketValue(totalMarketValue);
+    			ae.setTotalExpression(totalExpression);
     			tdActivityEnterpriseService.save(ae);
     		}
     	//总分排序
-    		List<TdActivityEnterprise> gradeList = tdActivityEnterpriseService.findByActivityIdAndStatusIdOrderByTotalPointDesc(activityId, 2L);
+    		List<TdActivityEnterprise> gradeList = null;
+    		if (null == orderId)
+    		{
+    			orderId = 0;
+    		}
+			switch(orderId)
+			{
+			case 0:
+				gradeList = tdActivityEnterpriseService.findByActivityIdAndStatusIdOrderByTotalPointDesc(activityId, 2L);
+				break;
+			case 1:
+				gradeList = tdActivityEnterpriseService.findByActivityIdAndStatusIdOrderByTotalTechnologyDesc(activityId, 2L);
+				break;
+			case 2:
+				gradeList = tdActivityEnterpriseService.findByActivityIdAndStatusIdOrderByTotalFeasibilityDesc(activityId, 2L);
+				break;
+			case 3:
+				gradeList = tdActivityEnterpriseService.findByActivityIdAndStatusIdOrderByTotalGroupDesc(activityId, 2L);
+				break;
+			case 4:
+				gradeList = tdActivityEnterpriseService.findByActivityIdAndStatusIdOrderByTotalMarketValueDesc(activityId, 2L);
+				break;
+			case 5:
+				gradeList = tdActivityEnterpriseService.findByActivityIdAndStatusIdOrderByTotalExpressionDesc(activityId, 2L);
+				break;
+			default:
+				gradeList = tdActivityEnterpriseService.findByActivityIdAndStatusIdOrderByTotalPointDesc(activityId, 2L);
+				break;
+			}
+    		
+    		
     		map.addAttribute("grade_list", gradeList);
+    		map.addAttribute("orderId",orderId);
     		if (null != gradeList)
     		{
     			int index = 0 ;
@@ -1968,10 +2077,30 @@ public class TdActivityController {
       {
           return;
       }
+      //先把获胜状态清空，为了可以多次选择入选企业
+      List<TdActivityEnterprise> aeList = tdActivityEnterpriseService.findByActivityIdAndStatusId(activityId, 2L);
+      for(TdActivityEnterprise aen : aeList)
+      {
+    	  if (null != aen.getWin() && aen.getWin() == activityId)
+    	  {
+    		  aen.setWin(null);
+    		  tdActivityEnterpriseService.save(aen);
+    	  }
+    	  TdEnterprise e = tdEnterpriseService.findOne(aen.getEnterpriseId());
+    	  if(null != e.getWin() && e.getWin() == activityId)
+    	  {
+    		  e.setWin(null);
+    		  tdEnterpriseService.save(e);
+    	  }
+      }
+
+      
       
       TdActivity activity = tdActivityService.findOne(activityId);
       activity.setStatusId(2L);
       tdActivityService.save(activity);
+      
+     
       
       for (int chkId : chkIds)
       {
@@ -1984,11 +2113,16 @@ public class TdActivityController {
           	{
           		ActivityEnterprise.setWin(activityId); 
           		tdActivityEnterpriseService.save(ActivityEnterprise);
-          		TdEnterprise enterprise = tdEnterpriseService.findOne(ActivityEnterprise.getEnterpriseId());
+          	}
+          	TdEnterprise enterprise = tdEnterpriseService.findOne(ActivityEnterprise.getEnterpriseId());
+          	if (null != enterprise)
+          	{
           		enterprise.setWin(activityId); 
           		tdEnterpriseService.save(enterprise);
-      
           	}
+          	
+      
+          	
           }
       }
     }

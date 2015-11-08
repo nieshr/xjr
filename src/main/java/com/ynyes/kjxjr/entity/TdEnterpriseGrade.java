@@ -102,6 +102,10 @@ public class TdEnterpriseGrade {
 	@Column
 	private Boolean isGrade;
 	
+	//一个一个打分 当前项是否可用
+	@Column
+	private Boolean gradeAble;
+	
 	//排序号
 	@Column
 	private Long sordId;
@@ -296,6 +300,14 @@ public class TdEnterpriseGrade {
 
 	public void setEnterpriseTitle(String enterpriseTitle) {
 		this.enterpriseTitle = enterpriseTitle;
+	}
+
+	public Boolean getGradeAble() {
+		return gradeAble;
+	}
+
+	public void setGradeAble(Boolean gradeAble) {
+		this.gradeAble = gradeAble;
 	}
 
 	

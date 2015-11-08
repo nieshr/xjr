@@ -59,6 +59,12 @@ $(function () {
             filetypes: "*.jpg;*.jpge;*.png;*.gif;" 
         });
     });
+    //设置封面图片的样式
+    $(".photo-list ul li .img-box img").each(function () {
+        if ($(this).attr("src") == $("#hidFocusPhoto").val()) {
+            $(this).parent().addClass("selected");
+        }
+    });
 });
 
 
@@ -245,6 +251,21 @@ $(function () {
       <input name="sortId" type="text" value="<#if diy_site??>${diy_site.sortId!""}<#else>99</#if>" class="input small" datatype="n" sucmsg=" ">
       <span class="Validform_checktip">*数字，越小越向前</span>
     </dd>
+  </dl>
+  
+  <dl  class="invest" <#if diy_site?? && !diy_site.payType?? || !diy_site?? || diy_site?? &&diy_site.payType="">style= "display:none;"</#if>>
+     <dt>封面图片</dt>
+     <dd>
+         <input name="imgUri" type="text" id="txtImgUrl" value="<#if diy_site??>${diy_site.imgUri!""}</#if>" class="input normal upload-path">
+         <div class="upload-box upload-img"></div>
+         <div class="photo-list thumb_ImgUrl_show" style="display: none;">
+             <ul>
+                 <li>
+                     <div class="img-box1"></div>
+                 </li>
+             </ul>
+         </div>
+     </dd>
   </dl>
   
   <dl  class="invest" <#if diy_site?? && !diy_site.payType?? || !diy_site?? || diy_site?? &&diy_site.payType="">style= "display:none;"</#if>>

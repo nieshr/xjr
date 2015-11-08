@@ -102,46 +102,50 @@ public class TdExpertController {
 		}
 		TdExpert expert = tdExpertService.findbyUsername(expertUsername);
 		List<TdActivityExpert> ae_list = tdActivityExpertService
-				.findByExpertIdAndCreateTimeAfterOrderByCreateTimeDesc(expert.getId());
+				.findByExpertIdOrderByCreateTimeDesc(expert.getId());
 		List<TdActivity> activities_list = new ArrayList<>();
-		for (TdActivityExpert item : ae_list) {
-			TdActivity activity = tdActivityService.findOne(item.getActivityId());
-			
-			/*评分时间检验*/
-	        	Date now = new Date();
-		        Calendar cn =  Calendar.getInstance();
-		        cn.setTime(now);
-	        	Date eventDate = activity.getDate();
-	            Calendar eventOn =  Calendar.getInstance();
-	            eventOn.setTime(eventDate);
-	        	Date eventEnd = activity.getEventEnd();
-	            Calendar eventOff =  Calendar.getInstance();
-	            eventOff.setTime(eventEnd);
-	            
-	            //未开始
-	            if (cn.before(eventOn))
-	            {
-	            	activity.setGradetimeId(0L);
-	            	tdActivityService.save(activity);
-	            }
-	            //可评
-	            else if (cn.after(eventOn)&&cn.before(eventOff))
-	            {
-	            	activity.setGradetimeId(1L);;
-	            	tdActivityService.save(activity);
-	            }
-	            //过期
-	            else if (cn.after(eventOff))
-	            {
-	            	activity.setGradetimeId(2L);
-	            	tdActivityService.save(activity);
-	            }
-			/** 评分时间检查 end*/
-	            
-			if (null != activity) {
-				activities_list.add(activity);
+		if(null != ae_list && ae_list.size()>0)
+		{
+			for (TdActivityExpert item : ae_list) {
+				TdActivity activity = tdActivityService.findOne(item.getActivityId());
+				
+				/*评分时间检验*/
+		        	Date now = new Date();
+			        Calendar cn =  Calendar.getInstance();
+			        cn.setTime(now);
+		        	Date eventDate = activity.getDate();
+		            Calendar eventOn =  Calendar.getInstance();
+		            eventOn.setTime(eventDate);
+		        	Date eventEnd = activity.getEventEnd();
+		            Calendar eventOff =  Calendar.getInstance();
+		            eventOff.setTime(eventEnd);
+		            
+		            //未开始
+		            if (cn.before(eventOn))
+		            {
+		            	activity.setGradetimeId(0L);
+		            	tdActivityService.save(activity);
+		            }
+		            //可评
+		            else if (cn.after(eventOn)&&cn.before(eventOff))
+		            {
+		            	activity.setGradetimeId(1L);;
+		            	tdActivityService.save(activity);
+		            }
+		            //过期
+		            else if (cn.after(eventOff))
+		            {
+		            	activity.setGradetimeId(2L);
+		            	tdActivityService.save(activity);
+		            }
+				/* 评分时间检查 end*/
+		            
+				if (null != activity) {
+					activities_list.add(activity);
+				}
 			}
 		}
+
 
 		
 		
@@ -346,15 +350,57 @@ public class TdExpertController {
 		theGrade.setTotalGroup(grade.getTotalGroup()); //zhangji
 		theGrade.setIsGrade(true);
 		tdEnterpriseGradeService.save(theGrade);
+		
+		//同步【活动-企业】中间表状态
 		TdActivityEnterprise activityEnterprise = tdActivityEnterpriseService.findByActivityIdAndEnterpriseId(activityId, enterprise.getId());
 		activityEnterprise.setIsGrade(true);
 		tdActivityEnterpriseService.save(activityEnterprise);
-		TdExpertCoachEnterprise expertCoachEnterprise = tdExpertCoachEnterpriseService.findByEnterpriseId(enterprise.getId());
-		if(null == expertCoachEnterprise){
-			expertCoachEnterprise = new TdExpertCoachEnterprise();
+		
+		//评分改为一个一个的评 zhangji
+		List<TdEnterpriseGrade> expertGradeList = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderBySordIdAsc(expert.getId(), activityId);
+		if (expertGradeList.size() > 0)
+		{
+			int index = 0;
+			int i = 0; 	//要操作的对象标识
+			for (TdEnterpriseGrade item : expertGradeList)
+			{
+				if (i==1)
+				{
+					item.setGradeAble(true);
+					tdEnterpriseGradeService.save(item);
+					break;
+				}
+				if (item.getId() == theGrade.getId())
+				{
+					if(index == (expertGradeList.size()-1))
+					{
+						res.put("msg", "评分完毕，谢谢！");
+						item.setGradeAble(false);
+						tdEnterpriseGradeService.save(item);
+					}
+					i = 1;
+					index++;
+					
+				}
+				else{
+					item.setGradeAble(false);
+					tdEnterpriseGradeService.save(item);
+					index++;
+				}
+				
+				
+			}
 		}
-		expertCoachEnterprise.setIsGrade(true);
-		tdExpertCoachEnterpriseService.save(expertCoachEnterprise);
+
+		
+		
+		
+//		TdExpertCoachEnterprise expertCoachEnterprise = tdExpertCoachEnterpriseService.findByEnterpriseId(enterprise.getId());
+//		if(null == expertCoachEnterprise){
+//			expertCoachEnterprise = new TdExpertCoachEnterprise();
+//		}
+//		expertCoachEnterprise.setIsGrade(true);
+//		tdExpertCoachEnterpriseService.save(expertCoachEnterprise);
 		res.put("status", 0);
 		return res;
 	}

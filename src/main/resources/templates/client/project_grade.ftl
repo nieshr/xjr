@@ -140,6 +140,10 @@
                 "activityId":"${activityId}"
             },function(res){
                 if(0 == res.status){
+                	if(typeof res.msg != "undefined")
+                	{
+                		alert(res.msg);
+                	}
                     location.reload();
                 }
             });
@@ -215,7 +219,7 @@
 			<#if grade_list??>
 			    <#list grade_list as item>
         			<td>
-        				<select class="setGrade${item_index}" onChange="changeTechnology('${item_index}');" id="${item_index}_oneTechnology" <#if item.isGrade??&&item.isGrade|| type??&&type=="check"|| !item.isGrade??&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if>>
+        				<select class="setGrade${item_index}" onChange="changeTechnology('${item_index}');" id="${item_index}_oneTechnology" <#if item.isGrade??&&item.isGrade|| type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if>>
         				    <#list 0..10 as n>
         					   <option value="${n}" <#if item.oneTechnology??&&n==item.oneTechnology>selected=""</#if>>${n}</option>
         					</#list>
@@ -229,7 +233,7 @@
 			<#if grade_list??>
 			    <#list grade_list as item>
         			<td>
-        				<select class="setGrade${item_index}" onChange="changeTechnology('${item_index}');" id="${item_index}_twoTechnology" <#if item.isGrade??&&item.isGrade|| type??&&type=="check">disabled="" style="background : #EDEDED;"</#if>>
+        				<select class="setGrade${item_index}" onChange="changeTechnology('${item_index}');" id="${item_index}_twoTechnology" <#if item.isGrade??&&item.isGrade|| type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if>>
         				    <#list 0..10 as n>
         					   <option value="${n}" <#if item.twoTechnology??&&n==item.twoTechnology>selected=""</#if>>${n}</option>
         					</#list>
@@ -243,7 +247,7 @@
 			<#if grade_list??>
 			    <#list grade_list as item>
         			<td>
-        				<select class="setGrade${item_index}"  onChange="changeTechnology('${item_index}');" id="${item_index}_threeTechnology" <#if item.isGrade??&&item.isGrade|| type??&&type=="check">disabled="" style="background : #EDEDED;"</#if>>
+        				<select class="setGrade${item_index}"  onChange="changeTechnology('${item_index}');" id="${item_index}_threeTechnology" <#if item.isGrade??&&item.isGrade|| type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if>>
         				    <#list 0..10 as n>
         					   <option value="${n}" <#if item.threeTechnology??&&n==item.threeTechnology>selected=""</#if>>${n}</option>
         					</#list>
@@ -270,7 +274,7 @@
 			<#if grade_list??>
 			    <#list grade_list as item>
         			<td>
-        				<select  class="setGrade${item_index}" onChange="changeFeasibility('${item_index}');" id="${item_index}_oneFeasibility" <#if item.isGrade??&&item.isGrade|| type??&&type=="check">disabled="" style="background : #EDEDED;"</#if>>
+        				<select  class="setGrade${item_index}" onChange="changeFeasibility('${item_index}');" id="${item_index}_oneFeasibility" <#if item.isGrade??&&item.isGrade|| type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if>>
         					<#list 0..10 as n>
         					   <option value="${n}" <#if item.oneFeasibility??&&n==item.oneFeasibility>selected=""</#if>>${n}</option>
         					</#list>
@@ -284,7 +288,7 @@
 			<#if grade_list??>	
 			    <#list grade_list as item>
         			<td>
-        				<select class="setGrade${item_index}"  onChange="changeFeasibility('${item_index}');" id="${item_index}_twoFeasibility" <#if item.isGrade??&&item.isGrade|| type??&&type=="check">disabled="" style="background : #EDEDED;"</#if>>
+        				<select class="setGrade${item_index}"  onChange="changeFeasibility('${item_index}');" id="${item_index}_twoFeasibility" <#if item.isGrade??&&item.isGrade|| type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if>>
         				    <#list 0..10 as n>
         					   <option value="${n}" <#if item.twoFeasibility??&&n==item.twoFeasibility>selected=""</#if>>${n}</option>
         					</#list>
@@ -311,7 +315,7 @@
 			<#if grade_list??>
     			<#list grade_list as item>
     			<td>
-    				<select class="setGrade${item_index}"  onChange="changeGroup('${item_index}');" id="${item_index}_oneGroup" <#if item.isGrade??&&item.isGrade|| type??&&type=="check">disabled="" style="background : #EDEDED;"</#if>>
+    				<select class="setGrade${item_index}"  onChange="changeGroup('${item_index}');" id="${item_index}_oneGroup" <#if item.isGrade??&&item.isGrade|| type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if>>
     				    <#list 0..10 as n>
     					   <option value="${n}" <#if item.oneGroup??&&n==item.oneGroup>selected=""</#if>>${n}</option>
     					</#list>
@@ -325,7 +329,7 @@
             <#if grade_list??>
                 <#list grade_list as item>
                 <td>
-                    <select class="setGrade${item_index}"  onChange="changeGroup('${item_index}');" id="${item_index}_twoGroup" <#if item.isGrade??&&item.isGrade|| type??&&type=="check">disabled="" style="background : #EDEDED;"</#if>>
+                    <select class="setGrade${item_index}"  onChange="changeGroup('${item_index}');" id="${item_index}_twoGroup" <#if item.isGrade??&&item.isGrade|| type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if>>
                         <#list 0..10 as n>
                            <option value="${n}" <#if item.twoGroup??&& n==item.twoGroup>selected=""</#if>>${n}</option>
                         </#list>
@@ -352,7 +356,7 @@
 			<#if grade_list??>
 			    <#list grade_list as item>
         			<td>
-        				<select class="setGrade${item_index}"  onChange="changeMarketValue('${item_index}');" id="${item_index}_oneMarketValue" <#if item.isGrade??&&item.isGrade|| type??&&type=="check">disabled="" style="background : #EDEDED;"</#if>>
+        				<select class="setGrade${item_index}"  onChange="changeMarketValue('${item_index}');" id="${item_index}_oneMarketValue" <#if item.isGrade??&&item.isGrade|| type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if>>
         				    <#list 0..10 as n>
         					   <option value="${n}" <#if item.oneMarketValue??&&n==item.oneMarketValue>selected=""</#if>>${n}</option>
         					</#list>
@@ -366,7 +370,7 @@
 			<#if grade_list??>
 			    <#list grade_list as item>
         			<td>
-        				<select  class="setGrade${item_index}" onChange="changeMarketValue('${item_index}');" id="${item_index}_twoMarketValue" <#if item.isGrade??&&item.isGrade|| type??&&type=="check">disabled="" style="background : #EDEDED;"</#if>>
+        				<select  class="setGrade${item_index}" onChange="changeMarketValue('${item_index}');" id="${item_index}_twoMarketValue" <#if item.isGrade??&&item.isGrade|| type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if>>
         				    <#list 0..10 as n>
         					   <option value="${n}" <#if item.twoMarketValue??&&n==item.twoMarketValue>selected=""</#if>>${n}</option>
         					</#list>
@@ -393,7 +397,7 @@
 			<#if grade_list??>
 			    <#list grade_list as item>
         			<td>
-        				<select class="setGrade${item_index}"  onChange="changeExpression('${item_index}');" id="${item_index}_oneExpression" <#if item.isGrade??&&item.isGrade|| type??&&type=="check">disabled="" style="background : #EDEDED;"</#if>>
+        				<select class="setGrade${item_index}"  onChange="changeExpression('${item_index}');" id="${item_index}_oneExpression" <#if item.isGrade??&&item.isGrade|| type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if>>
         				    <#list 0..10 as n>
         					   <option value="${n}" <#if item.oneExpression??&&n==item.oneExpression>selected=""</#if>>${n}</option>
         					</#list>
@@ -403,7 +407,7 @@
 			</#if>
 		</tr>		
 		
-		<tr class="tr02 "style="background:#DFEBF7;">
+		<tr class="tr02 "style="background:#dfebf7;">
 			<th>合计</th>
 			<#if grade_list??>
     			<#list grade_list as item>
@@ -415,14 +419,16 @@
     			</#list>
 			</#if>
 		</tr>
-		<tr class="tr02 mOn">
-			<th></th>
-			<#if grade_list??>
-    			<#list grade_list as item>
-    			     <td><input class="setGrade${item_index}"  <#if item.isGrade??&&item.isGrade || type??&&type=="check">disabled="" style="background : #EDEDED;"</#if> type="button" onClick="submitPoint('${item_index}','${item.number!''}');" value="确定" /></td>
-    			</#list>
-		    </#if>
-		</tr>	
+		<#if !type??>
+			<tr class="tr02 mOn">
+				<th></th>
+				<#if grade_list??>
+	    			<#list grade_list as item>
+	    			     <td><input class="setGrade${item_index}"  <#if item.isGrade??&&item.isGrade || type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if> type="button" onClick="submitPoint('${item_index}','${item.number!''}');" value="确定" /></td>
+	    			</#list>
+			    </#if>
+			</tr>
+		</#if>	
 	</table>
 	<#if print??&&print=="print">
 	   <input style="margin-left: 640px; margin-top: 20px; width:100px;height: 30px; font-size: 14px;" type="button" class="area_batch" onclick="location.href='/expert/export/grade?activityId=${activityId?c!''}&expertId=${expertId?c!''}'"  value="打印评分表" />

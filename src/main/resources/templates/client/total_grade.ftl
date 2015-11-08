@@ -9,6 +9,7 @@
     <link href="/client/css/area.css" rel="stylesheet" type="text/css" />
     <script src="/client/js/jquery-1.9.1.min.js"></script>
 	<script src="/client/js/main.js"></script>
+
 <script>    
  //全选取消按钮函数-入选
 function checkAll(chkobj) {
@@ -20,6 +21,12 @@ function checkAll(chkobj) {
         $(".checkall input:enabled").prop("checked", false);
     }
 }    
+ 
+ function gradeOrder(orderId)
+ {
+	 location.href="/activity/getGrade?activityId=${activityId?c!''}&orderId="+orderId+<#if mark??&&mark=="activity">"&mark=activity"</#if>;
+
+ }
 </script>
 </head>
 <body style="background: none;">
@@ -33,10 +40,15 @@ function checkAll(chkobj) {
 	        	<td width="2%">排名</td>
 	        	<td width="3%">编号</td>
 	        	<td width="15%">名称</td>
-	        	<td width="8%">总分</td>
+	        	<td id="order0"  width="3%" style="background-color:<#if orderId??&&orderId==0>#FFF3CD<#else>#D9E3F3</#if>;"><a href="javascript:gradeOrder(0);" title="点击按此评分项顺序排序">总分<img class="orderIcon" id="orderIcon0" style="margin-left:2px; <#if orderId??&&orderId!=0>display:none;</#if>"  src="/client/images/down1.png" width=8px height=10px alt=↓ /></a></td>
+	        	<td id="order1"  width="3%" style="background-color:<#if orderId??&&orderId==1>#FFF3CD<#else>#D9E3F3</#if>;"><a href="javascript:gradeOrder(1);" title="点击按此评分项顺序排序">核心竞争力<img class="orderIcon" id="orderIcon1"  style="margin-left:2px; <#if orderId??&&orderId!=1>display:none;</#if>" src="/client/images/down1.png" width=8px height=10px alt=↓ /></td>
+	        	<td id="order2"  width="3%" style="background-color:<#if orderId??&&orderId==2>#FFF3CD<#else>#D9E3F3</#if>;"><a href="javascript:gradeOrder(2);" title="点击按此评分项顺序排序">市场潜力<img class="orderIcon" id="orderIcon2"  style="margin-left:2px; <#if orderId??&&orderId!=2>display:none;</#if>"   src="/client/images/down1.png" width=8px height=10px alt=↓ /></td>
+	        	<td id="order3"  width="3%" style="background-color:<#if orderId??&&orderId==3>#FFF3CD<#else>#D9E3F3</#if>;"><a href="javascript:gradeOrder(3);" title="点击按此评分项顺序排序">团队能力<img class="orderIcon" id="orderIcon3" style="margin-left:2px; <#if orderId??&&orderId!=3>display:none;</#if>"   src="/client/images/down1.png" width=8px height=10px alt=↓ /></td>
+	        	<td id="order4"  width="3%" style="background-color:<#if orderId??&&orderId==4>#FFF3CD<#else>#D9E3F3</#if>;"><a href="javascript:gradeOrder(4);" title="点击按此评分项顺序排序">投资价值<img class="orderIcon" id="orderIcon4" style="margin-left:2px; <#if orderId??&&orderId!=4>display:none;</#if>"  src="/client/images/down1.png" width=8px height=10px alt=↓ /></td>
+	        	<td id="order5"  width="3%" style="background-color:<#if orderId??&&orderId==5>#FFF3CD<#else>#D9E3F3</#if>;"><a href="javascript:gradeOrder(5);" title="点击按此评分项顺序排序">现场表现力<img class="orderIcon" id="orderIcon5" style="margin-left:2px; <#if orderId??&&orderId!=5>display:none;</#if>"  src="/client/images/down1.png" width=8px height=10px alt=↓ /></td>
 	            <#if aex_list??>
 	                <#list aex_list as item>
-	                    <td width="5%">${item.name!''}</td>
+	                    <td width="4%">${item.name!''}</td>
 	                </#list>
 	            </#if>
 	        </tr>
@@ -46,7 +58,7 @@ function checkAll(chkobj) {
 			        	<#if mark??&&mark=="activity">
 		        		<td>
 		        		<span class="checkall" style="vertical-align:middle;">
-			        		<input style="width:15px;height:15px;float:left; margin:0 0 0 10px ;" <#if activity.statusId??&&activity.statusId==2>disabled=""</#if><#if item.win??&&item.win==activityId>checked=""</#if> id="listChkId" type="checkbox" name="listChkId" value="${item_index}"/>
+			        		<input style="width:15px;height:15px;float:left; margin:0 0 0 10px ;" <#if item.win??&&item.win==activityId || (activity.statusId==1 && item_index lt 7)>checked=""</#if> id="listChkId" type="checkbox" name="listChkId" value="${item_index}"/>
 			        		<input type="hidden" name="listId" id="listId" value="${item.id}">
 			        	</span>	
 		        		</td>
@@ -55,6 +67,11 @@ function checkAll(chkobj) {
 			        	<td>${item.number!''}</td>
 				        <td>${item.enterpriseTitle!''}</td>
 				        <td><#if item.totalPoint??>${item.totalPoint?c!''}</#if></td>
+				        <td><#if item.totalTechnology??>${item.totalTechnology?c!''}</#if></td>
+				        <td><#if item.totalFeasibility??>${item.totalFeasibility?c!''}</#if></td>
+				        <td><#if item.totalGroup??>${item.totalGroup?c!''}</#if></td>
+				        <td><#if item.totalMarketValue??>${item.totalMarketValue?c!''}</#if></td>
+				        <td><#if item.totalExpression??>${item.totalExpression?c!''}</#if></td>
 				        <#if ("expert_list_"+item_index)?eval??>
 				        	<#assign expertList=("expert_list_"+item_index)?eval>
 				        	<#list expertList as expert>
@@ -66,7 +83,7 @@ function checkAll(chkobj) {
 			</#if>        
 	   
 	    </table>
-	    <#if mark??&&mark=="activity"&&activity.statusId??&&activity.statusId==1>
+	    <#if mark??&&mark=="activity"&&activity.statusId??&&(activity.statusId==1||activity.statusId==2)>
         <a class="all" style="margin-left:10px;" href="javascript:;" onclick="checkAll(this);"><i></i><span>全选</span></a>
         <input style="cursor:pointer;" class="area_batch" style="margin-left:5%;" type="submit"  value="路演胜出" />
         </#if>

@@ -103,6 +103,29 @@ function cancelCheck(activityId) {
     }
 }
 
+function resetCheck(activityId) {
+    if (confirm("重置评分后将删除之前的评分表，确认吗？")) {
+         $.ajax({
+             type: "GET",
+             url: "/activity/reset",
+             contentType: "application/json; charset=utf-8",
+             data: {"activityId" : activityId},
+             dataType: "json",
+             success: function(data){
+                         if (data.code == 0)
+                         {
+                            alert("重置成功！");
+                             location.reload();
+                         }
+                         else 
+                         {
+                             alert(data.msg);
+                         }
+                      }
+         });
+    }
+}
+
 
 function sortUp(id , activityId)
 {
@@ -255,9 +278,12 @@ function sortDown(id , activityId)
                                 <#if activity??&&activity.statusId??&&activity.statusId==1>
                                     <input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:green;color:#fff; " type="button" class="area_batch" onclick="location.href='/activity/getCoach?activityId=${activity.id?c!''}'"  value="分配路演辅导" />
                                     <input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#E4574E;color:#fff; " type="button" onclick="javascript:cancelCheck(${activity.id?c!''});"  value="取消审核" />
+                                    <input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#e67817;color:#fff; " type="button" onclick="javascript:resetCheck(${activity.id?c!''});"  value="重置评分" />
                                 <#elseif activity??&&activity.statusId??&&activity.statusId==0> 
                                     <input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:green;color:#fff; " type="button" class="area_batch" onclick="location.href='/activity/getCoach?activityId=${activity.id?c!''}'"  value="分配路演辅导" />
                                     <input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#e67817;color:#fff; " type="button" class="area_batch" onclick="javascript:activityPass(${activity.id?c!''});" value="通过审核" />
+                                <#elseif activity??&&activity.statusId??&&activity.statusId==2>     
+                                    <input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#e67817;color:#fff; " type="button" onclick="javascript:resetCheck(${activity.id?c!''});"  value="重置评分" />
                                 </#if>
                             </#if>
                         <#else>
@@ -312,7 +338,7 @@ function sortDown(id , activityId)
                         <span style="margin-top: 6px;">评分结果：</span>
                         <ul class="active_project_text">
                             <li>
-                                <input type="button" class="area_batch" onclick="location.href='/activity/getGrade?activityId=${activity.id?c!''}&mark=activity'"  class="p01" value="选择胜出项目" />
+                                <input type="button" class="area_batch" onclick="javascript:window.open('/activity/getGrade?activityId=${activity.id?c!''}&mark=activity')"  class="p01" value="选择胜出项目" />
                                 <a style="display:block;  width:60px;"></a>
                             </li>
                         </ul>
@@ -322,7 +348,7 @@ function sortDown(id , activityId)
                         <span style="margin-top: 6px;">路演结果：</span>
                         <ul class="active_project_text">
                             <li>
-                                <input type="button" class="area_batch" onclick="location.href='/activity/getGrade?activityId=${activity.id?c!''}&mark=activity'"  class="p01" value="查看排名" />
+                                <input type="button" class="area_batch" onclick="javascript:window.open('/activity/getGrade?activityId=${activity.id?c!''}&mark=activity')"  class="p01" value="查看排名" />
                                 <a style="display:block;  width:60px;"></a>
                             </li>
                         </ul>

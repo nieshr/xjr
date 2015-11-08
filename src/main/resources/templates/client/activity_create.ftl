@@ -571,7 +571,8 @@ window.onload=done;
                 </#if>    
     			<!-- 评分汇总 end-->
      <#if pagetype?? && pagetype == "check">
-     <#elseif activity??&&activity.statusId??&&activity.statusId==0 || activity?? && !activity.statusId?? || !activity??>
+    <#-- <#elseif activity??&&activity.statusId??&&activity.statusId==0 || activity?? && !activity.statusId?? || !activity??> -->
+     <#else>	
     	<dt style=" margin-top: 40px;" class="dt05">
     	   <input type="submit" value="保存" style="cursor:pointer;"/>
     	</dt>

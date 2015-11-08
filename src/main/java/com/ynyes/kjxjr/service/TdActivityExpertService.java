@@ -146,7 +146,12 @@ public class TdActivityExpertService {
     	return repository.findByUsername(username);
     }
     
-    
+    public List<TdActivityExpert> findByExpertIdOrderByCreateTimeDesc(Long expertId){
+    	if(null == expertId){
+    		return null;
+    	}
+    	return repository.findByExpertIdOrderByCreateTimeDesc(expertId);
+    }
     
     
     
