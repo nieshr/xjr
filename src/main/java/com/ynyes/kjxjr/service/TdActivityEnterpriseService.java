@@ -126,34 +126,47 @@ public class TdActivityEnterpriseService {
     
     
     //活动管理，评分列表排序0
-    public List<TdActivityEnterprise> findByActivityIdAndStatusIdOrderByTotalPointDesc(Long activityId , Long statusId)
+    public Page<TdActivityEnterprise> findByActivityIdAndStatusId(Long activityId , Long statusId , Integer orderId , int page, int size)
     {
-        return (List<TdActivityEnterprise>) repository.findByActivityIdAndStatusIdOrderByTotalPointDesc(activityId , statusId);
-    }
-    //活动管理，评分列表排序1
-    public List<TdActivityEnterprise> findByActivityIdAndStatusIdOrderByTotalTechnologyDesc(Long activityId , Long statusId)
-    {
-        return (List<TdActivityEnterprise>) repository.findByActivityIdAndStatusIdOrderByTotalTechnologyDesc(activityId , statusId);
-    }
-    //活动管理，评分列表排序2
-    public List<TdActivityEnterprise> findByActivityIdAndStatusIdOrderByTotalFeasibilityDesc(Long activityId , Long statusId)
-    {
-        return (List<TdActivityEnterprise>) repository.findByActivityIdAndStatusIdOrderByTotalFeasibilityDesc(activityId , statusId);
-    }
-    //活动管理，评分列表排序3
-    public List<TdActivityEnterprise> findByActivityIdAndStatusIdOrderByTotalGroupDesc(Long activityId , Long statusId)
-    {
-        return (List<TdActivityEnterprise>) repository.findByActivityIdAndStatusIdOrderByTotalGroupDesc(activityId , statusId);
-    }
-    //活动管理，评分列表排序4
-    public List<TdActivityEnterprise> findByActivityIdAndStatusIdOrderByTotalMarketValueDesc(Long activityId , Long statusId)
-    {
-        return (List<TdActivityEnterprise>) repository.findByActivityIdAndStatusIdOrderByTotalMarketValueDesc(activityId , statusId);
-    }
-    //活动管理，评分列表排序5
-    public List<TdActivityEnterprise> findByActivityIdAndStatusIdOrderByTotalExpressionDesc(Long activityId , Long statusId)
-    {
-        return (List<TdActivityEnterprise>) repository.findByActivityIdAndStatusIdOrderByTotalExpressionDesc(activityId , statusId);
+    	PageRequest pageRequest =  null;
+    	switch (orderId)
+    	{
+    		case 0 :
+    			pageRequest = new PageRequest(page, size, new Sort(Direction.DESC, "totalPoint")
+																					.and(new Sort(Direction.DESC , "totalTechnology"))
+																					.and(new Sort(Direction.DESC , "totalGroup"))
+																					.and(new Sort(Direction.DESC , "totalFeasibility"))
+																					.and(new Sort(Direction.DESC , "totalMarketValue"))
+																					.and(new Sort(Direction.DESC , "totalExpression"))
+																					);
+    			break;
+    		case 1:
+    			pageRequest = new PageRequest(page, size, new Sort(Direction.DESC, "totalTechnology")	);
+    			break;
+    		case 2:
+    			pageRequest = new PageRequest(page, size, new Sort(Direction.DESC , "totalFeasibility"));
+    			break;
+    		case 3:
+    		 	 pageRequest = new PageRequest(page, size, new Sort(Direction.DESC , "totalGroup"));
+    		 	break;
+    		case 4:
+    			  pageRequest = new PageRequest(page, size, new Sort(Direction.DESC , "totalMarketValue"));
+    			  break;
+    		case 5 :
+    			  pageRequest = new PageRequest(page, size, new Sort(Direction.DESC , "totalExpression"));
+    			  break;
+    		default:
+    			pageRequest = new PageRequest(page, size, new Sort(Direction.DESC, "totalPoint")
+																					.and(new Sort(Direction.DESC , "totalTechnology"))
+																					.and(new Sort(Direction.DESC , "totalGroup"))
+																					.and(new Sort(Direction.DESC , "totalFeasibility"))
+																					.and(new Sort(Direction.DESC , "totalMarketValue"))
+																					.and(new Sort(Direction.DESC , "totalExpression"))
+						);
+    			break;
+    	}
+    	
+        return repository.findByActivityIdAndStatusId(activityId , statusId ,   pageRequest);
     }
     
     

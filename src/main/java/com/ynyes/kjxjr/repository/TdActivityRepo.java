@@ -23,12 +23,12 @@ public interface TdActivityRepo extends
 { 
 	List<TdActivity> findByRegion(String region);
 	
-	
     Page<TdActivity> findByTitleContainingOrderBySortIdAsc(String keywords, Pageable page);
     TdActivity findByStatusId(Long statusId);
     Page<TdActivity> findByStatusId(Long statusId, Pageable page);
     Page<TdActivity> findByRegionAndStatusIdAndPrepareOffAfterAndPrepareOnBefore(String region , Long statusId , Date current1 , Date current2 , Pageable page);
     Page<TdActivity> findByRegionAndPrepareOffAfterAndPrepareOnBefore(String region , Date current1 , Date current2 , Pageable page);
+    Page<TdActivity> findByRegion(String region , Pageable page);
     /**
 	 * @author lc
 	 * @注释：

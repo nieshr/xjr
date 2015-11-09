@@ -73,22 +73,14 @@
                     <td style="color:#e67817;">${item.prepareOn?string("MM-dd HH:mm")!''}</td>
                     <td style="color:#529c15;">${item.prepareOff?string("MM-dd HH:mm")!''}</td>
                    
-                    <#if item.timeId??&&item.statusId??>
-	                    <#if item.statusId ==0 &&item.timeId ==0>
+                    <#if item.timeId??>
+	                    <#if item.timeId ==0>
 	                    		 <td>未启动</td>
-	                    <#elseif  item.statusId ==0 &&item.timeId ==1>
-	                    		 <td style="color:#0ab2cb;">待审核</td>
-	                    <#elseif  item.statusId ==0 &&(item.timeId == 2 ||item.timeId == 3)>
-	                    		 <td  style="color:#e67817;">已过期</td>
-	                    <#elseif item.statusId ==1 &&( item.timeId ==0 || item.timeId ==1|| item.timeId ==2|| item.timeId ==3)>
-	                    		 <td  style="color:#529c15;">已审核</td>
-	                    <#elseif item.statusId ==2>
-	                    	 <td style="color:purple;">已结束</td>
-	                    <#else>
-	                    	<td>&nbsp;</td>	 
-	                    </#if>	
-	                <#else>
-	                	     <td>未启动</td>
+	                    <#elseif  item.timeId == 1>
+	                    		 <td style="color:#0ab2cb;">筹备中</td>
+	                    <#elseif  item.timeId == 2>
+	                    		 <td  style="color:#529c15;">已结束</td>
+	                    </#if>
 	                </#if>    
                     
                     <td>

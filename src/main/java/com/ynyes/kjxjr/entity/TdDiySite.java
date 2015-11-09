@@ -110,6 +110,10 @@ public class TdDiySite {
     //区县
     @Column
     private String region;
+    
+    //简介
+    @Column
+    private String content;
 
     public Long getId() {
         return id;
@@ -301,6 +305,14 @@ public class TdDiySite {
 
 	public void setRegion(String region) {
 		this.region = region;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
 	}
     
     

@@ -123,15 +123,15 @@ function selectSubmit()
 	$("#selectEnterType").submit();
 }
 </script>
-        
-       <form name="addEnterprise" action="/region/candidateEnterprise/${activityId?c!''}" method=post>
-       	        <input type="hidden" name="keywords" value="<#if keywords??&&keywords?length gt 0>${keywords}</#if>">
-	        	<input type="hidden" name="area" value="<#if area??&&area?length gt 0>${area}</#if>">
-	        	<input type="hidden" name="type" value="<#if type??&&type?length gt 0>${type}</#if>">
-	        	<input type="hidden" name="formType" value="<#if formType??&&formType?length gt 0>${formType}</#if>">
-	        	<input type="hidden" name="__ACTION" value="candidate">
-	        	<input type="hidden" name="page" value="<#if page??>${page!''}"</#if>>
+	
 	        <div class="list_base2" style="padding-top:0;">
+        		       <form name="addEnterprise" action="/region/candidateEnterprise/${activityId?c!''}" method=post>
+		       	        <input type="hidden" name="keywords" value="<#if keywords??&&keywords?length gt 0>${keywords}</#if>">
+			        	<input type="hidden" name="area" value="<#if area??&&area?length gt 0>${area}</#if>">
+			        	<input type="hidden" name="type" value="<#if type??&&type?length gt 0>${type}</#if>">
+			        	<input type="hidden" name="formType" value="<#if formType??&&formType?length gt 0>${formType}</#if>">
+			        	<input type="hidden" name="__ACTION" value="candidate">
+			        	<input type="hidden" name="page" value="<#if page??>${page!''}"</#if>>		        
 				<table class="new_list">
 		        	<tr class="list_title">
 		        		<th></th>
@@ -167,8 +167,9 @@ function selectSubmit()
 	        <div class="area_add_btn">
 	        <a class="all" style="margin-left:0px;" href="javascript:;" onclick="checkAll(this);"><i></i><span>全选</span></a>
 			<input style=" margin-left: 10px; cursor:pointer;" class="area_batch" type="submit" value="批量加入预选" />
+			</form>
 			</div>
-		</form>
+		
 		<div class="page">
 		<#if enterprise_page??>
 		<#assign PAGE_DATA = enterprise_page>

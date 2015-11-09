@@ -116,6 +116,16 @@ public class TdActivityService {
         return (List<TdActivity>) repository.findAll();
     }
     
+    /**
+     * 查找全部，以时间倒序排序
+     * @return
+     */
+    public List<TdActivity> findAllOrderByDateDesc()
+    {
+    	 Sort sort = new Sort(Direction.DESC, "date");
+        return (List<TdActivity>) repository.findAll(sort);
+    }
+    
     public Page<TdActivity> findAllOrderBySortIdAsc(int page, int size)
     {
         PageRequest pageRequest = new PageRequest(page, size, new Sort(Direction.ASC, "sortId"));
@@ -156,6 +166,13 @@ public class TdActivityService {
         PageRequest pageRequest = new PageRequest(page, size, new Sort(Direction.DESC, "id"));
         
         return repository.findByRegionAndPrepareOffAfterAndPrepareOnBefore(region , new Date() ,new Date() , pageRequest);
+    }
+    
+    public Page<TdActivity> findByRegionOrderByIdDesc(String region , int page, int size)
+    {
+        PageRequest pageRequest = new PageRequest(page, size, new Sort(Direction.DESC, "id"));
+        
+        return repository.findByRegion(region , pageRequest);
     }
     
     public Page<TdActivity> searchAllOrderBySortIdAsc(String keywords, int page, int size)
