@@ -16,10 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ynyes.kjxjr.entity.TdActivity;
 import com.ynyes.kjxjr.entity.TdArticle;
 import com.ynyes.kjxjr.entity.TdArticleCategory;
 import com.ynyes.kjxjr.entity.TdDemand;
 import com.ynyes.kjxjr.entity.TdNavigationMenu;
+import com.ynyes.kjxjr.service.TdActivityService;
+import com.ynyes.kjxjr.service.TdActivityTypeService;
 import com.ynyes.kjxjr.service.TdArticleCategoryService;
 import com.ynyes.kjxjr.service.TdArticleService;
 import com.ynyes.kjxjr.service.TdCommonService;
@@ -54,7 +57,12 @@ public class TdInfoController {
 	
 	@Autowired
 	private TdDemandService tdDemandService;
+	
+	@Autowired
+	TdActivityService tdActivityService;
     
+	@Autowired
+	TdActivityTypeService tdActivityTypeService;
 	@RequestMapping("/index")
 	public String infoIndex(ModelMap map,HttpServletRequest req){
 		tdCommonService.setHeader(map, req); 
@@ -719,6 +727,19 @@ public class TdInfoController {
 		
 		
 		return "/client/organization";
+	}
+	
+	//专项行动
+	@RequestMapping(value="/activity/list")
+	public String activityList(HttpServletRequest req,ModelMap map){
+		tdCommonService.setHeader(map, req);
+		
+		List<TdActivity> activityList = tdActivityService.findAllOrderByDateDesc();
+		
+		map.addAttribute("activity_list", activityList);
+		map.addAttribute("activityType_list" , tdActivityTypeService.findAllOrderBySortIdAsc());
+		
+		return "/client/news_activity_list";
 	}
 	
 }

@@ -12,6 +12,12 @@
 <script src="/client/js/main.js"></script>
 <script type="text/javascript" src="/mag/js/WdatePicker.js"></script>
 <script type="text/javascript" src="/client/js/Validform_v5.3.2_min.js"></script>
+<script type="text/javascript" src="/mag/js/swfupload.js"></script>
+<script type="text/javascript" src="/mag/js/swfupload.queue.js"></script>
+<script type="text/javascript" src="/mag/js/swfupload.handlers.js"></script>
+<script type="text/javascript" charset="utf-8" src="/mag/js/kindeditor-min.js"></script>
+<script type="text/javascript" charset="utf-8" src="/mag/js/zh_CN.js"></script>
+<script type="text/javascript" src="/mag/js/layout.js"></script>
 <script>
 $(document).ready(function(){
 
@@ -29,6 +35,16 @@ $(document).ready(function(){
                     alert(data.msg);
                 }
              }
+    });
+    
+    //初始化编辑器
+    var editor = KindEditor.create('.editor', {
+        width: '98%',
+        height: '350px',
+        resizeType: 1,
+        uploadJson: '/Verwalter/editor/upload?action=EditorFile',
+        fileManagerJson: '/Verwalter/editor/upload?action=EditorFile',
+        allowFileManager: true
     });
     
     <#if upload??&&upload == 1>
@@ -408,9 +424,12 @@ window.onload=done;
 	            </div>    
     			
     			<div><span>地址：</span><input <#if pagetype??&& pagetype == "check" >disabled=""</#if> type="text" name="address" id="address" datatype="*" value="<#if activity??>${activity.address!''}</#if>" /></div>
-    			<div><span>主题：</span><input <#if pagetype??&& pagetype == "check" >disabled=""</#if> type="text" name="theme" id="theme" datatype="*"  value="<#if activity??>${activity.theme!''}</#if>" /></div>
+    			<div><span>主题：</span><textarea cols="3" rows="3" <#if pagetype??&& pagetype == "check" >disabled=""</#if> type="text" name="theme" id="theme" datatype="*1-255" errormsg="最多255字！"><#if activity??>${activity.theme!''}</#if>"</textarea></div>
     			
-				<div><span>简介：</span><textarea <#if pagetype??&& pagetype == "check" >disabled=""</#if> name="introduction" id="introduction" datatype="*" ><#if activity??>${activity.introduction!''}</#if></textarea></div>
+				<div class="editer">
+					<span>简介：</span>
+					<textarea  <#if pagetype??&& pagetype == "check" >disabled=""</#if> name="introduction" id="introduction" datatype="*" ><#if activity??>${activity.introduction!''}</#if></textarea>
+				</div>
     			<div>
     				<span>筹备开始时刻：</span>
                         <input <#if pagetype??&& pagetype == "check">disabled=""</#if> name="prepareOn" id="prepareOn" type="text"  value="<#if activity??>${activity.prepareOn!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="填写正确格式" sucmsg=" ">

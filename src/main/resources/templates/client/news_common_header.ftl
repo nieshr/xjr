@@ -2,7 +2,7 @@
 	<div class="wrapper">
 		<ul class="wrapper-nav" id="wrapper-nav">
 			<a href="/"><li>首页</li></a>
-			<a href="#"><li>专项行动</li></a>
+			<a href="/info/activity/list"><li>专项行动</li></a>
 			<a href="#"><li>培育活动</li></a>
 			<a href="/info/index"><li class="active">新闻动态</li></a>
 			<a href="/info/projectshow"><li>企业项目</li></a>

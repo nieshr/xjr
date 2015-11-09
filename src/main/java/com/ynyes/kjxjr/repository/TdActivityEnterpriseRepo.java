@@ -28,12 +28,13 @@ public interface TdActivityEnterpriseRepo extends
 	List<TdActivityEnterprise> findByActivityIdAndStatusId(Long activityId , Long StatusId);
 	List<TdActivityEnterprise> findByActivityIdAndStatusIdOrderBySortIdAsc(Long activityId , Long StatusId);
 	
-	List<TdActivityEnterprise> findByActivityIdAndStatusIdOrderByTotalPointDesc(Long activityId , Long StatusId);
-	List<TdActivityEnterprise> findByActivityIdAndStatusIdOrderByTotalTechnologyDesc(Long activityId , Long StatusId);
-	List<TdActivityEnterprise> findByActivityIdAndStatusIdOrderByTotalFeasibilityDesc(Long activityId , Long StatusId);
-	List<TdActivityEnterprise> findByActivityIdAndStatusIdOrderByTotalGroupDesc(Long activityId , Long StatusId);
-	List<TdActivityEnterprise> findByActivityIdAndStatusIdOrderByTotalMarketValueDesc(Long activityId , Long StatusId);
-	List<TdActivityEnterprise> findByActivityIdAndStatusIdOrderByTotalExpressionDesc(Long activityId , Long StatusId);
+	Page<TdActivityEnterprise> findByActivityIdAndStatusId(Long activityId , Long StatusId , Pageable page);
+	Page<TdActivityEnterprise> findByActivityIdAndStatusIdOrderByTotalPointDesc(Long activityId , Long StatusId , Pageable page);
+	Page<TdActivityEnterprise> findByActivityIdAndStatusIdOrderByTotalTechnologyDesc(Long activityId , Long StatusId , Pageable page);
+	Page<TdActivityEnterprise> findByActivityIdAndStatusIdOrderByTotalFeasibilityDesc(Long activityId , Long StatusId , Pageable page);
+	Page<TdActivityEnterprise> findByActivityIdAndStatusIdOrderByTotalGroupDesc(Long activityId , Long StatusId , Pageable page);
+	Page<TdActivityEnterprise> findByActivityIdAndStatusIdOrderByTotalMarketValueDesc(Long activityId , Long StatusId , Pageable page);
+	Page<TdActivityEnterprise> findByActivityIdAndStatusIdOrderByTotalExpressionDesc(Long activityId , Long StatusId , Pageable page);
 	
 	
 	

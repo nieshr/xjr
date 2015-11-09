@@ -1860,43 +1860,19 @@ public class TdActivityController {
     			tdActivityEnterpriseService.save(ae);
     		}
     	//总分排序
-    		List<TdActivityEnterprise> gradeList = null;
     		if (null == orderId)
     		{
-    			orderId = 0;
+    			orderId = 0 ;
     		}
-			switch(orderId)
-			{
-			case 0:
-				gradeList = tdActivityEnterpriseService.findByActivityIdAndStatusIdOrderByTotalPointDesc(activityId, 2L);
-				break;
-			case 1:
-				gradeList = tdActivityEnterpriseService.findByActivityIdAndStatusIdOrderByTotalTechnologyDesc(activityId, 2L);
-				break;
-			case 2:
-				gradeList = tdActivityEnterpriseService.findByActivityIdAndStatusIdOrderByTotalFeasibilityDesc(activityId, 2L);
-				break;
-			case 3:
-				gradeList = tdActivityEnterpriseService.findByActivityIdAndStatusIdOrderByTotalGroupDesc(activityId, 2L);
-				break;
-			case 4:
-				gradeList = tdActivityEnterpriseService.findByActivityIdAndStatusIdOrderByTotalMarketValueDesc(activityId, 2L);
-				break;
-			case 5:
-				gradeList = tdActivityEnterpriseService.findByActivityIdAndStatusIdOrderByTotalExpressionDesc(activityId, 2L);
-				break;
-			default:
-				gradeList = tdActivityEnterpriseService.findByActivityIdAndStatusIdOrderByTotalPointDesc(activityId, 2L);
-				break;
-			}
+    		Page<TdActivityEnterprise> gradePage =  tdActivityEnterpriseService.findByActivityIdAndStatusId(activityId, 2L , orderId , 0 , 30);
     		
     		
-    		map.addAttribute("grade_list", gradeList);
+    		map.addAttribute("grade_list", gradePage);
     		map.addAttribute("orderId",orderId);
-    		if (null != gradeList)
+    		if (null != gradePage)
     		{
     			int index = 0 ;
-    			for (TdActivityEnterprise sortEnterprise : gradeList)
+    			for (TdActivityEnterprise sortEnterprise : gradePage.getContent())
     			{
     				List<TdEnterpriseGrade> expertList = tdEnterpriseGradeService.findByEnterpriseIdAndActivityId(sortEnterprise.getEnterpriseId(), activityId);
     				map.addAttribute("expert_list_"+index, expertList);
@@ -2173,7 +2149,7 @@ public class TdActivityController {
  		    	//总分排序
  		    	    List<List<TdEnterpriseGrade>> expertGradeList = new ArrayList<List<TdEnterpriseGrade>>();    
 // 		    		List<Object> expertGradeList = new ArrayList<Object>();     //Object 可以装任何类型；【评委评分表的列表】
- 		    		List<TdActivityEnterprise> gradeList = tdActivityEnterpriseService.findByActivityIdAndStatusIdOrderByTotalPointDesc(activityId, 2L);
+ 		    	   Page<TdActivityEnterprise> gradeList = tdActivityEnterpriseService.findByActivityIdAndStatusId(activityId, 2L , 0, 0 , 30);
  		    		map.addAttribute("grade_list", gradeList);
  		    		if (null != gradeList)
  		    		{  
@@ -2346,7 +2322,7 @@ public class TdActivityController {
  	 * @注释：将page中的订单数据存入excel表格中
  	 */
   @SuppressWarnings("deprecation")
- 	public boolean ImportData(List<List<TdEnterpriseGrade>> expertGradeList, int expertSize ,List<TdActivityEnterprise> gradeList , HSSFRow row, HSSFCell cell, HSSFSheet sheet ,HSSFCellStyle style){
+ 	public boolean ImportData(List<List<TdEnterpriseGrade>> expertGradeList, int expertSize ,Page<TdActivityEnterprise> gradeList , HSSFRow row, HSSFCell cell, HSSFSheet sheet ,HSSFCellStyle style){
  	 	
 	  		int i = 0 ; 
          	for (TdActivityEnterprise grade : gradeList )  

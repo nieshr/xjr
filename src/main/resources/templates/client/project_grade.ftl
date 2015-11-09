@@ -6,6 +6,10 @@
 	<link rel="shortcut icon" href="/client/images/icon.ico" />
 	<link href="/client/css/form.css" rel="stylesheet" type="text/css" />
 	<script src="/client/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript"   src="/client/js/rollValue.js"></script>
+
+
+
 	<script type="text/javascript">
         window.onload = function(){
         	var canvas = document.getElementById('canvas');
@@ -182,7 +186,6 @@
 	</style>
 </head>
 <body>
-	
 	<table class="score">
 		<caption>创投每周行路演评分表</caption>
 		<caption><#if activity??>${activity.title!''}</#if>（评委：${expert.name!''}）</caption>
@@ -429,6 +432,7 @@
 			    </#if>
 			</tr>
 		</#if>	
+
 	</table>
 	<#if print??&&print=="print">
 	   <input style="margin-left: 640px; margin-top: 20px; width:100px;height: 30px; font-size: 14px;" type="button" class="area_batch" onclick="location.href='/expert/export/grade?activityId=${activityId?c!''}&expertId=${expertId?c!''}'"  value="打印评分表" />

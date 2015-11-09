@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="/mag/style/idialog.css" rel="stylesheet" id="lhgdialoglink">
-<title>编辑物流配送</title>
+<title>编辑角色</title>
 <script type="text/javascript" src="/mag/js/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="/mag/js/Validform_v5.3.2_min.js"></script>
 <script type="text/javascript" src="/mag/js/lhgdialog.js"></script>
-<script type="text/javascript" src="/mag/js/swfupload.js"></script>
 <script type="text/javascript" charset="utf-8" src="/mag/js/kindeditor-min.js"></script>
+<script type="text/javascript" src="/mag/js/swfupload.js"></script>
 <script type="text/javascript" src="/mag/js/swfupload.queue.js"></script>
 <script type="text/javascript" src="/mag/js/swfupload.handlers.js"></script>
 <script type="text/javascript" src="/mag/js/layout.js"></script>
@@ -253,10 +253,18 @@ $(function () {
     </dd>
   </dl>
   
+   <dl>
+        <dt>备注</dt>
+        <dd>
+            <textarea name="info" rows="2" cols="20" class="input" datatype="*0-255" sucmsg=" "><#if diy_site??>${diy_site.info!""}</#if></textarea>
+            <span class="Validform_checktip">255个字符以内</span>
+        </dd>
+    </dl>
+  
   <dl  class="invest" <#if diy_site?? && !diy_site.payType?? || !diy_site?? || diy_site?? &&diy_site.payType="">style= "display:none;"</#if>>
      <dt>封面图片</dt>
      <dd>
-         <input name="imgUri" type="text" id="txtImgUrl" value="<#if diy_site??>${diy_site.imgUri!""}</#if>" class="input normal upload-path">
+         <input name="imgUri" type="text" id="txtImgUrl" value="<#if diy_site??&&diy_site.imgUri??>${diy_site.imgUri!""}</#if>" class="input normal upload-path">
          <div class="upload-box upload-img"></div>
          <div class="photo-list thumb_ImgUrl_show" style="display: none;">
              <ul>
@@ -271,7 +279,7 @@ $(function () {
   <dl  class="invest" <#if diy_site?? && !diy_site.payType?? || !diy_site?? || diy_site?? &&diy_site.payType="">style= "display:none;"</#if>>
     <dt>简介</dt>
     <dd>
-      <textarea name="info" class="editor" style="visibility:hidden;"><#if diy_site??>${diy_site.info!""}</#if></textarea>
+      <textarea name="content" class="editor" style="visibility:hidden;"><#if diy_site??>${diy_site.content!""}</#if></textarea>
       <span class="Validform_checktip"></span>
     </dd>
   </dl>

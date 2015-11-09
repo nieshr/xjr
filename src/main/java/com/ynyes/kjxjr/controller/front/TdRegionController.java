@@ -364,35 +364,33 @@ public class TdRegionController {
         	Date eventDate = activity.getDate();
             Calendar event =  Calendar.getInstance();
             event.setTime(eventDate);
+        	Date eventEnd = activity.getEventEnd();
+            Calendar eventOff =  Calendar.getInstance();
+            eventOff.setTime(eventEnd);
             
-            //待筹备
+            
+            //未启动
             if (cn.before(on))
             {
             	activity.setTimeId(0L);
             	tdActivityService.save(activity);
             }
             //筹备中
-            else if (cn.after(on)&&cn.before(off))
+            else if (cn.after(on)&&cn.before(eventOff))
             {
             	activity.setTimeId(1L);
             	tdActivityService.save(activity);
             }
-            //超过筹备时间
-            else if (cn.after(off)&&cn.before(event))
+            //已结束
+            else if (cn.after(eventOff))
             {
             	activity.setTimeId(2L);
-            	tdActivityService.save(activity);
-            }
-            //超过活动时间
-            else if (cn.after(event))
-            {
-            	activity.setTimeId(3L);
             	tdActivityService.save(activity);
             }
         }
         
 
-        Page<TdActivity> activityPage = tdActivityService.findByRegionAndPrepareOffAfterAndPrepareOnBeforeOrderByIdDesc(regionAdmin.getTitle() , page, ClientConstant.pageSize);
+        Page<TdActivity> activityPage = tdActivityService.findByRegionOrderByIdDesc(regionAdmin.getTitle() , page, ClientConstant.pageSize);
 
         
         map.addAttribute("activity_page",  activityPage);
@@ -688,7 +686,7 @@ public String  recommendEnterprise(HttpServletRequest req,
 		Long isDone,
 		String keywords) {
     String username = (String) req.getSession().getAttribute("regionUsername");
-
+    TdUser user = tdUserService.findByUsername(username);
 	    if (null == username) {
 	        return "redirect:/login";
 	    }
@@ -717,6 +715,7 @@ public String  recommendEnterprise(HttpServletRequest req,
 	    	map.addAttribute("done", isDone);
 	    }
 
+	    map.addAttribute("user", user);
 	    map.addAttribute("numwarn", numwarn);
 	    map.addAttribute("keywords", keywords);
 	   	map.addAttribute("activity", activity);
@@ -879,7 +878,7 @@ public String  selectEnterprise(HttpServletRequest req,
 		String type,
 		Long formType) {
     String username = (String) req.getSession().getAttribute("regionUsername");
-
+    TdUser user = tdUserService.findByUsername(username);
     if (null == username) {
         return "redirect:/login";
     }
@@ -1040,6 +1039,7 @@ public String  selectEnterprise(HttpServletRequest req,
    	map.addAttribute("activityId", activityId);
  	map.addAttribute("statusId", 0);
  	map.addAttribute("page", page);
+ 	map.addAttribute("user",user);
  	map.addAttribute("enterprise_page", enterprisePage);
  	map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityId(activityId));
  	map.addAttribute("region_list", tdRegionService.findByIsEnableTrueOrderBySortIdAsc());

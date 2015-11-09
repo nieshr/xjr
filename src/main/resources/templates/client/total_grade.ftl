@@ -10,6 +10,7 @@
     <script src="/client/js/jquery-1.9.1.min.js"></script>
 	<script src="/client/js/main.js"></script>
 
+
 <script>    
  //全选取消按钮函数-入选
 function checkAll(chkobj) {
@@ -24,7 +25,7 @@ function checkAll(chkobj) {
  
  function gradeOrder(orderId)
  {
-	 location.href="/activity/getGrade?activityId=${activityId?c!''}&orderId="+orderId+<#if mark??&&mark=="activity">"&mark=activity"</#if>;
+	 location.href="/activity/getGrade?activityId=${activityId?c!''}&orderId="+orderId<#if mark??&&mark=="activity">+"&mark=activity"</#if>;
 
  }
 </script>
@@ -42,8 +43,8 @@ function checkAll(chkobj) {
 	        	<td width="15%">名称</td>
 	        	<td id="order0"  width="3%" style="background-color:<#if orderId??&&orderId==0>#FFF3CD<#else>#D9E3F3</#if>;"><a href="javascript:gradeOrder(0);" title="点击按此评分项顺序排序">总分<img class="orderIcon" id="orderIcon0" style="margin-left:2px; <#if orderId??&&orderId!=0>display:none;</#if>"  src="/client/images/down1.png" width=8px height=10px alt=↓ /></a></td>
 	        	<td id="order1"  width="3%" style="background-color:<#if orderId??&&orderId==1>#FFF3CD<#else>#D9E3F3</#if>;"><a href="javascript:gradeOrder(1);" title="点击按此评分项顺序排序">核心竞争力<img class="orderIcon" id="orderIcon1"  style="margin-left:2px; <#if orderId??&&orderId!=1>display:none;</#if>" src="/client/images/down1.png" width=8px height=10px alt=↓ /></td>
-	        	<td id="order2"  width="3%" style="background-color:<#if orderId??&&orderId==2>#FFF3CD<#else>#D9E3F3</#if>;"><a href="javascript:gradeOrder(2);" title="点击按此评分项顺序排序">市场潜力<img class="orderIcon" id="orderIcon2"  style="margin-left:2px; <#if orderId??&&orderId!=2>display:none;</#if>"   src="/client/images/down1.png" width=8px height=10px alt=↓ /></td>
 	        	<td id="order3"  width="3%" style="background-color:<#if orderId??&&orderId==3>#FFF3CD<#else>#D9E3F3</#if>;"><a href="javascript:gradeOrder(3);" title="点击按此评分项顺序排序">团队能力<img class="orderIcon" id="orderIcon3" style="margin-left:2px; <#if orderId??&&orderId!=3>display:none;</#if>"   src="/client/images/down1.png" width=8px height=10px alt=↓ /></td>
+	        	<td id="order2"  width="3%" style="background-color:<#if orderId??&&orderId==2>#FFF3CD<#else>#D9E3F3</#if>;"><a href="javascript:gradeOrder(2);" title="点击按此评分项顺序排序">市场潜力<img class="orderIcon" id="orderIcon2"  style="margin-left:2px; <#if orderId??&&orderId!=2>display:none;</#if>"   src="/client/images/down1.png" width=8px height=10px alt=↓ /></td>
 	        	<td id="order4"  width="3%" style="background-color:<#if orderId??&&orderId==4>#FFF3CD<#else>#D9E3F3</#if>;"><a href="javascript:gradeOrder(4);" title="点击按此评分项顺序排序">投资价值<img class="orderIcon" id="orderIcon4" style="margin-left:2px; <#if orderId??&&orderId!=4>display:none;</#if>"  src="/client/images/down1.png" width=8px height=10px alt=↓ /></td>
 	        	<td id="order5"  width="3%" style="background-color:<#if orderId??&&orderId==5>#FFF3CD<#else>#D9E3F3</#if>;"><a href="javascript:gradeOrder(5);" title="点击按此评分项顺序排序">现场表现力<img class="orderIcon" id="orderIcon5" style="margin-left:2px; <#if orderId??&&orderId!=5>display:none;</#if>"  src="/client/images/down1.png" width=8px height=10px alt=↓ /></td>
 	            <#if aex_list??>
@@ -53,7 +54,7 @@ function checkAll(chkobj) {
 	            </#if>
 	        </tr>
 	        <#if grade_list??>
-	            <#list grade_list as item>
+	            <#list grade_list.content as item>
 			        <tr class="tr02" <#if item.win??&&item.win==activityId>style="background-color:#FFF3CD;"</#if>>
 			        	<#if mark??&&mark=="activity">
 		        		<td>
@@ -68,8 +69,8 @@ function checkAll(chkobj) {
 				        <td>${item.enterpriseTitle!''}</td>
 				        <td><#if item.totalPoint??>${item.totalPoint?c!''}</#if></td>
 				        <td><#if item.totalTechnology??>${item.totalTechnology?c!''}</#if></td>
-				        <td><#if item.totalFeasibility??>${item.totalFeasibility?c!''}</#if></td>
 				        <td><#if item.totalGroup??>${item.totalGroup?c!''}</#if></td>
+				        <td><#if item.totalFeasibility??>${item.totalFeasibility?c!''}</#if></td>
 				        <td><#if item.totalMarketValue??>${item.totalMarketValue?c!''}</#if></td>
 				        <td><#if item.totalExpression??>${item.totalExpression?c!''}</#if></td>
 				        <#if ("expert_list_"+item_index)?eval??>
