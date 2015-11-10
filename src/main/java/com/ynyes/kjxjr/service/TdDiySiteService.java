@@ -204,15 +204,18 @@ public class TdDiySiteService {
                 if (roleId ==3)
                 {
                 	TdExpert item = tdExpertService.findbyUsername(e.getUsername());
-                	item.setUsername(e.getUsername());
-                	item.setPassword(e.getPassword());
-                	item.setUsermobile(e.getMobile());
-                	item.setEmail(e.getEmail());
-                	item.setInCharge(e.getInCharge());
-                	item.setStatusId(e.getStatusId());
-                	item.setName(e.getInCharge());
-                	item.setProfile(e.getContent());
-                	tdExpertService.save(item);
+                	if (null != item)
+                	{
+	                	item.setUsername(e.getUsername());
+	                	item.setPassword(e.getPassword());
+	                	item.setUsermobile(e.getMobile());
+	                	item.setEmail(e.getEmail());
+	                	item.setInCharge(e.getInCharge());
+	                	item.setStatusId(e.getStatusId());
+	                	item.setName(e.getInCharge());
+	                	item.setProfile(e.getContent());
+	                	tdExpertService.save(item);
+                	}
 }
                 	List<TdActivityExpert> aex = tdActivityExpertService.findByUsername(e.getUsername());
                 	if(null != aex)

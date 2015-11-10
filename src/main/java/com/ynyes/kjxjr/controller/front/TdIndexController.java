@@ -65,8 +65,17 @@ public class TdIndexController {
     @RequestMapping
     public String index(HttpServletRequest req, Device device, ModelMap map) {        
         
+    
         tdCommonService.setHeader(map, req);              
         
+        String regionUsername = (String) req.getSession().getAttribute("regionUsername");
+        map.addAttribute("regionUsername" , regionUsername);
+        
+        String  expertUsername = (String) req.getSession().getAttribute("expertUsername");
+        map.addAttribute("expertUsername" , regionUsername);
+        
+        String activityUsername = (String) req.getSession().getAttribute("activityUsername");
+        map.addAttribute("activityUsername" , regionUsername);
         // 组织体系
         List<TdArticleCategory> tdArticleCategories = tdArticleCategoryService.findByMenuId(8L);
         if (null != tdArticleCategories) {

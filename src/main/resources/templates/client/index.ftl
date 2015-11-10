@@ -80,7 +80,16 @@
             <div class="clear"></div>
   <!-- banner -->
   <div class="banner1">
+  
+  <#if regionUsername??>
+  	<a href="/region/enterprise/list" >区县管理</a>
+  <#elseif expertUsername??>
+  	<a href="/expert/enterprise/list" >评分</a>
+  <#elseif activityUsername??>
+  	<a href="/activity/list" >活动管理</a>
+  <#else>  
     <a href="/enterprise/check">在线征集</a>
+  </#if> 
     <img src="/client/l_images/QR_code.png" alt="二维码" />
   </div>
   <!-- banner END -->

@@ -200,7 +200,9 @@
 			</th>
 			<#if grade_list??>
 			     <#list grade_list as item>
-			         <td><a style="color:#333;text-decoration: none;" href="/activity/enterprise/check/${item.enterpriseId?c!''}" target="_blank" title="${item.enterpriseTitle!''}">（${item_index+1}）${item.number!''}</a></td>
+			     	<#if item.gradeAble??&&item.gradeAble||item_index==0>
+			          <td><a style="color:#333;text-decoration: none;" href="/activity/enterprise/check/${item.enterpriseId?c!''}" target="_blank" title="${item.enterpriseTitle!''}">（${item_index+1}）${item.number!''}</a></td>
+			     	</#if>
 			     </#list>
 			</#if>
 		</tr>
@@ -209,11 +211,13 @@
 			<th>核心竞争力(小计)</th>
 			<#if grade_list??>
 			     <#list grade_list as item>
+			     <#if item.gradeAble??&&item.gradeAble||item_index==0>
 			         <#if item.totalTechnology??>
 			             <td id="${item_index}_totalTechnology">${item.totalTechnology?string("0")}</td>
 			         <#else>
 			             <td id="${item_index}_totalTechnology">0</td>
 			         </#if>
+			     </#if>    
 			     </#list>
 			</#if>
 		</tr>
@@ -221,6 +225,7 @@
 			<th>技术、产品、服务、商业模式领先性、创新性</th>
 			<#if grade_list??>
 			    <#list grade_list as item>
+			    <#if item.gradeAble??&&item.gradeAble||item_index==0>
         			<td>
         				<select class="setGrade${item_index}" onChange="changeTechnology('${item_index}');" id="${item_index}_oneTechnology" <#if item.isGrade??&&item.isGrade|| type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if>>
         				    <#list 0..10 as n>
@@ -228,6 +233,7 @@
         					</#list>
         				</select>
         			</td>
+        		</#if>	
     			</#list>
 			</#if>
 		</tr>
@@ -235,6 +241,7 @@
 			<th>专利、商标、著作登记、双软、双高证书</th>	
 			<#if grade_list??>
 			    <#list grade_list as item>
+			    <#if item.gradeAble??&&item.gradeAble||item_index==0>
         			<td>
         				<select class="setGrade${item_index}" onChange="changeTechnology('${item_index}');" id="${item_index}_twoTechnology" <#if item.isGrade??&&item.isGrade|| type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if>>
         				    <#list 0..10 as n>
@@ -242,6 +249,7 @@
         					</#list>
         				</select>
         			</td>
+        		</#if>	
     			</#list>
 			</#if>
 		</tr>		
@@ -249,6 +257,7 @@
 			<th>与竞争对手相比的优势程度</th>	
 			<#if grade_list??>
 			    <#list grade_list as item>
+			    <#if item.gradeAble??&&item.gradeAble||item_index==0>
         			<td>
         				<select class="setGrade${item_index}"  onChange="changeTechnology('${item_index}');" id="${item_index}_threeTechnology" <#if item.isGrade??&&item.isGrade|| type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if>>
         				    <#list 0..10 as n>
@@ -256,6 +265,7 @@
         					</#list>
         				</select>
         			</td>
+        		</#if>	
     			</#list>
 			</#if>
 		</tr>				
@@ -264,11 +274,13 @@
 			<th>市场潜力(小计)</th>
 			<#if grade_list??>
 			     <#list grade_list as item>
+			     <#if item.gradeAble??&&item.gradeAble||item_index==0>
 			         <#if item.totalFeasibility??>
 			             <td id="${item_index}_totalFeasibility">${item.totalFeasibility?string("0")}</td>
                      <#else>
                          <td id="${item_index}_totalFeasibility">0</td>
                      </#if>			             
+                 </#if>    
 			     </#list>
 			</#if>
 		</tr>
@@ -276,6 +288,7 @@
 			<th>潜在市场规模大小及已有的市场份额</th>
 			<#if grade_list??>
 			    <#list grade_list as item>
+			    <#if item.gradeAble??&&item.gradeAble||item_index==0>
         			<td>
         				<select  class="setGrade${item_index}" onChange="changeFeasibility('${item_index}');" id="${item_index}_oneFeasibility" <#if item.isGrade??&&item.isGrade|| type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if>>
         					<#list 0..10 as n>
@@ -283,6 +296,7 @@
         					</#list>
         				</select>
         			</td>
+        		</#if>	
     			</#list>
 			</#if>
 		</tr>
@@ -290,6 +304,7 @@
 			<th>市场开发价值与开发成本</th>
 			<#if grade_list??>	
 			    <#list grade_list as item>
+			    <#if item.gradeAble??&&item.gradeAble||item_index==0>
         			<td>
         				<select class="setGrade${item_index}"  onChange="changeFeasibility('${item_index}');" id="${item_index}_twoFeasibility" <#if item.isGrade??&&item.isGrade|| type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if>>
         				    <#list 0..10 as n>
@@ -297,6 +312,7 @@
         					</#list>
         				</select>
         			</td>
+        		</#if>	
     			</#list>
 			</#if>
 		</tr>
@@ -305,11 +321,13 @@
 			<th>团队能力(小计)</th>
 			<#if grade_list??>
 			     <#list grade_list as item>
+			     <#if item.gradeAble??&&item.gradeAble||item_index==0>
 			         <#if item.totalGroup??>
 			             <td id="${item_index}_totalGroup">${item.totalGroup?string("0")}</td>
 			         <#else>
 			             <td id="${item_index}_totalGroup">0</td>
 			         </#if>
+			     </#if>    
 			     </#list>
 			</#if>
 		</tr>
@@ -317,6 +335,7 @@
 			<th>核心领头人的专业能力及资源</th>
 			<#if grade_list??>
     			<#list grade_list as item>
+    			<#if item.gradeAble??&&item.gradeAble||item_index==0>
     			<td>
     				<select class="setGrade${item_index}"  onChange="changeGroup('${item_index}');" id="${item_index}_oneGroup" <#if item.isGrade??&&item.isGrade|| type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if>>
     				    <#list 0..10 as n>
@@ -324,6 +343,7 @@
     					</#list>
     				</select>
     			</td>
+    			</#if>
     			</#list>
 		    </#if>
 		</tr>
@@ -331,6 +351,7 @@
             <th>团队成员的专业能力及分工是否合理</th>
             <#if grade_list??>
                 <#list grade_list as item>
+                <#if item.gradeAble??&&item.gradeAble||item_index==0>
                 <td>
                     <select class="setGrade${item_index}"  onChange="changeGroup('${item_index}');" id="${item_index}_twoGroup" <#if item.isGrade??&&item.isGrade|| type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if>>
                         <#list 0..10 as n>
@@ -338,6 +359,7 @@
                         </#list>
                     </select>
                 </td>
+                </#if>
                 </#list>
             </#if>
         </tr>		
@@ -346,11 +368,13 @@
 			<th>投资价值(小计)</th>
 			<#if grade_list??>
 			     <#list grade_list as item>
+			     <#if item.gradeAble??&&item.gradeAble||item_index==0>
 			         <#if item.totalMarketValue??>
 			             <td id="${item_index}_totalMarketValue">${item.totalMarketValue?string("0")}</td>
 			         <#else>
 			             <td id="${item_index}_totalMarketValue">0</td>
 			         </#if>
+			     </#if>    
 			     </#list>
 			</#if>
 		</tr>
@@ -358,6 +382,7 @@
 			<th>行业环境及现有基础条件能否支撑</th>
 			<#if grade_list??>
 			    <#list grade_list as item>
+			    <#if item.gradeAble??&&item.gradeAble||item_index==0>
         			<td>
         				<select class="setGrade${item_index}"  onChange="changeMarketValue('${item_index}');" id="${item_index}_oneMarketValue" <#if item.isGrade??&&item.isGrade|| type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if>>
         				    <#list 0..10 as n>
@@ -365,6 +390,7 @@
         					</#list>
         				</select>
         			</td>
+        		</#if>	
     			</#list>
 			</#if>
 		</tr>
@@ -372,6 +398,7 @@
 			<th>财务状况及融资条件</th>	
 			<#if grade_list??>
 			    <#list grade_list as item>
+			    <#if item.gradeAble??&&item.gradeAble||item_index==0>
         			<td>
         				<select  class="setGrade${item_index}" onChange="changeMarketValue('${item_index}');" id="${item_index}_twoMarketValue" <#if item.isGrade??&&item.isGrade|| type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if>>
         				    <#list 0..10 as n>
@@ -379,6 +406,7 @@
         					</#list>
         				</select>
         			</td>
+        		</#if>	
     			</#list>
 			</#if>
 		</tr>
@@ -387,11 +415,13 @@
 			<th>现场表现力(小计)</th>
 			<#if grade_list??>
 			     <#list grade_list as item>
+			     <#if item.gradeAble??&&item.gradeAble||item_index==0>
 			         <#if item.totalExpression??>
 			             <td id="${item_index}_totalExpression">${item.totalExpression?string("0")}</td>
 			         <#else>
 			             <td id="${item_index}_totalExpression">0</td>
 			         </#if>
+			     </#if>    
 			     </#list>
 			</#if>
 		</tr>
@@ -399,6 +429,7 @@
 			<th>路演方式的创新程度及现场感染力</th>
 			<#if grade_list??>
 			    <#list grade_list as item>
+			    <#if item.gradeAble??&&item.gradeAble||item_index==0>
         			<td>
         				<select class="setGrade${item_index}"  onChange="changeExpression('${item_index}');" id="${item_index}_oneExpression" <#if item.isGrade??&&item.isGrade|| type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if>>
         				    <#list 0..10 as n>
@@ -406,6 +437,7 @@
         					</#list>
         				</select>
         			</td>
+        		</#if>	
     			</#list>
 			</#if>
 		</tr>		
@@ -414,11 +446,13 @@
 			<th>合计</th>
 			<#if grade_list??>
     			<#list grade_list as item>
+    			<#if item.gradeAble??&&item.gradeAble||item_index==0>
     			     <#if item.totalPoint??>
     			         <td id="${item_index}_totalPoint">${item.totalPoint?string("0")}</td>
     			     <#else>
     			         <td id="${item_index}_totalPoint">0</td>
     			     </#if>
+    			 </#if>    
     			</#list>
 			</#if>
 		</tr>
@@ -427,12 +461,16 @@
 				<th></th>
 				<#if grade_list??>
 	    			<#list grade_list as item>
+	    			<#if item.gradeAble??&&item.gradeAble||item_index==0>
 	    			     <td><input class="setGrade${item_index}"  <#if item.isGrade??&&item.isGrade || type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if> type="button" onClick="submitPoint('${item_index}','${item.number!''}');" value="确定" /></td>
+	    			</#if>
 	    			</#list>
 			    </#if>
 			</tr>
 		</#if>	
-
+<script type="text/javascript">
+	$("select").rollValue({minValue:0,maxValue:10,step:1});
+</script>
 	</table>
 	<#if print??&&print=="print">
 	   <input style="margin-left: 640px; margin-top: 20px; width:100px;height: 30px; font-size: 14px;" type="button" class="area_batch" onclick="location.href='/expert/export/grade?activityId=${activityId?c!''}&expertId=${expertId?c!''}'"  value="打印评分表" />
