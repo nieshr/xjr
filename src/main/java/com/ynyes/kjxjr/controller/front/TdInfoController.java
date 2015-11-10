@@ -742,4 +742,22 @@ public class TdInfoController {
 		return "/client/news_activity_list";
 	}
 	
+	//活动详情
+	@RequestMapping("/activity/detail/{activityId}")
+    public String activityDetail(@PathVariable Long activityId, ModelMap map, HttpServletRequest req){
+        
+	    tdCommonService.setHeader(map, req);
+	    
+        if (null == activityId )
+        {
+            return "/client/error_404";
+        }             
+        
+        TdActivity activity = tdActivityService.findOne(activityId);
+        
+        map.addAttribute("info", activity);      
+        
+        return "/client/news_activity_detail";
+    }
+	
 }

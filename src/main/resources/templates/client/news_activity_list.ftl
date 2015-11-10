@@ -58,7 +58,8 @@
 									<li style="margin-top: 0px;" class="<#if activity.statusId == 2 >bounceInDown<#else>green bounceInDown lcy_height</#if>">
 										<h3 style="display: block;">${activity.date?string("MM.dd")}<span>${activity.date?string("yyyy")}</span></h3>
 										<dl style="display: block;">
-											<dt><a href="#" title=""><p>${activity.title!''}</p><span>${activity.theme!''}</span></a></dt>
+											<dt><p><a href="/info/activity/detail/${activity.id?c!''}" title="查看详情">${activity.title!''}</a></p><span>${activity.theme!''}</span></dt>
+										  <a style="margin-right:5%;float:right;" href="/info/activity/detail/${activity.id?c!''}" title="查看详情">详情</a>
 										</dl>
 									</li>
 								</#if>
@@ -76,7 +77,8 @@
 									<li style="margin-top: 0px;" class="<#if activity.statusId == 2 >bounceInDown<#else>green bounceInDown lcy_height</#if>">
 										<h3 style="display: block;">${activity.date?string("MM.dd")}<span>${activity.date?string("yyyy")}</span></h3>
 										<dl style="display: block;">
-											<dt><a href="#" title=""><p>${activity.title!''}</p><span>${activity.theme!''}</span></a></dt>
+											<dt><a href="/info/activity/detail/${activity.id?c!''}" title=""><p>${activity.title!''}</p><span>${activity.theme!''}</span></a></dt>
+										  <a style="margin-right:5%;float:right;" href="/info/activity/detail/${activity.id?c!''}" title="查看详情">详情</a>
 										</dl>
 									</li>
 									</ul>
