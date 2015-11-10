@@ -2200,6 +2200,7 @@ public class TdActivityController {
        sheet.setColumnWidth((short) 1 , 6*256);
        sheet.setColumnWidth((short) 2 , 6*256);
        sheet.setColumnWidth((short) 3 , 46*256);
+       sheet.setColumnWidth((short) 4 , 6*256);
        
        
        // 第三步，在sheet中添加表头第0行,注意老版本poi对Excel的行数列数有限制short  
@@ -2301,6 +2302,7 @@ public class TdActivityController {
     	   for (TdActivityExpert ae : expertList)
            {
                cell = row.createCell((short) 5+i);
+               sheet.setColumnWidth((short) 5+i , 10*256);
                cell.setCellValue(ae.getName());
                cell.setCellStyle(style2);
                i++;
