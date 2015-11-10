@@ -114,7 +114,7 @@ public class TdExpertService {
     
     public TdExpert addNewUser(String username, String password, String mobile, String email ,String inCharge , String invest , String profile , Long statusId)
     {
-        if (null == username || null == password || username.isEmpty() || password.isEmpty()|| email.isEmpty() || inCharge.isEmpty() || invest.isEmpty() || profile.isEmpty())
+        if (null == username || null == password || username.isEmpty() || password.isEmpty()|| email.isEmpty() || inCharge.isEmpty() /*|| invest.isEmpty() || profile.isEmpty()*/)
         {
             return null;
         }

@@ -88,6 +88,7 @@ public class TdCommonService {
         
         //站内信
         TdUser user = tdUserService.findByUsername(username);
+        
         //企业用户
         if (null != user && user.getRoleId()==1)
         {
