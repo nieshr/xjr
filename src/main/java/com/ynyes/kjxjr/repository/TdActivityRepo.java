@@ -3,6 +3,7 @@ package com.ynyes.kjxjr.repository;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.annotations.Sort;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -22,6 +23,7 @@ public interface TdActivityRepo extends
 		JpaSpecificationExecutor<TdActivity> 
 { 
 	List<TdActivity> findByRegion(String region);
+	List<TdActivity> findByActivityTypeOrderByDateDesc(String activityType);
 	
     Page<TdActivity> findByTitleContainingOrderBySortIdAsc(String keywords, Pageable page);
     TdActivity findByStatusId(Long statusId);

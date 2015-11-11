@@ -2,13 +2,13 @@
 	<div class="wrapper">
 		<ul class="wrapper-nav" id="wrapper-nav">
 			<a href="/"><li>首页</li></a>
-			<a href="/info/activity/list"><li>专项行动</li></a>
-			<a href="#"><li>培育活动</li></a>
-			<a href="/info/index"><li class="active">新闻动态</li></a>
-			<a href="/info/projectshow"><li>企业项目</li></a>
-			<a href="/info/resource"><li>专家资源</li></a>
-			<a href="#"><li>合作机构</li></a>
-			<a href="/info/contact"><li>联系方式</li></a>
+			<a href="#"><li <#if active??&&active==1>class="active"</#if>>专项行动</li></a>
+			<a href="/info/activity/list"><li <#if active??&&active==2>class="active"</#if>>培育活动</li></a>
+			<a href="/info/index"><li <#if active??&&active==3>class="active"</#if>>新闻动态</li></a>
+			<a href="/info/projectshow"><li <#if active??&&active==4>class="active"</#if>>企业项目</li></a>
+			<a href="/info/resource"><li <#if active??&&active==5>class="active"</#if>>专家资源</li></a>
+			<a href="#"><li>合作机构</li <#if active??&&active==6>class="active"</#if>></a>
+			<a href="/info/contact"><li <#if active??&&active==7>class="active"</#if>>联系方式</li></a>
 		</ul>
                 <#if username??>
                     <div class="logoin"><a href="/user" style="color:#ff4040;">${username}</a><span>|</span><a href="/logout">退出</a></div>

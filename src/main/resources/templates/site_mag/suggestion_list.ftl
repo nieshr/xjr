@@ -92,13 +92,8 @@ var theForm = document.forms['form1'];
                <td class="comment">
                   <div class="title">
                     <span class="note">
-                     <i>联系电话：${comment.mobile!""}</i>   <i>&nbsp;&nbsp;&nbsp;&nbsp;</i> 
-                     <i>邮箱：  ${comment.mail!'' }  </i>    <i>&nbsp;&nbsp;&nbsp;&nbsp;</i> 
                      <i> ${comment.time!""}   </i>                 
-               <#-   <i class="reply">   
-                        <p><a href="/suggestion/delete?id=${comment.id}">删除</a></p> 
-                     </i>           
-              -->
+             
                     </span>
                     <b>
                         <span class="checkall" style="vertical-align:middle;">
@@ -107,7 +102,7 @@ var theForm = document.forms['form1'];
                         <input type="hidden" name="listId" id="listId" value="${comment.id!''}">
                     </b>
                     <span >                   
-                        <i>${comment.name!""}</i>        <i>&nbsp;&nbsp;&nbsp;&nbsp;</i>                   
+                        <i>${comment.title!""}</i>        <i>&nbsp;&nbsp;&nbsp;&nbsp;</i>                   
                        
                     </span>  
                  </div>

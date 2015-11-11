@@ -311,7 +311,7 @@ public class TdExpertController {
 		map.addAttribute("activityId", activityId);
 		map.addAttribute("expertId", expert.getId());
 		map.addAttribute("expert", expert);
-		return "/client/project_grade";
+		return "/client/expert_grade";
 	}
 
 	@RequestMapping(value = "/grade/sure")
@@ -379,6 +379,8 @@ public class TdExpertController {
 						tdEnterpriseGradeService.save(item);
 					}
 					i = 1;
+					item.setGradeAble(false);
+					tdEnterpriseGradeService.save(item);
 					index++;
 					
 				}

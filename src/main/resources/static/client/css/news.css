@@ -123,7 +123,7 @@
 	width: 1000px;
 }
 .location_nav .location ul li{
-	width:100px;
+	width:120px;
 	height:69px;
 	color:#333333;
 	font-size:16px;
@@ -131,16 +131,17 @@
 }
 .location_nav .location ul li:hover{
 	border-bottom:3px solid #e67817;
-	font-size:18px;
+	/*font-size:18px;*/
 }
 .location_nav .location ul .me{
 	border-bottom:3px solid #e67817;
 	font-size:18px;
 }
 .location_nav .location ul li a{
-	width:100px;
+	width:120px;
 	height:69px;
 	float:left;
+	text-decoration:none;
 }
 /*各种新闻*/
 .news_b{

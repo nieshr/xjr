@@ -89,6 +89,9 @@ public class TdInfoController {
 	    //创业风向
 		map.addAttribute("SYB_page", tdArticleService.findByCategoryId(24L, 0, SiteMagConstant.pageSize));
 		
+		Long active = 3L;
+		map.addAttribute("active",active);
+		
 		return "/client/news_index";
 	}
 	
@@ -620,6 +623,8 @@ public class TdInfoController {
     public String contact(ModelMap map, HttpServletRequest req){
         
 	    tdCommonService.setHeader(map, req);
+		Long active = 7L;
+		map.addAttribute("active",active);
 
 	    return "/client/contactus";
 	}
@@ -629,6 +634,8 @@ public class TdInfoController {
         
 	    tdCommonService.setHeader(map, req);
 	    
+		Long active = 5L;
+		map.addAttribute("active",active);
 		map.addAttribute("team_page", tdArticleService.findByMenuIdAndCategoryIdAndIsEnableOrderByIdDesc(11L, 16L, 0, ClientConstant.pageSize));	    
 		map.addAttribute("project_page", tdArticleService.findByMenuIdAndCategoryIdAndIsEnableOrderByIdDesc(11L, 17L, 0, ClientConstant.pageSize));	    
 		map.addAttribute("story_page", tdArticleService.findByMenuIdAndCategoryIdAndIsEnableOrderByIdDesc(11L, 18L, 0, ClientConstant.pageSize));	    
@@ -640,6 +647,8 @@ public class TdInfoController {
         
 	    tdCommonService.setHeader(map, req);
 	    
+		Long active = 5L;
+		map.addAttribute("active",active);
 		map.addAttribute("tutor_page", tdArticleService.findByMenuIdAndCategoryIdAndIsEnableOrderByIdDesc(12L, 2L, 0, ClientConstant.pageSize));	    
 		map.addAttribute("invest_page", tdArticleService.findByMenuIdAndCategoryIdAndIsEnableOrderByIdDesc(12L, 3L, 0, ClientConstant.pageSize));	    
 	    return "/client/resource";
@@ -702,7 +711,8 @@ public class TdInfoController {
         	catId = catList.get(0).getId();   //.get(0)表示 取catList表的第0个 zhangji
         }
         	
-	    
+		Long active = 1L;
+		map.addAttribute("active",active);
 	    map.addAttribute("info_cat",tdArticleCategoryService.findOne(catId) );   //找出栏目名称 zhangji
 	    map.addAttribute("catId", catId);
 	    map.addAttribute("mid", mid);
@@ -731,12 +741,25 @@ public class TdInfoController {
 	
 	//专项行动
 	@RequestMapping(value="/activity/list")
-	public String activityList(HttpServletRequest req,ModelMap map){
+	public String activityList(String activityType , HttpServletRequest req,ModelMap map){
 		tdCommonService.setHeader(map, req);
 		
-		List<TdActivity> activityList = tdActivityService.findAllOrderByDateDesc();
 		
-		map.addAttribute("activity_list", activityList);
+		if (null == activityType || activityType.equals(""))
+		{
+			List<TdActivity>	activityList = tdActivityService.findAllOrderByDateDesc();
+			map.addAttribute("activity_list",activityList);
+		}
+		else
+		{
+			List<TdActivity>	activityList = tdActivityService.findByActivityTypeOrderByDateDesc(activityType);
+			map.addAttribute("activity_list",activityList);
+		}
+
+		Long active = 2L;
+		map.addAttribute("active",active);
+		
+		map.addAttribute("activityType", activityType);
 		map.addAttribute("activityType_list" , tdActivityTypeService.findAllOrderBySortIdAsc());
 		
 		return "/client/news_activity_list";
@@ -755,6 +778,8 @@ public class TdInfoController {
         
         TdActivity activity = tdActivityService.findOne(activityId);
         
+		Long active = 2L;
+		map.addAttribute("active",active);
         map.addAttribute("info", activity);      
         
         return "/client/news_activity_detail";

@@ -3,7 +3,7 @@
 		<ul class="wrapper-nav" id="wrapper-nav">
 			<a href="/"><li>首页</li></a>
 			<a href="#"><li>专项行动</li></a>
-			<a href="#"><li>培育活动</li></a>
+			<a href="/info/activity/list"><li>培育活动</li></a>
 			<a href="/info/index"><li>新闻动态</li></a>
 			<a href="/info/projectshow"><li>企业项目</li></a>
 			<a href="/info/resource"><li>专家资源</li></a>

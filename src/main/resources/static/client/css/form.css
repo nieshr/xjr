@@ -7,8 +7,5 @@
 .score,.tr02{height:30px;}
 .score select{width:100%;height:100%; border: none;}
 .score,.tr03{height:30px;}
-.score,.tr03 th{font-weight: normal; width: 60%; margin: auto;} 
+.score,.tr03 th{font-weight: normal;}
 .score input{width:100%; height:100%; border:none;}
-
-.area_batch {cursor: pointer; width: 92px;height: 30px;  border: none;  border-radius: 6px;  background: #e67817;  color: white;  margin-top: 20px;  margin-left: 5%;  font-size: 14px;}
-.area_batch:hover{background:#FF0F00;}

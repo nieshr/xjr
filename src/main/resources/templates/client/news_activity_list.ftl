@@ -28,10 +28,10 @@
 <div class="location_nav">
   <div class="location">
     <ul>
-      <li class="me"><a href="#">专项行动</a></li>
+      <li <#if !activityType??>class="me"</#if>><a href="/info/activity/list">专项行动</a></li>
       <#if activityType_list??>
            <#list activityType_list as item>
-                <li><a href="">${item.title!''}</a></li>
+                <li <#if activityType?? && activityType == item.title>class="me"</#if>><a href="/info/activity/list?activityType=${item.title!'' }">${item.title!''}</a></li>
            </#list>
       </#if>
     </ul>

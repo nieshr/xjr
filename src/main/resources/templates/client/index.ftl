@@ -188,6 +188,7 @@
                     <!-- <div>speed</div> -->
                     <div class="parnet">
                       <div class="child">
+                      <#--
                         <div class="child1">
                           <div class="child1_1">
                               <p class="p1">科技小巨人培育专项</p>
@@ -232,6 +233,7 @@
                               </p>  
                           </div>
                           <img src="/client/l_images/pic1.png" width="420" height="280" /></div>
+                          -->
                       </div>      
                     </div>
                     <a class="prev" href="#"></a>

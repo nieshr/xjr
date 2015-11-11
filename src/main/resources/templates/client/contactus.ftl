@@ -137,7 +137,7 @@ function loadMap(x, y)
 			<input type="text" name="title" class="search">
 			<br>
 			<span>内容:</span>
-			<textarea name="content" id="" cols="30" rows="10"></textarea>
+			<textarea name="content" id="" cols="30" rows="10" datatype="*2-255"></textarea>
 			<br>
 			<input type="submit" id="btn_submit" class="button" value="提交" />
 

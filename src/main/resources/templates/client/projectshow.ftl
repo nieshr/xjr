@@ -24,7 +24,7 @@ function move3()
 </script>
 </head>
 <body>
-<#include "/client/project_common_header.ftl" />
+<#include "/client/news_common_header.ftl" />
 
 <!-- contend -->
 <div class="titlelist">

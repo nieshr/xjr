@@ -126,6 +126,11 @@ public class TdActivityService {
         return (List<TdActivity>) repository.findAll(sort);
     }
     
+    public List<TdActivity> findByActivityTypeOrderByDateDesc(String activityType)
+    {
+        return (List<TdActivity>) repository.findByActivityTypeOrderByDateDesc(activityType);
+    }
+    
     public Page<TdActivity> findAllOrderBySortIdAsc(int page, int size)
     {
         PageRequest pageRequest = new PageRequest(page, size, new Sort(Direction.ASC, "sortId"));
