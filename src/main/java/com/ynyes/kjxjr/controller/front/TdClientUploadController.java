@@ -55,13 +55,20 @@ public class TdClientUploadController {
 //        String contentType = Filedata.getContentType();
 
         String ext = name.substring(name.lastIndexOf("."));
+        //限制文件类型
+        if(!ext.equalsIgnoreCase(".jpg") && !ext.equalsIgnoreCase(".pdf"))
+        {
+            Long done = 2L;
+            return "redirect:/region/recommendEnterprise?id="+activityId
+            		+"&isDone="+done;
+        }
 
         try {
             byte[] bytes = Filedata.getBytes();
 
             Date dt = new Date(System.currentTimeMillis());
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-            String fileName ="recommend"+activityId+ "_" + sdf.format(dt) + ext;
+//            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+            String fileName ="recommend"+activityId/*+ "_" + sdf.format(dt) */+ ext;
 
             String uri = ImageRoot + "/" + fileName;
 
@@ -102,12 +109,20 @@ public class TdClientUploadController {
 
         String ext = name.substring(name.lastIndexOf("."));
 
+        //限制文件类型
+        if(!ext.equalsIgnoreCase(".jpg") && !ext.equalsIgnoreCase(".pdf"))
+        {
+            Long done = 2L;
+            return "redirect:/enterprise/upload?done="+done
+            		+"&id="+id;
+        }
+        
         try {
             byte[] bytes = Filedata.getBytes();
 
             Date dt = new Date(System.currentTimeMillis());
-            SimpleDateFormat sdf = new SimpleDateFormat("HHmmssSSS");
-            String fileName ="Num"+tdEnterpriseService.findbyUsername(username).getNumber()+"_"+ sdf.format(dt) + ext;
+//            SimpleDateFormat sdf = new SimpleDateFormat("HHmmssSSS");
+            String fileName ="Num"+tdEnterpriseService.findbyUsername(username).getNumber()/*+"_"+ sdf.format(dt) */+ ext;
 
             String uri = ImageRoot + "/" + fileName;
 
@@ -340,7 +355,7 @@ public class TdClientUploadController {
 //        String contentType = Filedata.getContentType();
 
         String ext = name.substring(name.lastIndexOf("."));
-
+        
         try {
             byte[] bytes = Filedata.getBytes();
 
@@ -389,13 +404,20 @@ public class TdClientUploadController {
 //        String contentType = Filedata.getContentType();
 
         String ext = name.substring(name.lastIndexOf("."));
-
+        //限制文件类型
+        if(!ext.equalsIgnoreCase(".ppt") && !ext.equalsIgnoreCase(".ppt"))
+        {
+            Long done = 2L;
+            return "redirect:/enterprise/activity/check?done="+done
+            		+"&id="+activityId;
+        }
+        
         try {
             byte[] bytes = Filedata.getBytes();
 
             Date dt = new Date(System.currentTimeMillis());
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-            String fileName = "PPT"+id+"_"+ sdf.format(dt) + ext;
+//            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+            String fileName = "PPT"+id/*+"_"+ sdf.format(dt)*/ + ext;
 
             String uri = ImageRoot + "/" + fileName;
 

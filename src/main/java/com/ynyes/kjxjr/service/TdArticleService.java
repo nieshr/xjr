@@ -421,6 +421,21 @@ public class TdArticleService {
     }
     
     /**
+     * 根据企业id查找 recommendedId表示企业id
+     * @param recommendId
+     * @return
+     */
+    public TdArticle findByRecommendId(Long recommendId)
+    {
+        if (null == recommendId)
+        {
+            return null;
+        }
+        
+        return repository.findByRecommendId(recommendId);
+    }
+    
+    /**
      * 查找
      * 
      * @param ids

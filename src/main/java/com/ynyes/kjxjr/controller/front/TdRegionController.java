@@ -47,6 +47,7 @@ import com.ibm.icu.text.DateFormat;
 import com.ynyes.kjxjr.entity.TdActivity;
 import com.ynyes.kjxjr.entity.TdActivityEnterprise;
 import com.ynyes.kjxjr.entity.TdActivityExpert;
+import com.ynyes.kjxjr.entity.TdArticle;
 import com.ynyes.kjxjr.entity.TdEnterprise;
 import com.ynyes.kjxjr.entity.TdEnterpriseGrade;
 import com.ynyes.kjxjr.entity.TdRegion;
@@ -56,6 +57,7 @@ import com.ynyes.kjxjr.entity.TdUserMessage;
 import com.ynyes.kjxjr.service.TdActivityEnterpriseService;
 import com.ynyes.kjxjr.service.TdActivityExpertService;
 import com.ynyes.kjxjr.service.TdActivityService;
+import com.ynyes.kjxjr.service.TdArticleService;
 import com.ynyes.kjxjr.service.TdCommonService;
 import com.ynyes.kjxjr.service.TdCouponService;
 import com.ynyes.kjxjr.service.TdEnterpriseGradeService;
@@ -109,6 +111,9 @@ public class TdRegionController {
 	
 	@Autowired
 	TdEnterpriseTypeService tdEnterpriseTypeService;
+	
+	@Autowired
+	TdArticleService tdArticleService;
 
     @RequestMapping(value = "/enterprise/list", method = RequestMethod.GET)
     public String EnterpriseList(HttpServletRequest req, ModelMap map,Integer page) {
@@ -212,8 +217,26 @@ public class TdRegionController {
             Enterprise.setStatusId(1L);
             tdEnterpriseService.save(Enterprise);
             
+            TdArticle article = tdArticleService.findByRecommendId(Enterprise.getId());
+            if (null == article)
+            {
+            	TdArticle newArticle = new TdArticle();
+            	newArticle.setRecommendId(Enterprise.getId());
+            	if(Enterprise.getFormType()==0)
+            	{
+            		newArticle.setCategoryId(16L);
+            	}
+            	else{
+            		newArticle.setCategoryId(17L);
+            	}
+            	newArticle.setStatusId(0L);
+            	newArticle.setTitle(Enterprise.getTitle());
+            	newArticle.setContent(Enterprise.getProfile());
+            	tdArticleService.save(newArticle);
+            }
+            
             //短信提醒
-            smsPass(Enterprise.getUsermobile(), 1L , Enterprise.getTitle() , res,req);
+//            smsPass(Enterprise.getUsermobile(), 1L , Enterprise.getTitle() , res,req);
             
             //站内信
             TdRegionAdmin admin = tdRegionAdminService.findbyUsername(username);

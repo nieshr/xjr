@@ -15,6 +15,8 @@ b,strong{font-weight:normal;}
 div{ margin:0 auto;text-align:center;}
 .wrapper{ width:1200px; display:block; overflow:hidden;background: url(../l_images/logo.png) no-repeat;height: 75px;}
 .w100{ width:100%; display:block; overflow:hidden;}
+
+
 /*头部*/
 .wrapper-nav{margin-left: 194px;}
 .wrapper-nav li{float: left;font-size: 16px;color: #333;line-height: 62px;margin:0 1px;padding: 0 19px;}

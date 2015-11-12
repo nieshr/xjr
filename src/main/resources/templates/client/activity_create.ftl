@@ -48,7 +48,7 @@ $(document).ready(function(){
     });
     
     <#if upload??&&upload == 1>
-        var height = $(window).height();
+        var height = $(document.body).height();
        $('html,body').animate({scrollTop:height+'px'},100);
     </#if>    
 });
@@ -314,8 +314,14 @@ function done()
 {
 	alert("上传成功！");
 }
+function done()
+{
+	alert("请上传类型为ppt的文件！");
+}
 <#if done?? &&done == 1>
 window.onload=done;
+<#elseif done?? &&done == 2>
+window.onload=done2;
 </#if>
 
 </script>
@@ -675,7 +681,7 @@ window.onload=done;
         <input type="hidden" name="id" <#if enterprise??>value="${enterprise.id?c}"</#if>></input>
          <input type="hidden"  name="activityId" <#if activity??>value="${activity.id?c}"</#if>></input>
         <div>
-            <span>上传PPT：</span>
+            <h2 style="margin: 10px 0 20px 10px;">上传PPT：</h2>
             <input name="Filedata" type="file" id="enterpptfile" value="" />
             <input type="button" value="PPT上传" onclick="javascript:enterpptSubmitCheck();"  style="margin:-5px 0 30px 48px;
                                                              border-radius: 8px;

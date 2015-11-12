@@ -716,41 +716,43 @@ public class TdExpertController {
 	      cell.setCellValue("与竞争对手相比的优势程度");  
 	      cell.setCellStyle(style);
 	      
-	      HSSFRow row9 =sheet.createRow((int) 9);
-	      row9.setHeight((short) (20 * 20));  
-	      cell = row9.createCell((short) 0);  
-	      cell.setCellValue("市场潜力(小计)");  
-	      cell.setCellStyle(style1);
-	      
-	      HSSFRow row10 =sheet.createRow((int) 10);
-	      row10.setHeight((short) (20 * 20));  
-	      cell = row10.createCell((short) 0);  
-	      cell.setCellValue("潜在市场规模大小及已有的市场份额");  
-	      cell.setCellStyle(style);
-	      
-	      HSSFRow row11 =sheet.createRow((int) 11);
-	      row11.setHeight((short) (20 * 20));  
-	      cell = row11.createCell((short) 0);  
-	      cell.setCellValue("市场开发价值与开发成本");  
-	      cell.setCellStyle(style);
-	      
-	      HSSFRow row12 =sheet.createRow((int) 12);
+	      HSSFRow row12 =sheet.createRow((int) 9);
 	      row12.setHeight((short) (20 * 20));  
 	      cell = row12.createCell((short) 0);  
 	      cell.setCellValue("团队能力(小计)");  
 	      cell.setCellStyle(style1);
 	      
-	      HSSFRow row13 =sheet.createRow((int) 13);
+	      HSSFRow row13 =sheet.createRow((int) 10);
 	      row13.setHeight((short) (20 * 20));  
 	      cell = row13.createCell((short) 0);  
 	      cell.setCellValue("核心领头人的专业能力及资源");  
 	      cell.setCellStyle(style);
 	      
-	      HSSFRow row14 =sheet.createRow((int) 14);
+	      HSSFRow row14 =sheet.createRow((int) 11);
 	      row14.setHeight((short) (20 * 20));  
 	      cell = row14.createCell((short) 0);  
 	      cell.setCellValue("团队成员的专业能力及分工是否合理");  
 	      cell.setCellStyle(style);
+	      
+	      HSSFRow row9 =sheet.createRow((int) 12);
+	      row9.setHeight((short) (20 * 20));  
+	      cell = row9.createCell((short) 0);  
+	      cell.setCellValue("市场潜力(小计)");  
+	      cell.setCellStyle(style1);
+	      
+	      HSSFRow row10 =sheet.createRow((int) 13);
+	      row10.setHeight((short) (20 * 20));  
+	      cell = row10.createCell((short) 0);  
+	      cell.setCellValue("潜在市场规模大小及已有的市场份额");  
+	      cell.setCellStyle(style);
+	      
+	      HSSFRow row11 =sheet.createRow((int) 14);
+	      row11.setHeight((short) (20 * 20));  
+	      cell = row11.createCell((short) 0);  
+	      cell.setCellValue("市场开发价值与开发成本");  
+	      cell.setCellStyle(style);
+	      
+
 	      
 	      HSSFRow row15 =sheet.createRow((int) 15);
 	      row15.setHeight((short) (20 * 20));  
@@ -869,9 +871,29 @@ public class TdExpertController {
 	                	 cell.setCellValue(tdEnterpriseGrade.getThreeTechnology());
 	                }
 	                cell.setCellStyle(style); 
-	                
-	               
+	              
 	                cell = array[9].createCell((short) i+1);
+	                if (null != tdEnterpriseGrade.getTotalGroup()&&null == isModule)
+	                {
+	                	 cell.setCellValue(tdEnterpriseGrade.getTotalGroup());
+	                }
+	                cell.setCellStyle(style); 
+	                
+	                cell = array[10].createCell((short) i+1);
+	                if (null != tdEnterpriseGrade.getOneGroup()&&null == isModule)
+	                {
+	                	 cell.setCellValue(tdEnterpriseGrade.getOneGroup());
+	                }
+	                cell.setCellStyle(style); 
+	                
+	                cell = array[11].createCell((short) i+1);
+	                if (null != tdEnterpriseGrade.getTwoGroup()&&null == isModule)
+	                {
+	                	 cell.setCellValue(tdEnterpriseGrade.getTwoGroup());
+	                }
+	                cell.setCellStyle(style); 
+	               
+	                cell = array[12].createCell((short) i+1);
 	                if (null != tdEnterpriseGrade.getTotalFeasibility()&&null == isModule)
 	                {
 	                	 cell.setCellValue(tdEnterpriseGrade.getTotalFeasibility());
@@ -879,7 +901,7 @@ public class TdExpertController {
 	                cell.setCellStyle(style); 
 	                
 	              
-	                cell = array[10].createCell((short) i+1);
+	                cell = array[13].createCell((short) i+1);
 	                if (null != tdEnterpriseGrade.getOneFeasibility()&&null == isModule)
 	                {
 	                	 cell.setCellValue(tdEnterpriseGrade.getOneFeasibility());
@@ -887,34 +909,13 @@ public class TdExpertController {
 	                cell.setCellStyle(style); 
 	                
 	              
-	                cell = array[11].createCell((short) i+1);
+	                cell = array[14].createCell((short) i+1);
 	                if (null != tdEnterpriseGrade.getTwoFeasibility()&&null == isModule)
 	                {
 	                	 cell.setCellValue(tdEnterpriseGrade.getTwoFeasibility());
 	                }
 	                cell.setCellStyle(style); 
-	                
-	                
-	                cell = array[12].createCell((short) i+1);
-	                if (null != tdEnterpriseGrade.getTotalGroup()&&null == isModule)
-	                {
-	                	 cell.setCellValue(tdEnterpriseGrade.getTotalGroup());
-	                }
-	                cell.setCellStyle(style); 
-	                
-	                cell = array[13].createCell((short) i+1);
-	                if (null != tdEnterpriseGrade.getOneGroup()&&null == isModule)
-	                {
-	                	 cell.setCellValue(tdEnterpriseGrade.getOneGroup());
-	                }
-	                cell.setCellStyle(style); 
-	                
-	                cell = array[14].createCell((short) i+1);
-	                if (null != tdEnterpriseGrade.getTwoGroup()&&null == isModule)
-	                {
-	                	 cell.setCellValue(tdEnterpriseGrade.getTwoGroup());
-	                }
-	                cell.setCellStyle(style); 
+
 	                
 	                cell = array[15].createCell((short) i+1);
 	                if (null != tdEnterpriseGrade.getTotalMarketValue()&&null == isModule)

@@ -57,4 +57,6 @@ public interface TdArticleRepo extends
     		String keywords,Long statusId,Long menuId, String keywords1,Long statusId1,Long menuId1, Pageable page);
     
     int countByCategoryId(Long catId);
+    
+    TdArticle findByRecommendId(Long recommendId);
 }

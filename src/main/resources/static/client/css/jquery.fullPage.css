@@ -18,6 +18,7 @@ html, body {
 .slide {
 	float: left;
 }
+.sect2 {background:#fafafa;}
 .slide, .slidesContainer {
 	height: 100%;
 	display: block;

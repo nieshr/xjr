@@ -547,33 +547,56 @@ public class TdEnterpriseController {
     
     @RequestMapping(value="/project")
     public String project(HttpServletRequest req,ModelMap map){
-//   	 String EnterpriseUsername = (String) req.getSession().getAttribute("EnterpriseUsername");
-//
-//        if (null == EnterpriseUsername) {
-//            return "redirect:/login";
-//        }
+        String username = (String) req.getSession().getAttribute("enterpriseUsername");
+
+        if (null == username) {
+            return "redirect:/login";
+        }
+        
+        TdEnterprise enterprise = tdEnterpriseService.findbyUsername(username);
+        map.addAttribute("enterprise",enterprise);
+        
+        TdArticle article = tdArticleService.findByRecommendId(enterprise.getId());
+        if (null != article)
+        {
+        	map.addAttribute("article", article);
+        }
     	
     	tdCommonService.setHeader(map, req);
     	
-    	map.addAttribute("category_list", tdArticleCategoryService.findByMenuId(11L));
+//    	map.addAttribute("category_list", tdArticleCategoryService.findByMenuId(11L));
     	return "/client/activity_askshow";
     }
     
     @RequestMapping(value="/article",method=RequestMethod.POST)
     public String activty(TdArticle article,HttpServletRequest req,ModelMap map){
-//    	 String EnterpriseUsername = (String) req.getSession().getAttribute("EnterpriseUsername");
-//
-//         if (null == EnterpriseUsername) {
-//             return "redirect:/login";
-//         }
+        String username = (String) req.getSession().getAttribute("enterpriseUsername");
+
+        if (null == username) {
+            return "redirect:/login";
+        }
+        
+
+        
+        TdEnterprise enterprise = tdEnterpriseService.findbyUsername(username);
+        map.addAttribute("enterprise",enterprise);
+        
+        if (null == article.getImgUrl() || article.getImgUrl().equals(""))
+        {
+        	map.addAttribute("msg", "封面图片不能为空！");
+        	map.addAttribute("article",article);
+        	return "/client/activity_askshow";
+        }
+
+       	 article.setRecommendId(enterprise.getId());
          article.setChannelId(1L);
          article.setStatusId(1L);
          article.setSource("本站");
          article.setMenuId(11L);
          
          tdArticleService.save(article);
-         
-         map.addAttribute("category_list", tdArticleCategoryService.findByMenuId(11L));
+         map.addAttribute("article",article);
+//         map.addAttribute("category_list", tdArticleCategoryService.findByMenuId(11L));
     	return "/client/activity_askshow";
     }
     /**

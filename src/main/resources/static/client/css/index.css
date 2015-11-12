@@ -133,7 +133,7 @@
 	margin-top:60px;
 	width:100%;
 	height:494px;
-	background:url(../images/index_bg2.png) no-repeat center top;
+	background:url(../l_images/index_bg2.png) no-repeat center top;
 }
 .sect2 .section2 .div1{
 	*+padding:10px 0;    /*IE 7*/
@@ -236,7 +236,7 @@
 	margin-top:-35px;
 	width:42px;
 	height:71px;
-	background:url(../images/arrow.png) no-repeat;
+	background:url(../l_images/arrow.png) no-repeat;
 	background-position:0% 0%;
 }
 .sect3 .section1 .next{
@@ -247,14 +247,14 @@
 	margin-top:-35px;
 	width:42px;
 	height:71px;
-	background:url(../images/arrow.png) no-repeat;
+	background:url(../l_images/arrow.png) no-repeat;
 	background-position:100% 0%;
 }
 .sect3 .section2{
 	position:relative;
 	width:100%;
 	height:510px;
-	background:url(../images/index_bg3.png) no-repeat center top;
+	background:url(../l_images/index_bg3.png) no-repeat center top;
 }
 .sect3 .section2 div{
 	position:absolute;
@@ -319,7 +319,7 @@
 	display:block;
 	width:62px;
 	height:64px;
-	background:url(../images/icon_1.png) no-repeat;
+	background:url(../l_images/icon_1.png) no-repeat;
 }
 .sect3 .section2 div .p2 .i1{
 	background-position:0% center;
@@ -417,7 +417,7 @@
 	margin-right:5px;
 	width:14px;
 	height:19px;
-	background:url(../images/icon_2.png) no-repeat left 5px;
+	background:url(../l_images/icon_2.png) no-repeat left 5px;
 }
 .sect4 .sect1 .div2 ul li a .newsmess .p3 .span1 .i1{
 	background-position:0% 5px;

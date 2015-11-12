@@ -28,8 +28,14 @@ function done()
 	alert("上传成功！");
 	location.href="/region/activity/list";
 }
+function done2()
+{
+    alert("类型错误（限定为jpg，pdf）！");	
+}
 <#if done?? &&done == 1>
 window.onload=done;
+<#elseif done??&&done==2>
+window.onload=done2;
 </#if>
 
 function numwarn()

@@ -15,8 +15,14 @@ function done()
     alert("上传资料成功！");	
 	location.href="/enterprise/check";
 }
+function done2()
+{
+    alert("类型错误（限定为jpg，pdf）！");	
+}
 <#if done?? &&done == 1>
 window.onload=done;
+<#elseif done??&&done==2>
+window.onload=done2;
 </#if>
 
 function submitCheck()

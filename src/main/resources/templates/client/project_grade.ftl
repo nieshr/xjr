@@ -261,47 +261,6 @@
 		</tr>				
 			
 		<tr class="tr02 " style="background:#DFEBF7;">
-			<th>市场潜力(小计)</th>
-			<#if grade_list??>
-			     <#list grade_list as item>
-			         <#if item.totalFeasibility??>
-			             <td id="${item_index}_totalFeasibility">${item.totalFeasibility?string("0")}</td>
-                     <#else>
-                         <td id="${item_index}_totalFeasibility">0</td>
-                     </#if>			             
-			     </#list>
-			</#if>
-		</tr>
-		<tr class="tr03 mOn">
-			<th>潜在市场规模大小及已有的市场份额</th>
-			<#if grade_list??>
-			    <#list grade_list as item>
-        			<td>
-        				<select  class="setGrade${item_index}" onChange="changeFeasibility('${item_index}');" id="${item_index}_oneFeasibility" <#if item.isGrade??&&item.isGrade|| type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if>>
-        					<#list 0..10 as n>
-        					   <option value="${n}" <#if item.oneFeasibility??&&n==item.oneFeasibility>selected=""</#if>>${n}</option>
-        					</#list>
-        				</select>
-        			</td>
-    			</#list>
-			</#if>
-		</tr>
-		<tr class="tr03 mOn">
-			<th>市场开发价值与开发成本</th>
-			<#if grade_list??>	
-			    <#list grade_list as item>
-        			<td>
-        				<select class="setGrade${item_index}"  onChange="changeFeasibility('${item_index}');" id="${item_index}_twoFeasibility" <#if item.isGrade??&&item.isGrade|| type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if>>
-        				    <#list 0..10 as n>
-        					   <option value="${n}" <#if item.twoFeasibility??&&n==item.twoFeasibility>selected=""</#if>>${n}</option>
-        					</#list>
-        				</select>
-        			</td>
-    			</#list>
-			</#if>
-		</tr>
-
-		<tr class="tr02 " style="background:#DFEBF7;">
 			<th>团队能力(小计)</th>
 			<#if grade_list??>
 			     <#list grade_list as item>
@@ -341,6 +300,47 @@
                 </#list>
             </#if>
         </tr>		
+
+		<tr class="tr02 " style="background:#DFEBF7;">
+			<th>市场潜力(小计)</th>
+			<#if grade_list??>
+			     <#list grade_list as item>
+			         <#if item.totalFeasibility??>
+			             <td id="${item_index}_totalFeasibility">${item.totalFeasibility?string("0")}</td>
+                     <#else>
+                         <td id="${item_index}_totalFeasibility">0</td>
+                     </#if>			             
+			     </#list>
+			</#if>
+		</tr>
+		<tr class="tr03 mOn">
+			<th>潜在市场规模大小及已有的市场份额</th>
+			<#if grade_list??>
+			    <#list grade_list as item>
+        			<td>
+        				<select  class="setGrade${item_index}" onChange="changeFeasibility('${item_index}');" id="${item_index}_oneFeasibility" <#if item.isGrade??&&item.isGrade|| type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if>>
+        					<#list 0..10 as n>
+        					   <option value="${n}" <#if item.oneFeasibility??&&n==item.oneFeasibility>selected=""</#if>>${n}</option>
+        					</#list>
+        				</select>
+        			</td>
+    			</#list>
+			</#if>
+		</tr>
+		<tr class="tr03 mOn">
+			<th>市场开发价值与开发成本</th>
+			<#if grade_list??>	
+			    <#list grade_list as item>
+        			<td>
+        				<select class="setGrade${item_index}"  onChange="changeFeasibility('${item_index}');" id="${item_index}_twoFeasibility" <#if item.isGrade??&&item.isGrade|| type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if>>
+        				    <#list 0..10 as n>
+        					   <option value="${n}" <#if item.twoFeasibility??&&n==item.twoFeasibility>selected=""</#if>>${n}</option>
+        					</#list>
+        				</select>
+        			</td>
+    			</#list>
+			</#if>
+		</tr>
 		
 		<tr class="tr02 " style="background:#DFEBF7;">
 			<th>投资价值(小计)</th>

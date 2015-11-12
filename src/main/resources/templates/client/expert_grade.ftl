@@ -370,6 +370,53 @@ function starChange(type, stars)
     			</#list>
 			</#if>
 		</tr>				
+
+		<tr class="tr02 " style="background:#DFEBF7;">
+			<th>团队能力(小计)</th>
+			<#if grade_list??>
+			     <#list grade_list as item>
+			     <#if item.gradeAble??&&item.gradeAble||item_index==0&&(!item.gradeAble??||item.gradeAble??&&item.gradeAble)>
+			         <#if item.totalGroup??>
+			             <td id="${item_index}_totalGroup">${item.totalGroup?string("0")}</td>
+			         <#else>
+			             <td id="${item_index}_totalGroup">0</td>
+			         </#if>
+			     </#if>    
+			     </#list>
+			</#if>
+		</tr>
+		<tr class="tr03 mOn">
+			<th>核心领头人的专业能力及资源</th>
+			<#if grade_list??>
+    			<#list grade_list as item>
+    			<#if item.gradeAble??&&item.gradeAble||item_index==0&&(!item.gradeAble??||item.gradeAble??&&item.gradeAble)>
+    			<td>
+    				<select class="setGrade${item_index}"  onChange="changeGroup('${item_index}');" id="${item_index}_oneGroup" <#if item.isGrade??&&item.isGrade|| type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if>>
+    				    <#list 0..10 as n>
+    					   <option value="${n}" <#if item.oneGroup??&&n==item.oneGroup>selected=""</#if>>${n}</option>
+    					</#list>
+    				</select>
+    			</td>
+    			</#if>
+    			</#list>
+		    </#if>
+		</tr>
+		<tr class="tr03 mOn">
+            <th>团队成员的专业能力及分工是否合理</th>
+            <#if grade_list??>
+                <#list grade_list as item>
+                <#if item.gradeAble??&&item.gradeAble||item_index==0&&(!item.gradeAble??||item.gradeAble??&&item.gradeAble)>
+                <td>
+                    <select class="setGrade${item_index}"  onChange="changeGroup('${item_index}');" id="${item_index}_twoGroup" <#if item.isGrade??&&item.isGrade|| type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if>>
+                        <#list 0..10 as n>
+                           <option value="${n}" <#if item.twoGroup??&& n==item.twoGroup>selected=""</#if>>${n}</option>
+                        </#list>
+                    </select>
+                </td>
+                </#if>
+                </#list>
+            </#if>
+        </tr>		
 			
 		<tr class="tr02 " style="background:#DFEBF7;">
 			<th>市场潜力(小计)</th>
@@ -418,53 +465,6 @@ function starChange(type, stars)
 			</#if>
 		</tr>
 
-		<tr class="tr02 " style="background:#DFEBF7;">
-			<th>团队能力(小计)</th>
-			<#if grade_list??>
-			     <#list grade_list as item>
-			     <#if item.gradeAble??&&item.gradeAble||item_index==0&&(!item.gradeAble??||item.gradeAble??&&item.gradeAble)>
-			         <#if item.totalGroup??>
-			             <td id="${item_index}_totalGroup">${item.totalGroup?string("0")}</td>
-			         <#else>
-			             <td id="${item_index}_totalGroup">0</td>
-			         </#if>
-			     </#if>    
-			     </#list>
-			</#if>
-		</tr>
-		<tr class="tr03 mOn">
-			<th>核心领头人的专业能力及资源</th>
-			<#if grade_list??>
-    			<#list grade_list as item>
-    			<#if item.gradeAble??&&item.gradeAble||item_index==0&&(!item.gradeAble??||item.gradeAble??&&item.gradeAble)>
-    			<td>
-    				<select class="setGrade${item_index}"  onChange="changeGroup('${item_index}');" id="${item_index}_oneGroup" <#if item.isGrade??&&item.isGrade|| type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if>>
-    				    <#list 0..10 as n>
-    					   <option value="${n}" <#if item.oneGroup??&&n==item.oneGroup>selected=""</#if>>${n}</option>
-    					</#list>
-    				</select>
-    			</td>
-    			</#if>
-    			</#list>
-		    </#if>
-		</tr>
-		<tr class="tr03 mOn">
-            <th>团队成员的专业能力及分工是否合理</th>
-            <#if grade_list??>
-                <#list grade_list as item>
-                <#if item.gradeAble??&&item.gradeAble||item_index==0&&(!item.gradeAble??||item.gradeAble??&&item.gradeAble)>
-                <td>
-                    <select class="setGrade${item_index}"  onChange="changeGroup('${item_index}');" id="${item_index}_twoGroup" <#if item.isGrade??&&item.isGrade|| type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if>>
-                        <#list 0..10 as n>
-                           <option value="${n}" <#if item.twoGroup??&& n==item.twoGroup>selected=""</#if>>${n}</option>
-                        </#list>
-                    </select>
-                </td>
-                </#if>
-                </#list>
-            </#if>
-        </tr>		
-		
 		<tr class="tr02 " style="background:#DFEBF7;">
 			<th>投资价值(小计)</th>
 			<#if grade_list??>
