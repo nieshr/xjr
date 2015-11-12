@@ -31,6 +31,19 @@ public class TdActivityType {
     @Column
     private Boolean isEnable;
     
+    // 简介
+    @Column
+    private String content;
+    
+    // 图片
+    @Column
+    private String imgUrl;
+    
+    // 链接
+    @Column
+    private String linkUrl;
+    
+    
     // 颜色
     @Column
     private String color;
@@ -73,6 +86,30 @@ public class TdActivityType {
 
 	public void setColor(String color) {
 		this.color = color;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
+	}
+
+	public String getLinkUrl() {
+		return linkUrl;
+	}
+
+	public void setLinkUrl(String linkUrl) {
+		this.linkUrl = linkUrl;
 	}
 
  

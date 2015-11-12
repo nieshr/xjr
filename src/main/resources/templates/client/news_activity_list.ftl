@@ -9,8 +9,8 @@
 <!-- css -->
 <link rel="stylesheet" type="text/css" href="/client/css/base.css"/>
 <link rel="stylesheet" type="text/css" href="/client/css/news.css"/>
-<link rel="stylesheet" href="/client/css/news_base.css">
-<link rel="stylesheet" href="/client/css/news_main.css">
+<link rel="stylesheet" href="/client/css/l_base.css">
+<link rel="stylesheet" href="/client/css/l_main.css">
 <link rel="stylesheet" type="text/css" href="/client/css/5icool.css"/>
 
 <script type="text/javascript" src="/client/js/act_jquery.js"></script>

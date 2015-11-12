@@ -1,5 +1,6 @@
 package com.ynyes.kjxjr.controller.front;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +28,7 @@ import com.ynyes.kjxjr.service.TdArticleCategoryService;
 import com.ynyes.kjxjr.service.TdArticleService;
 import com.ynyes.kjxjr.service.TdCommonService;
 import com.ynyes.kjxjr.service.TdDemandService;
+import com.ynyes.kjxjr.service.TdDiySiteService;
 import com.ynyes.kjxjr.service.TdNavigationMenuService;
 import com.ynyes.kjxjr.service.TdUserRecentVisitService;
 import com.ynyes.kjxjr.util.ClientConstant;
@@ -63,6 +65,9 @@ public class TdInfoController {
     
 	@Autowired
 	TdActivityTypeService tdActivityTypeService;
+	
+	@Autowired
+	TdDiySiteService tdDiySiteService;
 	@RequestMapping("/index")
 	public String infoIndex(ModelMap map,HttpServletRequest req){
 		tdCommonService.setHeader(map, req); 
@@ -649,7 +654,7 @@ public class TdInfoController {
 	    
 		Long active = 5L;
 		map.addAttribute("active",active);
-		map.addAttribute("tutor_page", tdArticleService.findByMenuIdAndCategoryIdAndIsEnableOrderByIdDesc(12L, 2L, 0, ClientConstant.pageSize));	    
+		map.addAttribute("tutor_page",tdDiySiteService.findByRoleIdOrderBySortIdAsc(3L, 0, ClientConstant.pageSize));	    
 		map.addAttribute("invest_page", tdArticleService.findByMenuIdAndCategoryIdAndIsEnableOrderByIdDesc(12L, 3L, 0, ClientConstant.pageSize));	    
 	    return "/client/resource";
 	}
@@ -784,5 +789,60 @@ public class TdInfoController {
         
         return "/client/news_activity_detail";
     }
+	
+	//活动简介
+	@RequestMapping("/aIn")
+    public String activityIntro(
+                            ModelMap map,
+                            HttpServletRequest req){	
+		
+	    tdCommonService.setHeader(map, req);   
+	    
+	    List<TdArticle> articleList = tdArticleService.findByMenuId(13L);
+    	List<TdArticle> intro1 = new ArrayList<>();
+    	List<TdArticle> intro2 = new ArrayList<>();
+	    for(TdArticle item : articleList)
+	    {
+	    	if (item.getTitle().equalsIgnoreCase("专项行动简介"))
+	    	{
+	    		map.addAttribute("article",item);
+	    	}
+	    	
+	    	if (item.getTitle().equalsIgnoreCase("3年目标任务"))
+	    	{
+	    		intro1.add(item);
+	    	}
+	    	if (item.getTitle().equalsIgnoreCase("组织体系"))
+	    	{
+	    		intro1.add(item);
+	    	}
+	    	if (item.getTitle().equalsIgnoreCase("培育对象"))
+	    	{
+	    		intro1.add(item);
+	    	}
+	    	
+	    	if (item.getTitle().equalsIgnoreCase("活动形式"))
+	    	{
+	    		intro2.add(item);
+	    	}
+	    	if (item.getTitle().equalsIgnoreCase("保障措施"))
+	    	{
+	    		intro2.add(item);
+	    	}
+	    	if (item.getTitle().equalsIgnoreCase("评委组成"))
+	    	{
+	    		intro2.add(item);
+	    	}
+	    	if (item.getTitle().equalsIgnoreCase("奖扶政策"))
+	    	{
+	    		intro2.add(item);
+	    	}
+	    	
+	    }
+	    map.addAttribute("intro1",intro1);
+	    map.addAttribute("intro2",intro2);
+	    
+        return "/client/news_activity_introduction";
+    }	
 	
 }

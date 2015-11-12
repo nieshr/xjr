@@ -8,9 +8,47 @@
 <script type="text/javascript" src="/mag/js/Validform_v5.3.2_min.js"></script>
 <script type="text/javascript" src="/mag/js/lhgdialog.js"></script>
 <script type="text/javascript" src="/mag/js/layout.js"></script>
-
+<script type="text/javascript" src="/mag/js/swfupload.js"></script>
+<script type="text/javascript" src="/mag/js/swfupload.queue.js"></script>
+<script type="text/javascript" src="/mag/js/swfupload.handlers.js"></script>
 <link href="/mag/style/style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript">
+    $(function () {
+        //初始化表单验证
+        $("#form1").initValidform();
 
+
+
+
+        //（缩略图）
+        var txtPic = $("#txtImgUrl").val();
+        if (txtPic == "" || txtPic == null) {
+            $(".thumb_ImgUrl_show").hide();
+        }
+        else {
+            $(".thumb_ImgUrl_show").html("<ul><li><div class='img-box1'><img src='" + txtPic + "' bigsrc='" + txtPic + "' /></div></li></ul>");
+            $(".thumb_ImgUrl_show").show();
+        }
+
+        $("#txtImgUrl").blur(function () {
+            var txtPic = $("#txtImgUrl").val();
+            if (txtPic == "" || txtPic == null) {
+                $(".thumb_ImgUrl_show").hide();
+            }
+            else {
+                $(".thumb_ImgUrl_show").html("<ul><li><div class='img-box1'><img src='" + txtPic + "' bigsrc='" + txtPic + "' /></div></li></ul>");
+                $(".thumb_ImgUrl_show").show();
+            }
+        });
+        
+        //设置封面图片的样式
+        $(".photo-list ul li .img-box img").each(function () {
+            if ($(this).attr("src") == $("#hidFocusPhoto").val()) {
+                $(this).parent().addClass("selected");
+            }
+        });
+    });
+</script>
 </head>
 
 <body class="mainbody">
@@ -72,6 +110,34 @@
       <span class="Validform_checktip">*数字，越小越向前</span>
     </dd>
   </dl>
+   <dl>
+       <dt>URL链接</dt>
+       <dd>
+           <input name="linkUrl" type="text" value="<#if article??>${article.linkUrl!""}</#if>" maxlength="255" id="txtLinkUrl" class="input normal">
+           <span class="Validform_checktip">填写后直接跳转到该网址</span>
+       </dd>
+   </dl>
+   <dl>
+       <dt>封面图片</dt>
+       <dd>
+           <input name="imgUrl" type="text" id="txtImgUrl" value="<#if article??>${article.imgUrl!""}</#if>" class="input normal upload-path">
+           <div class="upload-box upload-img"></div>
+           <div class="photo-list thumb_ImgUrl_show" style="display: none;">
+               <ul>
+                   <li>
+                       <div class="img-box1"></div>
+                   </li>
+               </ul>
+           </div>
+       </dd>
+   </dl>  
+   <dl>
+       <dt>描述内容</dt>
+       <dd>
+           <textarea name="content" rows="2" cols="20" id="txtZhaiyao" class="input" datatype="*0-255" sucmsg=" "><#if activityType??>${activityType.content!""}</#if></textarea>
+       </dd>
+   </dl>  
+  
   <#--
  	<dl>
 	    <dt>颜色</dt>

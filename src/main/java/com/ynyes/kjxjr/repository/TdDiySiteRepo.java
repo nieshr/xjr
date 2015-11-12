@@ -21,6 +21,7 @@ public interface TdDiySiteRepo extends
 		JpaSpecificationExecutor<TdDiySite> 
 {
     Page<TdDiySite> findByTitleContainingOrderBySortIdAsc(String keywords, Pageable page);
+    Page<TdDiySite> findByRoleIdOrderBySortIdAsc(Long roleId, Pageable page);
     
     List<TdDiySite> findByIsEnableTrue();
     

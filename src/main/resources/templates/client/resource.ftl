@@ -30,10 +30,10 @@
 						<li>
 							<img style="cursor:pointer;" src="${item.imgUrl!''}" width="150px" height="150px" onclick="location.href='/info/list/content/${item.id?c!''}?mid=${item.menuId?c!''}'">
 							<h6>${item.title!''}</h6>
-							<#if item.brief?length lt 20>
-								<p>${item.brief!''}</p>
+							<#if item.content?length lt 20>
+								<p>${item.content!''}</p>
 							<#else>
-								<p>${item.brief[0..20]!''}...</p>
+								<p>${item.content[0..20]!''}...</p>
 							</#if>
 						</li>
 					</#if>

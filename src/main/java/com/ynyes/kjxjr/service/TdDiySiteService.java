@@ -133,6 +133,20 @@ public class TdDiySiteService {
         return repository.findAll(pageRequest);
     }
     
+    /**
+     * 页面查找专家
+     * @param roleId
+     * @param page
+     * @param size
+     * @return
+     */
+    public Page<TdDiySite> findByRoleIdOrderBySortIdAsc(Long roleId , int page, int size)
+    {
+        PageRequest pageRequest = new PageRequest(page, size, new Sort(Direction.ASC, "sortId"));
+        
+        return repository.findByRoleIdOrderBySortIdAsc(roleId , pageRequest);
+    }
+    
     public Page<TdDiySite> searchAllOrderBySortIdAsc(String keywords, int page, int size)
     {
         PageRequest pageRequest = new PageRequest(page, size);

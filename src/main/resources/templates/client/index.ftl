@@ -188,52 +188,28 @@
                     <!-- <div>speed</div> -->
                     <div class="parnet">
                       <div class="child">
-                      <#--
+                     <#if activityType_list??>
+                        <#list activityType_list as item>
                         <div class="child1">
                           <div class="child1_1">
                               <p class="p1">科技小巨人培育专项</p>
-                              <p class="p2">每周行</p>
-                              <p class="p3">国际青年科技创业大赛是由北京市海淀区人民政府和北京大学携手发起</p>
+                              <p class="p2">${item.title!''}</p>
+                              <p class="p3"><#if item.content??&&item.content?length gt 40>
+                                                ${item.content[0..39]}...
+                                            <#else>
+                                                ${item.content!''}
+                                            </#if>
+                              </p>
                               <p class="p4">
-                                  <a href="#" class="a1">查看详情&rarr;</a>
-                                  <a href="#" class="a2">了解更多信息</a>
+                                  <a href="/info/aIn" class="a1">查看详情&rarr;</a>
+                                  <a href="<#if item.linkUrl??>${item.linkUrl}<#else>/info/aIn/${item.id?c!''}</#if>" class="a2">了解更多信息</a>
                               </p>  
                           </div>
-                          <img src="/client/l_images/pic1.png" width="420" height="280" /></div>
-                          <div class="child1">
-                          <div class="child1_1">
-                              <p class="p1">科技小巨人培育专项</p>
-                              <p class="p2">每周行</p>
-                              <p class="p3">国际青年科技创业大赛是由北京市海淀区人民政府和北京大学携手发起</p>
-                              <p class="p4">
-                                  <a href="#" class="a1">查看详情&rarr;</a>
-                                  <a href="#" class="a2">了解更多信息</a>
-                              </p>  
-                          </div>
-                          <img src="/client/l_images/pic1.png" width="420" height="280" /></div>
-                          <div class="child1">
-                          <div class="child1_1">
-                              <p class="p1">科技小巨人培育专项</p>
-                              <p class="p2">每周行</p>
-                              <p class="p3">国际青年科技创业大赛是由北京市海淀区人民政府和北京大学携手发起</p>
-                              <p class="p4">
-                                  <a href="#" class="a1">查看详情&rarr;</a>
-                                  <a href="#" class="a2">了解更多信息</a>
-                              </p>  
-                          </div>
-                          <img src="/client/l_images/pic1.png" width="420" height="280" /></div>
-                          <div class="child1">
-                          <div class="child1_1">
-                              <p class="p1">科技小巨人培育专项</p>
-                              <p class="p2">每周行</p>
-                              <p class="p3">国际青年科技创业大赛是由北京市海淀区人民政府和北京大学携手发起</p>
-                              <p class="p4">
-                                  <a href="#" class="a1">查看详情&rarr;</a>
-                                  <a href="#" class="a2">了解更多信息</a>
-                              </p>  
-                          </div>
-                          <img src="/client/l_images/pic1.png" width="420" height="280" /></div>
-                          -->
+                          <img src="${item.imgUrl!''}" width="420" height="280" />
+                        </div>
+                        </#list>
+                    </#if>    
+                        
                       </div>      
                     </div>
                     <a class="prev" href="#"></a>
