@@ -7,7 +7,7 @@
 			<a href="/info/index"><li>新闻动态</li></a>
 			<a href="/info/projectshow"><li class="active">企业项目</li></a>
 			<a href="/info/resource"><li>专家资源</li></a>
-			<a href="#"><li>合作机构</li></a>
+			<a href="/info/host"><li>合作机构</li></a>
 			<a href="/info/contact"><li>联系方式</li></a>
 		</ul>
                 <#if username??>
@@ -31,10 +31,10 @@ function gotop()
 }
 </script>
     <div class="floatbox">
-      <a id="BizQQWPA" href="http://wpa.qq.com/msgrd?v=3&uin=${site.qq1!''}&site=qq&menu=yes" title="申报入口">
+      <a  href="/user" target="_blank" title="申报入口">
         <img src="/client/l_images/float_ico02.png" width="42" height="42" alt="申报入口">
       </a>
-      <a href="http://weibo.com/ynsite" title="搜索" target="_blank" rel="nofollow">
+      <a href="#" title="搜索" target="_blank" rel="nofollow">
         <img src="/client/l_images/float_ico01.png" width="42" height="42" alt="搜索">
       </a>
       <a id="BizQQWPA" href="http://wpa.qq.com/msgrd?v=3&uin=1981148933&site=qq&menu=yes" target="_blank" title="在线客服">

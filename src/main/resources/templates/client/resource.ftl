@@ -28,19 +28,21 @@
 				<#list tutor_page.content as item>
 					<#if item_index lt 9>
 						<li>
-							<img style="cursor:pointer;" src="${item.imgUrl!''}" width="150px" height="150px" onclick="location.href='/info/list/content/${item.id?c!''}?mid=${item.menuId?c!''}'">
-							<h6>${item.title!''}</h6>
-							<#if item.content?length lt 20>
-								<p>${item.content!''}</p>
-							<#else>
-								<p>${item.content[0..20]!''}...</p>
+							<img style="cursor:pointer;" src="${item.imgUrl!''}" width="150px" height="150px" onclick="location.href='/info/list/content/expert/${item.id?c!''}'">
+							<h6>${item.inCharge!''}</h6>
+							<#if  item.content??>
+								<#if  item.content?length lt 20>
+									<p>${item.content!''}</p>
+								<#else>
+									<p>${item.content[0..20]!''}...</p>
+								</#if>
 							</#if>
 						</li>
 					</#if>
 				</#list>
 			</#if>	
 			<li>
-				<img style="cursor:pointer;"  src="/client/news_img/searchmore.png" alt="查看更多" onclick="location.href='/info/resource/2?mid=12'">
+				<img style="cursor:pointer;"  src="/client/news_img/searchmore.png" alt="查看更多" onclick="location.href='/info/resource/expert'">
 			</li>
 		</ul>
 	

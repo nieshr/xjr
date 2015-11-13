@@ -37,15 +37,38 @@ $(document).ready(function(){
              }
     });
     
-    //初始化编辑器
-    var editor = KindEditor.create('.editor', {
-        width: '98%',
-        height: '350px',
-        resizeType: 1,
-        uploadJson: '/Verwalter/editor/upload?action=EditorFile',
-        fileManagerJson: '/Verwalter/editor/upload?action=EditorFile',
-        allowFileManager: true
-    });
+      //初始化编辑器
+			var editor;
+			KindEditor.ready(function(K) {
+				editor = K.create('textarea[name="content"]', {
+					resizeType : 1,
+					allowPreviewEmoticons : false,
+					allowImageUpload : true,
+					items : [
+						'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+						'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+						'insertunorderedlist', '|', 'emoticons', 'image', 'link']
+				});
+			});
+   });
+   			KindEditor.ready(function(K) {
+				var editor = K.editor({
+					allowFileManager : true
+				});
+      				//上传图片
+   				K('#image3').click(function() {
+				editor.loadPlugin('image', function() {
+					editor.plugin.imageDialog({
+						showRemote : false,
+						imageUrl : K('#url3').val(),
+						clickFn : function(url, title, width, height, border, align) {
+							K('#url3').val(url);
+							editor.hideDialog();
+						}
+					});
+				});
+			});
+
     
     <#if upload??&&upload == 1>
         var height = $(document.body).height();
@@ -431,7 +454,14 @@ window.onload=done2;
     			
     			<div><span>地址：</span><input <#if pagetype??&& pagetype == "check" >disabled=""</#if> type="text" name="address" id="address" datatype="*" value="<#if activity??>${activity.address!''}</#if>" /></div>
     			<div><span>主题：</span><textarea cols="3" rows="3" <#if pagetype??&& pagetype == "check" >disabled=""</#if> type="text" name="theme" id="theme" datatype="*1-255" errormsg="最多255字！"><#if activity??>${activity.theme!''}</#if>"</textarea></div>
-    			
+    			<div><span>摘要：</span><textarea cols="3" rows="3" <#if pagetype??&& pagetype == "check" >disabled=""</#if> type="text" name="brief" id="brief" datatype="*0-255" errormsg="最多255字！"><#if activity??>${activity.brief!''}</#if>"</textarea></div>
+    			<div class="editer">
+					<span>文章：</span>
+					<textarea  class="editor" <#if pagetype??&& pagetype == "check" >disabled=""</#if> name="content" id="content"><#if activity??&&activity.content??>${activity.content!''}</#if></textarea>
+				</div>
+    				                <dd>
+	                    <textarea  name="content" class="editor" id="content" <#if article??&&article.imgUrl??&&(article.statusId==0 || article.statusId==1)>disabled=""</#if> datetype="*" style="visibility:hidden;"><#if article??&&article.content??>${article.content!''}</#if></textarea>
+	                </dd>
 				<div class="editer">
 					<span>简介：</span>
 					<textarea  <#if pagetype??&& pagetype == "check" >disabled=""</#if> name="introduction" id="introduction" datatype="*" ><#if activity??>${activity.introduction!''}</#if></textarea>

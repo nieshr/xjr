@@ -38,8 +38,8 @@
 		<#if intro1??>
 		  <#list intro1 as item>
 			<div class="specialaction-secend-one">
-				<img src="${item.imgUrl!''}">
-				<h4>${item.title!''}</h4>
+				<img src="${item.imgUrl!''}"  alt="封面图片" width=88 height=88>
+				<h4><a href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>" title="查看更多信息">${item.title!''}</a></h4>
 				<h5>${item.brief!''}</h5>
 			</div>
 			</#list>
@@ -47,12 +47,12 @@
 		</div>
 		</div>
 		<div class="specialaction-third clearl">
-		<#if activityType_list??>
-		  <#list activityType_list as item>
+		<#if breed_page??>
+		  <#list breed_page.content as item>
 			<div class="specialaction-third-one">
-				<img src="${item.imgUrl!''}">
-				<h3>${item.title!''}</h3>
-				<h4>${item.content!''}</h4>
+				<img src="${item.imgUrl!''}" alt="封面图片" width=128 height=128>
+				<h3><a href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>" title="查看更多信息">${item.title!''}</a></h3>
+				<h4>${item.brief!''}</h4>
 			</div>
 		  </#list>
 		</#if>	
@@ -62,8 +62,8 @@
 		<#if intro2??>
 		  <#list intro2 as item>
 			<div class="specialaction-fourth-one">
-				<img src="${item.imgUrl!''}">
-				<h4>${item.title!''}</h4>
+				<img src="${item.imgUrl!''}"  alt="封面图片" width=100 height=100>
+				<h4><a href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>" title="查看更多信息">${item.title!''}</a></h4>
 				<h5>${item.brief!''}</h5>
 			</div>
 		   </#list>

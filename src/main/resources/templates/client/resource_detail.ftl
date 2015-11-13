@@ -16,8 +16,8 @@
 <div class="titlelist">
 	<div id="titlelist">
 		<div>
-			<a href="/info/resource/2?mid=12" <#if catId==2> class="active" </#if>>创业导师</a>
-			<a href="/info/resource/3?mid=12" <#if catId==3> class="active" </#if>>投资机构</a>
+			<a href="/info/resource/expert" <#if !catId??> class="active" </#if>>创业导师</a>
+			<a href="/info/resource/3?mid=12" <#if catId??> class="active" </#if>>投资机构</a>
 		</div>
 	</div>
 
@@ -27,15 +27,29 @@
 	<ul class="teacher-list">
 		<#if info_page??>
 			<#list info_page.content as item>
-				<li>
-					<img src="${item.imgUrl!''}" alt="" onclick="location.href='/info/list/content/${item.id?c!''}?mid=12'">
-					<h6>${item.title!''}</h6>
-					<#if item.brief?length lt 20>
-						<p>${item.brief!''}</p>
-					<#else>
-						<p>${item.brief[0..20]!''}...</p>
-					</#if>
-				</li>
+				<#if catId??>
+					<li>
+						<img src="${item.imgUrl!''}" alt="展示图片" onclick="location.href='/info/list/content/${item.id?c!''}?mid=12'">
+						<h6>${item.title!''}</h6>
+						<#if item.brief?length lt 20>
+							<p>${item.brief!''}</p>
+						<#else>
+							<p>${item.brief[0..20]!''}...</p>
+						</#if>
+					</li>
+				<#else>
+					<li>
+						<img src="${item.imgUrl!''}" alt="展示图片" onclick="location.href='/info/list/content/expert/${item.id?c}'">
+						<h6>${item.inCharge!''}</h6>
+						<#if item.content??>
+							<#if item.content?length lt 20>
+								<p>${item.content!''}</p>
+							<#else>
+								<p>${item.content[0..20]!''}...</p>
+							</#if>
+						</#if>	
+					</li>		
+				</#if>				
 			</#list>
 		</#if>		
 	</ul>
@@ -45,9 +59,48 @@
 </div>
 <!-- 代码 开始 -->
 
-	<#assign PAGE_DATA=info_page />
+<#assign PAGE_DATA=info_page />
+<#if catId??>	
     <#include "/client/list_footer.ftl" />
-
+<#else>
+<div class="pagnation" id="pagnation">
+ <#if PAGE_DATA??>
+	 <#if PAGE_DATA.number+1 == 1>
+          <a disabled="disabled"  class="page-prev">上一页"</a>               
+     <#else>
+         <a href="/info/resource?page=${PAGE_DATA.number-1}"  class="page-prev">上一页"</a>                
+     </#if>
+     
+     <#assign continueEnter=false>
+     
+     <#if PAGE_DATA.totalPages gt 0>
+         <#list 1..PAGE_DATA.totalPages as page>
+             <#if page <= 3 || (PAGE_DATA.totalPages-page) < 3 || (PAGE_DATA.number+1-page)?abs<3 >
+                 <#if page == PAGE_DATA.number+1>
+                     <a  class ="current">${page }</a>
+                 <#else>
+                     <a href="/info/resource?page=${page-1}">${page}</a> 
+                 </#if>
+                 <#assign continueEnter=false>
+             <#else>
+                 <#if !continueEnter>
+                     ...
+                     <#assign continueEnter=true>
+                 </#if>
+             </#if>
+         </#list>
+     </#if>
+     
+     
+     <#if PAGE_DATA.number+1 == PAGE_DATA.totalPages || PAGE_DATA.totalPages==0>
+         <a disabled="disabled" class="page-next">下一页</a> 
+     <#else>
+         <a href="/info/resource?page=${PAGE_DATA.number+1}" class="page-next">下一页</a> 
+     </#if>
+ </#if>
+    
+</div>
+</#if>
 <!-- 代码 结束 -->
 <!-- contendend -->
 

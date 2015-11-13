@@ -547,7 +547,7 @@ public class TdActivityController {
 				activityId);
 		
 		map.addAttribute("print", "print");
-		map.addAttribute("type", "check");
+//		map.addAttribute("type", "check");
 		map.addAttribute("grade_list", grade_list);
 		map.addAttribute("activityId", activityId);
 		map.addAttribute("activity", activity);
@@ -555,7 +555,95 @@ public class TdActivityController {
 		map.addAttribute("expert", expert);
 		return "/client/project_grade";
 	}
-    
+	
+	@RequestMapping(value = "/grade/sure")
+	@ResponseBody
+	public Map<String, Object> gradeSure(TdEnterpriseGrade grade, String number, Long activityId, Long expertId,
+			HttpServletRequest req) {
+		Map<String, Object> res = new HashMap<>();
+		res.put("status", -1);
+        String username = (String) req.getSession().getAttribute("activityUsername");
+
+        if (null == username) {
+           res.put("msg", "请先登陆");
+           return res;
+        }
+        
+		TdExpert expert = tdExpertService.findOne(expertId);
+		TdEnterprise enterprise = tdEnterpriseService.findByNumber(number);
+		TdEnterpriseGrade theGrade = tdEnterpriseGradeService.findByExpertIdAndActivityIdAndNumber(expert.getId(),
+				activityId, number);
+		System.err.println(grade);
+		theGrade.setTotalPoint(grade.getTotalExpression() + grade.getTotalFeasibility() + grade.getTotalMarketValue()
+				+ grade.getTotalTechnology() + grade.getTotalGroup());
+		theGrade.setExpertId(expert.getId());
+		theGrade.setEnterpriseId(enterprise.getId());
+		theGrade.setActivityId(activityId);
+		theGrade.setNumber(number);
+		theGrade.setTotalExpression(grade.getTotalExpression());
+		theGrade.setOneExpression(grade.getOneExpression());
+		theGrade.setTotalFeasibility(grade.getTotalFeasibility());
+		theGrade.setOneFeasibility(grade.getOneFeasibility());
+		theGrade.setTwoFeasibility(grade.getTwoFeasibility());
+		theGrade.setTotalMarketValue(grade.getTotalMarketValue());
+		theGrade.setOneMarketValue(grade.getOneMarketValue());
+		theGrade.setTwoMarketValue(grade.getTwoMarketValue());
+		theGrade.setTotalTechnology(grade.getTotalTechnology());
+		theGrade.setOneTechnology(grade.getOneTechnology());
+		theGrade.setTwoTechnology(grade.getTwoTechnology());
+		theGrade.setThreeTechnology(grade.getThreeTechnology());
+//		theGrade.setTotalPoint(grade.getTotalPoint());   zhangji 注释掉
+		theGrade.setOneGroup(grade.getOneGroup());
+		theGrade.setTwoGroup(grade.getTwoGroup());
+		theGrade.setTotalGroup(grade.getTotalGroup()); //zhangji
+		theGrade.setIsGrade(true);
+		tdEnterpriseGradeService.save(theGrade);
+		
+		//同步【活动-企业】中间表状态
+		TdActivityEnterprise activityEnterprise = tdActivityEnterpriseService.findByActivityIdAndEnterpriseId(activityId, enterprise.getId());
+		activityEnterprise.setIsGrade(true);
+		tdActivityEnterpriseService.save(activityEnterprise);
+		
+		//评分改为一个一个的评 zhangji
+//		List<TdEnterpriseGrade> expertGradeList = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderBySordIdAsc(expert.getId(), activityId);
+//		if (expertGradeList.size() > 0)
+//		{
+//			int index = 0;
+//			int i = 0; 	//要操作的对象标识
+//			for (TdEnterpriseGrade item : expertGradeList)
+//			{
+//				if (i==1)
+//				{
+//					item.setGradeAble(true);
+//					tdEnterpriseGradeService.save(item);
+//					break;
+//				}
+//				if (item.getId() == theGrade.getId())
+//				{
+//					if(index == (expertGradeList.size()-1))
+//					{
+//						res.put("msg", "评分完毕，谢谢！");
+//						item.setGradeAble(false);
+//						tdEnterpriseGradeService.save(item);
+//					}
+//					i = 1;
+//					item.setGradeAble(false);
+//					tdEnterpriseGradeService.save(item);
+//					index++;
+//					
+//				}
+//				else{
+//					item.setGradeAble(false);
+//					tdEnterpriseGradeService.save(item);
+//					index++;
+//				}
+//				
+//				
+//			}
+//		}
+		res.put("status", 0);
+		return res;
+	}    
     //活动取消审核
     @RequestMapping(value = "/cancel")
     @ResponseBody

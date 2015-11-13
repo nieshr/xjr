@@ -104,25 +104,33 @@ public class TdIndexController {
 //        map.addAttribute("join_list", tdArticleService                   		
 //        		.findByMenuIdOrderByCreateTime(13L));   
 //        /////////
-        List<TdArticleCategory> joinList = tdArticleCategoryService
+        List<TdArticleCategory> systemList = tdArticleCategoryService
                 .findByMenuId(13L);
 
-        if (null != joinList && joinList.size() > 0) {
-            for (TdArticleCategory tdCat : joinList)
+        if (null != systemList && systemList.size() > 0) {
+            for (TdArticleCategory tdCat : systemList)
             {
-                if (null != tdCat.getTitle() && tdCat.getTitle().equals("人才招聘"))
+                if (null != tdCat.getTitle() && tdCat.getTitle().equals("行动概况"))
                 {
-                    map.addAttribute("join_page", tdArticleService
-                            .findByMenuIdAndCategoryIdAndIsEnableOrderByIdAsc(13L,
-                                    tdCat.getId(), 0, ClientConstant.pageSize));
+                    Page<TdArticle> aboutPage =  tdArticleService
+                            .findByMenuIdAndCategoryIdAndIsEnableOrderBySortIdAsc(13L,
+                                    tdCat.getId(), 0, ClientConstant.pageSize);
+                    
+                    TdArticle activityAbout = aboutPage.getContent().get(0);
+                    map.addAttribute("activityAbout", activityAbout);
                     
                 }
-                if (null != tdCat.getTitle() && tdCat.getTitle().equals("交通指南"))
+                if (null != tdCat.getTitle() && tdCat.getTitle().equals("科技小巨人培育专项"))
                 {
-                    map.addAttribute("map_page", tdArticleService
-                            .findByMenuIdAndCategoryIdAndIsEnableOrderByIdAsc(13L,
+                    map.addAttribute("breed_page", tdArticleService
+                            .findByMenuIdAndCategoryIdAndIsEnableOrderBySortIdAsc(13L,
                                     tdCat.getId(), 0, ClientConstant.pageSize));
-                    
+                }
+                if (null != tdCat.getTitle() && tdCat.getTitle().equals("五大支持"))
+                {
+                    map.addAttribute("fiveSupport_page", tdArticleService
+                            .findByMenuIdAndCategoryIdAndIsEnableOrderBySortIdAsc(13L,
+                                    tdCat.getId(), 0, ClientConstant.pageSize));
                 }
             }
         }

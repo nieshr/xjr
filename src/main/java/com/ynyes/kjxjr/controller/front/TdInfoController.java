@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.neo4j.cypher.internal.compiler.v2_1.perty.printToString;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -233,6 +234,24 @@ public class TdInfoController {
         map.addAttribute("latest_info_page", tdArticleService.findByMenuIdAndIsEnableOrderByIdDesc(mid, 0, ClientConstant.pageSize));
         
         return "/client/news_detail";
+    }
+	
+	
+	@RequestMapping("/list/content/expert/{id}")
+    public String contentExpert(@PathVariable Long id, ModelMap map, HttpServletRequest req){
+        
+	    tdCommonService.setHeader(map, req);
+     
+        map.addAttribute("menu_name", "专家资源");      
+//	    map.addAttribute("menu_id", menu.getId()); //菜单id zhangji
+	    map.addAttribute("menu_sub_name", "subName");//英文名称 zhangji
+
+        //找出栏目名称 zhangji
+        map.addAttribute("info_name","创业导师" );
+        
+        map.addAttribute("info", tdDiySiteService.findOne(id));
+        
+        return "/client/news_resource_detail";
     }
 	
 	/**
@@ -727,6 +746,57 @@ public class TdInfoController {
         return "/client/resource_detail";
     }
 	
+	//专家列表
+	@RequestMapping("/resource/expert")
+    public String expertList(
+    			    		String __EVENTTARGET,
+    			            String __EVENTARGUMENT,
+                            Integer page, 
+                            ModelMap map,
+                            HttpServletRequest req){	
+		
+	    tdCommonService.setHeader(map, req);   
+	    
+	    //翻页 zhangji
+	    if (null != __EVENTTARGET)
+        {
+            if (__EVENTTARGET.equalsIgnoreCase("btnPage"))
+            {
+                if (null != __EVENTARGUMENT)
+                {
+                    page = Integer.parseInt(__EVENTARGUMENT);
+                } 
+            }
+            
+        }
+	    /*翻页 end*/
+	    
+        if (null == page)
+        {
+            page = 0;
+        }
+       
+	    
+	    map.addAttribute("menu_name", "专家资源");
+	   
+	    map.addAttribute("menu_sub_name", "sub_name" );//英文名称 zhangji
+
+		map.addAttribute("info_page", tdDiySiteService.findByRoleIdOrderBySortIdAsc(3L, page, ClientConstant.pageSize));
+
+        	
+		Long active = 1L;
+		map.addAttribute("active",active);
+//	    map.addAttribute("info_cat",tdArticleCategoryService.findOne(catId) );   //找出栏目名称 zhangji
+//	    map.addAttribute("catId", catId);
+//	    map.addAttribute("mid", mid);
+//	    map.addAttribute("info_category_list", catList); //栏目的列表 zhangji
+//	    map.addAttribute("latest_info_page", tdArticleService.findByMenuIdAndIsEnableOrderByIdDesc(mid, page, ClientConstant.coursePageSize));
+	    
+        return "/client/resource_detail";
+    }
+	
+	
+	
 	// 合作机构
 	@RequestMapping(value="/organization")
 	public String organization(HttpServletRequest req,ModelMap map){
@@ -842,7 +912,98 @@ public class TdInfoController {
 	    map.addAttribute("intro1",intro1);
 	    map.addAttribute("intro2",intro2);
 	    
+	       List<TdArticleCategory> systemList = tdArticleCategoryService
+	                .findByMenuId(13L);
+
+	        if (null != systemList && systemList.size() > 0) {
+	            for (TdArticleCategory tdCat : systemList)
+	            {
+	                if (null != tdCat.getTitle() && tdCat.getTitle().equals("科技小巨人培育专项"))
+	                {
+	                    map.addAttribute("breed_page", tdArticleService
+	                            .findByMenuIdAndCategoryIdAndIsEnableOrderBySortIdAsc(13L,
+	                                    tdCat.getId(), 0, ClientConstant.pageSize));
+	                    break;
+	                }
+
+	            }
+	        }
+	    
         return "/client/news_activity_introduction";
+    }	
+	
+	//合作机构
+	@RequestMapping("/host")
+    public String host(
+                            ModelMap map,
+                            HttpServletRequest req){	
+		
+	    tdCommonService.setHeader(map, req);   
+	    
+        List<TdArticleCategory> articleList = tdArticleCategoryService
+                .findByMenuId(8L);
+    	List<TdArticle> intro1 = null;
+    	List<TdArticle> intro2 = null;
+    	List<TdArticle> intro3 = null;
+    	List<TdArticle> intro4 = null;
+    	List<TdArticle> intro5 = null;
+    	List<TdArticle> intro6 = null;
+	    for(TdArticleCategory item : articleList)
+	    {
+	    	if (item.getTitle().equalsIgnoreCase("指导单位"))
+	    	{
+	    		intro1 = tdArticleService.findByCategoryId(item.getId());
+	    		map.addAttribute("intro1" , intro1);
+	    	}
+	    	
+	    	if (item.getTitle().equalsIgnoreCase("主办单位"))
+	    	{
+	    		intro2 = tdArticleService.findByCategoryId(item.getId());
+	    		map.addAttribute("intro2" , intro2);
+	    	}
+	    	if (item.getTitle().equalsIgnoreCase("承办单位"))
+	    	{
+	    		intro3 = tdArticleService.findByCategoryId(item.getId());
+	    		map.addAttribute("intro3" , intro3);
+	    	}
+	    	if (item.getTitle().equalsIgnoreCase("支持单位"))
+	    	{
+	    		intro4 = tdArticleService.findByCategoryId(item.getId());
+	    		map.addAttribute("intro4" , intro4);
+	    	}
+	    	
+	    	if (item.getTitle().equalsIgnoreCase("金融机构"))
+	    	{
+	    		intro5 = tdArticleService.findByCategoryId(item.getId());
+	    		map.addAttribute("intro5" , intro5);
+	    	}
+	    	if (item.getTitle().equalsIgnoreCase("支持媒体"))
+	    	{
+	    		intro6 = tdArticleService.findByCategoryId(item.getId());
+	    		map.addAttribute("intro6" , intro6);
+	    	}
+	    	
+	    }
+
+	    
+	    map.addAttribute("menu_name1","指导单位");
+	    map.addAttribute("menu_name2","主办单位");
+	    map.addAttribute("menu_name3","承办单位");
+	    map.addAttribute("menu_name4","支持单位");
+	    map.addAttribute("menu_name5","金融机构");
+	    map.addAttribute("menu_name6","支持媒体");
+	    
+	    List<List<TdArticle>> hostList = new ArrayList<>();
+	    hostList.add(intro1);
+	    hostList.add(intro2);
+	    hostList.add(intro3);
+	    hostList.add(intro4);
+	    hostList.add(intro5);
+	    hostList.add(intro6);
+	    map.addAttribute("host_list" , hostList);
+
+	    
+        return "/client/news_host";
     }	
 	
 }

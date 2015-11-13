@@ -32,7 +32,6 @@
 <!--新闻题目-->
 <div class="news_detail" style="min-height:500px;">
   <div class="news_name">${info.title!''}</div>
-  <div class="news_writer"><span>${info.region!''}</span> <span>${info.date?string("yyyy-MM-dd HH:mm")}</span> </div>
   <div class="news_words">
     <div class="words1">${info.theme!''}</div>
     <div class="words1">${info.introduction!''}</div>

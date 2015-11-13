@@ -30,6 +30,7 @@
 /*文章*/
 .news_detail {
 	width: 1000px;
+	min-height: 600px;
 }
 .news_detail .news_name {
 	margin-top: 40px;

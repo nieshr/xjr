@@ -33,10 +33,10 @@
     <div class="swiper-pagination"></div>
     <!--右侧浮动导航开始-->
     <div class="floatbox">
-      <a id="BizQQWPA" href="http://wpa.qq.com/msgrd?v=3&uin=1981148933&site=qq&menu=yes" target="_blank" title="申报入口">
+      <a  href="/user" target="_blank" title="申报入口">
         <img src="/client/l_images/float_ico02.png" width="42" height="42" alt="申报入口">
       </a>
-      <a href="http://weibo.com/ynsite" title="搜索" target="_blank" rel="nofollow">
+      <a href="#" title="搜索" target="_blank" rel="nofollow">
         <img src="/client/l_images/float_ico01.png" width="42" height="42" alt="搜索">
       </a>
       <a id="BizQQWPA" href="http://wpa.qq.com/msgrd?v=3&uin=1981148933&site=qq&menu=yes" target="_blank" title="在线客服">
@@ -51,7 +51,7 @@
         <img src="/client/l_images/float_ico04.png" width="42" height="42" alt="客服电话">
         <span class="phone_num">023-8888 8888</span>
       </a>
-      <a href="#go_top" title="到顶部">
+      <a href="#page1" title="到顶部">
         <img src="/client/l_images/float_ico05.png" width="42" height="42" alt="到顶部">
       </a>
     </div>
@@ -60,14 +60,14 @@
             <!-- 导航 -->
               <div class="wrapper">
                 <ul class="wrapper-nav" id="wrapper-nav">
-                  <a href="/"><li class="active">首页</li></a>
-                  <a href="#"><li>专项行动</li></a>
-                  <a href="#"><li>培育活动</li></a>
-                  <a href="#"><li>新闻动态</li></a>
-                  <a href="#"><li>企业项目</li></a>
-                  <a href="#"><li>专家资源</li></a>
-                  <a href="#"><li>合作机构</li></a>
-                  <a href="#"><li>联系方式</li></a>
+			<a href="/"><li class="active">首页</li></a>
+			<a href="/info/aIn"><li >专项行动</li></a>
+			<a href="/info/activity/list"><li >培育活动</li></a>
+			<a href="/info/index"><li >新闻动态</li></a>
+			<a href="/info/projectshow"><li >企业项目</li></a>
+			<a href="/info/resource"><li >专家资源</li></a>
+			<a href="/info/host"><li>合作机构</li></a>
+			<a href="/info/contact"><li>联系方式</li></a>
                 </ul>
                 <#if username??>
                     <div class="logoin"><a href="/user" style="color:#ff4040;">${username}</a><span>|</span><a href="/logout">退出</a></div>
@@ -90,7 +90,7 @@
   <#else>  
     <a href="/enterprise/check">在线征集</a>
   </#if> 
-    <img src="/client/l_images/QR_code.png" alt="二维码" />
+    <img src="<#if site??>${site.wxQrCode!''}</#if>" alt="二维码" />
   </div>
   <!-- banner END -->
 
@@ -114,7 +114,7 @@
                                 <#if ("organization_level1_"+item.id)?eval??>
                                     <#list ("organization_level1_"+item.id)?eval as article>
                                         <#if article_index < 1>
-                                            <p>${article.title!''}</p>
+                                            <p><a title="查看更多信息" href="<#if article.linkUrl??&&article.linkUrl?length gt 0>${article.linkUrl!''}<#else>/info/list/content/${activityAbout.id?c!''}?mid=${activityAbout.menuId!''}</#if>">${article.title!''}</a></p>
                                         </#if>
                                     </#list>
                                 </#if>
@@ -124,7 +124,7 @@
                             <#if ("organization_level1_"+item.id)?eval??>
                                   <#list ("organization_level1_"+item.id)?eval as article>
                                         <#if article_index < 5>
-                                            <p>${article.title!''}</p>
+                                            <p><a title="查看更多信息" href="<#if article.linkUrl??&&article.linkUrl?length gt 0>${article.linkUrl!''}<#else>/info/list/content/${article.id?c!''}?mid=${article.menuId!''}</#if>">${article.title!''}</a></p>
                                         </#if>
                                   </#list>
                             </#if>                              
@@ -135,7 +135,7 @@
                                 <#if ("organization_level1_"+item.id)?eval??>
                                     <#list ("organization_level1_"+item.id)?eval as article>
                                         <#if article_index < 6>
-                                            <p>${article.title!''}</p>
+                                            <p><a title="查看更多信息" href="<#if article.linkUrl??&&article.linkUrl?length gt 0>${article.linkUrl!''}<#else>/info/list/content/${article.id?c!''}?mid=${article.menuId!''}</#if>">${article.title!''}</a></p>
                                         </#if>
                                     </#list>
                                 </#if>                                
@@ -145,7 +145,7 @@
                                 <#if ("organization_level1_"+item.id)?eval??>
                                     <#list ("organization_level1_"+item.id)?eval as article>
                                         <#if article_index gt 5>
-                                            <p>${article.title!''}</p>
+                                            <p><a title="查看更多信息" href="<#if article.linkUrl??&&article.linkUrl?length gt 0>${article.linkUrl!''}<#else>/info/list/content/${article.id?c!''}?mid=${article.menuId!''}</#if>">${article.title!''}</a></p>
                                         </#if>
                                     </#list>
                                 </#if>                                
@@ -156,7 +156,7 @@
                                 <#if ("organization_level1_"+item.id)?eval??>
                                     <#list ("organization_level1_"+item.id)?eval as article>
                                         <#if article_index < 6>
-                                            <p>${article.title!''}</p>
+                                            <p><a title="查看更多信息" href="<#if article.linkUrl??&&article.linkUrl?length gt 0>${article.linkUrl!''}<#else>/info/list/content/${article.id?c!''}?mid=${article.menuId!''}</#if>">${article.title!''}</a></p>
                                         </#if>
                                     </#list>
                                 </#if>
@@ -169,15 +169,12 @@
             </div>
             <div class="section2">
                 <div class="div1">
-                    <p class="p1">行动概况</p>
-                    <p class="p2">Introduction</p>
-                    <p class="p3">“重庆市科技小巨人企业培育专项行动面向科技型创业团队、处于初创期的科技型企业，
-连续3年开展创投每周行、创业训练营、年度创业SHOW等系列活动，
-并与入营培训、落地培育相结合，通过线上推广、
-项目辅导、项目路演、线下培育等多种形式，发掘、评选优秀创新创业项目和企业，
-力争3年内发掘遴选3000个优秀创新创业项目，
-培育1000家科技小巨人企业。</p>
-                    <p class="p4"><a href="#">查看更多</a></p>
+                <#if activityAbout??>
+                    <p class="p1">${activityAbout.title!''}</p>
+                    <p class="p2">${activityAbout.callIndex!''}</p>
+                    <p class="p3">${activityAbout.brief!''}</p>
+                    <p class="p4"><a title="查看更多信息" href="<#if activityAbout.linkUrl??&&activityAbout.linkUrl?length gt 0>${activityAbout.linkUrl!''}<#else>/info/list/content/${activityAbout.id?c!''}?mid=${activityAbout.menuId!''}</#if>">查看更多</a></p>
+               	</#if>
                 </div>
             </div>
         </div>
@@ -188,21 +185,21 @@
                     <!-- <div>speed</div> -->
                     <div class="parnet">
                       <div class="child">
-                     <#if activityType_list??>
-                        <#list activityType_list as item>
+                     <#if breed_page??>
+                        <#list breed_page.content as item>
                         <div class="child1">
                           <div class="child1_1">
                               <p class="p1">科技小巨人培育专项</p>
                               <p class="p2">${item.title!''}</p>
-                              <p class="p3"><#if item.content??&&item.content?length gt 40>
-                                                ${item.content[0..39]}...
+                              <p class="p3"><#if item.brief??&&item.brief?length gt 40>
+                                                ${item.brief[0..39]}...
                                             <#else>
-                                                ${item.content!''}
+                                                ${item.brief!''}
                                             </#if>
                               </p>
                               <p class="p4">
-                                  <a href="/info/aIn" class="a1">查看详情&rarr;</a>
-                                  <a href="<#if item.linkUrl??>${item.linkUrl}<#else>/info/aIn/${item.id?c!''}</#if>" class="a2">了解更多信息</a>
+                                  <a href="<#if item.linkUrl??>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>" class="a1">查看详情&rarr;</a>
+                                  <#--<a href="<#if item.linkUrl??>${item.linkUrl}<#else>/info/aIn/${item.id?c!''}</#if>" class="a2">了解更多信息</a>-->
                               </p>  
                           </div>
                           <img src="${item.imgUrl!''}" width="420" height="280" />
@@ -225,41 +222,23 @@
                         <p class="p1_1">五大支持</p>
                         <p class="p2_1">Support</p>
                     </div>
-                    <div class="div2">
-                        <p class="p1">组建创业种子投资引导基金<br />对创投每周行评选出的<br />优秀项目及企业<br />给予至少10万元的种子基金支持</p>
-                        <p class="p2">
-                            <i class="i1"></i>
-                            <b>基金支持</b>
-                        </p>
-                    </div>
-                    <div class="div3">
-                        <p class="p1">组建”重庆市科技小巨人创业导师辅导团”<br />为优秀项目和企业提供创业训练与服务。</p>
-                        <p class="p2">
-                            <i class="i2"></i>
-                            <b>交流辅导</b>
-                        </p>
-                    </div>
-                    <div class="div4">
-                        <p class="p2">
-                            <i class="i3"></i>
-                            <b>媒体推广</b>
-                        </p>
-                        <p class="p1">在市级主流媒体上对特色项目<br />优秀创业人物及团队进行推广报道</p>
-                    </div>
-                    <div class="div5">
-                        <p class="p2">
-                            <i class="i4"></i>
-                            <b>落地培育</b>
-                        </p>
-                        <p class="p1">评选出的优秀项目<br />入驻所在推荐单位区域内的<br />创客空间、孵化器、加速器进行落地培育</p>
-                    </div>
-                    <div class="div6">
-                        <p class="p2">
-                            <i class="i5"></i>
-                            <b>推荐创赛</b>
-                        </p>
-                        <p class="p1">推荐优秀项目进入<br />中国创新创业大赛重庆赛区决赛</p>
-                    </div>
+                    <#if fiveSupport_page??>
+                    	<#list fiveSupport_page.content as item>
+                    		<#if item_index lt 5>
+		                    <div class="div${item_index+2}">
+		                        <p class="p1">${item.brief!''}</p>
+		                        <p class="p2">
+		                            <i class="i${item_index+1}"></i>
+		                            <b>
+			                            <a style="color:#01468f;" href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>" title="查看详细介绍">
+			                           	    ${item.title!''}
+			                            </a>
+		                            </b>
+		                        </p>
+		                    </div>
+		                    </#if>
+		                </#list>    
+		            </#if>    
                 </div>
             </div>
 
@@ -310,7 +289,7 @@ function showVideo${item_index}(){
                     <#if news_list??>
                         <#list news_list as item>
                             <#if item_index < 4>
-                                <li class="li1"><a href="/info/list/content/${item.id?c}?mid=${item.menuId?c}">
+                                <li class="li1"><a href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>">
                                    <img src="${item.imgUrl!''}" width="173" height="120" alt="新闻图片" />
                                     <div class="newsmess1">
                                         <p class="p1"><#if item.title?length lt 18>
