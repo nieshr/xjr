@@ -114,7 +114,7 @@
                                 <#if ("organization_level1_"+item.id)?eval??>
                                     <#list ("organization_level1_"+item.id)?eval as article>
                                         <#if article_index < 1>
-                                            <p><a title="查看更多信息" href="<#if article.linkUrl??&&article.linkUrl?length gt 0>${article.linkUrl!''}<#else>/info/list/content/${activityAbout.id?c!''}?mid=${activityAbout.menuId!''}</#if>">${article.title!''}</a></p>
+                                            <p><a title="查看更多信息" href="<#if article.linkUrl??&&article.linkUrl?length gt 0>${article.linkUrl!''}<#else>/info/list/content/${article.id?c!''}?mid=${article.menuId!''}</#if>">${article.title!''}</a></p>
                                         </#if>
                                     </#list>
                                 </#if>
@@ -249,19 +249,12 @@
                         <p class="p2">News dynamics</p>
                     </div>
                     <div class="div2">
-                        <video width="480" height="400" src="/images/20151014153104349.mp4" controls="controls" id="video" autoplay="autoplay">
-                                                
+                        <video width="480" height="400" src="<#if video??><#list video.content as item><#if item_index=0>${item.imgUrl!''}</#if></#list></#if>" controls="controls" id="video" autoplay="autoplay">
+                                 您的浏览器不支持该视频播放               
                         </video>
                         <ul>
                         <#if news_list??>                   
                             <#list news_list as item>
-<script>
-
-function showVideo${item_index}(){
-    $("#video").text("<embed src='/images/20151014153310798.mp4' type='video/x-ms-asf-plugin' width='550' height='400' autostart='false' loop='true' />");
-}     
-
-</script> 
                                 <#if item_index < 3>
                                     <li class="li1"><a href="javascript:showVideo${item_index}();">
                                         <img src="${item.imgUrl!''}" width="173" height="120" alt="新闻图片" />
@@ -273,8 +266,10 @@ function showVideo${item_index}(){
                                             </#if></p>
                                             <p class="p2">${item.brief!''}</p>
                                             <p class="p3">
+                                            <#--
                                                 <span class="span2"><i class="i2"></i>${item.viewCount!'0'}</span>
                                                 <span class="span1"><i class="i1"></i>03:22</span>
+                                                -->
                                             </p>
                                         </div>
                                     </a></li>
@@ -288,7 +283,7 @@ function showVideo${item_index}(){
                     <ol>
                     <#if news_list??>
                         <#list news_list as item>
-                            <#if item_index < 4>
+                            <#if item_index gt 2&&item_index lt 6>
                                 <li class="li1"><a href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>">
                                    <img src="${item.imgUrl!''}" width="173" height="120" alt="新闻图片" />
                                     <div class="newsmess1">

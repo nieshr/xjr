@@ -132,6 +132,15 @@ public class TdIndexController {
                             .findByMenuIdAndCategoryIdAndIsEnableOrderBySortIdAsc(13L,
                                     tdCat.getId(), 0, ClientConstant.pageSize));
                 }
+                if (null != tdCat.getTitle() && tdCat.getTitle().equals("视频短片"))
+                {
+                	Page<TdArticle> video = tdArticleService.findByMenuIdAndCategoryIdAndIsEnableOrderBySortIdAsc(13L,
+                                    tdCat.getId(), 0, ClientConstant.pageSize);
+          
+                        map.addAttribute("video", video);
+             
+   
+                }
             }
         }
         
@@ -173,6 +182,8 @@ public class TdIndexController {
                 }
             }
         }
+        
+        
         
         // 首页大图轮播广告
         TdAdType adType = tdAdTypeService.findByTitle("首页轮播大图广告");
