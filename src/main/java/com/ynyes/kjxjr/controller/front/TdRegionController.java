@@ -117,9 +117,9 @@ public class TdRegionController {
 
     @RequestMapping(value = "/enterprise/list", method = RequestMethod.GET)
     public String EnterpriseList(HttpServletRequest req, ModelMap map,Integer page) {
-        String username = (String) req.getSession().getAttribute("regionUsername");
+        String username = (String) req.getSession().getAttribute("regionUsername");String manager =  (String) req.getSession().getAttribute("manager");
 
-        if (null == username) {
+        if (null == username && null == manager) {
             return "redirect:/login";
         }
         
@@ -144,9 +144,9 @@ public class TdRegionController {
     //区县审核项目，查看详情
     @RequestMapping(value = "/enterprise/check/{id}", method = RequestMethod.GET)
     public String userEnterpriseCheck(HttpServletRequest req, ModelMap map,@PathVariable Long id) {
-        String username = (String) req.getSession().getAttribute("regionUsername");
+        String username = (String) req.getSession().getAttribute("regionUsername");String manager =  (String) req.getSession().getAttribute("manager");
 
-        if (null == username) {
+        if (null == username && null == manager) {
             return "redirect:/login";
         }
         
@@ -197,9 +197,9 @@ public class TdRegionController {
     //通过审核
     @RequestMapping(value = "/enterprise/pass/{id}", method = RequestMethod.GET)
     public String userEnterprisePass(HttpServletRequest req,HttpServletResponse res , ModelMap map,@PathVariable Long id) {
-        String username = (String) req.getSession().getAttribute("regionUsername");
+        String username = (String) req.getSession().getAttribute("regionUsername");String manager =  (String) req.getSession().getAttribute("manager");
 
-        if (null == username) {
+        if (null == username && null == manager) {
             return "redirect:/login";
         }
         
@@ -266,9 +266,9 @@ public class TdRegionController {
     //未通过审核
     @RequestMapping(value = "/enterprise/cancel/{id}", method = RequestMethod.GET)
     public String userEnterpriseCancel(HttpServletRequest req, HttpServletResponse res , ModelMap map,@PathVariable Long id) {
-        String username = (String) req.getSession().getAttribute("regionUsername");
+        String username = (String) req.getSession().getAttribute("regionUsername");String manager =  (String) req.getSession().getAttribute("manager");
 
-        if (null == username) {
+        if (null == username && null == manager) {
             return "redirect:/login";
         }
         
@@ -313,9 +313,9 @@ public class TdRegionController {
     //重新审核
     @RequestMapping(value = "/enterprise/recall/{id}", method = RequestMethod.GET)
     public String userEnterpriseRecall(HttpServletRequest req, HttpServletResponse res ,ModelMap map,@PathVariable Long id) {
-        String username = (String) req.getSession().getAttribute("regionUsername");
+        String username = (String) req.getSession().getAttribute("regionUsername");String manager =  (String) req.getSession().getAttribute("manager");
 
-        if (null == username) {
+        if (null == username && null == manager) {
             return "redirect:/login";
         }
         
@@ -355,9 +355,9 @@ public class TdRegionController {
   
     @RequestMapping(value = "/activity/list", method = RequestMethod.GET)
     public String ActivitytList(HttpServletRequest req, ModelMap map,Integer page , Long sms) {
-        String username = (String) req.getSession().getAttribute("regionUsername");
+        String username = (String) req.getSession().getAttribute("regionUsername");String manager =  (String) req.getSession().getAttribute("manager");
 
-        if (null == username) {
+        if (null == username && null == manager) {
             return "redirect:/login";
         }
         
@@ -424,9 +424,9 @@ public class TdRegionController {
     
     @RequestMapping(value = "/activity/finish", method = RequestMethod.GET)
     public String Activitytfinish(HttpServletRequest req,HttpServletResponse res, ModelMap map,Integer page , Long id) {
-        String username = (String) req.getSession().getAttribute("regionUsername");
+        String username = (String) req.getSession().getAttribute("regionUsername");String manager =  (String) req.getSession().getAttribute("manager");
 
-        if (null == username) {
+        if (null == username && null == manager) {
             return "redirect:/login";
         }
         
@@ -479,9 +479,9 @@ public class TdRegionController {
      */
     @RequestMapping(value = "/message", method = RequestMethod.GET)
     public String userEnterpriseMessage(HttpServletRequest req, ModelMap map , Integer page) {
-        String username = (String) req.getSession().getAttribute("regionUsername");
+        String username = (String) req.getSession().getAttribute("regionUsername");String manager =  (String) req.getSession().getAttribute("manager");
 
-        if (null == username) {
+        if (null == username && null == manager) {
             return "redirect:/login";
         }
 
@@ -514,9 +514,9 @@ public class TdRegionController {
      */
     @RequestMapping(value = "/message/detail", method = RequestMethod.GET)
     public String MessageDetail(HttpServletRequest req, ModelMap map , Long enterpriseId , Long id) {
-        String username = (String) req.getSession().getAttribute("regionUsername");
+        String username = (String) req.getSession().getAttribute("regionUsername");String manager =  (String) req.getSession().getAttribute("manager");
 
-        if (null == username) {
+        if (null == username && null == manager) {
             return "redirect:/login";
         }
 
@@ -577,9 +577,9 @@ public class TdRegionController {
      */
     @RequestMapping(value = "/message/reply")
     public String MessageReply(HttpServletRequest req, ModelMap map , Long enterpriseId , TdUserMessage message) {
-        String username = (String) req.getSession().getAttribute("regionUsername");
+        String username = (String) req.getSession().getAttribute("regionUsername");String manager =  (String) req.getSession().getAttribute("manager");
 
-        if (null == username) {
+        if (null == username && null == manager) {
             return "redirect:/login";
         }
 
@@ -626,9 +626,9 @@ public class TdRegionController {
      */
     @RequestMapping(value = "/activity/detail", method = RequestMethod.GET)
     public String ActivitytDetail(HttpServletRequest req, ModelMap map,Long id) {
-        String username = (String) req.getSession().getAttribute("regionUsername");
+        String username = (String) req.getSession().getAttribute("regionUsername");String manager =  (String) req.getSession().getAttribute("manager");
 
-        if (null == username) {
+        if (null == username && null == manager) {
             return "redirect:/login";
         }
         
@@ -663,9 +663,9 @@ public String  regionSelectEnterprise(HttpServletRequest req,
 		Integer page,
 		Long id,
 		String keywords) {
-    String username = (String) req.getSession().getAttribute("regionUsername");
+    String username = (String) req.getSession().getAttribute("regionUsername");String manager =  (String) req.getSession().getAttribute("manager");
 
-	    if (null == username) {
+	    if (null == username && null == manager) {
 	        return "redirect:/login";
 	    }
 	    
@@ -708,9 +708,11 @@ public String  recommendEnterprise(HttpServletRequest req,
 		Long numwarn,
 		Long isDone,
 		String keywords) {
-    String username = (String) req.getSession().getAttribute("regionUsername");
+    String username = (String) req.getSession().getAttribute("regionUsername");String manager =  (String) req.getSession().getAttribute("manager");
+   
+    
     TdUser user = tdUserService.findByUsername(username);
-	    if (null == username) {
+	    if (null == username &&null ==  manager) {
 	        return "redirect:/login";
 	    }
 	    
@@ -757,9 +759,10 @@ public  Map<String, Object> regionAddEnterprise(HttpServletRequest req,Long id,L
     Map<String, Object> res = new HashMap<String, Object>();
     res.put("code", 1);
 	
-    String username = (String) req.getSession().getAttribute("regionUsername");
-
-    if (null == username) {
+    String username = (String) req.getSession().getAttribute("regionUsername");String manager =  (String) req.getSession().getAttribute("manager");
+    
+    
+    if (null == username && null == manager) {
        res.put("msg", "请先登陆");
        return res;
     }
@@ -900,9 +903,9 @@ public String  selectEnterprise(HttpServletRequest req,
 		String area,
 		String type,
 		Long formType) {
-    String username = (String) req.getSession().getAttribute("regionUsername");
+    String username = (String) req.getSession().getAttribute("regionUsername");String manager =  (String) req.getSession().getAttribute("manager");
     TdUser user = tdUserService.findByUsername(username);
-    if (null == username) {
+    if (null == username && null == manager) {
         return "redirect:/login";
     }
     
@@ -1198,9 +1201,9 @@ public Map<String, Object>  candidateEnterprise(HttpServletRequest req,Long id,L
     Map<String, Object> res = new HashMap<String, Object>();
     res.put("code", 1);
 	
-    String username = (String) req.getSession().getAttribute("regionUsername");
+    String username = (String) req.getSession().getAttribute("regionUsername");String manager =  (String) req.getSession().getAttribute("manager");
 
-    if (null == username) {
+    if (null == username && null == manager) {
     	res.put("msg", "请先登录！");
         return res;
     }
@@ -1282,9 +1285,9 @@ public Map<String, Object>  candidateEnterprise(HttpServletRequest req,Long id,L
 @RequestMapping(value = "/candidateRemoveEnterprise")
 public String  removeEnterprise(HttpServletRequest req,Long id,Long activityId,
 		ModelMap map) {
-    String username = (String) req.getSession().getAttribute("regionUsername");
+    String username = (String) req.getSession().getAttribute("regionUsername");String manager =  (String) req.getSession().getAttribute("manager");
 
-    if (null == username) {
+    if (null == username && null == manager) {
         return "redirect:/login";
     }
   
@@ -1310,9 +1313,9 @@ public String  removeEnterprise(HttpServletRequest req,Long id,Long activityId,
 @RequestMapping(value = "/removeEnterprise")
 public String  regionRemoveEnterprise(HttpServletRequest req,Long id,Long activityId,Long statusId,
 		ModelMap map) {
-    String username = (String) req.getSession().getAttribute("regionUsername");
-
-    if (null == username) {
+    String username = (String) req.getSession().getAttribute("regionUsername");String manager =  (String) req.getSession().getAttribute("manager");
+   
+    if (null == username && null == manager) {
         return "redirect:/login";
     }
   
@@ -1361,9 +1364,10 @@ public String  regionRemoveEnterprise(HttpServletRequest req,Long id,Long activi
 //完成项目选择
 @RequestMapping(value = "/enterprise/finish", method = RequestMethod.GET)
 	public String enterpriseFinish(HttpServletRequest req, ModelMap map,Long id,Long statusId) {
-			    String username = (String) req.getSession().getAttribute("regionUsername");
+			    String username = (String) req.getSession().getAttribute("regionUsername");String manager =  (String) req.getSession().getAttribute("manager");
+			  
 			
-			    if (null == username) {
+			    if (null == username && null == manager) {
 			        return "redirect:/login";
 			    }
 			
@@ -1583,8 +1587,10 @@ public String exportRecommend(
                             String exportUrl,
                             HttpServletResponse resp,
                             HttpServletRequest req){
-    String username = (String) req.getSession().getAttribute("regionUsername");
-    if (null == username) {
+    String username = (String) req.getSession().getAttribute("regionUsername");String manager =  (String) req.getSession().getAttribute("manager");
+   
+    
+    if (null == username && null == manager) {
         return "redirect:/login";
     }
 

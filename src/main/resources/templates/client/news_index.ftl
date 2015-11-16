@@ -106,7 +106,7 @@
            <#list notice_page.content as item>
                 <#if item_index < 1>
                     <a href="/info/list/content/${item.id?c}?mid=${item.menuId?c}">
-                    <img class="news_photo_1" src="${item.imgUrl!''}" alt="新闻图片" />
+                    <img class="news_photo_1" src="${item.imgUrl!''}" alt="新闻图片" width=300 height=150/>
                     <span class="tips"><#if item.title?length lt 20>
                                 ${item.title!''}
                             <#else>

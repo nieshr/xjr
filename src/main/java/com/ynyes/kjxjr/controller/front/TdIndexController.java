@@ -120,7 +120,7 @@ public class TdIndexController {
                     map.addAttribute("activityAbout", activityAbout);
                     
                 }
-                if (null != tdCat.getTitle() && tdCat.getTitle().equals("科技小巨人培育专项"))
+                if (null != tdCat.getTitle() && tdCat.getTitle().equals("专项轮播"))
                 {
                     map.addAttribute("breed_page", tdArticleService
                             .findByMenuIdAndCategoryIdAndIsEnableOrderBySortIdAsc(13L,

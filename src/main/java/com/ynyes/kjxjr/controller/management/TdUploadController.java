@@ -74,9 +74,19 @@ public class TdUploadController {
 
             Date dt = new Date(System.currentTimeMillis());
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-            String fileName = sdf.format(dt) + ext;
+            String fileName;
+            if (ext.equalsIgnoreCase(".mp4"))
+            {
+            	 fileName = "kjxjrVideo" + ext;
+            }
+            else
+            {
+            	 fileName = sdf.format(dt) + ext;
+            }
+            
 
             String uri = ImageRoot + "/" + fileName;
+
 
             File file = new File(uri);
 

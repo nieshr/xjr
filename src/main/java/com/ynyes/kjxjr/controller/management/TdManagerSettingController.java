@@ -497,6 +497,19 @@ public class TdManagerSettingController {
         return "redirect:/Verwalter/setting/enterpriseType/list";
     }
     
+    @RequestMapping(value="/activity/list")
+    public String activityList(
+                        ModelMap map,
+                        HttpServletRequest req) {
+        String username = (String) req.getSession().getAttribute("manager");
+        if (null == username)
+        {
+            return "redirect:/Verwalter/login";
+        }
+        
+        return "redirect:/activity/list";
+    }
+    
     @ModelAttribute
     public void getModel(@RequestParam(value = "id", required = false) Long id,
                             @RequestParam(value = "serviceItemId", required = false) Long serviceItemId,

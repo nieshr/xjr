@@ -6,8 +6,8 @@ $(function () {
         water: false, //是否加水印
         thumbnail: false, //是否生成缩略图
         sendurl: null, //发送地址
-        filetypes: "*.jpg;*.jpge;*.png;*.gif;*.doc;*.docx;*.xls;*.xlsx;*.ppt;*.pptx;*.pdf;*.rar;*.zip;*.txt;", //文件类型
-        filesize: "1024000", //文件大小
+        filetypes: "*.jpg;*.jpge;*.png;*.gif;*.doc;*.docx;*.xls;*.xlsx;*.ppt;*.pptx;*.pdf;*.rar;*.zip;*.txt;*.mp4;", //文件类型
+        filesize: "1024000000000000", //文件大小
         btntext: "浏览...", //上传按钮的文字
         btnwidth: 48, //上传按钮的宽度
         btnheight: 28, //上传按钮的高度

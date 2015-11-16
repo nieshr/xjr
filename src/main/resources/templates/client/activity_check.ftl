@@ -286,6 +286,9 @@ function sortDown(id , activityId)
                                     <input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#e67817;color:#fff; " type="button" onclick="javascript:resetCheck(${activity.id?c!''});"  value="重置评分" />
                                 </#if>
                             </#if>
+                            <#if type??&& type=="supervisor">
+                            	<input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#e67817;color:#fff; " type="button" onclick="location.href='/region/recommendEnterprise?id=${activity.id?c!''}'"  value="推荐项目" />
+                        	</#if>
                         <#else>
                                 <input id="selectEnterprise" style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background:white url(images/active_add_project.png) no-repeat 10px; padding-left: 13px;" type="button" value="添加项目" />
                         </#if>

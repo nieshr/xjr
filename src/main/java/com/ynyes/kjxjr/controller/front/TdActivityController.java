@@ -134,9 +134,9 @@ public class TdActivityController {
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String activityList(HttpServletRequest req, ModelMap map,Integer page) {
-        String username = (String) req.getSession().getAttribute("activityUsername");
+        String username = (String) req.getSession().getAttribute("activityUsername"); String manager = (String) req.getSession().getAttribute("manager");
 
-        if (null == username) {
+        if (null == username&&null==manager) {
             return "redirect:/login";
         }
 
@@ -207,9 +207,9 @@ public class TdActivityController {
     
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String activityCreate(HttpServletRequest req, ModelMap map , Long done) {
-        String username = (String) req.getSession().getAttribute("activityUsername");
+        String username = (String) req.getSession().getAttribute("activityUsername"); String manager = (String) req.getSession().getAttribute("manager");
 
-        if (null == username) {
+        if (null == username&&null==manager) {
             return "redirect:/login";
         }
 
@@ -241,9 +241,9 @@ public class TdActivityController {
     //区县审核项目，查看详情
     @RequestMapping(value = "/enterprise/check/{id}", method = RequestMethod.GET)
     public String userEnterpriseCheck(HttpServletRequest req, ModelMap map,@PathVariable Long id ) {
-//        String username = (String) req.getSession().getAttribute("activityUsername");
+//        String username = (String) req.getSession().getAttribute("activityUsername"); String manager = (String) req.getSession().getAttribute("manager");
 //
-//        if (null == username) {
+//        if (null == username&&null==manager) {
 //            return "redirect:/login";
 //        }
         
@@ -313,9 +313,9 @@ public class TdActivityController {
         Map<String, Object> res = new HashMap<String, Object>();
         res.put("code", 1);
     	
-        String username = (String) req.getSession().getAttribute("activityUsername");
+        String username = (String) req.getSession().getAttribute("activityUsername"); String manager = (String) req.getSession().getAttribute("manager");
 
-        if (null == username) {
+        if (null == username&&null==manager) {
            res.put("msg", "请先登陆");
            return res;
         }
@@ -345,9 +345,9 @@ public class TdActivityController {
         Map<String, Object> res = new HashMap<String, Object>();
         res.put("code", 1);
     	
-        String username = (String) req.getSession().getAttribute("activityUsername");
+        String username = (String) req.getSession().getAttribute("activityUsername"); String manager = (String) req.getSession().getAttribute("manager");
 
-        if (null == username) {
+        if (null == username&&null==manager) {
            res.put("msg", "请先登陆");
            return res;
         }
@@ -370,9 +370,9 @@ public class TdActivityController {
     //查看活动
     @RequestMapping(value = "/check", method = RequestMethod.GET)
     public String activityCheck(HttpServletRequest req, ModelMap map,Long id) {
-        String username = (String) req.getSession().getAttribute("activityUsername");
+        String username = (String) req.getSession().getAttribute("activityUsername"); String manager = (String) req.getSession().getAttribute("manager");
 
-        if (null == username) {
+        if (null == username&&null==manager) {
             return "redirect:/login";
         }
 
@@ -386,6 +386,11 @@ public class TdActivityController {
         	{
         		map.addAttribute("roadshow_list", roadshowList);
         	}
+        	if (null != manager)
+        	{
+        		map.addAttribute("type" , "supervisor");
+        	}
+        	
             map.addAttribute("mark", "activity");
 	        map.addAttribute("activity", activity);
 	        map.addAttribute("recommend_list" , tdActivityEnterpriseService.findByActivityIdAndStatusIdOrderBySortIdAsc(id, 2L));
@@ -412,9 +417,9 @@ public class TdActivityController {
         Map<String, Object> res = new HashMap<String, Object>();
         res.put("code", 1);
     	
-        String username = (String) req.getSession().getAttribute("activityUsername");
+        String username = (String) req.getSession().getAttribute("activityUsername"); String manager = (String) req.getSession().getAttribute("manager");
 
-        if (null == username) {
+        if (null == username&&null==manager) {
            res.put("msg", "请先登陆");
            return res;
         }
@@ -536,7 +541,8 @@ public class TdActivityController {
 	@RequestMapping(value = "/search/grade")
 	public String searchGrade(Long activityId,Long expertId,ModelMap map , HttpServletRequest req ){
 		 String username = (String) req.getSession().getAttribute("activityUsername");
-		 if (null == username)
+		 String manager = (String) req.getSession().getAttribute("manager");
+		 if (null == username&&null==manager)
 		 {
 			 return "redirect:/login";
 		 }
@@ -562,9 +568,9 @@ public class TdActivityController {
 			HttpServletRequest req) {
 		Map<String, Object> res = new HashMap<>();
 		res.put("status", -1);
-        String username = (String) req.getSession().getAttribute("activityUsername");
+        String username = (String) req.getSession().getAttribute("activityUsername"); String manager = (String) req.getSession().getAttribute("manager");
 
-        if (null == username) {
+        if (null == username&&null==manager) {
            res.put("msg", "请先登陆");
            return res;
         }
@@ -652,9 +658,9 @@ public class TdActivityController {
         Map<String, Object> res = new HashMap<String, Object>();
         res.put("code", 1);
     	
-        String username = (String) req.getSession().getAttribute("activityUsername");
+        String username = (String) req.getSession().getAttribute("activityUsername"); String manager = (String) req.getSession().getAttribute("manager");
 
-        if (null == username) {
+        if (null == username&&null==manager) {
            res.put("msg", "请先登陆");
            return res;
         }
@@ -676,9 +682,9 @@ public class TdActivityController {
     public Map<String, Object> activityReset(HttpServletRequest req, ModelMap map,Long activityId) {
         Map<String, Object> res = new HashMap<String, Object>();
         res.put("code", 1);
-        String username = (String) req.getSession().getAttribute("activityUsername");
+        String username = (String) req.getSession().getAttribute("activityUsername"); String manager = (String) req.getSession().getAttribute("manager");
         
-        if (null == username) {
+        if (null == username&&null==manager) {
             res.put("msg", "请先登陆");
             return res;
          }
@@ -741,9 +747,9 @@ public class TdActivityController {
         Map<String, Object> res = new HashMap<String, Object>();
         res.put("code", 1);
     	
-        String username = (String) req.getSession().getAttribute("activityUsername");
+        String username = (String) req.getSession().getAttribute("activityUsername"); String manager = (String) req.getSession().getAttribute("manager");
 
-        if (null == username) {
+        if (null == username&&null==manager) {
            res.put("msg", "请先登陆");
            return res;
         }
@@ -859,10 +865,10 @@ public class TdActivityController {
     //管理活动
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public String activityEdit(HttpServletRequest req, ModelMap map,Long id , Long done) {
-        String username = (String) req.getSession().getAttribute("activityUsername");
+        String username = (String) req.getSession().getAttribute("activityUsername"); String manager = (String) req.getSession().getAttribute("manager");
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
         
-        if (null == username) {
+        if (null == username&&null==manager) {
             return "redirect:/login";
         }
 
@@ -908,9 +914,9 @@ public class TdActivityController {
     //删除活动
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
     public String activityDelete(HttpServletRequest req, ModelMap map,Long id) {
-        String username = (String) req.getSession().getAttribute("activityUsername");
+        String username = (String) req.getSession().getAttribute("activityUsername"); String manager = (String) req.getSession().getAttribute("manager");
 
-        if (null == username) {
+        if (null == username&&null==manager) {
             return "redirect:/login";
         }
 
@@ -996,9 +1002,9 @@ public class TdActivityController {
     //完成项目选择
     @RequestMapping(value = "/enterprise/finish", method = RequestMethod.GET)
     public String enterpriseFinish(HttpServletRequest req, ModelMap map,Long id) {
-        String username = (String) req.getSession().getAttribute("activityUsername");
+        String username = (String) req.getSession().getAttribute("activityUsername"); String manager = (String) req.getSession().getAttribute("manager");
 
-        if (null == username) {
+        if (null == username&&null==manager) {
             return "redirect:/login";
         }
 
@@ -1054,9 +1060,9 @@ public class TdActivityController {
     	 Map<String, Object> res = new HashMap<String, Object>();
     	    res.put("code", 1);
     	
-        String username = (String) req.getSession().getAttribute("activityUsername");
+        String username = (String) req.getSession().getAttribute("activityUsername"); String manager = (String) req.getSession().getAttribute("manager");
 
-        if (null == username) {
+        if (null == username&&null==manager) {
         	res.put("msg", "请先登录！");
             return res;
         }
@@ -1104,9 +1110,9 @@ public class TdActivityController {
     		String area,
     		String type,
     		Long formType) {
-        String username = (String) req.getSession().getAttribute("activityUsername");
+        String username = (String) req.getSession().getAttribute("activityUsername"); String manager = (String) req.getSession().getAttribute("manager");
 
-        if (null == username) {
+        if (null == username&&null==manager) {
             return "redirect:/login";
         }
         
@@ -1390,9 +1396,9 @@ public class TdActivityController {
     @RequestMapping(value = "/addEnterprise")
     public String  addEnterprise(HttpServletRequest req,Long id,Long activityId,
     		ModelMap map) {
-        String username = (String) req.getSession().getAttribute("activityUsername");
+        String username = (String) req.getSession().getAttribute("activityUsername"); String manager = (String) req.getSession().getAttribute("manager");
 
-        if (null == username) {
+        if (null == username&&null==manager) {
             return "redirect:/login";
         }
       
@@ -1475,9 +1481,9 @@ public class TdActivityController {
     @RequestMapping(value = "/removeEnterprise")
     public String  removeEnterprise(HttpServletRequest req,Long id,Long activityId,
     		ModelMap map) {
-        String username = (String) req.getSession().getAttribute("activityUsername");
+        String username = (String) req.getSession().getAttribute("activityUsername"); String manager = (String) req.getSession().getAttribute("manager");
 
-        if (null == username) {
+        if (null == username&&null==manager) {
             return "redirect:/login";
         }
       
@@ -1512,9 +1518,9 @@ public class TdActivityController {
     		ModelMap map,
     		Integer page,
     		String keywords) {
-        String username = (String) req.getSession().getAttribute("activityUsername");
+        String username = (String) req.getSession().getAttribute("activityUsername"); String manager = (String) req.getSession().getAttribute("manager");
 
-        if (null == username) {
+        if (null == username&&null==manager) {
             return "redirect:/login";
         }
         
@@ -1550,9 +1556,9 @@ public class TdActivityController {
     		ModelMap map) {
     	Map <String , Object> res = new HashMap<String , Object>();
     	res.put("code",1);
-        String username = (String) req.getSession().getAttribute("activityUsername");
+        String username = (String) req.getSession().getAttribute("activityUsername"); String manager = (String) req.getSession().getAttribute("manager");
 
-        if (null == username) {
+        if (null == username&&null==manager) {
         	res.put("msg", "请先登录！");
         	return res;
         }
@@ -1636,9 +1642,9 @@ public class TdActivityController {
     	Map <String , Object> res = new HashMap<String , Object>();
     	 res.put("code", 1);
     	 
-        String username = (String) req.getSession().getAttribute("activityUsername");
+        String username = (String) req.getSession().getAttribute("activityUsername"); String manager = (String) req.getSession().getAttribute("manager");
 
-        if (null == username) {
+        if (null == username&&null==manager) {
          	res.put("msg", "请先登录！");
          	return res;
         }
@@ -1695,9 +1701,9 @@ public class TdActivityController {
         Map<String, Object> res = new HashMap<String, Object>();
         res.put("code", 1);
     	
-        String username = (String) req.getSession().getAttribute("activityUsername");
+        String username = (String) req.getSession().getAttribute("activityUsername"); String manager = (String) req.getSession().getAttribute("manager");
 
-        if (null == username) {
+        if (null == username&&null==manager) {
         	res.put("msg", "请先登录！");
             return res;
         }
@@ -1771,9 +1777,9 @@ public class TdActivityController {
     //区县审核项目，查看详情
     @RequestMapping(value = "/enterprise/detail/{id}", method = RequestMethod.GET)
     public String activityEnterpriseCheck(HttpServletRequest req, ModelMap map,@PathVariable Long id) {
-        String username = (String) req.getSession().getAttribute("activityUsername");
+        String username = (String) req.getSession().getAttribute("activityUsername"); String manager = (String) req.getSession().getAttribute("manager");
 
-        if (null == username) {
+        if (null == username&&null==manager) {
             return "redirect:/login";
         }
         
@@ -1841,9 +1847,9 @@ public class TdActivityController {
         Map<String, Object> res = new HashMap<String, Object>();
         res.put("code", 1);
     	
-        String username = (String) req.getSession().getAttribute("activityUsername");
+        String username = (String) req.getSession().getAttribute("activityUsername"); String manager = (String) req.getSession().getAttribute("manager");
 
-        if (null == username) {
+        if (null == username&&null==manager) {
         	res.put("msg", "请先登录！");
             return res;
         }
@@ -2116,9 +2122,9 @@ public class TdActivityController {
             Long[] listId,
             Integer[] listChkId,
     		ModelMap map) {
-        String username = (String) req.getSession().getAttribute("activityUsername");
+        String username = (String) req.getSession().getAttribute("activityUsername"); String manager = (String) req.getSession().getAttribute("manager");
 
-        if (null == username) {
+        if (null == username&&null==manager) {
             return "redirect:/login";
         }
         

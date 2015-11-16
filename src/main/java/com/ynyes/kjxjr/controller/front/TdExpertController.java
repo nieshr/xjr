@@ -304,6 +304,26 @@ public class TdExpertController {
         }
 	/** 评分时间检查 end*/
 		
+		//评分改为一个一个的评 zhangji
+		List<TdEnterpriseGrade> expertGradeList = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderBySordIdAsc(expert.getId(), activityId);
+		if (expertGradeList.size() > 0)
+		{
+			int index = 0;
+			int size = expertGradeList.size(); 	//要操作的对象标识
+			for (TdEnterpriseGrade item : expertGradeList)
+			{
+				if (item.getGradeAble() == false)
+				{
+					index++;
+				}
+				if (index == (size-1))
+				{
+					expertGradeList.get(0).setGradeAble(true);
+					tdEnterpriseGradeService.save(expertGradeList.get(0));
+				}
+				
+			}
+		}
         
         
 		map.addAttribute("grade_list", grade_list);

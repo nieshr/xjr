@@ -100,84 +100,95 @@
 
 
   <div class="section sect2">
-            <div class="section1">
-                <div class="div1">
-                    <p class="p1">组织体系</p>
-                    <p class="p2">Organization system</p>
-                </div>
-                <ul>
-                <#if organization_0_list??>
-                    <#list organization_0_list as item>
-                        <#if item_index == 0>
-                            <li class="li1">
-                                <p class="p1">${item.title!''}</p>
-                                <#if ("organization_level1_"+item.id)?eval??>
-                                    <#list ("organization_level1_"+item.id)?eval as article>
-                                        <#if article_index < 1>
-                                            <p><a title="查看更多信息" href="<#if article.linkUrl??&&article.linkUrl?length gt 0>${article.linkUrl!''}<#else>/info/list/content/${article.id?c!''}?mid=${article.menuId!''}</#if>">${article.title!''}</a></p>
-                                        </#if>
-                                    </#list>
-                                </#if>
-                                                                
-                        <#elseif item_index == 1>
+        <div class="section1">
+            <div class="div1">
+                <p class="p1">组织体系</p>
+                <p class="p2">Organization system</p>
+            </div>
+            <ul>
+            <#if organization_0_list??>
+                <#list organization_0_list as item>
+                    <#if item_index == 0>
+                        <li class="li1">
                             <p class="p1">${item.title!''}</p>
                             <#if ("organization_level1_"+item.id)?eval??>
-                                  <#list ("organization_level1_"+item.id)?eval as article>
-                                        <#if article_index < 5>
-                                            <p><a title="查看更多信息" href="<#if article.linkUrl??&&article.linkUrl?length gt 0>${article.linkUrl!''}<#else>/info/list/content/${article.id?c!''}?mid=${article.menuId!''}</#if>">${article.title!''}</a></p>
-                                        </#if>
-                                  </#list>
-                            </#if>                              
-                            </li>
-                        <#elseif item_index == 2>
-                            <li class="li2">
-                                <p class="p1">${item.title!''}</p>
-                                <#if ("organization_level1_"+item.id)?eval??>
-                                    <#list ("organization_level1_"+item.id)?eval as article>
-                                        <#if article_index < 6>
-                                            <p><a title="查看更多信息" href="<#if article.linkUrl??&&article.linkUrl?length gt 0>${article.linkUrl!''}<#else>/info/list/content/${article.id?c!''}?mid=${article.menuId!''}</#if>">${article.title!''}</a></p>
-                                        </#if>
-                                    </#list>
-                                </#if>                                
-                            </li>
-                            <li class="li3 current">
-                                <p class="p1">${item.title!''}</p>
-                                <#if ("organization_level1_"+item.id)?eval??>
-                                    <#list ("organization_level1_"+item.id)?eval as article>
-                                        <#if article_index gt 5>
-                                            <p><a title="查看更多信息" href="<#if article.linkUrl??&&article.linkUrl?length gt 0>${article.linkUrl!''}<#else>/info/list/content/${article.id?c!''}?mid=${article.menuId!''}</#if>">${article.title!''}</a></p>
-                                        </#if>
-                                    </#list>
-                                </#if>                                
-                            </li>
-                        <#else>
-                            <li class="li4">
-                                <p class="p1">${item.title!''}</p>
-                                <#if ("organization_level1_"+item.id)?eval??>
-                                    <#list ("organization_level1_"+item.id)?eval as article>
-                                        <#if article_index < 6>
-                                            <p><a title="查看更多信息" href="<#if article.linkUrl??&&article.linkUrl?length gt 0>${article.linkUrl!''}<#else>/info/list/content/${article.id?c!''}?mid=${article.menuId!''}</#if>">${article.title!''}</a></p>
-                                        </#if>
-                                    </#list>
-                                </#if>
-                                
-                            </li>
-                        </#if>
-                    </#list>
-                </#if>                    
-                </ul>
-            </div>
-            <div class="section2">
-                <div class="div1">
-                <#if activityAbout??>
-                    <p class="p1">${activityAbout.title!''}</p>
-                    <p class="p2">${activityAbout.callIndex!''}</p>
-                    <p class="p3">${activityAbout.brief!''}</p>
-                    <p class="p4"><a title="查看更多信息" href="<#if activityAbout.linkUrl??&&activityAbout.linkUrl?length gt 0>${activityAbout.linkUrl!''}<#else>/info/list/content/${activityAbout.id?c!''}?mid=${activityAbout.menuId!''}</#if>">查看更多</a></p>
-               	</#if>
-                </div>
+                                <#list ("organization_level1_"+item.id)?eval as article>
+                                    <#if article_index < 1>
+                                        <p><a title="查看更多信息" href="<#if article.linkUrl??&&article.linkUrl?length gt 0>${article.linkUrl!''}<#else>/info/list/content/${article.id?c!''}?mid=${article.menuId!''}</#if>">${article.title!''}</a></p>
+                                    </#if>
+                                </#list>
+                            </#if>
+                                                            
+                    <#elseif item_index == 1>
+                        <p class="p1">${item.title!''}</p>
+                        <#if ("organization_level1_"+item.id)?eval??>
+                              <#list ("organization_level1_"+item.id)?eval as article>
+                                    <#if article_index < 5>
+                                        <p><a title="查看更多信息" href="<#if article.linkUrl??&&article.linkUrl?length gt 0>${article.linkUrl!''}<#else>/info/list/content/${article.id?c!''}?mid=${article.menuId!''}</#if>">${article.title!''}</a></p>
+                                    </#if>
+                              </#list>
+                        </#if>                              
+                        </li>
+                    <#elseif item_index == 3>
+                        <li class="li2">
+                            <p class="p1">${item.title!''}</p>
+                            <#if ("organization_level1_"+item.id)?eval??>
+                                <#list ("organization_level1_"+item.id)?eval as article>
+                                    <#if article_index < 6>
+                                        <p><a title="查看更多信息" href="<#if article.linkUrl??&&article.linkUrl?length gt 0>${article.linkUrl!''}<#else>/info/list/content/${article.id?c!''}?mid=${article.menuId!''}</#if>">${article.title!''}</a></p>
+                                    </#if>
+                                </#list>
+                            </#if>                                
+                        </li>
+                        <li class="li3 current">
+                            <p class="p1">${item.title!''}</p>
+                            <#if ("organization_level1_"+item.id)?eval??>
+                                <#list ("organization_level1_"+item.id)?eval as article>
+                                    <#if article_index gt 5>
+                                        <p><a title="查看更多信息" href="<#if article.linkUrl??&&article.linkUrl?length gt 0>${article.linkUrl!''}<#else>/info/list/content/${article.id?c!''}?mid=${article.menuId!''}</#if>">${article.title!''}</a></p>
+                                    </#if>
+                                </#list>
+                            </#if>                                
+                        </li>
+                    <#elseif item_index == 4|| item_index == 5>
+                        <li class="li2" style="width:19%;">
+                            <p class="p1">${item.title!''}</p>
+                            <#if ("organization_level1_"+item.id)?eval??>
+                                <#list ("organization_level1_"+item.id)?eval as article>
+                                    <#if article_index < 6>
+                                        <p><a title="查看更多信息" href="<#if article.linkUrl??&&article.linkUrl?length gt 0>${article.linkUrl!''}<#else>/info/list/content/${article.id?c!''}?mid=${article.menuId!''}</#if>">${article.title!''}</a></p>
+                                    </#if>
+                                </#list>
+                            </#if>
+                        </li>                        
+                    <#else>
+                        <li class="li4">
+                            <p class="p1">${item.title!''}</p>
+                            <#if ("organization_level1_"+item.id)?eval??>
+                                <#list ("organization_level1_"+item.id)?eval as article>
+                                    <#if article_index < 6>
+                                        <p><a title="查看更多信息" href="<#if article.linkUrl??&&article.linkUrl?length gt 0>${article.linkUrl!''}<#else>/info/list/content/${article.id?c!''}?mid=${article.menuId!''}</#if>">${article.title!''}</a></p>
+                                    </#if>
+                                </#list>
+                            </#if>
+                            
+                        </li>
+                    </#if>
+                </#list>
+            </#if>                    
+            </ul>
+        </div>
+        <div class="section2">
+            <div class="div1">
+            <#if activityAbout??>
+                <p class="p1">${activityAbout.title!''}</p>
+                <p class="p2">${activityAbout.callIndex!''}</p>
+                <p class="p3">${activityAbout.brief!''}</p>
+                <p class="p4"><a title="查看更多信息" href="<#if activityAbout.linkUrl??&&activityAbout.linkUrl?length gt 0>${activityAbout.linkUrl!''}<#else>/info/list/content/${activityAbout.id?c!''}?mid=${activityAbout.menuId!''}</#if>">查看更多</a></p>
+           	</#if>
             </div>
         </div>
+    </div>
 
 
 	<div class="section sect3">
@@ -226,15 +237,27 @@
                     	<#list fiveSupport_page.content as item>
                     		<#if item_index lt 5>
 		                    <div class="div${item_index+2}">
-		                        <p class="p1">${item.brief!''}</p>
-		                        <p class="p2">
-		                            <i class="i${item_index+1}"></i>
-		                            <b>
-			                            <a style="color:#01468f;" href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>" title="查看详细介绍">
-			                           	    ${item.title!''}
-			                            </a>
-		                            </b>
-		                        </p>
+		                    	<#if item_index == 2>
+			                    	<p class="p2">
+			                            <i class="i${item_index+1}"></i>
+			                            <b>
+				                            <a style="color:#01468f;" href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>" title="查看详细介绍">
+				                           	    ${item.title!''}
+				                            </a>
+			                            </b>
+			                        </p>
+			                        <p class="p1">${item.brief!''}</p>
+		                        <#else>
+			                        <p class="p1">${item.brief!''}</p>
+			                        <p class="p2">
+			                            <i class="i${item_index+1}"></i>
+			                            <b>
+				                            <a style="color:#01468f;" href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>" title="查看详细介绍">
+				                           	    ${item.title!''}
+				                            </a>
+			                            </b>
+			                        </p>
+			                    </#if>    
 		                    </div>
 		                    </#if>
 		                </#list>    

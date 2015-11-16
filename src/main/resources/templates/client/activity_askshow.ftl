@@ -22,6 +22,7 @@
 <script type="text/javascript" charset="utf-8" src="/mag/js/zh_CN.js"></script>
 <script type="text/javascript" src="/mag/js/layout.js"></script>
 
+
 <script type="text/javascript">
     $(function () {
         //初始化表单验证
@@ -35,6 +36,8 @@
 					resizeType : 1,
 					allowPreviewEmoticons : false,
 					allowImageUpload : true,
+				    uploadJson: '/Verwalter/editor/upload?action=EditorFile',
+            		fileManagerJson: '/Verwalter/editor/upload?action=EditorFile',
 					items : [
 						'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
 						'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
@@ -42,24 +45,28 @@
 				});
 			});
    });
-   			KindEditor.ready(function(K) {
+
+			KindEditor.ready(function(K) {
 				var editor = K.editor({
 					allowFileManager : true
 				});
-      				//上传图片
-   				K('#image3').click(function() {
-				editor.loadPlugin('image', function() {
-					editor.plugin.imageDialog({
-						showRemote : false,
-						imageUrl : K('#url3').val(),
-						clickFn : function(url, title, width, height, border, align) {
-							K('#url3').val(url);
-							editor.hideDialog();
-						}
+
+				K('#image3').click(function() {
+					editor.loadPlugin('image', function() {
+						editor.plugin.imageDialog({
+							showRemote : false,
+							imageUrl : K('#url3').val(),
+						    uploadJson: '/Verwalter/editor/upload?action=EditorFile',
+		            		fileManagerJson: '/Verwalter/editor/upload?action=EditorFile',							
+							clickFn : function(url, title, width, height, border, align) {
+								K('#url3').val(url);
+								editor.hideDialog();
+							}
+						});
 					});
 				});
 			});
-		});		
+
 function subActivity(){
     
 }    
@@ -72,6 +79,7 @@ function done(msg)
 <#if msg?? >
 window.onload=done(${msg});
 </#if>
+
 
 </script>
 
@@ -134,6 +142,7 @@ window.onload=done(${msg});
                     <input type="text" datatype="*" id="url3" value="<#if article??&&article.imgUrl??>${article.imgUrl!''}</#if>"  /> <input <#if article??&&article.imgUrl??&&(article.statusId==0 || article.statusId==1)>disabled=""</#if> type="button" id="image3" value="选择图片" />
                 </dd>
             </dl>               
+
             <dl style="float:left;">
                 <dt style="font-size:14px;float:left">内容描述：</dt>
                 <dd>
