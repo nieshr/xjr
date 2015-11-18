@@ -136,9 +136,10 @@
 }
 .location_nav .location ul .me{
 	border-bottom:3px solid #e67817;
-	font-size:18px;
+	/*font-size:18px;*/
 }
 .location_nav .location ul li a{
+	text-align: center;
 	width:120px;
 	height:69px;
 	float:left;
@@ -146,6 +147,7 @@
 }
 /*各种新闻*/
 .news_b{
+	min-height: 500px;
 	width:1000px;
 	padding-top:36px;
 }
@@ -291,7 +293,7 @@
 #position{ position:absolute; bottom:0; right:0;margin:0;width:100%;text-align:right;}
 #position li{width:10px;height:10px;margin:0 2px;display:inline-block;-webkit-border-radius:5px;border-radius:5px;background-color:#AFAFAF;}
 #position li.cur{background-color:#FF0000;}
-.img-responsive { display: block; max-width: 100%;*+width:600px;  height:300px;*+height:350px;}
+.img-responsive { display: block; width: 524px;max-width: 100%;*+width:600px;  height:300px;*+height:350px;}
 
 .newsBox .sect1{
 	overflow:hidden;
@@ -359,7 +361,7 @@
 	width:100%;
 	background:rgba(0,0,0,0.6);
 	color:#ffffff;
-	font-size:16px;
+	font-size:14px;
 	line-height:24px;
 	text-indent:4px;
 }

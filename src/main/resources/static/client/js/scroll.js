@@ -4,7 +4,7 @@ $(function(){
     function scl(){
         $(".child").animate({marginLeft:speed+"px"},500);
             speed-=860;
-            if(speed==-3440){
+            if(speed==-2580){
             speed=0;
             }
     }

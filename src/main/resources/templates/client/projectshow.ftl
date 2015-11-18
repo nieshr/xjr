@@ -30,19 +30,25 @@ function move3()
 <div class="titlelist">
 	<div id="titlelist">
 		<div>
-			<a href="javascript:move1();" class="active">团队展</a>
-			<a href="javascript:move2();">项目展</a>
-			<a href="javascript:move3();">创业故事</a>
+			<#if show_list??>
+				<#list show_list as item>
+					<a href="/info/projectshow/detail?mid=<#if item.menuId??>${item.menuId?c!''}</#if>&catId=${item.id?c!''}">${item.title!''}</a>
+				</#list>
+			</#if>		
 		</div>
 	</div>
 	<div class="teamdisplay ">
-		<p>团队展</p>
+		<p>企业展</p>
 		<ul class="clearl">
 			<#if team_page??>
 				<#list team_page.content as item>
 					<#if item_index lt 6>
 						<li>
-								<img style="cursor:pointer;" src="${item.imgUrl!''}" width="322px" height="144px" onclick="location.href='/info/list/content/${item.id?c!''}?mid=${item.menuId?c!''}'">
+								<img style="cursor:pointer;" 
+										src="<#if item.imgUrl??&&item.imgUrl?length gt 0>${item.imgUrl!''}<#else>/client/news_img/projectdisplay.jpg</#if>" 
+										width="322px" height="144px" 
+										title="查看详情" 
+										onclick="location.href='<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>'">
 								<h3>${item.title!''}</h3>
 								<#if item.brief?length lt 20>
 									<h4>${item.brief!''}</h4>
@@ -57,13 +63,17 @@ function move3()
 	</div>
 	
 	<div class="teamdisplay ">
-		<p>项目展</p>
+		<p>团队展</p>
 		<ul class="clearl">
 			<#if project_page??>
 				<#list project_page.content as item>
 					<#if item_index lt 6>
 						<li>
-								<img style="cursor:pointer;" src="${item.imgUrl!''}" width="322px" height="144px" onclick="location.href='/info/list/content/${item.id?c!''}?mid=${item.menuId?c!''}'">
+								<img style="cursor:pointer;" 
+										src="<#if item.imgUrl??&&item.imgUrl?length gt 0>${item.imgUrl!''}<#else>/client/news_img/projectdisplay.jpg</#if>" 
+										width="322px" height="144px"
+										title="查看详情"
+										 onclick="location.href='<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>'">
 								<h3>${item.title!''}</h3>
 								<#if item.brief?length lt 20>
 									<h4>${item.brief!''}</h4>
@@ -84,7 +94,11 @@ function move3()
 				<#list story_page.content as item>
 					<#if item_index lt 6>
 						<li>
-								<img style="cursor:pointer;" src="${item.imgUrl!''}" width="322px" height="144px" onclick="location.href='/info/list/content/${item.id?c!''}?mid=${item.menuId?c!''}'">
+								<img style="cursor:pointer;" 
+										src="<#if item.imgUrl??&&item.imgUrl?length gt 0>${item.imgUrl!''}<#else>/client/news_img/projectdisplay.jpg</#if>" 
+										width="322px" height="144px" 
+										title="查看详情"
+										onclick="location.href='<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>'">
 								<h3>${item.title!''}</h3>
 								<#if item.brief?length lt 20>
 									<h4>${item.brief!''}</h4>

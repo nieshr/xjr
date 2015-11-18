@@ -3,7 +3,7 @@
 .listbanner div{position:absolute;top:100px;width:100%;color:#fff;text-align:center;font-size:50px;}
 .listbanner div span{text-shadow: 3px 3px 15px #888888;}
 .titlelist{height: 70px;display: inline;}
-#titlelist{width:100%;padding-left: 10px;background: #EFEFEF;padding-top: 10px;}
+#titlelist{width:100%;/*padding-left: 10px;*/background: #EFEFEF;padding-top: 10px;}
 #titlelist div{width: 1000px;}
 .titlelist div a{padding:  15px; color: #333333;font-size: 16px;line-height: 56px;}
 .titlelist div a:hover{ text-decoration:none;font-size: 18px;}
@@ -56,7 +56,7 @@ a:hover { color: #c36; text-decoration: underline; }
 .button{width: 73px;height:28px;background: url(../news_img/button.png) no-repeat;color: #fff;border-radius:5px;border-bottom: none;margin-top: 26px;margin-left: 452px;}
 
 /*项目展示*/
-.teamdisplay{width: 1000px;margin: 16px auto;}
+.teamdisplay{width: 1000px;margin: 16px auto;   min-height: 200px;}
 .teamdisplay p{font-size: 24px;color: #333333;text-align: center;line-height: 77px;}
 .teamdisplay ul li{float: left;padding:9px 5px;}
 .teamdisplay ul li h3{font-size: 16px;font-weight: normal;line-height: 24px;color:#333;margin-top: 4px;}

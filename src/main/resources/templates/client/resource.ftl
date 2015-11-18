@@ -15,8 +15,8 @@
 <div class="titlelist">
 	<div id="titlelist">
 	<div>
-		<a href="#" class="active">创业导师</a>
-		<a href="#">投资机构</a>
+		<a href="/info/resource/expert" class="active">创业导师</a>
+		<a href="/info/resource/3?mid=12">投资机构</a>
 		</div>
 	</div>
 	<!-- 创业导师 -->
@@ -28,7 +28,7 @@
 				<#list tutor_page.content as item>
 					<#if item_index lt 9>
 						<li>
-							<img style="cursor:pointer;" src="${item.imgUrl!''}" width="150px" height="150px" onclick="location.href='/info/list/content/expert/${item.id?c!''}'">
+							<img style="cursor:pointer;" src="<#if item.imageUri??&&item.imageUri != "">${item.imageUri!''}<#else>/client/images/default.jpg</#if>" width="150px" height="150px" onclick="location.href='/info/list/content/expert/${item.id?c!''}'">
 							<h6>${item.inCharge!''}</h6>
 							<#if  item.content??>
 								<#if  item.content?length lt 20>
@@ -57,7 +57,7 @@
 				<#list invest_page.content as item>
 					<#if item_index lt 9>
 						<li>
-							<img style="cursor:pointer;" src="${item.imgUrl!''}" width="150px" height="150px" onclick="location.href='/info/list/content/${item.id?c!''}?mid=${item.menuId?c!''}'">
+							<img style="cursor:pointer;" src="<#if item.imgUri??&&item.imgUri != "">${item.imgUri!''}<#else>/client/images/default.jpg</#if>" width="150px" height="150px" onclick="location.href='/info/list/content/${item.id?c!''}?mid=${item.menuId?c!''}'">
 							<h6>${item.title!''}</h6>
 							<#if item.brief?length lt 20>
 								<p>${item.brief!''}</p>

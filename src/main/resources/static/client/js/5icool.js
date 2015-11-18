@@ -20,9 +20,9 @@ function systole(){
 		$warpEle.find("ul").children(":not('h2:first')").each(function(idx){
 			eleTop.push($(this).position().top);
 			$(this).css({"margin-top":-eleTop[idx]}).children().hide();
-		}).animate({"margin-top":0}, 1600).children().fadeIn();
+		}).animate({"margin-top":0}, 200).children().fadeIn();
 
-		$warpEle.parent().animate({"height":parentH}, 2600);
+		$warpEle.parent().animate({"height":parentH}, 200);
 
 		$warpEle.find("ul").children(":not('h2:first')").addClass("bounceInDown").css({"-webkit-animation-duration":"2s","-webkit-animation-delay":"0","-webkit-animation-timing-function":"ease","-webkit-animation-fill-mode":"both"}).end().children("h2").css({"position":"relative"});
 		

@@ -5,7 +5,7 @@
 <link rel="shortcut icon" href="/client/images/icon.ico" />
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>科技小巨人-专项行动</title>
+<title>科技小巨人-培育活动</title>
 <!-- css -->
 <link rel="stylesheet" type="text/css" href="/client/css/base.css"/>
 <link rel="stylesheet" type="text/css" href="/client/css/news.css"/>
@@ -24,7 +24,60 @@ div{ margin:0 auto;text-align:left;}
 <body>
 <!-- 导航 -->
 <!-- head  -->
-    <#include "/client/news_common_header.ftl" />
+	<div class="wrapper">
+		<ul class="wrapper-nav" id="wrapper-nav">
+			<a href="/"><li>首页</li></a>
+			<a href="/info/aIn"><li <#if active??&&active==1>class="active"</#if>>专项行动</li></a>
+			<a href="/info/activity/list"><li <#if active??&&active==2>class="active"</#if>>培育活动</li></a>
+			<a href="/info/index"><li <#if active??&&active==3>class="active"</#if>>新闻动态</li></a>
+			<a href="/info/projectshow"><li <#if active??&&active==4>class="active"</#if>>企业项目</li></a>
+			<a href="/info/resource"><li <#if active??&&active==5>class="active"</#if>>专家资源</li></a>
+			<a href="/info/host"><li <#if active??&&active==6>class="active"</#if>>合作机构</li></a>
+			<a href="/info/contact"><li <#if active??&&active==7>class="active"</#if>>联系方式</li></a>
+		</ul>
+                <#if username??>
+                    <div class="logoin"><a href="/user" style="color:#ff4040;">${username}</a><span>|</span><a href="/logout">退出</a></div>
+                <#else>
+                    <div class="logoin"><a href="/login">登录</a><span>|</span><a href="/reg">注册</a></div>
+                </#if>
+	</div>
+<!-- 导航end -->
+<!-- banner -->
+<div class="listbanner">
+	<img src="/client/news_img/bglist.png"/>
+	<div><span>关注成长，创领未来</span></div>
+</div>
+<!-- bannerend -->
+    <!--右侧浮动导航开始-->
+    <script>
+function gotop()
+{
+    $('html,body').animate({scrollTop:0},400);
+}
+</script>
+    <div class="floatbox">
+      <a  href="/user" target="_blank" title="申报入口">
+        <img src="/client/l_images/float_ico02.png" width="42" height="42" alt="申报入口">
+      </a>
+      <a href="/info/search" title="搜索" target="_blank" rel="nofollow">
+        <img src="/client/l_images/float_ico01.png" width="42" height="42" alt="搜索">
+      </a>
+      <a id="BizQQWPA" href="http://wpa.qq.com/msgrd?v=3&uin=<#if site??>${site.qq1}</#if>&site=qq&menu=yes" target="_blank" title="在线客服">
+        <img src="/client/l_images/float_ico06.png" width="42" height="42" alt="在线客服">
+      </a>
+      <a href="javascript:loginWinOpen('weixin_win','myselfbox',200);" title="官方微信">
+        <img src="/client/l_images/float_ico03.png" width="42" height="42" alt="官方微信">
+        <span class="qr" style="top:0;"><img src="<#if site??>${site.wxQrCode!''}</#if>"></span>
+      </a>
+      
+      <a title="客服电话">
+        <img src="/client/l_images/float_ico04.png" width="42" height="42" alt="客服电话">
+        <span class="phone_num" style="top:0;"><#if site??>${site.telephone!''}</#if></span>
+      </a>
+      <a href="javascript:gotop();" title="到顶部">
+        <img src="/client/l_images/float_ico05.png" width="42" height="42" alt="到顶部">
+      </a>
+    </div>
 <!-- head end -->
 
 <!--菜单导航-->
@@ -49,39 +102,41 @@ div{ margin:0 auto;text-align:left;}
 				<#if activity_list??>
 					<#list activity_list as activity>
 						<#if activity_index ==0>
-							<#assign year = activity.date?string("yyyy")>
+							<#assign year = activity.createTime?string("yyyy")>
 						</#if>
 						<div class="history-date">
 							<ul>
 							<#if activity_index == 0>
-								<#if activity.date??>
+								<#if activity.createTime??>
 									<h2 style="position: relative;" class="first">
-										<a href="#nogo">${activity.date?string("yyyy")}年</a>
+										<a href="#nogo">${activity.createTime?string("yyyy")}年</a>
 									</h2>
-									<li style="margin-top: 0px;" class="<#if activity.statusId == 2 >bounceInDown<#else>green bounceInDown lcy_height</#if>">
-										<h3 style="display: block;">${activity.date?string("MM.dd")}<span>${activity.date?string("yyyy")}</span></h3>
+									<li style="margin-top: 0px;" class="<#if activity.sortId == 2 >bounceInDown<#else>green bounceInDown lcy_height</#if>">
+										<#if activity.sortId == 2 >
+											<h3 style="display: block;">${activity.createTime?string("MM.dd")}<span>${activity.createTime?string("yyyy")}</span></h3>
+										</#if>
 										<dl style="display: block;">
-											<dt><p><a href="/info/activity/detail/${activity.id?c!''}" title="查看详情">${activity.title!''}</a></p><span>${activity.theme!''}</span></dt>
-										  <a style="margin-right:5%;float:right;" href="/info/activity/detail/${activity.id?c!''}" title="查看详情">详情</a>
+											<dt><p><a href="/info/list/content/${activity.id?c!''}?mid=13" title="查看详情">${activity.title!''}</a></p><span>${activity.brief!''}</span></dt>
+										  <a style="margin-right:5%;float:right;" href="<#if activity.linkUrl??&&activity.linkUrl!="">${activity.linkUrl!''}<#else>/info/list/content/${activity.id?c!''}?mid=13</#if>" title="查看详情">详情</a>
 										</dl>
 									</li>
 								</#if>
 							<#else>
-								<#if activity.date?string("yyyy") != year>
-									<#assign year = activity.date?string("yyyy")>
+								<#if activity.createTime?string("yyyy") != year>
+									<#assign year = activity.createTime?string("yyyy")>
 									</ul>
 								</div>
 								<div class="history-date">
 									<ul>
 									<h2 style="position: relative;" class="date02 bounceInDown">
-										<a href="#nogo">${activity.date?string("yyyy")}年</a>
+										<a href="#nogo">${activity.createTime?string("yyyy")}年</a>
 									</h2>
 								</#if>	
-									<li style="margin-top: 0px;" class="<#if activity.statusId == 2 >bounceInDown<#else>green bounceInDown lcy_height</#if>">
-										<h3 style="display: block;">${activity.date?string("MM.dd")}<span>${activity.date?string("yyyy")}</span></h3>
+									<li style="margin-top: 0px;" class="<#if activity.sortId == 2 >bounceInDown<#else>green bounceInDown lcy_height</#if>">
+										<h3 style="display: block;">${activity.createTime?string("MM.dd")}<span>${activity.createTime?string("yyyy")}</span></h3>
 										<dl style="display: block;">
-											<dt><a href="/info/activity/detail/${activity.id?c!''}" title=""><p>${activity.title!''}</p><span>${activity.theme!''}</span></a></dt>
-										  <a style="margin-right:5%;float:right;" href="/info/activity/detail/${activity.id?c!''}" title="查看详情">详情</a>
+											<dt><a href="<#if activity.linkUrl??&&activity.linkUrl!="">${activity.linkUrl!''}<#else>/info/list/content/${activity.id?c!''}?mid=13</#if>" title=""><p>${activity.title!''}</p><span>${activity.theme!''}</span></a></dt>
+										  <a style="margin-right:5%;float:right;" href="<#if activity.linkUrl??&&activity.linkUrl!="">${activity.linkUrl!''}<#else>/info/list/content/${activity.id?c!''}?mid=13</#if>" title="查看详情">详情</a>
 										</dl>
 									</li>
 									</ul>

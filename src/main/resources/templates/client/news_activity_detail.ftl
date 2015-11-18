@@ -33,8 +33,8 @@
 <div class="news_detail" style="min-height:500px;">
   <div class="news_name">${info.title!''}</div>
   <div class="news_words">
-    <div class="words1">${info.theme!''}</div>
-    <div class="words1">${info.introduction!''}</div>
+    <div class="words1">${info.brief!''}</div>
+    <div class="words1">${info.content!''}</div>
   </div>
 </div>
 

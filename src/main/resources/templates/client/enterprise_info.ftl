@@ -143,7 +143,7 @@ window.onload=checkstatus;
     			<div>
     			     <span class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>">企业名称：</span>
     			     <span class="pro <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>hide</#if>">项目名称：</span>
-    			     <input type="text" name="title" value="<#if enterprise.formType??>${enterprise.title!''}</#if>" datatype="*"/>
+    			     <input type="text" name="title" value="<#if enterprise.formType??>${enterprise.title!''}</#if>" datatype="*2-25" errormsg="请填写2到25位字符"/>
     		    </div>
     			<div>
     			<span class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>">成立时间：</span>
@@ -196,11 +196,11 @@ window.onload=checkstatus;
     				</#if>		
 				</div>
 				<div class="pro <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>hide</#if>"><span>主要负责人：</span><input type="text"  name="inCharge" datatype="*" ignore="ignore" value="<#if enterprise.formType??>${enterprise.inCharge!''}</#if>" /></div>
-				<div><span>邮箱：</span><input type="text" name="email" datatype="e"  ignore="ignore" value="<#if enterprise.formType??>${enterprise.email!''}</#if>" errormsg="请填写邮箱"/></div>
+				<div><span>邮箱（选填）：</span><input type="text" name="email" datatype="e"  ignore="ignore" value="<#if enterprise.formType??>${enterprise.email!''}</#if>" errormsg="请填写邮箱"/></div>
     			<div><span>联系人：</span><input type="text"  name="contact" datatype="*"  value="<#if enterprise.formType??>${enterprise.contact!''}</#if>" /></div>
-    			<div><span>网站：</span><input type="text" name="website" datatype="url"  ignore="ignore" value="<#if enterprise.formType??>${enterprise.website!''}</#if>" /></div>
+    			<div><span>网站（选填）：</span><input type="text" name="website" datatype="url"  ignore="ignore" value="<#if enterprise.formType??>${enterprise.website!''}</#if>" /></div>
     			<div><span>联系电话：</span><input type="text"  name="telephone" datatype="*" value="<#if enterprise.formType??>${enterprise.telephone!''}</#if>" /></div>
-    			<div><span>传真：</span><input type="text"  name="fax" datatype="*"  ignore="ignore" value="<#if enterprise.formType??>${enterprise.fax!''}</#if>" /></div>
+    			<div><span>传真（选填）：</span><input type="text"  name="fax" datatype="*"  ignore="ignore" value="<#if enterprise.formType??>${enterprise.fax!''}</#if>" /></div>
     			<div><span>QQ/MSN：</span><input type="text" name="chat" datatype="*"  value="<#if enterprise.formType??>${enterprise.chat!''}</#if>" /></div>
     			<div><span>手机：</span><input type="text"  name="mobile" datatype="m|/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/"  value="<#if enterprise.formType??>${enterprise.mobile!''}</#if>" errormsg="请填写手机！"/></div>
     			<div>

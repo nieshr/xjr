@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>专项行动</title>
+	<title>科技小巨人-专项行动</title>
+	<link rel="shortcut icon" href="/client/images/icon.ico" />
 	<link rel="stylesheet" href="/client/css/news_base.css">
 	<link rel="stylesheet" href="/client/css/news_main.css">
 	<script src="/client/js/main.js"></script>
@@ -16,10 +17,11 @@
 <div class="titlelist">
 	<div id="titlelist">
 		<div>
-			<a href="#" class="active">行动介绍</a>
-			<a href="#">种子引导基金</a>
-			<a href="#">报名方式</a>
-			<a href="#">评选方式</a>
+			<#if aboutActivity_page??>
+				<#list aboutActivity_page.content as item>
+					<a href="<#if item.linkUrl??&&item.linkUrl!="">${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=13</#if>" title="">${item.title!''}</a>
+				</#list>
+			</#if>	
 		</div>
 	</div>
 	<!-- 专项行动body -->
@@ -50,10 +52,11 @@
 		<#if breed_page??>
 		  <#list breed_page.content as item>
 			<div class="specialaction-third-one">
-				<img src="${item.imgUrl!''}" alt="封面图片" width=128 height=128>
+				<img src="${item.imgUrl!''}" alt="封面图片" width=120 height=100 />
 				<h3><a href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>" title="查看更多信息">${item.title!''}</a></h3>
 				<h4>${item.brief!''}</h4>
 			</div>
+			
 		  </#list>
 		</#if>	
 		</div>

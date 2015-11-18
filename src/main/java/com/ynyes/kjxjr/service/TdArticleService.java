@@ -61,6 +61,38 @@ public class TdArticleService {
     }
     
     /**
+     * 查找活动文章列表
+     * @param menuId
+     * @param catId
+     * @return
+     */
+    public List<TdArticle> findByMenuIdAndCategoryIdAndIsEnableOrderByCreateTimeDesc(Long menuId, Long catId)
+    {
+        if (null == menuId && null == catId)
+        {
+            return null;
+        }
+        
+        return repository.findByMenuIdAndCategoryIdAndStatusIdOrderByCreateTimeDesc(menuId, catId, 0L);
+    }
+
+    /**
+     * 分类查找活动文章列表
+     * @param menuId
+     * @param catId
+     * @return
+     */
+    public List<TdArticle> findByMenuIdAndCategoryIdAndSourceAndIsEnableOrderByCreateTimeDesc(Long menuId, Long catId , String source)
+    {
+        if (null == menuId && null == catId)
+        {
+            return null;
+        }
+        
+        return repository.findByMenuIdAndCategoryIdAndSourceAndStatusIdOrderByCreateTimeDesc(menuId, catId, source , 0L);
+    }
+    
+    /**
      * 通过菜单ID查找
      * @param menuId
      * @param page
@@ -175,6 +207,18 @@ public class TdArticleService {
         return repository.findByMenuIdAndCategoryIdAndStatusIdOrderByIdAsc(menuId, catId, 0L, pageRequest);
     }
     
+    public Page<TdArticle> findByMenuIdAndCategoryIdAndSourceAndIsEnableOrderByCreateTimeDesc(Long menuId, Long catId, String source ,int page, int size)
+    {
+        if (null == menuId && null == catId)
+        {
+            return null;
+        }
+        
+        PageRequest pageRequest = new PageRequest(page, size);
+        
+        return repository.findByMenuIdAndCategoryIdAndSourceAndStatusIdOrderByCreateTimeDesc(menuId, catId, source , 0L, pageRequest);
+    }
+    
     public Page<TdArticle> findByMenuIdAndCategoryIdAndIsEnableOrderBySortIdAsc(Long menuId, Long catId, int page, int size)
     {
         if (null == menuId && null == catId)
@@ -276,7 +320,7 @@ public class TdArticleService {
     }
     
     /**
-     * 搜索课程
+     * 搜索全部
      * @author Zhangji
      * @param keywords
      * @param page
@@ -289,11 +333,11 @@ public class TdArticleService {
         }
 
         PageRequest pageRequest = new PageRequest(page, size, new Sort(
-                Direction.DESC, "id"));
+                Direction.DESC, "createTime"));
 
         return repository
-                .findByTitleContainingIgnoreCaseAndStatusIdAndMenuIdOrBriefContainingIgnoreCaseAndStatusIdAndMenuId(
-                        keywords, 0L,12L,keywords, 0L,12L, pageRequest);
+                .findByTitleContainingIgnoreCaseAndStatusIdOrBriefContainingIgnoreCaseAndStatusId(
+                        keywords, 0L,keywords, 0L, pageRequest);
     }
     
     /**
@@ -425,14 +469,14 @@ public class TdArticleService {
      * @param recommendId
      * @return
      */
-    public TdArticle findByRecommendId(Long recommendId)
+    public TdArticle findByRecommendIdAndMenuId(Long recommendId , Long menuId)
     {
-        if (null == recommendId)
+        if (null == recommendId || null == menuId )
         {
             return null;
         }
         
-        return repository.findByRecommendId(recommendId);
+        return repository.findByRecommendIdAndMenuId(recommendId , menuId);
     }
     
     /**

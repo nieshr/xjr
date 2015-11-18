@@ -5,7 +5,7 @@
 <link rel="shortcut icon" href="/client/images/icon.ico" />
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>科技小巨人-新闻动态</title>
+<title>科技小巨人-搜索</title>
 <link rel="stylesheet" type="text/css" href="/client/css/base.css"/>
 <link rel="stylesheet" type="text/css" href="/client/css/news.css"/>
 <link rel="stylesheet" href="/client/css/news_base.css">
@@ -73,45 +73,51 @@ function gotop()
 <!-- head end -->
 
 <!--菜单导航-->
-<div class="location_nav">
+<div class="location_nav" >
   <div class="location">
-    <ul>
-      <li><a href="/info/index">新闻动态</a></li>
-      <#if newsCat_list??>
-           <#list newsCat_list as item>
-                <li <#if item.id==catId>class="me"</#if>><a href="/info/list/10?catId=${item.id?c}">${item.title!''}</a></li>
-           </#list>
-      </#if>      
-    </ul>
+	 <form action="/info/search">
+	 <input style="width: 375px;height: 20px;font-size: 16px;" type="text" name="keywords" value="<#if keywords??>${keywords}</#if>" />
+	 <input type="submit" style="   height: 30px;
+														  width: 60px;
+														  border-radius: 8px;
+														  margin: 0 auto;
+														  line-height: 30px;
+														  border: none;
+														  background: #e67817;
+														  color: white;
+														  font-size: 14px;"
+														  value="搜索"/>
+	 </form>
   </div>
 </div>
 
 <!--各种新闻-->
-<div class="news_b">
+<div class="news_b" style="min-height:300px;">
   <ul>
-  <#if info_page??>
+    <#if info_page??>
       <#list info_page.content as item>
-            <li><a href="/info/list/content/${item.id?c}?mid=10">
-              <div class="pic"><img src="${item.imgUrl!''}" /></div>
+            <li><a href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>">
+              <div class="pic"><img src="<#if item.imgUrl??&&item.imgUrl?length gt 0>${item.imgUrl!''}<#else>/client/news_img/modification.png</#if>" /></div>
               <div class="news_words">
                 <div class="news_title">${item.title!''}</div>
-                <div class="news_time">${item.createTime?string("yyyy-MM-dd")}</div>
+                <div class="news_time"><#if item.createTime??>${item.createTime?string("yyyy-MM-dd")}</#if></div>
                 <div class="news_detail">${item.brief!''}</div>
               </div>
               </a></li>
       </#list>
-  </#if>  
+     </#if>  
   </ul>
 </div>
 
 <!--页码按钮-->
+<#if info_page??>
 <#assign PAGE_DATA=info_page />
 <div class="pagnation" id="pagnation">
  <#if PAGE_DATA??>
      <#if PAGE_DATA.number+1 == 1>
           <a disabled="disabled"  class="page-prev">上一页"</a>               
      <#else>
-         <a href="/info/list/10?catId=${item.id?c}&page=${PAGE_DATA.number-1}"  class="page-prev">上一页"</a>                
+         <a href="/info/search?page=${PAGE_DATA.number-1}&keywords=${keywords!''}"  class="page-prev">上一页"</a>                
      </#if>
      
      <#assign continueEnter=false>
@@ -122,7 +128,7 @@ function gotop()
                  <#if page == PAGE_DATA.number+1>
                      <a  class ="current">${page }</a>
                  <#else>
-                     <a href="/info/list/10?catId=${item.id?c}&page=${page-1}">${page}</a> 
+                     <a href="/info/search?page=${page-1}&keywords=${keywords!''}">${page}</a> 
                  </#if>
                  <#assign continueEnter=false>
              <#else>
@@ -138,12 +144,12 @@ function gotop()
      <#if PAGE_DATA.number+1 == PAGE_DATA.totalPages || PAGE_DATA.totalPages==0>
          <a disabled="disabled" class="page-next">下一页</a> 
      <#else>
-         <a href="/info/list/10?catId=${item.id?c}&page=${PAGE_DATA.number+1}" class="page-next">下一页</a> 
+         <a href="/info/search?page=${PAGE_DATA.number+1}&keywords=${keywords!''}" class="page-next">下一页</a> 
      </#if>
  </#if>
     
 </div>
-
+  </#if>  
 
 
 <!-- 底部 -->

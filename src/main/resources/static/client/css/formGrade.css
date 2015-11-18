@@ -1,13 +1,13 @@
 .score{width:100%;border-collapse:collapse;}
 .score caption{width:100%;height:60px; line-height:60px;}
 .score tr{}
-.score th{border:black 1px solid; text-align: center; width:360px;}
+.score th{border:black 1px solid; text-align: center; width:280px;}
 .score td{ border:black 1px solid; text-align: center; width:60%;}
 .score,.tr01{height:40px;}
-.score,.tr02{height:30px;}
+.score,.tr02{height:24px;}
 .score select{width:100%;height:100%; border: none;}
 .score,.tr03{height:40px;}
-.score,.tr03 th{font-weight: normal; width: 77%; margin: auto;} 
+.score,.tr03 th{font-weight: normal; width: 60%; margin: auto;} 
 .score input{width:100%; height:100%; border:none;}
 
 .area_batch {cursor: pointer; width: 92px;height: 30px;  border: none;  border-radius: 6px;  background: #e67817;  color: white;  margin-top: 20px;  margin-left: 5%;  font-size: 14px;}
@@ -34,18 +34,18 @@
   background-color: #edb867;
 }
 .br-wrapper .br-widget .br-current-rating {
-  font-size: 20px;
+  font-size: 16px;
  /* line-height: 2;*/
   float: left;
-  padding: 0 0 0 20px;
+  padding: 4px 0 0 10px;
   color: #edb867;
   font-weight: 600;
 }
 /* Center in container */
 .br-wrapper {
-  width: 240px;
+  width: 220px;
  /* position: absolute;*/
-  margin: 0px 0 0 120px;
+  margin: 0px 0 0 20px;
   left: 50%;
 }
 /******* EXAMPLE B *******/

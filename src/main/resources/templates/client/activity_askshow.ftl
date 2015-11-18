@@ -12,6 +12,7 @@
 </head>
 
 <script src="/client/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/mag/js/Validform_v5.3.2_min.js"></script>
 <script src="/client/js/main.js"></script>
 
 <script type="text/javascript" src="/mag/js/WdatePicker.js"></script>
@@ -27,7 +28,7 @@
     $(function () {
         //初始化表单验证
         $("#form1").initValidform();
-        
+      
 
         //初始化编辑器
 			var editor;
@@ -101,7 +102,7 @@ window.onload=done(${msg});
 	</div>
 <!--right-->
 <#if enterprise??&&enterprise.formType??&&enterprise.statusId??>
-    <form  action="/enterprise/article" method="post">
+    <form id = "form1"  action="/enterprise/article" method="post">
     <input type="hidden" name="categoryId" value="<#if enterprise.formType??&&enterprise.formType==0>16<#else>17</#if>" />
     <#if article??>
     <input type="hidden" name="id" value="${article.id?c!''}" />
@@ -133,13 +134,13 @@ window.onload=done(${msg});
             <dl class="team_title02">
                 <dt>展示标题 :</dt>
                 <dd>
-                    <input type="text" value="<#if article??&&article.title??>${article.title!''}</#if>" <#if article??&&article.imgUrl??&&(article.statusId==0 || article.statusId==1)>disabled=""</#if> datatype="*" id="title" name="title"/>
+                    <input type="text" value="<#if article??&&article.title??>${article.title!''}</#if>"  datatype="*" id="title" name="title"/>
                 </dd>
             </dl>   
              <dl class="team_title02" style="float:left;">
                 <dt style="font-size:14px;float:left">封面图片：</dt>
                 <dd>
-                    <input type="text" datatype="*" id="url3" value="<#if article??&&article.imgUrl??>${article.imgUrl!''}</#if>"  /> <input <#if article??&&article.imgUrl??&&(article.statusId==0 || article.statusId==1)>disabled=""</#if> type="button" id="image3" value="选择图片" />
+                    <input type="text"  id="url3" value="<#if article??&&article.imgUrl??>${article.imgUrl!''}</#if>"  /> <input <#if article??&&article.imgUrl??&&(article.statusId==0 || article.statusId==1)>disabled=""</#if> type="button" id="image3" value="选择图片" />
                 </dd>
             </dl>               
 
@@ -150,7 +151,7 @@ window.onload=done(${msg});
                 </dd>
             </dl>    
         </div>    
-        <input <#if article??&&article.imgUrl??&&(article.statusId==0 || article.statusId==1)>disabled=""</#if> style="cursor:pointer; width:80px; height: 30px; border:none; background:  <#if article??&&article.imgUrl??&&(article.statusId==0 || article.statusId==1)>#666<#else>>#e67817</#if>; font-size: 14px; color: white; border-radius: 6px;margin-left: 30px; margin-top: 50px;" type="submit" value="提交"/>
+        <input <#--<#if article??&&article.imgUrl??&&(article.statusId==0 || article.statusId==1)>disabled=""</#if>--> style="cursor:pointer; width:80px; height: 30px; border:none; background: #e67817; font-size: 14px; color: white; border-radius: 6px;margin-left: 30px; margin-top: 50px;" type="submit" value="提交"/>
     </div>
     </form>
  <#else>

@@ -12,6 +12,7 @@ body {
 	font:12px/180% Arial, Helvetica, sans-serif, "新宋体";
 }
 .demo {
+	min-height:500px;
 	width:960px;
 	margin:60px auto 0 auto;
 }

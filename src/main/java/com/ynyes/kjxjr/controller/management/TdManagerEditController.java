@@ -230,10 +230,10 @@ public class TdManagerEditController {
 //                return "/site_mag/goods_edit";
 //            }
 //        }
-        if(mid == 83)
-        {
-        	return"/site_mag/downdata_content_edit";
-        }
+//        if(mid == 83)
+//        {
+//        	return"/site_mag/downdata_content_edit";
+//        }
         return "/site_mag/article_content_edit";
     }
     

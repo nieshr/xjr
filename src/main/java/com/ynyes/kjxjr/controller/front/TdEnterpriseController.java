@@ -548,15 +548,18 @@ public class TdEnterpriseController {
     @RequestMapping(value="/project")
     public String project(HttpServletRequest req,ModelMap map){
         String username = (String) req.getSession().getAttribute("enterpriseUsername");
-
+        
         if (null == username) {
             return "redirect:/login";
         }
         
+        TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
+        map.addAttribute("user", user);
+        
         TdEnterprise enterprise = tdEnterpriseService.findbyUsername(username);
         map.addAttribute("enterprise",enterprise);
         
-        TdArticle article = tdArticleService.findByRecommendId(enterprise.getId());
+        TdArticle article = tdArticleService.findByRecommendIdAndMenuId(enterprise.getId() , 11L);
         if (null != article)
         {
         	map.addAttribute("article", article);
@@ -581,18 +584,19 @@ public class TdEnterpriseController {
         TdEnterprise enterprise = tdEnterpriseService.findbyUsername(username);
         map.addAttribute("enterprise",enterprise);
         
-        if (null == article.getImgUrl() || article.getImgUrl().equals(""))
-        {
-        	map.addAttribute("msg", "封面图片不能为空！");
-        	map.addAttribute("article",article);
-        	return "/client/activity_askshow";
-        }
+//        if (null == article.getImgUrl() || article.getImgUrl().equals(""))
+//        {
+//        	map.addAttribute("msg", "封面图片不能为空！");
+//        	map.addAttribute("article",article);
+//        	return "/client/activity_askshow";
+//        }
 
        	 article.setRecommendId(enterprise.getId());
          article.setChannelId(1L);
          article.setStatusId(1L);
          article.setSource("本站");
          article.setMenuId(11L);
+         article.setSortId(99L);
          
          tdArticleService.save(article);
          map.addAttribute("article",article);

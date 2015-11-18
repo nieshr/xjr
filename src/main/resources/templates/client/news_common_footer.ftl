@@ -16,7 +16,7 @@
 	</ul>
 </div>
 <div class="footlist-body">
-	<h5>联系电话：
+	<h5>电话：
 	<#list site.telephone?split(",") as item>
 		<#if item !="">
 			${item!''} &nbsp;

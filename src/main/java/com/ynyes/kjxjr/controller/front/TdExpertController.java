@@ -260,7 +260,7 @@ public class TdExpertController {
 	}
 
 	@RequestMapping(value = "/grade")
-	public String goGrade(Long activityId, HttpServletRequest req, ModelMap map) {
+	public String goGrade(Long activityId, Long enterpriseId , HttpServletRequest req, ModelMap map) {
 		String expertUsername = (String) req.getSession().getAttribute("expertUsername");
 		if (null == expertUsername) {
 			return "/client/login";
@@ -306,17 +306,33 @@ public class TdExpertController {
 		
 		//评分改为一个一个的评 zhangji
 		List<TdEnterpriseGrade> expertGradeList = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderBySordIdAsc(expert.getId(), activityId);
+		
+		//评分跳转到指定项目
+        if (null != enterpriseId)
+        {
+        	for (TdEnterpriseGrade expertGrade : expertGradeList)
+        	{
+        		expertGrade.setGradeAble(false);
+        		tdEnterpriseGradeService.save(expertGrade);
+        	}
+        	String number = tdEnterpriseService.findOne(enterpriseId).getNumber();
+        	TdEnterpriseGrade enterpriseGrade = tdEnterpriseGradeService.findByExpertIdAndActivityIdAndNumber(expert.getId(), activityId, number);
+        	enterpriseGrade.setGradeAble(true);
+        	tdEnterpriseGradeService.save(enterpriseGrade);
+        }
+		
+        //初始化可评分状态：第一个可评
 		if (expertGradeList.size() > 0)
 		{
 			int index = 0;
 			int size = expertGradeList.size(); 	//要操作的对象标识
 			for (TdEnterpriseGrade item : expertGradeList)
 			{
-				if (item.getGradeAble() == false)
+				if ( null != item.getGradeAble() && item.getGradeAble() == false || null == item.getGradeAble() )
 				{
 					index++;
 				}
-				if (index == (size-1))
+				if (index == size)
 				{
 					expertGradeList.get(0).setGradeAble(true);
 					tdEnterpriseGradeService.save(expertGradeList.get(0));

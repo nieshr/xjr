@@ -46,6 +46,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ynyes.kjxjr.entity.TdActivity;
 import com.ynyes.kjxjr.entity.TdActivityEnterprise;
 import com.ynyes.kjxjr.entity.TdActivityExpert;
+import com.ynyes.kjxjr.entity.TdArticle;
+import com.ynyes.kjxjr.entity.TdArticleCategory;
 import com.ynyes.kjxjr.entity.TdEnterprise;
 import com.ynyes.kjxjr.entity.TdEnterpriseGrade;
 import com.ynyes.kjxjr.entity.TdExpert;
@@ -57,6 +59,8 @@ import com.ynyes.kjxjr.service.TdActivityEnterpriseService;
 import com.ynyes.kjxjr.service.TdActivityExpertService;
 import com.ynyes.kjxjr.service.TdActivityService;
 import com.ynyes.kjxjr.service.TdActivityTypeService;
+import com.ynyes.kjxjr.service.TdArticleCategoryService;
+import com.ynyes.kjxjr.service.TdArticleService;
 import com.ynyes.kjxjr.service.TdCommonService;
 import com.ynyes.kjxjr.service.TdCouponService;
 import com.ynyes.kjxjr.service.TdEnterpriseGradeService;
@@ -124,6 +128,12 @@ public class TdActivityController {
 	
 	@Autowired
 	TdUserMessageService tdUserMessageService;
+	
+	@Autowired
+	TdArticleService tdArticleService;
+	
+	@Autowired
+	TdArticleCategoryService tdArticleCategoryService;
 
 	   /**
      * 企业填写资料
@@ -1910,6 +1920,42 @@ public class TdActivityController {
 			}
 		}
        
+		//创建活动文章
+		TdArticle article = tdArticleService.findByRecommendIdAndMenuId(tdActivity.getId() , 13L);
+		if (null == article )
+		{
+			List<TdArticleCategory> categoryList = tdArticleCategoryService.findByMenuId(13L);
+			Long catId = 0L;
+			for (TdArticleCategory item : categoryList)
+			{
+				if(item.getTitle().equalsIgnoreCase("培育活动"))
+				{
+					catId = item.getId();
+				}
+			}
+			
+			TdArticle newArticle = new TdArticle();
+			newArticle.setTitle(title);;
+			newArticle.setContent(introduction);
+			newArticle.setCreateTime(date1);
+			newArticle.setRecommendId(tdActivity.getId());
+			newArticle.setChannelId(1L);
+			newArticle.setStatusId(0L);
+			newArticle.setSource(tdActivity.getActivityType());
+	        newArticle.setMenuId(13L);
+	        newArticle.setCategoryId(catId);
+	        if(tdActivity.getStatusId()==2)
+	        {
+	        	newArticle.setSortId(2L);
+	        }
+	        else{
+	        	newArticle.setSortId(1L);
+	        }
+	        
+	         
+	         tdArticleService.save(newArticle);
+		}
+
         res.put("code", 0);
         return res;
     }
@@ -2170,6 +2216,10 @@ public class TdActivityController {
       activity.setStatusId(2L);
       tdActivityService.save(activity);
       
+      //修改文章黄台
+      TdArticle article = tdArticleService.findByRecommendIdAndMenuId(activityId, 13L);
+      article.setSortId(2L);
+      tdArticleService.save(article);
      
       
       for (int chkId : chkIds)

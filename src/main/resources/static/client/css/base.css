@@ -84,8 +84,8 @@ body{ background:url(../images/background.png); background-size:100% 100%;}
 /*=============================validform==================================*/
 	
 .Validform_checktip{ margin-left:8px; line-height:20px; height:20px; overflow:hidden; color:#999; font-size:12px;   width: initial;}
-.Validform_right{ color:#22A011; background:url(../images/tips_icon_right.png) no-repeat left center;background-position: 20px  center;	background-size:14px 14px;}
-.Validform_wrong{ color:#EA5D0E;  white-space:nowrap; background:url(../images/tips_icon_wrong.png) no-repeat left center;background-position:30px  center;	background-size:14px 14px;}
+.Validform_right{ color:#22A011;/* background:url(../images/tips_icon_right.png) no-repeat left center;*/background-position: 20px  center;	background-size:14px 14px;}
+.Validform_wrong{ color:#EA5D0E;  white-space:nowrap; /*background:url(../images/tips_icon_wrong.png) no-repeat left center;*/background-position:30px  center;	background-size:14px 14px;}
 .Validform_loading{ padding-left:20px; background:url(icon_onload.gif) no-repeat left center; }
 .Validform_error{ background:#FEFBD3; }
 
@@ -93,8 +93,8 @@ body{ background:url(../images/background.png); background-size:100% 100%;}
 /*=============================validform==================================*/
     
 .Validform_checktip{ margin-left:8px; line-height:20px; height:20px; overflow:hidden; color:#999; font-size:12px;   width: initial;}
-.Validform_right{ color:#22A011; background:url(../images/tips_icon_right.png) no-repeat left center;background-position: 20px  center; background-size:14px 14px;}
-.Validform_wrong{ color:#EA5D0E;  white-space:nowrap; background:url(../images/tips_icon_wrong.png) no-repeat left center;background-position:30px  center; background-size:14px 14px;}
+.Validform_right{ color:#22A011; /*background:url(../images/tips_icon_right.png) no-repeat left center;*/background-position: 20px  center; background-size:14px 14px;}
+.Validform_wrong{ color:#EA5D0E;  white-space:nowrap;/* background:url(../images/tips_icon_wrong.png) no-repeat left center;*/background-position:30px  center; background-size:14px 14px;}
 .Validform_loading{ padding-left:20px; background:url(icon_onload.gif) no-repeat left center; }
 .Validform_error{ background:#FEFBD3; }
 

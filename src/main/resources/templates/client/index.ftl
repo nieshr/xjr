@@ -8,50 +8,55 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 <title>科技小巨人-首页</title>
 <!--css-->
-<link rel="shortcut icon" href="/images/icon.ico" />
 <link href="/client/css/l_base.css" rel="stylesheet" type="text/css" />
 <link href="/client/css/jquery.fullPage.css" rel="stylesheet" type="text/css" />
 <link href="/client/css/index.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="/client/js/jquery-1.9.1.min.js"></script>
+	
+  <!-- Chang URLs to wherever Video.js files will be hosted -->
+  <link href="/client/css/video-js.css" rel="stylesheet" type="text/css">
+  <!-- video.js must be in the <head> for older IEs to work. -->
+  <script src="/client/js/video.js"></script>
 
-
+  <!-- Unless using the CDN hosted version, update the URL to the Flash SWF -->
+  <script>
+    videojs.options.flash.swf = "/client/js/video-js.swf";
+  </script>
 </head>
 <body>
  
 <!--代码部分begin-->
 
-<!-- 右侧圆点 -->
-<ul id="menu">
-  <li data-menuanchor="page1" class="active"><a href="#page1">1</a></li>
-  <li data-menuanchor="page2"><a href="#page2">2</a></li>
-  <li data-menuanchor="page3"><a href="#page3">3</a></li>
-  <li data-menuanchor="page4"><a href="#page4">4</a></li>
-  <li data-menuanchor="page5"><a href="#page5">5</a></li>
-</ul>
-<!-- 右侧圆点 END-->
 
  <!--右侧按钮-->
     <div class="swiper-pagination"></div>
     <!--右侧浮动导航开始-->
+<script>
+	function gotop()
+	{
+	    $('html,body').animate({scrollTop:0},400);
+	}
+</script>
     <div class="floatbox">
       <a  href="/user" target="_blank" title="申报入口">
         <img src="/client/l_images/float_ico02.png" width="42" height="42" alt="申报入口">
       </a>
-      <a href="#" title="搜索" target="_blank" rel="nofollow">
+      <a href="/info/search" title="搜索" target="_blank" rel="nofollow">
         <img src="/client/l_images/float_ico01.png" width="42" height="42" alt="搜索">
       </a>
-      <a id="BizQQWPA" href="http://wpa.qq.com/msgrd?v=3&uin=1981148933&site=qq&menu=yes" target="_blank" title="在线客服">
+      <a id="BizQQWPA" href="http://wpa.qq.com/msgrd?v=3&uin=<#if site??>${site.qq1}</#if>&site=qq&menu=yes" target="_blank" title="在线客服">
         <img src="/client/l_images/float_ico06.png" width="42" height="42" alt="在线客服">
       </a>
       <a href="javascript:loginWinOpen('weixin_win','myselfbox',200);" title="官方微信">
         <img src="/client/l_images/float_ico03.png" width="42" height="42" alt="官方微信">
-        <span class="qr"><img src="/client/l_images/QR_code.png"></span>
+        <span class="qr"><img src="<#if site??>${site.wxQrCode!''}</#if>"></span>
       </a>
       
       <a title="客服电话">
         <img src="/client/l_images/float_ico04.png" width="42" height="42" alt="客服电话">
-        <span class="phone_num">023-8888 8888</span>
+        <span class="phone_num"><#if site??>${site.telephone!''}</#if></span>
       </a>
-      <a href="#page1" title="到顶部">
+      <a href="javascript:gotop();" title="到顶部">
         <img src="/client/l_images/float_ico05.png" width="42" height="42" alt="到顶部">
       </a>
     </div>
@@ -90,7 +95,6 @@
   <#else>  
     <a href="/enterprise/check">在线征集</a>
   </#if> 
-    <img src="<#if site??>${site.wxQrCode!''}</#if>" alt="二维码" />
   </div>
   <!-- banner END -->
 
@@ -114,17 +118,35 @@
                             <#if ("organization_level1_"+item.id)?eval??>
                                 <#list ("organization_level1_"+item.id)?eval as article>
                                     <#if article_index < 1>
-                                        <p><a title="查看更多信息" href="<#if article.linkUrl??&&article.linkUrl?length gt 0>${article.linkUrl!''}<#else>/info/list/content/${article.id?c!''}?mid=${article.menuId!''}</#if>">${article.title!''}</a></p>
+                                        <p class="current">
+	                                        <a title="${article.title!''}" target="_blank" href="<#if article.linkUrl??&&article.linkUrl?length gt 0>${article.linkUrl!''}<#else>/info/list/content/${article.id?c!''}?mid=${article.menuId!''}</#if>">
+	                                        	<#if article.title?length gt 11>
+	                                        		${article.title[0..10]}...
+	                                        	<#else>
+	                                        		${article.title!''}
+	                                        	</#if>
+	                                        </a>
+                                        </p>
                                     </#if>
                                 </#list>
                             </#if>
+                         </li>
                                                             
                     <#elseif item_index == 1>
+                     <li class="li1">
                         <p class="p1">${item.title!''}</p>
                         <#if ("organization_level1_"+item.id)?eval??>
                               <#list ("organization_level1_"+item.id)?eval as article>
                                     <#if article_index < 5>
-                                        <p><a title="查看更多信息" href="<#if article.linkUrl??&&article.linkUrl?length gt 0>${article.linkUrl!''}<#else>/info/list/content/${article.id?c!''}?mid=${article.menuId!''}</#if>">${article.title!''}</a></p>
+                                        <p class="current">
+	                                        <a title="${article.title!''}" target="_blank"  href="<#if article.linkUrl??&&article.linkUrl?length gt 0>${article.linkUrl!''}<#else>/info/list/content/${article.id?c!''}?mid=${article.menuId!''}</#if>">
+	                                        	<#if article.title?length gt 11>
+	                                        		${article.title[0..10]}...
+	                                        	<#else>
+	                                        		${article.title!''}
+	                                        	</#if>
+	                                        </a>
+                                        </p>                                    
                                     </#if>
                               </#list>
                         </#if>                              
@@ -135,28 +157,52 @@
                             <#if ("organization_level1_"+item.id)?eval??>
                                 <#list ("organization_level1_"+item.id)?eval as article>
                                     <#if article_index < 6>
-                                        <p><a title="查看更多信息" href="<#if article.linkUrl??&&article.linkUrl?length gt 0>${article.linkUrl!''}<#else>/info/list/content/${article.id?c!''}?mid=${article.menuId!''}</#if>">${article.title!''}</a></p>
+                                        <p class="current">
+	                                        <a title="${article.title!''}"  target="_blank" href="<#if article.linkUrl??&&article.linkUrl?length gt 0>${article.linkUrl!''}<#else>/info/list/content/${article.id?c!''}?mid=${article.menuId!''}</#if>">
+	                                        	<#if article.title?length gt 11>
+	                                        		${article.title[0..10]}...
+	                                        	<#else>
+	                                        		${article.title!''}
+	                                        	</#if>
+	                                        </a>
+                                        </p>                                      
                                     </#if>
                                 </#list>
                             </#if>                                
                         </li>
-                        <li class="li3 current">
+                        <li class="li3">
                             <p class="p1">${item.title!''}</p>
                             <#if ("organization_level1_"+item.id)?eval??>
                                 <#list ("organization_level1_"+item.id)?eval as article>
                                     <#if article_index gt 5>
-                                        <p><a title="查看更多信息" href="<#if article.linkUrl??&&article.linkUrl?length gt 0>${article.linkUrl!''}<#else>/info/list/content/${article.id?c!''}?mid=${article.menuId!''}</#if>">${article.title!''}</a></p>
+                                        <p class="current">
+	                                        <a title="${article.title!''}" target="_blank"  href="<#if article.linkUrl??&&article.linkUrl?length gt 0>${article.linkUrl!''}<#else>/info/list/content/${article.id?c!''}?mid=${article.menuId!''}</#if>">
+	                                        	<#if article.title?length gt 11>
+	                                        		${article.title[0..10]}...
+	                                        	<#else>
+	                                        		${article.title!''}
+	                                        	</#if>
+	                                        </a>
+                                        </p>                                      
                                     </#if>
                                 </#list>
                             </#if>                                
                         </li>
                     <#elseif item_index == 4|| item_index == 5>
-                        <li class="li2" style="width:19%;">
+                        <li class="li2">
                             <p class="p1">${item.title!''}</p>
                             <#if ("organization_level1_"+item.id)?eval??>
                                 <#list ("organization_level1_"+item.id)?eval as article>
                                     <#if article_index < 6>
-                                        <p><a title="查看更多信息" href="<#if article.linkUrl??&&article.linkUrl?length gt 0>${article.linkUrl!''}<#else>/info/list/content/${article.id?c!''}?mid=${article.menuId!''}</#if>">${article.title!''}</a></p>
+                                        <p class="current">
+	                                        <a title="${article.title!''}"  target="_blank" href="<#if article.linkUrl??&&article.linkUrl?length gt 0>${article.linkUrl!''}<#else>/info/list/content/${article.id?c!''}?mid=${article.menuId!''}</#if>">
+	                                        	<#if article.title?length gt 11>
+	                                        		${article.title[0..10]}...
+	                                        	<#else>
+	                                        		${article.title!''}
+	                                        	</#if>
+	                                        </a>
+                                        </p>                                      
                                     </#if>
                                 </#list>
                             </#if>
@@ -167,7 +213,15 @@
                             <#if ("organization_level1_"+item.id)?eval??>
                                 <#list ("organization_level1_"+item.id)?eval as article>
                                     <#if article_index < 6>
-                                        <p><a title="查看更多信息" href="<#if article.linkUrl??&&article.linkUrl?length gt 0>${article.linkUrl!''}<#else>/info/list/content/${article.id?c!''}?mid=${article.menuId!''}</#if>">${article.title!''}</a></p>
+                                        <p class="current">
+	                                        <a title="${article.title!''}" target="_blank"  href="<#if article.linkUrl??&&article.linkUrl?length gt 0>${article.linkUrl!''}<#else>/info/list/content/${article.id?c!''}?mid=${article.menuId!''}</#if>">
+	                                        	<#if article.title?length gt 11>
+	                                        		${article.title[0..10]}...
+	                                        	<#else>
+	                                        		${article.title!''}
+	                                        	</#if>
+	                                        </a>
+                                        </p>                                      
                                     </#if>
                                 </#list>
                             </#if>
@@ -184,7 +238,7 @@
                 <p class="p1">${activityAbout.title!''}</p>
                 <p class="p2">${activityAbout.callIndex!''}</p>
                 <p class="p3">${activityAbout.brief!''}</p>
-                <p class="p4"><a title="查看更多信息" href="<#if activityAbout.linkUrl??&&activityAbout.linkUrl?length gt 0>${activityAbout.linkUrl!''}<#else>/info/list/content/${activityAbout.id?c!''}?mid=${activityAbout.menuId!''}</#if>">查看更多</a></p>
+                <p class="p4"><a title="查看更多信息" target="_blank"  href="<#if activityAbout.linkUrl??&&activityAbout.linkUrl?length gt 0>${activityAbout.linkUrl!''}<#else>/info/list/content/${activityAbout.id?c!''}?mid=${activityAbout.menuId!''}</#if>">查看更多</a></p>
            	</#if>
             </div>
         </div>
@@ -209,7 +263,7 @@
                                             </#if>
                               </p>
                               <p class="p4">
-                                  <a href="<#if item.linkUrl??>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>" class="a1">查看详情&rarr;</a>
+                                  <a target="_blank"  href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>" class="a1">查看详情&rarr;</a>
                                   <#--<a href="<#if item.linkUrl??>${item.linkUrl}<#else>/info/aIn/${item.id?c!''}</#if>" class="a2">了解更多信息</a>-->
                               </p>  
                           </div>
@@ -220,8 +274,8 @@
                         
                       </div>      
                     </div>
-                    <a class="prev" href="#"></a>
-                    <a class="next" href="#"></a>
+                    <a class="prev" href="javascript:void(0)"></a>
+                    <a class="next" href="javascript:void(0)"></a>
                     <script type="text/javascript" src="/client/js/jquery.js"></script>
                     <script src="/client/js/scroll.js"></script>
                 </div>
@@ -237,11 +291,11 @@
                     	<#list fiveSupport_page.content as item>
                     		<#if item_index lt 5>
 		                    <div class="div${item_index+2}">
-		                    	<#if item_index == 2>
+		                    	<#if  item_index gt 1>
 			                    	<p class="p2">
 			                            <i class="i${item_index+1}"></i>
 			                            <b>
-				                            <a style="color:#01468f;" href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>" title="查看详细介绍">
+				                            <a target="_blank"  style="color:#01468f;" href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>" title="查看详细介绍">
 				                           	    ${item.title!''}
 				                            </a>
 			                            </b>
@@ -252,7 +306,7 @@
 			                        <p class="p2">
 			                            <i class="i${item_index+1}"></i>
 			                            <b>
-				                            <a style="color:#01468f;" href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>" title="查看详细介绍">
+				                            <a target="_blank"  style="color:#01468f;" href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>" title="查看详细介绍">
 				                           	    ${item.title!''}
 				                            </a>
 			                            </b>
@@ -272,14 +326,29 @@
                         <p class="p2">News dynamics</p>
                     </div>
                     <div class="div2">
-                        <video width="480" height="400" src="<#if video??><#list video.content as item><#if item_index=0>${item.imgUrl!''}</#if></#list></#if>" controls="controls" id="video" autoplay="autoplay">
+                    <#--
+                        <video style="background:#000;" width="480" height="400" src="<#if video??><#list video.content as item><#if item_index=0>${item.imgUrl!''}</#if></#list></#if>" controls="controls" id="video" >
                                  您的浏览器不支持该视频播放               
                         </video>
+                     -->
+					   <video id="example_video_1" class="video-js vjs-default-skin" controls preload="none" width="480" height="340"
+					      poster="/client/l_images/banner_bg1.png"
+					      data-setup="{}">
+					    <source src="<#if video??><#list video.content as item><#if item_index=0>${item.imgUrl!''}</#if></#list></#if>" type='video/mp4' />
+					    <#-->
+					    <source src="http://video-js.zencoder.com/oceans-clip.webm" type='video/webm' />
+					    <source src="http://video-js.zencoder.com/oceans-clip.ogv" type='video/ogg' />
+					    -->
+					    <track kind="captions" src="/client/js/demo.captions.vtt" srclang="en" label="English"></track><!-- Tracks need an ending tag thanks to IE9 -->
+					    <track kind="subtitles" src="/client/js/demo.captions.vtt" srclang="en" label="English"></track><!-- Tracks need an ending tag thanks to IE9 -->
+					  </video>   
+					  
+                        <#-- 视频兼容调试-->
                         <ul>
                         <#if news_list??>                   
                             <#list news_list as item>
                                 <#if item_index < 3>
-                                    <li class="li1"><a href="javascript:showVideo${item_index}();">
+                                    <li class="li1"><a target="_blank"  href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>">
                                         <img src="${item.imgUrl!''}" width="173" height="120" alt="新闻图片" />
                                         <div class="newsmess">
                                             <p class="p1"><#if item.title?length lt 18>
@@ -307,7 +376,7 @@
                     <#if news_list??>
                         <#list news_list as item>
                             <#if item_index gt 2&&item_index lt 6>
-                                <li class="li1"><a href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>">
+                                <li class="li1"><a target="_blank"  href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>">
                                    <img src="${item.imgUrl!''}" width="173" height="120" alt="新闻图片" />
                                     <div class="newsmess1">
                                         <p class="p1"><#if item.title?length lt 18>
@@ -333,19 +402,6 @@
                 <!-- 底部end -->
             </div>
 
-<script src="/client/js/jquery.min.js"></script>
-<script src="/client/js/jquery-ui-1.10.3.min.js"></script>
-<script src="/client/js/jquery.fullPage.min.js"></script>
-<script>
-  $(function(){
-    $.fn.fullpage({
-      // slidesColor: ['#009999', '#CC6600', '#CCCC00', '#66CC66', '#CC3366'],
-      anchors: ['page1', 'page2', 'page3', 'page4', 'page5'],
-      menu: '#menu'
-    });
-  });
-</script>
-<!--代码部分end-->
 
 </body>
 </html>

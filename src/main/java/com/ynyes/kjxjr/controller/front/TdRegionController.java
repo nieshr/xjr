@@ -217,7 +217,7 @@ public class TdRegionController {
             Enterprise.setStatusId(1L);
             tdEnterpriseService.save(Enterprise);
             
-            TdArticle article = tdArticleService.findByRecommendId(Enterprise.getId());
+            TdArticle article = tdArticleService.findByRecommendIdAndMenuId(Enterprise.getId() , 11L);
             if (null == article)
             {
             	TdArticle newArticle = new TdArticle();
@@ -236,7 +236,7 @@ public class TdRegionController {
             }
             
             //短信提醒
-//            smsPass(Enterprise.getUsermobile(), 1L , Enterprise.getTitle() , res,req);
+            smsPass(Enterprise.getUsermobile(), 1L , Enterprise.getTitle() , res,req);
             
             //站内信
             TdRegionAdmin admin = tdRegionAdminService.findbyUsername(username);
@@ -245,7 +245,7 @@ public class TdRegionController {
             message.setRegionAdminId(admin.getId());
             message.setName(Enterprise.getTitle());
             message.setRegion(admin.getTitle());
-            message.setContent("【审核】恭喜您通过"+admin.getRegion()+"地区的审核，请登录个人中心查看详情！");
+            message.setContent("【审核】恭喜您通过"+admin.getRegion()+"的审核，请登录个人中心查看详情！");
             message.setTitle("通过审核");
             message.setStatusE(0L);
             message.setSpeaker(1L);

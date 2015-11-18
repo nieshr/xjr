@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>联系我们</title>
+	<title>科技小巨人-联系我们</title>
 	<link rel="shortcut icon" href="/client/images/icon.ico" />
 	<link rel="stylesheet" href="/client/css/news_base.css">
 	<link rel="stylesheet" href="/client/css/news_main.css">

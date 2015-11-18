@@ -93,6 +93,7 @@
 </div>
 <input name="menuId" type="text" value='${mid!""}' style="display:none;">
 <input name="channelId" type="text" value='${cid!""}' style="display:none">
+<input name="recommendId" type="text" value='<#if article??&&article.recommendId??>${article.recommendId?c!""}</#if>' style="display:none">
 <input name="id" type="text" value='<#if article??>${article.id!""}</#if>' style="display:none">
     <!--导航栏-->
     <div class="location">
@@ -188,8 +189,8 @@
         <dl>
             <dt>内容标题</dt>
             <dd>
-                <input name="title" type="text" value="<#if article??>${article.title!""}</#if>" id="txtTitle" class="input normal" datatype="*2-25" sucmsg=" ">
-                <span class="Validform_checktip">*标题最多25个字符</span>
+                <input name="title" type="text" value="<#if article??>${article.title!""}</#if>" id="txtTitle" class="input normal" datatype="*2-50" sucmsg=" ">
+                <span class="Validform_checktip">*标题最多50个字符</span>
             </dd>
         </dl>
         

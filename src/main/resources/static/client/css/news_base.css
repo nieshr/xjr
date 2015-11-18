@@ -13,7 +13,7 @@ textarea { resize:none;}
 table { border-collapse:collapse;border-spacing:0;}
 th , td { text-align:left;}
 div{ margin:0 auto;}
-.wrapper{ width:1200px; display:block; overflow:hidden;background: url(../img/logo.png) no-repeat;height: 75px;}
+.wrapper{ width:100%; display:block; overflow:hidden;background: url(../img/logo.png) no-repeat;height: 75px;}
 .w100{ width:100%; display:block; overflow:hidden;}
 /*头部*/
 .wrapper-nav{margin-left: 194px;}

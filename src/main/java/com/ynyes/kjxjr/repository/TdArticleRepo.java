@@ -40,6 +40,8 @@ public interface TdArticleRepo extends
     //顺序排列 zhangji
     Page<TdArticle> findByMenuIdAndCategoryIdAndStatusIdOrderByIdAsc(Long menuId, Long catId, Long statusId, Pageable page);
     
+    Page<TdArticle> findByMenuIdAndCategoryIdAndSourceAndStatusIdOrderByCreateTimeDesc(Long menuId, Long catId, String source ,Long statusId, Pageable page);
+    
     Page<TdArticle> findByChannelIdAndCategoryIdOrderBySortIdAsc(Long channeldId, Long catId, Pageable page);
     
     List<TdArticle> findByMenuIdAndCategoryIdAndStatusIdOrderByIdDesc(Long menuId, Long catId, Long statusId);
@@ -52,11 +54,19 @@ public interface TdArticleRepo extends
     List<TdArticle> findByChannelIdAndCategoryIdOrderBySortIdAsc(Long channeldId, Long catId);
     Page<TdArticle> findByChannelIdOrderBySortIdAsc(Long channeldId, Pageable page);
     
+    //搜索全部 zhangji
+    Page<TdArticle> findByTitleContainingIgnoreCaseAndStatusIdOrBriefContainingIgnoreCaseAndStatusId(
+    		String keywords,Long statusId, String keywords1,Long statusId1,Pageable page);
+    
     //搜索课程 zhangji
     Page<TdArticle> findByTitleContainingIgnoreCaseAndStatusIdAndMenuIdOrBriefContainingIgnoreCaseAndStatusIdAndMenuId(
     		String keywords,Long statusId,Long menuId, String keywords1,Long statusId1,Long menuId1, Pageable page);
     
     int countByCategoryId(Long catId);
     
-    TdArticle findByRecommendId(Long recommendId);
+    TdArticle findByRecommendIdAndMenuId(Long recommendId , Long  menuId);
+    
+    //根据类别查找，按时间排序
+    List<TdArticle> findByMenuIdAndCategoryIdAndStatusIdOrderByCreateTimeDesc(Long menuId, Long catId, Long statusId);
+    List<TdArticle> findByMenuIdAndCategoryIdAndSourceAndStatusIdOrderByCreateTimeDesc(Long menuId, Long catId, String source ,  Long statusId);
 }

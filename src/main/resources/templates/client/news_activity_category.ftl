@@ -5,7 +5,7 @@
 <link rel="shortcut icon" href="/client/images/icon.ico" />
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>科技小巨人-新闻动态</title>
+<title>科技小巨人<#if activityType??>-${activityType!''}</#if></title>
 <link rel="stylesheet" type="text/css" href="/client/css/base.css"/>
 <link rel="stylesheet" type="text/css" href="/client/css/news.css"/>
 <link rel="stylesheet" href="/client/css/news_base.css">
@@ -24,7 +24,7 @@
 			<a href="/info/index"><li <#if active??&&active==3>class="active"</#if>>新闻动态</li></a>
 			<a href="/info/projectshow"><li <#if active??&&active==4>class="active"</#if>>企业项目</li></a>
 			<a href="/info/resource"><li <#if active??&&active==5>class="active"</#if>>专家资源</li></a>
-			<a href="/info/host"><li>合作机构</li <#if active??&&active==6>class="active"</#if>></a>
+			<a href="/info/host"><li <#if active??&&active==6>class="active"</#if>>合作机构</li></a>
 			<a href="/info/contact"><li <#if active??&&active==7>class="active"</#if>>联系方式</li></a>
 		</ul>
                 <#if username??>
@@ -76,42 +76,43 @@ function gotop()
 <div class="location_nav">
   <div class="location">
     <ul>
-      <li><a href="/info/index">新闻动态</a></li>
-      <#if newsCat_list??>
-           <#list newsCat_list as item>
-                <li <#if item.id==catId>class="me"</#if>><a href="/info/list/10?catId=${item.id?c}">${item.title!''}</a></li>
+      <li <#if !activityType??>class="me"</#if>><a href="/info/activity/list">专项行动</a></li>
+      <#if activityType_list??>
+           <#list activityType_list as item>
+                <li <#if activityType?? && activityType == item.title>class="me"</#if>><a href="/info/activity/list?activityType=${item.title!'' }">${item.title!''}</a></li>
            </#list>
-      </#if>      
+      </#if>
     </ul>
   </div>
 </div>
 
 <!--各种新闻-->
-<div class="news_b">
+<div class="news_b" style="min-height:300px;">
   <ul>
-  <#if info_page??>
+    <#if info_page??>
       <#list info_page.content as item>
-            <li><a href="/info/list/content/${item.id?c}?mid=10">
-              <div class="pic"><img src="${item.imgUrl!''}" /></div>
+            <li><a href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>">
+              <div class="pic"><img src="<#if item.imgUrl??&&item.imgUrl?length gt 0>${item.imgUrl!''}<#else>/client/news_img/modification.png</#if>" /></div>
               <div class="news_words">
                 <div class="news_title">${item.title!''}</div>
-                <div class="news_time">${item.createTime?string("yyyy-MM-dd")}</div>
+                <div class="news_time"><#if item.createTime??>${item.createTime?string("yyyy-MM-dd")}</#if></div>
                 <div class="news_detail">${item.brief!''}</div>
               </div>
               </a></li>
       </#list>
-  </#if>  
+     </#if>  
   </ul>
 </div>
 
 <!--页码按钮-->
+<#if info_page??>
 <#assign PAGE_DATA=info_page />
 <div class="pagnation" id="pagnation">
  <#if PAGE_DATA??>
      <#if PAGE_DATA.number+1 == 1>
           <a disabled="disabled"  class="page-prev">上一页"</a>               
      <#else>
-         <a href="/info/list/10?catId=${item.id?c}&page=${PAGE_DATA.number-1}"  class="page-prev">上一页"</a>                
+         <a href="/info/activity/list?activityType=${activityType!'' }&page=${PAGE_DATA.number-1}"  class="page-prev">上一页"</a>                
      </#if>
      
      <#assign continueEnter=false>
@@ -122,7 +123,7 @@ function gotop()
                  <#if page == PAGE_DATA.number+1>
                      <a  class ="current">${page }</a>
                  <#else>
-                     <a href="/info/list/10?catId=${item.id?c}&page=${page-1}">${page}</a> 
+                     <a href="/info/activity/list?activityType=${activityType!'' }&page=${page-1}&keywords=${keywords!''}">${page}</a> 
                  </#if>
                  <#assign continueEnter=false>
              <#else>
@@ -138,12 +139,12 @@ function gotop()
      <#if PAGE_DATA.number+1 == PAGE_DATA.totalPages || PAGE_DATA.totalPages==0>
          <a disabled="disabled" class="page-next">下一页</a> 
      <#else>
-         <a href="/info/list/10?catId=${item.id?c}&page=${PAGE_DATA.number+1}" class="page-next">下一页</a> 
+         <a href="/info/activity/list?activityType=${activityType!'' }&page=${PAGE_DATA.number+1}&keywords=${keywords!''}" class="page-next">下一页</a> 
      </#if>
  </#if>
     
 </div>
-
+  </#if>  
 
 
 <!-- 底部 -->

@@ -121,6 +121,7 @@ public class TdActivity {
     // ppt
     @Column
     private String pptUrl;
+    
 
 	public Long getId() {
 		return id;

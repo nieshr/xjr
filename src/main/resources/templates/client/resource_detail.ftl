@@ -29,7 +29,7 @@
 			<#list info_page.content as item>
 				<#if catId??>
 					<li>
-						<img src="${item.imgUrl!''}" alt="展示图片" onclick="location.href='/info/list/content/${item.id?c!''}?mid=12'">
+						<img src="<#if item.imgUrl??&&item.imgUrl != "">${item.imgUrl!''}<#else>/client/images/default.jpg</#if>" alt="展示图片" onclick="location.href='/info/list/content/${item.id?c!''}?mid=12'">
 						<h6>${item.title!''}</h6>
 						<#if item.brief?length lt 20>
 							<p>${item.brief!''}</p>
@@ -39,7 +39,7 @@
 					</li>
 				<#else>
 					<li>
-						<img src="${item.imgUrl!''}" alt="展示图片" onclick="location.href='/info/list/content/expert/${item.id?c}'">
+						<img src="<#if item.imageUri??&&item.imageUri != "">${item.imageUri!''}<#else>/client/images/default.jpg</#if>" alt="展示图片" onclick="location.href='/info/list/content/expert/${item.id?c}'">
 						<h6>${item.inCharge!''}</h6>
 						<#if item.content??>
 							<#if item.content?length lt 20>
@@ -68,7 +68,11 @@
 	 <#if PAGE_DATA.number+1 == 1>
           <a disabled="disabled"  class="page-prev">上一页"</a>               
      <#else>
-         <a href="/info/resource?page=${PAGE_DATA.number-1}"  class="page-prev">上一页"</a>                
+	     <#if catId??>
+	     	<a href="/info/resource/3?mid=12&page=${PAGE_DATA.number-1}">下一页</a> 
+	     <#else>
+	     	<a href="/info/resource/expert?page=${PAGE_DATA.number-1}">下一页</a> 
+	     </#if>	              
      </#if>
      
      <#assign continueEnter=false>
@@ -79,7 +83,11 @@
                  <#if page == PAGE_DATA.number+1>
                      <a  class ="current">${page }</a>
                  <#else>
-                     <a href="/info/resource?page=${page-1}">${page}</a> 
+                 	<#if catId??>
+                     	<a href="/info/resource/3?mid=12&page=${page-1}">${page}</a> 
+                     <#else>
+                     	<a href="/info/resource/expert?page=${page-1}">${page}</a> 
+                     </#if>	
                  </#if>
                  <#assign continueEnter=false>
              <#else>
@@ -95,7 +103,11 @@
      <#if PAGE_DATA.number+1 == PAGE_DATA.totalPages || PAGE_DATA.totalPages==0>
          <a disabled="disabled" class="page-next">下一页</a> 
      <#else>
-         <a href="/info/resource?page=${PAGE_DATA.number+1}" class="page-next">下一页</a> 
+	     <#if catId??>
+	     	<a href="/info/resource/3?mid=12&page=${PAGE_DATA.number+1}">下一页</a> 
+	     <#else>
+	     	<a href="/info/resource/expert?page=${PAGE_DATA.number+1}">下一页</a> 
+	     </#if>	
      </#if>
  </#if>
     

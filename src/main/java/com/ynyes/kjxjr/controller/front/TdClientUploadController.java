@@ -121,8 +121,8 @@ public class TdClientUploadController {
             byte[] bytes = Filedata.getBytes();
 
             Date dt = new Date(System.currentTimeMillis());
-//            SimpleDateFormat sdf = new SimpleDateFormat("HHmmssSSS");
-            String fileName ="Num"+tdEnterpriseService.findbyUsername(username).getNumber()/*+"_"+ sdf.format(dt) */+ ext;
+            SimpleDateFormat sdf = new SimpleDateFormat("HHmmssSSS");
+            String fileName ="Num"+tdEnterpriseService.findbyUsername(username).getNumber()+"_"+ sdf.format(dt) + ext;
 
             String uri = ImageRoot + "/" + fileName;
 
@@ -416,8 +416,8 @@ public class TdClientUploadController {
             byte[] bytes = Filedata.getBytes();
 
             Date dt = new Date(System.currentTimeMillis());
-//            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-            String fileName = "PPT"+id/*+"_"+ sdf.format(dt)*/ + ext;
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+            String fileName = "PPT"+id+"_"+ sdf.format(dt) + ext;
 
             String uri = ImageRoot + "/" + fileName;
 

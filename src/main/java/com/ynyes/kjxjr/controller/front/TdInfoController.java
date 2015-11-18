@@ -237,6 +237,24 @@ public class TdInfoController {
     }
 	
 	
+	@RequestMapping("/search")
+    public String search(String keywords , Integer page , ModelMap map, HttpServletRequest req){
+        
+	    tdCommonService.setHeader(map, req);
+	    
+	    if (null == page )
+	    {
+	    	page = 0;
+	    }
+     
+	    Page<TdArticle> infoPage = tdArticleService.searchArticle(keywords, page, ClientConstant.pageSize);
+	    map.addAttribute("info_page", infoPage);
+	    map.addAttribute("keywords", keywords);
+
+        
+        return "/client/search";
+    }
+	
 	@RequestMapping("/list/content/expert/{id}")
     public String contentExpert(@PathVariable Long id, ModelMap map, HttpServletRequest req){
         
@@ -658,13 +676,75 @@ public class TdInfoController {
         
 	    tdCommonService.setHeader(map, req);
 	    
-		Long active = 5L;
+		Long active = 4L;
 		map.addAttribute("active",active);
-		map.addAttribute("team_page", tdArticleService.findByMenuIdAndCategoryIdAndIsEnableOrderByIdDesc(11L, 16L, 0, ClientConstant.pageSize));	    
-		map.addAttribute("project_page", tdArticleService.findByMenuIdAndCategoryIdAndIsEnableOrderByIdDesc(11L, 17L, 0, ClientConstant.pageSize));	    
-		map.addAttribute("story_page", tdArticleService.findByMenuIdAndCategoryIdAndIsEnableOrderByIdDesc(11L, 18L, 0, ClientConstant.pageSize));	    
+		
+		//根据栏目名称查找
+        List<TdArticleCategory> showList = tdArticleCategoryService
+                .findByMenuId(11L);
+        map.addAttribute("show_list" , showList);
+
+        if (null != showList && showList.size() > 0) {
+            for (TdArticleCategory tdCat : showList)
+            {
+                if (null != tdCat.getTitle() && tdCat.getTitle().equals("企业展"))
+                {
+                    Page<TdArticle> teamPage =  tdArticleService
+                            .findByMenuIdAndCategoryIdAndIsEnableOrderBySortIdAsc(11L,
+                                    tdCat.getId(), 0, ClientConstant.pageSize);
+                    
+                    map.addAttribute("team_page", teamPage);
+                }
+                if (null != tdCat.getTitle() && tdCat.getTitle().equals("团队展"))
+                {
+                    map.addAttribute("project_page", tdArticleService
+                            .findByMenuIdAndCategoryIdAndIsEnableOrderBySortIdAsc(11L,
+                                    tdCat.getId(), 0, ClientConstant.pageSize));
+                }
+                if (null != tdCat.getTitle() && tdCat.getTitle().equals("创业故事"))
+                {
+                    map.addAttribute("story_page", tdArticleService
+                            .findByMenuIdAndCategoryIdAndIsEnableOrderBySortIdAsc(11L,
+                                    tdCat.getId(), 0, ClientConstant.pageSize));
+                }
+            }
+        }
+//		map.addAttribute("team_page", tdArticleService.findByMenuIdAndCategoryIdAndIsEnableOrderByIdDesc(11L, 16L, 0, ClientConstant.pageSize));	    
+//		map.addAttribute("project_page", tdArticleService.findByMenuIdAndCategoryIdAndIsEnableOrderByIdDesc(11L, 17L, 0, ClientConstant.pageSize));	    
+//		map.addAttribute("story_page", tdArticleService.findByMenuIdAndCategoryIdAndIsEnableOrderByIdDesc(11L, 18L, 0, ClientConstant.pageSize));	    
 	    return "/client/projectshow";
 	}
+	
+	//企业项目-详情
+	@RequestMapping("/projectshow/detail")
+    public String projectshowDetail( Long catId , Long mid , Integer page , ModelMap map, HttpServletRequest req){
+        
+	    tdCommonService.setHeader(map, req);
+	    
+		Long active = 4L;
+		map.addAttribute("active",active);
+		
+		if (null == page)
+		{
+			page = 0;
+		}
+		
+		//根据栏目名称查找
+        List<TdArticleCategory> showList = tdArticleCategoryService
+                .findByMenuId(mid);
+        map.addAttribute("show_list" , showList);
+		
+		//根据栏目类别查找
+        Page<TdArticle> showPage = tdArticleService
+        		.findByMenuIdAndCategoryIdAndIsEnableOrderBySortIdAsc(mid, catId, page, ClientConstant.pageSize);
+        map.addAttribute("show_page" , showPage);
+        
+        map.addAttribute("catId", catId);
+        map.addAttribute("menuName", tdArticleCategoryService.findOne(catId).getTitle());
+    
+	    return "/client/projectshow_detail";
+	}
+	
 	//专家资源
 	@RequestMapping("/resource")
     public String resource(ModelMap map, HttpServletRequest req){
@@ -816,20 +896,49 @@ public class TdInfoController {
 	
 	//专项行动
 	@RequestMapping(value="/activity/list")
-	public String activityList(String activityType , HttpServletRequest req,ModelMap map){
+	public String activityList(String activityType , Integer page , HttpServletRequest req,ModelMap map){
 		tdCommonService.setHeader(map, req);
-		
-		
-		if (null == activityType || activityType.equals(""))
+
+		if(null == page)
 		{
-			List<TdActivity>	activityList = tdActivityService.findAllOrderByDateDesc();
-			map.addAttribute("activity_list",activityList);
+			page = 0;
 		}
-		else
-		{
-			List<TdActivity>	activityList = tdActivityService.findByActivityTypeOrderByDateDesc(activityType);
-			map.addAttribute("activity_list",activityList);
-		}
+		
+        List<TdArticleCategory> systemList = tdArticleCategoryService
+                .findByMenuId(13L);
+
+        if (null != systemList && systemList.size() > 0) {
+            for (TdArticleCategory tdCat : systemList)
+            {
+                if (null != tdCat.getTitle() && tdCat.getTitle().equals("培育活动"))
+                {
+            		if (null == activityType || activityType.equals(""))
+            		{
+	                    List<TdArticle> activityList =  tdArticleService
+	                    			.findByMenuIdAndCategoryIdAndIsEnableOrderByCreateTimeDesc(13L, tdCat.getId());
+	                           
+	                    map.addAttribute("activity_list", activityList);
+            		}
+            		else
+            		{
+	                    Page<TdArticle> infoPage =  tdArticleService
+                    			.findByMenuIdAndCategoryIdAndSourceAndIsEnableOrderByCreateTimeDesc(13L, tdCat.getId() , activityType ,  page, ClientConstant.pageSize);
+                           
+	                    map.addAttribute("info_page", infoPage);
+	            		Long active = 2L;
+	            		map.addAttribute("active",active);
+	            		
+	            		map.addAttribute("activityType", activityType);
+	            		map.addAttribute("activityType_list" , tdActivityTypeService.findAllOrderBySortIdAsc());
+	            		
+	            		return "/client/news_activity_category";
+	                    
+            		}
+
+                }
+            }
+        }
+	
 
 		Long active = 2L;
 		map.addAttribute("active",active);
@@ -918,17 +1027,23 @@ public class TdInfoController {
 	        if (null != systemList && systemList.size() > 0) {
 	            for (TdArticleCategory tdCat : systemList)
 	            {
-	                if (null != tdCat.getTitle() && tdCat.getTitle().equals("科技小巨人培育专项"))
+	                if (null != tdCat.getTitle() && tdCat.getTitle().equals("专项轮播"))
 	                {
 	                    map.addAttribute("breed_page", tdArticleService
 	                            .findByMenuIdAndCategoryIdAndIsEnableOrderBySortIdAsc(13L,
 	                                    tdCat.getId(), 0, ClientConstant.pageSize));
-	                    break;
 	                }
-
+	                if (null != tdCat.getTitle() && tdCat.getTitle().equals("行动概况"))
+	                {
+	                    map.addAttribute("aboutActivity_page", tdArticleService
+	                            .findByMenuIdAndCategoryIdAndIsEnableOrderBySortIdAsc(13L,
+	                                    tdCat.getId(), 0, ClientConstant.pageSize));
+	                }
 	            }
 	        }
-	    
+	    Long active = 1L;
+	    map.addAttribute("active" , active);
+	        
         return "/client/news_activity_introduction";
     }	
 	
@@ -992,6 +1107,7 @@ public class TdInfoController {
 	    map.addAttribute("menu_name4","支持单位");
 	    map.addAttribute("menu_name5","金融机构");
 	    map.addAttribute("menu_name6","支持媒体");
+	    map.addAttribute("article_list",articleList);
 	    
 	    List<List<TdArticle>> hostList = new ArrayList<>();
 	    hostList.add(intro1);
@@ -1001,7 +1117,9 @@ public class TdInfoController {
 	    hostList.add(intro5);
 	    hostList.add(intro6);
 	    map.addAttribute("host_list" , hostList);
-
+	    
+	    Long active = 6L;
+	    map.addAttribute("active", active);
 	    
         return "/client/news_host";
     }	

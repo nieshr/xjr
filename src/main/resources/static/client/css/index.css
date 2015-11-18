@@ -58,7 +58,7 @@
 .sect1 .banner1{
 	position:relative;
 	width:100%;
-	height:92%;
+	height:880px;
 	background:url(../images/kjxjr_logo_1.png) no-repeat center top;
 }
 .sect1 .banner1 a{
@@ -87,9 +87,10 @@
 }
 
 /*第二屏*/
+.sect2 {background: #fafafa;}
 .sect2 .section1{
 	*+padding:10px 0;    /*IE 7*/
-	margin-top:60px;
+	padding-top:60px;
 	width:100%;
 }
 .sect2 .section1 .div1 .p1{
@@ -105,17 +106,18 @@
 	overflow:hidden;
 	margin:0 auto;
 	margin-top:40px;
-	width:66%;
-	*+width:60%;        /*IE 7*/
+	width:1400px;
+	/*width:70%;*/
+	/**+width:62%; */       /*IE 7*/
 }
 .sect2 .section1 ul li{
 	float:left;
 	padding:10px;
 	*+padding:0;         /*IE 7*/
-	width:15%;
+	width:200px;
 	box-sizing:border-box;
 }
-.sect2 .section1 ul li.current{
+.sect2 .section1 ul li p.current:hover{
 	background:#eeeeee;
 }
 .sect2 .section1 ul li p{
@@ -149,8 +151,9 @@
 	color:#999999;
 }
 .sect2 .section2 .div1 .p3{
+	text-align:justify;
 	margin-top:20px;
-	line-height:40px;
+	line-height:32px;
 	font-size:15px;
 }
 .sect2 .section2 .div1 .p4{
@@ -263,7 +266,8 @@
 .sect3 .section2 div .p1,.sect3 .section2 div .p2{
 	float:left;
 }
-.sect3 .section2 div .p1{text-align:left;}
+.sect3 .section2 div .p1{overflow:hidden;text-align:justify;width:146px;height:70px;}
+.sect3 .section2 .div4 .p1{width:174px;}
 .sect3 .section2 .div2 .p1,.sect3 .section2 .div3 .p1{text-align:right;}
 .sect3 .section2 .div6 .p1{margin-top:30px;}
 .sect3 .section2 .div1{
@@ -272,19 +276,31 @@
 	background:#ffffff;
 	padding: 20px;
 }
+@media screen and (max-width: 1366px){
+    .sect3 .section2 .div1 {left: 45%;}
+}
 .sect3 .section2 .div2{
 	top:19%;
 	left:20%;
 }
+@media screen and (max-width: 1366px){
+    .sect3 .section2 .div2 {left: 8%;}
+}
 .sect3 .section2 .div3{
 	top:54%;
-	left:23%;
+	left:27%;
+}
+@media screen and (max-width: 1366px){
+    .sect3 .section2 .div3 {left: 18%;}
 }
 .sect3 .section2 .div4{
-	top:65%;
+	top:70%;
 	left:45%;
 	width:180px;
 	text-align:left;
+}
+@media screen and (max-width: 1366px){
+    .sect3 .section2 .div4 {left: 44%;}
 }
 .sect3 .section2 .div4 .p2{
 	margin-left:59px;
@@ -293,9 +309,15 @@
 	top:54%;
 	left:61%;
 }
+@media screen and (max-width: 1366px){
+    .sect3 .section2 .div5 {left: 66%;}
+}
 .sect3 .section2 .div6{
 	top:19%;
 	left:68%;
+}
+@media screen and (max-width: 1366px){
+    .sect3 .section2 .div6 {left: 75%;}
 }
 .sect3 .section2 div .p1{
 	font-size:12px;
@@ -361,7 +383,8 @@
 }
 .sect4 .sect1 .div2 ul{
 	overflow:hidden;
-	float:left;
+	/*float:left;*/
+	float:right;
 	*+padding:10px 0;    /*IE 7*/
 	margin-left:40px;
 	width:480px;

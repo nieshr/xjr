@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>指导单位</title>
+	<title>科技小巨人-指导单位</title>
+	<link rel="shortcut icon" href="/client/images/icon.ico" />
 	<link rel="stylesheet" href="/client/css/news_base.css">
 	<link rel="stylesheet" href="/client/css/news_main.css">
 	<script type="text/javascript" src="/client/js/jquery-1.9.1.min.js"></script>
@@ -18,12 +19,11 @@
 <div class="titlelist">
 	<div id="titlelist">
 		<div>
-		<a href="#">主办单位</a>
-		<a href="#">指导单位</a>
-		<a href="#">支持单位</a>
-		<a href="#">主办单位</a>
-		<a href="#">主办单位</a>
-		<a href="#">主办单位</a>
+			<#if article_list??>
+				<#list article_list as item>
+					<a href="javascript:void(0)">${item.title!''}</a>
+				</#list>
+			</#if>		
 		</div>
 	</div>
 <div class="contactustitle">
@@ -49,10 +49,14 @@
 			<#if hostList??>
 				<#list hostList as item>
 					<li>
-						<a title="查看更多信息" href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>">
-						<img src="${item.imgUrl!''}" alt="名称" width=150 height=150>
+						<img  style="cursor:pointer;" 
+								src="<#if item.imgUrl??&&item.imgUrl?length gt 0>${item.imgUrl!''}<#else>/client/news_img/modification01.png</#if>" 
+								alt="名称" 
+								width=150 height=150
+								title="查看详情"
+								onclick="location.href='<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>'">
 						<p>${item.title!''}</p>
-						</a>
+					
 					</li>
 				</#list>	
 			</#if>	
