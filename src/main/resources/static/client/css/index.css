@@ -110,11 +110,14 @@
 	/*width:70%;*/
 	/**+width:62%; */       /*IE 7*/
 }
+@media screen and (max-width:1366px){
+    .sect2 .section1 ul{ width:80%;}
+}
 .sect2 .section1 ul li{
 	float:left;
-	padding:10px;
+	padding:0;
 	*+padding:0;         /*IE 7*/
-	width:200px;
+	width:190px;
 	box-sizing:border-box;
 }
 .sect2 .section1 ul li p.current:hover{
@@ -242,6 +245,10 @@
 	background:url(../l_images/arrow.png) no-repeat;
 	background-position:0% 0%;
 }
+
+@media screen and (max-width:1366px){
+	.sect3 .section1 .prev{left:10%;}
+}
 .sect3 .section1 .next{
 	position:absolute;
 	top:50%;
@@ -252,6 +259,10 @@
 	height:71px;
 	background:url(../l_images/arrow.png) no-repeat;
 	background-position:100% 0%;
+}
+
+@media screen and (max-width:1366px){
+    .sect3 .section1 .next{right:10%;}
 }
 .sect3 .section2{
 	position:relative;

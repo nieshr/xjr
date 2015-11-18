@@ -11,6 +11,9 @@
 <link href="/client/css/l_base.css" rel="stylesheet" type="text/css" />
 <link href="/client/css/jquery.fullPage.css" rel="stylesheet" type="text/css" />
 <link href="/client/css/index.css" rel="stylesheet" type="text/css" />
+<style>
+#example_video_1{text-align:left;}
+</style>
 	<script type="text/javascript" src="/client/js/jquery-1.9.1.min.js"></script>
 	
   <!-- Chang URLs to wherever Video.js files will be hosted -->
@@ -113,7 +116,7 @@
             <#if organization_0_list??>
                 <#list organization_0_list as item>
                     <#if item_index == 0>
-                        <li class="li1">
+                        <li class="li1" style="margin-left:5%;">
                             <p class="p1">${item.title!''}</p>
                             <#if ("organization_level1_"+item.id)?eval??>
                                 <#list ("organization_level1_"+item.id)?eval as article>
