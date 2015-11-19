@@ -15,14 +15,19 @@
 	<link rel="shortcut icon" href="/client/images/icon.ico" />
 	<link href="/client/css/base.css" rel="stylesheet" type="text/css" />
 	<link href="/client/css/area.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="/client/css/ios6alert.css">
 
 <script src="/client/js/jquery-1.9.1.min.js"></script>
 <script src="/client/js/main.js"></script>
+<script src="/client/js/ios6alert.js"></script>
 <script>
 <#if errormsg??>
 function warnmsg()
 {
-    alert("${errormsg}");
+    $("body").ios6alert({
+        content : ${errormsg}
+    });
+    
 }
 
 window.onload=warnmsg;
@@ -43,7 +48,9 @@ function addExpert(id,activityId)
 			}
 			else
 			{
-				alert(data.msg);
+                $("body").ios6alert({
+                    content : data.msg
+                });
 			}
            
         }
@@ -63,7 +70,9 @@ function expertFinish(activityId)
 			}
 			else
 			{
-				alert(data.msg);
+                $("body").ios6alert({
+                    content : data.msg
+                });
 			}
            
         }

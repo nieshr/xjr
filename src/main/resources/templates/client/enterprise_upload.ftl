@@ -4,20 +4,30 @@
 <link rel="shortcut icon" href="/client/images/icon.ico" />
 <link href="/client/css/base.css" rel="stylesheet" type="text/css" />
 <link href="/client/css/team.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="/client/css/ios6alert.css">
 
 <script src="/client/js/jquery-1.9.1.min.js"></script>
 <script src="/client/js/main.js"></script>
 <script type="text/javascript" src="/client/js/Validform_v5.3.2_min.js"></script>
+<script src="/client/js/ios6alert.js"></script>
 <script>
 
 function done()
 {
-    alert("上传资料成功！");	
-	location.href="/enterprise/check";
+    $("body").ios6alert({
+        content : "上传资料成功",
+        onClose : function(){
+        	           location.href="/enterprise/check";
+                   }
+    });
 }
 function done2()
 {
-    alert("类型错误（限定为jpg，pdf）！");	
+    $("body").ios6alert({
+    	title: 类型错误,
+        content : "请上传jpg，pdf格式的扫描件"
+    });
+   
 }
 <#if done?? &&done == 1>
 window.onload=done;
@@ -30,7 +40,9 @@ function submitCheck()
 	var filedata = $("#file").val();
 	if (filedata == "")
 	{
-		alert("请添加文件！")
+	    $("body").ios6alert({
+	        content : "请添加文件"
+	    });
 		}else{
 		$("#upload").submit();
 		}

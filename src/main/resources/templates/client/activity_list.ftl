@@ -19,7 +19,7 @@
 
 <script src="/client/js/jquery-1.9.1.min.js"></script>
 <script src="/client/js/main.js"></script>
-=<script src="/client/js/ios6alert.js"></script>
+<script src="/client/js/ios6alert.js"></script>
 <script>
 <!--
 function unfinish()
@@ -30,14 +30,14 @@ function unfinish()
 window.onload=unfinish;
 </#if>
 -->
-function deleteConfirm(id) {
+function deleteConfirm(id,title) {
 	
 		$("body").ios6alert({
-			title : "科技小巨人",
-			content : "确定要删除这条消息吗？",
+			title : title,
+			content : "确定要删除这个活动吗？",
 			type : 2,
-			onClickYes :  function(id){
-										 location.href='/activity/delete?id='+id;
+			onClickYes : function(){
+							 location.href="/activity/delete?id="+id;
 								  }
 		});
 
@@ -154,7 +154,7 @@ function deleteConfirm(id) {
 		                	    
 		                </#if>    		                
 		        		<td>
-		        			<a href="/activity/edit?id=${item.id?c!''}">编辑信息</a>丨<a href="/activity/check?id=${item.id?c!''}">操作</a>丨<a  onclick="javascript:deleteConfirm(${item.id?c!''} );">删除</a>
+		        			<a href="/activity/edit?id=${item.id?c!''}">编辑信息</a>丨<a href="/activity/check?id=${item.id?c!''}">操作</a>丨<a  onclick="javascript:deleteConfirm(${item.id?c!''},'${item.title!''}' );">删除</a>
 		        		</td>
 		        	</tr>
 	        	</#list>

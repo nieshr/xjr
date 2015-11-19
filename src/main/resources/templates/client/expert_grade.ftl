@@ -5,12 +5,13 @@
 	<title>评分</title>
 	<link rel="shortcut icon" href="/client/images/icon.ico" />
 	<link href="/client/css/formGrade.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="/client/css/ios6alert.css">
 	<script src="/client/js/jquery-1.9.1.min.js"></script>
 
     <script type="text/javascript"   src="/client/js/jquery-1.11.2.min.js"></script>
 	<script type="text/javascript"   src="/client/js/jquery.barrating.js"></script>
 	<script type="text/javascript"   src="/client/js/examples.js"></script>	
-
+    <script src="/client/js/ios6alert.js"></script>
 
 
 	<script type="text/javascript">
@@ -153,7 +154,9 @@
                 if(0 == res.status){
                 	if(typeof res.msg != "undefined")
                 	{
-                		alert(res.msg);
+                        $("body").ios6alert({
+                            content : res.msg
+                        });
                 	}
                 	else{
                 		location.reload();

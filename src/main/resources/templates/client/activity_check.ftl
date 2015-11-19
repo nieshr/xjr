@@ -7,15 +7,21 @@
 <link href="/client/css/base.css" rel="stylesheet" type="text/css" />
 <link href="/client/css/active.css" rel="stylesheet" type="text/css" />
 <link href="/mag/style/WdatePicker.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="/client/css/ios6alert.css">
 
 <script src="/client/js/jquery-1.9.1.min.js"></script>
 <script src="/client/js/main.js"></script>
 <script type="text/javascript" src="/mag/js/WdatePicker.js"></script>
 <script type="text/javascript" src="/client/js/Validform_v5.3.2_min.js"></script>
+<script src="/client/js/ios6alert.js"></script>
 <script>
 
 function activityPass(activityId)
 {
+    $("body").ios6alert({
+        content :"请稍后...",
+        autoClose:5000
+    });
          $.ajax({
              type: "GET",
              url: "/activity/pass",
@@ -25,12 +31,19 @@ function activityPass(activityId)
              success: function(data){
                          if (data.code == 0)
                          {
-                             alert("审核成功！");
-                             location.reload();
+                             $("body").ios6alert({
+                                 content : "审核成功",
+	                          	 onClose : function(){
+	                          	               location.reload();
+	                          	            }
+                             });
+                            
                          }
                          else 
                          {
-                             alert(data.msg);
+                             $("body").ios6alert({
+                                 content : data.msg
+                             });
                          }
                       }
          });
@@ -47,41 +60,62 @@ function sendSms(id,activityId,roleId)
              success: function(data){
                          if (data.code == 0)
                          {
-                             alert("已发送！");
+                             $("body").ios6alert({
+                                 content : "已发送"
+                             });
                          }
                          else 
                          {
-                             alert(data.msg);
+                             $("body").ios6alert({
+                                 content : data.msg
+                             });
                          }
                       }
          });
 }
 
 function passCheck(activityId) {
-    if (confirm("点击将更新列表到评分表（需等待3秒）。确认吗？")) {
-         $.ajax({
-             type: "GET",
-             url: "/activity/pass",
-             contentType: "application/json; charset=utf-8",
-             data: {"activityId" : activityId},
-             dataType: "json",
-             success: function(data){
-                         if (data.code == 0)
-                         {
-                            alert("更新成功！");
-                             location.reload();
-                         }
-                         else 
-                         {
-                             alert(data.msg);
-                         }
-                      }
-         });
-    }
+    
+	$("body").ios6alert({
+	    title : "通过审核",
+	    content : "更新列表到评分表，确认吗？",
+	    type : 1,
+	    onClickYes : function(){
+	    	 $.ajax({
+	             type: "GET",
+	             url: "/activity/pass",
+	             contentType: "application/json; charset=utf-8",
+	             data: {"activityId" : activityId},
+	             dataType: "json",
+	             success: function(data){
+	                         if (data.code == 0)
+	                         {
+	                             $("body").ios6alert({
+	                                 content : "更新成功",
+	                                 onClose : function(){
+                                         location.reload();
+                                      }
+	                             });
+	                         }
+	                         else 
+	                         {
+	                             $("body").ios6alert({
+	                                 content : data.msg
+	                             });
+	                         }
+	                      }
+	         });
+	    }
+	});
+
 }
 
 function cancelCheck(activityId) {
-    if (confirm("取消审核后将可以修改活动信息，确认吗？")) {
+   $("body").ios6alert({
+        title : "取消审核",
+        content : "取消审核后将可以修改活动信息，确认吗？",
+        type : 1,
+        onClickYes : function(){
          $.ajax({
              type: "GET",
              url: "/activity/cancel",
@@ -91,20 +125,31 @@ function cancelCheck(activityId) {
              success: function(data){
                          if (data.code == 0)
                          {
-                            alert("取消成功！");
-                             location.reload();
+                             $("body").ios6alert({
+                                 content : "取消成功",
+                                 onClose : function(){
+                                     location.reload();
+                                  }
+                             });
                          }
                          else 
                          {
-                             alert(data.msg);
+                             $("body").ios6alert({
+                                 content : data.msg
+                             });
                          }
                       }
          });
-    }
+       }
+    });
 }
 
 function resetCheck(activityId) {
-    if (confirm("重置评分后将删除之前的评分表，确认吗？")) {
+  $("body").ios6alert({
+       title : "重置评分",
+       content : "重置评分后将删除之前的评分表，确认吗？",
+       type : 1,
+       onClickYes : function(){	
          $.ajax({
              type: "GET",
              url: "/activity/reset",
@@ -114,16 +159,23 @@ function resetCheck(activityId) {
              success: function(data){
                          if (data.code == 0)
                          {
-                            alert("重置成功！");
-                             location.reload();
+                             $("body").ios6alert({
+                                 content : "重置成功",
+                                 onClose : function(){
+                                     location.reload();
+                                  }
+                             });
                          }
                          else 
                          {
-                             alert(data.msg);
+                             $("body").ios6alert({
+                                 content : data.msg
+                             });
                          }
                       }
          });
-    }
+       }
+    });
 }
 
 
@@ -142,7 +194,9 @@ function sortUp(id , activityId)
                          }
                          else 
                          {
-                             alert(data.msg);
+                             $("body").ios6alert({
+                                 content : data.msg
+                             });
                          }
                       }
          });
@@ -163,7 +217,9 @@ function sortDown(id , activityId)
                          }
                          else 
                          {
-                             alert(data.msg);
+                             $("body").ios6alert({
+                                 content : data.msg
+                             });
                          }
                       }
          });
