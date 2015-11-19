@@ -106,18 +106,21 @@
 	overflow:hidden;
 	margin:0 auto;
 	margin-top:40px;
-	width:1400px;
-	/*width:70%;*/
+	/*width:1400px;*/
+	width:100%;
 	/**+width:62%; */       /*IE 7*/
 }
+/*
 @media screen and (max-width:1366px){
     .sect2 .section1 ul{ width:80%;}
 }
+*/
 .sect2 .section1 ul li{
 	float:left;
 	padding:0;
 	*+padding:0;         /*IE 7*/
-	width:190px;
+	/*width:190px;*/
+	width:14%;
 	box-sizing:border-box;
 }
 .sect2 .section1 ul li p.current:hover{
@@ -386,15 +389,20 @@
 }
 .sect4 .sect1 .div2{
 	overflow:hidden;
+	position:relative;
 	width:1000px;
 }
-.sect4 .sect1 .div2 video{
+/*.sect4 .sect1 .div2 video{
 	float:left;
 	background:#efefef;
+}*/
+#example_video_1{
+	*+position:absolute;
+	*+left:0;
+	*+top:0;
 }
 .sect4 .sect1 .div2 ul{
 	overflow:hidden;
-	/*float:left;*/
 	float:right;
 	*+padding:10px 0;    /*IE 7*/
 	margin-left:40px;

@@ -2,10 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-	<title>活动列表</title>
+	<title>活动管理员-活动列表</title>
 	<link rel="shortcut icon" href="/client/images/icon.ico" />
 	<link href="/client/css/base.css" rel="stylesheet" type="text/css" />
 	<link href="/client/css/list_base.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="/client/css/ios6alert.css">
 		<style type="text/css">
 		.page{ width: 600px; float: right; margin-top: 30px;}
 		.page *{ float: left;}
@@ -18,6 +19,7 @@
 
 <script src="/client/js/jquery-1.9.1.min.js"></script>
 <script src="/client/js/main.js"></script>
+=<script src="/client/js/ios6alert.js"></script>
 <script>
 <!--
 function unfinish()
@@ -28,10 +30,17 @@ function unfinish()
 window.onload=unfinish;
 </#if>
 -->
-function deleteConfirm() {
-    if (!confirm("确认删除活动？")) {
-        window.event.returnValue = false;
-    }
+function deleteConfirm(id) {
+	
+		$("body").ios6alert({
+			title : "科技小巨人",
+			content : "确定要删除这条消息吗？",
+			type : 2,
+			onClickYes :  function(id){
+										 location.href='/activity/delete?id='+id;
+								  }
+		});
+
 }
 
 </script>
@@ -145,7 +154,7 @@ function deleteConfirm() {
 		                	    
 		                </#if>    		                
 		        		<td>
-		        			<a href="/activity/edit?id=${item.id?c!''}">编辑信息</a>丨<a href="/activity/check?id=${item.id?c!''}">操作</a>丨<a  onclick="javascript:deleteConfirm();" href="/activity/delete?id=${item.id?c!''}">删除</a>
+		        			<a href="/activity/edit?id=${item.id?c!''}">编辑信息</a>丨<a href="/activity/check?id=${item.id?c!''}">操作</a>丨<a  onclick="javascript:deleteConfirm(${item.id?c!''} );">删除</a>
 		        		</td>
 		        	</tr>
 	        	</#list>

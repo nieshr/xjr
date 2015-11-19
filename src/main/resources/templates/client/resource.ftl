@@ -15,7 +15,7 @@
 <div class="titlelist">
 	<div id="titlelist">
 	<div>
-		<a href="/info/resource/expert" class="active">创业导师</a>
+		<a href="/info/resource/expert" >创业导师</a>
 		<a href="/info/resource/3?mid=12">投资机构</a>
 		</div>
 	</div>

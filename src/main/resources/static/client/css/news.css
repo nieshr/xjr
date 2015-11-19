@@ -91,6 +91,7 @@
 .news_detail .news_last {
 	height: 20px;
 	margin-top: 20px;
+	margin-bottom: 20px;
 	font-size: 12px;
 	color: #999999;
 }

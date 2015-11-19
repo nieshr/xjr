@@ -67,15 +67,13 @@ function move3()
 <!-- 代码 开始 -->
 
 <#assign PAGE_DATA=show_page />
-<#if catId??>	
-    <#include "/client/list_footer.ftl" />
-<#else>
+
 <div class="pagnation" id="pagnation">
  <#if PAGE_DATA??>
 	 <#if PAGE_DATA.number+1 == 1>
-          <a disabled="disabled"  class="page-prev">上一页"</a>               
+          <a disabled="disabled"  class="page-prev" title="前面没有了">上一页"</a>               
      <#else>
-         <a href="/info/projectshow/detail?page=${PAGE_DATA.number-1}&mid=<#if item.menuId??>${item.menuId?c!''}</#if>&catId=${item.id?c!''}"  class="page-prev">上一页"</a>                
+         <a href="/info/projectshow/detail?page=${PAGE_DATA.number-1}&mid=11&catId=${catId?c!''}"  class="page-prev" title="上一页">上一页"</a>                
      </#if>
      
      <#assign continueEnter=false>
@@ -86,7 +84,7 @@ function move3()
                  <#if page == PAGE_DATA.number+1>
                      <a  class ="current">${page }</a>
                  <#else>
-                     <a href="/info/projectshow/detail?page=${page-1}&mid=<#if item.menuId??>${item.menuId?c!''}</#if>&catId=${item.id?c!''}">${page}</a> 
+                     <a href="/info/projectshow/detail?page=${page-1}&mid=11&catId=${catId?c!''}">${page}</a> 
                  </#if>
                  <#assign continueEnter=false>
              <#else>
@@ -100,14 +98,14 @@ function move3()
      
      
      <#if PAGE_DATA.number+1 == PAGE_DATA.totalPages || PAGE_DATA.totalPages==0>
-         <a disabled="disabled" class="page-next">下一页</a> 
+         <a disabled="disabled" class="page-next" title="已是最后一页">下一页</a> 
      <#else>
-         <a href="/info/projectshow/detail?page=${PAGE_DATA.number+1}&mid=<#if item.menuId??>${item.menuId?c!''}</#if>&catId=${item.id?c!''}" class="page-next">下一页</a> 
+         <a href="/info/projectshow/detail?page=${PAGE_DATA.number+1}&mid=11&catId=${catId?c!''}" class="page-next" title="下一页">下一页</a> 
      </#if>
  </#if>
     
 </div>
-</#if>
+
 <!-- 代码 结束 -->
 <!-- contendend -->
 

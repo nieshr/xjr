@@ -11,7 +11,7 @@
 		.page p{  margin-left: 10px;}
 	</style>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-	<title>添加路演辅导</title>
+	<title>活动管理员-添加路演辅导</title>
 	<link rel="shortcut icon" href="/client/images/icon.ico" />
 	<link href="/client/css/base.css" rel="stylesheet" type="text/css" />
 	<link href="/client/css/area.css" rel="stylesheet" type="text/css" />

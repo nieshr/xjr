@@ -19,13 +19,13 @@
 	<div class="wrapper">
 		<ul class="wrapper-nav" id="wrapper-nav">
 			<a href="/"><li>首页</li></a>
-			<a href="/info/aIn"><li <#if active??&&active==1>class="active"</#if>>专项行动</li></a>
-			<a href="/info/activity/list"><li <#if active??&&active==2>class="active"</#if>>培育活动</li></a>
-			<a href="/info/index"><li <#if active??&&active==3>class="active"</#if>>新闻动态</li></a>
-			<a href="/info/projectshow"><li <#if active??&&active==4>class="active"</#if>>企业项目</li></a>
-			<a href="/info/resource"><li <#if active??&&active==5>class="active"</#if>>专家资源</li></a>
-			<a href="/info/host"><li>合作机构</li <#if active??&&active==6>class="active"</#if>></a>
-			<a href="/info/contact"><li <#if active??&&active==7>class="active"</#if>>联系方式</li></a>
+			<li <#if active??&&active==1>class="active"</#if>><a href="/info/aIn"></a>专项行动</li>
+			<li <#if active??&&active==2>class="active"</#if>><a href="/info/activity/list">培育活动</a></li>
+			<li <#if active??&&active==3>class="active"</#if>><a href="/info/index">新闻动态</a></li>
+			<li <#if active??&&active==4>class="active"</#if>><a href="/info/projectshow">企业项目</a></li>
+			<li <#if active??&&active==5>class="active"</#if>><a href="/info/resource">专家资源</a></li>
+			<li <#if active??&&active==6>class="active"</#if>><a href="/info/host">合作机构</a></li >
+			<li <#if active??&&active==7>class="active"</#if>><a href="/info/contact">联系方式</a></li>
 		</ul>
                 <#if username??>
                     <div class="logoin"><a href="/user" style="color:#ff4040;">${username}</a><span>|</span><a href="/logout">退出</a></div>
@@ -92,6 +92,7 @@ function gotop()
 </div>
 
 <!--各种新闻-->
+<#if info_page??&&info_page.content?size gt 0 >
 <div class="news_b" style="min-height:300px;">
   <ul>
     <#if info_page??>
@@ -108,7 +109,25 @@ function gotop()
      </#if>  
   </ul>
 </div>
-
+<#else>
+<div class="news_b" style="min-height:300px;">
+	<h1>没有相关信息</h1>
+	<h2 style="margin:20px 0;">请输入文章标题或摘要的关键字</h2>
+	 <form action="/info/search">
+	 <input style="margin-left:100px;width: 375px;height: 30px;font-size: 16px;" type="text" name="keywords" value="<#if keywords??>${keywords}</#if>" />
+	 <input type="submit" style="   height: 30px;
+														  width: 60px;
+														  border-radius: 8px;
+														  margin: 0 auto;
+														  line-height: 30px;
+														  border: none;
+														  background: #e67817;
+														  color: white;
+														  font-size: 14px;"
+														  value="搜索"/>
+	 </form>
+</div>
+</#if>
 <!--页码按钮-->
 <#if info_page??>
 <#assign PAGE_DATA=info_page />

@@ -1,9 +1,9 @@
 <div class="header">
     <a href="/"><div class="logo" style="background-image:url('/client/images/logo01.png')"></div></a>
-    <form>
+    <form action="/info/search">
     <div class="search">
-    	<input type="text" value=" &nbsp;请输入搜索内容" />
-        <input style="width:40px; background:url(/client/images/search.png) no-repeat center;" type="submit" value="" />
+    	<input type="text" name="keywords" value="&nbsp;请输入搜索内容" onfocus="if(this.value=='&nbsp;请输入搜索内容'){this.value='';}" onblur="if(this.value==''){this.value='&nbsp;请输入搜索内容'}" />
+        <input style="cursoe:pointer;width:40px; background:url(/client/images/search.png) no-repeat center;" type="submit" value="" />
     </div>
     </form>
     <dl class="porfile">

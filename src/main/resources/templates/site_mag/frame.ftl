@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="shortcut icon" href="/client/images/icon.ico" />
 <link href="/mag/style/idialog.css" rel="stylesheet" id="lhgdialoglink">
 <title>后台管理中心</title>
 <link href="/mag/style/style.css" rel="stylesheet" type="text/css">

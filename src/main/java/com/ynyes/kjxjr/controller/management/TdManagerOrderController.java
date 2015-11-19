@@ -194,7 +194,7 @@ public class TdManagerOrderController {
                 
                 return "/site_mag/delivery_type_list";
             }
-            else if (type.equalsIgnoreCase("diysite")) // 配送方式
+            else if (type.equalsIgnoreCase("diysite")) // 角色
             {
                 if (null == keywords)
                 {
@@ -560,9 +560,9 @@ public class TdManagerOrderController {
         
         if (null != tdDiySite.getRoleId()) {
 			if (tdDiySite.getRoleId().equals(2L)) {
-				tdDiySite.setTitle("区县管理");
+				tdDiySite.setTitle("区县管理员");
 			}else if (tdDiySite.getRoleId().equals(4L)) {
-				tdDiySite.setTitle("活动");
+				tdDiySite.setTitle("活动管理员");
 			}else if (tdDiySite.getRoleId().equals(3L)) {
 				tdDiySite.setTitle("专家");
 			}

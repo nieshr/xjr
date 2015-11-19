@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>活动</title>
+<title>活动管理员-操作活动</title>
 <link rel="shortcut icon" href="/client/images/icon.ico" />
 <link href="/client/css/base.css" rel="stylesheet" type="text/css" />
 <link href="/client/css/active.css" rel="stylesheet" type="text/css" />

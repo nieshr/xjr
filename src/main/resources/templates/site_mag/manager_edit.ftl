@@ -82,6 +82,7 @@ $(function () {
             </div>
         </dd>
     </dl>
+    <#--
     <dl>
         <dt>角色分配</dt>
         <dd>
@@ -99,6 +100,7 @@ $(function () {
                 </div>
         </dd>
     </dl>
+    -->
     <dl>
         <dt>姓名</dt>
         <dd>

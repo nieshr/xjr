@@ -236,6 +236,7 @@
     
     <div class="tab-content" style="display: none;">
         <#-- 批量上传 zhangji-->
+        <#--
         <#if mid = 11 || mid = 10>
         <dl id="div_show360_container">
             <dt>展示图片</dt>
@@ -261,6 +262,7 @@
             </dd>
         </dl>
         </#if>
+        -->
         <#-- 批量上传 zhangji  end-->
         <dl>
             <dt>调用别名</dt>

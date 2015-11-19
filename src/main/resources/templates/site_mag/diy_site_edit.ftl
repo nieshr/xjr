@@ -138,7 +138,7 @@ $(function () {
            <div class="rule-single-select">
                 <select id="roleId" name="roleId" datatype="*" sucmsg=" ">
                      <option value="" <#if !diy_site?? || !diy_site.roleId??>selected="selected"</#if>>请选择...</option>
-                     <option value="2" <#if diy_site?? && diy_site.roleId?? && diy_site.roleId==2>selected="selected"</#if>>区县管理</option> 
+                     <option value="2" <#if diy_site?? && diy_site.roleId?? && diy_site.roleId==2>selected="selected"</#if>>区县管理员</option> 
                      <option value="3" <#if diy_site?? && diy_site.roleId?? && diy_site.roleId==3>selected="selected"</#if>>专家</option>
                      <option value="4" <#if diy_site?? && diy_site.roleId?? && diy_site.roleId==4>selected="selected"</#if>>活动管理员</option>                   
                 </select>

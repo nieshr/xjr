@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>活动</title>
+<title>活动信息</title>
 <link rel="shortcut icon" href="/client/images/icon.ico" />
 <link href="/client/css/base.css" rel="stylesheet" type="text/css" />
 <link href="/client/css/active.css" rel="stylesheet" type="text/css" />
@@ -304,7 +304,7 @@ function done()
 {
 	alert("上传成功！");
 }
-function done()
+function done2()
 {
 	alert("请上传类型为ppt的文件！");
 }
@@ -420,7 +420,7 @@ window.onload=done2;
 	            </div>    
     			
     			<div><span>地址：</span><input <#if pagetype??&& pagetype == "check" >disabled=""</#if> type="text" name="address" id="address" datatype="*" value="<#if activity??>${activity.address!''}</#if>" /></div>
-    			<div><span>主题：</span><textarea cols="3" rows="3" <#if pagetype??&& pagetype == "check" >disabled=""</#if> type="text" name="theme" id="theme" datatype="*1-255" errormsg="最多255字！"><#if activity??>${activity.theme!''}</#if>"</textarea></div>
+    			<div><span>主题：</span><textarea cols="3" rows="3" <#if pagetype??&& pagetype == "check" >disabled=""</#if> type="text" name="theme" id="theme" datatype="*1-255" errormsg="最多255字！"><#if activity??>${activity.theme!''}</#if></textarea></div>
 				<div class="editer">
 					<span>简介：</span>
 					<textarea  <#if pagetype??&& pagetype == "check" >disabled=""</#if> name="introduction" id="introduction" datatype="*" ><#if activity??>${activity.introduction!''}</#if></textarea>

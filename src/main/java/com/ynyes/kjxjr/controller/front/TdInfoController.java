@@ -77,23 +77,72 @@ public class TdInfoController {
 		List<TdArticleCategory> tdArticleCategories = tdArticleCategoryService.findByMenuId(10L);
 		map.addAttribute("newsCat_list", tdArticleCategories);
 		
-		//通知公告
-		map.addAttribute("notice_page", tdArticleService.findByCategoryId(19L, 0, SiteMagConstant.pageSize));
-		
-	    //活动状态
-		map.addAttribute("activity_page", tdArticleService.findByCategoryId(20L, 0, SiteMagConstant.pageSize));
-		
-	    //媒体报道
-		map.addAttribute("media_page", tdArticleService.findByCategoryId(21L, 0, SiteMagConstant.pageSize));
-		
-	    //数据公布
-		map.addAttribute("data_page", tdArticleService.findByCategoryId(22L, 0, SiteMagConstant.pageSize));
-		
-	    //热点追踪
-		map.addAttribute("hot_page", tdArticleService.findByCategoryId(23L, 0, SiteMagConstant.pageSize));
-		
-	    //创业风向
-		map.addAttribute("SYB_page", tdArticleService.findByCategoryId(24L, 0, SiteMagConstant.pageSize));
+//		//通知公告
+//		map.addAttribute("notice_page", tdArticleService.findByCategoryId(19L, 0, SiteMagConstant.pageSize));
+//		
+//	    //活动状态
+//		map.addAttribute("activity_page", tdArticleService.findByCategoryId(20L, 0, SiteMagConstant.pageSize));
+//		
+//	    //媒体报道
+//		map.addAttribute("media_page", tdArticleService.findByCategoryId(21L, 0, SiteMagConstant.pageSize));
+//		
+//	    //数据公布
+//		map.addAttribute("data_page", tdArticleService.findByCategoryId(22L, 0, SiteMagConstant.pageSize));
+//		
+//	    //热点追踪
+//		map.addAttribute("hot_page", tdArticleService.findByCategoryId(23L, 0, SiteMagConstant.pageSize));
+//		
+//	    //创业风向
+//		map.addAttribute("SYB_page", tdArticleService.findByCategoryId(24L, 0, SiteMagConstant.pageSize));
+
+        if (null != tdArticleCategories && tdArticleCategories.size() > 0) {
+            for (TdArticleCategory tdCat : tdArticleCategories)
+            {
+                if (null != tdCat.getTitle() && tdCat.getTitle().equals("通知公告"))
+                {
+                    map.addAttribute("notice_page", tdArticleService
+                            .findByMenuIdAndCategoryIdAndIsEnableOrderBySortIdAsc(10L,
+                                    tdCat.getId(), 0, ClientConstant.pageSize));
+                    
+                }
+                if (null != tdCat.getTitle() && tdCat.getTitle().equals("活动状态"))
+                {
+                    map.addAttribute("activity_page", tdArticleService
+                            .findByMenuIdAndCategoryIdAndIsEnableOrderBySortIdAsc(10L,
+                                    tdCat.getId(), 0, ClientConstant.pageSize));
+                    
+                }
+                if (null != tdCat.getTitle() && tdCat.getTitle().equals("媒体报道"))
+                {
+                    map.addAttribute("media_page", tdArticleService
+                            .findByMenuIdAndCategoryIdAndIsEnableOrderBySortIdAsc(10L,
+                                    tdCat.getId(), 0, ClientConstant.pageSize));
+                    
+                }
+                if (null != tdCat.getTitle() && tdCat.getTitle().equals("数据公布"))
+                {
+                    map.addAttribute("data_page", tdArticleService
+                            .findByMenuIdAndCategoryIdAndIsEnableOrderBySortIdAsc(10L,
+                                    tdCat.getId(), 0, ClientConstant.pageSize));
+                    
+                }
+                if (null != tdCat.getTitle() && tdCat.getTitle().equals("热点追踪"))
+                {
+                    map.addAttribute("hot_page", tdArticleService
+                            .findByMenuIdAndCategoryIdAndIsEnableOrderBySortIdAsc(10L,
+                                    tdCat.getId(), 0, ClientConstant.pageSize));
+                    
+                }
+                if (null != tdCat.getTitle() && tdCat.getTitle().equals("创业风向"))
+                {
+                    map.addAttribute("SYB_page", tdArticleService
+                            .findByMenuIdAndCategoryIdAndIsEnableOrderBySortIdAsc(10L,
+                                    tdCat.getId(), 0, ClientConstant.pageSize));
+                    
+                }
+             
+            }
+        }
 		
 		Long active = 3L;
 		map.addAttribute("active",active);
@@ -736,9 +785,10 @@ public class TdInfoController {
 		
 		//根据栏目类别查找
         Page<TdArticle> showPage = tdArticleService
-        		.findByMenuIdAndCategoryIdAndIsEnableOrderBySortIdAsc(mid, catId, page, ClientConstant.pageSize);
+        		.findByMenuIdAndCategoryIdAndIsEnableOrderBySortIdAsc(mid, catId, page, 15);
         map.addAttribute("show_page" , showPage);
         
+        map.addAttribute("mid" , mid);
         map.addAttribute("catId", catId);
         map.addAttribute("menuName", tdArticleCategoryService.findOne(catId).getTitle());
     

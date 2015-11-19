@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-    <title>辅导企业</title>
+    <title>专家评委-辅导企业</title>
     <link rel="shortcut icon" href="/client/images/icon.ico" />
     <link href="/client/css/base.css" rel="stylesheet" type="text/css" />
     <link href="/client/css/expert.css" rel="stylesheet" type="text/css" />
