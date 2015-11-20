@@ -50,9 +50,10 @@
 .floatbox a:hover span {
 	display:block;
 }
+/*
 @media screen and (max-width:1150px) {
 	.floatbox { display:none;}
-}
+}  */
 
 /*banner*/
 .sect1 .banner1{
@@ -286,53 +287,45 @@
 .sect3 .section2 .div6 .p1{margin-top:30px;}
 .sect3 .section2 .div1{
 	top: 33%;
-	left: 46%;
+	left: 50%;
+	margin-left:-80px;
 	background:#ffffff;
 	padding: 20px;
-}
-@media screen and (max-width: 1366px){
-    .sect3 .section2 .div1 {left: 45%;}
+	width:120px;
 }
 .sect3 .section2 .div2{
 	top:19%;
-	left:20%;
-}
-@media screen and (max-width: 1366px){
-    .sect3 .section2 .div2 {left: 8%;}
+	left:44px;
+	width:208px;
 }
 .sect3 .section2 .div3{
 	top:54%;
-	left:27%;
+	left:171px;
+	width:208px;
 }
-@media screen and (max-width: 1366px){
-    .sect3 .section2 .div3 {left: 18%;}
-}
+
 .sect3 .section2 .div4{
 	top:70%;
-	left:45%;
+	left:50%;
+	margin-left:-90px;
 	width:180px;
 	text-align:left;
-}
-@media screen and (max-width: 1366px){
-    .sect3 .section2 .div4 {left: 44%;}
 }
 .sect3 .section2 .div4 .p2{
 	margin-left:59px;
 }
 .sect3 .section2 .div5{
 	top:54%;
-	left:61%;
-}
-@media screen and (max-width: 1366px){
-    .sect3 .section2 .div5 {left: 66%;}
+	left:816px;
+	width:208px;
 }
 .sect3 .section2 .div6{
 	top:19%;
-	left:68%;
+	left:947px;
+	width:208px;
+	
 }
-@media screen and (max-width: 1366px){
-    .sect3 .section2 .div6 {left: 75%;}
-}
+
 .sect3 .section2 div .p1{
 	font-size:12px;
 }

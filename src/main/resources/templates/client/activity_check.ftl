@@ -20,7 +20,7 @@ function activityPass(activityId)
 {
     $("body").ios6alert({
         content :"请稍后...",
-        autoClose:5000
+        autoClose:3000
     });
          $.ajax({
              type: "GET",
@@ -113,7 +113,7 @@ function passCheck(activityId) {
 function cancelCheck(activityId) {
    $("body").ios6alert({
         title : "取消审核",
-        content : "取消审核后将可以修改活动信息，确认吗？",
+        content : "取消审核后可修改活动信息，确认吗？",
         type : 1,
         onClickYes : function(){
          $.ajax({

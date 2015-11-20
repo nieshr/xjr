@@ -265,8 +265,12 @@ public class TdInfoController {
         TdArticle tdArticle = tdArticleService.findOne(id);
         //浏览量 zhangji
         Long viewCount = tdArticle.getViewCount();
-        tdArticle.setViewCount(viewCount+1);
-        tdArticleService.save(tdArticle);
+        if(null !=viewCount)
+        {
+            tdArticle.setViewCount(viewCount+1);
+            tdArticleService.save(tdArticle);
+        }
+
         //找出栏目名称 zhangji
         Long catId = tdArticle.getCategoryId();
         map.addAttribute("info_name",tdArticleCategoryService.findOne(catId) );

@@ -52,6 +52,12 @@ function show2()
 	$(".contactussmall").addClass("hide");
 	$(".contactussmall2").removeClass("hide");
 }
+
+	function message()
+	{
+	    $('html,body').animate({scrollTop:900},400);
+	}
+
 </script>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -94,7 +100,7 @@ function loadMap(x, y)
 	<div id="titlelist">
 	<div>
 		<a href="javascript:void(0);" class="active">联系我们</a>
-		<a href="javascript:void(0);">在线留言</a>
+		<a href="javascript:message();">在线留言</a>
 </div>
 	</div>
 <div class="contactustitle">
@@ -125,7 +131,7 @@ function loadMap(x, y)
 					</#if>
 				</#list>	
 				</h3>				
-				<h3 class="contactusqq">QQ：${site.qq1!''}</h3>
+				<h3 class="contactusqq">Q&nbsp;Q：${site.qq1!''}</h3>
 				<h3 class="contactusemail">邮箱：${site.adminEmail!''}</h3>
 				<h3 class="contactusaddress">地址：${site.address!''}</h3>				
 				<h3 class="contactusleft">线路：${site.busRoute!''}</h3>
@@ -148,7 +154,7 @@ function loadMap(x, y)
 			<span>内容:</span>
 			<textarea name="content" id="" cols="30" rows="10" datatype="*2-255"></textarea>
 			<br>
-			<input type="submit" id="btn_submit" class="button" value="提交" />
+			<input style="cursor:pointer;" type="submit" id="btn_submit" class="button" value="提交" />
 
 		</div>
 		

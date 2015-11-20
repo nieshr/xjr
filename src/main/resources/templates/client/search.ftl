@@ -73,6 +73,7 @@ function gotop()
 <!-- head end -->
 
 <!--菜单导航-->
+<#if info_page??&&info_page.content?size gt 0 >
 <div class="location_nav" >
   <div class="location">
 	 <form action="/info/search">
@@ -92,7 +93,7 @@ function gotop()
 </div>
 
 <!--各种新闻-->
-<#if info_page??&&info_page.content?size gt 0 >
+
 <div class="news_b" style="min-height:300px;">
   <ul>
     <#if info_page??>
@@ -110,11 +111,10 @@ function gotop()
   </ul>
 </div>
 <#else>
-<div class="news_b" style="min-height:300px;">
-	<h1>没有相关信息</h1>
-	<h2 style="margin:20px 0;">请输入文章标题或摘要的关键字</h2>
+<div class="news_b" style="min-height:400px;">
+	<h2 style="margin:100px  0 20px 0;">请输入文章标题或摘要的关键字</h2>
 	 <form action="/info/search">
-	 <input style="margin-left:100px;width: 375px;height: 30px;font-size: 16px;" type="text" name="keywords" value="<#if keywords??>${keywords}</#if>" />
+	 <input style="width: 375px;height: 30px;font-size: 16px;" type="text" name="keywords" value="<#if keywords??>${keywords}</#if>" />
 	 <input type="submit" style="   height: 30px;
 														  width: 60px;
 														  border-radius: 8px;
