@@ -1,14 +1,16 @@
 <div class="footlist">
-<div class="footlist-title" style="height:<#if site_link_list??>${(site_link_list?size / 6 )?ceiling * 32}px<#else>45px</#if>;">
+<div class="footlist-title" style="height:<#if site_link_list??>${(site_link_list?size / 6 )?ceiling * 32}px<#else>32px</#if>;">
 	<ul>
 		<li class="footlist-title-title">友情链接：</li>
 	    <#if site_link_list??>
 	        <#list site_link_list as link>
+	        
 	            <#if link_index  % 6 == 0 && link_index gt 0> 
 	            	 <li style="margin-left : 75px;"><a href="${link.linkUri}" target="_blank" title="${link.linkUri}">${link.title}</a><span>|</span></li>
 	            <#elseif ( link_index + 1 ) %6== 0 && link_index gt 0> 
-	            	 <li><a href="${link.linkUri}" target="_blank" title="${link.linkUri}">${link.title}</a><span>|</span></li>
-	            <#else>	 
+	            	 <li><a href="${link.linkUri}" target="_blank" title="${link.linkUri}">${link.title}</a><span>|</span></li> </br>
+	            <#else>
+	           
 	            	<#if link_has_next>
 		                <li><a href="${link.linkUri}" target="_blank" title="${link.linkUri}">${link.title}</a><span>|</span></li>
 	                <#else>

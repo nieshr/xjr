@@ -39,8 +39,8 @@ div{ margin:0 auto;text-align:center;}
 .footlist-title{background: #2E2E2E;height: 45px;line-height: 32px;}
 .footlist-title .footlist-title-title{padding-right: 5px;}
 .footlist ul{width: 1000px;margin: 0 auto;color: #cccccc;}
-.footlist ul li{float: left;font-size: 14px;}
-.footlist ul li a{color: #cccccc;display:inline-block;}
+.footlist ul li{float: left;font-size: 14px;white-space:nowrap;}
+.footlist ul li a{color: #cccccc;white-space:nowrap;}
 .footlist ul li span{padding:0 4px; }
 .footlist h5{font-weight: normal;line-height: 32px;color: #999999;font-size: 12px;text-align: left;}
 .footlist-body{width: 1000px;margin-top: 32px;}
