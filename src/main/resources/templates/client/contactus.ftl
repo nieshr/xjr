@@ -79,6 +79,11 @@ function loadMap(x, y)
     map.addOverlay(marker);
 }
 </script>
+<style type="text/css">  
+   .anchorBL{  
+       display:none;  
+   }  
+  </style> 
 </head>
 <body>
 <!-- head  -->
