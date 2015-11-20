@@ -73,7 +73,7 @@
             <!-- 导航 -->
               <div class="wrapper">
                 <ul class="wrapper-nav" id="wrapper-nav">
-			<li>	<a href="/">首页</a></li>
+			<li  class="active" ><a href="/">首页</a></li>
 			<li ><a href="/info/aIn">专项行动</a></li>
 			<li ><a href="/info/activity/list">培育活动</a></li>
 			<li ><a href="/info/index">新闻动态</a></li>
@@ -291,6 +291,7 @@
                 <div class="clear"></div>
 
                 <div class="section2">
+                <div class="fivesupport" >
                     <div class="div1">
                         <p class="p1_1">五大支持</p>
                         <p class="p2_1">Support</p>

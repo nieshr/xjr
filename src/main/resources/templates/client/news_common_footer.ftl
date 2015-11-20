@@ -7,12 +7,12 @@
 	            <#if link_index  % 6 == 0 && link_index gt 0> 
 	            	 <li style="margin-left : 75px;"><a href="${link.linkUri}" target="_blank" title="${link.linkUri}">${link.title}</a><span>|</span></li>
 	            <#elseif ( link_index + 1 ) %6== 0 && link_index gt 0> 
-	            	 <li><a href="${link.linkUri}" target="_blank" title="${link.linkUri}">${link.title}</a><span>|</span></li></br>	 
+	            	 <li><a href="${link.linkUri}" target="_blank" title="${link.linkUri}">${link.title}</a><span>|</span></li>
 	            <#else>	 
 	            	<#if link_has_next>
 		                <li><a href="${link.linkUri}" target="_blank" title="${link.linkUri}">${link.title}</a><span>|</span></li>
 	                <#else>
-	                	<li><a href="${link.linkUri}" target="_blank" title="${link.linkUri}">${link.title}</a></li>
+	                	<li><a href="${link.linkUri}" target="_blank" title="${link.linkUri}">${link.title}</a><span>|</span></li>
 	                </#if>
 	            </#if>
 	        </#list>
@@ -28,7 +28,7 @@
 	</#list>		
 	</span>
 	<span style= "margin-left : 320px;">
-	邮箱：${site.adminEmail!''}<
+	邮箱：${site.adminEmail!''}
 	</span>
 	</h5>
 	<h5>
@@ -43,7 +43,7 @@
 		地址：${site.address!''}
 	</span>					
 	</h5>
-	<h5>${site.copyright!''}</h5> 
+	<h5><#if site.copyright??&&site.copyright?length gt 0>${site.copyright!''}<#else>科技小巨人</#if></h5> 
 	<div class="footercode"> 
 	<img src="${site.wxQrCode!''}">
 	<p>微信公众号</p>

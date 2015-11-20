@@ -15,6 +15,7 @@
     <link rel="shortcut icon" href="/client/images/icon.ico" />
     <link href="/client/css/base.css" rel="stylesheet" type="text/css" />
     <link href="/client/css/area.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="/client/css/ios6alert.css">
 <style>
 .Validform_wrong {  background-position: -20px center;}
 .Validform_right {  background-position: -20px center;}
@@ -22,15 +23,23 @@
 <script src="/client/js/jquery-1.9.1.min.js"></script>
 <script src="/client/js/main.js"></script>
 <script type="text/javascript" src="/client/js/Validform_v5.3.2_min.js"></script>
+<script src="/client/js/ios6alert.js"></script>
 <script>
 function done()
 {
-	alert("上传成功！");
-	location.href="/region/activity/list";
+            $("body").ios6alert({
+                content : "上传成功",
+             	onClose : function(){
+						       	    location.href="/region/activity/list";
+						        }
+            });
 }
 function done2()
 {
-    alert("类型错误（限定为jpg，pdf）！");	
+            $("body").ios6alert({
+            	title: "类型错误",
+                content : "请上传jpg或pdf格式的扫描件"
+            });
 }
 <#if done?? &&done == 1>
 window.onload=done;
@@ -40,8 +49,12 @@ window.onload=done2;
 
 function numwarn()
 {
-	alert("推荐个数不能为0！");
-	location.href="/region/recommendEnterprise?id="+${activityId?c!''};
+            $("body").ios6alert({
+                content : "推荐个数不能为0！",
+             	onClose : function(){
+						       	    location.href="/region/recommendEnterprise?id="+${activityId?c!''};
+						        }
+            });
 }
 <#if numwarn??&&numwarn == 1>
 window.onload=numwarn;
@@ -64,7 +77,9 @@ function recommendSubmitCheck()
 
     if (filedata == "")
     {
-        alert("请添加文件！")
+            $("body").ios6alert({
+                content : "请添加文件"
+            });
     }
     else{
         $("#upload").submit();
@@ -78,7 +93,9 @@ function addEnterprise1(id,activityId,statusId)
 	var reasonlength = reason.length;
 	if (reasonlength >26)
 		{
-			alert("推荐理由最多输入26个字")
+            $("body").ios6alert({
+                content : "推荐理由最多输入26个字"
+            });		
 		}	
 	else{
 		  $.ajax({
@@ -88,7 +105,9 @@ function addEnterprise1(id,activityId,statusId)
 		      success:function(data){
 				if (data.code == 1)
 				{
-					alert(data.msg);
+		            $("body").ios6alert({
+		                content : data.msg
+		            });		
 				}
 				else{
 					location.reload();

@@ -1944,6 +1944,7 @@ public class TdActivityController {
 			newArticle.setSource(tdActivity.getActivityType());
 	        newArticle.setMenuId(13L);
 	        newArticle.setCategoryId(catId);
+	        newArticle.setViewCount(0L);
 	        if(null != tdActivity.getStatusId() && tdActivity.getStatusId()==2)
 	        {
 	        	newArticle.setSortId(2L);
