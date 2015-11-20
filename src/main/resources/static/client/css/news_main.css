@@ -47,7 +47,7 @@ a:hover { color: #c36; text-decoration: underline; }
 .contactusleft2{margin-left: 42px;}
 .contactuswechat{background: url(../img/wechat.png) no-repeat 0 center;}
 .contactus img{margin-top: -33px;margin-left: 140px;}
-.map{width: 440px;height: 304px;margin-top: -380px;float: right;}
+.map{width: 500px;height: 500px;float: right;}
 .map iframe{width: 440px;height: 304px;}
 .massage{width: 1000px;margin: 0 auto; margin-bottom:120px;}
 .massage span{vertical-align:top;display: inline-block;margin-top: 24px;font-size: 14px;}

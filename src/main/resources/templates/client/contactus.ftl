@@ -102,6 +102,11 @@ function loadMap(x, y)
 		<hr style="border-top:1px solid #DDDDDD;" />
 </div>
 	<div class="contactussmall">
+	       <div class="map" style="float:right;">
+        <#--    <iframe src="map.html" frameborder="0"></iframe> -->
+            <div id="allmap"></div>
+
+        </div>
 		<div class="contactus">
 			<#if site??>
 				<h1>${site.title!''}</h1>
@@ -128,11 +133,6 @@ function loadMap(x, y)
 				<h3 class="contactuswechat">扫描添加微信：</h3>
 				<img src="${site.wxQrCode!''}" alt="">
 			</#if>	
-		</div>
-		<div class="map">
-		<#--	<iframe src="map.html" frameborder="0"></iframe> -->
-			<div id="allmap"></div>
-
 		</div>
 	</div>
 	<div class="contactussmall2">
