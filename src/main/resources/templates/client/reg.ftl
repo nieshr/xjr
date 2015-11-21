@@ -17,7 +17,7 @@
 <script>
 $(document).ready(function(){
 	$("#reg").Validform({
-		tiptype:4,
+		tiptype:4
 	});
 	    $(".whitebutton").mouseover(function(){   
         var index = $(this).index();
@@ -91,7 +91,6 @@ $(document).ready(function(){
                 });
                 $("#smsCodeBtn").removeAttr("disabled");
             }  
-  
         });
     }); 
 });
@@ -101,7 +100,6 @@ $(document).ready(function(){
         $("#btn_reg").click();
     }
    }
-   
  <#if error??>
 function warnmsg()
 {
