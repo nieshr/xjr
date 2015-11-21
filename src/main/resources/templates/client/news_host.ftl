@@ -17,6 +17,7 @@
 
 <!-- contend -->
 <div class="titlelist">
+<#--
 	<div id="titlelist">
 		<div>
 			<#if article_list??>
@@ -26,6 +27,7 @@
 			</#if>		
 		</div>
 	</div>
+-->	
 <div class="contactustitle">
 	<#if host_list??>
 		<#list host_list as hostList>
