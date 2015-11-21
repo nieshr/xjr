@@ -56,7 +56,7 @@ $(document).ready(function(){
 					resizeType : 1,
 					allowPreviewEmoticons : false,
 					allowImageUpload : true,
-				    uploadJson: '/Verwalter/editor/upload?action=EditorFile',
+				    uploadJson: '/editor/upload',
             		fileManagerJson: '/Verwalter/editor/upload?action=EditorFile',
 					items : [
 						'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
@@ -115,7 +115,6 @@ KindEditor.ready(function(K) {
         });
     });
 });
-
 </script>
 <body>
 <!--main-->
@@ -173,7 +172,8 @@ KindEditor.ready(function(K) {
              <dl class="team_title03">
                 <dt style="font-size:14px;float:left">封面图片：</dt>
                 <dd>
-                    <input name="imgUrl" type="text" end  id="url3"<#if article??&&article.statusId==1>disabled=""</#if> value="<#if article??&&article.imgUrl??>${article.imgUrl!''}</#if>"  /> <input <#if article??&&article.statusId==1>disabled=""</#if> type="button" id="image3" value="选择图片" />
+                    <input name="imgUrl" type="text" end  id="url3"<#if article??&&article.statusId==1>disabled=""</#if> value="<#if article??&&article.imgUrl??>${article.imgUrl!''}</#if>"  />
+                    <input <#if article??&&article.statusId==1>disabled=""</#if> type="button" id="image3" value="选择图片" />
                     <div class="img1_lcy">
                         <img id="ImgView" />
                     </div>

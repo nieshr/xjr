@@ -110,7 +110,7 @@ public class TdClientUploadController {
         String ext = name.substring(name.lastIndexOf("."));
 
         //限制文件类型
-        if(!ext.equalsIgnoreCase(".jpg") && !ext.equalsIgnoreCase(".pdf"))
+        if(!ext.equalsIgnoreCase(".jpg") && !ext.equalsIgnoreCase(".pdf") && !ext.equalsIgnoreCase(".png"))
         {
             Long done = 2L;
             return "redirect:/enterprise/upload?done="+done
