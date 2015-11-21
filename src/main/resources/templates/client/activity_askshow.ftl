@@ -7,13 +7,14 @@
 
 <link href="/client/css/base.css" rel="stylesheet" type="text/css" />
 <link href="/client/css/team.css" rel="stylesheet" type="text/css" />
-
+<link rel="stylesheet" href="/client/css/ios6alert.css">
 
 </head>
 
 <script src="/client/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="/mag/js/Validform_v5.3.2_min.js"></script>
 <script src="/client/js/main.js"></script>
+<script src="/client/js/ios6alert.js"></script>
 
 <script type="text/javascript" src="/mag/js/WdatePicker.js"></script>
 <script type="text/javascript" src="/mag/js/swfupload.js"></script>
@@ -54,7 +55,9 @@ function subActivity(){
 
 function done(msg)
 {
-    alert(msg);	
+    $("body").ios6alert({
+        content :msg
+    });
 }
 
 <#if msg?? >
@@ -112,10 +115,10 @@ KindEditor.ready(function(K) {
     <div class="right_content">
         <div class="right_box">
         	<dl class="crumb">
-            	<dt><a href="#"></a></dt>
+            	<dt><a href="javascript:void(0)"></a></dt>
                 <dd>
                 	<p>当前所在位置:</p>
-                    <a href="">申请展示</a>
+                    <a href="javascript:void(0)">申请展示</a>
                 </dd>
             </dl>
             <dl class="team_title01">
@@ -134,26 +137,26 @@ KindEditor.ready(function(K) {
                 </dd>
             </dl>
             <dl class="team_title02">
-                <dt>展示标题 :</dt>
+                <dt>展示标题：</dt>
                 <dd>
-                    <input type="text" value="<#if article??&&article.title??>${article.title!''}</#if>"  datatype="*" id="title" name="title"/>
+                    <input type="text" <#if article??&&article.statusId==1>disabled=""</#if> value="<#if article??&&article.title??>${article.title!''}</#if>"  datatype="*" id="title" name="title"/>
                 </dd>
             </dl>   
              <dl class="team_title02" style="float:left;">
                 <dt style="font-size:14px;float:left">封面图片：</dt>
                 <dd>
-                    <input name="imgUrl" type="text"  id="url3"<#if article??&&article.imgUrl??&&(article.statusId==0 || article.statusId==1)>disabled=""</#if> value="<#if article??&&article.imgUrl??>${article.imgUrl!''}</#if>"  /> <input <#if article??&&article.imgUrl??&&(article.statusId==0 || article.statusId==1)>disabled=""</#if> type="button" id="image3" value="选择图片" />
+                    <input name="imgUrl" type="text"  id="url3"<#if article??&&article.statusId==1>disabled=""</#if> value="<#if article??&&article.imgUrl??>${article.imgUrl!''}</#if>"  /> <input <#if article??&&article.statusId==1>disabled=""</#if> type="button" id="image3" value="选择图片" />
                 </dd>
             </dl>               
 
-            <dl style="float:left;">
-                <dt style="font-size:14px;float:left">内容描述：</dt>
+            <dl style="float:left;margin-top:20px;">
+                <dt style="font-size:14px;float:left">内容描述：&nbsp;&nbsp;</dt>
                 <dd>
-                    <textarea  name="content" class="editor" id="content" <#if article??&&article.imgUrl??&&(article.statusId==0 || article.statusId==1)>disabled=""</#if> datetype="*" style="visibility:hidden;"><#if article??&&article.content??>${article.content!''}</#if></textarea>
+                    <textarea  name="content" class="editor" id="content" <#if article??&&article.statusId==1>disabled=""</#if> datetype="*" style="visibility:hidden;"><#if article??&&article.content??>${article.content!''}</#if></textarea>
                 </dd>
             </dl>    
         </div>    
-        <input <#--<#if article??&&article.imgUrl??&&(article.statusId==0 || article.statusId==1)>disabled=""</#if>--> style="cursor:pointer; width:80px; height: 30px; border:none; background: #e67817; font-size: 14px; color: white; border-radius: 6px;margin-left: 30px; margin-top: 50px;" type="submit" value="提交"/>
+        <input <#if article??&&article.statusId==1>disabled="" style="cursor:pointer; width:80px; height: 30px; border:none; background: #666; font-size: 14px; color: white; border-radius: 6px;margin-left: 30px; margin-top: 50px;"</#if> style="cursor:pointer; width:80px; height: 30px; border:none; background: #e67817; font-size: 14px; color: white; border-radius: 6px;margin-left: 30px; margin-top: 50px;" type="submit" value="提交"/>
     </div>
     </form>
  <#else>

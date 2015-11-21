@@ -222,6 +222,10 @@ public class TdRegionController {
             {
             	TdArticle newArticle = new TdArticle();
             	newArticle.setRecommendId(Enterprise.getId());
+            	newArticle.setMenuId(11L);
+            	newArticle.setSortId(99L);
+            	newArticle.setSource("本站");
+            	newArticle.setViewCount(0L);
             	if(Enterprise.getFormType()==0)
             	{
             		newArticle.setCategoryId(16L);
@@ -245,7 +249,7 @@ public class TdRegionController {
             message.setRegionAdminId(admin.getId());
             message.setName(Enterprise.getTitle());
             message.setRegion(admin.getTitle());
-            message.setContent("【审核】恭喜您通过"+admin.getRegion()+"的审核，请登录个人中心查看详情！");
+            message.setContent("【审核】恭喜您通过"+admin.getRegion()+"的审核，活动信息可以在【活动列表】查看。您也可以【申请展示】中编辑文章或上传资料，通过审核后可以在本站相关网页中展示。");
             message.setTitle("通过审核");
             message.setStatusE(0L);
             message.setSpeaker(1L);

@@ -7,6 +7,7 @@
 <link rel="shortcut icon" href="/client/images/icon.ico" />
 <link href="/client/css/base.css" rel="stylesheet" type="text/css" />
 <link href="/client/css/team.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="/client/css/ios6alert.css">
 
 <style>
 .apply_content dd div .Validform_wrong span{ text-align:left;}
@@ -16,12 +17,15 @@
 <script src="/client/js/main.js"></script>
 <script type="text/javascript" src="/mag/js/WdatePicker.js"></script>
 <script type="text/javascript" src="/client/js/Validform_v5.3.2_min.js"></script>
+<script src="/client/js/ios6alert.js"></script>
 
 <script>
 
 function done()
 {
-    alert("上传资料成功！");	
+    $("body").ios6alert({
+        content :"上传资料成功！"
+    });
 }
 <#if done?? &&done == 1>
 window.onload=done;
@@ -32,7 +36,9 @@ function submitCheck1()
 	var filedata = $("#file1").val();
 	if (filedata == "")
 	{
-		alert("请添加文件！")
+	    $("body").ios6alert({
+   			 content :"请添加文件！"
+		});
 		}else{
 		$("#upload1").submit();
 		}
@@ -43,7 +49,9 @@ function submitCheck2()
 	var filedata = $("#file2").val();
 	if (filedata == "")
 	{
-		alert("请添加文件！")
+	    $("body").ios6alert({
+   			 content :"请添加文件！"
+		});
 		}else{
 		$("#upload2").submit();
 		}
@@ -54,7 +62,9 @@ function submitCheck3()
 	var filedata = $("#file3").val();
 	if (filedata == "")
 	{
-		alert("请添加文件！")
+	    $("body").ios6alert({
+   			 content :"请添加文件！"
+		});
 		}else{
 		$("#upload3").submit();
 		}
@@ -88,11 +98,11 @@ function submitCheck3()
         	<dt><a href="#"></a></dt>
             <dd>
             	<p>当前所在位置:</p>
-                <a href="#">企业/团队</a>
+                <a href="javascript:void(0)">企业/团队</a>
                 <p>&gt;</p>
-                <a href="#">基本资料</a>
+                <a href=""javascript:void(0)">基本资料</a>
                 <p>&gt;</p>
-                <a href="#">上传资料</a>
+                <a href=""javascript:void(0)">上传资料</a>
             </dd>
             <dt class="crumb_back" onClick="history.go(-1);"><a>返回上一页</a></dt>
         </dl>
@@ -109,7 +119,7 @@ function submitCheck3()
 	    			     <span><input id="file1" style="margin: 20px 0 0 48px ;background : #fff;color:#333;" name="Filedata" type="file" value="" /></span>
 	    			     <input  style="background:#ccc;margin:18px 0 0 110px;"  class="area_save_btn" type="button" value="上传项目资料" onclick="javascript:submitCheck1();"/>
 	    		    </div>
-	    		<#if enterprise.dataBusiness??>
+	    		<#if enterprise.dataBusiness??&&enterprise.dataBusiness?length gt 0>
 	    		    <div style="margin-top:20px;">
 	    		    	<span>已上传资料：</span>
 	    		    	<a href="/download/data?name=${enterprise.dataBusiness!''}" title="点击下载">【商业计划书】${enterprise.dataBusiness!''}</a>
