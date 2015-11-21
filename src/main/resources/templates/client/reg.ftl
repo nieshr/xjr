@@ -158,7 +158,7 @@ function inputPwd()
     <form action="/reg" method="post" id="reg">
     	<div>
         	<i class="i1"></i>
-        	<input type="text" name="username" id="txt_regId" value="用户名" ajaxUrl="/reg/check/username" datatype="*6-25" onfocus="if(this.value=='用户名'){this.value='';}" onblur="if(this.value==''){this.value='用户名'}"/>
+        	<input type="text" name="username" id="txt_regId" value="用户名" ajaxUrl="/reg/check/username" datatype="*6-25" onfocus="if(this.value=='请输入用户名'){this.value='';}" onblur="if(this.value==''){this.value='请输入用户名'}"/>
             <span>*用户名</span>
         </div>
         <div>
@@ -173,7 +173,7 @@ function inputPwd()
         </div>
         <div>
         	<i class="i4"></i>
-        	<input type="text" name="mobile" id="txt_regMobile" value="手机" ajaxUrl="/reg/check/mobile" datatype="m|/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/" onfocus="if(this.value=='手机'){this.value='';}" onblur="if(this.value==''){this.value='手机'}"/>
+        	<input type="text" name="mobile" id="txt_regMobile" value="手机" ajaxUrl="/reg/check/mobile" datatype="m|/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/" onfocus="if(this.value=='请输入手机'){this.value='';}" onblur="if(this.value==''){this.value='请输入手机'}"/>
             <span>*注册手机号</span>
         </div>
         <div>
