@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="/client/css/news_main.css">
 	<script type="text/javascript" src="/client/js/jquery-1.9.1.min.js"></script>
 	<script src="/client/js/main.js"></script>
-	<script src="/client/js/l_main.js"></script>
+
 </head>
 <script>
 function subActivity(hight)

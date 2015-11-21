@@ -869,7 +869,7 @@ public class TdInfoController {
         	catId = catList.get(0).getId();   //.get(0)表示 取catList表的第0个 zhangji
         }
         	
-		Long active = 1L;
+		Long active = 5L;
 		map.addAttribute("active",active);
 	    map.addAttribute("info_cat",tdArticleCategoryService.findOne(catId) );   //找出栏目名称 zhangji
 	    map.addAttribute("catId", catId);
@@ -918,7 +918,7 @@ public class TdInfoController {
 		map.addAttribute("info_page", tdDiySiteService.findByRoleIdOrderBySortIdAsc(3L, page, ClientConstant.pageSize));
 
         	
-		Long active = 1L;
+		Long active = 5L;
 		map.addAttribute("active",active);
 //	    map.addAttribute("info_cat",tdArticleCategoryService.findOne(catId) );   //找出栏目名称 zhangji
 //	    map.addAttribute("catId", catId);

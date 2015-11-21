@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <!--网页左上角小图标-->
-	<link rel="shortcut icon" href="/client/images/icon.ico" />
+	
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
@@ -13,6 +13,7 @@
 </#if>
 <title>科技小巨人-首页</title>
 <!--css-->
+<link rel="shortcut icon" href="/client/images/icon.ico" />
 <link href="/client/css/l_base.css" rel="stylesheet" type="text/css" />
 <link href="/client/css/jquery.fullPage.css" rel="stylesheet" type="text/css" />
 <link href="/client/css/index.css" rel="stylesheet" type="text/css" />
@@ -20,7 +21,7 @@
 #example_video_1{float:left;*+text-align:left;}
 </style>
 	<script type="text/javascript" src="/client/js/jquery-1.9.1.min.js"></script>
-	<script src="/client/js/l_main.js"></script>
+
   <!-- Chang URLs to wherever Video.js files will be hosted -->
   <link href="/client/css/video-js.css" rel="stylesheet" type="text/css">
   <!-- video.js must be in the <head> for older IEs to work. -->

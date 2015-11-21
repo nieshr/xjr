@@ -3,7 +3,7 @@
 <head>
 <!--网页左上角小图标-->
 <link rel="shortcut icon" href="/client/images/icon.ico" />
-<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>科技小巨人-培育活动</title>
 <!-- css -->
@@ -16,7 +16,7 @@
 <script type="text/javascript" src="/client/js/act_jquery.js"></script>
 <script type="text/javascript" src="/client/js/5icool.js"></script>
 <script type="text/javascript" src="/client/js/jquery-1.9.1.min.js"></script>
-<script src="/client/js/l_main.js"></script>
+
 <style type="">
 div{ margin:0 auto;text-align:left;}
 </style>
