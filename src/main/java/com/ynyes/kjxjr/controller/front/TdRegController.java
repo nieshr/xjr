@@ -11,6 +11,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -305,12 +307,22 @@ public class TdRegController {
 		// qr.getQRCode("weixin://wxpay/bizpayurl?appid=wx2421b1c4370ec43b&mch_id=10000100&nonce_str=f6808210402125e30663234f94c87a8c&product_id=1&time_stamp=1415949957&sign=512F68131DD251DA4A45DA79CC7EFE9D",
 		// 125, response);
 	}
-
+	public boolean isMobileNO(String mobiles) {
+		Pattern p = Pattern.compile("^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$");
+		Matcher m = p.matcher(mobiles);
+		return m.matches();
+		}
+	
 	@RequestMapping(value = "/reg/smscode", method = RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Object> smsCode(String mobile, HttpServletResponse response, HttpServletRequest request) {
 		Map<String, Object> res = new HashMap<>();
 		res.put("status", -1);
+		if (!isMobileNO(mobile))
+		{
+			res.put("message","手机号不正确");
+			return res;
+		}
 		Random random = new Random();
 		String smscode = random.nextInt(9000) + 1000 + "";
 		HttpSession session = request.getSession();
