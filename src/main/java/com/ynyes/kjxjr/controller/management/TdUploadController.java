@@ -169,8 +169,7 @@ public class TdUploadController {
 
     @RequestMapping(value = "/editor/upload", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> editorUpload(String action,
-            @RequestParam MultipartFile imgFile, HttpServletRequest req) {
+    public Map<String, Object> editorUpload(String action, @RequestParam MultipartFile imgFile, HttpServletRequest req) {
         Map<String, Object> res = new HashMap<String, Object>();
 
         res.put("error", 1);
