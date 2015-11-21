@@ -506,6 +506,9 @@ public class TdExpertController {
 	@RequestMapping(value = "/lyfd")
 	public String lyfd(HttpServletRequest req,ModelMap map){
 		String expertUsername = (String) req.getSession().getAttribute("expertUsername");
+		if (null == expertUsername) {
+			return "/client/login";
+		}
 		TdExpert expert = tdExpertService.findbyUsername(expertUsername);
 		List<TdExpertCoachEnterprise> grade_false_list = tdExpertCoachEnterpriseService.findByExpertIdAndIsGradeIsFalse(expert.getId());
 		List<TdExpertCoachEnterprise> grade_true_list = tdExpertCoachEnterpriseService.findByExpertIdAndIsGradeIsTrue(expert.getId());

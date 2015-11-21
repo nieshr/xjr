@@ -49,7 +49,7 @@
                                 <dt>活动名称</dt>
                                     <#if grade_false_list??>                                
                                         <#list grade_false_list as item>
-                                            <dd><a href="#">${item.enterpriseName!''}</a></dd>
+                                            <dd><a>${item.enterpriseName!''}</a></dd>
                                         </#list>
                                     </#if>
                             </dl>
@@ -57,15 +57,15 @@
                                 <dt>活动类型</dt>
                                 <#if grade_false_list??>                                
                                     <#list grade_false_list as item>
-                                        <dd class="list_color_blue"><a href="#">${item.activityType!''}</a></dd>
+                                        <dd class="list_color_blue"><a>${item.activityType!''}</a></dd>
                                     </#list>
                                 </#if>
                             </dl>
                             <dl>
-                                <dt>行业归属</dt>
+                                <dt>地区</dt>
                                 <#if grade_false_list??>                                
                                     <#list grade_false_list as item>
-                                        <dd class="list_color_blue"><a href="#">${item.type!''}</a></dd>
+                                        <dd class="list_color_blue"><a>${item.type!''}</a></dd>
                                     </#list>
                                 </#if>
                             </dl>
@@ -73,7 +73,7 @@
                                 <dt>操作</dt>
                                 <#if grade_false_list??>                                
                                     <#list grade_false_list as item>
-                                        <dd><a href="/expert/coach/${item.enterpriseId?c}">录入辅导信息</a>丨<a href="#">下载</a></dd>
+                                        <dd><a href="/expert/coach/${item.enterpriseId?c}">录入辅导信息</a><#--丨<a href="#">下载</a>--></dd>
                                     </#list>
                                 </#if>
                             </dl>
@@ -92,7 +92,7 @@
                                 <dt>项目名称</dt>
                                 <#if grade_true_list??>
                                     <#list grade_true_list as item>
-                                        <dd><a href="#">${item.enterpriseName!''}</a></dd>
+                                        <dd><a >${item.enterpriseName!''}</a></dd>
                                     </#list>
                                 </#if>
                             </dl>
@@ -100,15 +100,15 @@
                                 <dt>活动类型</dt>
                                 <#if grade_true_list??>
                                     <#list grade_true_list as item>
-                                        <dd><a href="#">${item.activityType!''}</a></dd>
+                                        <dd><a >${item.activityType!''}</a></dd>
                                     </#list>
                                 </#if>
                             </dl>
                             <dl>
-                                <dt>行业归属</dt>
+                                <dt>地区</dt>
                                 <#if grade_true_list??>
                                     <#list grade_true_list as item>
-                                        <dd><a href="#">${item.type!''}</a></dd>
+                                        <dd><a>${item.type!''}</a></dd>
                                     </#list>
                                 </#if>
                             </dl>
@@ -116,7 +116,7 @@
                                 <dt>操作</dt>
                                 <#if grade_true_list??>
                                     <#list grade_true_list as item>
-                                        <dd><a href="/expert/coach/log/${item.entenpriseId?c}">查看</a>丨<a href="#">下载</a></dd>
+                                        <dd><a <#if item.enterpriseId??>href="/expert/coach/log/${item.enterpriseId?c}" </#if>>查看</a><#--丨<a href="#">下载</a>--></dd>
                                     </#list>
                                 </#if>
                             </dl>

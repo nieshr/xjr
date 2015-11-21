@@ -26,7 +26,7 @@ function done()
 function done2()
 {
     $("body").ios6alert({
-    	title: 类型错误,
+    	title: "类型错误",
         content : "请上传jpg，pdf格式的扫描件"
     });
    
@@ -119,8 +119,8 @@ function submitCheck()
         <form id="upload" enctype="multipart/form-data" action="/client/enterprise/upload" method="post">
         <dl class="apply_step2" >
             <input type="hidden" id="id" name="id" value="<#if id??>${id?c!''}</#if>"></input>
-				<dt>*点击选择文件，上传已经打印并盖章的报名表扫描文件</dt>
-				<dd ><input id="file" style=" background : #fff;color:#333;" name="Filedata" type="file" value="" /></dd>
+				<dt>*点击选择文件(*.jpg *.png *.pdf)，上传已经打印并盖章的报名表扫描文件</dt>
+				<dd ><input id="file" style="margin-top: 40px ; background : #E67818;color:#333; height:25px;" name="Filedata" type="file" value="" /></dd>
 		</dl>	
 		<dl class="apply_step2" style="margin-top:20px ; ">
 				<dt>*多个文件请放置在同一个文件夹内，并添加为压缩文件上传</dt>

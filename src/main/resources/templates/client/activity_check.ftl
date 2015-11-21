@@ -278,7 +278,7 @@ function sortDown(id , activityId)
                         <#if recommend_list??>
                             <#list recommend_list as item>
                                 <li>
-                                    <p class="p01" style="width: 380px; float: left;text-align:left;"><b style="float:left;">${item_index+1}.${item.enterpriseTitle!''}</b><#if item.win??&&item.win==1><img src="/client/images/n0.png" style="width:12px; height:12px;margin-left:3px;" title="胜出项目" alt="胜出" /> </#if></p>
+                                    <p class="p01" style="width:<#-- 380-->348px; float: left;text-align:left;"><b style="float:left;">${item_index+1}.${item.enterpriseTitle!''}</b><#if item.win??&&item.win==1><img src="/client/images/n0.png" style="width:12px; height:12px;margin-left:3px;" title="胜出项目" alt="胜出" /> </#if></p>
                                     <a href="/activity/enterprise/check/${item.enterpriseId?c!''}"   target=_blank>查看</a>
                                     <a>丨</a>
                                     <#if item.isGrade??&&item.isGrade>
@@ -300,6 +300,13 @@ function sortDown(id , activityId)
 	                                            <a href="/activity/sortUp?enterpriseId=${item.id?c!''}&activityId=${item.activityId?c!''}"><img style="width:10px;height:13px;margin-top: 8px; <#if item_has_next>margin-left:3px;</#if>" src="/client/images/up1.png" alt="上移" title="上移排序"/></a>
 	                                        </#if>
                                         </#if>
+ 			    						<#if item.pptUrl??&&item.pptUrl?length gt 0>
+				    						<a>丨</a>
+				    						<a href="/download/data?name=${item.pptUrl!''} " title="点击下载文件">PPT</a>
+				    					<#else>
+				    						<a>丨</a>
+				    						<a href="javascript:void(0) " style="color:#666;" title="无资料">PPT</a>
+			    						</#if>                                       
 			    						<#if item.enterpriseFileUrl??&&item.enterpriseFileUrl?length gt 0>
 				    						<a>丨</a>
 				    						<a href="/download/data?name=${item.enterpriseFileUrl!''} " title="点击下载文件">扫描件</a>
@@ -416,6 +423,7 @@ function sortDown(id , activityId)
                         <ul class="active_project_text">
                             <li>
                                 <input type="button" class="area_batch" onclick="javascript:window.open('/activity/getGrade?activityId=${activity.id?c!''}&mark=activity')"  class="p01" value="查看排名" />
+                                <input type="button" class="area_batch" onclick="javascript:window.open('/activity/getGrade?activityId=${activity.id?c!''}&mark=activity')"  class="p01" value="分配投资机构" />
                                 <a style="display:block;  width:60px;"></a>
                             </li>
                         </ul>

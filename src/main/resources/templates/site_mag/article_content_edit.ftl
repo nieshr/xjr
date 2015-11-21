@@ -27,7 +27,7 @@
             width: '98%',
             height: '350px',
             resizeType: 1,
-            uploadJson: '/Verwalter/editor/upload?action=EditorFile',
+            uploadJson: '/editor/upload',
             fileManagerJson: '/Verwalter/editor/upload?action=EditorFile',
             allowFileManager: true
         });

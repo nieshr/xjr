@@ -110,7 +110,7 @@ public class TdClientUploadController {
         String ext = name.substring(name.lastIndexOf("."));
 
         //限制文件类型
-        if(!ext.equalsIgnoreCase(".jpg") && !ext.equalsIgnoreCase(".pdf"))
+        if(!ext.equalsIgnoreCase(".jpg") && !ext.equalsIgnoreCase(".pdf") && !ext.equalsIgnoreCase(".png"))
         {
             Long done = 2L;
             return "redirect:/enterprise/upload?done="+done
@@ -431,7 +431,7 @@ public class TdClientUploadController {
             if(null == enterprise){
             	enterprise = new TdEnterprise();
             }
-            if (enterprise.getStatusId()==1 &&null != enterprise.getIsSelect() && enterprise.getIsSelect())
+            if (enterprise.getStatusId()==1 &&null != enterprise.getIsSelect() && enterprise.getIsSelect()==true)
             {
                 enterprise.setPptUrl(fileName);
                 tdEnterpriseService.save(enterprise);

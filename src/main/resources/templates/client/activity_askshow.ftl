@@ -26,6 +26,26 @@
 
 
 <script type="text/javascript">
+    var img;
+    
+$(document).ready(function(){
+        var txtPic = $("#url3").val();
+        if (txtPic == "" || txtPic == null) 
+        {
+            $(".ImgView").hide();
+        }
+        else 
+        {
+            $("#ImgView").attr("src" , $("#url3").val())
+            $(".ImgView").show();
+        }
+
+        $("#url3").change(function()
+        {
+          $("#ImgView").attr("src" , $("#url3").val())
+        });
+});
+
     $(function () {
         //初始化表单验证
         $("#form1").initValidform();
@@ -36,7 +56,7 @@
 					resizeType : 1,
 					allowPreviewEmoticons : false,
 					allowImageUpload : true,
-				    uploadJson: '/Verwalter/editor/upload?action=EditorFile',
+				    uploadJson: '/editor/upload',
             		fileManagerJson: '/Verwalter/editor/upload?action=EditorFile',
 					items : [
 						'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
@@ -44,9 +64,15 @@
 						'insertunorderedlist', '|', 'emoticons', 'image', 'link']
 				});
 			});
+			
         });
-        
 
+        
+function showImg(imageUrl)
+{
+    $(".thumb_ImgUrl_show").show();
+    $("#ImgView").attr("src",imageUrl);
+}
 
 
 function subActivity(){
@@ -71,7 +97,8 @@ KindEditor.ready(function(K) {
     var editor = K.editor({
         allowFileManager : true,
         uploadJson: '/editor/upload',
-        allowUpload : true
+        allowUpload : true,
+
     });
 
     K('#image3').click(function() {
@@ -81,13 +108,14 @@ KindEditor.ready(function(K) {
                 imageUrl : K('#url3').val(),                       
                 clickFn : function(url, title, width, height, border, align) {
                     K('#url3').val(url);
+                    img=url;
                     editor.hideDialog();
+                    showImg(url)
                 }
             });
         });
     });
 });
-
 </script>
 <body>
 <!--main-->
@@ -142,15 +170,21 @@ KindEditor.ready(function(K) {
                     <input type="text" <#if article??&&article.statusId==1>disabled=""</#if> value="<#if article??&&article.title??>${article.title!''}</#if>"  datatype="*" id="title" name="title"/>
                 </dd>
             </dl>   
-             <dl class="team_title02" style="float:left;">
+             <dl class="team_title03">
                 <dt style="font-size:14px;float:left">封面图片：</dt>
                 <dd>
-                    <input name="imgUrl" type="text"  id="url3"<#if article??&&article.statusId==1>disabled=""</#if> value="<#if article??&&article.imgUrl??>${article.imgUrl!''}</#if>"  /> <input <#if article??&&article.statusId==1>disabled=""</#if> type="button" id="image3" value="选择图片" />
+                    <input name="imgUrl" type="text" end  id="url3"<#if article??&&article.statusId==1>disabled=""</#if> value="<#if article??&&article.imgUrl??>${article.imgUrl!''}</#if>"  />
+                    <input <#if article??&&article.statusId==1>disabled=""</#if> type="button" id="image3" value="选择图片" />
+                    <div class="img1_lcy">
+                        <img id="ImgView" style="width:332px; height:144px;"/>
+                    </div>
                 </dd>
-            </dl>               
+                
+            </dl>  
+                        
 
-            <dl style="float:left;margin-top:20px;">
-                <dt style="font-size:14px;float:left">内容描述：&nbsp;&nbsp;</dt>
+            <dl class="team_title03" style="float:left;margin-top:20px;">
+                <dt style="font-size:14px;float:left;">内容描述：&nbsp;&nbsp;</dt>
                 <dd>
                     <textarea  name="content" class="editor" id="content" <#if article??&&article.statusId==1>disabled=""</#if> datetype="*" style="visibility:hidden;"><#if article??&&article.content??>${article.content!''}</#if></textarea>
                 </dd>

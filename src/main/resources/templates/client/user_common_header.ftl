@@ -18,13 +18,15 @@
         <dd>
         	<div><img src="/client/images/user.png" /></div>
         	<span>${username!''}</span>
+        	<#--
        		<span style="width:70px;">
 	           <a style="width:70px;line-height: 60px; display: block;  color: white;  font-size: 14px;  " href="/user/password">修改密码</a>
       		</span>
       		<span style="width:70px;">
 	           <a style="width:70px;line-height: 60px; display: block;  color: white;  font-size: 14px;  " href="/logout">注销</a>
       		</span>
-        	<!--
+      		-->
+        
             <p>管理</p>
             <span id="nav_guide"></span>
         </dd>
@@ -32,6 +34,6 @@
             <li><a href="/user/password">修改密码</a></li>
             <li><a href="/logout">注销</a></li>     
         </ul>
-        -->
+       
     </dl>
 </div>

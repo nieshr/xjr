@@ -704,6 +704,11 @@ public class TdActivityController {
         		tdActivityEnterpriseService.save(aen);
         	}
         	
+        	//重置路演状态
+            TdExpertCoachEnterprise coach = tdExpertCoachEnterpriseService.findByEnterpriseId(activityId);
+            coach.setIsGrade(false);
+            tdExpertCoachEnterpriseService.save(coach);
+        	
         	
         	List<TdEnterpriseGrade> enterpriseGrade = tdEnterpriseGradeService.findByActivityIdOrderByIdAsc(activityId);
         	for(TdEnterpriseGrade theGrade : enterpriseGrade)
@@ -2115,6 +2120,8 @@ public class TdActivityController {
     	coach.setIsGrade(false);
     	coach.setExpertName(expert.getName());
     	coach.setExpertId(expertId);
+    	coach.setActivityType(tdActivityService.findOne(activityId).getActivityType());
+    	coach.setType(tdActivityService.findOne(activityId).getRegion()); //地区
        
     	tdExpertCoachEnterpriseService.save(coach);
         res.put("code", 0);
@@ -2200,7 +2207,6 @@ public class TdActivityController {
     		  tdEnterpriseService.save(e);
     	  }
       }
-
       
       
       TdActivity activity = tdActivityService.findOne(activityId);
@@ -2211,6 +2217,11 @@ public class TdActivityController {
       TdArticle article = tdArticleService.findByRecommendIdAndMenuId(activityId, 13L);
       article.setSortId(2L);
       tdArticleService.save(article);
+      
+      //路演辅导状态
+      TdExpertCoachEnterprise coach = tdExpertCoachEnterpriseService.findByEnterpriseId(activityId);
+      coach.setIsGrade(true);
+      tdExpertCoachEnterpriseService.save(coach);
      
       
       for (int chkId : chkIds)

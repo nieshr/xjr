@@ -40,7 +40,7 @@ body{ background:url(../images/background.png); background-size:100% 100%;}
 .search input{height:30px; width:160px; border:none; float:left;background:#2b3442; color:white;*+width:120px;line-height:30px;}
 
 .porfile{height:60px;float:right;position:relative;}.porfile dt{width:120px; display:block;overflow:hidden; float:left;}
-.porfile dt a{ line-height:60px; display:block; color:white; font-size:16px;  background:url(../images/help.png) no-repeat left; padding-left:24px;}.porfile dd{width:400px;display:block;overflow:hidden; float:left;color:white; font-size:16px;margin-left:30px;}		
+.porfile dt a{ line-height:60px; display:block; color:white; font-size:16px;  background:url(../images/help.png) no-repeat left; padding-left:24px;}.porfile dd{width:304px; display:block;overflow:hidden; float:left;color:white; font-size:16px;margin-left:30px;}		
 .porfile dd div{ width:40px; height:40px; margin-top:10px; float:left;}
 .porfile dd div img{width:40px; height:40px; border-radius:20px;}
 .porfile dd span{ display:block; float:left; height:60px;width:120px; line-height:60px; margin-left:10px; overflow:hidden;}

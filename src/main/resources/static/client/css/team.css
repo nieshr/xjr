@@ -13,6 +13,7 @@
 .apply_form div input{ float: left; height:40px; line-height: 40px; }
 .apply_form div span{ display: block; float: left; font-size: 14px; height:40px; line-height: 40px; width:100px;margin-left: 10px;}
 
+
 .apply_content{width:100%; height:auto; display: block; overflow: hidden;float:left;}
 .apply_content dt{ width:100%; height: 40px; padding: 8px 0; margin-top: 20px;}
 .apply_content .dt01{background: #01458d;}
@@ -30,7 +31,6 @@
 .apply_content dd div select{ margin-left: 20px; float: left;}
 .apply_content .dt05{ width:100%; height:40px;margin-bottom: 30px;}
 .apply_content .dt05 input{ display: block; height:40px; width:60px; border-radius: 8px; margin: 0 auto; line-height:40px; border: none; background: #e67817; color: white; font-size: 14px; }
-
 
 
 /*资料_第二歄1�7*/
@@ -125,6 +125,12 @@
 .team_title02 dd input{width:220px;height:30px; margin-left:10px;}
 
 
+.team_title03{width:100%;float:left;display:block;overflow:hidden;font-size:16px; margin-top:20px;}
+.team_title03 dt{float:left; height:30px;line-height:30px; font-size:14px;}
+.team_title03 dd{float:left;}
+.team_title03 dd input{width:220px;height:30px; margin-left:10px;}
+.img1_lcy{ max-width:600px;height:auto;margin:10px 0 0 10px;}
+.img1_lcy img{ width:200px;height:auto;}
 
 
 
