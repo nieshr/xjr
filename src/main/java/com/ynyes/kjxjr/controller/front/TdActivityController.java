@@ -2217,7 +2217,7 @@ public class TdActivityController {
       activity.setStatusId(2L);
       tdActivityService.save(activity);
       
-      //修改文章黄台
+      //修改文章状态
       TdArticle article = tdArticleService.findByRecommendIdAndMenuId(activityId, 13L);
       article.setSortId(2L);
       tdArticleService.save(article);

@@ -39,6 +39,7 @@ $(document).ready(function(){
             $("#btn_reg").css("background","#999999");
    	    }
    	 });
+
 //手机验证码
     $("#smsCodeBtn").bind("click", function() {  
         
@@ -142,7 +143,7 @@ function inputPwd()
 <div class="head">
 	<div class="logo">
     	<!--LOGO 尺寸：118*163-->
-    	<a href="#"><img src="/client/images/index_logo.png" alt="科技小巨人LOGO" width="118px"; height="163px"; /></a>
+    	<a href="/"><img src="/client/images/index_logo.png" alt="科技小巨人LOGO" width="118px"; height="163px"; /></a>
         <p>科技小巨人&nbsp;&nbsp;&nbsp;&nbsp;开创新未来</p>
     </div>
     <ul>

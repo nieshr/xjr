@@ -34,14 +34,14 @@
     <div class="right_content">
     <div class="right_box">
     	<dl class="crumb">
-        	<dt><a href="#"></a></dt>
+        	<dt><a href="javascript:void(0)"></a></dt>
             <dd>
             	<p>当前所在位置:</p>
-                <a href="#">企业/团队</a>
+                <a href="javascript:void(0)">企业/团队</a>
                 <p>&gt;</p>
-                <a href="#">基本资料</a>
+                <a href="javascript:void(0)">基本资料</a>
                 <p>&gt;</p>
-                <a href="#">填写资料</a>
+                <a href="javascript:void(0)">填写资料</a>
             </dd>
             <dt class="crumb_back"><a  href="javascript:history.go(-1);">返回上一页</a></dt>
         </dl>
@@ -61,7 +61,7 @@
         </dl>
     </div>  
     
-    <div style="float:left;	">
+    <div style="float:left;	width:100%;">
      <form>
    <dl class="apply_change">
     	<dt class="dt01"><span>一、基本信息</span><br/><p>此信息将自动生成到报名表中</p></dt>

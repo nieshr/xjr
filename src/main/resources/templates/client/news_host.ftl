@@ -8,6 +8,7 @@
 	<link rel="stylesheet" href="/client/css/news_main.css">
 	<script type="text/javascript" src="/client/js/jquery-1.9.1.min.js"></script>
 	<script src="/client/js/main.js"></script>
+	<script src="/client/js/l_main.js"></script>
 </head>
 <script>
 function subActivity(hight)
@@ -24,6 +25,7 @@ function subActivity(hight)
 <!-- contend -->
 <div class="titlelist">
 	<div id="titlelist">
+	<#--
 		<div>
 			<#if article_list??>
 				<#list article_list as item>
@@ -31,6 +33,7 @@ function subActivity(hight)
 				</#list>
 			</#if>		
 		</div>
+		-->
 	</div>
 <div class="contactustitle">
 	<#if host_list??>

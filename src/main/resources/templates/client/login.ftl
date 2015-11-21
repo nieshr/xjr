@@ -128,7 +128,7 @@ function saveUserInfo() {
         </div>
         <div>
         	<i class="i3"></i>
-        	<input type="text" name="password" id="txt_loginPwd"  datatype="*6-25" nullmsg="请输入密码"/>
+        	<input type="password" name="password" id="txt_loginPwd"  datatype="*6-25" nullmsg="请输入密码"/>
            
         </div>
         <div class="yzm">

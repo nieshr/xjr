@@ -20,7 +20,7 @@
 #example_video_1{float:left;*+text-align:left;}
 </style>
 	<script type="text/javascript" src="/client/js/jquery-1.9.1.min.js"></script>
-	
+	<script src="/client/js/l_main.js"></script>
   <!-- Chang URLs to wherever Video.js files will be hosted -->
   <link href="/client/css/video-js.css" rel="stylesheet" type="text/css">
   <!-- video.js must be in the <head> for older IEs to work. -->
