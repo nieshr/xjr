@@ -110,8 +110,9 @@ function submitCheck3()
 
        
     </div>  
-    <dl class="apply_content">
-      	<form id="upload1" enctype="multipart/form-data" action="/client/dataBusiness/upload" method="post">
+    
+      	<form id="upload1"  enctype="multipart/form-data" action="/client/dataBusiness/upload" method="post">
+      		<dl class="apply_content">
             <input type="hidden" name="id" value="${enterprise.id?c!''}" />
 	    	<dt class="dt01" style="background:#80a2c6;"><span>一、商业计划书</span><br/><p>报名表中勾选此项时上传</p></dt>
 	    	<dd>
@@ -126,9 +127,11 @@ function submitCheck3()
 	    		    </div>	    		    
     		    </#if>
 	    	</dd>
+	    	</dl>
 	    </form>	
 	    
     	<form id="upload2" enctype="multipart/form-data" action="/client/dataPossible/upload" method="post">
+    	<dl class="apply_content">
     		  <input type="hidden" name="id" value="${enterprise.id?c!''}" />
     	    	<dt class="dt01" style="background:#80a2c6;margin-top:100px;"><span>二、可行性报告</span><br/><p>报名表中勾选此项时上传</p></dt>
     	<dd>
@@ -143,9 +146,11 @@ function submitCheck3()
 	    		    </div>
     		    </#if>
     	</dd>
+    	</dl>
     	</form>	
     	
     	<form id="upload3" enctype="multipart/form-data" action="/client/dataOther/upload" method="post">
+    	<dl class="apply_content">
     		  <input type="hidden" name="id" value="${enterprise.id?c!''}" />
     	    	<dt class="dt01" style="background:#80a2c6; margin-top:100px;"><span>三、其他资料</span><br/><p>报名表中勾选此项时上传</p></dt>
     	<dd>
@@ -160,6 +165,7 @@ function submitCheck3()
 	    		    </div>    		    
     		    </#if>
     	</dd>
+		</dl>
     	</form>	
 
     </div>

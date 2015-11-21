@@ -1,3 +1,5 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
 <title>个人中心-上传扫描件</title>
@@ -118,7 +120,7 @@ function submitCheck()
         <dl class="apply_step2" >
             <input type="hidden" id="id" name="id" value="<#if id??>${id?c!''}</#if>"></input>
 				<dt>*点击选择文件，上传已经打印并盖章的报名表扫描文件</dt>
-				<dd ><input id="file" style="margin-top: 20px ; background : #fff;color:#333;" name="Filedata" type="file" value="" /></dd>
+				<dd ><input id="file" style=" background : #fff;color:#333;" name="Filedata" type="file" value="" /></dd>
 		</dl>	
 		<dl class="apply_step2" style="margin-top:20px ; ">
 				<dt>*多个文件请放置在同一个文件夹内，并添加为压缩文件上传</dt>

@@ -739,7 +739,7 @@ public String  recommendEnterprise(HttpServletRequest req,
 	    Long activityId = activity.getId();
 	    Long statusId = 2L;
 	    
-	    if (null != isDone && isDone == 1)
+	    if (null != isDone && (isDone == 1 || isDone == 2))
 	    {
 	    	map.addAttribute("done", isDone);
 	    }

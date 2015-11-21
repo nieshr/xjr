@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>活动管理员-操作活动</title>
@@ -15,7 +15,27 @@
 <script type="text/javascript" src="/client/js/Validform_v5.3.2_min.js"></script>
 <script src="/client/js/ios6alert.js"></script>
 <script>
-
+function sortUp(id , activityId)
+{
+         $.ajax({
+             type: "GET",
+             url: "/activity/sortUp",
+             data: {"id":id ,"activityId" : activityId},
+             dataType: "json",
+             success: function(data){
+                         if (data.code == 0)
+                         {
+                             location.reload();
+                         }
+                         else 
+                         {
+                             $("body").ios6alert({
+                                 content : data.msg
+                             });
+                         }
+                      }
+         });
+}
 function activityPass(activityId)
 {
     $("body").ios6alert({
@@ -54,7 +74,6 @@ function sendSms(id,activityId,roleId)
          $.ajax({
              type: "GET",
              url: "/activity/sendSms",
-             contentType: "application/json; charset=utf-8",
              data: {"id":id,"activityId" : activityId,"roleId":roleId},
              dataType: "json",
              success: function(data){
@@ -179,29 +198,6 @@ function resetCheck(activityId) {
 }
 
 
-function sortUp(id , activityId)
-{
-         $.ajax({
-             type: "GET",
-             url: "/activity/sortUp",
-             contentType: "application/json; charset=utf-8",
-             data: {"id":id ,"activityId" : activityId},
-             dataType: "json",
-             success: function(data){
-                         if (data.code == 0)
-                         {
-                             location.reload();
-                         }
-                         else 
-                         {
-                             $("body").ios6alert({
-                                 content : data.msg
-                             });
-                         }
-                      }
-         });
-}
-
 function sortDown(id , activityId)
 {
          $.ajax({
@@ -298,27 +294,39 @@ function sortDown(id , activityId)
                                         <#if activity.statusId??&&(activity.statusId==1|| activity.statusId == 0)>
                                          <a>丨</a> 
 	                                        <#if item_has_next>
-	                                            <a href="javascript:sortDown(${item.id?c!''} , ${item.activityId?c!''});"><img style="width:10px;height:13px;margin-top: 8px;"src="/client/images/down1.png" alt="下移" title="下移排序"/></a>
+	                                            <a href="/activity/sortDown?enterpriseId=${item.id?c!''}&activityId=${item.activityId?c!''}"><img style="width:10px;height:13px;margin-top: 8px;" src="/client/images/down1.png" alt="下移" title="下移排序"/></a>
 	                                        </#if>                                  
 	                                        <#if item_index != 0>
-	                                            <a href="javascript:sortUp(${item.id?c!''} , ${item.activityId?c!''});"><img style="width:10px;height:13px;margin-top: 8px; <#if item_has_next>margin-left:3px;</#if>" src="/client/images/up1.png" alt="上移" title="上移排序"/></a>
+	                                            <a href="/activity/sortUp?enterpriseId=${item.id?c!''}&activityId=${item.activityId?c!''}"><img style="width:10px;height:13px;margin-top: 8px; <#if item_has_next>margin-left:3px;</#if>" src="/client/images/up1.png" alt="上移" title="上移排序"/></a>
 	                                        </#if>
                                         </#if>
-			    						<#if item.enterpriseFileUrl??>
+			    						<#if item.enterpriseFileUrl??&&item.enterpriseFileUrl?length gt 0>
 				    						<a>丨</a>
 				    						<a href="/download/data?name=${item.enterpriseFileUrl!''} " title="点击下载文件">扫描件</a>
+				    					<#else>
+				    						<a>丨</a>
+				    						<a href="javascript:void(0) " style="color:#666;" title="无资料">扫描件</a>
 			    						</#if>
-			    						<#if item.dataBusiness??>
+			    						<#if item.dataBusiness??&&item.dataBusiness?length gt 0>
 				    						<a>丨</a>
 				    						<a href="/download/data?name=${item.dataBusiness!''}" title="点击下载文件">商业计划书</a>
+				    					<#else>
+				    						<a>丨</a>
+				    						<a href="javascript:void(0) " style="color:#666;"  title="无资料">商业计划书</a>	
 			    						</#if>
-			    						<#if item.dataPossible??>
+			    						<#if item.dataPossible??&&item.dataPossible?length gt 0>
 				    						<a>丨</a>
 				    						<a href="/download/data?name=${item.dataPossible!''}" title="点击下载文件">可行性报告</a>
+				    					<#else>
+				    						<a>丨</a>
+				    						<a href="javascript:void(0) " style="color:#666;" title="无资料">可行性报告</a>	
 			    						</#if>
-			    						<#if item.dataOther??>
+			    						<#if item.dataOther??&&item.dataOther?length gt 0>
 				    						<a>丨</a>
 				    						<a href="/download/data?name=${item.dataOther!''}" title="点击下载文件">其他资料</a>
+				    					<#else>
+				    						<a>丨</a>
+				    						<a href="javascript:void(0)" style="color:#666;" title="无资料">其他资料</a>	
 			    						</#if>
 
                                 </li>
@@ -361,7 +369,7 @@ function sortDown(id , activityId)
                                     <a style="display:block;  width:100px;"></a>
 
                                     <#if activity.statusId??&&activity.statusId==0>
-                                        <a href="javascript:void(0)" title="评分尚未开始" style="color:#666;" target="_blank">评分情况</a>
+                                        <a href="javascript:void(0)" title="评分尚未开始" style="color:#666;" >评分情况</a>
                                     <#else>
                                         <a href="/activity/search/grade?activityId=${activity.id?c!''}&expertId=${item.expertId?c!''}" title="查看该评委的评分详情并导出表格" target="_blank">评分情况</a>
                                     </#if>
@@ -452,7 +460,7 @@ function sortDown(id , activityId)
                                                 float: left;
                                                 height: 26px;
                                                 line-height: 26px;
-                                                width: 170px;"></input>
+                                                width: 170px;" />
         </dd>
         </dl>
         <#else>
@@ -468,7 +476,7 @@ function sortDown(id , activityId)
                                                             float: left;
                                                             height: 26px;
                                                             line-height: 26px;
-                                                            width: 170px;"></input>
+                                                            width: 170px;" />
         
         </div>
         </form>

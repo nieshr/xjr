@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
     <head>
+    	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
         <title>专家评委-活动列表</title>
         <link rel="shortcut icon" href="/client/images/icon.ico" />
@@ -75,13 +76,7 @@
 	                                        	<a title="活动已结束" href="javascript:void(0)" style="color:#666;">评分</a>	
 	                                        </#if>
 	                                    -->
-	                                    	<a target="_blank" title="<#if item.gradetimeId??&&item.gradetimeId==0>
-	                                    												活动未开始
-	                                    												<#elseif item.gradetimeId??&&item.gradetimeId==1>
-	                                    												开始评分
-	                                    												 <#elseif item.gradetimeId??&&item.gradetimeId==2>
-	                                    												 活动已结束
-	                                    												 </#if>	" href="/expert/grade?activityId=${item.id?c}">评分</a>    
+	                                    	<a target="_blank"  title="<#if item.gradetimeId??&&item.gradetimeId==0>活动未开始<#elseif item.gradetimeId??&&item.gradetimeId==1>开始评分<#elseif item.gradetimeId??&&item.gradetimeId==2>活动已结束</#if>" href="/expert/grade?activityId=${item.id?c}">评分</a>    
 	                                        &nbsp;|&nbsp;
 	                                        <a href="/expert/detail/${item.id?c}">详情</a>
 	                                        &nbsp;|&nbsp;

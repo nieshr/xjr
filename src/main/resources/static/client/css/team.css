@@ -13,7 +13,7 @@
 .apply_form div input{ float: left; height:40px; line-height: 40px; }
 .apply_form div span{ display: block; float: left; font-size: 14px; height:40px; line-height: 40px; width:100px;margin-left: 10px;}
 
-.apply_content{width＄1�70%; height:auto; display: block; overflow: hidden;}
+.apply_content{width:100%; height:auto; display: block; overflow: hidden;float:left;}
 .apply_content dt{ width:100%; height: 40px; padding: 8px 0; margin-top: 20px;}
 .apply_content .dt01{background: #01458d;}
 .apply_content .dt02{background: #e67817;}
@@ -31,13 +31,15 @@
 .apply_content .dt05{ width:100%; height:40px;margin-bottom: 30px;}
 .apply_content .dt05 input{ display: block; height:40px; width:60px; border-radius: 8px; margin: 0 auto; line-height:40px; border: none; background: #e67817; color: white; font-size: 14px; }
 
-/*资料_第二歄1�7*/
+
+
+/*资料_第二歄1�7*/
 .apply_step2{width:950px; height:auto; display: block; overflow: hidden;}
 .apply_step2 dt{width:950px; height:40px; text-align: center; line-height: 40px; color: red;}
 .apply_step2 dd{ width:950px; height:40px;}
 .apply_step2 dd input{ cursor:pointer;margin: 0 auto; display: block; width:300px; height:40px; padding: 0 10px; border: none; background: #e67817; color: white; font-size: 16px; border-radius: 8px;}
 
-/*资料_第三歄1�7*/
+/*资料_第三歄1�7*/
 .apply_step3{width:950px; height:auto; display: block; overflow: hidden;}
 .apply_step3 dt{width:950px;height:auto; display: block; overflow: hidden; margin-top: 20px;}
 .apply_step3 dt div{width:600px; height:100px; background: #529c15; margin: 0 auto; color: white; font-size: 20px;;}
@@ -51,7 +53,7 @@
 .change_inform span{ float: left; display: block; font-size: 16px; margin-left: 20px;}
 .change_inform input{ float: right; font-size: 12px; height:30px; width:108px; line-height: 30px; margin-right: 20px; margin-top: 5px; border-radius: 6px; border: none; color: white; background: #e67817;}
 
-.apply_change{width＄1�70%; height:auto; display: block; overflow: hidden;}
+.apply_change{width＄1�70%; height:auto; display: block; overflow: hidden;}
 .apply_change dt{ width:100%; height: 40px; padding: 8px 0; margin-top: 20px; background: #80a2c6;}
 .apply_change dt span{ color: white; font-size: 14px; margin-left: 30px;}
 .apply_change dt p{ color: white; margin-left: 30px; }
@@ -67,8 +69,8 @@
 .apply_change .dt05 input{ display: block; height:40px; width:60px; border-radius: 8px; margin: 0 auto; line-height:40px; border: none; background: #e67817; color: white; font-size: 14px; }
 .apply_change .hide{display:none;}
 
-/*四�1�7�活动详惄1�7*/
-.active_text{width＄1�70%; height:auto; display: block; overflow: hidden;}
+/*四�1�7�活动详惄1�7*/
+.active_text{width＄1�70%; height:auto; display: block; overflow: hidden;}
 .active_text dt{ width:100%; height: 40px; padding: 8px 0; margin-top: 20px;}
 .active_text .dt01{background: #01458d;}
 .active_text .dt02{background: #e67817;}
@@ -101,7 +103,7 @@
 .active_project_text li a{float: left; display: block; height:30px; line-height: 30px; color: #01458d; }
 
 
-/*五�1�7�申请展礄1�7*/
+/*五�1�7�申请展礄1�7*/
 .team_show{width:950px; height:40px; float:left; background:#ffffff; line-height: 40px; font-size: 16px;}
 .team_show input{float: left;margin-top:14px ; margin-left: 20px;}
 .team_show span{ display:block; float: left; margin-left:10px;}
@@ -126,7 +128,7 @@
 
 
 
-/*六�1�7�档案跟踄1�7 = 修改资料*/
+/*六�1�7�档案跟踄1�7 = 修改资料*/
 .expert_date{width: 950px; margin-left:30px;height: auto; display: block; overflow: hidden; float: left;  margin-top: 30px;}
 .expert_date dd{width:100%;height: auto; padding:10px 0; display: block; overflow: hidden; float: left; margin-top: 10px; background: white; padding-left: 10px;}
 .expert_date dd span{ float: left; font-size: 14px; display: block; width:6%;}
@@ -137,7 +139,7 @@
 .expert_date dt input{ clear: both; display: block; margin-left: 68px; width:60px; height:30px; margin-top: 10px; border: none; border-radius: 6px; background: #e67817; color: white;}
 
 
-/*七�1�7�站内消恄1�7*/
+/*七�1�7�站内消恄1�7*/
 .list_base11{width:98%; padding-left: 1%;padding-right: 1%; height: auto; display: block; overflow: hidden; padding-top: 30px;}
 .list_base11 dl{width:25%; height:auto; display: block; overflow: hidden;float: left; text-align: center;}
 .list_base11 .list_active11 a{ color:#01458d;}

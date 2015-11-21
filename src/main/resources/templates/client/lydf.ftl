@@ -35,7 +35,7 @@
                                 <a href="/expert/lyfd">路演辅导</a>
                             </dd>
                         </dl>
-                        <div class="btwz">当前辅导企业</div>
+                        <div class="btwz">当前辅导活动</div>
                         <div class="list_base8">
                             <dl>
                                 <dt>序号</dt>
@@ -46,7 +46,7 @@
                                 </#if>
                             </dl>
                             <dl>
-                                <dt>项目名称</dt>
+                                <dt>活动名称</dt>
                                     <#if grade_false_list??>                                
                                         <#list grade_false_list as item>
                                             <dd><a href="#">${item.enterpriseName!''}</a></dd>

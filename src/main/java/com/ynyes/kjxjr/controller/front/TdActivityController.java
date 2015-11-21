@@ -317,21 +317,16 @@ public class TdActivityController {
     
     //活动排序上升
     @RequestMapping(value = "/sortUp")
-    @ResponseBody
-    public  Map<String, Object> sortUp(HttpServletRequest req,Long id,Long activityId,
-    		ModelMap map) {
-        Map<String, Object> res = new HashMap<String, Object>();
-        res.put("code", 1);
-    	
+    public  String sortUp(HttpServletRequest req,Long enterpriseId,Long activityId,ModelMap map) {
         String username = (String) req.getSession().getAttribute("activityUsername"); String manager = (String) req.getSession().getAttribute("manager");
 
         if (null == username&&null==manager) {
-           res.put("msg", "请先登陆");
-           return res;
+          
+           return "redirect:/login";
         }
         
         
-        TdActivityEnterprise activityEnterprise = tdActivityEnterpriseService.findOne(id);
+        TdActivityEnterprise activityEnterprise = tdActivityEnterpriseService.findOne(enterpriseId);
         Long sortId = activityEnterprise.getSortId(); 
         TdActivityEnterprise lastActivityEnterprise = tdActivityEnterpriseService.findByActivityIdAndSortId(activityId, sortId-1);
 
@@ -343,27 +338,23 @@ public class TdActivityController {
 	        lastActivityEnterprise.setSortId(sortId);
 	        tdActivityEnterpriseService.save(lastActivityEnterprise);
         }
-        res.put("code", 0);
-        return res;
+        
+        return "redirect:/activity/check?id="+activityId;
     }
     
     //活动排序下降
     @RequestMapping(value = "/sortDown")
-    @ResponseBody
-    public  Map<String, Object> sortDown(HttpServletRequest req,Long id,Long activityId,
+    public String sortDown(HttpServletRequest req,Long enterpriseId,Long activityId,
     		ModelMap map) {
-        Map<String, Object> res = new HashMap<String, Object>();
-        res.put("code", 1);
     	
         String username = (String) req.getSession().getAttribute("activityUsername"); String manager = (String) req.getSession().getAttribute("manager");
 
         if (null == username&&null==manager) {
-           res.put("msg", "请先登陆");
-           return res;
+        	   return "redirect:/login";
         }
         
         
-        TdActivityEnterprise activityEnterprise = tdActivityEnterpriseService.findOne(id);
+        TdActivityEnterprise activityEnterprise = tdActivityEnterpriseService.findOne(enterpriseId);
         Long sortId = activityEnterprise.getSortId(); 
         TdActivityEnterprise nextActivityEnterprise = tdActivityEnterpriseService.findByActivityIdAndSortId(activityId, sortId+1);
 
@@ -373,8 +364,7 @@ public class TdActivityController {
         nextActivityEnterprise.setSortId(sortId);
         tdActivityEnterpriseService.save(nextActivityEnterprise);
 
-        res.put("code", 0);
-        return res;
+        return "redirect:/activity/check?id="+activityId;
     }
     
     //查看活动

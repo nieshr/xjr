@@ -178,7 +178,7 @@ function addEnterprise1(id,activityId,statusId)
                             <td style="color:#0ab2cb;">${item.area!''}</td>
                             <td style="color:#e67817;">${item.type!''}</td>
                             <#if statusId??&&statusId == 2>
-	                            <td><input style="width: 98%;height: 30px;" type="text" id="reason${item.id?c!''}"    <#if item.statusId == 2>disabled==""</#if>/></td>
+	                            <td><input value="${item.reason!''}" style="width: 98%;height: 30px;" type="text" id="reason${item.id?c!''}"    <#if item.statusId == 2>disabled=""</#if>/></td>
 	                            <td>
 		                            <#if item.statusId == 2>
 		                           	 	<p>已添加</p>
@@ -262,7 +262,7 @@ function addEnterprise1(id,activityId,statusId)
         </div>
         <#if statusId??&&statusId == 2>
          <form id="upload" enctype="multipart/form-data" action="/client/recommend/upload" method="post">
-            <input type="hidden" id="activityId" name="activityId" value="${activity.id?c!''}"></input>
+            <input type="hidden" id="activityId" name="activityId" value="${activity.id?c!''}" />
 		    <dl class="area_up">
 			    <dd><input onclick="location.href='/region/export/recommend?activityId=${activityId?c!''}'" class="area_save_btn01" type="button" value="生成并下载《区县推荐项目汇总表》" /></dd>
 			    <dd>
@@ -275,7 +275,7 @@ function addEnterprise1(id,activityId,statusId)
 		</#if>	
         
         
-        <input style="cursor:pointer;" class="area_save_btn" style="margin-left:45%;"type="button" onclick="location.href='/region/enterprise/finish?id=${activityId?c!''}&statusId=${statusId!''}'" value="完成" />
+        <input style="cursor:pointer;" class="area_save_btn" style="margin-left:45%;" type="button" onclick="location.href='/region/enterprise/finish?id=${activityId?c!''}&statusId=${statusId!''}'" value="完成" />
     </div> 
     </div>
 </div><!--content_end-->
