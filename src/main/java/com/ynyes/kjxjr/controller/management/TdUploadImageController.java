@@ -27,7 +27,11 @@ import com.ynyes.kjxjr.service.TdEnterpriseService;
 import com.ynyes.kjxjr.util.SiteMagConstant;
 
 import net.sf.json.JSONObject;
-
+/**
+ * kindeditor 上传控件控制器
+ * @author mdj
+ *
+ */
 @Controller
 public class TdUploadImageController 
 {
