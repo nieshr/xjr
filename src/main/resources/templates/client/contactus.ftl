@@ -7,7 +7,7 @@
 	<link rel="stylesheet" href="/client/css/news_base.css">
 	<link rel="stylesheet" href="/client/css/news_main.css">
 	<link rel="stylesheet" href="/client/css/ios6alert.css">
-	<script src="/client/js/l_main.js"></script>
+
 	<script src="/client/js/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript" src="/client/js/Validform_v5.3.2_min.js"></script>	
 	<script src="/client/js/ios6alert.js"></script>
@@ -54,6 +54,12 @@ function show2()
 }
 
 
+	function message()
+	{
+	    $('html,body').animate({scrollTop:900},400);
+	}
+
+
 </script>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -81,6 +87,11 @@ function loadMap(x, y)
     map.addOverlay(marker);
 }
 </script>
+<style type="text/css">  
+   .anchorBL{  
+       display:none;  
+   }  
+  </style> 
 </head>
 <body>
 <!-- head  -->
@@ -91,7 +102,7 @@ function loadMap(x, y)
 	<div id="titlelist">
 	<div>
 		<a href="javascript:void(0);" class="active">联系我们</a>
-		<a href="javascript:void(0);">在线留言</a>
+		<a href="javascript:message();">在线留言</a>
 </div>
 	</div>
 <div class="contactustitle">
@@ -99,6 +110,11 @@ function loadMap(x, y)
 		<hr style="border-top:1px solid #DDDDDD;" />
 </div>
 	<div class="contactussmall">
+	       <div class="map" style="float:right;">
+        <#--    <iframe src="map.html" frameborder="0"></iframe> -->
+            <div id="allmap"></div>
+
+        </div>
 		<div class="contactus">
 			<#if site??>
 				<h1>${site.title!''}</h1>
@@ -117,7 +133,7 @@ function loadMap(x, y)
 					</#if>
 				</#list>	
 				</h3>				
-				<h3 class="contactusqq">QQ：${site.qq1!''}</h3>
+				<h3 class="contactusqq">Q&nbsp;Q：${site.qq1!''}</h3>
 				<h3 class="contactusemail">邮箱：${site.adminEmail!''}</h3>
 				<h3 class="contactusaddress">地址：${site.address!''}</h3>				
 				<h3 class="contactusleft">线路：${site.busRoute!''}</h3>
@@ -125,11 +141,6 @@ function loadMap(x, y)
 				<h3 class="contactuswechat">扫描添加微信：</h3>
 				<img src="${site.wxQrCode!''}" alt="">
 			</#if>	
-		</div>
-		<div class="map">
-		<#--	<iframe src="map.html" frameborder="0"></iframe> -->
-			<div id="allmap"></div>
-
 		</div>
 	</div>
 	<div class="contactussmall2">
@@ -145,7 +156,7 @@ function loadMap(x, y)
 			<span>内容:</span>
 			<textarea name="content" id="" cols="30" rows="10" datatype="*2-255"></textarea>
 			<br>
-			<input type="submit" id="btn_submit" class="button" value="提交" />
+			<input style="cursor:pointer;" type="submit" id="btn_submit" class="button" value="提交" />
 
 		</div>
 		

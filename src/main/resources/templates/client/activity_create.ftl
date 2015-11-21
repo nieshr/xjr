@@ -356,7 +356,7 @@ window.onload=done2;
 		   <dl class="nav">
 	            <dd><a href="/region/enterprise/list">企业列表</a></dd>
 	            <dd><a href="/region/activity/list">活动列表</a></dd>
-	            <dd><a href="">档案跟踪</a></dd>
+	             <#--<dd><a href="#">档案跟踪</a></dd>-->
 	        </dl>
 	   <#elseif mark?? && mark == "expert">
 			<dl class="nav">
@@ -442,7 +442,7 @@ window.onload=done2;
 	            </div>    
     			
     			<div><span>地址：</span><input <#if pagetype??&& pagetype == "check" >disabled=""</#if> type="text" name="address" id="address" datatype="*" value="<#if activity??>${activity.address!''}</#if>" /></div>
-    			<div><span>主题：</span><textarea cols="3" rows="3" <#if pagetype??&& pagetype == "check" >disabled=""</#if> type="text" name="theme" id="theme" datatype="*1-255" errormsg="最多255字！"><#if activity??>${activity.theme!''}</#if></textarea></div>
+    			<div><span>主题：</span><textarea style="height: 56px;" cols="3" rows="3" <#if pagetype??&& pagetype == "check" >disabled=""</#if> type="text" name="theme" id="theme" datatype="*1-255" errormsg="最多255字！"><#if activity??>${activity.theme!''}</#if></textarea></div>
 				<div class="editer">
 					<span>简介：</span>
 					<textarea  <#if pagetype??&& pagetype == "check" >disabled=""</#if> name="introduction" id="introduction" datatype="*" ><#if activity??>${activity.introduction!''}</#if></textarea>
@@ -483,7 +483,7 @@ window.onload=done2;
     				    <#if selected_enterprise_list??>
     				        <#list selected_enterprise_list as item>
 		    					<li>
-		    						<p class="p01"  style="width: 505px; float: left;text-align:left;"><a style="color:#000;" target=_blank title="查看项目详情" href="<#if mark??&&(mark=="activity"||mark="region"||mark=="expert")>/activity/enterprise/check/${item.enterpriseId?c!''}<#else>javascript:void(0)</#if>">${item_index+1}.${item.enterpriseTitle!''}</a></p>
+		    						<p class="p01"  style="width: 505px; float: left;text-align:left;"><a style="color:#000;" <#if mark??&&(mark=="activity"||mark="region"||mark=="expert")>target=_blank</#if>  title="查看项目详情" href="<#if mark??&&(mark=="activity"||mark="region"||mark=="expert")>/activity/enterprise/check/${item.enterpriseId?c!''}<#else>javascript:void(0)</#if>">${item_index+1}.${item.enterpriseTitle!''}</a></p>
 		    						<#if mark??&&(mark=="activity"||mark="region"||mark=="expert")>
 			    						<a href="/activity/enterprise/check/${item.enterpriseId?c!''}" target=_blank>查看</a>
 			    						<#if item.enterpriseFileUrl??>
@@ -725,7 +725,7 @@ window.onload=done2;
         </form>
         	<#if enterprise.pptUrl??>
              <div>
-                <span style="margin-top: 10px;">已上传PPT模板：</span>
+                <span style="margin-top: 10px;">已上传PPT：</span>
                 <ul class="active_add_file">
                     <li>
                         <img src="/client/images/active_file.png" />

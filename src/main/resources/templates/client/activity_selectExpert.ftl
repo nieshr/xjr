@@ -100,12 +100,12 @@ function expertFinish(activityId)
     <div class="right_content">
     <div class="right_box">
     	<dl class="crumb">
-        	<dt><a href="#"></a></dt>
+        	<dt><a ></a></dt>
             <dd>
             	<p>当前所在位置:</p>
-                <a href="#">活动列表</a>
+                <a >活动列表</a>
 				<p>&gt;</p>
-                <a href="#">预选专家</a>
+                <a >预选专家</a>
             </dd>
             <dt class="crumb_back"><a  href="javascript:history.go(-1);">返回上一页</a></dt>
         </dl>

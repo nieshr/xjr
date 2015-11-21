@@ -23,7 +23,7 @@ $(function () {
         //初始化属性
         var btnAction = SWFUpload.BUTTON_ACTION.SELECT_FILES; //多文件上传
 
-        p.sendurl += "?action=UpLoadFile";
+        p.sendurl += "?dir=image";
         if (p.single) {
             btnAction = SWFUpload.BUTTON_ACTION.SELECT_FILE; //单文件上传
         }
@@ -77,7 +77,7 @@ $(function () {
         //初始化属性
         var btnAction = SWFUpload.BUTTON_ACTION.SELECT_FILES; //多文件上传
 
-        p.sendurl += "?action=UpLoadFile";
+        p.sendurl += "?dir=image";
         if (p.single) {
             btnAction = SWFUpload.BUTTON_ACTION.SELECT_FILE; //单文件上传
         }
@@ -131,7 +131,7 @@ $(function () {
         //初始化属性
         var btnAction = SWFUpload.BUTTON_ACTION.SELECT_FILES; //多文件上传
 
-        p.sendurl += "?action=UpLoadFile";
+        p.sendurl += "?dir=image";
         if (p.single) {
             btnAction = SWFUpload.BUTTON_ACTION.SELECT_FILE; //单文件上传
         }

@@ -123,12 +123,12 @@ function saveUserInfo() {
     <form id="login" action="/login" method="post" name="login">
     	<div>
         	<i class="i1"></i>
-        	<input type="text" name="username" id="txt_loginId" value="用户名/手机号" datatype="*6-25" onfocus="if(this.value=='用户名/手机号'){this.value='';}" onblur="if(this.value==''){this.value='用户名/手机号'}"/>
+        	<input type="text" name="username" id="txt_loginId" tip="用户名/手机号" datatype="*6-25" />
             
         </div>
         <div>
         	<i class="i3"></i>
-        	<input type="text" name="password" id="txt_loginPwd" value="密码" datatype="*6-25" onfocus="this.type='password';if(this.value=='密码'){this.value='';}" onblur="if(this.value==''){this.type='text';this.value='密码'}"/>
+        	<input type="password" name="password" id="txt_loginPwd"  datatype="*6-25" nullmsg="请输入密码"/>
            
         </div>
         <div class="yzm">

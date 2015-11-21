@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="/client/css/news_base.css">
 <link rel="stylesheet" href="/client/css/news_main.css">
 <script type="text/javascript" src="/client/js/jquery-1.9.1.min.js"></script>
+
 </head>
 
 <body>

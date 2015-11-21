@@ -7,29 +7,48 @@
 
 <link href="/client/css/base.css" rel="stylesheet" type="text/css" />
 <link href="/client/css/team.css" rel="stylesheet" type="text/css" />
-
+<link rel="stylesheet" href="/client/css/ios6alert.css">
 
 </head>
 
 <script src="/client/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="/mag/js/Validform_v5.3.2_min.js"></script>
 <script src="/client/js/main.js"></script>
+<script src="/client/js/ios6alert.js"></script>
 
 <script type="text/javascript" src="/mag/js/WdatePicker.js"></script>
 <script type="text/javascript" src="/mag/js/swfupload.js"></script>
 <script type="text/javascript" src="/mag/js/swfupload.queue.js"></script>
 <script type="text/javascript" src="/mag/js/swfupload.handlers.js"></script>
-<script type="text/javascript" charset="utf-8" src="/mag/js/kindeditor-min.js"></script>
+<script type="text/javascript" charset="utf-8" src="/mag/js/kindeditor.js"></script>
 <script type="text/javascript" charset="utf-8" src="/mag/js/zh_CN.js"></script>
 <script type="text/javascript" src="/mag/js/layout.js"></script>
 
 
 <script type="text/javascript">
+    var img;
+    
+$(document).ready(function(){
+        var txtPic = $("#url3").val();
+        if (txtPic == "" || txtPic == null) 
+        {
+            $(".ImgView").hide();
+        }
+        else 
+        {
+            $("#ImgView").attr("src" , $("#url3").val())
+            $(".ImgView").show();
+        }
+
+        $("#url3").change(function()
+        {
+          $("#ImgView").attr("src" , $("#url3").val())
+        });
+});
+
     $(function () {
         //初始化表单验证
         $("#form1").initValidform();
-      
-
         //初始化编辑器
 			var editor;
 			KindEditor.ready(function(K) {
@@ -37,7 +56,7 @@
 					resizeType : 1,
 					allowPreviewEmoticons : false,
 					allowImageUpload : true,
-				    uploadJson: '/Verwalter/editor/upload?action=EditorFile',
+				    uploadJson: '/editor/upload',
             		fileManagerJson: '/Verwalter/editor/upload?action=EditorFile',
 					items : [
 						'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
@@ -45,28 +64,16 @@
 						'insertunorderedlist', '|', 'emoticons', 'image', 'link']
 				});
 			});
-   });
+			
+        });
 
-			KindEditor.ready(function(K) {
-				var editor = K.editor({
-					allowFileManager : true
-				});
+        
+function showImg(imageUrl)
+{
+    $(".thumb_ImgUrl_show").show();
+    $("#ImgView").attr("src",imageUrl);
+}
 
-				K('#image3').click(function() {
-					editor.loadPlugin('image', function() {
-						editor.plugin.imageDialog({
-							showRemote : false,
-							imageUrl : K('#url3').val(),
-						    uploadJson: '/Verwalter/editor/upload?action=EditorFile',
-		            		fileManagerJson: '/Verwalter/editor/upload?action=EditorFile',							
-							clickFn : function(url, title, width, height, border, align) {
-								K('#url3').val(url);
-								editor.hideDialog();
-							}
-						});
-					});
-				});
-			});
 
 function subActivity(){
     
@@ -74,7 +81,9 @@ function subActivity(){
 
 function done(msg)
 {
-    alert(msg);	
+    $("body").ios6alert({
+        content :msg
+    });
 }
 
 <#if msg?? >
@@ -83,7 +92,31 @@ window.onload=done(${msg});
 
 
 </script>
+<script>
+KindEditor.ready(function(K) {
+    var editor = K.editor({
+        allowFileManager : true,
+        uploadJson: '/editor/upload',
+        allowUpload : true,
 
+    });
+
+    K('#image3').click(function() {
+        editor.loadPlugin('image', function() {
+            editor.plugin.imageDialog({
+                showRemote : false,
+                imageUrl : K('#url3').val(),                       
+                clickFn : function(url, title, width, height, border, align) {
+                    K('#url3').val(url);
+                    img=url;
+                    editor.hideDialog();
+                    showImg(url)
+                }
+            });
+        });
+    });
+});
+</script>
 <body>
 <!--main-->
 <div class="main">
@@ -110,10 +143,10 @@ window.onload=done(${msg});
     <div class="right_content">
         <div class="right_box">
         	<dl class="crumb">
-            	<dt><a href="#"></a></dt>
+            	<dt><a href="javascript:void(0)"></a></dt>
                 <dd>
                 	<p>当前所在位置:</p>
-                    <a href="">申请展示</a>
+                    <a href="javascript:void(0)">申请展示</a>
                 </dd>
             </dl>
             <dl class="team_title01">
@@ -132,26 +165,32 @@ window.onload=done(${msg});
                 </dd>
             </dl>
             <dl class="team_title02">
-                <dt>展示标题 :</dt>
+                <dt>展示标题：</dt>
                 <dd>
-                    <input type="text" value="<#if article??&&article.title??>${article.title!''}</#if>"  datatype="*" id="title" name="title"/>
+                    <input type="text" <#if article??&&article.statusId==1>disabled=""</#if> value="<#if article??&&article.title??>${article.title!''}</#if>"  datatype="*" id="title" name="title"/>
                 </dd>
             </dl>   
-             <dl class="team_title02" style="float:left;">
+             <dl class="team_title03">
                 <dt style="font-size:14px;float:left">封面图片：</dt>
                 <dd>
-                    <input type="text"  id="url3" value="<#if article??&&article.imgUrl??>${article.imgUrl!''}</#if>"  /> <input <#if article??&&article.imgUrl??&&(article.statusId==0 || article.statusId==1)>disabled=""</#if> type="button" id="image3" value="选择图片" />
+                    <input name="imgUrl" type="text" end  id="url3"<#if article??&&article.statusId==1>disabled=""</#if> value="<#if article??&&article.imgUrl??>${article.imgUrl!''}</#if>"  />
+                    <input <#if article??&&article.statusId==1>disabled=""</#if> type="button" id="image3" value="选择图片" />
+                    <div class="img1_lcy">
+                        <img id="ImgView" style="width:332px; height:144px;"/>
+                    </div>
                 </dd>
-            </dl>               
+                
+            </dl>  
+                        
 
-            <dl style="float:left;">
-                <dt style="font-size:14px;float:left">内容描述：</dt>
+            <dl class="team_title03" style="float:left;margin-top:20px;">
+                <dt style="font-size:14px;float:left;">内容描述：&nbsp;&nbsp;</dt>
                 <dd>
-                    <textarea  name="content" class="editor" id="content" <#if article??&&article.imgUrl??&&(article.statusId==0 || article.statusId==1)>disabled=""</#if> datetype="*" style="visibility:hidden;"><#if article??&&article.content??>${article.content!''}</#if></textarea>
+                    <textarea  name="content" class="editor" id="content" <#if article??&&article.statusId==1>disabled=""</#if> datetype="*" style="visibility:hidden;"><#if article??&&article.content??>${article.content!''}</#if></textarea>
                 </dd>
             </dl>    
         </div>    
-        <input <#--<#if article??&&article.imgUrl??&&(article.statusId==0 || article.statusId==1)>disabled=""</#if>--> style="cursor:pointer; width:80px; height: 30px; border:none; background: #e67817; font-size: 14px; color: white; border-radius: 6px;margin-left: 30px; margin-top: 50px;" type="submit" value="提交"/>
+        <input <#if article??&&article.statusId==1>disabled="" style="cursor:pointer; width:80px; height: 30px; border:none; background: #666; font-size: 14px; color: white; border-radius: 6px;margin-left: 30px; margin-top: 50px;"</#if> style="cursor:pointer; width:80px; height: 30px; border:none; background: #e67817; font-size: 14px; color: white; border-radius: 6px;margin-left: 30px; margin-top: 50px;" type="submit" value="提交"/>
     </div>
     </form>
  <#else>

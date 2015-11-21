@@ -21,7 +21,7 @@
 <script src="/client/js/main.js"></script>
 <script src="/client/js/ios6alert.js"></script>
 <script>
-<!--
+/*
 function unfinish()
 {
 	alert("有未完成创建的活动！");
@@ -29,7 +29,7 @@ function unfinish()
 <#if alert?? &&alert == 1>
 window.onload=unfinish;
 </#if>
--->
+*/
 function deleteConfirm(id,title) {
 	
 		$("body").ios6alert({

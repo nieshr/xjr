@@ -265,8 +265,12 @@ public class TdInfoController {
         TdArticle tdArticle = tdArticleService.findOne(id);
         //浏览量 zhangji
         Long viewCount = tdArticle.getViewCount();
-        tdArticle.setViewCount(viewCount+1);
-        tdArticleService.save(tdArticle);
+        if(null !=viewCount)
+        {
+            tdArticle.setViewCount(viewCount+1);
+            tdArticleService.save(tdArticle);
+        }
+
         //找出栏目名称 zhangji
         Long catId = tdArticle.getCategoryId();
         map.addAttribute("info_name",tdArticleCategoryService.findOne(catId) );
@@ -865,7 +869,7 @@ public class TdInfoController {
         	catId = catList.get(0).getId();   //.get(0)表示 取catList表的第0个 zhangji
         }
         	
-		Long active = 1L;
+		Long active = 5L;
 		map.addAttribute("active",active);
 	    map.addAttribute("info_cat",tdArticleCategoryService.findOne(catId) );   //找出栏目名称 zhangji
 	    map.addAttribute("catId", catId);
@@ -914,7 +918,7 @@ public class TdInfoController {
 		map.addAttribute("info_page", tdDiySiteService.findByRoleIdOrderBySortIdAsc(3L, page, ClientConstant.pageSize));
 
         	
-		Long active = 1L;
+		Long active = 5L;
 		map.addAttribute("active",active);
 //	    map.addAttribute("info_cat",tdArticleCategoryService.findOne(catId) );   //找出栏目名称 zhangji
 //	    map.addAttribute("catId", catId);

@@ -6,7 +6,7 @@
 	<link rel="shortcut icon" href="/client/images/icon.ico" />
     <link rel="stylesheet" href="/client/css/news_base.css">
     <link rel="stylesheet" href="/client/css/news_main.css">
-    <script src="/client/js/l_main.js"></script>
+
     <script src="/client/js/jquery-1.9.1.min.js"></script>
 </head>
 <body>

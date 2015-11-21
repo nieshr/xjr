@@ -317,21 +317,16 @@ public class TdActivityController {
     
     //活动排序上升
     @RequestMapping(value = "/sortUp")
-    @ResponseBody
-    public  Map<String, Object> sortUp(HttpServletRequest req,Long id,Long activityId,
-    		ModelMap map) {
-        Map<String, Object> res = new HashMap<String, Object>();
-        res.put("code", 1);
-    	
+    public  String sortUp(HttpServletRequest req,Long enterpriseId,Long activityId,ModelMap map) {
         String username = (String) req.getSession().getAttribute("activityUsername"); String manager = (String) req.getSession().getAttribute("manager");
 
         if (null == username&&null==manager) {
-           res.put("msg", "请先登陆");
-           return res;
+          
+           return "redirect:/login";
         }
         
         
-        TdActivityEnterprise activityEnterprise = tdActivityEnterpriseService.findOne(id);
+        TdActivityEnterprise activityEnterprise = tdActivityEnterpriseService.findOne(enterpriseId);
         Long sortId = activityEnterprise.getSortId(); 
         TdActivityEnterprise lastActivityEnterprise = tdActivityEnterpriseService.findByActivityIdAndSortId(activityId, sortId-1);
 
@@ -343,27 +338,23 @@ public class TdActivityController {
 	        lastActivityEnterprise.setSortId(sortId);
 	        tdActivityEnterpriseService.save(lastActivityEnterprise);
         }
-        res.put("code", 0);
-        return res;
+        
+        return "redirect:/activity/check?id="+activityId;
     }
     
     //活动排序下降
     @RequestMapping(value = "/sortDown")
-    @ResponseBody
-    public  Map<String, Object> sortDown(HttpServletRequest req,Long id,Long activityId,
+    public String sortDown(HttpServletRequest req,Long enterpriseId,Long activityId,
     		ModelMap map) {
-        Map<String, Object> res = new HashMap<String, Object>();
-        res.put("code", 1);
     	
         String username = (String) req.getSession().getAttribute("activityUsername"); String manager = (String) req.getSession().getAttribute("manager");
 
         if (null == username&&null==manager) {
-           res.put("msg", "请先登陆");
-           return res;
+        	   return "redirect:/login";
         }
         
         
-        TdActivityEnterprise activityEnterprise = tdActivityEnterpriseService.findOne(id);
+        TdActivityEnterprise activityEnterprise = tdActivityEnterpriseService.findOne(enterpriseId);
         Long sortId = activityEnterprise.getSortId(); 
         TdActivityEnterprise nextActivityEnterprise = tdActivityEnterpriseService.findByActivityIdAndSortId(activityId, sortId+1);
 
@@ -373,8 +364,7 @@ public class TdActivityController {
         nextActivityEnterprise.setSortId(sortId);
         tdActivityEnterpriseService.save(nextActivityEnterprise);
 
-        res.put("code", 0);
-        return res;
+        return "redirect:/activity/check?id="+activityId;
     }
     
     //查看活动
@@ -713,6 +703,11 @@ public class TdActivityController {
         		aen.setWin(null);
         		tdActivityEnterpriseService.save(aen);
         	}
+        	
+        	//重置路演状态
+            TdExpertCoachEnterprise coach = tdExpertCoachEnterpriseService.findByEnterpriseId(activityId);
+            coach.setIsGrade(false);
+            tdExpertCoachEnterpriseService.save(coach);
         	
         	
         	List<TdEnterpriseGrade> enterpriseGrade = tdEnterpriseGradeService.findByActivityIdOrderByIdAsc(activityId);
@@ -1944,6 +1939,7 @@ public class TdActivityController {
 			newArticle.setSource(tdActivity.getActivityType());
 	        newArticle.setMenuId(13L);
 	        newArticle.setCategoryId(catId);
+	        newArticle.setViewCount(0L);
 	        if(null != tdActivity.getStatusId() && tdActivity.getStatusId()==2)
 	        {
 	        	newArticle.setSortId(2L);
@@ -2124,6 +2120,8 @@ public class TdActivityController {
     	coach.setIsGrade(false);
     	coach.setExpertName(expert.getName());
     	coach.setExpertId(expertId);
+    	coach.setActivityType(tdActivityService.findOne(activityId).getActivityType());
+    	coach.setType(tdActivityService.findOne(activityId).getRegion()); //地区
        
     	tdExpertCoachEnterpriseService.save(coach);
         res.put("code", 0);
@@ -2209,17 +2207,21 @@ public class TdActivityController {
     		  tdEnterpriseService.save(e);
     	  }
       }
-
       
       
       TdActivity activity = tdActivityService.findOne(activityId);
       activity.setStatusId(2L);
       tdActivityService.save(activity);
       
-      //修改文章黄台
+      //修改文章状态
       TdArticle article = tdArticleService.findByRecommendIdAndMenuId(activityId, 13L);
       article.setSortId(2L);
       tdArticleService.save(article);
+      
+      //路演辅导状态
+      TdExpertCoachEnterprise coach = tdExpertCoachEnterpriseService.findByEnterpriseId(activityId);
+      coach.setIsGrade(true);
+      tdExpertCoachEnterpriseService.save(coach);
      
       
       for (int chkId : chkIds)

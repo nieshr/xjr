@@ -3,6 +3,12 @@
 /* CSS Document */
 * {padding: 0;margin: 0;}
 body {margin: 0px;padding: 0px;color: #666666;font-family:"微软雅黑", Arial, Helvetica, sans-serif;font-size: 12px;background:#ffffff;text-align:left;line-height:18px;}
+@media screen and (max-width:1366px){
+    body{ width:1359px;}
+}
+@media screen and (max-width:1280px){
+    body{ width:1263px;}
+}
 img {border: 0;}
 .clear {height:0px;line-height:0px;font-size:0px;clear:both;visibility:hidden;overflow:hidden;padding:0;margin:0;}
 div,ul,dl,dd,dt,li,td,tr,table,p,span,h1,h2,h3,h4,h5,h6,form{ margin:0px;  padding:0px; list-style:none; list-style-type: none; word-wrap:break-word; border:none;}
@@ -16,7 +22,7 @@ div{ margin:0 auto;}
 .wrapper{ width:1200px; display:block; overflow:hidden;background: url(../l_images/logo.png) no-repeat;height: 75px;}
 
 @media screen and (max-width:1366px){
-    .wrapper{ width:80%;}
+    .wrapper{ width:1000px;}
 }
 
 
@@ -30,8 +36,8 @@ div{ margin:0 auto;}
 .logoin{float: right;font-size: 12px;color: #666; }
 .logoin a{line-height: 74px;}
 .logoin span{padding: 0 5px;}
-@media screen and (max-width:1024px){
-    .wrapper-nav li{ font-size:12px;padding:0 5px;}
+@media screen and (max-width:1366px){
+    .wrapper-nav li{ font-size:16px;padding:0 8px;}
     .wrapper{ height:64px}
     .logoin a{height:64px;line-height:64px;}
 }
@@ -41,8 +47,8 @@ div{ margin:0 auto;}
 .footlist-title{background: #2E2E2E;height: 45px;line-height: 32px;}
 .footlist-title .footlist-title-title{padding-right: 5px;}
 .footlist ul{width: 1000px;margin: 0 auto;color: #cccccc;}
-.footlist ul li{float: left;font-size: 14px;}
-.footlist ul li a{color: #cccccc;}
+.footlist ul li{float: left;font-size: 14px;white-space:nowrap;}
+.footlist ul li a{color: #cccccc;white-space:nowrap;}
 .footlist ul li span{padding:0 4px; }
 .footlist h5{font-weight: normal;line-height: 32px;color: #999999;font-size: 12px;text-align: left;}
 .footlist-body{width: 1000px;margin-top: 32px;}

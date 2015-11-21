@@ -23,7 +23,7 @@
 .teacher-list-danwei li p{font-size: 14px;text-align: center;line-height: 24px;}
 /* 懒人图库 搜集整理 www.lanrentuku.com */
 a:link, a:visited { color: #444; text-decoration: none; -webkit-transition: color .4s ease-in-out; -moz-transition: color .4s ease-in-out; -ms-transition: color .4s ease-in-out; -o-transition: color .4s ease-in-out; transition: color .4s ease-in-out; }
-a:hover { color: #c36; text-decoration: underline; }
+a:hover { }
 .pagnation { text-align: center; margin-top: 22px; margin-bottom: 20px; }
 .pagnation a { display: inline-block; width: 34px; height: 34px; line-height: 34px; overflow: hidden; background: url(../news_img/sprite.png) no-repeat 0 -29px; margin-left: 4px; font-size: 16px; vertical-align: top; -webkit-transition: all .4s ease-in-out; -moz-transition: all .4s ease-in-out; -ms-transition: all .4s ease-in-out; -o-transition: all .4s ease-in-out; transition: all .4s ease-in-out; }
 /* .pagnation a:hover { background-position: 0 -64px; color: #fff; text-decoration: none } */
@@ -47,7 +47,7 @@ a:hover { color: #c36; text-decoration: underline; }
 .contactusleft2{margin-left: 42px;}
 .contactuswechat{background: url(../img/wechat.png) no-repeat 0 center;}
 .contactus img{margin-top: -33px;margin-left: 140px;}
-.map{width: 440px;height: 304px;margin-top: -380px;float: right;}
+.map{width: 500px;height: 500px;float: right;}
 .map iframe{width: 440px;height: 304px;}
 .massage{width: 1000px;margin: 0 auto; margin-bottom:120px;}
 .massage span{vertical-align:top;display: inline-block;margin-top: 24px;font-size: 14px;}
@@ -191,9 +191,11 @@ a:hover { color: #c36; text-decoration: underline; }
 .floatbox a:hover span {
 	display:block;
 }
+/*
 @media screen and (max-width:1150px) {
 	.floatbox { display:none;}
 }
+*/
 /*This chapter end*/
 
 

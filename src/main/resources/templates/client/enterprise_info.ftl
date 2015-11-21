@@ -100,14 +100,14 @@ window.onload=checkstatus;
 
     <div class="right_box">
     	<dl class="crumb" style="z-index:1000;">
-        	<dt><a href="#"></a></dt>
+        	<dt><a href="javascript:void(0)"></a></dt>
             <dd>
             	<p>当前所在位置:</p>
-                <a href="#">企业/团队</a>
+                <a>企业/团队</a>
                 <p>&gt;</p>
-                <a href="#">基本资料</a>
+                <a>基本资料</a>
                 <p>&gt;</p>
-                <a href="#">填写资料</a>
+                <a href="javascript:void(0)">填写资料</a>
             </dd>
             <dt class="crumb_back" onClick="history.go(-1);"><a>返回上一页</a></dt>
         </dl>
@@ -148,8 +148,9 @@ window.onload=checkstatus;
     			<div>
     			<span class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>">成立时间：</span>
     			<span class="pro <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>hide</#if>">（拟）成立时间：</span>
-    			  <input  type="text" id="date" value="<#if enterprise.establish??>${enterprise.establish?string("yyyy年MM月dd日")!''}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy年MM月dd日',vel:'date_2',lang:'zh-cn' ,<#--<#if enterprise.formType??&&enterprise.formType == 1> minDate:'%y-%M-%d' <#else>maxDate:'%y-%M-%d'</#if> --> })" datatype="*" / >
+    			  <input  type="text" id="date" value="<#if enterprise.establish??>${enterprise.establish?string("yyyy年MM月dd日")!''}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy年MM月dd日',vel:'date_2',lang:'zh-cn'  })" datatype="*" / >
     			  <input id="date_2" name="establish" value="<#if enterprise.establish??>${enterprise.establish?string("yyyy-MM-dd")!''}</#if>" type="hidden" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}$/" errormsg="填写正确格式" sucmsg=" " />
+    		
     			<#--<input type="text" name="establish" value="<#if enterprise.formType??>${enterprise.establish!''}</#if>" datatype="*" ignore="ignore" /> -->
     			</div>
     			<div>

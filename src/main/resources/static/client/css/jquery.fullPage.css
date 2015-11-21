@@ -11,10 +11,30 @@ html, body {
 }
 .section {
 	position: relative;
+	width:1903px;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 }
+/* zhangji */
+@media screen and (max-width:1366px){
+  	.section{width:1349px;}
+}
+@media screen and (max-width:1280px){
+  	.section{width:1263px;}
+}
+
+
+.fivesupport{margin:0 351px;*+margin-left:-610px;width:1200px;height:510px;}
+
+@media screen and (max-width:1366px){
+	.fivesupport{margin:0 61px;}
+}
+@media screen and (max-width:1280px){
+	.fivesupport{margin:0 24px;}
+}
+
+/* zhangji end*/
 .slide {
 	float: left;
 }

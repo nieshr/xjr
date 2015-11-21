@@ -36,11 +36,11 @@
     <div class="right_content">
     <div class="right_box">
     	<dl class="crumb">
-        	<dt><a href="#"></a></dt>
+        	<dt><a href="javascript:void(0)"></a></dt>
             <dd>
             	<p>当前所在位置:</p>
 
-                <a href="#">基本资料</a>
+                <a href="javascript:void(0)">基本资料</a>
 
             </dd>
 
