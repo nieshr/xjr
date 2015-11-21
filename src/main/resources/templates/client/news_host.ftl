@@ -9,6 +9,12 @@
 	<script type="text/javascript" src="/client/js/jquery-1.9.1.min.js"></script>
 	<script src="/client/js/main.js"></script>
 </head>
+<script>
+function subActivity(hight)
+{
+    $('html,body').animate({scrollTop:hight},400);
+}    
+</script>
 <body>
 <!-- 导航 -->
 <!-- head  -->
@@ -21,7 +27,7 @@
 		<div>
 			<#if article_list??>
 				<#list article_list as item>
-					<a href="javascript:void(0)">${item.title!''}</a>
+					<a href="javascript:subActivity(100 + ${item_index}*100)">${item.title!''}</a>
 				</#list>
 			</#if>		
 		</div>
@@ -58,7 +64,7 @@
 						<p>${item.title!''}</p>
 					
 					</li>
-				</#list>	
+				</#list>
 			</#if>	
 		</ul>
 		</#list>

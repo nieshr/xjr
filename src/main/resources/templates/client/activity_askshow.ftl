@@ -19,7 +19,7 @@
 <script type="text/javascript" src="/mag/js/swfupload.js"></script>
 <script type="text/javascript" src="/mag/js/swfupload.queue.js"></script>
 <script type="text/javascript" src="/mag/js/swfupload.handlers.js"></script>
-<script type="text/javascript" charset="utf-8" src="/mag/js/kindeditor-min.js"></script>
+<script type="text/javascript" charset="utf-8" src="/mag/js/kindeditor.js"></script>
 <script type="text/javascript" charset="utf-8" src="/mag/js/zh_CN.js"></script>
 <script type="text/javascript" src="/mag/js/layout.js"></script>
 
@@ -28,8 +28,6 @@
     $(function () {
         //初始化表单验证
         $("#form1").initValidform();
-      
-
         //初始化编辑器
 			var editor;
 			KindEditor.ready(function(K) {
@@ -45,28 +43,10 @@
 						'insertunorderedlist', '|', 'emoticons', 'image', 'link']
 				});
 			});
-   });
+        });
+        
 
-			KindEditor.ready(function(K) {
-				var editor = K.editor({
-					allowFileManager : true
-				});
 
-				K('#image3').click(function() {
-					editor.loadPlugin('image', function() {
-						editor.plugin.imageDialog({
-							showRemote : false,
-							imageUrl : K('#url3').val(),
-						    uploadJson: '/Verwalter/editor/upload?action=EditorFile',
-		            		fileManagerJson: '/Verwalter/editor/upload?action=EditorFile',							
-							clickFn : function(url, title, width, height, border, align) {
-								K('#url3').val(url);
-								editor.hideDialog();
-							}
-						});
-					});
-				});
-			});
 
 function subActivity(){
     
@@ -83,7 +63,29 @@ window.onload=done(${msg});
 
 
 </script>
+<script>
+KindEditor.ready(function(K) {
+    var editor = K.editor({
+        allowFileManager : true,
+        uploadJson: '/editor/upload',
+        allowUpload : true
+    });
 
+    K('#image3').click(function() {
+        editor.loadPlugin('image', function() {
+            editor.plugin.imageDialog({
+                showRemote : false,
+                imageUrl : K('#url3').val(),                       
+                clickFn : function(url, title, width, height, border, align) {
+                    K('#url3').val(url);
+                    editor.hideDialog();
+                }
+            });
+        });
+    });
+});
+
+</script>
 <body>
 <!--main-->
 <div class="main">
@@ -140,7 +142,7 @@ window.onload=done(${msg});
              <dl class="team_title02" style="float:left;">
                 <dt style="font-size:14px;float:left">封面图片：</dt>
                 <dd>
-                    <input type="text"  id="url3" value="<#if article??&&article.imgUrl??>${article.imgUrl!''}</#if>"  /> <input <#if article??&&article.imgUrl??&&(article.statusId==0 || article.statusId==1)>disabled=""</#if> type="button" id="image3" value="选择图片" />
+                    <input name="imgUrl" type="text"  id="url3"<#if article??&&article.imgUrl??&&(article.statusId==0 || article.statusId==1)>disabled=""</#if> value="<#if article??&&article.imgUrl??>${article.imgUrl!''}</#if>"  /> <input <#if article??&&article.imgUrl??&&(article.statusId==0 || article.statusId==1)>disabled=""</#if> type="button" id="image3" value="选择图片" />
                 </dd>
             </dl>               
 
