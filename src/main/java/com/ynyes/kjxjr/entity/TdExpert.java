@@ -71,6 +71,10 @@ public class TdExpert {
     @Column
     private Long roadshowActivityId;
     
+    // 被选择的辅导项目ID【路演辅导】
+    @Column
+    private Long enterpriseId;
+    
     // 登录名
     @Column
     private String username;
@@ -207,6 +211,14 @@ public class TdExpert {
 
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
+	}
+
+	public Long getEnterpriseId() {
+		return enterpriseId;
+	}
+
+	public void setEnterpriseId(Long enterpriseId) {
+		this.enterpriseId = enterpriseId;
 	}
 
 	@Override

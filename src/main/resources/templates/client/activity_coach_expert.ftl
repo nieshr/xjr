@@ -64,6 +64,50 @@ function removeCoachExpert(id , activityId)
 	        }
 	    });
 	}
+	
+function addExpert(id , enterpriseIdId)
+{
+    $.ajax({
+        type:"post",
+        url:"/activity/addEE",
+        data:{"expertId":id,"enterpriseId":enterpriseId},
+        success:function(data){
+            if (data.code == 0)
+            {
+                location.reload();
+            }
+            else
+            {
+                $("body").ios6alert({
+                    content : data.msg
+                });
+            }
+           
+        }
+    });
+}
+
+function removeExpert(id , enterpriseId)
+{
+    $.ajax({
+        type:"post",
+        url:"/activity/removeEE",
+        data:{"expertId":id,"enterpriseIdId":enterpriseIdId},
+        success:function(data){
+            if (data.code == 0)
+            {
+                location.reload();
+            }
+            else
+            {
+                $("body").ios6alert({
+                    content : data.msg
+                });
+            }
+           
+        }
+    });
+}	
 </script>
 </head>
 <body>
@@ -88,10 +132,17 @@ function removeCoachExpert(id , activityId)
         	<dt><a href="#"></a></dt>
             <dd>
             	<p>当前所在位置:</p>
-
-                <a href="#">添加路演辅导</a>
+                <#if type??&&type=="invest">
+                    <a>添加投资辅导</a>
+                <#else>
+                    <a>添加路演辅导</a>
+                </#if>
 				<p>&gt;</p>
-                <a href="#">${activity.title!''}</a>
+				<#if type??&&type=="invest">
+                    <a>${enterprise.title!''}</a>
+                <#else>
+                    <a>${activity.title!''}</a> 
+                </#if>       
             </dd>
             <dt class="crumb_back"><a  href="javascript:history.go(-1);">返回上一页</a></dt>
         </dl>
@@ -111,7 +162,7 @@ function removeCoachExpert(id , activityId)
 		        	<tr class="list_title">
 		        		<th width="30%">姓名</th>
 		        		<th width="25%">联系电话</th>
-		        		<th width="25%">邮箱</th>
+		        		<th width="25%"><#if type??&&type=="invest">投资机构<#else>邮箱</#if></th>
 		        		<th width="20%">操作</th>
 		        	</tr>
 		        <#if ExpertPage??>
@@ -125,11 +176,19 @@ function removeCoachExpert(id , activityId)
 			        		-->
 			        		<td>${item.name!''}</td>
 			        		<td style="color:#0ab2cb;">${item.usermobile!''}</td>
-			        		<td style="color:#e67817;">${item.email!''}</td>
-			        		<#if item.roadshowActivityId??&&item.roadshowActivityId==activityId>
-			        			<td><a href="javascript:removeCoachExpert('${item.id?c}' , ${activityId?c!''})" style="color:#666;" title="取消该路演辅导">取消</td>
+			        		<td style="color:#e67817;"><#if type??&&type=="invest">${item.invest!''}<#else>${item.email!''}</#if></td>
+			        		<#if type??&&type=="invest">
+			        		     <#if item.enterpriseId??&&item.enterpriseId==enterpriseId>
+	                                <td><a href="javascript:removeExpert('${item.id?c}' , ${enterpriseId?c!''})" style="color:#666;" title="取消该路演辅导">取消</td>
+	                            <#else>
+	                                <td><a href="javascript:addExpert('${item.id?c}' , ${enterpriseId?c!''})">确定</a></td>
+	                            </#if>
 			        		<#else>
-			        			<td><a href="javascript:addCoachExpert('${item.id?c}' , ${activityId?c!''})">确定</a></td>
+				        		<#if item.roadshowActivityId??&&item.roadshowActivityId==activityId>
+				        			<td><a href="javascript:removeCoachExpert('${item.id?c}' , ${activityId?c!''})" style="color:#666;" title="取消该路演辅导">取消</td>
+				        		<#else>
+				        			<td><a href="javascript:addCoachExpert('${item.id?c}' , ${activityId?c!''})">确定</a></td>
+				        		</#if>
 			        		</#if>
 			        	</tr>
 		        	</#list>
@@ -147,7 +206,11 @@ function removeCoachExpert(id , activityId)
 				 <#if PAGE_DATA.number+1 == 1>
 			          <a disabled="disabled"  class="page_next">上一页</a>               
 			     <#else>
-			         <a href="/activity/getCoach?page=${PAGE_DATA.number-1}&activityId=${activityId?c!''}&keywords=${keywords!''}"  class="page_next">上一页</a>                
+			         <#if type??&&type=="invest">
+			             <a href="/activity/invest?page=${PAGE_DATA.number-1}&enterpriseId=${enterpriseId?c!''}&activityId=${activityId?c!''}&keywords=${keywords!''}"  class="page_next">上一页</a>                
+			         <#else>
+			             <a href="/activity/getCoach?page=${PAGE_DATA.number-1}&activityId=${activityId?c!''}&keywords=${keywords!''}"  class="page_next">上一页</a>                
+			         </#if>
 			     </#if>
 			     
 			     <#assign continueEnter=false>
@@ -158,7 +221,11 @@ function removeCoachExpert(id , activityId)
 			                 <#if page == PAGE_DATA.number+1>
 			                     <a  class ="current" style="color:#e67817;">${page }</a>
 			                 <#else>
-			                     <a href="/activity/getCoach?page=${page-1}&activityId=${activityId?c!''}&keywords=${keywords!''}">${page}</a> 
+			                     <#if type??&&type=="invest">
+			                         <a href="/activity/invest?page=${page-1}&enterpriseId=${enterpriseId?c!''}&activityId=${activityId?c!''}&keywords=${keywords!''}">${page}</a> 
+			                     <#else>
+			                         <a href="/activity/getCoach?page=${page-1}&activityId=${activityId?c!''}&keywords=${keywords!''}">${page}</a> 
+			                     </#if>
 			                 </#if>
 			                 <#assign continueEnter=false>
 			             <#else>
@@ -174,7 +241,11 @@ function removeCoachExpert(id , activityId)
 			     <#if PAGE_DATA.number+1 == PAGE_DATA.totalPages || PAGE_DATA.totalPages==0>
 			         <a disabled="disabled" class="page_last">下一页</a> 
 			     <#else>
-			         <a href="/activity/getCoach?page=${PAGE_DATA.number+1}&activityId=${activityId?c!''}&keywords=${keywords!''}" class="page_last">下一页</a> 
+                    <#if type??&&type=="invest">			
+                        <a href="/activity/invest?page=${PAGE_DATA.number+1}&enterpriseId=${enterpriseId?c!''}&activityId=${activityId?c!''}&keywords=${keywords!''}" class="page_last">下一页</a>      
+			        <#else>    
+			            <a href="/activity/getCoach?page=${PAGE_DATA.number+1}&activityId=${activityId?c!''}&keywords=${keywords!''}" class="page_last">下一页</a> 
+			        </#if>
 			     </#if>
 			 </#if>
 		  	<p>共${PAGE_DATA.totalPages!'1'}页  ${PAGE_DATA.totalElements!'1'}条</p>

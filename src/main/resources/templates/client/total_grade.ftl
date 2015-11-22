@@ -66,7 +66,7 @@ function checkAll(chkobj) {
 		        		</#if>
 			        	<td>${item_index+1}</td>
 			        	<td>${item.number!''}</td>
-				        <td>${item.enterpriseTitle!''}</td>
+				        <td><#if item.win??&&item.win==activityId><a title="分配投资机构" href="/activity/invest?enterpriseId=${item.enterpriseId?c!''}&activityId=${item.activityId?c!''}">${item.enterpriseTitle!''}</a><#else>${item.enterpriseTitle!''}</#if></td>
 				        <td><#if item.totalPoint??>${item.totalPoint?c!''}</#if></td>
 				        <td><#if item.totalTechnology??>${item.totalTechnology?c!''}</#if></td>
 				        <td><#if item.totalGroup??>${item.totalGroup?c!''}</#if></td>

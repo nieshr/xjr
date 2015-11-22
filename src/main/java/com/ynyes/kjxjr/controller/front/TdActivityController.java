@@ -2149,6 +2149,34 @@ public class TdActivityController {
         return res;
     }
     
+    @RequestMapping(value = "/invest")
+    public String invest(Long enterpriseId,Long activityId,ModelMap map,HttpServletRequest req,String keywords,Integer page){
+    	String activityUsername = (String) req.getSession().getAttribute("activityUsername");
+    	if(null == activityUsername){
+    		return "/client/login";
+    	}
+    	
+    	if (null == page)
+    	{
+    		page = 0;
+    	}
+    	
+    	if (null != enterpriseId && null != activityId)
+    	{
+    		TdActivity activity = tdActivityService.findOne(activityId);
+    		TdEnterprise enterprise = tdEnterpriseService.findOne(enterpriseId);
+    		Page<TdExpert> expertPage = tdExpertService.findAllOrderBySortIdAsc(page, ClientConstant.pageSize);
+    	}
+    	
+    	map.addAttribute("type", "invest");
+        map.addAttribute("activity", tdActivityService.findOne(activityId));
+        map.addAttribute("enterprise", tdActivityService.findOne(enterpriseId));
+    	map.addAttribute("keywords", keywords);
+    	map.addAttribute("page", page);
+    	map.addAttribute("activityId", activityId);
+    	return "/client/activity_coach_expert";
+    }
+    
     /**
      * 选出入选胜出的项目
      * @param req
@@ -2215,14 +2243,18 @@ public class TdActivityController {
       
       //修改文章状态
       TdArticle article = tdArticleService.findByRecommendIdAndMenuId(activityId, 13L);
-      article.setSortId(2L);
-      tdArticleService.save(article);
-      
+      if (null != article)
+      {
+	      article.setSortId(2L);
+	      tdArticleService.save(article);
+      }
       //路演辅导状态
       TdExpertCoachEnterprise coach = tdExpertCoachEnterpriseService.findByEnterpriseId(activityId);
-      coach.setIsGrade(true);
-      tdExpertCoachEnterpriseService.save(coach);
-     
+      if (null != coach)
+      {
+	      coach.setIsGrade(true);
+	      tdExpertCoachEnterpriseService.save(coach);
+      }
       
       for (int chkId : chkIds)
       {
