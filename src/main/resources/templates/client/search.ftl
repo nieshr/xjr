@@ -18,7 +18,7 @@
 <!-- head  -->
 	<div class="wrapper">
 		<ul class="wrapper-nav" id="wrapper-nav">
-			<a href="/"><li>首页</li></a>
+			<li><a href="/">首页</a></li>
 			<li <#if active??&&active==1>class="active"</#if>><a href="/info/aIn"></a>专项行动</li>
 			<li <#if active??&&active==2>class="active"</#if>><a href="/info/activity/list">培育活动</a></li>
 			<li <#if active??&&active==3>class="active"</#if>><a href="/info/index">新闻动态</a></li>

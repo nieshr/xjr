@@ -110,7 +110,7 @@ function gotop()
 <div class="pagnation" id="pagnation">
  <#if PAGE_DATA??>
      <#if PAGE_DATA.number+1 == 1>
-          <a disabled="disabled"  class="page-prev">上一页"</a>               
+          <a disabled="disabled"  class="page-prev">上一页"</a>              
      <#else>
          <a href="/info/activity/list?activityType=${activityType!'' }&page=${PAGE_DATA.number-1}"  class="page-prev">上一页"</a>                
      </#if>
@@ -137,7 +137,7 @@ function gotop()
      
      
      <#if PAGE_DATA.number+1 == PAGE_DATA.totalPages || PAGE_DATA.totalPages==0>
-         <a disabled="disabled" class="page-next">下一页</a> 
+        <a disabled="disabled" class="page-next">下一页</a>
      <#else>
          <a href="/info/activity/list?activityType=${activityType!'' }&page=${PAGE_DATA.number+1}&keywords=${keywords!''}" class="page-next">下一页</a> 
      </#if>
