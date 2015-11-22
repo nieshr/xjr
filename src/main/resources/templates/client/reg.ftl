@@ -1,6 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<style>
+    body{min-width:1200px;}
+</style>
 <!--网页左上角小图标-->
 <link rel="shortcut icon" href="/client/images/icon.ico" />
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
@@ -158,14 +161,9 @@ function inputPwd()
 	<!--register-->
 	<div class="register">
     <form action="/reg" method="post" id="reg">
-    	<!--<div>
+    	<div>
         	<i class="i1"></i>
         	<input type="text" name="username" id="txt_regId" value="用户名" ajaxUrl="/reg/check/username" datatype="*6-25" onfocus="if(this.value=='用户名'){this.value='';}" onblur="if(this.value==''){this.value='用户名'}"/>
-            <span class="Validform_checktip">*用户名</span>
-        </div>-->
-        <div>
-            <i class="i1"></i>
-            <input type="password" name="username" placeholder="手机/邮箱/用户名"/>
             <span class="Validform_checktip">*用户名</span>
         </div>
         <div>

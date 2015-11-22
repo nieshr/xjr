@@ -17,7 +17,7 @@ public class TdManagerPermissionList {
 	
 	 // 角色权限
     @OneToMany
-    @JoinColumn(name="roleId")
+    @JoinColumn(name="roleIdd")
     private List<TdManagerPermission> permissionlist;
 
 	public Long getId() {
