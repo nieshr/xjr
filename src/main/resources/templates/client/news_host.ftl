@@ -67,6 +67,7 @@ function subActivity(hight)
 								title="查看详情">
 						<p><a target="_blank" href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>">${item.title!''}</p>
 					
+					
 					</li>
 				</#list>
 			</#if>	
