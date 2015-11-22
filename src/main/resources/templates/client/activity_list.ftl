@@ -38,7 +38,11 @@ function deleteConfirm(id,title) {
 			type : 2,
 			onClickYes : function(){
 							 location.href="/activity/delete?id="+id;
-								  }
+								  },
+			buttonText : {
+				Delete : "删除",
+				No : "取消"				
+			}		  
 		});
 
 }

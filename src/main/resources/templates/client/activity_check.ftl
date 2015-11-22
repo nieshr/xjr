@@ -99,6 +99,10 @@ function passCheck(activityId) {
 	    title : "通过审核",
 	    content : "更新列表到评分表，确认吗？",
 	    type : 1,
+	    buttonText : {
+			Yes : "确认",
+			No : "取消"
+		},
 	    onClickYes : function(){
 	    	 $.ajax({
 	             type: "GET",
@@ -134,6 +138,10 @@ function cancelCheck(activityId) {
         title : "取消审核",
         content : "取消审核后可修改活动信息，确认吗？",
         type : 1,
+        buttonText : {
+			Yes : "确认",
+			No : "取消"
+		},
         onClickYes : function(){
          $.ajax({
              type: "GET",
@@ -168,6 +176,10 @@ function resetCheck(activityId) {
        title : "重置评分",
        content : "重置评分后将删除之前的评分表，确认吗？",
        type : 1,
+       buttonText : {
+			Yes : "确认",
+			No : "取消"
+		},
        onClickYes : function(){	
          $.ajax({
              type: "GET",

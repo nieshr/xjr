@@ -46,6 +46,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ynyes.kjxjr.entity.TdActivity;
 import com.ynyes.kjxjr.entity.TdActivityEnterprise;
 import com.ynyes.kjxjr.entity.TdActivityExpert;
+import com.ynyes.kjxjr.entity.TdActivityInvest;
 import com.ynyes.kjxjr.entity.TdArticle;
 import com.ynyes.kjxjr.entity.TdArticleCategory;
 import com.ynyes.kjxjr.entity.TdEnterprise;
@@ -57,6 +58,7 @@ import com.ynyes.kjxjr.entity.TdUser;
 import com.ynyes.kjxjr.entity.TdUserMessage;
 import com.ynyes.kjxjr.service.TdActivityEnterpriseService;
 import com.ynyes.kjxjr.service.TdActivityExpertService;
+import com.ynyes.kjxjr.service.TdActivityInvestService;
 import com.ynyes.kjxjr.service.TdActivityService;
 import com.ynyes.kjxjr.service.TdActivityTypeService;
 import com.ynyes.kjxjr.service.TdArticleCategoryService;
@@ -134,6 +136,9 @@ public class TdActivityController {
 	
 	@Autowired
 	TdArticleCategoryService tdArticleCategoryService;
+	
+	@Autowired
+	TdActivityInvestService tdActivityInvestService;
 
 	   /**
      * 企业填写资料
@@ -2151,10 +2156,11 @@ public class TdActivityController {
     
     @RequestMapping(value = "/invest")
     public String invest(Long enterpriseId,Long activityId,ModelMap map,HttpServletRequest req,String keywords,Integer page){
-    	String activityUsername = (String) req.getSession().getAttribute("activityUsername");
-    	if(null == activityUsername){
-    		return "/client/login";
-    	}
+        String username = (String) req.getSession().getAttribute("activityUsername"); String manager = (String) req.getSession().getAttribute("manager");
+
+        if (null == username&&null==manager) {
+            return "redirect:/login";
+        }
     	
     	if (null == page)
     	{
@@ -2166,17 +2172,68 @@ public class TdActivityController {
     		TdActivity activity = tdActivityService.findOne(activityId);
     		TdEnterprise enterprise = tdEnterpriseService.findOne(enterpriseId);
     		Page<TdExpert> expertPage = tdExpertService.findAllOrderBySortIdAsc(page, ClientConstant.pageSize);
+    		map.addAttribute("ExpertPage", expertPage);
+    		map.addAttribute("enterprise", enterprise);
+    		map.addAttribute("activity", activity);
     	}
     	
     	map.addAttribute("type", "invest");
-        map.addAttribute("activity", tdActivityService.findOne(activityId));
-        map.addAttribute("enterprise", tdActivityService.findOne(enterpriseId));
     	map.addAttribute("keywords", keywords);
     	map.addAttribute("page", page);
     	map.addAttribute("activityId", activityId);
     	return "/client/activity_coach_expert";
     }
     
+    @RequestMapping(value = "/invest/edit")
+    public String investEdit(Long enterpriseId,Long expertId,Long activityId , ModelMap map,HttpServletRequest req){
+        String username = (String) req.getSession().getAttribute("activityUsername"); String manager = (String) req.getSession().getAttribute("manager");
+
+        if (null == username&&null==manager) {
+            return "redirect:/login";
+        }
+    	
+    	if (null != enterpriseId && null != expertId)
+    	{
+    		TdExpert expert = tdExpertService.findOne(expertId);
+    		TdEnterprise enterprise = tdEnterpriseService.findOne(enterpriseId);
+        	map.addAttribute("type", "invest");
+        	map.addAttribute("expert", expert);
+            map.addAttribute("enterprise", enterprise);
+            map.addAttribute("activityId", activityId);
+    	}
+    	return "/client/activity_invest_edit";
+    }
+    
+    @RequestMapping(value = "/invest/submit")
+    public String investSubmit(TdActivityInvest activityInvest , Long activityId , ModelMap map,HttpServletRequest req){
+        String username = (String) req.getSession().getAttribute("activityUsername"); String manager = (String) req.getSession().getAttribute("manager");
+
+        if (null == username&&null==manager) {
+            return "redirect:/login";
+        }
+
+		TdExpert expert = tdExpertService.findOne(activityInvest.getExpertId());
+		TdEnterprise enterprise = tdEnterpriseService.findOne(activityInvest.getEnterpriseId());
+		
+		TdActivityInvest  invest = tdActivityInvestService.findByExpertIdAndEnterpriseId(activityInvest.getExpertId(), activityInvest.getEnterpriseId());
+		if (null ==invest)
+		{
+			tdActivityInvestService.save(activityInvest);
+		}
+		else{
+			invest.setExpertId(activityInvest.getExpertId());
+			invest.setAmount(activityInvest.getAmount());
+			invest.setDatail(activityInvest.getDatail());
+			tdActivityInvestService.save(invest);
+		}
+		
+		
+    	map.addAttribute("type", "invest");
+    	map.addAttribute("expert", expert);
+        map.addAttribute("enterprise", enterprise);
+    
+        return "redirect:/activity/getGrade?activityId="+activityId+"&mark=activity";
+    }
     /**
      * 选出入选胜出的项目
      * @param req

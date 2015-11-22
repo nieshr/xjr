@@ -11,7 +11,8 @@
 		.page p{  margin-left: 10px;}
 	</style>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-	<title>活动管理员-添加路演辅导</title>
+	<title>活动管理员-添加辅导
+     </title>
 	<link rel="shortcut icon" href="/client/images/icon.ico" />
 	<link href="/client/css/base.css" rel="stylesheet" type="text/css" />
 	<link href="/client/css/area.css" rel="stylesheet" type="text/css" />
@@ -65,49 +66,7 @@ function removeCoachExpert(id , activityId)
 	    });
 	}
 	
-function addExpert(id , enterpriseIdId)
-{
-    $.ajax({
-        type:"post",
-        url:"/activity/addEE",
-        data:{"expertId":id,"enterpriseId":enterpriseId},
-        success:function(data){
-            if (data.code == 0)
-            {
-                location.reload();
-            }
-            else
-            {
-                $("body").ios6alert({
-                    content : data.msg
-                });
-            }
-           
-        }
-    });
-}
 
-function removeExpert(id , enterpriseId)
-{
-    $.ajax({
-        type:"post",
-        url:"/activity/removeEE",
-        data:{"expertId":id,"enterpriseIdId":enterpriseIdId},
-        success:function(data){
-            if (data.code == 0)
-            {
-                location.reload();
-            }
-            else
-            {
-                $("body").ios6alert({
-                    content : data.msg
-                });
-            }
-           
-        }
-    });
-}	
 </script>
 </head>
 <body>
@@ -178,11 +137,7 @@ function removeExpert(id , enterpriseId)
 			        		<td style="color:#0ab2cb;">${item.usermobile!''}</td>
 			        		<td style="color:#e67817;"><#if type??&&type=="invest">${item.invest!''}<#else>${item.email!''}</#if></td>
 			        		<#if type??&&type=="invest">
-			        		     <#if item.enterpriseId??&&item.enterpriseId==enterpriseId>
-	                                <td><a href="javascript:removeExpert('${item.id?c}' , ${enterpriseId?c!''})" style="color:#666;" title="取消该路演辅导">取消</td>
-	                            <#else>
-	                                <td><a href="javascript:addExpert('${item.id?c}' , ${enterpriseId?c!''})">确定</a></td>
-	                            </#if>
+	                                <td><a href="/activity/invest/edit?expertId=${item.id?c}&enterpriseId=${enterprise.id?c!''}&activityId=${activityId?c!''}" title="编辑项目辅导投资">编辑</td>
 			        		<#else>
 				        		<#if item.roadshowActivityId??&&item.roadshowActivityId==activityId>
 				        			<td><a href="javascript:removeCoachExpert('${item.id?c}' , ${activityId?c!''})" style="color:#666;" title="取消该路演辅导">取消</td>

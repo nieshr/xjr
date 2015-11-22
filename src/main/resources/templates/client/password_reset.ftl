@@ -31,14 +31,15 @@
                 <#if user?? && user.roleId??>
                     <#switch user.roleId>
                         <#case 1>
-                            <dd><a href="/enterprise/check">基本资料</a></dd>
-                            <dd><a href="/enterprise/activity/list">活动列表</a></dd>
-                            <dd><a href="/enterprise/project">申请展示</a></dd>
+				            <dd><a href="/enterprise/info">网上报名</a></dd>
+				            <dd><a href="/enterprise/data">项目资料</a></dd>
+				            <dd><a href="/enterprise/activity/list">活动列表</a></dd>
+				            <dd><a href="/enterprise/project">申请展示</a></dd>
                             <#break>
                         <#case 2>
                             <dd><a href="/region/enterprise/list">企业列表</a></dd>
                             <dd><a href="/region/activity/list">活动列表</a></dd>
-                            <dd><a href="#">档案跟踪</a></dd>
+                            <#--<dd><a href="#">档案跟踪</a></dd>-->
                             <#break>
                         <#case 3>
                             <dd><a href="/expert/enterprise/list">活动列表</a></dd>

@@ -166,7 +166,7 @@ window.onload=checkstatus;
     			<div>
 	    			<span class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>">股东结构：</span>
 	    			<span class="pro <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>hide</#if>">（拟）股东结构：</span>
-	    			<textarea name="shareholder" datatype="*5-100"  errormsg="输入5到100字"><#if enterprise.formType??>${enterprise.shareholder!''}</#if></textarea>
+	    			<textarea name="shareholder" datatype="*5-100"  errormsg="输入5到100字" tip="100字以内"> <#if enterprise.formType??>${enterprise.shareholder!''}</#if></textarea>
     			</div>
     			<div><span>所在地区：</span>
     				<select name="area" datatype="*">
@@ -177,7 +177,7 @@ window.onload=checkstatus;
     					</#if>	
     				</select>
     			</div>
-    			<div><span>地址：</span><input type="text" name="address" datatype="*"value="<#if enterprise.address??>${enterprise.address!''}</#if>" /></div>
+    			<div><span>地址：</span><input type="text" style="width:400px;" name="address" datatype="*"value="<#if enterprise.address??>${enterprise.address!''}</#if>" /></div>
     			<div><span  class="enter <#if enterprise.formType??&&enterprise.formType==1>hide</#if>">职工人数：</span>
     			        <span  class="pro  <#if enterprise.formType??&&enterprise.formType==0 ||!enterprise.formType??>hide</#if>">团队人数：</span>
     				<input type="text" name="staffNumber" datatype="n"  value="<#if enterprise.staffNumber??>${enterprise.staffNumber?c!''}</#if>" /></div>

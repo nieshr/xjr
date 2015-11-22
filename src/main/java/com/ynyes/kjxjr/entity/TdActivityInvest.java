@@ -59,6 +59,14 @@ public class TdActivityInvest {
 	@Column
 	private String activityType;
 	
+	//投融资价值
+	@Column
+	private String amount;
+	
+	//详情
+	@Column
+	private String datail;
+	
 	public String getType() {
 		return type;
 	}
@@ -145,6 +153,22 @@ public class TdActivityInvest {
 
 	public void setActivityTitle(Long activityTitle) {
 		this.activityTitle = activityTitle;
+	}
+
+	public String getAmount() {
+		return amount;
+	}
+
+	public void setAmount(String amount) {
+		this.amount = amount;
+	}
+
+	public String getDatail() {
+		return datail;
+	}
+
+	public void setDatail(String datail) {
+		this.datail = datail;
 	}
 
 }
