@@ -43,19 +43,23 @@ function move3()
 			<#if team_page??>
 				<#list team_page.content as item>
 					<#if item_index lt 6>
+					
 						<li>
 								<img style="cursor:pointer;" 
 										src="<#if item.imgUrl??&&item.imgUrl?length gt 0>${item.imgUrl!''}<#else>/client/news_img/projectdisplay.jpg</#if>" 
 										width="322px" height="144px" 
 										title="查看详情" 
 										onclick="location.href='<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>'">
+								<a style="padding: 0px;" href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>">
 								<h3>${item.title!''}</h3>
 								<#if item.brief?length lt 20>
-									<h4>${item.brief!''}</h4>
+								<h4>${item.brief!''}</h4>
 								<#else>
-									<h4>${item.brief[0..19]}...</h4>
+								<h4>${item.brief[0..19]}...</h4>
 								</#if>
+								</a>
 						</li>
+						
 					</#if>
 				</#list>
 			</#if>	
@@ -74,12 +78,14 @@ function move3()
 										width="322px" height="144px"
 										title="查看详情"
 										 onclick="location.href='<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>'">
+								<a style="padding: 0px;" href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>">
 								<h3>${item.title!''}</h3>
 								<#if item.brief?length lt 20>
 									<h4>${item.brief!''}</h4>
 								<#else>
 									<h4>${item.brief[0..19]}...</h4>
 								</#if>
+								</a>
 						</li>
 					</#if>
 				</#list>
@@ -99,12 +105,14 @@ function move3()
 										width="322px" height="144px" 
 										title="查看详情"
 										onclick="location.href='<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>'">
+								<a style="padding: 0px;" href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>">
 								<h3>${item.title!''}</h3>
 								<#if item.brief?length lt 20>
 									<h4>${item.brief!''}</h4>
 								<#else>
 									<h4>${item.brief[0..19]}...</h4>
 								</#if>
+								</a>
 						</li>
 					</#if>
 				</#list>
