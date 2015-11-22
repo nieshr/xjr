@@ -29,7 +29,6 @@ $(document).ready(function(){
             callback: function (data) { 
                 if (data.code == 0)
                 {
-                    
                     location.href="/activity/list";
                 }
                 else 
@@ -437,7 +436,7 @@ window.onload=done2;
                         </#if>        
                     </select>
     			</div>
-    			<div><span>日期：</span>
+    			<div><span>时间：</span>
 	                    <input <#if pagetype??&& pagetype == "check" >disabled=""</#if> name="date" type="text" id="date" value="<#if activity??>${activity.date!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="填写正确格式" sucmsg=" " >
 	            </div>    
     			
