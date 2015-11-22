@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title><#if info_cat??>${info_cat.title!''}</#if></title>
+	<title><#if info_cat??>${info_cat.title!''}<#else>创业导师</#if></title>
 	<link rel="shortcut icon" href="/client/images/icon.ico" />
 	<link rel="stylesheet" href="/client/css/news_base.css">
 	<link rel="stylesheet" href="/client/css/news_main.css">
@@ -29,7 +29,7 @@
 			<#list info_page.content as item>
 				<#if catId??>
 					<li>
-						<img src="<#if item.imgUrl??&&item.imgUrl != "">${item.imgUrl!''}<#else>/client/images/default.jpg</#if>" alt="展示图片" onclick="location.href='/info/list/content/${item.id?c!''}?mid=12'">
+						<img style="cursor:pointer;" src="<#if item.imgUrl??&&item.imgUrl != "">${item.imgUrl!''}<#else>/client/images/default.jpg</#if>" alt="展示图片" onclick="location.href='/info/list/content/${item.id?c!''}?mid=12'">
 						<h6>${item.title!''}</h6>
 						<#if item.brief?length lt 20>
 							<p>${item.brief!''}</p>
@@ -39,7 +39,7 @@
 					</li>
 				<#else>
 					<li>
-						<img src="<#if item.imageUri??&&item.imageUri != "">${item.imageUri!''}<#else>/client/images/default.jpg</#if>" alt="展示图片" onclick="location.href='/info/list/content/expert/${item.id?c}'">
+						<img style="cursor:pointer;" src="<#if item.imageUri??&&item.imageUri != "">${item.imageUri!''}<#else>/client/images/default.jpg</#if>" alt="展示图片" onclick="location.href='/info/list/content/expert/${item.id?c}'">
 						<h6>${item.inCharge!''}</h6>
 						<#if item.content??>
 							<#if item.content?length lt 20>
