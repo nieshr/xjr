@@ -35,6 +35,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ynyes.kjxjr.entity.TdActivity;
 import com.ynyes.kjxjr.entity.TdActivityEnterprise;
 import com.ynyes.kjxjr.entity.TdActivityExpert;
+import com.ynyes.kjxjr.entity.TdActivityInvest;
 import com.ynyes.kjxjr.entity.TdActivityType;
 import com.ynyes.kjxjr.entity.TdCoachContent;
 import com.ynyes.kjxjr.entity.TdEnterprise;
@@ -44,6 +45,7 @@ import com.ynyes.kjxjr.entity.TdExpertCoachEnterprise;
 import com.ynyes.kjxjr.entity.TdUser;
 import com.ynyes.kjxjr.service.TdActivityEnterpriseService;
 import com.ynyes.kjxjr.service.TdActivityExpertService;
+import com.ynyes.kjxjr.service.TdActivityInvestService;
 import com.ynyes.kjxjr.service.TdActivityService;
 import com.ynyes.kjxjr.service.TdActivityTypeService;
 import com.ynyes.kjxjr.service.TdCoachContentService;
@@ -93,6 +95,9 @@ public class TdExpertController {
 	
 	@Autowired
 	private TdCommonService tdCommonService;
+	
+	@Autowired
+	TdActivityInvestService tdActivityInvestService;
 	
 	@RequestMapping(value = "/enterprise/list")
 	public String execute(HttpServletRequest req, ModelMap map) {
@@ -450,8 +455,8 @@ public class TdExpertController {
 			return "/client/login";
 		}
 		TdExpert expert = tdExpertService.findbyUsername(expertUsername);
-		List<TdExpertCoachEnterprise> enterprise_list = tdExpertCoachEnterpriseService
-				.findByExpertIdAndIsGradeIsFalse(expert.getId());
+		List<TdActivityInvest> enterprise_list = tdActivityInvestService
+				.findByExpertId(expert.getId());
 		map.addAttribute("enterprise_list", enterprise_list);
 		return "/client/expert_enterprise_list";
 	}

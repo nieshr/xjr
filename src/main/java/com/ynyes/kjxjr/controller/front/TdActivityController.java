@@ -2218,9 +2218,15 @@ public class TdActivityController {
 		TdActivityInvest  invest = tdActivityInvestService.findByExpertIdAndEnterpriseId(activityInvest.getExpertId(), activityInvest.getEnterpriseId());
 		if (null ==invest)
 		{
+			activityInvest.setEnterpriseName(enterprise.getTitle());
+			activityInvest.setPantent(enterprise.getMobile());
+			activityInvest.setAddr(enterprise.getAddress());
 			tdActivityInvestService.save(activityInvest);
 		}
 		else{
+			invest.setEnterpriseName(enterprise.getTitle());
+			invest.setPantent(enterprise.getMobile());
+			invest.setAddr(enterprise.getAddress());
 			invest.setExpertId(activityInvest.getExpertId());
 			invest.setAmount(activityInvest.getAmount());
 			invest.setDatail(activityInvest.getDatail());

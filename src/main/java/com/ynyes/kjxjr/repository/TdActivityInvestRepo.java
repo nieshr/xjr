@@ -12,6 +12,8 @@ public interface TdActivityInvestRepo extends PagingAndSortingRepository<TdActiv
 
 	// 根据专家ID查找所有当前辅导企业
 	List<TdActivityInvest> findByExpertIdAndIsGradeIsFalse(Long expertId);
+	
+	List<TdActivityInvest> findByExpertId(Long expertId);
 
 	// 根据专家ID查找所有往期辅导企业
 	List<TdActivityInvest> findByExpertIdAndIsGradeIsTrue(Long expertId);

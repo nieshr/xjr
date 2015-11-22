@@ -64,9 +64,8 @@ function subActivity(hight)
 								src="<#if item.imgUrl??&&item.imgUrl?length gt 0>${item.imgUrl!''}<#else>/client/news_img/modification01.png</#if>" 
 								alt="名称" 
 								width=150 height=150
-								title="查看详情"
-								onclick="location.href='<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>'">
-						<p>${item.title!''}</p>
+								title="查看详情">
+						<p><a target="_blank" href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>">${item.title!''}</p>
 					
 					</li>
 				</#list>

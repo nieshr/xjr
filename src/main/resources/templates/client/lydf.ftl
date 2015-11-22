@@ -73,7 +73,7 @@
                                 <dt>操作</dt>
                                 <#if grade_false_list??>                                
                                     <#list grade_false_list as item>
-                                        <dd><a href="/expert/coach/${item.enterpriseId?c}">录入辅导信息</a><#--丨<a href="#">下载</a>--></dd>
+                                        <dd><a href="/expert/coach/log/${item.enterpriseId?c}">录入辅导信息</a><#--丨<a href="#">下载</a>--></dd>
                                     </#list>
                                 </#if>
                             </dl>
@@ -116,7 +116,7 @@
                                 <dt>操作</dt>
                                 <#if grade_true_list??>
                                     <#list grade_true_list as item>
-                                        <dd><a <#if item.enterpriseId??>href="/expert/coach/log/${item.enterpriseId?c}" </#if>>查看</a><#--丨<a href="#">下载</a>--></dd>
+                                        <dd><a <#if item.enterpriseId??>href="/activity/enterprise/check/${item.enterpriseId?c}" target="_blank"</#if> >查看</a><#--丨<a href="#">下载</a>--></dd>
                                     </#list>
                                 </#if>
                             </dl>

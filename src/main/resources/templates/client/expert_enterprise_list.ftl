@@ -40,7 +40,7 @@
                             <dt>备选企业列表</dt>
                             <#if enterprise_list??>
                                 <#list enterprise_list as item>
-                                    <dd><a href="#">${item.enterpriseName!''}</a></dd>
+                                    <dd><a>${item.enterpriseName!''}</a></dd>
                                 </#list>
                             </#if>
                         </dl>
@@ -48,15 +48,15 @@
                             <dt>地址</dt>
                             <#if enterprise_list??>
                                 <#list enterprise_list as item>
-                                    <dd><a href="#">${item.addr!''}</a></dd>
+                                    <dd><a title="${item.addr!''}">${item.addr!''}</a></dd>
                                 </#list>
                             </#if>
                         </dl>
                         <dl class="list_color_yellow">
-                            <dt>专利</dt>
+                            <dt>电话</dt>
                             <#if enterprise_list??>
                                 <#list enterprise_list as item>
-                                    <dd><a href="#">${item.pantent!''}</a></dd>
+                                    <dd><a>${item.pantent!''}</a></dd>
                                 </#list>
                             </#if>
                         </dl>

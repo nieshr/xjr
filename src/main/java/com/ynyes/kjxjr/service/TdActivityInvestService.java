@@ -69,6 +69,13 @@ public class TdActivityInvestService {
 		return repository.findByExpertIdAndIsGradeIsFalse(expertId);
 	}
 	
+	public List<TdActivityInvest> findByExpertId(Long expertId){
+		if(null == expertId){
+			return null;
+		}
+		return repository.findByExpertId(expertId);
+	}
+	
 	public List<TdActivityInvest> findByExpertIdAndIsGradeIsTrue(Long expertId){
 		if(null == expertId){
 			return null;
