@@ -22,6 +22,7 @@ public interface TdDiySiteRepo extends
 {
     Page<TdDiySite> findByTitleContainingOrderBySortIdAsc(String keywords, Pageable page);
     Page<TdDiySite> findByRoleIdOrderBySortIdAsc(Long roleId, Pageable page);
+    Page<TdDiySite> findByRoleIdAndStatusIdOrderBySortIdAsc(Long roleId, Long statusId ,Pageable page);
     
     List<TdDiySite> findByIsEnableTrue();
     

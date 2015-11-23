@@ -147,6 +147,13 @@ public class TdDiySiteService {
         return repository.findByRoleIdOrderBySortIdAsc(roleId , pageRequest);
     }
     
+    public Page<TdDiySite> findByRoleIdAndStatusIdOrderBySortIdAsc(Long roleId , Long statusId ,  int page, int size)
+    {
+        PageRequest pageRequest = new PageRequest(page, size, new Sort(Direction.ASC, "sortId"));
+        
+        return repository.findByRoleIdAndStatusIdOrderBySortIdAsc(roleId , statusId ,pageRequest);
+    }
+    
     public Page<TdDiySite> searchAllOrderBySortIdAsc(String keywords, int page, int size)
     {
         PageRequest pageRequest = new PageRequest(page, size);

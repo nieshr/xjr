@@ -55,6 +55,10 @@ public class TdArticle {
     @Column
     private Long sortId;
     
+    // 是否显示时间
+    @Column
+    private Long timeAbleId;
+    
     // 浏览次数
     @Column
     private Long viewCount;
@@ -315,6 +319,14 @@ public class TdArticle {
     public void setParamIsSearchable(Boolean paramIsSearchable) {
         this.paramIsSearchable = paramIsSearchable;
     }
+
+	public Long getTimeAbleId() {
+		return timeAbleId;
+	}
+
+	public void setTimeAbleId(Long timeAbleId) {
+		this.timeAbleId = timeAbleId;
+	}
 
 	@Override
 	public String toString() {

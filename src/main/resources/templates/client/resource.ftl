@@ -28,7 +28,7 @@
 				<#list tutor_page.content as item>
 					<#if item_index lt 9>
 						<li>
-							<img style="cursor:pointer;" src="<#if item.imageUri??&&item.imageUri != "">${item.imageUri!''}<#else>/client/images/default.jpg</#if>" width="150px" height="150px" onclick="location.href='/info/list/content/expert/${item.id?c!''}'">
+							<img title="查看详情" style="cursor:pointer;" src="<#if item.imageUri??&&item.imageUri != "">${item.imageUri!''}<#else>/client/images/default.jpg</#if>" width="150px" height="150px" onclick="location.href='/info/list/content/expert/${item.id?c!''}'">
 							<h6>${item.inCharge!''}</h6>
 							<#if  item.content??>
 								<#if  item.content?length lt 20>

@@ -85,7 +85,7 @@ function gotop()
 <div class="location_nav">
   <div class="location">
     <ul>
-      <li <#if !activityType??>class="me"</#if>><a href="/info/activity/list">专项行动</a></li>
+      <li <#if !activityType??>class="me"</#if>><a href="/info/activity/list">培育活动</a></li>
       <#if activityType_list??>
            <#list activityType_list as item>
                 <li <#if activityType?? && activityType == item.title>class="me"</#if>><a href="/info/activity/list?activityType=${item.title!'' }">${item.title!''}</a></li>
@@ -113,8 +113,10 @@ function gotop()
 										<a href="#nogo">${activity.createTime?string("yyyy")}年</a>
 									</h2>
 									<li style="margin-top: 0px;" class="<#if activity.sortId == 2 >bounceInDown<#else>green bounceInDown lcy_height</#if>">
-										<#if activity.sortId == 2 >
+										<#if activity.timeAbleId??&&activity.timeAbleId == 0 >
 											<h3 style="display: block;">${activity.createTime?string("MM.dd")}<span>${activity.createTime?string("yyyy")}</span></h3>
+										<#else>
+											<h3 style="display: block;">筹备中</h3>	
 										</#if>
 										<dl style="display: block;">
 											<dt><p><a href="/info/list/content/${activity.id?c!''}?mid=13" title="查看详情">${activity.title!''}</a></p><span>${activity.brief!''}</span></dt>
@@ -134,7 +136,11 @@ function gotop()
 									</h2>
 								</#if>	
 									<li style="margin-top: 0px;" class="<#if activity.sortId == 2 >bounceInDown<#else>green bounceInDown lcy_height</#if>">
+									<#if activity.timeAbleId??&&activity.timeAbleId == 0 >
 										<h3 style="display: block;">${activity.createTime?string("MM.dd")}<span>${activity.createTime?string("yyyy")}</span></h3>
+									<#else>
+										<h3 style="display: block;">筹备中</h3>	
+									</#if>	
 										<dl style="display: block;">
 											<dt><a href="<#if activity.linkUrl??&&activity.linkUrl!="">${activity.linkUrl!''}<#else>/info/list/content/${activity.id?c!''}?mid=13</#if>" title=""><p>${activity.title!''}</p><span>${activity.theme!''}</span></a></dt>
 										  <a style="margin-right:5%;float:right;" href="<#if activity.linkUrl??&&activity.linkUrl!="">${activity.linkUrl!''}<#else>/info/list/content/${activity.id?c!''}?mid=13</#if>" title="查看详情">详情</a>

@@ -95,7 +95,7 @@ function gotop()
               <div class="pic"><img src="<#if item.imgUrl??&&item.imgUrl?length gt 0>${item.imgUrl!''}<#else>/client/news_img/modification.png</#if>" /></div>
               <div class="news_words">
                 <div class="news_title">${item.title!''}</div>
-                <div class="news_time"><#if item.createTime??>${item.createTime?string("yyyy-MM-dd")}</#if></div>
+                <#if item.timeAbleId??&&item.timeAbleId == 0><div class="news_time"><#if item.createTime??>${item.createTime?string("yyyy-MM-dd")}</#if></div><#else>筹备中</#if>
                 <div class="news_detail">${item.brief!''}</div>
               </div>
               </a></li>

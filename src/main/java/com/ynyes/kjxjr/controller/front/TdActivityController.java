@@ -1935,7 +1935,7 @@ public class TdActivityController {
 			}
 			
 			TdArticle newArticle = new TdArticle();
-			newArticle.setTitle(title);;
+			newArticle.setTitle(title);
 			newArticle.setContent(introduction);
 			newArticle.setCreateTime(date1);
 			newArticle.setRecommendId(tdActivity.getId());
@@ -1952,7 +1952,7 @@ public class TdActivityController {
 	        else{
 	        	newArticle.setSortId(1L);
 	        }
-	        
+	        newArticle.setTimeAbleId(1L);
 	         
 	         tdArticleService.save(newArticle);
 		}

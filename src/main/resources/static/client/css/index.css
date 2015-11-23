@@ -55,6 +55,22 @@
 	.floatbox { display:none;}
 }  */
 
+.section {
+	position: relative;
+	width:100%;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+/* zhangji */
+@media screen and (max-width:1366px){
+  	.section{width:1349px;}
+}
+@media screen and (max-width:1280px){
+  	.section{width:1263px;}
+}
+
+
 /*banner*/
 .sect1 .banner1{
 	position:relative;
@@ -242,6 +258,7 @@
 	position:absolute;
 	top:50%;
 	left:22%;
+	*+left:20px;
 	display:block;
 	margin-top:-35px;
 	width:42px;
@@ -251,12 +268,13 @@
 }
 
 @media screen and (max-width:1366px){
-	.sect3 .section1 .prev{left:10%;}
+	.sect3 .section1 .prev{left:2%;}
 }
 .sect3 .section1 .next{
 	position:absolute;
 	top:50%;
 	right:22%;
+	*+right:20px;
 	display:block;
 	margin-top:-35px;
 	width:42px;
@@ -266,7 +284,7 @@
 }
 
 @media screen and (max-width:1366px){
-    .sect3 .section1 .next{right:10%;}
+    .sect3 .section1 .next{right:2%;}
 }
 .sect3 .section2{
 	position:relative;
@@ -274,10 +292,12 @@
 	height:510px;
 	background:url(../l_images/index_bg3.png) no-repeat center top;
 }
+/*
 .sect3 .section2 div{
 	position:absolute;
 	overflow:hidden;
-}
+}*/
+
 .sect3 .section2 div .p1,.sect3 .section2 div .p2{
 	float:left;
 }
@@ -285,7 +305,12 @@
 .sect3 .section2 .div4 .p1{width:174px;}
 .sect3 .section2 .div2 .p1,.sect3 .section2 .div3 .p1{text-align:right;}
 .sect3 .section2 .div6 .p1{margin-top:30px;}
+
+.fivesupport {/*margin:0 auto;*+margin-left:-600px;*/position:relative;width:1200px;height:510px;}
+
 .sect3 .section2 .div1{
+	position:absolute;
+	overflow:hidden;
 	top: 33%;
 	left: 50%;
 	margin-left:-80px;
@@ -294,17 +319,23 @@
 	width:120px;
 }
 .sect3 .section2 .div2{
+	position:absolute;
+	overflow:hidden;
 	top:19%;
 	left:44px;
 	width:208px;
 }
 .sect3 .section2 .div3{
+	position:absolute;
+	overflow:hidden;
 	top:54%;
 	left:171px;
 	width:208px;
 }
 
 .sect3 .section2 .div4{
+	position:absolute;
+	overflow:hidden;
 	top:70%;
 	left:50%;
 	margin-left:-90px;
@@ -315,11 +346,15 @@
 	margin-left:59px;
 }
 .sect3 .section2 .div5{
+	position:absolute;
+	overflow:hidden;
 	top:54%;
 	left:816px;
 	width:208px;
 }
 .sect3 .section2 .div6{
+	position:absolute;
+	overflow:hidden;
 	top:19%;
 	left:947px;
 	width:208px;

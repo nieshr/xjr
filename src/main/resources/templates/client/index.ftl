@@ -15,7 +15,6 @@
 <!--css-->
 <link rel="shortcut icon" href="/client/images/icon.ico" />
 <link href="/client/css/l_base.css" rel="stylesheet" type="text/css" />
-<link href="/client/css/jquery.fullPage.css" rel="stylesheet" type="text/css" />
 <link href="/client/css/index.css" rel="stylesheet" type="text/css" />
 <style>
 #example_video_1{float:left;*+text-align:left;}

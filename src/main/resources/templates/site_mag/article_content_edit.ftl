@@ -208,6 +208,19 @@
                 </div>
             </dd>
         </dl>
+        <#if mark??&&mark=="培育活动">
+         <dl>
+            <dt>活动状态</dt>
+            <dd>
+                 <div class="rule-multi-radio multi-radio">
+                    <span style="display: none;">
+                        <input type="radio" name="sortId" value="2" <#if !article?? || article?? && article.sortId?? && article.sortId==2>checked="checked"</#if> ><label>已结束</label>
+                        <input type="radio" name="sortId" value="1" <#if article?? && article.sortId?? && article.sortId==1>checked="checked"</#if>><label>未结束</label>
+                    </span>
+                </div>
+            </dd>
+        </dl>
+        <#else>
         <dl>
             <dt>排序数字</dt>
             <dd>
@@ -215,6 +228,7 @@
                 <span class="Validform_checktip">*数字，越小越向前</span>
             </dd>
         </dl>
+        </#if>
         <dl>
             <dt>浏览次数</dt>
             <dd>
@@ -222,6 +236,24 @@
                 <span class="Validform_checktip">点击浏览该信息自动+1</span>
             </dd>
         </dl>
+        <#if mark??&&mark=="培育活动">
+        <dl>
+            <dt>发布时间</dt>
+            <dd>
+                <div class="input-date">
+                    <input name="createTime" type="text" id="txtAddTime" value="<#if article??>${article.createTime!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="请选择正确的日期" sucmsg=" ">
+                    <i>日期</i>
+                </div>
+                 <div class="rule-multi-radio multi-radio">
+                    <span style="display: none;">
+                        <input type="radio" name="timeAbleId" value="0" <#if !article?? || article?? && article.timeAbleId?? && article.timeAbleId==0>checked="checked"</#if> ><label>显示</label>
+                        <input type="radio" name="timeAbleId" value="1" <#if article?? && article.timeAbleId?? && article.timeAbleId==1>checked="checked"</#if>><label>不显示</label>
+                    </span>
+                </div>
+                <span class="Validform_checktip">不选择默认当前发布时间</span>
+            </dd>
+        </dl>
+        <#else>
         <dl>
             <dt>发布时间</dt>
             <dd>
@@ -232,6 +264,7 @@
                 <span class="Validform_checktip">不选择默认当前发布时间</span>
             </dd>
         </dl>
+        </#if>
     </div>
     
     <div class="tab-content" style="display: none;">

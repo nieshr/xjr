@@ -49,12 +49,14 @@ function move3()
 										width="322px" height="144px" 
 										title="查看详情" 
 										onclick="location.href='<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>'">
+								<a title="查看详情" style="padding: 0px;" href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>">
 								<h3>${item.title!''}</h3>
 								<#if item.brief?length lt 20>
 									<h4>${item.brief!''}</h4>
 								<#else>
 									<h4>${item.brief[0..19]}...</h4>
 								</#if>
+								</a>
 						</li>
 					
 				</#list>

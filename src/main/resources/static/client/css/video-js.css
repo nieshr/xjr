@@ -141,6 +141,12 @@ fonts to show/hide properly.
   width: 4em;
 }
 /* FontAwsome button icons */
+
+/*
+.vjs-default-skin .vjs-control:before{
+	background:url(/client/images/iconfont-zanting.png) no-repeat center;
+}    /*11-23修改*/
+
 .vjs-default-skin .vjs-control:before {
   font-family: VideoJS;
   font-size: 1.5em;
@@ -432,20 +438,27 @@ easily in the skin designer. http://designer.videojs.com/
   -o-transition: all 0s;
   transition: all 0s;
 }
+
+.vjs-default-skin .vjs-big-play-button{
+	background:url(/client/images/iconfont-bofanganniu.png) no-repeat center;
+}    /*11-23修改*/
+
+/*
 .vjs-default-skin .vjs-big-play-button:before {
   content: "\e001";
   font-family: VideoJS;
   /* In order to center the play icon vertically we need to set the line height
-     to the same as the button height */
+     to the same as the button height *
 
   line-height: 1.6em;
   text-shadow: 0.05em 0.05em 0.1em #000;
-  text-align: center /* Needed for IE8 */;
+  text-align: center /* Needed for IE8 *
   position: absolute;
   left: 0.1em;
   width: 100%;
   height: 100%;
 }
+*/
 /* Loading Spinner
 --------------------------------------------------------------------------------
 */
