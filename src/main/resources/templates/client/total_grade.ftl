@@ -7,9 +7,10 @@
     <link href="/client/css/form.css" rel="stylesheet" type="text/css" />
     <link href="/client/css/base.css" rel="stylesheet" type="text/css" />
     <link href="/client/css/area.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="/client/css/ios6alert.css">
     <script src="/client/js/jquery-1.9.1.min.js"></script>
 	<script src="/client/js/main.js"></script>
-
+    <script src="/client/js/ios6alert.js"></script>
 
 <script>    
  //全选取消按钮函数-入选
@@ -22,6 +23,17 @@ function checkAll(chkobj) {
         $(".checkall input:enabled").prop("checked", false);
     }
 }    
+
+function tip()
+{
+    $("body").ios6alert({
+        content : "操作成功"
+    });
+}
+<#if tip??&&tip == 1>
+    window.onload=tip;
+</#if>
+
  
  function gradeOrder(orderId)
  {
@@ -47,10 +59,17 @@ function checkAll(chkobj) {
 	        	<td id="order2"  width="3%" style="background-color:<#if orderId??&&orderId==2>#FFF3CD<#else>#D9E3F3</#if>;"><a href="javascript:gradeOrder(2);" title="点击按此评分项顺序排序">市场潜力<img class="orderIcon" id="orderIcon2"  style="margin-left:2px; <#if orderId??&&orderId!=2>display:none;</#if>"   src="/client/images/down1.png" width=8px height=10px alt=↓ /></td>
 	        	<td id="order4"  width="3%" style="background-color:<#if orderId??&&orderId==4>#FFF3CD<#else>#D9E3F3</#if>;"><a href="javascript:gradeOrder(4);" title="点击按此评分项顺序排序">投资价值<img class="orderIcon" id="orderIcon4" style="margin-left:2px; <#if orderId??&&orderId!=4>display:none;</#if>"  src="/client/images/down1.png" width=8px height=10px alt=↓ /></td>
 	        	<td id="order5"  width="3%" style="background-color:<#if orderId??&&orderId==5>#FFF3CD<#else>#D9E3F3</#if>;"><a href="javascript:gradeOrder(5);" title="点击按此评分项顺序排序">现场表现力<img class="orderIcon" id="orderIcon5" style="margin-left:2px; <#if orderId??&&orderId!=5>display:none;</#if>"  src="/client/images/down1.png" width=8px height=10px alt=↓ /></td>
-	            <#if aex_list??>
-	                <#list aex_list as item>
-	                    <td width="4%">${item.name!''}</td>
-	                </#list>
+	            <#if invest??&&invest==1>
+	               <td width="8%">投资方</td>
+	               <td width="2%">金额</td>
+	               <td width="2%">专家</td>
+	               <td width="4%">企业电话</td>
+	            <#else>
+		            <#if aex_list??>
+		                <#list aex_list as item>
+		                    <td width="4%">${item.name!''}</td>
+		                </#list>
+		            </#if>
 	            </#if>
 	        </tr>
 	        <#if grade_list??>
@@ -66,19 +85,35 @@ function checkAll(chkobj) {
 		        		</#if>
 			        	<td>${item_index+1}</td>
 			        	<td>${item.number!''}</td>
-				        <td><#if item.win??&&item.win==activityId><a title="分配投资机构" href="/activity/invest?enterpriseId=${item.enterpriseId?c!''}&activityId=${item.activityId?c!''}">${item.enterpriseTitle!''}</a><#else>${item.enterpriseTitle!''}</#if></td>
+				        <td><#if item.win??&&item.win==activityId><a style="color:#BB4014;"  title="分配投资机构" href="/activity/invest?enterpriseId=${item.enterpriseId?c!''}&activityId=${item.activityId?c!''}">${item.enterpriseTitle!''}</a><#else>${item.enterpriseTitle!''}</#if></td>
 				        <td><#if item.totalPoint??>${item.totalPoint?c!''}</#if></td>
 				        <td><#if item.totalTechnology??>${item.totalTechnology?c!''}</#if></td>
 				        <td><#if item.totalGroup??>${item.totalGroup?c!''}</#if></td>
 				        <td><#if item.totalFeasibility??>${item.totalFeasibility?c!''}</#if></td>
 				        <td><#if item.totalMarketValue??>${item.totalMarketValue?c!''}</#if></td>
 				        <td><#if item.totalExpression??>${item.totalExpression?c!''}</#if></td>
-				        <#if ("expert_list_"+item_index)?eval??>
-				        	<#assign expertList=("expert_list_"+item_index)?eval>
-				        	<#list expertList as expert>
-				        		<td><#if expert.totalPoint??>${expert.totalPoint?c!''}</#if></td>
-				        	</#list>
-				        </#if>		
+				        <#if invest??&&invest==1>
+				            <#if ("invest_"+item_index)?eval??>
+	                            <#assign investEnterprise=("invest_"+item_index)?eval>
+	                                <td><#if investEnterprise.type??><a style="color:#2F7938;" title="查看投资详情"  href="/activity/invest/edit?expertId=${investEnterprise.expertId?c}&enterpriseId=${investEnterprise.enterpriseId?c!''}&activityId=${investEnterprise.  activityId?c!''}">${investEnterprise.type!''}</a></#if></td>
+	                                <td><#if investEnterprise.amount??>${investEnterprise.amount!''}万元</#if></td>
+	                                <td><#if investEnterprise.expertName??>${investEnterprise.expertName!''}</#if></td>
+	                                <td><#if investEnterprise.pantent??>${investEnterprise.pantent!''}</#if></td>
+                            <#else>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            </#if>
+                                  
+				        <#else>
+					        <#if ("expert_list_"+item_index)?eval??>
+					        	<#assign expertList=("expert_list_"+item_index)?eval>
+					        	<#list expertList as expert>
+					        		<td><#if expert.totalPoint??>${expert.totalPoint?c!''}</#if></td>
+					        	</#list>
+					        </#if>
+					    </#if>    		
 			        </tr>
 			    </#list>
 			</#if>        

@@ -1962,7 +1962,7 @@ public class TdActivityController {
     }
   
     @RequestMapping(value = "/getGrade")
-    public String getGrade(Long activityId, String mark , Integer orderId , ModelMap map){
+    public String getGrade(Long activityId, String mark , Long tip ,Integer orderId , ModelMap map){
     	List<TdActivityEnterprise> activityEnterpriseList = tdActivityEnterpriseService.findByActivityIdAndStatusId(activityId, 2L);
     	if(null != activityEnterpriseList){
     		for (TdActivityEnterprise ae : activityEnterpriseList)
@@ -2015,10 +2015,12 @@ public class TdActivityController {
     			int index = 0 ;
     			for (TdActivityEnterprise sortEnterprise : gradePage.getContent())
     			{
-    				List<TdEnterpriseGrade> expertList = tdEnterpriseGradeService.findByEnterpriseIdAndActivityId(sortEnterprise.getEnterpriseId(), activityId);
+    				List<TdEnterpriseGrade> expertList = tdEnterpriseGradeService
+    						.findByEnterpriseIdAndActivityId(sortEnterprise.getEnterpriseId(), activityId);
     				map.addAttribute("expert_list_"+index, expertList);
     				index++;
     			}
+
     		}
     		
     		List<TdActivityExpert> expertList = tdActivityExpertService.findByActivityIdOrderByExpertIdAsc(activityId);
@@ -2027,6 +2029,20 @@ public class TdActivityController {
     		TdActivity activity = tdActivityService.findOne(activityId);
     		map.addAttribute("activityId", activityId);
     		map.addAttribute("activity", activity);
+    		if (mark.equalsIgnoreCase("invest")&&null != gradePage);
+    		{
+    			int index = 0 ;
+    			for (TdActivityEnterprise investEnterprise : gradePage.getContent())
+    			{
+    				TdActivityInvest invest = tdActivityInvestService
+    						.findByEnterpriseIdAndActivityId(investEnterprise.getEnterpriseId() , activityId);
+    				map.addAttribute("invest_"+index, invest);
+    				index++;		
+    			}
+    			map.addAttribute("invest", 1);
+    			map.addAttribute("mark", "activity");
+    		}
+    		
     		map.addAttribute("mark", mark);
     		
     		/*----------------------------------dengxiao **************************------------------*/
@@ -2072,6 +2088,10 @@ public class TdActivityController {
 //    			map.addAttribute("expert6", activity_experts.get(6).getName());
 //			}
 			/*----------------------------------dengxiao **************************------------------*/
+    	}
+    	if(null != tip && tip == 1)
+    	{
+    		map.addAttribute("tip", tip);
     	}
     	return "/client/total_grade";
     }
@@ -2221,6 +2241,8 @@ public class TdActivityController {
 			activityInvest.setEnterpriseName(enterprise.getTitle());
 			activityInvest.setPantent(enterprise.getMobile());
 			activityInvest.setAddr(enterprise.getAddress());
+			activityInvest.setExpertName(expert.getInCharge());
+			activityInvest.setType(expert.getInvest());
 			tdActivityInvestService.save(activityInvest);
 		}
 		else{
@@ -2228,6 +2250,8 @@ public class TdActivityController {
 			invest.setPantent(enterprise.getMobile());
 			invest.setAddr(enterprise.getAddress());
 			invest.setExpertId(activityInvest.getExpertId());
+			activityInvest.setExpertName(expert.getInCharge());
+			activityInvest.setType(expert.getInvest());
 			invest.setAmount(activityInvest.getAmount());
 			invest.setDatail(activityInvest.getDatail());
 			tdActivityInvestService.save(invest);
@@ -2271,7 +2295,7 @@ public class TdActivityController {
     		}
         }
         
-        return "redirect:/activity/getGrade?activityId="+activityId+"&mark=activity";
+        return "redirect:/activity/getGrade?activityId="+activityId+"&mark=activity"+"&tip=1";
     }
     
     

@@ -62,6 +62,14 @@ public class TdActivityInvestService {
 		return repository.findByEnterpriseIdOrderByExpertIdAsc(enterpriseId);
 	}
 	
+	//总分页面根据企业id和活动id查找投资情况
+	public TdActivityInvest findByEnterpriseIdAndActivityId(Long enterpriseId , Long activityId){
+		if(null == enterpriseId || null == activityId){
+			return null;
+		}
+		return repository.findByEnterpriseIdAndActivityId(enterpriseId ,activityId);
+	}
+	
 	public List<TdActivityInvest> findByExpertIdAndIsGradeIsFalse(Long expertId){
 		if(null == expertId){
 			return null;

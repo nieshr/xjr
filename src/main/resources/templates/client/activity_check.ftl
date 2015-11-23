@@ -435,7 +435,7 @@ function sortDown(id , activityId)
                         <ul class="active_project_text">
                             <li>
                                 <input type="button" class="area_batch" onclick="javascript:window.open('/activity/getGrade?activityId=${activity.id?c!''}&mark=activity')"  class="p01" value="查看排名" />
-                                <#--<input type="button" class="area_batch" onclick="javascript:window.open('/activity/getGrade?activityId=${activity.id?c!''}&mark=activity')"  class="p01" value="分配投资机构" />-->
+                                <input type="button" class="area_batch" onclick="javascript:window.open('/activity/getGrade?activityId=${activity.id?c!''}&mark=activity')"  class="p01" value="分配投资机构" />
                                 <a style="display:block;  width:60px;"></a>
                             </li>
                         </ul>

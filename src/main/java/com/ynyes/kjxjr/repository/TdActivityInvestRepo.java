@@ -19,8 +19,10 @@ public interface TdActivityInvestRepo extends PagingAndSortingRepository<TdActiv
 	List<TdActivityInvest> findByExpertIdAndIsGradeIsTrue(Long expertId);
 	
 	List<TdActivityInvest> findByEnterpriseIdOrderByExpertIdAsc(Long enterpriseId);
+	
+	TdActivityInvest findByEnterpriseIdAndActivityId(Long enterpriseId , Long activityId);
 
-	TdActivityInvest findByExpertIdAndEnterpriseId(Long expertId,Long enterpriseId);
+	TdActivityInvest findByExpertIdAndEnterpriseId(Long expertId,Long enterpriseId); 
 	
 	TdActivityInvest findByEnterpriseId(Long enterpriseId);
 }

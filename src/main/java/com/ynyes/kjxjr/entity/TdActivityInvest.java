@@ -18,6 +18,10 @@ public class TdActivityInvest {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	
+	// 活动ID
+	@Column
+	private Long activityId;
 
 	// 专家ID
 	@Column
@@ -169,6 +173,14 @@ public class TdActivityInvest {
 
 	public void setDatail(String datail) {
 		this.datail = datail;
+	}
+
+	public Long getActivityId() {
+		return activityId;
+	}
+
+	public void setActivityId(Long activityId) {
+		this.activityId = activityId;
 	}
 
 }
