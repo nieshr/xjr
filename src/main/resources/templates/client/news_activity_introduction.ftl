@@ -21,7 +21,11 @@
 		<div>
 			<#if aboutActivity_page??>
 				<#list aboutActivity_page.content as item>
-					<a href="<#if item.linkUrl??&&item.linkUrl!="">${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=13</#if>" title="">${item.title!''}</a>
+					<#if item_index == 0>
+						<a href="<#if item.linkUrl??&&item.linkUrl!="">${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=13</#if>" title="">${item.title!''}</a>
+					<#else>
+						<a href="<#if item.linkUrl??&&item.linkUrl!="">${item.linkUrl!''}<#else>${item.imgUrl!''}</#if>" title="">${item.title!''}</a>
+					</#if>
 				</#list>
 			</#if>	
 		</div>
@@ -54,8 +58,8 @@
 		<#if breed_page??>
 		  <#list breed_page.content as item>
 			<div class="specialaction-third-one">
-				<img src="${item.imgUrl!''}" alt="封面图片" width=120 height=100 />
-				<h3><a href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>" title="查看更多信息">${item.title!''}</a></h3>
+				<img src="<#if item_index==0>/client/news_img/weekaction.png<#elseif item_index==1>/client/news_img/weekaction02.png<#elseif item_index==2>/client/news_img/weekaction03.png</#if>" alt="封面图片" width=128 height=128 />
+				<a href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>" title="查看更多信息"><h3>${item.title!''}</h3></a>
 				<h4>${item.brief!''}</h4>
 			</div>
 			

@@ -6,7 +6,7 @@ $(function () {
         water: false, //是否加水印
         thumbnail: false, //是否生成缩略图
         sendurl: null, //发送地址
-        filetypes: "*.jpg;*.jpge;*.png;*.gif;*.doc;*.docx;*.xls;*.xlsx;*.ppt;*.pptx;*.pdf;*.rar;*.zip;*.txt;", //文件类型
+        filetypes: "*.jpg;*.jpge;*.png;*.gif;*.doc;*.docx;*.xls;*.xlsx;*.ppt;*.pptx;*.pdf;*.rar;*.zip;*.txt;*.mht;*.mhtml;", //文件类型
         filesize: "10240000", //文件大小
         btntext: "选择资料", //上传按钮的文字
         btnwidth: 68, //上传按钮的宽度

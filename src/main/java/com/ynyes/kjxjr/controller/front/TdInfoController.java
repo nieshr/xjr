@@ -807,7 +807,7 @@ public class TdInfoController {
 	    
 		Long active = 5L;
 		map.addAttribute("active",active);
-		map.addAttribute("tutor_page",tdDiySiteService.findByRoleIdOrderBySortIdAsc(3L, 0, ClientConstant.pageSize));	    
+		map.addAttribute("tutor_page",tdDiySiteService.findByRoleIdAndStatusIdOrderBySortIdAsc(3L, 1L, 0, ClientConstant.pageSize));	    
 		map.addAttribute("invest_page", tdArticleService.findByMenuIdAndCategoryIdAndIsEnableOrderByIdDesc(12L, 3L, 0, ClientConstant.pageSize));	    
 	    return "/client/resource";
 	}
@@ -915,8 +915,8 @@ public class TdInfoController {
 	   
 	    map.addAttribute("menu_sub_name", "sub_name" );//英文名称 zhangji
 
-		map.addAttribute("info_page", tdDiySiteService.findByRoleIdOrderBySortIdAsc(3L, page, ClientConstant.pageSize));
-
+		map.addAttribute("info_page", tdDiySiteService.findByRoleIdAndStatusIdOrderBySortIdAsc(3L, 1L ,page, ClientConstant.pageSize));
+		
         	
 		Long active = 5L;
 		map.addAttribute("active",active);

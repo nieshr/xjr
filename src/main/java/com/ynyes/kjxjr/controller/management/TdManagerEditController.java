@@ -172,6 +172,13 @@ public class TdManagerEditController {
         if (null != id)
         {
             map.addAttribute("article", tdArticleService.findOne(id));
+            if (tdArticleCategoryService.
+            		findOne(tdArticleService.
+            				findOne(id).getCategoryId())
+            					.getTitle().equals("培育活动"))
+            {
+            	map.addAttribute("mark", "培育活动");
+            }
         }
         
         map.addAttribute("cid", cid);

@@ -116,6 +116,9 @@ function gotop()
   	<div class="news_writer">作者：<span>${info.source!''}</span> <span>${info.createTime?string("yyyy-MM-dd")}</span> </div>
   </#if>
   <div class="news_words">
+  
+ <a href="/images/jijin.mht" >aaa</a> 	
+  
     <div class="words1">${info.content!''}</div>
   </div>
   <div class="news_last">
