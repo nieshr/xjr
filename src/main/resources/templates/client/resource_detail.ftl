@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title><#if info_cat??>${info_cat.title!''}</#if></title>
+	<title><#if info_cat??>${info_cat.title!''}<#else>创业导师</#if></title>
 	<link rel="shortcut icon" href="/client/images/icon.ico" />
 	<link rel="stylesheet" href="/client/css/news_base.css">
 	<link rel="stylesheet" href="/client/css/news_main.css">
