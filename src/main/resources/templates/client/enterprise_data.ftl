@@ -122,7 +122,7 @@ function submitCheck3()
 	    		<#if enterprise.dataBusiness??&&enterprise.dataBusiness?length gt 0>
 	    		    <div style="margin-top:20px;">
 	    		    	<span>已上传资料：</span>
-	    		    	<a href="/download/data?name=${enterprise.dataBusiness!''}" title="点击下载">【商业计划书】${enterprise.dataBusiness!''}</a>
+	    		    	<a href="/download/data?name=${enterprise.dataBusiness!''}" title="点击下载">${enterprise.dataBusiness!''}</a>
 	    		    </div>	    		    
     		    </#if>
 	    	</dd>
@@ -138,10 +138,10 @@ function submitCheck3()
     			     <span><input id="file2" style="margin: 20px 0 0 48px ; background : #fff;color:#333;" name="Filedata" type="file" value="" /></span>
     			     <input  style="background:#ccc;margin:18px 0 0 110px;"  class="area_save_btn" type="button" value="上传项目资料" onclick="javascript:submitCheck2();"/>
     		    </div>
-    		    <#if enterprise.dataPossible??>
+    		    <#if enterprise.dataPossible?? && enterprise.dataPossible != "">
 	    		    <div style="margin-top:20px;">
 	    		    	<span>已上传资料：</span>
-	    		    	<a href="/download/data?name=${enterprise.dataPossible!''}" title="点击下载">【可行性报告】${enterprise.dataPossible!''}</a>
+	    		    	<a href="/download/data?name=${enterprise.dataPossible!''}" title="点击下载">${enterprise.dataPossible!''}</a>
 	    		    </div>
     		    </#if>
     	</dd>
@@ -157,10 +157,10 @@ function submitCheck3()
     			     <span><input id="file3" style="margin: 20px 0 0 48px ; background : #fff;color:#333;" name="Filedata" type="file" value="" /></span>
     			     <input  style="background:#ccc;margin:18px 0 0 110px;"  class="area_save_btn" type="button" value="上传项目资料" onclick="javascript:submitCheck3();"/>
     		    </div>
-    		    <#if enterprise.dataOther??>
+    		    <#if enterprise.dataOther?? && enterprise.dataOther != "">
 	    		    <div style="margin-top:20px;">
 	    		    	<span>已上传资料：</span>
-	    		    	<a href="/download/data?name=${enterprise.dataOther!''}" title="点击下载">【其他资料】${enterprise.dataOther!''}</a>
+	    		    	<a href="/download/data?name=${enterprise.dataOther!''}" title="点击下载">${enterprise.dataOther!''}</a>
 	    		    </div>    		    
     		    </#if>
     	</dd>

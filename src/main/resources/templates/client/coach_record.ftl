@@ -76,13 +76,10 @@ function record(){
                                 <p>当前所在位置:</p>
                                 <a href="/expert/enterprises">辅导企业</a>
                                 <p>&gt;</p>
-                                <a href="#">档案跟踪</a>
+                                <a>档案跟踪</a>
                             </dd>
                             <dt class="crumb_back"><a></a></dt>
                         </dl>
-                        <div class="change_inform">
-                            <span>审核状态：已通过</span>
-                        </div>
                     </div>  
                     <input id="text_show_btn" style="width: 80px; height:30px; border: none; background: #e67817; color: white; border-radius: 6px; margin-left: 30px; margin-top: 30px;" type="button" value="显示资料" />
                     <p id="text" style=" margin-left: 30px; font-size: 14px; color: red;">*点击按钮查看资料</p>

@@ -48,10 +48,13 @@ import com.ynyes.kjxjr.entity.TdActivity;
 import com.ynyes.kjxjr.entity.TdActivityEnterprise;
 import com.ynyes.kjxjr.entity.TdActivityExpert;
 import com.ynyes.kjxjr.entity.TdArticle;
+import com.ynyes.kjxjr.entity.TdCoachContent;
 import com.ynyes.kjxjr.entity.TdEnterprise;
 import com.ynyes.kjxjr.entity.TdEnterpriseGrade;
+import com.ynyes.kjxjr.entity.TdExpert;
 import com.ynyes.kjxjr.entity.TdRegion;
 import com.ynyes.kjxjr.entity.TdRegionAdmin;
+import com.ynyes.kjxjr.entity.TdRegionRecord;
 import com.ynyes.kjxjr.entity.TdUser;
 import com.ynyes.kjxjr.entity.TdUserMessage;
 import com.ynyes.kjxjr.service.TdActivityEnterpriseService;
@@ -64,6 +67,7 @@ import com.ynyes.kjxjr.service.TdEnterpriseGradeService;
 import com.ynyes.kjxjr.service.TdEnterpriseService;
 import com.ynyes.kjxjr.service.TdEnterpriseTypeService;
 import com.ynyes.kjxjr.service.TdRegionAdminService;
+import com.ynyes.kjxjr.service.TdRegionRecordService;
 import com.ynyes.kjxjr.service.TdRegionService;
 import com.ynyes.kjxjr.service.TdUserMessageService;
 import com.ynyes.kjxjr.service.TdUserService;
@@ -114,6 +118,9 @@ public class TdRegionController {
 	
 	@Autowired
 	TdArticleService tdArticleService;
+	
+	@Autowired
+	TdRegionRecordService tdRegionRecordService;
 
     @RequestMapping(value = "/enterprise/list", method = RequestMethod.GET)
     public String EnterpriseList(HttpServletRequest req, ModelMap map,Integer page) {
@@ -1189,6 +1196,58 @@ private void removeE(Long activityId ,Long[] ids, Integer[] chkIds)
       }
   }
 }
+
+//档案追踪
+@RequestMapping(value = "/coach/{enterpriseId}")
+public String coach(@PathVariable Long enterpriseId, HttpServletRequest req, ModelMap map) {
+	String username = (String) req.getSession().getAttribute("expertUsername");
+	if (null == username) {
+		return "/client/login";
+	}
+	TdRegionAdmin regionAdmin = tdRegionAdminService.findbyUsername(username);
+	List<TdRegionRecord> recordList = tdRegionRecordService
+			.findByRegionAdminIdAndEnterpriseIdOrderByCoachDateAsc(regionAdmin.getId(), enterpriseId);
+	TdEnterprise enterprise = tdEnterpriseService.findOne(enterpriseId);
+	map.addAttribute("enterprise", enterprise);
+	if (null != enterprise.getType())
+    {
+    	String type[] = enterprise.getType().split(",");
+    	map.addAttribute("enterpriseType", type);
+    }
+	Calendar calendar = Calendar.getInstance();
+    calendar.setTime(new Date());
+    calendar.add(Calendar.YEAR, -1);
+    Date lastyear1 = calendar.getTime();
+    map.addAttribute("lastyear1", lastyear1);
+    
+    calendar.add(Calendar.YEAR, -1);
+    Date lastyear2 = calendar.getTime();
+    map.addAttribute("lastyear2", lastyear2);
+    
+    calendar.add(Calendar.YEAR, -1);
+    Date lastyear3 = calendar.getTime();
+    map.addAttribute("lastyear3", lastyear3);
+    
+	map.addAttribute("content_list", recordList);
+	return "/client/region_record";
+}
+
+@RequestMapping(value = "/record/save")
+public String coachSave(HttpServletRequest req, String content, Long enterpriseId) {
+	String username = (String) req.getSession().getAttribute("expertUsername");
+	if (null == username) {
+		return "/client/login";
+	}
+	TdRegionAdmin regionAdmin = tdRegionAdminService.findbyUsername(username);
+	TdRegionRecord coach = new TdRegionRecord();
+	coach.setCoachDate(new Date());
+	coach.setContent(content);
+	coach.setEnterpriseId(enterpriseId);
+	coach.setRegionAdminId(regionAdmin.getId());
+	tdRegionRecordService.save(coach);
+	return "redirect:/region/record/" + enterpriseId;
+}
+
 
 /**
  * 预选企业

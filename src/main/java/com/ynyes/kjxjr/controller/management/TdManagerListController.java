@@ -191,6 +191,7 @@ public class TdManagerListController {
                                 Long[] listId,
                                 Integer[] listChkId,
                                 Long[] listSortId,
+//                                Long statusId,
                                 ModelMap map,
                                 HttpServletRequest req){
         String username = (String) req.getSession().getAttribute("manager");
@@ -228,6 +229,12 @@ public class TdManagerListController {
                 tdManagerLogService.addLog("delete", "用户删除文章", req);
                 
                 break;
+                
+//            case "btnShow":
+//                btnShow(cid, listId, listChkId , statusId);
+//                tdManagerLogService.addLog("show", "编辑文章显示", req);
+//                
+//                break;
             }
             if (__EVENTTARGET.equalsIgnoreCase("btnPage"))
             {
@@ -651,6 +658,34 @@ public class TdManagerListController {
                 }
                 else
                 {
+                    tdArticleService.delete(id);
+                }
+            }
+        }
+    }
+    
+    private void btnShow(Long cid, Long[] ids, Integer[] chkIds , Long  statusId)
+    {
+        if (null == ids || null == chkIds || null == statusId
+                || ids.length < 1 || chkIds.length < 1)
+        {
+            return;
+        }
+        
+        for (int chkId : chkIds)
+        {
+            if (chkId >=0 && ids.length > chkId)
+            {
+                Long id = ids[chkId];
+                
+                if (null != cid && cid.equals(2L))
+                {
+                    tdGoodsService.delete(id);
+                }
+                else
+                {
+                	TdArticle article = tdArticleService.findOne(id);
+                	article.setStatusId(statusId);
                     tdArticleService.delete(id);
                 }
             }

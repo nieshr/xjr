@@ -36,7 +36,8 @@
         $(".upload-img").each(function () {
             $(this).InitSWFUpload({ 
                 sendurl: "/Verwalter/upload", 
-                flashurl: "/mag/js/swfupload.swf"
+                flashurl: "/mag/js/swfupload.swf",
+                filetypes: "*.*;" 
             });
         });
         //批量上传 zhangji

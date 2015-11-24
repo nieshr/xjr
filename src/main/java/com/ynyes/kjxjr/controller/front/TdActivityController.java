@@ -2029,21 +2029,24 @@ public class TdActivityController {
     		TdActivity activity = tdActivityService.findOne(activityId);
     		map.addAttribute("activityId", activityId);
     		map.addAttribute("activity", activity);
-    		if (mark.equalsIgnoreCase("invest")&&null != gradePage);
+    		if (null != mark && mark.equals("b") && null != gradePage)
     		{
     			int index = 0 ;
     			for (TdActivityEnterprise investEnterprise : gradePage.getContent())
     			{
-    				TdActivityInvest invest = tdActivityInvestService
+    				TdActivityInvest ActivityInvest = tdActivityInvestService
     						.findByEnterpriseIdAndActivityId(investEnterprise.getEnterpriseId() , activityId);
-    				map.addAttribute("invest_"+index, invest);
+    				map.addAttribute("invest_"+index, ActivityInvest);
     				index++;		
     			}
     			map.addAttribute("invest", 1);
     			map.addAttribute("mark", "activity");
     		}
+    		if (null != mark && mark.equals("a"))
+    		{
+    			map.addAttribute("mark", "activity");
+    		}
     		
-    		map.addAttribute("mark", mark);
     		
     		/*----------------------------------dengxiao **************************------------------*/
 //    		if(0 < activity_experts.size()){
@@ -2301,27 +2304,29 @@ public class TdActivityController {
     
     private void selectW(Long activityId ,Long[] ids, Integer[] chkIds)
     {
+        //先把获胜状态清空，为了可以多次选择入选企业
+        List<TdActivityEnterprise> aeList = tdActivityEnterpriseService.findByActivityIdAndStatusId(activityId, 2L);
+        for(TdActivityEnterprise aen : aeList)
+        {
+      	  if (null != aen.getWin() && aen.getWin() == activityId)
+      	  {
+      		  aen.setWin(null);
+      		  tdActivityEnterpriseService.save(aen);
+      	  }
+      	  TdEnterprise e = tdEnterpriseService.findOne(aen.getEnterpriseId());
+      	  if(null != e.getWin() && e.getWin() == activityId)
+      	  {
+      		  e.setWin(null);
+      		  tdEnterpriseService.save(e);
+      	  }
+        }
+    	
       if (null == ids || null == chkIds || null == activityId
               || ids.length < 1 || chkIds.length < 1)
       {
           return;
       }
-      //先把获胜状态清空，为了可以多次选择入选企业
-      List<TdActivityEnterprise> aeList = tdActivityEnterpriseService.findByActivityIdAndStatusId(activityId, 2L);
-      for(TdActivityEnterprise aen : aeList)
-      {
-    	  if (null != aen.getWin() && aen.getWin() == activityId)
-    	  {
-    		  aen.setWin(null);
-    		  tdActivityEnterpriseService.save(aen);
-    	  }
-    	  TdEnterprise e = tdEnterpriseService.findOne(aen.getEnterpriseId());
-    	  if(null != e.getWin() && e.getWin() == activityId)
-    	  {
-    		  e.setWin(null);
-    		  tdEnterpriseService.save(e);
-    	  }
-      }
+
       
       
       TdActivity activity = tdActivityService.findOne(activityId);
@@ -2361,10 +2366,20 @@ public class TdActivityController {
           		enterprise.setWin(activityId); 
           		tdEnterpriseService.save(enterprise);
           	}
-          	
-      
-          	
           }
+      }
+      
+      //删除投资信息
+      for(TdActivityEnterprise aen : aeList)
+      {
+    	  if(null == aen.getWin())
+    	  {
+    		  TdActivityInvest invest = tdActivityInvestService.findByEnterpriseIdAndActivityId(aen.getEnterpriseId(), activityId);
+    		  if (null !=invest)
+    		  {
+    			  tdActivityInvestService.delete(invest.getId());
+    		  }
+    	  }
       }
     }
 

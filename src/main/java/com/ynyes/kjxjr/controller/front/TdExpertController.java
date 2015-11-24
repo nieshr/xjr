@@ -498,6 +498,9 @@ public class TdExpertController {
 	@RequestMapping(value = "/coach/save")
 	public String coachSave(HttpServletRequest req, String content, Long enterpriseId) {
 		String expertUsername = (String) req.getSession().getAttribute("expertUsername");
+		if (null == expertUsername) {
+			return "/client/login";
+		}
 		TdExpert expert = tdExpertService.findbyUsername(expertUsername);
 		TdCoachContent coach = new TdCoachContent();
 		coach.setCoachDate(new Date());

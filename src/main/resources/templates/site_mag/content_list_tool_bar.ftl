@@ -8,6 +8,16 @@
         <li><a class="all" href="javascript:;" onclick="checkAll(this);"><i></i><span>全选</span></a></li>
         <li><a onclick="return ExePostBack('btnDelete');" id="btnDelete" class="del" href="javascript:__doPostBack('btnDelete','')"><i></i><span>删除</span></a></li>
       </ul>
+<#--
+        <div class="rule-single-select single-select">
+            <select name="categoryId" onchange="javascript:ExePostBack('btnShow');"  style="display: none;">
+                <option name="statusId" selected="selected" value="">显示状态</option>
+                        <option value="0" >显示</option>
+                        <option value="1" >待审核</option>
+                        <option value="2" >不显示</option>
+            </select>
+        </div>
+  -->      
       <div class="menu-list">
         <div class="rule-single-select single-select">
             <select name="categoryId" onchange="javascript:setTimeout(__doPostBack('categoryId', ''), 0)" id="ddlCategoryId" style="display: none;">
@@ -35,12 +45,14 @@
         -->
       </div>
     </div>
+    <#--
     <div class="r-list">
       <input name="txtKeywords" type="text" id="txtKeywords" class="keyword">
       <a id="lbtnSearch" class="btn-search" href="javascript:__doPostBack('lbtnSearch','')">查询</a>
       <a id="lbtnViewImg" title="图像列表视图" class="img-view" href="javascript:__doPostBack('lbtnViewImg','')"></a>
       <a id="lbtnViewTxt" title="文字列表视图" class="txt-view" href="javascript:__doPostBack('lbtnViewTxt','')"></a>
     </div>
+    -->
   </div>
 </div>
 <!--/工具栏-->

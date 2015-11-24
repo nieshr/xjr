@@ -6,7 +6,7 @@
 	<link rel="shortcut icon" href="/client/images/icon.ico" />
 	<link rel="stylesheet" href="/client/css/news_base.css">
 	<link rel="stylesheet" href="/client/css/news_main.css">
-	<script src="/client/js/main.js"></script>
+	<#--<script src="/client/js/main.js"></script>-->
 	<script src="/client/js/jquery-1.9.1.min.js"></script>
 
 </head>
@@ -21,11 +21,14 @@
 		<div>
 			<#if aboutActivity_page??>
 				<#list aboutActivity_page.content as item>
+				<#--
 					<#if item_index == 0>
 						<a href="<#if item.linkUrl??&&item.linkUrl!="">${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=13</#if>" title="">${item.title!''}</a>
 					<#else>
-						<a href="<#if item.linkUrl??&&item.linkUrl!="">${item.linkUrl!''}<#else>${item.imgUrl!''}</#if>" title="">${item.title!''}</a>
+						<a href="file:/<#if item.linkUrl??&&item.linkUrl!="">${item.linkUrl!''}<#else>${item.imgUrl!''}</#if>" title="">${item.title!''}</a>
 					</#if>
+				-->
+					<a href="<#if item.linkUrl??&&item.linkUrl!="">${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=13</#if>" title="">${item.title!''}</a>
 				</#list>
 			</#if>	
 		</div>

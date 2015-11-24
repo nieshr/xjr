@@ -89,10 +89,10 @@
         	<tr class="list_title">
         		<th width="10%">编号</th>
         		<th  style="text-align : left; padding-left:40px ;">名称<th>
-        		<th width="15%">手机</th>
-        		<th width="15%">注册资本</th>
+        		<th width="13%">手机</th>
+        		<th width="12%">注册资本</th>
         		<th width="15%">法人代表</th>
-        		<th width="15%">操作</th>
+        		<th width="20%">操作</th>
         	</tr>
         <#if enterprise_page??>
         	<#list enterprise_page.content as item>
@@ -120,6 +120,8 @@
 	        		<td>
 	        		     <a href="/region/enterprise/check/${item.id?c!''}">详情</a>
 	        		     | <a href="/region/message/detail?enterpriseId=${item.id?c!''}">站内信</a>
+	        		     | <a href="/region/record/${item.id?c!''}">档案跟踪</a>
+	        		   
 	        		</td>
 	        	</tr>
         	</#list>

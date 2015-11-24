@@ -54,7 +54,7 @@ $(document).ready(function(){
 <div class="modification3">
 	<div class="modification2">
 		<p>您验证的账号信息为：</p>
-		<h5>用户名：${user.realName!''}</h5>
+		<h5>用户名：${user.username!''}</h5>
 		<h5>邮&nbsp&nbsp&nbsp箱：${user.email!''}</h5>
 		<h5>手机号：${user.mobile!''}</h5>
 	</div>
