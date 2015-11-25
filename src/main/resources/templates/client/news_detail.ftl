@@ -103,7 +103,11 @@ function gotop()
 		</#if>	
     <#elseif mid??&&mid==10> <a href="/info/index"> 新闻动态</a>  > <a href="/info/list/${mid?c!''}?catId=${catId!'21'}">${info_name.title!''}</a>
     <#else>
-    ${info_name.title!''}
+	    <#if info_name.title == "行动概况">
+	    	<a href="/info/aIn">${info_name.title!''}</a>
+	    <#else>
+	    	${info_name.title!''}
+	    </#if>
     </#if>
     </div>
   </div>
@@ -116,8 +120,6 @@ function gotop()
   	<div class="news_writer">作者：<span>${info.source!''}</span> <span>${info.createTime?string("yyyy-MM-dd")}</span> </div>
   </#if>
   <div class="news_words">
-  
- <a href="/images/jijin.mht" >aaa</a> 	
   
     <div class="words1">${info.content!''}</div>
   </div>

@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -121,8 +122,12 @@ public class TdClientUploadController {
             byte[] bytes = Filedata.getBytes();
 
             Date dt = new Date(System.currentTimeMillis());
-            SimpleDateFormat sdf = new SimpleDateFormat("HHmmssSSS");
-            String fileName ="Num"+tdEnterpriseService.findbyUsername(username).getNumber()+"_"+ sdf.format(dt) + ext;
+//            SimpleDateFormat sdf = new SimpleDateFormat("HHmmssSSS");
+            TdEnterprise enterprise = tdEnterpriseService.findOne(id);
+            //找出改企业参加活动个数。
+            List<TdActivityEnterprise> aeList = tdActivityEnterpriseService.findByEnterpriseId(id); 
+            Integer size = aeList.size();
+            String fileName ="Num_"+tdEnterpriseService.findbyUsername(username).getNumber()+"_"+ size + ext;
 
             String uri = ImageRoot + "/" + fileName;
 
@@ -133,7 +138,6 @@ public class TdClientUploadController {
             stream.write(bytes);
             stream.close();
             
-            TdEnterprise enterprise = tdEnterpriseService.findOne(id);
             String fileUrl = enterprise.getFileUrl();
             		
             enterprise.setFileUrl(fileName);
@@ -153,7 +157,7 @@ public class TdClientUploadController {
 	
 	//企业商业计划书
 	@RequestMapping(value = "/dataBusiness/upload", method = RequestMethod.POST)
-    public String dataBusiness(String action,Long id,
+    public String dataBusiness(String action,Long id ,Long activityId,
             @RequestParam MultipartFile Filedata, ModelMap map, HttpServletRequest req) {
 		
         String username = (String) req.getSession().getAttribute("enterpriseUsername");
@@ -169,10 +173,14 @@ public class TdClientUploadController {
 
         try {
             byte[] bytes = Filedata.getBytes();
-
+            
             Date dt = new Date(System.currentTimeMillis());
-            SimpleDateFormat sdf = new SimpleDateFormat("HHmmssSSS");
-            String fileName ="Data"+tdEnterpriseService.findbyUsername(username).getNumber()+"_"+ sdf.format(dt) + ext;
+//            SimpleDateFormat sdf = new SimpleDateFormat("HHmmssSSS");
+            TdEnterprise enterprise = tdEnterpriseService.findOne(id);
+            //找出改企业参加活动个数。
+            List<TdActivityEnterprise> aeList = tdActivityEnterpriseService.findByEnterpriseId(id); 
+            Integer size = aeList.size();
+            String fileName ="DataBusiness_"+tdEnterpriseService.findbyUsername(username).getNumber()+"_"+ size + ext;
 
             String uri = ImageRoot + "/" + fileName;
 
@@ -183,10 +191,13 @@ public class TdClientUploadController {
             stream.write(bytes);
             stream.close();
             
-            TdEnterprise enterprise = tdEnterpriseService.findOne(id);
-            		
+            
             enterprise.setDataBusiness(fileName);
             tdEnterpriseService.save(enterprise);
+            
+            TdActivityEnterprise ae = tdActivityEnterpriseService.findByActivityIdAndEnterpriseId(activityId, id);
+            ae.setDataBusiness(fileName);
+            tdActivityEnterpriseService.save(ae);
       
 
         } catch (Exception e) {
@@ -195,12 +206,12 @@ public class TdClientUploadController {
         
         Long done = 1L;
         return "redirect:/enterprise/data?done="+done
-        		+"&id="+id;
+        		+"&activityId="+activityId;
     }
 	
 	//企业可行性报告
 	@RequestMapping(value = "/dataPossible/upload", method = RequestMethod.POST)
-    public String dataPossible(String action,Long id,
+    public String dataPossible(String action,Long id,Long activityId,
             @RequestParam MultipartFile Filedata, ModelMap map, HttpServletRequest req) {
 		
         String username = (String) req.getSession().getAttribute("enterpriseUsername");
@@ -218,8 +229,12 @@ public class TdClientUploadController {
             byte[] bytes = Filedata.getBytes();
 
             Date dt = new Date(System.currentTimeMillis());
-            SimpleDateFormat sdf = new SimpleDateFormat("HHmmssSSS");
-            String fileName ="Data"+tdEnterpriseService.findbyUsername(username).getNumber()+"_"+ sdf.format(dt) + ext;
+//            SimpleDateFormat sdf = new SimpleDateFormat("HHmmssSSS");
+            TdEnterprise enterprise = tdEnterpriseService.findOne(id);
+            //找出改企业参加活动个数。
+            List<TdActivityEnterprise> aeList = tdActivityEnterpriseService.findByEnterpriseId(id); 
+            Integer size = aeList.size();
+            String fileName ="DataPossible_"+tdEnterpriseService.findbyUsername(username).getNumber()+"_"+ size + ext;
 
             String uri = ImageRoot + "/" + fileName;
 
@@ -230,24 +245,25 @@ public class TdClientUploadController {
             stream.write(bytes);
             stream.close();
             
-            TdEnterprise enterprise = tdEnterpriseService.findOne(id);
-            		
             enterprise.setDataPossible(fileName);
             tdEnterpriseService.save(enterprise);
       
-
+            TdActivityEnterprise ae = tdActivityEnterpriseService.findByActivityIdAndEnterpriseId(activityId, id);
+            ae.setDataPossible(fileName);
+            tdActivityEnterpriseService.save(ae);
+            
         } catch (Exception e) {
         	e.printStackTrace();
         }
         
         Long done = 1L;
         return "redirect:/enterprise/data?done="+done
-        		+"&id="+id;
+        		+"&activityId="+activityId;
     }
 	
 	//企业其他
 	@RequestMapping(value = "/dataOther/upload", method = RequestMethod.POST)
-    public String dataOther(String action,Long id,
+    public String dataOther(String action,Long id,Long activityId,
             @RequestParam MultipartFile Filedata, ModelMap map, HttpServletRequest req) {
 		
         String username = (String) req.getSession().getAttribute("enterpriseUsername");
@@ -265,8 +281,12 @@ public class TdClientUploadController {
             byte[] bytes = Filedata.getBytes();
 
             Date dt = new Date(System.currentTimeMillis());
-            SimpleDateFormat sdf = new SimpleDateFormat("HHmmssSSS");
-            String fileName ="Data"+tdEnterpriseService.findbyUsername(username).getNumber()+"_"+ sdf.format(dt) + ext;
+//            SimpleDateFormat sdf = new SimpleDateFormat("HHmmssSSS");
+            TdEnterprise enterprise = tdEnterpriseService.findOne(id);
+            //找出改企业参加活动个数。
+            List<TdActivityEnterprise> aeList = tdActivityEnterpriseService.findByEnterpriseId(id); 
+            Integer size = aeList.size();
+            String fileName ="DataOther_"+tdEnterpriseService.findbyUsername(username).getNumber()+"_"+ size + ext;
 
             String uri = ImageRoot + "/" + fileName;
 
@@ -277,11 +297,12 @@ public class TdClientUploadController {
             stream.write(bytes);
             stream.close();
             
-            TdEnterprise enterprise = tdEnterpriseService.findOne(id);
-            		
             enterprise.setDataOther(fileName);
             tdEnterpriseService.save(enterprise);
-      
+            
+            TdActivityEnterprise ae = tdActivityEnterpriseService.findByActivityIdAndEnterpriseId(activityId, id);
+            ae.setDataOther(fileName);
+            tdActivityEnterpriseService.save(ae);
 
         } catch (Exception e) {
         	e.printStackTrace();
@@ -289,7 +310,7 @@ public class TdClientUploadController {
         
         Long done = 1L;
         return "redirect:/enterprise/data?done="+done
-        		+"&id="+id;
+        		+"&activityId="+activityId;
     }
 	
 	@RequestMapping(value = "/activity/upload", method = RequestMethod.POST)
@@ -360,8 +381,8 @@ public class TdClientUploadController {
             byte[] bytes = Filedata.getBytes();
 
             Date dt = new Date(System.currentTimeMillis());
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-            String fileName = "PPTmodule"+id+"_"+ sdf.format(dt) + ext;
+//            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+            String fileName = "PPTmodule"+id+"_"+ ext;
 
             String uri = ImageRoot + "/" + fileName;
 
@@ -405,7 +426,7 @@ public class TdClientUploadController {
 
         String ext = name.substring(name.lastIndexOf("."));
         //限制文件类型
-        if(!ext.equalsIgnoreCase(".ppt") && !ext.equalsIgnoreCase(".ppt"))
+        if(!ext.equalsIgnoreCase(".ppt") && !ext.equalsIgnoreCase(".pdf"))
         {
             Long done = 2L;
             return "redirect:/enterprise/activity/check?done="+done
@@ -416,8 +437,8 @@ public class TdClientUploadController {
             byte[] bytes = Filedata.getBytes();
 
             Date dt = new Date(System.currentTimeMillis());
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-            String fileName = "PPT"+id+"_"+ sdf.format(dt) + ext;
+//            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+            String fileName = "PPT_"+id+"_"+activityId + ext;
 
             String uri = ImageRoot + "/" + fileName;
 
@@ -431,11 +452,11 @@ public class TdClientUploadController {
             if(null == enterprise){
             	enterprise = new TdEnterprise();
             }
-            if (enterprise.getStatusId()==1 &&null != enterprise.getIsSelect() && enterprise.getIsSelect()==true)
-            {
+//            if (enterprise.getStatusId()==1 &&null != enterprise.getIsSelect() && enterprise.getIsSelect()==true)
+//            {
                 enterprise.setPptUrl(fileName);
                 tdEnterpriseService.save(enterprise);
-            }
+//            }
             
             TdActivityEnterprise ae = tdActivityEnterpriseService.findByActivityIdAndEnterpriseId(activityId, id);
             ae.setPptUrl(fileName);

@@ -138,7 +138,17 @@ function saveUserInfo() {
             
         </div>
         <div class="sure">
-            <span class="span6 span7">  <input id="rmbUser" type="checkbox" style="width:20px;height:20px;"/>&nbsp;记住密码</span>
+            <span class="span6 span7">  <input id="rmbUser" type="checkbox" style="  width: 13px;
+																																			  height: 13px;
+																																			  position: relative;
+																																			  padding-left: 0px;
+																																			  padding-right: 0px;
+																																			  line-height: 13px;
+																																			  border: solid 1px #dddddd;
+																																			  box-sizing: border-box;
+																																			  color: #999999;
+																																			  margin-top: 6px;
+																																			  margin-right: 4px;"/>&nbsp;记住密码</span>
         	<span class="span6 span7"><a href="/login/password_retrieve">忘记密码？</a></span>
             <span class="span6 "><a href="/reg">注册账号></a></span>
         </div>

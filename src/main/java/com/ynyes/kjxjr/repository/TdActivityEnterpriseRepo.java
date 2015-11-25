@@ -25,6 +25,7 @@ public interface TdActivityEnterpriseRepo extends
 	
 	List<TdActivityEnterprise> findByActivityId(Long activityId);
 	List<TdActivityEnterprise> findByEnterpriseId(Long enterpriseId);
+	List<TdActivityEnterprise> findByEnterpriseIdOrderByCreateTimeDesc(Long enterpriseId);
 	List<TdActivityEnterprise> findByActivityIdAndStatusId(Long activityId , Long StatusId);
 	List<TdActivityEnterprise> findByActivityIdAndStatusIdOrderBySortIdAsc(Long activityId , Long StatusId);
 	

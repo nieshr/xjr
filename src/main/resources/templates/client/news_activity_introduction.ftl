@@ -28,7 +28,7 @@
 						<a href="file:/<#if item.linkUrl??&&item.linkUrl!="">${item.linkUrl!''}<#else>${item.imgUrl!''}</#if>" title="">${item.title!''}</a>
 					</#if>
 				-->
-					<a href="<#if item.linkUrl??&&item.linkUrl!="">${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=13</#if>" title="">${item.title!''}</a>
+					<a target="_blank" href="<#if item.linkUrl??&&item.linkUrl!="">${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=13</#if>" title="">${item.title!''}</a>
 				</#list>
 			</#if>	
 		</div>

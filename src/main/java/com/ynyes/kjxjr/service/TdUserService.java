@@ -398,8 +398,8 @@ public class TdUserService {
 		PageRequest pageRequest = new PageRequest(page, size);
 
 		return repository
-				.findByUsernameContainingAndRoleIdOrMobileContainingAndRoleIdOrEmailContainingAndRoleIdOrderByIdDesc(
-						keywords, roleId, keywords, roleId, keywords, roleId, pageRequest);
+				.findByUsernameContainingAndRoleIdOrMobileContainingAndRoleIdOrEmailContainingAndRoleIdOrRealNameContainingAndRoleIdOrderByIdDesc(
+						keywords, roleId, keywords, roleId, keywords, roleId, keywords , roleId , pageRequest);
 	}
 
 	public Page<TdUser> searchAndOrderByIdDesc(String keywords, int page, int size) {

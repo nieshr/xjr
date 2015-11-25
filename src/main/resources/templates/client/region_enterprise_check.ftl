@@ -95,7 +95,7 @@ else
         </div>
         <div class="change_inform">
         	<span>
-        	<#if enterprise.fileUrl??>	<a style="font-size:12px;  text-decoration: underline;" href="/download/data?name=${enterprise.fileUrl!''}">【申请表附件下载】</a></#if>
+        		<#if enterprise.fileUrl??>	<a style="font-size:12px;  text-decoration: underline;" href="/download/data?name=${enterprise.fileUrl!''}">【申请表附件】</a></#if>
         	</span>
         </div>
     </div>  

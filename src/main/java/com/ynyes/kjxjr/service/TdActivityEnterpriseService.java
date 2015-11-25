@@ -111,6 +111,12 @@ public class TdActivityEnterpriseService {
         return (List<TdActivityEnterprise>) repository.findByEnterpriseId(enterpriseId);
     }
     
+    //企业资料页面筛选活动用，按时间倒序
+    public List<TdActivityEnterprise> findByEnterpriseIdOrderByCreateTimeDesc(Long enterpriseId)
+    {
+        return (List<TdActivityEnterprise>) repository.findByEnterpriseIdOrderByCreateTimeDesc(enterpriseId);
+    }
+    
     //区县管理，预选列表
     public List<TdActivityEnterprise> findByActivityIdAndStatusId(Long activityId , Long statusId)
     {

@@ -234,7 +234,7 @@ $(function () {
     </div>
     <#--   上传-->
         <div style="float:left;	">
-       		<#if enterprise??&&enterprise.fileUrl??>	
+       		<#if enterprise??&&enterprise.fileUrl??&&enterprise.fileUrl?length gt 0>	
 	        	<dl>
 		        	<dt>
 		        		已上传资料：

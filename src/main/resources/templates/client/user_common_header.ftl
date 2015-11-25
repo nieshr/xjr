@@ -7,7 +7,7 @@
     </div>
     </form>
     <dl class="porfile">
-    	<dt><a>帮助</a></dt>
+    	<dt><a href="http://www.cqgczx.com/cqkjxjr/" target="_blank">帮助</a></dt>
     	<#if user??>
     		<#if user.roleId == 1>
         		<dt><a href="/enterprise/message">站内信息<#if message_num??&&message_num gt 0><b style="float:right;  color: darkorange; margin: 1px 12px 0 0;">${message_num!''}</b></#if></a></dt>

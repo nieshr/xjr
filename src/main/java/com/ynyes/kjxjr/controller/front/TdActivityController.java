@@ -1449,7 +1449,7 @@ public class TdActivityController {
         		newEnter.setDataPossible(enterprise.getDataPossible());
         		newEnter.setDataOther(enterprise.getDataOther());
         		newEnter.setEnterpriseFileUrl(enterprise.getFileUrl());
-        		newEnter.setPptUrl(activity.getPptUrl());
+        		newEnter.setPptUrl(enterprise.getPptUrl());
         		newEnter.setFileUrl(activity.getFileUrl());
         		newEnter.setStatusId(0L);
         		tdActivityEnterpriseService.save(newEnter);
@@ -1475,7 +1475,7 @@ public class TdActivityController {
         		activityEnterprise.setDataPossible(enterprise.getDataPossible());
         		activityEnterprise.setDataOther(enterprise.getDataOther());
         		activityEnterprise.setEnterpriseFileUrl(enterprise.getFileUrl());
-        		activityEnterprise.setPptUrl(activity.getPptUrl());
+        		activityEnterprise.setPptUrl(enterprise.getPptUrl());
         		activityEnterprise.setFileUrl(activity.getFileUrl());
         		tdActivityEnterpriseService.save(activityEnterprise);
         	}

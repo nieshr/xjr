@@ -1133,7 +1133,7 @@ private void selectE(Long activityId ,Long[] ids, Integer[] chkIds)
         		newEnter.setDataBusiness(enterprise.getDataBusiness());
         		newEnter.setDataPossible(enterprise.getDataPossible());
         		newEnter.setDataOther(enterprise.getDataOther());
-        		newEnter.setPptUrl(activity.getPptUrl());
+        		newEnter.setPptUrl(enterprise.getPptUrl());
         		newEnter.setFileUrl(activity.getFileUrl());
         		newEnter.setStatusId(0L);
         		tdActivityEnterpriseService.save(newEnter);
@@ -1158,7 +1158,7 @@ private void selectE(Long activityId ,Long[] ids, Integer[] chkIds)
         		activityEnterprise.setDataBusiness(enterprise.getDataBusiness());
         		activityEnterprise.setDataPossible(enterprise.getDataPossible());
         		activityEnterprise.setDataOther(enterprise.getDataOther());
-        		activityEnterprise.setPptUrl(activity.getPptUrl());
+        		activityEnterprise.setPptUrl(enterprise.getPptUrl());
         		activityEnterprise.setFileUrl(activity.getFileUrl());
         		tdActivityEnterpriseService.save(activityEnterprise);
         	}
@@ -1198,9 +1198,9 @@ private void removeE(Long activityId ,Long[] ids, Integer[] chkIds)
 }
 
 //档案追踪
-@RequestMapping(value = "/coach/{enterpriseId}")
+@RequestMapping(value = "/record/{enterpriseId}")
 public String coach(@PathVariable Long enterpriseId, HttpServletRequest req, ModelMap map) {
-	String username = (String) req.getSession().getAttribute("expertUsername");
+	String username = (String) req.getSession().getAttribute("regionUsername");
 	if (null == username) {
 		return "/client/login";
 	}
@@ -1234,7 +1234,7 @@ public String coach(@PathVariable Long enterpriseId, HttpServletRequest req, Mod
 
 @RequestMapping(value = "/record/save")
 public String coachSave(HttpServletRequest req, String content, Long enterpriseId) {
-	String username = (String) req.getSession().getAttribute("expertUsername");
+	String username = (String) req.getSession().getAttribute("regionUsername");
 	if (null == username) {
 		return "/client/login";
 	}

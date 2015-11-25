@@ -87,7 +87,7 @@ function submitCheck()
 	<div class="leftbar">
 		<dl class="nav">
             <dd><a href="/enterprise/info">网上报名</a></dd>
-            <dd><a href="/enterprise/data">项目资料</a></dd>
+            <dd><a href="/enterprise/data">项目资料</a></dd> 
             <dd><a href="/enterprise/activity/list">活动列表</a></dd>
             <dd><a href="/enterprise/project">申请展示</a></dd>
 
@@ -120,7 +120,7 @@ function submitCheck()
         <dl class="apply_step2" >
             <input type="hidden" id="id" name="id" value="<#if id??>${id?c!''}</#if>"></input>
 				<dt>*点击选择文件(*.jpg *.png *.pdf)，上传已经打印并盖章的报名表扫描文件</dt>
-				<dd ><input id="file" style="margin-top: 40px ; background : #E67818;color:#333; height:25px;" name="Filedata" type="file" value="" /></dd>
+				<dd ><input id="file" style="padding: 8px 8px;" class="area_save_btn" name="Filedata" type="file" value="" /></dd>
 		</dl>	
 		<dl class="apply_step2" style="margin-top:20px ; ">
 				<dt>*多个文件请放置在同一个文件夹内，并添加为压缩文件上传</dt>

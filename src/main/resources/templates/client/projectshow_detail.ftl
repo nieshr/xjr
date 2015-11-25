@@ -45,7 +45,7 @@ function move3()
 					
 						<li>
 								<img style="cursor:pointer;" 
-										src="<#if item.imgUrl??&&item.imgUrl?length gt 0>${item.imgUrl!''}<#else>/client/news_img/projectdisplay.jpg</#if>" 
+										src="<#if item.imgUrl??&&item.imgUrl?length gt 0>${item.imgUrl!''}<#else>/client/images/banner_bg1.png</#if>" 
 										width="322px" height="144px" 
 										title="查看详情" 
 										onclick="location.href='<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>'">

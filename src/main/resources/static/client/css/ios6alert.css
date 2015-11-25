@@ -28,15 +28,21 @@
 	position:relative;
 	height:30px;
 	background:url(ios_images/iOS6AlertBackground_side.png) no-repeat;
+	background-color:#354052\0;
+	*background-color:#354052;
 }
 .ios6alert .side_bottom{
 	height:18px;
 	background:url(ios_images/iOS6AlertBackground_side.png) no-repeat;
 	background-position:0px -31px;
+	background-color:#354052\0;
+	*background-color:#354052;
 }
 .ios6alert .alt_bg{
 	background:url(ios_images/iOS6AlertBackground_bg.png) no-repeat;
 	background-size:100% 100%;
+	background-color:#354052\0;
+	*background-color:#354052;
 	-ms-behavior: url(ios_images/backgroundsize.min.htc);/*background-size support for IE*/
 	behavior: url(ios_images/backgroundsize.min.htc);/*background-size support for IE*/
 	word-wrap:break-word;
@@ -50,8 +56,11 @@
 .ios6alert .alt_content{
 	padding:7px 5px;
 	font-size:14px;
+	background-color:#354052\0;
+	*background-color:#354052;
 }
 .ios6alert .side_top .alt_titlebar{
+	background-color:#354052\9;
 	font-size:14px;
 	padding:14px 10px 0 10px;
 	font-weight:bold;

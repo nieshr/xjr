@@ -23,12 +23,14 @@ public interface TdUserRepo extends
     
     Page<TdUser> findByUsernameContainingOrMobileContainingOrEmailContainingOrderByIdDesc(String keywords1, String keywords2, String keywords3, Pageable page);
     
-    Page<TdUser> findByUsernameContainingAndRoleIdOrMobileContainingAndRoleIdOrEmailContainingAndRoleIdOrderByIdDesc(String keywords1, 
+    Page<TdUser> findByUsernameContainingAndRoleIdOrMobileContainingAndRoleIdOrEmailContainingAndRoleIdOrRealNameContainingAndRoleIdOrderByIdDesc(String keywords1, 
                                                                 Long roleId1,
                                                                 String keywords2,
                                                                 Long roleId2,
                                                                 String keyword3,
                                                                 Long roleId3,
+                                                                String keyword4,
+                                                                Long roleId4, 
                                                                 Pageable page);
     
     TdUser findByUsernameAndStatusIdOrUsernameAndStatusId(String username, Long statusId, String username1, Long statusId1);

@@ -2,12 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>修改资料</title>
-    <link rel="shortcut icon" href="/images/icon.ico" />
+    <title>档案跟踪</title>
+    <link rel="shortcut icon" href="/client/images/icon.ico" />
     <link href="/client/css/base.css" rel="stylesheet" type="text/css" />
     <link href="/client/css/expert.css" rel="stylesheet" type="text/css" />
     <script src="/client/js/jquery-1.9.1.min.js"></script>
     <script src="/client/js/main.js"></script>
+
 </head>
 <script>
 window.onload = function(){
@@ -62,9 +63,8 @@ function record(){
                 <!--left-->
                 <div class="leftbar">
                     <dl class="nav">
-                        <dd><a href="/expert/enterprise/list">活动列表</a></dd>
-                        <dd><a href="/expert/enterprises">辅导企业</a></dd>
-                        <dd><a href="/expert/lyfd">路演辅导</a></dd>
+			            <dd><a href="/region/enterprise/list">企业列表</a></dd>
+			            <dd><a href="/region/activity/list">活动列表</a></dd>
                     </dl>
                 </div>
                 <!--right-->
@@ -80,6 +80,33 @@ function record(){
                             </dd>
                             <dt class="crumb_back"><a></a></dt>
                         </dl>
+					 <div class="change_inform">
+					            <#if enterprise.statusId??&&enterprise.statusId == 0 >
+					            <span>审核状态： 待审核</span>
+					            <input style="cursor:pointer;" type="button" value="审核通过 " onclick="location.href='/region/enterprise/pass/${enterprise.id?c!''}'"/>          
+					            <input style="cursor:pointer;" type="button" value="审核未通过 " onclick="location.href='/region/enterprise/cancel/${enterprise.id?c!''}'"/>         
+					            <#elseif enterprise.statusId??&& enterprise.statusId == 1>
+					            <span>审核状态：已通过</span>
+					            <input style="cursor:pointer;" type="button" value="重新审核 " onclick="location.href='/region/enterprise/recall/${enterprise.id?c!''}'"/>
+					            <input style="cursor:pointer;" type="button" value="审核未通过 " onclick="location.href='/region/enterprise/cancel/${enterprise.id?c!''}'"/>       
+					            <#elseif enterprise.statusId??&& enterprise.statusId == 2>
+					            <span>审核状态： 用户申请了重新审核</span>
+					            <input style="cursor:pointer;" type="button" value="重新审核 " onclick="location.href='/region/enterprise/recall/${enterprise.id?c!''}'"/> 
+					             <#elseif  enterprise.statusId??&&enterprise.statusId == 3>
+					            <span>审核状态：未通过</span>
+					            <input style="cursor:pointer;" type="button" value="重新审核 " onclick="location.href='/region/enterprise/recall/${enterprise.id?c!''}'"/>
+					            <input style="cursor:pointer;" type="button" value="审核通过 " onclick="location.href='/region/enterprise/pass/${enterprise.id?c!''}'"/> 
+					             <#elseif  enterprise.statusId??&&enterprise.statusId == 4>
+					             <span>审核状态：重新审核（更新中）</span>
+					              <#else>
+					             <span>用户未完善资料</span>
+					            </#if>
+					        </div>
+					        <div class="change_inform">
+					        	<span>
+					        		<#if enterprise.fileUrl??>	<a style="font-size:12px;  text-decoration: underline;" href="/download/data?name=${enterprise.fileUrl!''}">【申请表附件】</a></#if>
+					        	</span>
+					        </div>
                     </div>  
                     <input id="text_show_btn" style="width: 80px; height:30px; border: none; background: #e67817; color: white; border-radius: 6px; margin-left: 30px; margin-top: 30px;" type="button" value="显示资料" />
                     <p id="text" style=" margin-left: 30px; font-size: 14px; color: red;">*点击按钮查看资料</p>

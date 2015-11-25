@@ -98,7 +98,7 @@ function deleteConfirm(id,title) {
 			<table class="new_list">
 	        	<tr class="list_title">
 	        		<th width="30%">活动</th>
-	        		<th width="13%">地址</th>
+	        		<th width="13%">地区</th>
 	        		<th width="13%">活动类型</th>
 	        	<#--	<th width="13%">审核</th> -->
 	        		<th width="10%">状态</th>
@@ -114,7 +114,7 @@ function deleteConfirm(id,title) {
 		        		</td>
 		        		-->
 		        		<td>${item.title!''}<#if item.statusEx??&&item.statusEx == 0 || !item.statusEx??><img src="/client/images/n11.gif" style="top:2px;left:3px;" title="未选择评委" alt="未选择评委" /></#if></td>
-		        		<td style="color:#0ab2cb;">${item.address!''}</td>
+		        		<td style="color:#0ab2cb;">${item.region!''}</td>
 		        		<td style="color:#e67817;">${item.activityType!''}</td>
 		        		<#--
 		        		<#if item.statusId?? && item.statusId == 1>

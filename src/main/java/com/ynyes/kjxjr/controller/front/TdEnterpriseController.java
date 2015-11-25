@@ -211,7 +211,11 @@ public class TdEnterpriseController {
         tdEnterprise.setPassword(user.getPassword());
        	tdEnterpriseService.save(tdEnterprise);
        
-       	
+       //同步信息到user表	
+       user.setTotalCollectedGoods(tdEnterprise.getFormType());	
+       user.setRealName(tdEnterprise.getTitle());
+       tdUserService.save(user);
+      
        	//同步信息到预选
        	List<TdActivityEnterprise> aeList = tdActivityEnterpriseService.findByEnterpriseId(tdEnterprise.getId());
        	if (null != aeList)
@@ -307,15 +311,25 @@ public class TdEnterpriseController {
             return "redirect:/login";
         }
 
+
         tdCommonService.setHeader(map, req);
 
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
-        TdEnterprise Enterprise = tdEnterpriseService.findbyUsername(username);
+        TdEnterprise enterprise = tdEnterpriseService.findbyUsername(username);
         
+//        List<TdActivityEnterprise> aeList = tdActivityEnterpriseService.findByEnterpriseIdOrderByCreateTimeDesc(enterprise.getId());
+//        if (null == activityId)
+//        {
+//        	if (null != aeList)
+//        	{
+//        		activityId = aeList.get(0).getActivityId();
+//        	}
+//        }
         
-        
-        map.addAttribute("enterprise", Enterprise);
-        map.addAttribute("id", Enterprise.getId());
+//        map.addAttribute("ae_list", aeList);
+//        map.addAttribute("activityId", activityId);
+        map.addAttribute("enterprise", enterprise);
+        map.addAttribute("id", enterprise.getId());
         map.addAttribute("user", user);
         map.addAttribute("done", done);
 

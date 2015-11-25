@@ -77,10 +77,11 @@ var theForm = document.forms['form1'];
   <tbody>
   <tr class="odd_bg">
     <th width="8%">选择</th>
-    <th align="left" colspan="2">用户名</th>
-    <th align="left" width="6%">用户组</th>
-    <th align="center" width="12%">邮箱</th>
-    <th width="12%">手机号</th>
+    <th align="left" width="8%" colspan=2>用户名</th>
+    <th  align="center" width="20%">名称</th>
+    <th align="left" width="4%">用户组</th>
+    <th align="center" width="8%">邮箱</th>
+    <th width="8%">手机号</th>
     <th width="8%">最近登录</th>
     <th width="6%">状态</th>
     <th width="6%">操作</th>
@@ -116,10 +117,11 @@ var theForm = document.forms['form1'];
                     -->
                   </div>
                 </td>
+                <td align="center">${user.realName!"&nbsp;"}</td>
                 <td>
-	                <#if user.roleId?? && user.roleId==1 && user.formType??&&user.formType == 0>
+	                <#if user.roleId?? && user.roleId==1 && user.totalCollectedGoods??&&user.totalCollectedGoods == 0>
 	                企业
-	                <#elseif user.roleId?? && user.roleId==1&& user.formType??&&user.formType == 1>
+	                <#elseif user.roleId?? && user.roleId==1&& user.totalCollectedGoods??&&user.totalCollectedGoods == 1>
 	                项目
 	                <#else>
 	                企业/项目

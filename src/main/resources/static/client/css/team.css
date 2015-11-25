@@ -23,7 +23,7 @@
 .apply_content dt span{ color: white; font-size: 14px; margin-left: 30px;}
 .apply_content dt p{ color: white; margin-left: 30px; }
 .apply_content dd{ width:950px; height:auto; display: block; overflow: hidden;}
-.apply_content dd div{ width:950px; margin-top: 10px; overflow: hidden;}
+.apply_content dd div{ width:950px; margin-top: 10px; overflow: hidden;/*min-height: 80px;*/}
 .apply_content dd div span{width:120px; display: block; float: left; text-align: right;}
 .apply_content dd div p{width:auto; height:20px; display: block; float: left; text-align: right; margin-left: 10px;;}
 .apply_content dd div input{ margin-left: 20px; float: left; height:26px; line-height:26px; width:170px;}
