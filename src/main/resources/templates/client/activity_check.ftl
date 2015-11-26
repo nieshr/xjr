@@ -283,7 +283,7 @@ function sortDown(id , activityId)
                     </#if>       
                 </#if>         
                  
-                <#if recommend_list??>
+                <#if recommend_list??&&recommend_list?size gt 0>
                 <div>
                     <span style="margin-top: 6px;"><#if activity.statusId??&&activity.statusId==0||!activity.statusId??>推荐项目：<#else>路演项目：</#if></span>
                     <ul class="active_project_text">
@@ -378,6 +378,102 @@ function sortDown(id , activityId)
                     </ul>
                 </div> 
                 </#if>
+<#-- 年度秀-->
+			<#if activityType_list??>
+		        <#list activityType_list as type>
+		        	<#if type_index ==2&&type.title == activity.activityType>
+                <div>
+                    <span style="margin-top: 6px;">参加项目：</span>
+                    <ul class="active_project_text">
+                        <#if show_list??>
+                            <#list show_list as item>
+                                <li>
+                                    <p class="p01" style="width:<#-- 380-->348px; float: left;text-align:left;"><b style="float:left;">${item_index+1}.${item.enterpriseTitle!''}</b><#if item.win??&&item.win==1><img src="/client/images/n0.png" style="width:12px; height:12px;margin-left:3px;" title="胜出项目" alt="胜出" /> </#if></p>
+                                    <a href="/activity/enterprise/check/${item.enterpriseId?c!''}"   target=_blank>查看</a>
+                                    <a>丨</a>
+                                    <#if item.isGrade??&&item.isGrade>
+                                        <a  href="/enterprise/grade/?activityId=${item.activityId?c!''}&enterpriseId=${item.enterpriseId?c!''}" title="查看该项目的得分"   target="_blank">得分</a>
+                                    <#else>
+                                        <a   href="javascript:void(0)" title="评分尚未开始"  style="color:#666; " >得分</a>
+                                    </#if>         
+                                        <#if activity??&&activity.statusId??&&activity.statusId==1>
+                                        	  <a>丨</a> 
+                                            <a href="javascript:sendSms(${item.enterpriseId?c!''},${item.activityId?c!''},1);">短信通知</a>
+                                           
+                                        </#if>
+                                        <#if activity.statusId??&&(activity.statusId==1|| activity.statusId == 0)>
+                                         <a>丨</a> 
+	                                        <#if item_has_next>
+	                                            <a href="/activity/sortDown?enterpriseId=${item.id?c!''}&activityId=${item.activityId?c!''}"><img style="width:10px;height:13px;margin-top: 8px;" src="/client/images/down1.png" alt="下移" title="下移排序"/></a>
+	                                        </#if>                                  
+	                                        <#if item_index != 0>
+	                                            <a href="/activity/sortUp?enterpriseId=${item.id?c!''}&activityId=${item.activityId?c!''}"><img style="width:10px;height:13px;margin-top: 8px; <#if item_has_next>margin-left:3px;</#if>" src="/client/images/up1.png" alt="上移" title="上移排序"/></a>
+	                                        </#if>
+                                        </#if>
+ 			    						<#if item.pptUrl??&&item.pptUrl?length gt 0>
+				    						<a>丨</a>
+				    						<a href="/download/data?name=${item.pptUrl!''} " title="点击下载文件">PPT</a>
+				    					<#else>
+				    						<a>丨</a>
+				    						<a href="javascript:void(0) " style="color:#666;" title="无资料">PPT</a>
+			    						</#if>                                       
+			    						<#if item.enterpriseFileUrl??&&item.enterpriseFileUrl?length gt 0>
+				    						<a>丨</a>
+				    						<a href="/download/data?name=${item.enterpriseFileUrl!''} " title="点击下载文件">扫描件</a>
+				    					<#else>
+				    						<a>丨</a>
+				    						<a href="javascript:void(0) " style="color:#666;" title="无资料">扫描件</a>
+			    						</#if>
+			    						<#if item.dataBusiness??&&item.dataBusiness?length gt 0>
+				    						<a>丨</a>
+				    						<a href="/download/data?name=${item.dataBusiness!''}" title="点击下载文件">商业计划书</a>
+				    					<#else>
+				    						<a>丨</a>
+				    						<a href="javascript:void(0) " style="color:#666;"  title="无资料">商业计划书</a>	
+			    						</#if>
+			    						<#if item.dataPossible??&&item.dataPossible?length gt 0>
+				    						<a>丨</a>
+				    						<a href="/download/data?name=${item.dataPossible!''}" title="点击下载文件">可行性报告</a>
+				    					<#else>
+				    						<a>丨</a>
+				    						<a href="javascript:void(0) " style="color:#666;" title="无资料">可行性报告</a>	
+			    						</#if>
+			    						<#if item.dataOther??&&item.dataOther?length gt 0>
+				    						<a>丨</a>
+				    						<a href="/download/data?name=${item.dataOther!''}" title="点击下载文件">其他资料</a>
+				    					<#else>
+				    						<a>丨</a>
+				    						<a href="javascript:void(0)" style="color:#666;" title="无资料">其他资料</a>	
+			    						</#if>
+
+                                </li>
+                            </#list>
+                        </#if>    
+                        <#if pagetype??&& pagetype == "check">
+                            <#if mark??&&mark="activity">
+                                <#if activity??&&activity.statusId??&&activity.statusId==1>
+                                    <input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:green;color:#fff; " type="button" class="area_batch" onclick="location.href='/activity/getCoach?activityId=${activity.id?c!''}'"  value="分配路演辅导" />
+                                    <input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#E4574E;color:#fff; " type="button" onclick="javascript:cancelCheck(${activity.id?c!''});"  value="取消审核" />
+                                    <input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#e67817;color:#fff; " type="button" onclick="javascript:resetCheck(${activity.id?c!''});"  value="重置评分" />
+                                <#elseif activity??&&activity.statusId??&&activity.statusId==0> 
+                                    <input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:green;color:#fff; " type="button" class="area_batch" onclick="location.href='/activity/getCoach?activityId=${activity.id?c!''}'"  value="分配路演辅导" />
+                                    <input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#e67817;color:#fff; " type="button" class="area_batch" onclick="javascript:activityPass(${activity.id?c!''});" value="通过审核" />
+                                <#elseif activity??&&activity.statusId??&&activity.statusId==2>     
+                                    <input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#e67817;color:#fff; " type="button" onclick="javascript:resetCheck(${activity.id?c!''});"  value="重置评分" />
+                                </#if>
+                            </#if>
+                            <#if type??&& type=="supervisor">
+                            	<input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#e67817;color:#fff; " type="button" onclick="location.href='/region/recommendEnterprise?id=${activity.id?c!''}'"  value="推荐项目" />
+                        	</#if>
+                        <#else>
+                                <input id="selectEnterprise" style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background:white url(images/active_add_project.png) no-repeat 10px; padding-left: 13px;" type="button" value="添加项目" />
+                        </#if>
+                    </ul>
+                </div> 
+					</#if>
+			    </#list>
+			</#if>  
+<#--年度秀 end  -->                
                 <div style="margin-top:50px;">
                     <span style="margin-top: 6px;">评委专家：</span>
                     <ul class="active_project_text">

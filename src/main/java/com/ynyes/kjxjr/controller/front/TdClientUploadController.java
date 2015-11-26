@@ -3,7 +3,9 @@ package com.ynyes.kjxjr.controller.front;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -125,8 +127,18 @@ public class TdClientUploadController {
 //            SimpleDateFormat sdf = new SimpleDateFormat("HHmmssSSS");
             TdEnterprise enterprise = tdEnterpriseService.findOne(id);
             //找出改企业参加活动个数。
-            List<TdActivityEnterprise> aeList = tdActivityEnterpriseService.findByEnterpriseIdAndStatusId(id, 2L);
-            Integer size = aeList.size();
+            List<TdActivityEnterprise> aeList = tdActivityEnterpriseService.findByEnterpriseId(id);
+            List<TdActivity> activityList = new ArrayList<>();
+            for (TdActivityEnterprise ae : aeList)
+            {
+            	TdActivity activity = tdActivityService.findOne(ae.getActivityId()); 
+            	if (activity.getStatusId() == 2)
+            	{
+            		activityList.add(activity);
+            	}
+            }
+            	
+            Integer size = activityList.size();
             String fileName ="Num_"+tdEnterpriseService.findbyUsername(username).getNumber()+"_"+ size + ext;
 
             String uri = ImageRoot + "/" + fileName;
@@ -157,7 +169,7 @@ public class TdClientUploadController {
 	
 	//企业商业计划书
 	@RequestMapping(value = "/dataBusiness/upload", method = RequestMethod.POST)
-    public String dataBusiness(String action,Long id ,Long activityId,
+    public String dataBusiness(String action,Long id, 
             @RequestParam MultipartFile Filedata, ModelMap map, HttpServletRequest req) {
 		
         String username = (String) req.getSession().getAttribute("enterpriseUsername");
@@ -178,8 +190,18 @@ public class TdClientUploadController {
 //            SimpleDateFormat sdf = new SimpleDateFormat("HHmmssSSS");
             TdEnterprise enterprise = tdEnterpriseService.findOne(id);
             //找出改企业参加活动个数。
-            List<TdActivityEnterprise> aeList = tdActivityEnterpriseService.findByEnterpriseIdAndStatusId(id, 2L);
-            Integer size = aeList.size();
+            List<TdActivityEnterprise> aeList = tdActivityEnterpriseService.findByEnterpriseId(id);
+            List<TdActivity> activityList = new ArrayList<>();
+            for (TdActivityEnterprise ae : aeList)
+            {
+            	TdActivity activity = tdActivityService.findOne(ae.getActivityId()); 
+            	if (activity.getStatusId() == 2)
+            	{
+            		activityList.add(activity);
+            	}
+            }
+            	
+            Integer size = activityList.size();
             String fileName ="DataBusiness_"+tdEnterpriseService.findbyUsername(username).getNumber()+"_"+ size + ext;
 
             String uri = ImageRoot + "/" + fileName;
@@ -195,23 +217,17 @@ public class TdClientUploadController {
             enterprise.setDataBusiness(fileName);
             tdEnterpriseService.save(enterprise);
             
-            TdActivityEnterprise ae = tdActivityEnterpriseService.findByActivityIdAndEnterpriseId(activityId, id);
-            ae.setDataBusiness(fileName);
-            tdActivityEnterpriseService.save(ae);
-      
-
         } catch (Exception e) {
         	e.printStackTrace();
         }
         
         Long done = 1L;
-        return "redirect:/enterprise/data?done="+done
-        		+"&activityId="+activityId;
+        return "redirect:/enterprise/data?done="+done;
     }
 	
 	//企业可行性报告
 	@RequestMapping(value = "/dataPossible/upload", method = RequestMethod.POST)
-    public String dataPossible(String action,Long id,Long activityId,
+    public String dataPossible(String action,Long id,
             @RequestParam MultipartFile Filedata, ModelMap map, HttpServletRequest req) {
 		
         String username = (String) req.getSession().getAttribute("enterpriseUsername");
@@ -232,8 +248,18 @@ public class TdClientUploadController {
 //            SimpleDateFormat sdf = new SimpleDateFormat("HHmmssSSS");
             TdEnterprise enterprise = tdEnterpriseService.findOne(id);
             //找出改企业参加活动个数。
-            List<TdActivityEnterprise> aeList = tdActivityEnterpriseService.findByEnterpriseIdAndStatusId(id, 2L);
-            Integer size = aeList.size();
+            List<TdActivityEnterprise> aeList = tdActivityEnterpriseService.findByEnterpriseId(id);
+            List<TdActivity> activityList = new ArrayList<>();
+            for (TdActivityEnterprise ae : aeList)
+            {
+            	TdActivity activity = tdActivityService.findOne(ae.getActivityId()); 
+            	if (activity.getStatusId() == 2)
+            	{
+            		activityList.add(activity);
+            	}
+            }
+            	
+            Integer size = activityList.size();
             String fileName ="DataPossible_"+tdEnterpriseService.findbyUsername(username).getNumber()+"_"+ size + ext;
 
             String uri = ImageRoot + "/" + fileName;
@@ -247,18 +273,13 @@ public class TdClientUploadController {
             
             enterprise.setDataPossible(fileName);
             tdEnterpriseService.save(enterprise);
-      
-            TdActivityEnterprise ae = tdActivityEnterpriseService.findByActivityIdAndEnterpriseId(activityId, id);
-            ae.setDataPossible(fileName);
-            tdActivityEnterpriseService.save(ae);
             
         } catch (Exception e) {
         	e.printStackTrace();
         }
         
         Long done = 1L;
-        return "redirect:/enterprise/data?done="+done
-        		+"&activityId="+activityId;
+        return "redirect:/enterprise/data?done="+done;
     }
 	
 	//企业其他
@@ -284,8 +305,18 @@ public class TdClientUploadController {
 //            SimpleDateFormat sdf = new SimpleDateFormat("HHmmssSSS");
             TdEnterprise enterprise = tdEnterpriseService.findOne(id);
             //找出改企业参加活动个数。
-            List<TdActivityEnterprise> aeList = tdActivityEnterpriseService.findByEnterpriseIdAndStatusId(id, 2L);
-            Integer size = aeList.size();
+            List<TdActivityEnterprise> aeList = tdActivityEnterpriseService.findByEnterpriseId(id);
+            List<TdActivity> activityList = new ArrayList<>();
+            for (TdActivityEnterprise ae : aeList)
+            {
+            	TdActivity activity = tdActivityService.findOne(ae.getActivityId()); 
+            	if (activity.getStatusId() == 2)
+            	{
+            		activityList.add(activity);
+            	}
+            }
+            	
+            Integer size = activityList.size();
             String fileName ="DataOther_"+tdEnterpriseService.findbyUsername(username).getNumber()+"_"+ size + ext;
 
             String uri = ImageRoot + "/" + fileName;
@@ -300,9 +331,9 @@ public class TdClientUploadController {
             enterprise.setDataOther(fileName);
             tdEnterpriseService.save(enterprise);
             
-            TdActivityEnterprise ae = tdActivityEnterpriseService.findByActivityIdAndEnterpriseId(activityId, id);
-            ae.setDataOther(fileName);
-            tdActivityEnterpriseService.save(ae);
+//            TdActivityEnterprise ae = tdActivityEnterpriseService.findByActivityIdAndEnterpriseId(activityId, id);
+//            ae.setDataOther(fileName);
+//            tdActivityEnterpriseService.save(ae);
 
         } catch (Exception e) {
         	e.printStackTrace();
@@ -438,8 +469,18 @@ public class TdClientUploadController {
 //            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
             TdEnterprise enterprise = tdEnterpriseService.findOne(id);
             //找出改企业参加活动个数。
-            List<TdActivityEnterprise> aeList = tdActivityEnterpriseService.findByEnterpriseIdAndStatusId(id, 2L);
-            Integer size = aeList.size();
+            List<TdActivityEnterprise> aeList = tdActivityEnterpriseService.findByEnterpriseId(id);
+            List<TdActivity> activityList = new ArrayList<>();
+            for (TdActivityEnterprise ae : aeList)
+            {
+            	TdActivity activity = tdActivityService.findOne(ae.getActivityId()); 
+            	if (activity.getStatusId() == 2)
+            	{
+            		activityList.add(activity);
+            	}
+            }
+            	
+            Integer size = activityList.size();
             String fileName ="PPT_"+tdEnterpriseService.findbyUsername(username).getNumber()+"_"+ size + ext;
 
             String uri = ImageRoot + "/" + fileName;
@@ -459,9 +500,7 @@ public class TdClientUploadController {
                 tdEnterpriseService.save(enterprise);
 //            }
             
-            TdActivityEnterprise ae = tdActivityEnterpriseService.findByActivityIdAndEnterpriseId(activityId, id);
-            ae.setPptUrl(fileName);
-            tdActivityEnterpriseService.save(ae);
+
       
 
         } catch (Exception e) {

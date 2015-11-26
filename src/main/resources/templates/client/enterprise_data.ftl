@@ -27,16 +27,40 @@ function done()
        
     });
 }
+function done2()
+{
+    $("body").ios6alert({
+        content :"类型错误（*.PPT ,*,pdf）！"
+    });
+}
 <#if done?? &&done == 1>
 window.onload=done;
 </#if>
+<#if done?? &&done == 2>
+window.onload=done2;
+</#if>
+
+function submitCheck0()
+{
+	var filedata = $("#file0").val();
+	if (filedata == "")
+	{
+	    $("body").ios6alert({
+   			 content :"请添加文件！"
+		});
+		}else{
+		$("#upload0").submit();
+		}
+}
 
 function submitCheck1()
 {
 	var filedata = $("#file1").val();
 	if (filedata == "")
 	{
-		alert("请添加文件！")
+	    $("body").ios6alert({
+   			 content :"请添加文件！"
+		});
 		}else{
 		$("#upload1").submit();
 		}
@@ -47,7 +71,9 @@ function submitCheck2()
 	var filedata = $("#file2").val();
 	if (filedata == "")
 	{
-		alert("请添加文件！")
+	    $("body").ios6alert({
+   			 content :"请添加文件！"
+		});
 		}else{
 		$("#upload2").submit();
 		}
@@ -58,7 +84,9 @@ function submitCheck3()
 	var filedata = $("#file3").val();
 	if (filedata == "")
 	{
-		alert("请添加文件！")
+	    $("body").ios6alert({
+   			 content :"请添加文件！"
+		});
 		}else{
 		$("#upload3").submit();
 		}
@@ -105,9 +133,40 @@ function submitCheck3()
        
     </div>  
     <dl class="apply_content">
+			      	<form id="upload0" enctype="multipart/form-data" action="/client/enterprise/pptupload" method="post">
+			            <input type="hidden" name="id" value="${enterprise.id?c!''}" />
+				    	<dt class="dt01" style="background:#80a2c6;"><span>PPT</span><br/><p>项目展示PPT</p></dt>
+				    	<dd>
+				    			<div>
+				    			     <span><input id="file0" style="margin: 20px 0 0 48px ;background : #fff;color:#333;" name="Filedata" type="file" value="" /></span>
+				    			     <input  style="background:#ccc;margin:18px 0 0 110px;
+				    			     						  cursor:pointer;
+															  font-size: 12px;
+															  height: 30px;
+															  width: 108px;
+															  line-height: 30px;
+															  margin-right: 20px;
+															  margin-top: 15px;
+															  border-radius: 6px;
+															  border: none;
+															  color: white;
+															  background: #e67817; " 
+															   class="area_save_btn" type="button" value="上传项目资料" onclick="javascript:submitCheck0();"/>
+				    		    </div>
+				    		<#if enterprise.pptUrl??&&enterprise.pptUrl != "">
+				    		    <div style="margin-top:20px;">
+				    		    	<span>已上传资料：</span>
+				    		    	<a href="/download/data?name=${enterprise.pptUrl!''}" title="点击下载">${enterprise.pptUrl!''}</a>
+				    		    </div>	    		    
+			    		    </#if>
+				    	</dd>
+				    </form>	
+    </dl>
+    
      	<#if enterprise.dataAble??>
     		<#list enterprise.dataAble?split(",") as data>
     			<#if data == "商业计划书">   
+    			<dl class="apply_content">
 			      	<form id="upload1" enctype="multipart/form-data" action="/client/dataBusiness/upload" method="post">
 			            <input type="hidden" name="id" value="${enterprise.id?c!''}" />
 				    	<dt class="dt01" style="background:#80a2c6;"><span>商业计划书</span><br/><p>报名表中勾选此项时上传</p></dt>
@@ -136,12 +195,14 @@ function submitCheck3()
 			    		    </#if>
 				    	</dd>
 				    </form>	
+				    </dl>
 	    		</#if>
 	    	</#list>
 	    </#if>
     	<#if enterprise.dataAble??>
     		<#list enterprise.dataAble?split(",") as data>
-    			<#if data == "可行性报告">	    	    
+    			<#if data == "可行性报告">
+    			<dl class="apply_content">	    	    
 			    	<form id="upload2" enctype="multipart/form-data" action="/client/dataPossible/upload" method="post">
 			    		  <input type="hidden" name="id" value="${enterprise.id?c!''}" />
 			    	    	<dt class="dt01" style="background:#80a2c6;margin-top:100px;"><span>可行性报告</span><br/><p>报名表中勾选此项时上传</p></dt>
@@ -170,12 +231,14 @@ function submitCheck3()
 			    		    </#if>
 			    	</dd>
 			    	</form>	
+			    	</dl>
 	    		</#if>
 	    	</#list>
 	    </#if>
     	<#if enterprise.dataAble??>
     		<#list enterprise.dataAble?split(",") as data>
-    			<#if data == "其他说明资料">	        	
+    			<#if data == "其他说明资料">	  
+    				<dl class="apply_content">      	
 			    	<form id="upload3" enctype="multipart/form-data" action="/client/dataOther/upload" method="post">
 			    		  <input type="hidden" name="id" value="${enterprise.id?c!''}" />
 			    	    	<dt class="dt01" style="background:#80a2c6; margin-top:100px;"><span>其他说明资料</span><br/><p>报名表中勾选此项时上传</p></dt>
@@ -204,6 +267,7 @@ function submitCheck3()
 			    		    </#if>
 			    	</dd>
 			    	</form>	
+			    	</dl>
 	    		</#if>
 	    	</#list>
 	    </#if>

@@ -47,6 +47,7 @@ import com.ynyes.kjxjr.entity.TdActivity;
 import com.ynyes.kjxjr.entity.TdActivityEnterprise;
 import com.ynyes.kjxjr.entity.TdActivityExpert;
 import com.ynyes.kjxjr.entity.TdActivityInvest;
+import com.ynyes.kjxjr.entity.TdActivityType;
 import com.ynyes.kjxjr.entity.TdArticle;
 import com.ynyes.kjxjr.entity.TdArticleCategory;
 import com.ynyes.kjxjr.entity.TdEnterprise;
@@ -399,6 +400,7 @@ public class TdActivityController {
             map.addAttribute("mark", "activity");
 	        map.addAttribute("activity", activity);
 	        map.addAttribute("recommend_list" , tdActivityEnterpriseService.findByActivityIdAndStatusIdOrderBySortIdAsc(id, 2L));
+	        map.addAttribute("show_list" , tdActivityEnterpriseService.findByActivityIdAndStatusIdOrderBySortIdAsc(id, 1L));
 	        map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityId(id));
 	        map.addAttribute("selected_expert_list", tdActivityExpertService.findByActivityId(id));
         }
@@ -1754,6 +1756,24 @@ public class TdActivityController {
         	activity.setPrepareOn(prepareOnF);
         	activity.setPrepareOff(prepareOffF);
         	activity.setEventEnd(eventEndF);
+        	
+        	//3类活动区别对待，后两类直接不审核了
+            List<TdActivityType> activityTypeList = tdActivityTypeService.findByIsEnableTrueOrderBySortIdAsc(); //活动类型
+            int i = 0;
+            for (TdActivityType item : activityTypeList)
+            {
+            	if (i == 1&&item.getTitle().equals(activity.getActivityType()))
+            	{
+            		activity.setStatusId(1L);
+            	}
+            	if (i == 2&&item.getTitle().equals(activity.getActivityType()))
+            	{
+            		activity.setStatusId(0L);
+            	}
+            	i++;
+            }
+            
+            
 //        	activity.setStatusId(0L);
         	tdActivityService.save(activity);
         	
@@ -1899,6 +1919,22 @@ public class TdActivityController {
         tdActivity.setPrepareOn(prepareOn1);
         tdActivity.setPrepareOff(prepareOff1);
         tdActivity.setEventEnd(eventEnd1);
+        
+    	//3类活动区别对待，后两类直接不审核了
+        List<TdActivityType> activityTypeList = tdActivityTypeService.findByIsEnableTrueOrderBySortIdAsc(); //活动类型
+        int i = 0;
+        for (TdActivityType item : activityTypeList)
+        {
+        	if (i == 1&&item.getTitle().equals(tdActivity.getActivityType()))
+        	{
+        		tdActivity.setStatusId(1L);
+        	}
+        	if (i == 2&&item.getTitle().equals(tdActivity.getActivityType()))
+        	{
+        		tdActivity.setStatusId(0L);
+        	}
+        	i++;
+        }
        
        	tdActivityService.save(tdActivity);
        	

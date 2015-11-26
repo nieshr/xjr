@@ -158,7 +158,15 @@ function deleteConfirm(id,title) {
 		                	    
 		                </#if>    		                
 		        		<td>
-		        			<a href="/activity/edit?id=${item.id?c!''}">编辑信息</a>丨<a href="/activity/check?id=${item.id?c!''}">操作</a>丨<a  onclick="javascript:deleteConfirm(${item.id?c!''},'${item.title!''}' );">删除</a>
+		        			<a href="/activity/edit?id=${item.id?c!''}">编辑信息</a>
+		        			<#if activityType_list??>
+	    				        <#list activityType_list as type>
+	    				        	<#if (type_index == 0||type_index ==2)&&type.title == item.activityType>
+										丨<a href="/activity/check?id=${item.id?c!''}">操作</a>
+									</#if>
+	    					    </#list>
+    						</#if>   							
+							丨<a  onclick="javascript:deleteConfirm(${item.id?c!''},'${item.title!''}' );">删除</a>
 		        		</td>
 		        	</tr>
 	        	</#list>

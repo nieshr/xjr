@@ -85,13 +85,24 @@
                     
                     <td>
                          <a href="/region/activity/detail?id=${item.id?c!''}">详情</a>
-                         <#if  item.statusId??&&item.statusId == 1>
-	                         | <a href="" style="color: #666;" title="已审核，无法修改">预选</a>
-	                         | <a href=""  style="color: #666;"  title="已审核，无法修改">推荐企业</a>
-                         <#else>
-	                         | <a href="/region/candidateEnterprise/${item.id?c!''}?area=${item.region!''}">预选</a>
-	                         | <a href="/region/recommendEnterprise?id=${item.id?c!''}">推荐企业</a>    
-                         </#if>                    
+                         
+                           <#if activityType_list??>
+	    				        <#list activityType_list as type>
+	    				        	<#if type_index == 0 && type.title == item.activityType>	              
+				                         <#if  item.statusId??&&item.statusId == 1>
+					                         &nbsp;|&nbsp;<a href="" style="color: #666;" title="已审核，无法修改">预选</a>
+					                         &nbsp;|&nbsp;<a href=""  style="color: #666;"  title="已审核，无法修改">推荐企业</a>
+				                         <#else>
+					                         &nbsp;|&nbsp;<a href="/region/candidateEnterprise/${item.id?c!''}?area=${item.region!''}">预选</a>
+					                         &nbsp;|&nbsp;<a href="/region/recommendEnterprise?id=${item.id?c!''}">推荐企业</a>
+				                         </#if>   
+	    				        	<#elseif type_index == 1&& type.title == item.activityType>	              
+					                         &nbsp;|&nbsp;<a href="/region/candidateEnterprise/${item.id?c!''}?area=${item.region!''}">训练营名单</a>
+	    				        	<#elseif type_index == 2&&type.title == item.activityType>	              
+					                         &nbsp;|&nbsp;<a href="/region/candidateEnterprise/${item.id?c!''}?area=${item.region!''}">年度秀名单</a>
+									</#if>
+	    					    </#list>
+    						</#if>   
                      <#--     | <a <#if item.pptUrl??> href="/download/data?name=${item.pptUrl!''}" <#else> style="color:#999999;"</#if>>下载模板</a>
                         | <a href="">上传推荐表</a> -->
 

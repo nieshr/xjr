@@ -105,6 +105,7 @@ public class TdExpertController {
 		if (null == expertUsername) {
 			return "/client/login";
 		}
+		 tdCommonService.setHeader(map, req);
 		TdExpert expert = tdExpertService.findbyUsername(expertUsername);
 		List<TdActivityExpert> ae_list = tdActivityExpertService
 				.findByExpertIdOrderByCreateTimeDesc(expert.getId());

@@ -32,19 +32,21 @@ $(document).ready(function(){
         var txtPic = $("#url3").val();
         if (txtPic == "" || txtPic == null) 
         {
-            $(".ImgView").hide();
+            $("#ImgView").hide();
         }
         else 
         {
             $("#ImgView").attr("src" , $("#url3").val())
-            $(".ImgView").show();
+            $("#ImgView").show();
         }
 
-        $("#url3").change(function()
+        $("#url3").blur(function()
         {
-          $("#ImgView").attr("src" , $("#url3").val())
+          $("#ImgView").attr("src" , $("#url3").val());
+          $("#ImgView").show();
         });
 });
+
 
     $(function () {
         //初始化表单验证

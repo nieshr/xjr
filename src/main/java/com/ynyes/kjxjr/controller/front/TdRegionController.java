@@ -47,6 +47,7 @@ import com.ibm.icu.text.DateFormat;
 import com.ynyes.kjxjr.entity.TdActivity;
 import com.ynyes.kjxjr.entity.TdActivityEnterprise;
 import com.ynyes.kjxjr.entity.TdActivityExpert;
+import com.ynyes.kjxjr.entity.TdActivityType;
 import com.ynyes.kjxjr.entity.TdArticle;
 import com.ynyes.kjxjr.entity.TdCoachContent;
 import com.ynyes.kjxjr.entity.TdEnterprise;
@@ -60,6 +61,7 @@ import com.ynyes.kjxjr.entity.TdUserMessage;
 import com.ynyes.kjxjr.service.TdActivityEnterpriseService;
 import com.ynyes.kjxjr.service.TdActivityExpertService;
 import com.ynyes.kjxjr.service.TdActivityService;
+import com.ynyes.kjxjr.service.TdActivityTypeService;
 import com.ynyes.kjxjr.service.TdArticleService;
 import com.ynyes.kjxjr.service.TdCommonService;
 import com.ynyes.kjxjr.service.TdCouponService;
@@ -121,6 +123,9 @@ public class TdRegionController {
 	
 	@Autowired
 	TdRegionRecordService tdRegionRecordService;
+	
+	@Autowired
+	TdActivityTypeService tdActivityTypeService;
 
     @RequestMapping(value = "/enterprise/list", method = RequestMethod.GET)
     public String EnterpriseList(HttpServletRequest req, ModelMap map,Integer page) {
@@ -1310,6 +1315,18 @@ public Map<String, Object>  candidateEnterprise(HttpServletRequest req,Long id,L
     		newEnter.setPptUrl(activity.getPptUrl());
     		newEnter.setFileUrl(activity.getFileUrl());
     		newEnter.setStatusId(0L);
+        	//3类活动区别对待，后两类直接不审核了
+            List<TdActivityType> activityTypeList = tdActivityTypeService.findByIsEnableTrueOrderBySortIdAsc(); //活动类型
+            int i = 0;
+            for (TdActivityType item : activityTypeList)
+            {
+            	if (i == 2&&item.getTitle().equals(activity.getActivityType()))
+            	{
+            		newEnter.setStatusId(2L);
+            	}
+            	i++;
+            }
+    		
     		tdActivityEnterpriseService.save(newEnter);
     	}
     	else

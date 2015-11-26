@@ -521,7 +521,7 @@ window.onload=done2;
     				    </#if>
     				</ul>
     			</div>
- 				<#if recommend_list??>
+ 				<#if recommend_list??&&recommend_list?size gt 0>
     			<div>
     				<span style="margin-top: 6px;">推荐项目：</span>
     				<ul class="active_project_text">
@@ -581,12 +581,17 @@ window.onload=done2;
 			    					<li>
 			    						<p class="p01" style="  width: 250px;float: left; text-align: left;">${item_index+1}.${item.name!''}</p>
 			    						<a style="display:block;  width:100px;"></a>
-	
-	                                    <#if activity.statusId??&&activity.statusId==0 || !activity.statusId??>
-	                                   	    <a href="javascript:void(0)" title="评分尚未开始" style="color:#666;" target="_blank">评分情况</a>
-	                                    <#else>
-	                                    	<a href="/expert/search/grade?activityId=${activity.id?c!''}&expertId=${item.expertId?c!''}" title="查看该评委的评分详情" target="_blank">评分情况</a>
-	                                    </#if>
+					        			<#if activityType_list??>
+				    				        <#list activityType_list as type>
+				    				        	<#if (type_index == 0||type_index ==2)&&item.type??&&type.title == item.type>						
+				                                    <#if activity.statusId??&&activity.statusId==0 || !activity.statusId??>
+				                                   	    <a href="javascript:void(0)" title="评分尚未开始" style="color:#666;" target="_blank">评分情况</a>
+				                                    <#else>
+				                                    	<a href="/expert/search/grade?activityId=${activity.id?c!''}&expertId=${item.expertId?c!''}" title="查看该评委的评分详情" target="_blank">评分情况</a>
+				                                    </#if>
+												</#if>
+				    					    </#list>
+			    						</#if>   		                                    
 			    					</li>
 	    					    </#list>
 	    					</#if>    
@@ -704,6 +709,7 @@ window.onload=done2;
         </#if>
 
 		</#if>
+		<#--
 		<#if mark??&&mark == "enterprise">
 		<dl class="active_content" style="margin-top:50px;">
         <dd>
@@ -734,7 +740,7 @@ window.onload=done2;
                 </ul>
             </div>
             </#if>
-        </#if>
+        </#if>-->
 	</#if>
 		
     </div>
