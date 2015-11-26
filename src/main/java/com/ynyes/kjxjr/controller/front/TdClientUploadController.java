@@ -263,7 +263,7 @@ public class TdClientUploadController {
 	
 	//企业其他
 	@RequestMapping(value = "/dataOther/upload", method = RequestMethod.POST)
-    public String dataOther(String action,Long id,Long activityId,
+    public String dataOther(String action,Long id,
             @RequestParam MultipartFile Filedata, ModelMap map, HttpServletRequest req) {
 		
         String username = (String) req.getSession().getAttribute("enterpriseUsername");
@@ -309,8 +309,7 @@ public class TdClientUploadController {
         }
         
         Long done = 1L;
-        return "redirect:/enterprise/data?done="+done
-        		+"&activityId="+activityId;
+        return "redirect:/enterprise/data?done="+done;
     }
 	
 	@RequestMapping(value = "/activity/upload", method = RequestMethod.POST)
@@ -412,7 +411,7 @@ public class TdClientUploadController {
 	
 	
 	@RequestMapping(value = "/enterprise/pptupload", method = RequestMethod.POST)
-    public String enterprisePptUpload(String action,Long id, Long activityId,
+    public String enterprisePptUpload(String action,Long id, 
             @RequestParam MultipartFile Filedata, ModelMap map, HttpServletRequest req) {
 		
         String username = (String) req.getSession().getAttribute("enterpriseUsername");
@@ -429,8 +428,7 @@ public class TdClientUploadController {
         if(!ext.equalsIgnoreCase(".ppt") && !ext.equalsIgnoreCase(".pdf"))
         {
             Long done = 2L;
-            return "redirect:/enterprise/activity/check?done="+done
-            		+"&id="+activityId;
+            return "redirect:/enterprise/data?done="+done;
         }
         
         try {
@@ -468,8 +466,7 @@ public class TdClientUploadController {
         }
         
         Long done = 1L;
-        return "redirect:/enterprise/activity/check?done="+done
-        		+"&id="+activityId;
+        return "redirect:/enterprise/data?done="+done;
 
     }	
 }
