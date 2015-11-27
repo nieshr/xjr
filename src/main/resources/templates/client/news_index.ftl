@@ -81,7 +81,7 @@ function gotop()
       <li class="me"><a href="javascript:void(0)">新闻动态</a></li>
       <#if newsCat_list??>
            <#list newsCat_list as item>
-                <li><a href="/info/list/10?catId=${item.id?c}">${item.title!''}</a></li>
+                <li><a href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/10?catId=${item.id?c}</#if>">${item.title!''}</a></li>
            </#list>
       </#if>
     </ul>
@@ -102,7 +102,7 @@ function gotop()
                 <#if activity_page??>
                     <#list activity_page.content as item>
                         <#if item_index < 3>
-                            <div><a href="/info/list/content/${item.id?c}?mid=${item.menuId?c}"><img class="img-responsive" src="${item.imgUrl!''}"/>
+                            <div><a href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c}?mid=${item.menuId?c}</#if>"><img class="img-responsive" src="${item.imgUrl!''}"/>
                             <span><#if item.title?length lt 18>
                                 ${item.title!''}
                             <#else>
@@ -141,7 +141,7 @@ function gotop()
       <#if activity_page??>
            <#list activity_page.content as item>
                  <#if item_index gt 2 && item_index < 6>
-                     <div class="div1"><a href="/info/list/content/${item.id?c}?mid=${item.menuId?c}"><img src="${item.imgUrl!''}" alt="新闻图片" width="122" height="92"/></a>
+                     <div class="div1"><a href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c}?mid=${item.menuId?c}</#if>"><img src="${item.imgUrl!''}" alt="新闻图片" width="122" height="92"/></a>
                      <span><#if item.title?length lt 18>
                                 ${item.title!''}
                             <#else>
@@ -159,15 +159,13 @@ function gotop()
       <#if notice_page??>
            <#list notice_page.content as item>
                 <#if item_index < 1>
-                    <a href="/info/list/content/${item.id?c}?mid=${item.menuId?c}">
+                    <a href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c}?mid=${item.menuId?c}</#if>">
                     <img class="news_photo_1" src="${item.imgUrl!''}" alt="新闻图片" width=300 height=150/>
-                    <span class="tips"><#if item.title?length lt 20>
+                    <span class="tips">
                                 ${item.title!''}
-                            <#else>
-                                ${item.title[0..19]?default("")}...
-                            </#if></span></a>
+                           </span></a>
                 <#else>
-                    <p><a href="/info/list/content/${item.id?c}?mid=${item.menuId?c}"><i class="i1"></i>
+                    <p><a href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c}?mid=${item.menuId?c}</#if>"><i class="i1"></i>
                         <span><#if item.title?length lt 20>
                                 ${item.title!''}
                             <#else>
@@ -187,9 +185,9 @@ function gotop()
       <dl>
       <#if media_page??>
           <#list media_page.content as item>
-                <#if item_index < 3>
-                     <dd><a href="/info/list/content/${item.id?c}?mid=${item.menuId?c}">
-                      <img src="${item.imgUrl!''}" width="195" height="128" alt="新闻图片" />
+                <#if item_index < 4>
+                     <dd><a href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c}?mid=${item.menuId?c}</#if>">
+                      <img src="${item.imgUrl!''}" width="195" height="128" alt="新闻图片" style="border: #666 1px solid;"/>
                       <div class="mess">
                         <p class="p1"><#if item.title?length lt 20>
                                 ${item.title!''}
@@ -218,37 +216,6 @@ function gotop()
                       </div>
                     </a></dd>
                 </#if>
-                <#if item_index gt 2 && item_index < 4>
-                    <dt><a href="/info/list/content/${item.id?c}?mid=${item.menuId?c}">
-                      <img src="${item.imgUrl!''}" width="334" height="204" alt="新闻图片" />
-                      <div class="mess">
-                        <p class="p1"><#if item.title?length lt 20>
-                                ${item.title!''}
-                            <#else>
-                                ${item.title[0..19]?default("")}...
-                            </#if></p>
-                        <p class="p3">
-                          <span class="span1">${item.source!''}</span>
-                          <span class="span2">${item.createTime?string("yyyy-MM-dd")}</span>
-                          <span class="span3">阅读（<b>${item.viewCount!'0'}</b>）</span>
-                          <span class="span4">
-                           <!-- JiaThis Button BEGIN -->
-                            <div class="jiathis_style">
-                                <a class="jiathis_button_qzone"></a>
-                                <a class="jiathis_button_tsina"></a>
-                                <a class="jiathis_button_tqq"></a>
-                                <a class="jiathis_button_weixin"></a>
-                                <a class="jiathis_button_renren"></a>
-                                <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
-                            </div>
-                            <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
-                            <!-- JiaThis Button END -->
-                          </span>
-                        </p>
-                        <p class="p2">${item.brief!''}</p>
-                      </div>
-                    </a></dt>
-                </#if>
           </#list>
       </#if>        
       </dl>      
@@ -260,7 +227,7 @@ function gotop()
       <#if data_page??>
           <#list data_page.content as item>
                 <#if item_index < 3>
-                    <li><a href="/info/list/content/${item.id?c}?mid=${item.menuId?c}">
+                    <li><a href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c}?mid=${item.menuId?c}</#if>">
                       <img src="${item.imgUrl!''}" width="280" height="158" alt="新闻图片" />
                       <p>${item.title!''}</p>
                     </a></li>
@@ -280,7 +247,7 @@ function gotop()
        <#if hot_page??>
           <#list hot_page.content as item>
                 <#if item_index < 3>
-                     <dd><a href="/info/list/content/${item.id?c}?mid=${item.menuId?c}">
+                     <dd><a href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c}?mid=${item.menuId?c}</#if>">
                       <img src="${item.imgUrl!''}" width="195" height="128" alt="新闻图片" />
                       <div class="mess">
                         <p class="p1"><#if item.title?length lt 20>
@@ -311,7 +278,7 @@ function gotop()
                     </a></dd>
                 </#if>
                 <#if item_index gt 2 && item_index < 4>
-                    <dt><a href="/info/list/content/${item.id?c}?mid=${item.menuId?c}">
+                    <dt><a href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c}?mid=${item.menuId?c}</#if>">
                       <img src="${item.imgUrl!''}" width="334" height="204" alt="新闻图片" />
                       <div class="mess">
                         <p class="p1"><#if item.title?length lt 20>
@@ -351,7 +318,7 @@ function gotop()
       <#if SYB_page??>
           <#list SYB_page.content as item>
               <#if item_index < 8>
-                   <li><a href="/info/list/content/${item.id?c}?mid=${item.menuId?c}">
+                   <li><a href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c}?mid=${item.menuId?c}</#if>">
                       <img src="${item.imgUrl!''}"  width="66" height="56" alt="新闻图片" />
                       <p>
                         <span class="span1"><#if item.title?length lt 17>

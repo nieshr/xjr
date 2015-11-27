@@ -275,7 +275,7 @@
                                   <#--<a href="<#if item.linkUrl??>${item.linkUrl}<#else>/info/aIn/${item.id?c!''}</#if>" class="a2">了解更多信息</a>-->
                               </p>  
                           </div>
-                          <img src="${item.imgUrl!''}" width="420" height="280" />
+                          <img src="${item.imgUrl!''}" width="420" height="280" style="border:0;"/>
                         </div>
                         </#list>
                     </#if>    
@@ -331,7 +331,7 @@
 	<div class="section sect4">
                 <div class="sect1">
                     <div class="div1">
-                        <p class="p1">新闻动态</p>
+                        <p class="p1"><a href="/info/index">新闻动态</a></p>
                         <p class="p2">News dynamics</p>
                     </div>
                     <div class="div2">
@@ -358,7 +358,7 @@
                             <#list news_list as item>
                                 <#if item_index < 3>
                                     <li class="li1"><a target="_blank"  href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>">
-                                        <img src="${item.imgUrl!''}" width="173" height="120" alt="新闻图片" />
+                                        <img src="${item.imgUrl!''}" width="171" height="120" alt="新闻图片" />
                                         <div class="newsmess">
                                             <p class="p1"><#if item.title?length lt 18>
                                                 ${item.title!''}
@@ -386,7 +386,7 @@
                         <#list news_list as item>
                             <#if item_index gt 2&&item_index lt 7>
                                 <li class="li1"><a target="_blank"  href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>">
-                                   <img src="${item.imgUrl!''}" width="173" height="120" alt="新闻图片" />
+                                   <img src="${item.imgUrl!''}" width="171" height="120" alt="新闻图片" />
                                     <div class="newsmess1">
                                         <p class="p1"><#if item.title?length lt 18>
                                             ${item.title!''}

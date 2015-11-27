@@ -79,7 +79,7 @@ function gotop()
       <li><a href="/info/index">新闻动态</a></li>
       <#if newsCat_list??>
            <#list newsCat_list as item>
-                <li <#if item.id==catId>class="me"</#if>><a href="/info/list/10?catId=${item.id?c}">${item.title!''}</a></li>
+                <li <#if item.id==catId>class="me"</#if>><a href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/10?catId=${item.id?c}</#if>">${item.title!''}</a></li>
            </#list>
       </#if>      
     </ul>
@@ -91,7 +91,7 @@ function gotop()
   <ul>
   <#if info_page??>
       <#list info_page.content as item>
-            <li><a href="/info/list/content/${item.id?c}?mid=10">
+            <li><a href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c}?mid=10</#if>">
               <div class="pic"><img src="${item.imgUrl!''}" /></div>
               <div class="news_words">
                 <div class="news_title">${item.title!''}</div>

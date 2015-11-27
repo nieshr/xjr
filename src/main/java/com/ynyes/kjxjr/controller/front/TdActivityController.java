@@ -1342,6 +1342,17 @@ public class TdActivityController {
             		newEnter.setPptUrl(activity.getPptUrl());
             		newEnter.setFileUrl(activity.getFileUrl());
             		newEnter.setStatusId(0L);
+                	//3类活动区别对待
+                    List<TdActivityType> activityTypeList = tdActivityTypeService.findByIsEnableTrueOrderBySortIdAsc(); //活动类型
+                    int i = 0;
+                    for (TdActivityType item : activityTypeList)
+                    {
+                    	if (i == 2&&item.getTitle().equals(activity.getActivityType()))
+                    	{
+                    		newEnter.setStatusId(2L);
+                    	}
+                    	i++;
+                    }
             		tdActivityEnterpriseService.save(newEnter);
             	}
             	else
@@ -1454,6 +1465,17 @@ public class TdActivityController {
         		newEnter.setPptUrl(enterprise.getPptUrl());
         		newEnter.setFileUrl(activity.getFileUrl());
         		newEnter.setStatusId(0L);
+            	//3类活动区别对待
+                List<TdActivityType> activityTypeList = tdActivityTypeService.findByIsEnableTrueOrderBySortIdAsc(); //活动类型
+                int i = 0;
+                for (TdActivityType item : activityTypeList)
+                {
+                	if (i == 2&&item.getTitle().equals(activity.getActivityType()))
+                	{
+                		newEnter.setStatusId(2L);
+                	}
+                	i++;
+                }
         		tdActivityEnterpriseService.save(newEnter);
         	}
         	else
@@ -1764,7 +1786,7 @@ public class TdActivityController {
             {
             	if (i == 1&&item.getTitle().equals(activity.getActivityType()))
             	{
-            		activity.setStatusId(1L);
+            		activity.setStatusId(0L);
             	}
             	if (i == 2&&item.getTitle().equals(activity.getActivityType()))
             	{
@@ -1927,7 +1949,7 @@ public class TdActivityController {
         {
         	if (i == 1&&item.getTitle().equals(tdActivity.getActivityType()))
         	{
-        		tdActivity.setStatusId(1L);
+        		tdActivity.setStatusId(0L);
         	}
         	if (i == 2&&item.getTitle().equals(tdActivity.getActivityType()))
         	{
@@ -2301,7 +2323,7 @@ public class TdActivityController {
     	map.addAttribute("expert", expert);
         map.addAttribute("enterprise", enterprise);
     
-        return "redirect:/activity/getGrade?activityId="+activityId+"&mark=activity";
+        return "redirect:/activity/getGrade?activityId="+activityId+"&mark=b";
     }
     /**
      * 选出入选胜出的项目
@@ -2334,7 +2356,7 @@ public class TdActivityController {
     		}
         }
         
-        return "redirect:/activity/getGrade?activityId="+activityId+"&mark=activity"+"&tip=1";
+        return "redirect:/activity/getGrade?activityId="+activityId+"&mark=a"+"&tip=1";
     }
     
     

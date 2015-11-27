@@ -148,25 +148,25 @@ KindEditor.ready(function(K) {
             </dl>
             <dl class="team_title02">
                 <dt>辅导企业：</dt>
-                <dd>
+                <dd style="line-height: 30px; font-size: 14px;">
 					<span>${enterprise.title!''}</span>                   
                 </dd>
             </dl>
             <dl class="team_title02">
                 <dt>投资机构：</dt>
-                <dd>
+                <dd style="line-height: 30px; font-size: 14px;">
                     ${expert.invest!''}
                 </dd>
             </dl>   
              <dl class="team_title02">
                 <dt>辅导专家：</dt>
-                <dd>
+                <dd style="line-height: 30px; font-size: 14px;">
                     ${expert.name!''}
                 </dd>
             </dl> 
              <dl class="team_title03">
                 <dt style="font-size:14px;float:left">投融资价值：</dt>
-                <dd>
+                <dd style="line-height: 30px; font-size: 14px;">
                     <input  type="text" name="amount" style="width:64px" value="<#if invest??>${invest.amount!''}</#if>" />万元
                 </dd>
             </dl>  

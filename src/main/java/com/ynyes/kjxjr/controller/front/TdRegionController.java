@@ -1315,7 +1315,7 @@ public Map<String, Object>  candidateEnterprise(HttpServletRequest req,Long id,L
     		newEnter.setPptUrl(activity.getPptUrl());
     		newEnter.setFileUrl(activity.getFileUrl());
     		newEnter.setStatusId(0L);
-        	//3类活动区别对待，后两类直接不审核了
+        	//3类活动区别对待
             List<TdActivityType> activityTypeList = tdActivityTypeService.findByIsEnableTrueOrderBySortIdAsc(); //活动类型
             int i = 0;
             for (TdActivityType item : activityTypeList)

@@ -45,7 +45,7 @@ function move3()
 					<#if item_index lt 6>
 					
 						<li>
-								<img style="cursor:pointer;" 
+								<img style="cursor:pointer;border:0;" 
 										src="<#if item.imgUrl??&&item.imgUrl?length gt 0>${item.imgUrl!''}<#else>/client/images/banner_bg1.png</#if>" 
 										width="322px" height="144px" 
 										title="查看详情" 
@@ -73,7 +73,7 @@ function move3()
 				<#list project_page.content as item>
 					<#if item_index lt 6>
 						<li>
-								<img style="cursor:pointer;" 
+								<img style="cursor:pointer;border:0;" 
 										src="<#if item.imgUrl??&&item.imgUrl?length gt 0>${item.imgUrl!''}<#else>/client/images/banner_bg1.png</#if>" 
 										width="322px" height="144px"
 										title="查看详情"
@@ -100,7 +100,7 @@ function move3()
 				<#list story_page.content as item>
 					<#if item_index lt 6>
 						<li>
-								<img style="cursor:pointer;" 
+								<img style="cursor:pointer;border:0;" 
 										src="<#if item.imgUrl??&&item.imgUrl?length gt 0>${item.imgUrl!''}<#else>/client/images/banner_bg1.png</#if>" 
 										width="322px" height="144px" 
 										title="查看详情"

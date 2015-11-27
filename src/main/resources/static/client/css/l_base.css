@@ -3,7 +3,7 @@
 /* CSS Document */
 * {padding: 0;margin: 0;}
 body {margin: 0px;padding: 0px;color: #666666;font-family:"微软雅黑", Arial, Helvetica, sans-serif;font-size: 12px;background:#ffffff;text-align:left;line-height:18px;}
-img {border: 0;}
+img {border: #666 1px solid;}
 .clear {height:0px;line-height:0px;font-size:0px;clear:both;visibility:hidden;overflow:hidden;padding:0;margin:0;}
 div,ul,dl,dd,dt,li,td,tr,table,p,span,h1,h2,h3,h4,h5,h6,form{ margin:0px;  padding:0px; list-style:none; list-style-type: none; word-wrap:break-word; border:none;}
 a {color:#666666;text-decoration: none;cursor:pointer;}

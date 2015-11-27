@@ -476,9 +476,10 @@ window.onload=done2;
     			    <span>活动结束时刻：</span>
                     <input <#if pagetype??&& pagetype == "check" >disabled=""</#if> name="eventEnd" id="eventEnd" type="text" value="<#if activity??>${activity.eventEnd!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="填写正确格式" sucmsg=" ">
     			</div>
+    			<#--
                 <#if activityType_list??>
                     <#list activityType_list as type>
-                        <#if (type_index == 0||type_index ==1)&&type.title == activity.activityType>    			
+                        <#if (type_index == 0||type_index ==1)&&type.title == activity.activityType>    -->			
 		    			<div>
 		    				<span style="margin-top: 6px;">预选项目：</span>
 		    				<ul class="active_project_text">
@@ -543,9 +544,9 @@ window.onload=done2;
 		    				    </#if>
 		    				</ul>
 		    			</div>
-                        </#if>
+             <#-->           </#if>
                     </#list>
-                </#if>     			
+                </#if>     -->		
  				<#if recommend_list??&&recommend_list?size gt 0>
     			<div>
     				<span style="margin-top: 6px;">推荐项目：</span>

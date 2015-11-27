@@ -190,8 +190,8 @@
         <dl>
             <dt>内容标题</dt>
             <dd>
-                <input name="title" type="text" value="<#if article??>${article.title!""}</#if>" id="txtTitle" class="input normal" datatype="*2-50" sucmsg=" ">
-                <span class="Validform_checktip">*标题最多50个字符</span>
+                <input name="title" type="text" value="<#if article??>${article.title!""}</#if>" id="txtTitle" class="input normal" datatype="*2-250" sucmsg=" ">
+                <span class="Validform_checktip">*标题最多250个字符</span>
             </dd>
         </dl>
         
