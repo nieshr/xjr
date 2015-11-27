@@ -361,11 +361,14 @@
 	/* top:-12px; */
 	bottom:0;
 	width:100%;
-	background:rgba(0,0,0,0.6);
+	/*
+	background:rgba(0,0,0,0.6);*/
 	color:#ffffff;
 	font-size:14px;
 	/* line-height:24px; */
 	text-indent:4px;
+	background: #333
+	
 }
 .newsBox .sect1 .div2 .sect1_right p{
 	overflow:hidden;

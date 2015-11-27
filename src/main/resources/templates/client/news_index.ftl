@@ -160,7 +160,7 @@ function gotop()
            <#list notice_page.content as item>
                 <#if item_index < 1>
                     <a href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c}?mid=${item.menuId?c}</#if>">
-                    <img class="news_photo_1" src="${item.imgUrl!''}" alt="新闻图片" width=300 height=150/>
+                    <img class="news_photo_1" src="${item.imgUrl!''}" alt="新闻图片" width=332 height=172/>
                     <span class="tips">
                                 ${item.title!''}
                            </span></a>
