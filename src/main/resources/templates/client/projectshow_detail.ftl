@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>企业项目</title>
+	<title>科技小巨人-企业项目</title>
 	<link rel="shortcut icon" href="/client/images/icon.ico" />
 	<link rel="stylesheet" href="/client/css/news_base.css">
 	<link rel="stylesheet" href="/client/css/news_main.css">
@@ -50,8 +50,8 @@ function move3()
 										src="<#if item.imgUrl??&&item.imgUrl?length gt 0>${item.imgUrl!''}<#else>/client/images/banner_bg1.png</#if>" 
 										width="322px" height="144px" 
 										title="查看详情" 
-										onclick="location.href='<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>'">
-								<a title="查看详情" style="padding: 0px;" href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>">
+										onclick="window.open('<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>')">
+								<a title="查看详情"  target="_blank"   style="padding: 0px;" href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>">
 								<h3>${item.title!''}</h3>
 								<#if item.brief?length lt 20>
 									<h4>${item.brief!''}</h4>

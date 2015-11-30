@@ -36,7 +36,7 @@
 <!-- 导航end -->
 <!-- banner -->
 <div class="listbanner">
-	<img src="/client/news_img/bglist.png"/>
+	<img style="border:0;" src="/client/news_img/bglist.png"/>
 	<div><span>关注成长，创领未来</span></div>
 </div>
 <!-- bannerend -->

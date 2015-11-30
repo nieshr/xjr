@@ -41,7 +41,9 @@ public class TdArticleService {
             return null;
         }
         
-        return repository.findByMenuIdOrderBySortIdAsc(menuId);
+        Sort sort = new Sort(Direction.ASC, "sortId").and(new Sort(Direction.DESC , "createTime"));
+        
+        return repository.findByMenuId(menuId , sort);
     }
     
     /**
@@ -106,7 +108,7 @@ public class TdArticleService {
             return null;
         }
         
-        PageRequest pageRequest = new PageRequest(page, size);
+        PageRequest pageRequest = new PageRequest(page, size , new Sort(Direction.ASC , "sortId").and(new Sort(Direction.DESC , "createTime")));
         
         return repository.findByMenuIdOrderBySortIdAsc(menuId, pageRequest);
     }
@@ -169,7 +171,7 @@ public class TdArticleService {
             return null;
         }
         
-        PageRequest pageRequest = new PageRequest(page, size);
+        PageRequest pageRequest = new PageRequest(page, size  , new Sort(Direction.ASC , "sortId").and(new Sort(Direction.DESC , "createTime")));
         
         return repository.findByMenuIdAndCategoryIdOrderBySortIdAsc(menuId, catId, pageRequest);
     }
@@ -225,8 +227,9 @@ public class TdArticleService {
         {
             return null;
         }
-        
-        PageRequest pageRequest = new PageRequest(page, size);
+         
+        PageRequest pageRequest = new PageRequest(page, size , new Sort(Direction.ASC, "sortId")           //zhangji 排序号优先，其次时间
+				.and(new Sort(Direction.DESC , "createTime")));
         
         return repository.findByMenuIdAndCategoryIdAndStatusIdOrderBySortIdAsc(menuId, catId, 0L, pageRequest);
     }

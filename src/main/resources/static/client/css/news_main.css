@@ -6,7 +6,7 @@
 #titlelist{width:100%;/*padding-left: 10px;*/background: #EFEFEF;padding-top: 10px;}
 #titlelist div{width: 1000px;}
 .titlelist div a{padding:  15px; color: #333333;font-size: 16px;line-height: 56px;}
-.titlelist div a:hover{ text-decoration:none;font-size: 18px;}
+.titlelist div a:hover{ /*text-decoration:none;font-size: 18px;*/ border-bottom:3px solid #e67817;}
 .titlelist div .active{border-bottom: 3px solid #E67817;font-size: 18px;}
 .teacher{margin-top: 20px;width: 1000px;}
 .contactustitle{margin-top: 20px;width: 1000px;}
@@ -60,7 +60,7 @@ a:hover { }
 .teamdisplay p{font-size: 24px;color: #333333;text-align: center;line-height: 77px;}
 .teamdisplay ul li{float: left;padding:9px 5px;}
 .teamdisplay ul li h3{font-size: 16px;font-weight: normal;line-height: 24px;color:#333;margin-top: 4px;}
-.teamdisplay ul li h4{font-size: 14px;font-weight: normal;line-height: 17px;color:#666;}
+.teamdisplay ul li h4{font-size: 14px;font-weight: normal;line-height: 17px;color:#666; min-height: 17px;}
 /*项目展示end*/
 /*专项行动*/
 /*.specialaction{width: 1000px;border: 1px solid red;}*/

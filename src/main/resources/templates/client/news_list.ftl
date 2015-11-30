@@ -36,7 +36,7 @@
 <!-- 导航end -->
 <!-- banner -->
 <div class="listbanner">
-	<img src="/client/news_img/bglist.png"/>
+	<img style="border:0;" src="/client/news_img/bglist.png"/>
 	<div><span>关注成长，创领未来</span></div>
 </div>
 <!-- bannerend -->
@@ -91,7 +91,7 @@ function gotop()
   <ul>
   <#if info_page??>
       <#list info_page.content as item>
-            <li><a href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c}?mid=10</#if>">
+            <li><a target="_blank" href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c}?mid=10</#if>">
               <div class="pic"><img src="${item.imgUrl!''}" /></div>
               <div class="news_words">
                 <div class="news_title">${item.title!''}</div>

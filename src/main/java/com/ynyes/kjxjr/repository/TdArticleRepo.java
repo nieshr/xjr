@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
@@ -23,6 +24,7 @@ public interface TdArticleRepo extends
     // 通过父类型查找
     List<TdArticle> findByMenuIdOrderBySortIdAsc(Long menuId);
     List<TdArticle> findByMenuIdOrderByCreateTimeDesc(Long menuId); //zhangji
+    List<TdArticle> findByMenuId(Long menuId , Sort sort); 
     
     Page<TdArticle> findByMenuIdOrderBySortIdAsc(Long menuId, Pageable page);
     

@@ -32,6 +32,10 @@ public class TdEnterprise {
     @Column
     private Long win;
     
+    //年度秀胜出活动id
+    @Column
+    private Long showWin;
+    
     // 企业/项目名称
     @Column
     private String title;
@@ -784,6 +788,14 @@ public class TdEnterprise {
 
 	public void setWin(Long win) {
 		this.win = win;
+	}
+
+	public Long getShowWin() {
+		return showWin;
+	}
+
+	public void setShowWin(Long showWin) {
+		this.showWin = showWin;
 	}
 
 

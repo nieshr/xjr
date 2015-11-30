@@ -65,7 +65,7 @@ img {border:0;}
 			<div class="specialaction-third-one">
 				<img src="<#if item_index==0>/client/news_img/weekaction.png<#elseif item_index==1>/client/news_img/weekaction02.png<#elseif item_index==2>/client/news_img/weekaction03.png</#if>" alt="封面图片" width=128 height=128 />
 				<a href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>" title="查看更多信息"><h3>${item.title!''}</h3></a>
-				<h4>${item.brief!''}</h4>
+				<h4 style="min-height:96px;">${item.brief!''}</h4>
 			</div>
 			
 		  </#list>

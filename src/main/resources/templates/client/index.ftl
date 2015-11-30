@@ -357,7 +357,7 @@
                         <#if news_list??>                   
                             <#list news_list as item>
                                 <#if item_index < 3>
-                                    <li class="li1"><a target="_blank"  href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>">
+                                    <li class="li1"><a target="_blank" title="${item.title!''}"  href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>">
                                         <img src="${item.imgUrl!''}" width="171" height="120" alt="新闻图片" />
                                         <div class="newsmess">
                                             <p class="p1"><#if item.title?length lt 18>
@@ -385,7 +385,7 @@
                     <#if news_list??>
                         <#list news_list as item>
                             <#if item_index gt 2&&item_index lt 7>
-                                <li class="li1"><a target="_blank"  href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>">
+                                <li class="li1"><a target="_blank" title="${item.title!''}"  href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>">
                                    <img src="${item.imgUrl!''}" width="171" height="120" alt="新闻图片" />
                                     <div class="newsmess1">
                                         <p class="p1"><#if item.title?length lt 18>

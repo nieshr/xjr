@@ -2105,6 +2105,8 @@ public class TdActivityController {
     			map.addAttribute("mark", "activity");
     		}
     		
+            List<TdActivityType> activityTypeList = tdActivityTypeService.findByIsEnableTrueOrderBySortIdAsc();
+            map.addAttribute("activityType_list", activityTypeList);
     		
     		/*----------------------------------dengxiao **************************------------------*/
 //    		if(0 < activity_experts.size()){
@@ -2258,6 +2260,9 @@ public class TdActivityController {
     		map.addAttribute("activity", activity);
     	}
     	
+        List<TdActivityType> activityTypeList = tdActivityTypeService.findByIsEnableTrueOrderBySortIdAsc();
+        map.addAttribute("activityType_list", activityTypeList);
+    	
     	map.addAttribute("type", "invest");
     	map.addAttribute("keywords", keywords);
     	map.addAttribute("page", page);
@@ -2348,11 +2353,23 @@ public class TdActivityController {
             return "redirect:/login";
         }
         
+        //活动类型年度秀时，保存不同字段
+        List<TdActivityType> activityTypeList = tdActivityTypeService.findByIsEnableTrueOrderBySortIdAsc();
+        TdActivity  activity = tdActivityService.findOne(activityId);
+        if (activityTypeList.get(2).getTitle().equals(activity.getActivityType()))
+        {
+        	__ACTION = "showWin";
+        }
+        
         if (null != __ACTION)
         {
         	if (__ACTION.equalsIgnoreCase("win"))
     		{
     			selectW(activityId , listId, listChkId);
+    		}
+        	else if (__ACTION.equalsIgnoreCase("showWin"))
+    		{
+    			selectSW(activityId , listId, listChkId);
     		}
         }
         
@@ -2441,6 +2458,86 @@ public class TdActivityController {
       }
     }
 
+    //年度秀
+    private void selectSW(Long activityId ,Long[] ids, Integer[] chkIds)
+    {
+        //先把获胜状态清空，为了可以多次选择入选企业
+        List<TdActivityEnterprise> aeList = tdActivityEnterpriseService.findByActivityIdAndStatusId(activityId, 2L);
+        for(TdActivityEnterprise aen : aeList)
+        {
+      	  if (null != aen.getShowWin() && aen.getShowWin() == activityId)
+      	  {
+      		  aen.setShowWin(null);
+      		  tdActivityEnterpriseService.save(aen);
+      	  }
+      	  TdEnterprise e = tdEnterpriseService.findOne(aen.getEnterpriseId());
+      	  if(null != e.getShowWin() && e.getShowWin() == activityId)
+      	  {
+      		  e.setShowWin(null);
+      		  tdEnterpriseService.save(e);
+      	  }
+        }
+    	
+      if (null == ids || null == chkIds || null == activityId
+              || ids.length < 1 || chkIds.length < 1)
+      {
+          return;
+      }
+      
+      TdActivity activity = tdActivityService.findOne(activityId);
+      activity.setStatusId(2L);
+      tdActivityService.save(activity);
+      
+      //修改文章状态
+      TdArticle article = tdArticleService.findByRecommendIdAndMenuId(activityId, 13L);
+      if (null != article)
+      {
+	      article.setSortId(2L);
+	      tdArticleService.save(article);
+      }
+      //路演辅导状态
+      TdExpertCoachEnterprise coach = tdExpertCoachEnterpriseService.findByEnterpriseId(activityId);
+      if (null != coach)
+      {
+	      coach.setIsGrade(true);
+	      tdExpertCoachEnterpriseService.save(coach);
+      }
+      
+      for (int chkId : chkIds)
+      {
+          if (chkId >=0 && ids.length > chkId)
+          {
+              Long id = ids[chkId];
+              
+          	TdActivityEnterprise ActivityEnterprise = tdActivityEnterpriseService.findOne(id);
+          	if (null != ActivityEnterprise)
+          	{
+          		ActivityEnterprise.setShowWin(activityId); 
+          		tdActivityEnterpriseService.save(ActivityEnterprise);
+          	}
+          	TdEnterprise enterprise = tdEnterpriseService.findOne(ActivityEnterprise.getEnterpriseId());
+          	if (null != enterprise)
+          	{
+          		enterprise.setShowWin(activityId); 
+          		tdEnterpriseService.save(enterprise);
+          	}
+          }
+      }
+      
+      //删除投资信息
+      for(TdActivityEnterprise aen : aeList)
+      {
+    	  if(null == aen.getShowWin())
+    	  {
+    		  TdActivityInvest invest = tdActivityInvestService.findByEnterpriseIdAndActivityId(aen.getEnterpriseId(), activityId);
+    		  if (null !=invest)
+    		  {
+    			  tdActivityInvestService.delete(invest.getId());
+    		  }
+    	  }
+      }
+    }
+    
  
  //评分汇总表导出
  @SuppressWarnings("deprecation")

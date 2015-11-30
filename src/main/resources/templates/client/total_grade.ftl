@@ -53,12 +53,12 @@ function tip()
 	        	<td width="2%">排名</td>
 	        	<td width="3%">编号</td>
 	        	<td width="15%">名称</td>
-	        	<td id="order0"  width="3%" style="background-color:<#if orderId??&&orderId==0>#FFF3CD<#else>#D9E3F3</#if>;"><a href="javascript:gradeOrder(0);" title="点击按此评分项顺序排序">总分<img class="orderIcon" id="orderIcon0" style="margin-left:2px; <#if orderId??&&orderId!=0>display:none;</#if>"  src="/client/images/down1.png" width=8px height=10px alt=↓ /></a></td>
-	        	<td id="order1"  width="3%" style="background-color:<#if orderId??&&orderId==1>#FFF3CD<#else>#D9E3F3</#if>;"><a href="javascript:gradeOrder(1);" title="点击按此评分项顺序排序">核心竞争力<img class="orderIcon" id="orderIcon1"  style="margin-left:2px; <#if orderId??&&orderId!=1>display:none;</#if>" src="/client/images/down1.png" width=8px height=10px alt=↓ /></td>
-	        	<td id="order3"  width="3%" style="background-color:<#if orderId??&&orderId==3>#FFF3CD<#else>#D9E3F3</#if>;"><a href="javascript:gradeOrder(3);" title="点击按此评分项顺序排序">团队能力<img class="orderIcon" id="orderIcon3" style="margin-left:2px; <#if orderId??&&orderId!=3>display:none;</#if>"   src="/client/images/down1.png" width=8px height=10px alt=↓ /></td>
-	        	<td id="order2"  width="3%" style="background-color:<#if orderId??&&orderId==2>#FFF3CD<#else>#D9E3F3</#if>;"><a href="javascript:gradeOrder(2);" title="点击按此评分项顺序排序">市场潜力<img class="orderIcon" id="orderIcon2"  style="margin-left:2px; <#if orderId??&&orderId!=2>display:none;</#if>"   src="/client/images/down1.png" width=8px height=10px alt=↓ /></td>
-	        	<td id="order4"  width="3%" style="background-color:<#if orderId??&&orderId==4>#FFF3CD<#else>#D9E3F3</#if>;"><a href="javascript:gradeOrder(4);" title="点击按此评分项顺序排序">投资价值<img class="orderIcon" id="orderIcon4" style="margin-left:2px; <#if orderId??&&orderId!=4>display:none;</#if>"  src="/client/images/down1.png" width=8px height=10px alt=↓ /></td>
-	        	<td id="order5"  width="3%" style="background-color:<#if orderId??&&orderId==5>#FFF3CD<#else>#D9E3F3</#if>;"><a href="javascript:gradeOrder(5);" title="点击按此评分项顺序排序">现场表现力<img class="orderIcon" id="orderIcon5" style="margin-left:2px; <#if orderId??&&orderId!=5>display:none;</#if>"  src="/client/images/down1.png" width=8px height=10px alt=↓ /></td>
+	        	<td id="order0"  width="3%" style="background:url(/client/images/colorman<#if orderId??&&orderId==0><#else>02</#if>.png);"><a href="javascript:gradeOrder(0);" title="点击按此评分项顺序排序">总分<img class="orderIcon" id="orderIcon0" style="margin-left:2px; <#if orderId??&&orderId!=0>display:none;</#if>"  src="/client/images/down1.png" width=8px height=10px alt=↓ /></a></td>
+	        	<td id="order1"  width="3%" style="background:url(/client/images/colorman<#if orderId??&&orderId==1><#else>02</#if>.png);"><a href="javascript:gradeOrder(1);" title="点击按此评分项顺序排序">核心竞争力<img class="orderIcon" id="orderIcon1"  style="margin-left:2px; <#if orderId??&&orderId!=1>display:none;</#if>" src="/client/images/down1.png" width=8px height=10px alt=↓ /></td>
+	        	<td id="order3"  width="3%" style="background:url(/client/images/colorman<#if orderId??&&orderId==2><#else>02</#if>.png);"><a href="javascript:gradeOrder(3);" title="点击按此评分项顺序排序">团队能力<img class="orderIcon" id="orderIcon3" style="margin-left:2px; <#if orderId??&&orderId!=3>display:none;</#if>"   src="/client/images/down1.png" width=8px height=10px alt=↓ /></td>
+	        	<td id="order2"  width="3%" style="background:url(/client/images/colorman<#if orderId??&&orderId==3><#else>02</#if>.png);"><a href="javascript:gradeOrder(2);" title="点击按此评分项顺序排序">市场潜力<img class="orderIcon" id="orderIcon2"  style="margin-left:2px; <#if orderId??&&orderId!=2>display:none;</#if>"   src="/client/images/down1.png" width=8px height=10px alt=↓ /></td>
+	        	<td id="order4"  width="3%" style="background:url(/client/images/colorman<#if orderId??&&orderId==4><#else>02</#if>.png);"><a href="javascript:gradeOrder(4);" title="点击按此评分项顺序排序">投资价值<img class="orderIcon" id="orderIcon4" style="margin-left:2px; <#if orderId??&&orderId!=4>display:none;</#if>"  src="/client/images/down1.png" width=8px height=10px alt=↓ /></td>
+	        	<td id="order5"  width="3%" style="background:url(/client/images/colorman<#if orderId??&&orderId==5><#else>02</#if>.png);"><a href="javascript:gradeOrder(5);" title="点击按此评分项顺序排序">现场表现力<img class="orderIcon" id="orderIcon5" style="margin-left:2px; <#if orderId??&&orderId!=5>display:none;</#if>"  src="/client/images/down1.png" width=8px height=10px alt=↓ /></td>
 	            <#if invest??&&invest==1>
 	               <td width="8%">投资方</td>
 	               <td width="2%">金额</td>
@@ -74,18 +74,59 @@ function tip()
 	        </tr>
 	        <#if grade_list??>
 	            <#list grade_list.content as item>
-			        <tr class="tr02" <#if item.win??&&item.win==activityId>style="background-color:#FFF3CD;"</#if>>
+			        <tr class="tr02" 
+					<#if activityType_list??>
+    				    <#list activityType_list as type>
+    				        <#if type_index == 0 && type.title == activity.activityType>	 
+			        			<#if item.win??&&item.win==activityId>style="background:url(/client/images/colorman.png);"</#if>
+							</#if>
+    				        <#if type_index == 2 && type.title == activity.activityType>	 
+			        			<#if item.showWin??&&item.showWin==activityId>style="background:url(/client/images/colorman.png);"</#if>
+							</#if>							
+					    </#list>
+					</#if>   			        			
+			        >
 			        	<#if mark??&&mark=="activity">
 		        		<td>
 		        		<span class="checkall" style="vertical-align:middle;">
-			        		<input style="width:15px;height:15px;float:left; margin:0 0 0 10px ;" <#if item.win??&&item.win==activityId || (activity.statusId==1 && item_index lt 7)>checked=""</#if> id="listChkId" type="checkbox" name="listChkId" value="${item_index}"/>
+			        		<input style="width:15px;height:15px;float:left; margin:0 0 0 10px ;" 
+							<#if activityType_list??>
+		    				    <#list activityType_list as type>
+		    				        <#if type_index == 0 && type.title == activity.activityType>	 			        		
+					        			<#if item.win??&&item.win==activityId || (activity.statusId==1 && item_index lt 7)>checked=""</#if>
+					        		</#if>
+		    				        <#if type_index == 2 && type.title == activity.activityType>	 			        		
+					        			<#if item.showWin??&&item.showWin==activityId || (activity.statusId==1 && item_index lt 7)>checked=""</#if>
+					        		</#if>			        		
+							    </#list>
+							</#if>   					        		
+			        		 id="listChkId" type="checkbox" name="listChkId" value="${item_index}"/>
 			        		<input type="hidden" name="listId" id="listId" value="${item.id}">
 			        	</span>	
 		        		</td>
 		        		</#if>
 			        	<td>${item_index+1}</td>
 			        	<td>${item.number!''}</td>
-				        <td><#if item.win??&&item.win==activityId><a style="color:#BB4014;"  title="分配投资机构" href="/activity/invest?enterpriseId=${item.enterpriseId?c!''}&activityId=${item.activityId?c!''}">${item.enterpriseTitle!''}</a><#else>${item.enterpriseTitle!''}</#if></td>
+				        <td>
+						<#if activityType_list??>
+	    				    <#list activityType_list as type>
+	    				        <#if type_index == 0 && type.title == activity.activityType>	 				        
+							        <#if item.win??&&item.win==activityId>
+							        	<a style="color:#BB4014;"  title="分配投资机构" href="/activity/invest?enterpriseId=${item.enterpriseId?c!''}&activityId=${item.activityId?c!''}">${item.enterpriseTitle!''}</a>
+							        <#else>
+							        	${item.enterpriseTitle!''}
+							        </#if>
+							    </#if>    
+	    				        <#if type_index == 2 && type.title == activity.activityType>	 				        
+							        <#if item.showWin??&&item.showWin==activityId>
+							        	<a style="color:#BB4014;"  title="分配投资机构" href="/activity/invest?enterpriseId=${item.enterpriseId?c!''}&activityId=${item.activityId?c!''}">${item.enterpriseTitle!''}</a>
+							        <#else>
+							        	${item.enterpriseTitle!''}
+							        </#if>	
+							    </#if>    						        
+							    </#list>
+							</#if>  							        
+				        </td>
 				        <td><#if item.totalPoint??>${item.totalPoint?c!''}</#if></td>
 				        <td><#if item.totalTechnology??>${item.totalTechnology?c!''}</#if></td>
 				        <td><#if item.totalGroup??>${item.totalGroup?c!''}</#if></td>

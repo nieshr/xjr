@@ -163,9 +163,13 @@ public class TdActivityEnterprise {
     @Column
     private Long totalExpression;
     
-    //胜出
+    //胜出的活动id
     @Column
     private Long win;
+    
+    //年度秀胜出活动id
+    @Column
+    private Long showWin;
 
     public String getDownload() {
 		return download;
@@ -453,6 +457,14 @@ public class TdActivityEnterprise {
 
 	public void setTotalExpression(Long totalExpression) {
 		this.totalExpression = totalExpression;
+	}
+
+	public Long getShowWin() {
+		return showWin;
+	}
+
+	public void setShowWin(Long showWin) {
+		this.showWin = showWin;
 	}
 
 	

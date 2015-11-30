@@ -38,8 +38,9 @@
 <!-- 导航end -->
 <!-- banner -->
 <div class="listbanner">
-	<img src="/client/news_img/bglist.png"/>
+	<img style="*+border:0;" src="/client/news_img/bglist.png"/>
 	<div><span>关注成长，创领未来</span></div>
+
 </div>
 <!-- bannerend -->
     <!--右侧浮动导航开始-->
@@ -81,7 +82,7 @@ function gotop()
       <li class="me"><a href="javascript:void(0)">新闻动态</a></li>
       <#if newsCat_list??>
            <#list newsCat_list as item>
-                <li><a href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/10?catId=${item.id?c}</#if>">${item.title!''}</a></li>
+                <li><a title="查看分类列表"  href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/10?catId=${item.id?c}</#if>">${item.title!''}</a></li>
            </#list>
       </#if>
     </ul>
@@ -93,7 +94,15 @@ function gotop()
 
   <div class="sect1">
     <div class="div1">
-      <h3>活动动态</h3>
+      <h3>
+       <#if newsCat_list??>
+           <#list newsCat_list as item>
+           		<#if item_index == 1>
+                	<li><a title="查看分类列表"  href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/10?catId=${item.id?c}</#if>">${item.title!''}</a></li>
+           		</#if>
+           </#list>
+      </#if>     
+      </h3>
       <div class="ggBox">
       <!--Luara图片切换骨架begin-->
       <div class="addWrap">
@@ -102,7 +111,7 @@ function gotop()
                 <#if activity_page??>
                     <#list activity_page.content as item>
                         <#if item_index < 3>
-                            <div><a href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c}?mid=${item.menuId?c}</#if>"><img class="img-responsive" src="${item.imgUrl!''}"/>
+                            <div><a target="_blank" href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c}?mid=${item.menuId?c}</#if>"><img class="img-responsive" src="${item.imgUrl!''}"/>
                             <span><#if item.title?length lt 18>
                                 ${item.title!''}
                             <#else>
@@ -138,6 +147,7 @@ function gotop()
       </div>
 
       <div class="ggBox2">
+      <#--
       <#if activity_page??>
            <#list activity_page.content as item>
                  <#if item_index gt 2 && item_index < 6>
@@ -149,45 +159,29 @@ function gotop()
                             </#if></span></div>
                  </#if>
            </#list>
-      </#if>               
+      </#if>      
+      -->         
       </div>
 
     </div>
-    <div class="div2">
-      <h3>通知公告</h3>
-      <div class="sect1_right">
-      <#if notice_page??>
-           <#list notice_page.content as item>
-                <#if item_index < 1>
-                    <a href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c}?mid=${item.menuId?c}</#if>">
-                    <img class="news_photo_1" src="${item.imgUrl!''}" alt="新闻图片" width=332 height=172/>
-                    <span class="tips">
-                                ${item.title!''}
-                           </span></a>
-                <#else>
-                    <p><a href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c}?mid=${item.menuId?c}</#if>"><i class="i1"></i>
-                        <span><#if item.title?length lt 20>
-                                ${item.title!''}
-                            <#else>
-                                ${item.title[0..19]?default("")}...
-                            </#if></span></a></p>
-                </#if>
-           </#list>
-      </#if>
-      </div>
-    </div>
-  </div>
-
-  <!-- 媒体报道、数据公布 -->
-  <div class="sect2">
     <div class="div1">
-      <h3>媒体报道</h3>
+      <h3>
+       <#if newsCat_list??>
+           <#list newsCat_list as item>
+           		<#if item_index == 2>
+                	<li><a   title="查看分类列表" href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/10?catId=${item.id?c}</#if>">${item.title!''}</a></li>
+           		</#if>
+           </#list>
+      </#if>  
+      </h3>
       <dl>
       <#if media_page??>
           <#list media_page.content as item>
                 <#if item_index < 4>
-                     <dd><a href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c}?mid=${item.menuId?c}</#if>">
-                      <img src="${item.imgUrl!''}" width="195" height="128" alt="新闻图片" style="border: #666 1px solid;"/>
+                     <dd>
+                     <a target="_blank" class="left-pic" href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c}?mid=${item.menuId?c}</#if>">
+                        <img src="${item.imgUrl!''}" width="195" height="128" alt="新闻图片" style="border: #666 1px solid;"/>
+                      </a>
                       <div class="mess">
                         <p class="p1"><#if item.title?length lt 20>
                                 ${item.title!''}
@@ -220,35 +214,24 @@ function gotop()
       </#if>        
       </dl>      
     </div>
-    
-    <div class="div2">
-      <h3 class="h3_right">数据公布</h3>
-      <ul>
-      <#if data_page??>
-          <#list data_page.content as item>
-                <#if item_index < 3>
-                    <li><a href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c}?mid=${item.menuId?c}</#if>">
-                      <img src="${item.imgUrl!''}" width="280" height="158" alt="新闻图片" />
-                      <p>${item.title!''}</p>
-                    </a></li>
-                </#if>
-          </#list>
-      </#if>               
-      </ul>
-    </div>
-  </div>
-  <!-- 媒体报道、数据公布 End-->
-
-  <!-- 热点追踪、创业风向 -->
-  <div class="sect2">
     <div class="div1">
-      <h3>热点追踪</h3>
+      <h3>
+       <#if newsCat_list??>
+           <#list newsCat_list as item>
+           		<#if item_index == 4>
+                	<li><a  title="查看分类列表" href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/10?catId=${item.id?c}</#if>">${item.title!''}</a></li>
+           		</#if>
+           </#list>
+      </#if>        
+      </h3>
       <dl>
        <#if hot_page??>
           <#list hot_page.content as item>
                 <#if item_index < 3>
-                     <dd><a href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c}?mid=${item.menuId?c}</#if>">
-                      <img src="${item.imgUrl!''}" width="195" height="128" alt="新闻图片" />
+                     <dd>
+                     <a target="_blank" class="left-pic" href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c}?mid=${item.menuId?c}</#if>">
+                        <img src="${item.imgUrl!''}" width="195" height="128" alt="新闻图片" />
+                      </a>
                       <div class="mess">
                         <p class="p1"><#if item.title?length lt 20>
                                 ${item.title!''}
@@ -278,7 +261,7 @@ function gotop()
                     </a></dd>
                 </#if>
                 <#if item_index gt 2 && item_index < 4>
-                    <dt><a href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c}?mid=${item.menuId?c}</#if>">
+                    <dt><a target="_blank" href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c}?mid=${item.menuId?c}</#if>">
                       <img src="${item.imgUrl!''}" width="334" height="204" alt="新闻图片" />
                       <div class="mess">
                         <p class="p1"><#if item.title?length lt 20>
@@ -312,13 +295,72 @@ function gotop()
       </#if>        
       </dl>
     </div>
+  </div>
+
+  <!-- 媒体报道、数据公布 -->
+  <div class="sect2">
+  <div class="div2">
+      <h3 class="h3_right">
+        <#if newsCat_list??>
+           <#list newsCat_list as item>
+           		<#if item_index == 0>
+                	<li><a  title="查看分类列表" href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/10?catId=${item.id?c}</#if>">${item.title!''}</a></li>
+           		</#if>
+           </#list>
+      </#if>       
+      </h3>
+      <div class="sect1_right">
+      <#if notice_page??>
+           <#list notice_page.content as item>
+                <#if item_index  lt 5>
+                    <p style="height:auto;"><a target="_blank" title="${item.title!''}"  href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c}?mid=${item.menuId?c}</#if>"><i class="i1"></i>
+                        <span style="height:auto;">
+                                ${item.title!''} 
+                           </span></a></p>
+                </#if>
+           </#list>
+      </#if>
+      </div>
+    </div>   
     <div class="div2">
-      <h3 class="h3_right">创业风向</h3>
+      <h3 class="h3_right">
+       <#if newsCat_list??>
+           <#list newsCat_list as item>
+           		<#if item_index ==3>
+                	<li><a  title="查看分类列表" href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/10?catId=${item.id?c}</#if>">${item.title!''}</a></li>
+           		</#if>
+           </#list>
+      </#if>        
+      </h3>
+      <ul>
+      <#if data_page??>
+          <#list data_page.content as item>
+                <#if item_index lt 5>
+                    <li><a target="_blank" title="${item.title!''}" href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c}?mid=${item.menuId?c}</#if>">
+                      <#--<img src="${item.imgUrl!''}" width="280" height="158" alt="新闻图片" />-->
+                      <p style="height:auto;">${item.title!''}</p>
+                    </a></li>
+                </#if>
+          </#list>
+      </#if>               
+      </ul>
+    </div>
+    
+     <div class="div2">
+      <h3 class="h3_right">
+       <#if newsCat_list??>
+           <#list newsCat_list as item>
+           		<#if item_index == 5>
+                	<li><a  title="查看分类列表" href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/10?catId=${item.id?c}</#if>">${item.title!''}</a></li>
+           		</#if>
+           </#list>
+      </#if>        
+      </h3>
       <ol>
       <#if SYB_page??>
           <#list SYB_page.content as item>
               <#if item_index < 8>
-                   <li><a href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c}?mid=${item.menuId?c}</#if>">
+                   <li><a target="_blank" href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c}?mid=${item.menuId?c}</#if>">
                       <img src="${item.imgUrl!''}"  width="66" height="56" alt="新闻图片" />
                       <p>
                         <span class="span1"><#if item.title?length lt 17>
@@ -335,6 +377,9 @@ function gotop()
       </ol>
     </div>
   </div>
+  <!-- 媒体报道、数据公布 End-->
+
+  <!-- 热点追踪、创业风向 -->
   <!-- 热点追踪、创业风向 End-->
 
 </div>
