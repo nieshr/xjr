@@ -120,7 +120,7 @@ function gotop()
 										</#if>
 										<dl style="display: block;">
 											<dt><p><a href="/info/list/content/${activity.id?c!''}?mid=13" title="查看详情">${activity.title!''}</a></p><span>${activity.brief!''}</span></dt>
-										  <a style="margin-right:5%;float:right;" href="<#if activity.linkUrl??&&activity.linkUrl!="">${activity.linkUrl!''}<#else>/info/list/content/${activity.id?c!''}?mid=13</#if>" title="查看详情">详情</a>
+										  <a style="margin-right:5%;float:right;"  target="_blank"  href="<#if activity.linkUrl??&&activity.linkUrl!="">${activity.linkUrl!''}<#else>/info/list/content/${activity.id?c!''}?mid=13</#if>" title="查看详情">详情</a>
 										</dl>
 									</li>
 								</#if>
@@ -143,7 +143,7 @@ function gotop()
 									</#if>	
 										<dl style="display: block;">
 											<dt><a href="<#if activity.linkUrl??&&activity.linkUrl!="">${activity.linkUrl!''}<#else>/info/list/content/${activity.id?c!''}?mid=13</#if>" title=""><p>${activity.title!''}</p><span>${activity.theme!''}</span></a></dt>
-										  <a style="margin-right:5%;float:right;" href="<#if activity.linkUrl??&&activity.linkUrl!="">${activity.linkUrl!''}<#else>/info/list/content/${activity.id?c!''}?mid=13</#if>" title="查看详情">详情</a>
+										  <a style="margin-right:5%;float:right;" target="_blank" href="<#if activity.linkUrl??&&activity.linkUrl!="">${activity.linkUrl!''}<#else>/info/list/content/${activity.id?c!''}?mid=13</#if>" title="查看详情">详情</a>
 										</dl>
 									</li>
 									</ul>

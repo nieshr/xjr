@@ -12,4 +12,5 @@ public interface TdCoachContentRepo
 
 	//根据企业ID和专家ID查询辅导内容，并按照时间排序
 	List<TdCoachContent> findByExpertIdAndEnterpriseIdOrderByCoachDateAsc(Long expertId,Long enterpriseId);
+	List<TdCoachContent> findByExpertIdAndActivityIdOrderByCoachDateAsc(Long expertId,Long activityId);
 }

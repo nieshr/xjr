@@ -29,7 +29,7 @@
 			<#list info_page.content as item>
 				<#if catId??>
 					<li>
-						<img  style="cursor:pointer;" title="查看详情" src="<#if item.imgUrl??&&item.imgUrl != "">${item.imgUrl!''}<#else>/client/images/default.jpg</#if>" alt="展示图片" onclick="location.href='/info/list/content/${item.id?c!''}?mid=12'">
+						<img  style="cursor:pointer;" title="查看详情" src="<#if item.imgUrl??&&item.imgUrl != "">${item.imgUrl!''}<#else>/client/images/default.jpg</#if>" alt="展示图片" onclick="window.open('<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=12</#if>')">
 						<h6>${item.title!''}</h6>
 						<#if item.brief?length lt 20>
 							<p>${item.brief!''}</p>
@@ -39,7 +39,7 @@
 					</li>
 				<#else>
 					<li>
-						<img style="cursor:pointer;" title="查看详情" src="<#if item.imageUri??&&item.imageUri != "">${item.imageUri!''}<#else>/client/images/default.jpg</#if>" alt="展示图片" onclick="location.href='/info/list/content/expert/${item.id?c}'">
+						<img style="cursor:pointer;" title="查看详情" src="<#if item.imageUri??&&item.imageUri != "">${item.imageUri!''}<#else>/client/images/default.jpg</#if>" alt="展示图片" onclick="window.open('<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/expert/${item.id?c}</#if>')">
 						<h6>${item.inCharge!''}</h6>
 						<#if item.content??>
 							<#if item.content?length lt 20>

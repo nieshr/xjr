@@ -31,9 +31,9 @@ public class TdActivityInvest {
 	@Column
 	private String expertName;
 
-	// 活动id
+	// 活动名称
 	@Column
-	private Long activityTitle;
+	private String  activityTitle;
 
 	// 企业ID
 	@Column
@@ -151,11 +151,11 @@ public class TdActivityInvest {
 		this.activityType = activityType;
 	}
 
-	public Long getActivityTitle() {
+	public String getActivityTitle() {
 		return activityTitle;
 	}
 
-	public void setActivityTitle(Long activityTitle) {
+	public void setActivityTitle(String activityTitle) {
 		this.activityTitle = activityTitle;
 	}
 

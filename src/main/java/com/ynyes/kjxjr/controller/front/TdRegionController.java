@@ -252,7 +252,7 @@ public class TdRegionController {
             }
             
             //短信提醒
-            smsPass(Enterprise.getUsermobile(), 1L , Enterprise.getTitle() , res,req);
+            smsPass(Enterprise.getMobile(), 1L , Enterprise.getTitle() , res,req);
             
             //站内信
             TdRegionAdmin admin = tdRegionAdminService.findbyUsername(username);

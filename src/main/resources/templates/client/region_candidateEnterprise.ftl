@@ -11,7 +11,7 @@
 		.page p{  margin-left: 10px;}
 	</style>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-	<title>预选项目</title>
+	<title>初选项目</title>
 	<link rel="shortcut icon" href="/client/images/icon.ico" />
 	<link href="/client/css/base.css" rel="stylesheet" type="text/css" />
 	<link href="/client/css/area.css" rel="stylesheet" type="text/css" />
@@ -30,7 +30,7 @@ function searchSubmit()
 	    }
    }
    
-//全选取消按钮函数-预选
+//全选取消按钮函数-初选
 function checkAll(chkobj) {
     if ($(chkobj).text() == "全选") {
         $(chkobj).children("span").text("取消");
@@ -78,7 +78,7 @@ function checkAll2(chkobj) {
                 <p>当前所在位置:</p>
                 <a href="#">区县管理</a>
                 <p>&gt;</p>
-                <a href="#">预选企业/团队</a>
+                <a href="#">初选企业/团队</a>
                 <#if activity??>
 	                <p>&gt;</p>
 	                <a href="#">${activity.title!''}</a>  
@@ -166,7 +166,7 @@ function selectSubmit()
 	        </div>
 	        <div class="area_add_btn">
 	        <a class="all" style="margin-left:0px;" href="javascript:;" onclick="checkAll(this);"><i></i><span>全选</span></a>
-			<input style=" margin-left: 10px; cursor:pointer;" class="area_batch" type="submit" value="批量加入预选" />
+			<input style=" margin-left: 10px; cursor:pointer;" class="area_batch" type="submit" value="批量加入初选" />
 			</form>
 			</div>
 		
@@ -217,7 +217,7 @@ function selectSubmit()
         	<#include "/client/region_candidate_selected_enterprise.ftl" />
         
         <div class="area_add_btn">
-		<!--	<input style="cursor:pointer;"  type="button" value="批量取消预选" />-->
+		<!--	<input style="cursor:pointer;"  type="button" value="批量取消初选" />-->
 		</div>
 		<input style="cursor:pointer;" class="area_save_btn" style="margin-left:45%;"type="button" onclick="location.href='/region/enterprise/finish?id=${activityId?c!''}&statusId=1'" value="完成" />
     </div> 

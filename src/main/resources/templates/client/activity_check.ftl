@@ -93,6 +93,30 @@ function sendSms(id,activityId,roleId)
          });
 }
 
+function smsSendAll(activityId,roleId)
+{
+         $.ajax({
+             type: "GET",
+             url: "/activity/smsSendAll",
+             data: {"activityId" : activityId,"roleId":roleId},
+             dataType: "json",
+             success: function(data){
+                         if (data.code == 0)
+                         {
+                             $("body").ios6alert({
+                                 content : "已发送"
+                             });
+                         }
+                         else 
+                         {
+                             $("body").ios6alert({
+                                 content : data.msg
+                             });
+                         }
+                      }
+         });
+}
+
 function passCheck(activityId) {
     
 	$("body").ios6alert({
@@ -362,6 +386,7 @@ function sortDown(id , activityId)
                                     <input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:green;color:#fff; " type="button" class="area_batch" onclick="location.href='/activity/getCoach?activityId=${activity.id?c!''}'"  value="分配路演辅导" />
                                     <input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#E4574E;color:#fff; " type="button" onclick="javascript:cancelCheck(${activity.id?c!''});"  value="取消审核" />
                                     <input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#e67817;color:#fff; " type="button" onclick="javascript:resetCheck(${activity.id?c!''});"  value="重置评分" />
+                                    <input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#1484E4;color:#fff; " type="button" onclick="javascript:smsSendAll(${activity.id?c!''},1);"  value="群发短信" />
                                 <#elseif activity??&&activity.statusId??&&activity.statusId==0> 
                                     <input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:green;color:#fff; " type="button" class="area_batch" onclick="location.href='/activity/getCoach?activityId=${activity.id?c!''}'"  value="分配路演辅导" />
                                     <input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#e67817;color:#fff; " type="button" class="area_batch" onclick="javascript:activityPass(${activity.id?c!''});" value="通过审核" />
@@ -395,7 +420,7 @@ function sortDown(id , activityId)
                                     </#if>
                                     <#if activity??&&activity.statusId??&&activity.statusId==1&&mark??&&mark="activity">
                                         <a>丨</a> 
-                                        <a href="javascript:sendSms(${item.expertId?c!''},${item.activityId?c!''},3);">短信通知</a>
+                                        <a href="javascript:smsSendAll(${item.activityId?c!''},3);">短信通知</a>
                                     </#if>
                                 </li>
                             </#list>
@@ -404,6 +429,9 @@ function sortDown(id , activityId)
                         <#else>
                            <input id="selectExpert" style="cursor:pointer;width:100px; height:30px; line-height: 30px; border: none;background:white url(images/active_add_project.png) no-repeat 10px; padding-left: 13px;" type="button"  value="添加评委" />
                         </#if>
+                        <#if activity??&&activity.statusId??&&activity.statusId==1&&mark??&&mark="activity">
+                        <input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#1484E4;color:#fff; " type="button" onclick="javascript:smsExpert(${activity.id?c!''});"  value="群发短信" />
+                    	</#if>
                     </ul>
                 </div>
                <#if roadshow_list??>

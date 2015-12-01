@@ -336,7 +336,7 @@ public class TdArticleService {
         }
 
         PageRequest pageRequest = new PageRequest(page, size, new Sort(
-                Direction.DESC, "createTime"));
+                Direction.ASC, "sortId").and(new Sort(Direction.DESC, "createTime")));
 
         return repository
                 .findByTitleContainingIgnoreCaseAndStatusIdOrBriefContainingIgnoreCaseAndStatusId(

@@ -497,7 +497,7 @@ public class TdExpertController {
 	}
 
 	@RequestMapping(value = "/coach/save")
-	public String coachSave(HttpServletRequest req, String content, Long enterpriseId) {
+	public String coachSave(HttpServletRequest req, String content, Long enterpriseId , Long activityId) {
 		String expertUsername = (String) req.getSession().getAttribute("expertUsername");
 		if (null == expertUsername) {
 			return "/client/login";
@@ -506,10 +506,21 @@ public class TdExpertController {
 		TdCoachContent coach = new TdCoachContent();
 		coach.setCoachDate(new Date());
 		coach.setContent(content);
-		coach.setEnterpriseId(enterpriseId);
-		coach.setExpertId(expert.getId());
-		tdCoachContentService.save(coach);
-		return "redirect:/expert/coach/" + enterpriseId;
+		if (null != enterpriseId)
+		{
+			coach.setEnterpriseId(enterpriseId);
+			coach.setExpertId(expert.getId());
+			tdCoachContentService.save(coach);
+			return "redirect:/expert/coach/" + enterpriseId;
+		}
+		else if (null != activityId)
+		{
+			coach.setActivityId(activityId);
+			coach.setExpertId(expert.getId());
+			tdCoachContentService.save(coach);
+			return "redirect:/expert/coach/log/" + activityId;
+		}
+		return "redirect:/expert/enterprise/list";
 	}
 	
 	@RequestMapping(value = "/lyfd")
@@ -526,14 +537,15 @@ public class TdExpertController {
 		return "/client/lydf";
 	}
 	
-	@RequestMapping(value = "/coach/log/{enterpriseId}")
-	public String coachLog(@PathVariable Long enterpriseId,HttpServletRequest req,ModelMap map){
+	@RequestMapping(value = "/coach/log/{activityId}")
+	public String coachLog(@PathVariable Long activityId,HttpServletRequest req,ModelMap map){
 		String expertUsername = (String) req.getSession().getAttribute("expertUsername");
 		if(null == expertUsername){
 			return "/client/login";
 		}
 		TdExpert expert = tdExpertService.findbyUsername(expertUsername);
-		List<TdCoachContent> content_list = tdCoachContentService.findByExpertIdAndEnterpriseIdOrderByCoachDateAsc(expert.getId(), enterpriseId);
+		List<TdCoachContent> content_list = tdCoachContentService
+				.findByExpertIdAndActivityIdOrderByCoachDateAsc(expert.getId(), activityId);
 		map.addAttribute("content_list", content_list);
 		return "/client/coach_log";
 	}

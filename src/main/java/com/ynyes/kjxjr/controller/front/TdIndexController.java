@@ -116,8 +116,16 @@ public class TdIndexController {
                             .findByMenuIdAndCategoryIdAndIsEnableOrderBySortIdAsc(13L,
                                     tdCat.getId(), 0, ClientConstant.pageSize);
                     
-                    TdArticle activityAbout = aboutPage.getContent().get(0);
-                    map.addAttribute("activityAbout", activityAbout);
+                    for (TdArticle activityAbout : aboutPage )
+                    {
+                        if (activityAbout.getTitle().equals("行动概况"))
+                        {
+                        	map.addAttribute("activityAbout", activityAbout);
+                        	break;
+                        }
+                        
+                    }
+
                     
                 }
                 if (null != tdCat.getTitle() && tdCat.getTitle().equals("专项轮播"))

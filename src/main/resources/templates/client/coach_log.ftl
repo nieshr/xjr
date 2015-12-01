@@ -2,12 +2,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>日志记录</title>
+    <title>专家评委-日志记录</title>
     <link rel="shortcut icon" href="/images/icon.ico" />
     <link href="/client/css/base.css" rel="stylesheet" type="text/css" />
     <link href="/client/css/expert.css" rel="stylesheet" type="text/css" />
     <script src="/client/js/jquery-1.9.1.min.js"></script>
     <script src="/client/js/main.js"></script>
+    <script>
+			function submit(){
+			    var content = document.getElementById("content").value;
+			    window.location.href = "/expert/coach/save?content="+content+"&activityId=<#if activityId??>${activityId?c}</#if>";
+			}    
+    </script>
 </head>
 
 
@@ -44,8 +50,8 @@
                             <#include "/client/records.ftl">
                             <dt>
                                 <span>意见录入:</span>
-                                <textarea></textarea>
-                                <input type="button" value="发表" />
+                                <textarea id="content"></textarea>
+                                <input type="button" value="发表" onclick="javascript:submit();" />
                             </dt>
                         </dl>
                     </div>    

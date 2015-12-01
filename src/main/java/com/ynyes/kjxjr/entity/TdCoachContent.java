@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -31,8 +32,13 @@ public class TdCoachContent {
 	@Column
 	private Long enterpriseId;
 	
+	//活动ID
+	@Column
+	private Long activityId;
+	
 	//辅导内容
 	@Column
+	@Lob
 	private String content;
 	
 	//辅导时间
@@ -79,6 +85,14 @@ public class TdCoachContent {
 
 	public void setCoachDate(Date coachDate) {
 		this.coachDate = coachDate;
+	}
+
+	public Long getActivityId() {
+		return activityId;
+	}
+
+	public void setActivityId(Long activityId) {
+		this.activityId = activityId;
 	}
 	
 	

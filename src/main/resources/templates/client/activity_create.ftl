@@ -481,7 +481,7 @@ window.onload=done2;
                     <#list activityType_list as type>
                         <#if (type_index == 0||type_index ==1)&&type.title == activity.activityType>    -->			
 		    			<div>
-		    				<span style="margin-top: 6px;">预选项目：</span>
+		    				<span style="margin-top: 6px;">初选项目：</span>
 		    				<ul class="active_project_text">
 		    				    <#if selected_enterprise_list??>
 		    				        <#list selected_enterprise_list as item>

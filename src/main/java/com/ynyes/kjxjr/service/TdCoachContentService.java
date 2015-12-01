@@ -48,4 +48,14 @@ public class TdCoachContentService {
 		return repository.findByExpertIdAndEnterpriseIdOrderByCoachDateAsc(expertId, enterpriseId);
 	}
 	
+	/*
+	 * @zhangji
+	 * 路演辅导对象变为活动了
+	 */
+	public List<TdCoachContent> findByExpertIdAndActivityIdOrderByCoachDateAsc(Long expertId,Long activityId){
+		if(null == expertId||null == activityId){
+			return null;
+		}
+		return repository.findByExpertIdAndActivityIdOrderByCoachDateAsc(expertId, activityId);
+	}
 }

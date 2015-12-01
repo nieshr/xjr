@@ -145,7 +145,7 @@
                         <p class="p1">${item.title!''}</p>
                         <#if ("organization_level1_"+item.id)?eval??>
                               <#list ("organization_level1_"+item.id)?eval as article>
-                                    <#if article_index < 5>
+                                    <#if article_index < 2>
                                         <p class="current">
 	                                        <a title="${article.title!''}" target="_blank"  href="<#if article.linkUrl??&&article.linkUrl?length gt 0>${article.linkUrl!''}<#else>/info/list/content/${article.id?c!''}?mid=${article.menuId!''}</#if>">
 	                                        	<#if article.title?length gt 9>
@@ -182,7 +182,7 @@
                             <p class="p1">${item.title!''}</p>
                             <#if ("organization_level1_"+item.id)?eval??>
                                 <#list ("organization_level1_"+item.id)?eval as article>
-                                    <#if article_index gt 5>
+                                    <#if article_index gt 5 && article_index lt 12>
                                         <p class="current">
 	                                        <a title="${article.title!''}" target="_blank"  href="<#if article.linkUrl??&&article.linkUrl?length gt 0>${article.linkUrl!''}<#else>/info/list/content/${article.id?c!''}?mid=${article.menuId!''}</#if>">
 	                                        	<#if article.title?length gt 9>
@@ -201,7 +201,7 @@
                             <p class="p1">${item.title!''}</p>
                             <#if ("organization_level1_"+item.id)?eval??>
                                 <#list ("organization_level1_"+item.id)?eval as article>
-                                    <#if article_index < 6>
+                                    <#if article_index < 5>
                                         <p class="current">
 	                                        <a title="${article.title!''}"  target="_blank" href="<#if article.linkUrl??&&article.linkUrl?length gt 0>${article.linkUrl!''}<#else>/info/list/content/${article.id?c!''}?mid=${article.menuId!''}</#if>">
 	                                        	<#if article.title?length gt 9>
@@ -220,7 +220,7 @@
                             <p class="p1">${item.title!''}</p>
                             <#if ("organization_level1_"+item.id)?eval??>
                                 <#list ("organization_level1_"+item.id)?eval as article>
-                                    <#if article_index < 6>
+                                    <#if article_index < 3>
                                         <p class="current">
 	                                        <a title="${article.title!''}" target="_blank"  href="<#if article.linkUrl??&&article.linkUrl?length gt 0>${article.linkUrl!''}<#else>/info/list/content/${article.id?c!''}?mid=${article.menuId!''}</#if>">
 	                                        	<#if article.title?length gt 9>

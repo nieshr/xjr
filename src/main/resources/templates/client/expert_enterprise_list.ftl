@@ -37,7 +37,7 @@
                     </dl>
                     <div class="list_base6">
                         <dl>
-                            <dt>备选企业列表</dt>
+                            <dt>企业列表</dt>
                             <#if enterprise_list??>
                                 <#list enterprise_list as item>
                                     <dd><a>${item.enterpriseName!''}</a></dd>
@@ -45,10 +45,10 @@
                             </#if>
                         </dl>
                         <dl class="list_color_blue">
-                            <dt>地址</dt>
+                            <dt>活动</dt>
                             <#if enterprise_list??>
                                 <#list enterprise_list as item>
-                                    <dd><a title="${item.addr!''}">${item.addr!''}</a></dd>
+                                    <dd><a title="${item.activityTitle!''}">${item.activityTitle!''}</a></dd>
                                 </#list>
                             </#if>
                         </dl>

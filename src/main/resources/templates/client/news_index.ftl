@@ -3,7 +3,7 @@
 <head>
 <!--网页左上角小图标-->
 <link rel="shortcut icon" href="/client/images/icon.ico" />
-<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<#--<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />-->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>科技小巨人-新闻动态</title>
 <!-- css -->
@@ -112,10 +112,10 @@ function gotop()
                     <#list activity_page.content as item>
                         <#if item_index < 3>
                             <div><a target="_blank" href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c}?mid=${item.menuId?c}</#if>"><img class="img-responsive" src="${item.imgUrl!''}"/>
-                            <span><#if item.title?length lt 18>
+                            <span><#if item.title?length lt 36>
                                 ${item.title!''}
                             <#else>
-                                ${item.title[0..17]?default("")}...
+                                ${item.title[0..35]?default("")}...
                             </#if></span></a></div> 
                         </#if>  
                     </#list>            

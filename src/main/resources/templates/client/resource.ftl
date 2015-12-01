@@ -28,7 +28,7 @@
 				<#list tutor_page.content as item>
 					<#if item_index lt 9>
 						<li>
-							<img title="查看详情" style="cursor:pointer;" src="<#if item.imageUri??&&item.imageUri != "">${item.imageUri!''}<#else>/client/images/default.jpg</#if>" width="150px" height="150px" onclick="location.href='/info/list/content/expert/${item.id?c!''}'">
+							<img title="查看详情" style="cursor:pointer;" src="<#if item.imageUri??&&item.imageUri != "">${item.imageUri!''}<#else>/client/images/default.jpg</#if>" width="150px" height="150px" onclick="window.open('<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/expert/${item.id?c!''}</#if>')">
 							<h6>${item.inCharge!''}</h6>
 							<#if  item.content??>
 								<#if  item.content?length lt 20>
@@ -57,7 +57,7 @@
 				<#list invest_page.content as item>
 					<#if item_index lt 9>
 						<li>
-							<img style="cursor:pointer;" src="<#if item.imgUri??&&item.imgUri != "">${item.imgUri!''}<#else>/client/images/default.jpg</#if>" width="150px" height="150px" onclick="location.href='/info/list/content/${item.id?c!''}?mid=${item.menuId?c!''}'">
+							<img style="cursor:pointer;" src="<#if item.imgUri??&&item.imgUri != "">${item.imgUri!''}<#else>/client/images/default.jpg</#if>" width="150px" height="150px" onclick="window.open('<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId?c!''}</#if>')">
 							<h6>${item.title!''}</h6>
 							<#if item.brief?length lt 20>
 								<p>${item.brief!''}</p>

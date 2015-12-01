@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-    <title>路演辅导</title>
+    <title>专家评委-路演辅导</title>
     <link rel="shortcut icon" href="/client/images/icon.ico" />
     <link href="/client/css/base.css" rel="stylesheet" type="text/css" />
     <link href="/client/css/expert.css" rel="stylesheet" type="text/css" />
@@ -49,7 +49,7 @@
                                 <dt>活动名称</dt>
                                     <#if grade_false_list??>                                
                                         <#list grade_false_list as item>
-                                            <dd><a>${item.enterpriseName!''}</a></dd>
+                                            <dd><a title="查看详细信息" <#if item.enterpriseId??>href="/activity/enterprise/check/${item.enterpriseId?c}" target="_blank"</#if> >${item.enterpriseName!''}</a></dd>
                                         </#list>
                                     </#if>
                             </dl>
@@ -78,7 +78,7 @@
                                 </#if>
                             </dl>
                         </div>
-                        <div class="btwz">往期辅导企业</div>
+                        <div class="btwz">往期辅导活动</div>
                         <div class="list_base8">
                             <dl>
                                 <dt>序号</dt>
@@ -89,10 +89,10 @@
                                 </#if>
                             </dl>
                             <dl>
-                                <dt>项目名称</dt>
+                                <dt>活动名称</dt>
                                 <#if grade_true_list??>
                                     <#list grade_true_list as item>
-                                        <dd><a >${item.enterpriseName!''}</a></dd>
+                                        <dd><a title="查看详细信息"  <#if item.enterpriseId??>href="/activity/enterprise/check/${item.enterpriseId?c}" target="_blank"</#if> >${item.enterpriseName!''}</a></dd>
                                     </#list>
                                 </#if>
                             </dl>
@@ -116,7 +116,8 @@
                                 <dt>操作</dt>
                                 <#if grade_true_list??>
                                     <#list grade_true_list as item>
-                                        <dd><a <#if item.enterpriseId??>href="/activity/enterprise/check/${item.enterpriseId?c}" target="_blank"</#if> >查看</a><#--丨<a href="#">下载</a>--></dd>
+                                        <dd><#--丨<a href="#">下载</a>--><a href="/expert/coach/log/${item.enterpriseId?c}">录入辅导信息</a></dd>
+                                    
                                     </#list>
                                 </#if>
                             </dl>

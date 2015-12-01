@@ -776,7 +776,7 @@ public class TdActivityController {
         {
         	TdEnterprise enterprise = tdEnterpriseService.findOne(id);
         	TdActivity activity = tdActivityService.findOne(activityId);
-        	smsRecommend(enterprise.getUsermobile(),activity.getTitle() , enterprise.getTitle() , response , req);
+        	smsRecommend(enterprise.getMobile(),activity.getTitle() , enterprise.getTitle() , response , req);
         }
         if (roleId == 3)
         {
@@ -789,7 +789,53 @@ public class TdActivityController {
         return res;
     }
        
-    
+  //群发短信
+    @RequestMapping(value = "/smsSendAll")
+    @ResponseBody
+    public  Map<String, Object> smsSendAll(HttpServletRequest req, HttpServletResponse response, Long activityId , Long roleId,
+    		ModelMap map) {
+        Map<String, Object> res = new HashMap<String, Object>();
+        res.put("code", 1);
+    	
+        String username = (String) req.getSession().getAttribute("activityUsername"); String manager = (String) req.getSession().getAttribute("manager");
+
+        if (null == username&&null==manager) {
+           res.put("msg", "请先登陆");
+           return res;
+        }
+        
+        if ( null == activityId || null == roleId)
+        {
+        	res.put("msg", "数据有误，发送失败。");
+        	return res;
+        }
+        
+        TdActivity activity = tdActivityService.findOne(activityId);
+        
+        if (roleId == 1)
+        {
+        	List<TdActivityEnterprise> aenList = tdActivityEnterpriseService.findByActivityIdAndStatusIdOrderBySortIdAsc(activityId, 2L);
+        	for (TdActivityEnterprise aen : aenList)	
+        	{
+    			TdEnterprise enterprise = tdEnterpriseService.findOne(aen.getEnterpriseId());
+		    	smsRecommend(enterprise.getMobile(),activity.getTitle() , enterprise.getTitle() , response , req);
+        	}
+
+        }
+        if (roleId == 3)
+        {
+        	List<TdActivityExpert> aexList = tdActivityExpertService.findByActivityIdOrderByExpertIdAsc(activityId);
+        	for (TdActivityExpert aex : aexList)
+        	{
+            	TdExpert expert = tdExpertService.findOne(aex.getExpertId());
+            	smsRecommend(expert.getUsermobile(),activity.getTitle() , expert.getName() , response , req);
+        	}
+
+        }
+        
+        res.put("code", 0);
+        return res;
+    } 
     
 	//发短信【推荐】
 	public Map<String, Object> smsRecommend(String mobile,  String activityTitle ,String name ,HttpServletResponse response, HttpServletRequest request) {
@@ -2309,6 +2355,7 @@ public class TdActivityController {
 			activityInvest.setAddr(enterprise.getAddress());
 			activityInvest.setExpertName(expert.getInCharge());
 			activityInvest.setType(expert.getInvest());
+			activityInvest.setActivityTitle(tdActivityService.findOne(activityId).getTitle());
 			tdActivityInvestService.save(activityInvest);
 		}
 		else{
@@ -2316,8 +2363,9 @@ public class TdActivityController {
 			invest.setPantent(enterprise.getMobile());
 			invest.setAddr(enterprise.getAddress());
 			invest.setExpertId(activityInvest.getExpertId());
-			activityInvest.setExpertName(expert.getInCharge());
-			activityInvest.setType(expert.getInvest());
+			invest.setExpertName(expert.getInCharge());
+			invest.setType(expert.getInvest());
+			invest.setActivityTitle(tdActivityService.findOne(activityId).getTitle());
 			invest.setAmount(activityInvest.getAmount());
 			invest.setDatail(activityInvest.getDatail());
 			tdActivityInvestService.save(invest);

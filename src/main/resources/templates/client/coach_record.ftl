@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>修改资料</title>
+    <title>专家评委-跟踪档案</title>
     <link rel="shortcut icon" href="/images/icon.ico" />
     <link href="/client/css/base.css" rel="stylesheet" type="text/css" />
     <link href="/client/css/expert.css" rel="stylesheet" type="text/css" />
@@ -45,7 +45,7 @@ window.onload = function(){
 
 function record(){
     var content = document.getElementById("coach_record").value;
-    window.location.href = "/expert/coach/save?content="+content+"&enterpriseId=${enterpriseId}";
+    window.location.href = "/expert/coach/save?content="+content+"&enterpriseId=<#if enterpriseId??>${enterpriseId?c}</#if>";
 }
 </script>
 
@@ -80,6 +80,40 @@ function record(){
                             </dd>
                             <dt class="crumb_back"><a></a></dt>
                         </dl>
+				        <div class="change_inform">
+				            <span>审核状态：已通过</span>
+				        </div>
+				        <div class="change_inform">
+				            <span>
+				            <#if enterprise.fileUrl??&&enterprise.fileUrl?length gt 0>  
+				            	<a style="font-size:12px; color:#01458d;" title="${enterprise.fileUrl!''}" href="/download/data?name=${enterprise.fileUrl!''}">【申请表附件下载】</a>
+				            <#else>
+				            	<a style="font-size:12px; color:#666;" title="无资料"   href="javascript:void(0)">【申请表附件下载】</a>
+				            </#if>
+				            </span>
+				            <span>
+				            <#if enterprise.dataBusiness??&&enterprise.dataBusiness?length gt 0> 
+				                <a style="font-size:12px; color:#01458d;" title="${enterprise.dataBusiness!''}" href="/download/data?name=${enterprise.dataBusiness!''}">【商业计划书】</a>
+				            <#else>
+				            	<a style="font-size:12px; color:#666;" title="无资料" href="javascript:void(0)">【商业计划书】</a>
+				            </#if>
+				            </span>
+				            <span>
+				            <#if enterprise.dataPossible??&&enterprise.dataPossible?length gt 0>
+				                 <a style="font-size:12px; color:#01458d; " title="${enterprise.dataPossible!''}" href="/download/data?name=${enterprise.dataPossible!''}">【可行性报告】</a>
+				             <#else>
+				            	<a style="font-size:12px;   color:#666;" title="无资料"  href="javascript:void(0)">【可行性报告】</a>          	
+				            </#if>
+				            </span>
+				            <span>
+				            <#if enterprise.dataOther??&&enterprise.dataOther?length gt 0>
+				                <a style="font-size:12px; color:#01458d;" title="${enterprise.dataOther!''}" href="/download/data?name=${enterprise.dataOther!''}">【其他资料】</a>
+				             <#else>
+				            	<a style="font-size:12px; color:#666;"  title="无资料" href="javascript:void(0)">【其他资料】</a>           
+				            </#if>
+				            </span>
+				                        
+				        </div>                        
                     </div>  
                     <input id="text_show_btn" style="width: 80px; height:30px; border: none; background: #e67817; color: white; border-radius: 6px; margin-left: 30px; margin-top: 30px;" type="button" value="显示资料" />
                     <p id="text" style=" margin-left: 30px; font-size: 14px; color: red;">*点击按钮查看资料</p>
