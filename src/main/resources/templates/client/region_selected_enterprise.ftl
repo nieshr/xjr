@@ -5,13 +5,13 @@
 					</#if>
 				<table class="new_list">
 		        	<tr class="list_title">
-		        		<th width="20%">已选择列表</th>
-		        		<th width="20%">地区</th>
+		        		<th width="30%">已选择列表</th>
+		        		<th width="10%">地区</th>
 		        		<th width="20%">行业归属</th>
 		                <#if statusId??&&statusId == 2>
                         	<th width="20%">推荐理由</th>
                         </#if>
-		        		<th width="20%">操作</th>
+		        		<th width="12%">操作</th>
 		        	</tr>
 		        <#if selected_enterprise_list??>
 		        	<#list selected_enterprise_list as item>

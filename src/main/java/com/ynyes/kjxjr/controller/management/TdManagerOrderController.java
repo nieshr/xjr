@@ -696,7 +696,59 @@ public class TdManagerOrderController {
     
     
     
-    
+    @RequestMapping(value = "/diysite/role" , method = RequestMethod.GET)
+    public String assumingControl(Long id,HttpServletRequest request , ModelMap map){
+        String username = (String) request.getSession().getAttribute("manager");
+        if (null == username) {
+            return "redirect:/Verwalter/login";
+        }
+    	
+        if (null != id )
+        {
+        	TdDiySite diySite = tdDiySiteService.findOne(id);
+        	TdUser user = tdUserService.findByUsername(diySite.getUsername());
+       
+        	System.err.println(user);
+			Integer roleId = user.getRoleId().intValue();
+			request.getSession().setMaxInactiveInterval(60 * 60 * 2);
+			switch (roleId) {
+			// 区县管理
+			case 2:
+				request.getSession().setAttribute("regionUsername", user.getUsername());
+				request.getSession().setAttribute("regionUsermobile", user.getMobile());
+				request.getSession().setAttribute("username", user.getUsername());
+				//去掉多余session用户名
+				request.getSession().removeAttribute("expertUsername");
+				request.getSession().removeAttribute("activityUsername");
+				
+				return "redirect:/region/enterprise/list";
+			// 专家
+			case 3:
+				request.getSession().setAttribute("expertUsername", user.getUsername());
+				request.getSession().setAttribute("expertUsermobile", user.getMobile());
+				request.getSession().setAttribute("username", user.getUsername());
+				//去掉多余session用户名
+				request.getSession().removeAttribute("regionUsername");
+				request.getSession().removeAttribute("activityUsername");
+				
+				return "redirect:/expert/enterprise/list";
+			// 活动管理
+			case 4:
+				request.getSession().setAttribute("activityUsername", user.getUsername());
+				request.getSession().setAttribute("activityUsermobile", user.getMobile());
+				request.getSession().setAttribute("username", user.getUsername());
+				//去掉多余session用户名
+				request.getSession().removeAttribute("regionUsername");
+				request.getSession().removeAttribute("expertUsermobile");
+				
+				return "redirect:/activity/list";
+			default:
+				return "redirect:/order/setting/diysite/list";
+			}
+        }
+        
+    	return "redirect:/order/setting/diysite/list";
+    }
     
     
     

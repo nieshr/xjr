@@ -377,26 +377,26 @@ function sortDown(id , activityId)
                         </#if>    
                         <#if pagetype??&& pagetype == "check">
                             <#if activity??&&activity.fileUrl??>
-                                <input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#e67817;color:#fff;" type="button" onclick="location.href='/download/data?name=${activity.fileUrl!''}'" value="推荐表下载" />
+                                <input  style="margin-top:10px;width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#e67817;color:#fff;" type="button" onclick="location.href='/download/data?name=${activity.fileUrl!''}'" value="推荐表下载" />
                             <#else>
-                                <input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#666;color:#fff;" type="button"  value="推荐表下载" />
+                                <input  style="margin-top:10px;width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#666;color:#fff;" type="button"  value="推荐表下载" />
                             </#if>  
                             <#if mark??&&mark="activity">
                                 <#if activity??&&activity.statusId??&&activity.statusId==1>
-                                    <input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:green;color:#fff; " type="button" class="area_batch" onclick="location.href='/activity/getCoach?activityId=${activity.id?c!''}'"  value="分配路演辅导" />
-                                    <input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#E4574E;color:#fff; " type="button" onclick="javascript:cancelCheck(${activity.id?c!''});"  value="取消审核" />
-                                    <input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#e67817;color:#fff; " type="button" onclick="javascript:resetCheck(${activity.id?c!''});"  value="重置评分" />
-                                    <input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#1484E4;color:#fff; " type="button" onclick="javascript:smsSendAll(${activity.id?c!''},1);"  value="群发短信" />
+                                    <input  style="margin-top:10px;width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:green;color:#fff; " type="button" class="area_batch" onclick="location.href='/activity/getCoach?activityId=${activity.id?c!''}'"  value="分配路演辅导" />
+                                    <input  style="margin-top:10px;width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#E4574E;color:#fff; " type="button" onclick="javascript:cancelCheck(${activity.id?c!''});"  value="取消审核" />
+                                    <input  style="margin-top:10px;width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#e67817;color:#fff; " type="button" onclick="javascript:resetCheck(${activity.id?c!''});"  value="重置评分" />
+                                    <input  style="margin-top:10px;width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#1484E4;color:#fff; " type="button" onclick="javascript:smsSendAll(${activity.id?c!''},1);"  value="群发短信" />
                                 <#elseif activity??&&activity.statusId??&&activity.statusId==0> 
-                                    <input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:green;color:#fff; " type="button" class="area_batch" onclick="location.href='/activity/getCoach?activityId=${activity.id?c!''}'"  value="分配路演辅导" />
-                                    <input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#e67817;color:#fff; " type="button" class="area_batch" onclick="javascript:activityPass(${activity.id?c!''});" value="通过审核" />
+                                    <input  style="margin-top:10px;width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:green;color:#fff; " type="button" class="area_batch" onclick="location.href='/activity/getCoach?activityId=${activity.id?c!''}'"  value="分配路演辅导" />
+                                    <input  style="margin-top:10px;width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#e67817;color:#fff; " type="button" class="area_batch" onclick="javascript:activityPass(${activity.id?c!''});" value="通过审核" />
                                 <#elseif activity??&&activity.statusId??&&activity.statusId==2>     
-                                    <input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#e67817;color:#fff; " type="button" onclick="javascript:resetCheck(${activity.id?c!''});"  value="重置评分" />
+                                    <input  style="margin-top:10px;width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#e67817;color:#fff; " type="button" onclick="javascript:resetCheck(${activity.id?c!''});"  value="重置评分" />
                                 </#if>
                             </#if>
-                            <#if type??&& type=="supervisor">
+                            <#--<#if type??&& type=="supervisor">
                             	<input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#e67817;color:#fff; " type="button" onclick="location.href='/region/recommendEnterprise?id=${activity.id?c!''}'"  value="推荐项目" />
-                        	</#if>
+                        	</#if>-->
                         <#else>
                                 <input id="selectEnterprise" style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background:white url(images/active_add_project.png) no-repeat 10px; padding-left: 13px;" type="button" value="添加项目" />
                         </#if>
@@ -427,10 +427,10 @@ function sortDown(id , activityId)
                         </#if>    
                         <#if pagetype??&& pagetype == "check">
                         <#else>
-                           <input id="selectExpert" style="cursor:pointer;width:100px; height:30px; line-height: 30px; border: none;background:white url(images/active_add_project.png) no-repeat 10px; padding-left: 13px;" type="button"  value="添加评委" />
+                           <input id="selectExpert" style="margin-top:10px;cursor:pointer;width:100px; height:30px; line-height: 30px; border: none;background:white url(images/active_add_project.png) no-repeat 10px; padding-left: 13px;" type="button"  value="添加评委" />
                         </#if>
                         <#if activity??&&activity.statusId??&&activity.statusId==1&&mark??&&mark="activity">
-                        <input  style="width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#1484E4;color:#fff; " type="button" onclick="javascript:smsExpert(${activity.id?c!''});"  value="群发短信" />
+                        <input  style="margin-top:10px;width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#1484E4;color:#fff; " type="button" onclick="javascript:smsExpert(${activity.id?c!''});"  value="群发短信" />
                     	</#if>
                     </ul>
                 </div>

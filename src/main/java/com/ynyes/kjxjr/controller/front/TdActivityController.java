@@ -392,10 +392,10 @@ public class TdActivityController {
         	{
         		map.addAttribute("roadshow_list", roadshowList);
         	}
-        	if (null != manager)
-        	{
-        		map.addAttribute("type" , "supervisor");
-        	}
+//        	if (null != manager)
+//        	{
+//        		map.addAttribute("type" , "supervisor");
+//        	}
         	
             map.addAttribute("mark", "activity");
 	        map.addAttribute("activity", activity);

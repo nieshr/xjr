@@ -124,6 +124,7 @@ function candidateRemoveEnterprise(id,activityId)
         url:"/region/candidateRemoveEnterprise",
         data:{"id":id,"activityId":activityId},
         success:function(data){
+        	$("#selectedEnterprise").empty();
             $("#selectedEnterprise").html(data);
         }
     });

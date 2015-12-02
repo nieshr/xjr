@@ -94,9 +94,34 @@ else
             </#if>
         </div>
         <div class="change_inform">
-        	<span>
-        		<#if enterprise.fileUrl??>	<a style="font-size:12px;  text-decoration: underline;" href="/download/data?name=${enterprise.fileUrl!''}">【申请表附件】</a></#if>
-        	</span>
+            <span>
+            <#if enterprise.fileUrl??&&enterprise.fileUrl?length gt 0>  
+            	<a style="font-size:12px; color:#01458d;" title="${enterprise.fileUrl!''}" href="/download/data?name=${enterprise.fileUrl!''}">【申请表附件下载】</a>
+            <#else>
+            	<a style="font-size:12px; color:#666;" title="无资料"   href="javascript:void(0)">【申请表附件下载】</a>
+            </#if>
+            </span>
+            <span>
+            <#if enterprise.dataBusiness??&&enterprise.dataBusiness?length gt 0> 
+                <a style="font-size:12px; color:#01458d;" title="${enterprise.dataBusiness!''}" href="/download/data?name=${enterprise.dataBusiness!''}">【商业计划书】</a>
+            <#else>
+            	<a style="font-size:12px; color:#666;" title="无资料" href="javascript:void(0)">【商业计划书】</a>
+            </#if>
+            </span>
+            <span>
+            <#if enterprise.dataPossible??&&enterprise.dataPossible?length gt 0>
+                 <a style="font-size:12px; color:#01458d; " title="${enterprise.dataPossible!''}" href="/download/data?name=${enterprise.dataPossible!''}">【可行性报告】</a>
+             <#else>
+            	<a style="font-size:12px;   color:#666;" title="无资料"  href="javascript:void(0)">【可行性报告】</a>          	
+            </#if>
+            </span>
+            <span>
+            <#if enterprise.dataOther??&&enterprise.dataOther?length gt 0>
+                <a style="font-size:12px; color:#01458d;" title="${enterprise.dataOther!''}" href="/download/data?name=${enterprise.dataOther!''}">【其他资料】</a>
+             <#else>
+            	<a style="font-size:12px; color:#666;"  title="无资料" href="javascript:void(0)">【其他资料】</a>           
+            </#if>
+            </span>
         </div>
     </div>  
  

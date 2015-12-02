@@ -24,6 +24,7 @@
 <link rel="stylesheet" href="/client/css/news_main.css">
 <style>
 .news_detail table,td,tr{border:1px #333 solid; }
+.news_detail li{list-style-type:disc;}
 </style>
 <!-- js -->
 	<script src="/client/js/jquery-1.9.1.min.js"></script>

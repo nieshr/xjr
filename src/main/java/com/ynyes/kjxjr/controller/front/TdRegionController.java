@@ -1363,8 +1363,7 @@ public Map<String, Object>  candidateEnterprise(HttpServletRequest req,Long id,L
 }
 
 @RequestMapping(value = "/candidateRemoveEnterprise")
-public String  removeEnterprise(HttpServletRequest req,Long id,Long activityId,
-		ModelMap map) {
+public String  removeEnterprise(HttpServletRequest req,Long id,Long activityId,ModelMap map) {
     String username = (String) req.getSession().getAttribute("regionUsername");String manager =  (String) req.getSession().getAttribute("manager");
 
     if (null == username && null == manager) {
@@ -1387,7 +1386,8 @@ public String  removeEnterprise(HttpServletRequest req,Long id,Long activityId,
     
     map.addAttribute("activityId",activityId);
     map.addAttribute("selected_enterprise_list", tdActivityEnterpriseService.findByActivityId(activityId));
-    return "/client/region_selected_enterprise";
+//    return "redirect:/region/candidateEnterprise/"+activityId;
+    return "/client/region_candidate_selected_enterprise";
 }
 
 @RequestMapping(value = "/removeEnterprise")

@@ -211,11 +211,9 @@ function selectSubmit()
 		  	</#if>
 		  </div>
 		
-		
-		
-		
+		<div class="list_base2" id="selectedEnterprise">			
         	<#include "/client/region_candidate_selected_enterprise.ftl" />
-        
+        </div>  
         <div class="area_add_btn">
 		<!--	<input style="cursor:pointer;"  type="button" value="批量取消初选" />-->
 		</div>

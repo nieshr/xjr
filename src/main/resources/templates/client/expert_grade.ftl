@@ -149,17 +149,20 @@
                 "oneGroup":oneGroup,
                 "twoGroup":twoGroup,
                 "number":number,
-                "activityId":"${activityId}"
+                "activityId":"${activityId?c}"
             },function(res){
                 if(0 == res.status){
                 	if(typeof res.msg != "undefined")
                 	{
                         $("body").ios6alert({
-                            content : res.msg
+                            content : res.msg,
+                            onClose:function(){
+                            	location.reload();
+                            }
                         });
                 	}
                 	else{
-                		location.reload();
+                		location.href='/expert/grade?activityId='+${activityId?c};
                 	}
                   
                 }

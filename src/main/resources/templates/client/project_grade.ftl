@@ -152,7 +152,13 @@
                             content : res.msg
                         });
                 	}
-                    location.reload();
+                        $("body").ios6alert({
+                            content : "修改成功！",
+                            onClose: function(){
+                            	 location.reload();
+                            }
+                        });                	
+                   
                 }
             });
         }

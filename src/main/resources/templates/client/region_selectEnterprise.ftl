@@ -157,13 +157,13 @@ function addEnterprise1(id,activityId,statusId)
             <h1 style="line-height:50px;  width:100%; text-align:center; float:left;">${activity.title!''}</h1>
                 <table class="new_list">
                     <tr class="list_title">
-                        <th width="20%">备选企业列表</th>
-                        <th width="20%">地区</th>
+                        <th width="30%">备选企业列表</th>
+                        <th width="10%">地区</th>
                         <th width="20%">行业归属</th>
                         <#if statusId??&&statusId == 2>
                         	<th width="20%">推荐理由</th>
                         </#if>
-                        <th width="20%">操作</th>
+                        <th width="12%">操作</th>
                     </tr>
                 <#if enterprise_page??>
                     <#list enterprise_page.content as item>

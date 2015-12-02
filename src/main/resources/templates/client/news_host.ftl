@@ -59,16 +59,16 @@ function subActivity(hight)
 		<ul class="teacher-list-danwei">
 			<#if hostList??>
 				<#list hostList as item>
-					<a target="_blank" href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>">
-					<li>
+					<li style="height:auto;">
+						<a target="_blank" href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c!''}?mid=${item.menuId!''}</#if>">
 						<img  style="cursor:pointer;" 
 								src="<#if item.imgUrl??&&item.imgUrl?length gt 0>${item.imgUrl!''}<#else>/client/news_img/modification01.png</#if>" 
 								alt="名称"
-								width=150 height=150
+								width=200 height=120
 								title="查看详情"/>
 						<p>${item.title!''}</p>
+						</a>
 					</li>
-					</a>
 				</#list>
 			</#if>	
 		</ul>

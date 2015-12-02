@@ -47,7 +47,7 @@ function __doPostBack(eventTarget, eventArgument) {
       <ul class="icon-list">
         <li><a class="add" href="/Verwalter/order/setting/diysite/edit"><i></i><span>新增</span></a></li>
         <li><a class="all" href="javascript:;" onclick="checkAll(this);"><i></i><span>全选</span></a></li>
-        <li><a id="btnSave" class="save" href="javascript:__doPostBack('btnSave','')"><i></i><span>保存</span></a></li>
+        <#--<li><a id="btnSave" class="save" href="javascript:__doPostBack('btnSave','')"><i></i><span>保存</span></a></li>-->
         <li><a onclick="return ExePostBack('btnDelete');" id="btnDelete" class="del" href="javascript:__doPostBack('btnDelete','')"><i></i><span>删除</span></a></li>
       </ul>
     </div>
@@ -68,13 +68,14 @@ function __doPostBack(eventTarget, eventArgument) {
   <tr class="odd_bg">
     <th width="8%">选择</th>
     <th align="left">登录名</th>
-    <th width="15%" align="left">所属</th>
     <th align="left">角色类型</th>
-
+    <th align="left">密码</th>
+    <th width="15%" align="left">所属</th>
+    <th align="left">负责人</th>
     <th align="left">手机号</th>
-    <th align="left" width="12%">排序</th>
-    <th width="8%">是否启用</th>
-    <th width="10%">操作</th>
+    <th align="left" width="5%">排序</th>
+    <#--<th width="8%">是否启用</th>-->
+    <th width="12%">操作</th>
   </tr>
 
     <#if diy_site_page??>
@@ -87,16 +88,19 @@ function __doPostBack(eventTarget, eventArgument) {
                     <input type="hidden" name="listId" id="listId" value="${item.id}">
                 </td>
                 <td><a href="/Verwalter/order/setting/diysite/edit?id=${item.id}">${item.username!""}</a></td>
-                <td>${item.region!''}</td>
                 <td>${item.title!""}</td>
+                 <td>${item.password!''}</td>
+                <td>${item.region!''}</td>
+                <td>${item.inCharge!""}</td>
                 <td>${item.mobile!''}</td>
                 <#--><td>${item.city!""}</td>
                 <td>${item.address!""}</td>-->
                 <td><input name="listSortId" type="text" value="${item.sortId!""}" disabled="" class="sort" onkeydown="return checkNumber(event);"></td>
 
-                <td align="center"><#if item.statusId?? && item.statusId == 1>是<#else>否</#if></td>
+                <#--<td align="center"><#if item.statusId?? && item.statusId == 1>是<#else>否</#if></td>-->
                 <td align="center">
                     <a href="/Verwalter/order/setting/diysite/edit?id=${item.id}">修改</a>
+                    <a href="/Verwalter/order/diysite/role?id=${item.id}">进入</a>
                 </td>
               </tr>
         </#list>
