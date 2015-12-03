@@ -43,8 +43,11 @@ public interface TdEnterpriseRepo extends
     Page<TdEnterprise> findByTypeContainingAndFormTypeAndStatusIdOrderBySortIdAsc(String type,Long formType, Long statusId , Pageable page);
     Page<TdEnterprise> findByAreaAndTypeContainingAndFormTypeAndStatusIdOrderBySortIdAsc(String Area,String type,Long formType,Long statusId , Pageable page);
     
+    /*
+     * 审核筛选
+     */
     
-    
+    Page<TdEnterprise> findByStatusIdAndFormTypeAndTitleContainingOrderByIdDesc(Long statusId , Long formType,String keywords , Pageable page);
     /**
 	 * @author lc
 	 * @注释：

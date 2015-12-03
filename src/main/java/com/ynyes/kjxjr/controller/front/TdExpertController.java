@@ -580,7 +580,7 @@ public class TdExpertController {
 	                            HttpServletResponse resp,
 	                            HttpServletRequest req){
 
-	        	exportUrl = SiteMagConstant.backupPath;
+	        	exportUrl = SiteMagConstant.imagePath;
 	    
 		if (null != exportUrl) {
 					List<TdEnterpriseGrade> enterpriseGradeList = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderBySordIdAsc(expertId, activityId);

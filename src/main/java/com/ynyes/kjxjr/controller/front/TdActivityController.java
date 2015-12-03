@@ -149,7 +149,13 @@ public class TdActivityController {
      * @return
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String activityList(HttpServletRequest req, ModelMap map,Integer page) {
+    public String activityList(HttpServletRequest req, 
+    										ModelMap map,
+    										Integer page,
+    										String keywords,
+    										String region,
+    										String activityType,
+    										Long timeId) {
         String username = (String) req.getSession().getAttribute("activityUsername"); String manager = (String) req.getSession().getAttribute("manager");
 
         if (null == username&&null==manager) {
@@ -212,10 +218,141 @@ public class TdActivityController {
             }
         }
         
+        
+        /*活动列表条件筛选*/
+        //搜索
+        Page<TdActivity>activityPage = null;
+        if (null != keywords && !keywords.isEmpty())
+        {
+        	if(null != region && !region.isEmpty())
+        	{
+        		if (null != activityType && !activityType.isEmpty())
+        		{
+        			if(null != timeId)
+        			{
+        				//123
+        				activityPage = tdActivityService.findByRegionAndActivityTypeAndTimeIdAndSearch(region, activityType, timeId,  keywords, page, ClientConstant.pageSize);
+        			}
+        			else
+        			{
+        				//12
+        				activityPage = tdActivityService.findByRegionAndActivityTypeAndSearch(region, activityType,  keywords, page, ClientConstant.pageSize);
+        			}
+        		}
+            	else
+            	{
+            		if(null != timeId)
+            		{
+            			//13
+            			activityPage = tdActivityService.findByRegionAndTimeIdAndSearch(region,timeId, keywords, page, ClientConstant.pageSize);
+            		}
+            		else
+            		{
+            			//1
+            			activityPage = tdActivityService.findByRegionAndSearch(region,  keywords, page, ClientConstant.pageSize);
+            		}
+            	}
+        	}
+        	else
+        	{
+        		if(null != activityType && !activityType.isEmpty())
+	        	{
+	        		if(null != timeId)
+	        		{
+	        			//23
+	        			activityPage = tdActivityService.findByActivityTypeAndTimeIdAndSearch(activityType,timeId  ,keywords, page, ClientConstant.pageSize);
+	        		}
+	        		else
+	        		{
+	        			//2
+	        			activityPage = tdActivityService.findByActivityTypeAndSearch(activityType,   keywords, page, ClientConstant.pageSize);
+	        		}
+	        	}
+        		else
+        		{
+        			if (null != timeId )
+        			{
+        				//3
+        				activityPage = tdActivityService.findByTimeIdAndSearch(timeId,  keywords, page, ClientConstant.pageSize);
+        			}
+        			else
+        			{
+        				//0
+        				activityPage = tdActivityService.findBySearch(keywords,page, ClientConstant.pageSize);
+        			}
+        		}
+        	}
+        }
+        else
+        {
+        	if(null != region && !region.isEmpty())
+        	{
+        		if (null != activityType && !activityType.isEmpty())
+        		{
+        			if(null != timeId)
+        			{
+        				//123
+        				activityPage = tdActivityService.findByRegionAndActivityTypeAndTimeId(region, activityType, timeId,  page, ClientConstant.pageSize);
+        			}
+        			else
+        			{
+        				//12
+        				activityPage = tdActivityService.findByRegionAndActivityType(region, activityType,   page, ClientConstant.pageSize);
+        			}
+        		}
+            	else
+            	{
+            		if(null != timeId)
+            		{
+            			//13
+            			activityPage = tdActivityService.findByRegionAndTimeId(region,timeId,  page, ClientConstant.pageSize);
+            		}
+            		else
+            		{
+            			//1
+            			activityPage = tdActivityService.findByRegion(region,   page,  ClientConstant.pageSize);
+            		}
+            	}
+        	}
+        	else
+        	{
+        		if(null != activityType && !activityType.isEmpty())
+	        	{
+	        		if(null != timeId)
+	        		{
+	        			//23
+	        			activityPage = tdActivityService.findByActivityTypeAndTimeId(activityType,timeId,  page, ClientConstant.pageSize);
+	        		}
+	        		else
+	        		{
+	        			//2
+	        			activityPage = tdActivityService.findByActivityType(activityType,   page, ClientConstant.pageSize);
+	        		}
+	        	}
+        		else
+        		{
+        			if (null != timeId )
+        			{
+        				//3
+        				activityPage = tdActivityService.findByTimeId(timeId,  page, ClientConstant.pageSize);
+        			}
+        			else
+        			{
+        				//0
+        				activityPage = tdActivityService.findAllOrderByDateDesc( page, ClientConstant.pageSize);
+        			}
+        		}
+        	}
+        }    	
+        /*活动列表条件筛选 end */
 //        TdActivity unfinish = tdActivityService.findByStatusId(0L);
         
 //        map.addAttribute("unfinish", unfinish);
-        map.addAttribute("activity_page", tdActivityService.findAllOrderByIdDesc(page, ClientConstant.pageSize));
+        map.addAttribute("activity_page", activityPage);
+        map.addAttribute("keywords", keywords);
+        map.addAttribute("region", region);
+        map.addAttribute("activityType", activityType);
+        map.addAttribute("timeId", timeId);
         map.addAttribute("user", user);
 
         return "/client/activity_list";
@@ -2603,7 +2740,7 @@ public class TdActivityController {
 	 /*-------------------------------------*/
 	 
 
-         	exportUrl = SiteMagConstant.backupPath;
+         	exportUrl = SiteMagConstant.imagePath;
      
  			if (null != exportUrl) {
  			   	List<TdActivityEnterprise> activityEnterpriseList = tdActivityEnterpriseService.findByActivityIdAndStatusId(activityId, 2L);

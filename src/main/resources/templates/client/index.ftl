@@ -93,6 +93,8 @@
             <div class="clear"></div>
   <!-- banner -->
   <div class="banner1">
+  	<div class="bg1"></div>
+  	<div class="bg2"></div>
   
   <#if regionUsername??>
   	<a href="/region/enterprise/list" >区县管理员</a>
@@ -114,8 +116,11 @@
   <div class="section sect2">
         <div class="section1">
             <div class="div1">
-                <p class="p1">组织体系</p>
-                <p class="p2">Organization system</p>
+                <#--<p class="p1">组织体系</p>
+                <p class="p2">Organization system</p>-->
+                <img src="/client/images/zztx1.png" alt="组织体系"/>
+				<br>
+            	<img src="/client/images/zztx2.png" alt="System"/>
             </div>
             <ul>
             <#if organization_0_list??>
@@ -243,8 +248,10 @@
         <div class="section2">
             <div class="div1">
             <#if activityAbout??>
-                <p class="p1">${activityAbout.title!''}</p>
-                <p class="p2">${activityAbout.callIndex!''}</p>
+                <img src="/client/images/xdgk1.png" alt="行动概况"/>
+                <br>
+            	<img src="/client/images/xdgk2.png" alt="Survey"/>
+            </div>
                 <p class="p3">${activityAbout.brief!''}</p>
                 <p class="p4"><a title="查看更多信息" target="_blank"  href="<#if activityAbout.linkUrl??&&activityAbout.linkUrl?length gt 0>${activityAbout.linkUrl!''}<#else>/info/list/content/${activityAbout.id?c!''}?mid=${activityAbout.menuId!''}</#if>">查看更多</a></p>
            	</#if>
@@ -293,8 +300,9 @@
                 <div class="section2">
                 <div class="fivesupport" >
                     <div class="div1">
-                        <p class="p1_1">五大支持</p>
-                        <p class="p2_1">Support</p>
+		                <img src="/client/images/wdzc1.png" alt="五大支持"/>
+		                <br>
+		            	<img src="/client/images/wdzc2_2.png" alt="Support" />
                     </div>
                     <#if fiveSupport_page??>
                     	<#list fiveSupport_page.content as item>
@@ -331,8 +339,9 @@
 	<div class="section sect4">
                 <div class="sect1">
                     <div class="div1">
-                        <p class="p1"><a href="/info/index">新闻动态</a></p>
-                        <p class="p2">News dynamics</p>
+		                <img src="/client/images/xwdt1.png" alt="新闻动态" onclick="javascript:window.open("/info/index");" style="curser:pointer;"/>
+		                <br>
+		            	<img src="/client/images/xwdt2.png" alt="News" style=" border:0;"/>
                     </div>
                     <div class="div2">
                     <#--
@@ -340,7 +349,7 @@
                                  您的浏览器不支持该视频播放               
                         </video>
                      -->
-					   <video id="example_video_1" class="video-js vjs-default-skin" controls preload="none" width="480" height="340"
+					   <video id="example_video_1" class="video-js vjs-default-skin" controls preload="none" width="480" height="400"
 					      poster="/client/l_images/banner_bg1.png"
 					      data-setup="{}">
 					    <source src="<#if video??><#list video.content as item><#if item_index=0>${item.imgUrl!''}</#if></#list></#if>" type='video/mp4' />

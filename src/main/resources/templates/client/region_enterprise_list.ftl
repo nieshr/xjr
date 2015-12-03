@@ -50,6 +50,24 @@
             </dd>
             <dt class="crumb_back"><a  href="javascript:history.go(-1);">返回上一页</a></dt>
         </dl>
+       <div class="area_choice">
+        	<form action="/region/enterprise/list" id="searchform">
+        		<span>关键字:</span>
+        		<input style="margin:0 14px 0 0;" class="area_text" name="keywords" type="text" value="<#if keywords??&&keywords?length gt 0>${keywords}</#if>" />
+        		<select name="statusId" style="margin-left: 0px;"  disabled="">
+        			<option value="">审核状态</option>
+        			<option  value="0" <#if statusId??&&statusId?length gt 0&&statusId==0>selected="selected"</#if>>待审核</option>
+        			<option  value="1" <#if statusId??&&statusId?length gt 0&&statusId==1>selected="selected"</#if>>已审核</option>
+        			<option  value="3" <#if statusId??&&statusId?length gt 0&&statusId==3>selected="selected"</#if>>重新审核</option>
+        		</select>
+        		<select name="formType"  onchange="javascript:searchSubmit(this);">
+        			<option value="" >类型</option>
+        			<option value="0" <#if formType??&&formType?length gt 0&&formType==0>selected="selected"</#if> >企业  </option>
+        			<option value="1" <#if formType??&&formType?length gt 0&&formType==1>selected="selected"</#if> >团队  </option>
+        		</select>
+        		<input id="selectSubmit" style="cursor:pointer;" class="area_Btn02" type="submit" value="确认筛选" />
+        	</form>
+        </div>        
        <#-- <div class="area_choice">
         		<span>关键字:</span>
         		<input style="margin: 0 14px 0 0;"  name="keywords"  class="area_text" type="text" value="" />

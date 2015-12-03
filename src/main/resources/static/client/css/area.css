@@ -11,7 +11,7 @@
 .area_choice .area_text{ width:160px; height: 24px; margin-left: 30px;border:#999999 1px solid;}
 .area_choice .area_Btn01{ width:26px; height: 26px; background: white url(../images/search_area_l.png) no-repeat center; border:#999999 1px solid;}
 .area_choice .area_Btn02{ width:80px; height: 26px; border: none; background: #e67817; line-height: 26px; color: white; margin-left: 20px;}
-.area_choice select{ width:100px; height: 26px; margin-left: 14px;}
+.area_choice select{ width:140px; height: 26px; margin-left: 14px;}
 .area_choice span{ width:60px; height:26px; line-height: 26px; font-size: 14px; margin-left: 20px;}
 
 .area_choice_two{ width: 950px; height:auto; display: block; overflow: hidden; float: left; margin-left:30px; margin-top: 10px;}

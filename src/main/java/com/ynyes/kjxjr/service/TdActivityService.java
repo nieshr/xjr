@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ynyes.kjxjr.entity.TdActivity;
+import com.ynyes.kjxjr.entity.TdActivity;
 import com.ynyes.kjxjr.repository.TdActivityRepo;
 
 
@@ -131,6 +132,149 @@ public class TdActivityService {
         return (List<TdActivity>) repository.findByActivityTypeOrderByDateDesc(activityType);
     }
     
+	/*
+	 * 关键字搜索
+	 */
+	// 搜索0
+	public Page<TdActivity> findBySearch( String keywords, int page, int size) {
+		PageRequest pageRequest = new PageRequest(page, size);
+
+		return repository.findByTitleContainingOrderByDateDesc( keywords, pageRequest);
+	}
+
+	// 搜索1
+	public Page<TdActivity> findByRegionAndSearch(String region, String keywords, int page,
+			int size) {
+		PageRequest pageRequest = new PageRequest(page, size);
+
+		return repository.findByRegionAndTitleContainingOrderByDateDesc(region,  keywords,
+				pageRequest);
+	}
+
+	// 搜索2
+	public Page<TdActivity> findByActivityTypeAndSearch(String activityType, String keywords, int page,
+			int size) {
+		PageRequest pageRequest = new PageRequest(page, size);
+
+		return repository.findByActivityTypeAndTitleContainingOrderByDateDesc(activityType,  keywords,
+				pageRequest);
+	}
+
+	// 搜索3
+	public Page<TdActivity> findByTimeIdAndSearch(Long timeId, String keywords,
+			int page, int size) {
+		PageRequest pageRequest = new PageRequest(page, size);
+
+		return repository.findByTimeIdAndTitleContainingOrderByDateDesc(timeId,  keywords,
+				pageRequest);
+	}
+
+	// 搜索12
+	public Page<TdActivity> findByRegionAndActivityTypeAndSearch(String region, String activityType, 
+			String keywords, int page, int size) {
+		PageRequest pageRequest = new PageRequest(page, size);
+
+		return repository.findByRegionAndActivityTypeAndTitleContainingOrderByDateDesc(region, activityType, 
+				keywords, pageRequest);
+	}
+
+	// 搜索13
+	public Page<TdActivity> findByRegionAndTimeIdAndSearch(String region, Long timeId, 
+			String keywords, int page, int size) {
+		PageRequest pageRequest = new PageRequest(page, size);
+
+		return repository.findByRegionAndTimeIdAndTitleContainingOrderByDateDesc(region, timeId, 
+				keywords, pageRequest);
+	}
+
+	// 搜索23
+	public Page<TdActivity> findByActivityTypeAndTimeIdAndSearch(String activityType, Long timeId, 
+			String keywords, int page, int size) {
+		PageRequest pageRequest = new PageRequest(page, size);
+
+		return repository.findByActivityTypeAndTimeIdAndTitleContainingOrderByDateDesc(activityType, timeId,
+				keywords, pageRequest);
+	}
+
+	// 搜索123
+	public Page<TdActivity> findByRegionAndActivityTypeAndTimeIdAndSearch(String region, String activityType, Long timeId,
+			 String keywords, int page, int size) {
+		PageRequest pageRequest = new PageRequest(page, size);
+
+		return repository.findByRegionAndActivityTypeAndTimeIdAndTitleContainingOrderByDateDesc(region,
+				activityType, timeId, keywords, pageRequest);
+	}
+	/*
+	 * 无关键字搜索
+	 */
+
+	// 搜索0
+	public Page<TdActivity> findAllOrderByDateDesc( int page, int size) {
+		PageRequest pageRequest = new PageRequest(page, size , new Sort(Direction.DESC, "date"));
+
+		return repository.findAll(pageRequest);
+	}
+
+	// 搜索1
+	public Page<TdActivity> findByRegion(String region,  int page, int size) {
+		PageRequest pageRequest = new PageRequest(page, size);
+
+		return repository.findByRegionOrderByDateDesc(region,pageRequest);
+	}
+
+	// 搜索2
+	public Page<TdActivity> findByActivityType(String activityType,  int page, int size) {
+		PageRequest pageRequest = new PageRequest(page, size);
+
+		return repository.findByActivityTypeOrderByDateDesc(activityType, pageRequest);
+	}
+
+	// 搜索3
+	public Page<TdActivity> findByTimeId(Long timeId,  int page, int size) {
+		PageRequest pageRequest = new PageRequest(page, size);
+
+		return repository.findByTimeIdOrderByDateDesc(timeId, pageRequest);
+	}
+
+	// 搜索12
+	public Page<TdActivity> findByRegionAndActivityType(String region, String activityType, int page,
+			int size) {
+		PageRequest pageRequest = new PageRequest(page, size);
+
+		return repository.findByRegionAndActivityTypeOrderByDateDesc(region, activityType, pageRequest);
+	}
+
+	// 搜索13
+	public Page<TdActivity> findByRegionAndTimeId(String region, Long timeId,  int page, int size) {
+		PageRequest pageRequest = new PageRequest(page, size);
+
+		return repository.findByRegionAndTimeIdOrderByDateDesc(region, timeId,  pageRequest);
+	}
+
+	// 搜索23
+	public Page<TdActivity> findByActivityTypeAndTimeId(String activityType, Long timeId, int page,
+			int size) {
+		PageRequest pageRequest = new PageRequest(page, size);
+
+		return repository.findByActivityTypeAndTimeIdOrderByDateDesc(activityType, timeId, pageRequest);
+	}
+
+	// 搜索123
+	public Page<TdActivity> findByRegionAndActivityTypeAndTimeId(String region, String activityType, Long timeId,  int page, int size) {
+		PageRequest pageRequest = new PageRequest(page, size);
+
+		return repository.findByRegionAndActivityTypeAndTimeIdOrderByDateDesc(region , activityType, timeId , pageRequest);
+	}
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     public Page<TdActivity> findAllOrderBySortIdAsc(int page, int size)
     {
         PageRequest pageRequest = new PageRequest(page, size, new Sort(Direction.ASC, "sortId"));
@@ -184,7 +328,7 @@ public class TdActivityService {
     {
         PageRequest pageRequest = new PageRequest(page, size);
         
-        return repository.findByTitleContainingOrderBySortIdAsc(keywords, pageRequest);
+        return repository.findByTitleContainingOrderByDateDesc(keywords, pageRequest);
     }
     
     /**

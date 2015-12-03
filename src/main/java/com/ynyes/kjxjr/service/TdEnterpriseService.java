@@ -246,6 +246,17 @@ public class TdEnterpriseService {
 
 		return repository.findByTitleContainingOrderBySortIdAsc(keywords, pageRequest);
 	}
+	
+	/**
+	 * 审核筛选
+	 * @author Zhangji
+	 */
+	//12
+	public Page<TdEnterprise> findByStatusIdAndFormTypeAndSearchOrderByIdDesc(Long statusId , Long formType ,String keywords, int page, int size) {
+		PageRequest pageRequest = new PageRequest(page, size);
+
+		return repository.findByStatusIdAndFormTypeAndTitleContainingOrderByIdDesc(statusId , formType , keywords, pageRequest);
+	}
 
 	/**
 	 * 保存

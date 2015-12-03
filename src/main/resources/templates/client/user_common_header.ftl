@@ -7,7 +7,19 @@
     </div>
     </form>
     <dl class="porfile">
-    	<dt><a href="http://www.cqgczx.com/cqkjxjr/" target="_blank">帮助</a></dt>
+    	<dt>
+    		<#if user??>
+    			<#if user.roleId??&&user.roleId == 1>
+    				<a href="http://www.cqgczx.com/cqkjxjr/" target="_blank">帮助</a>
+    			<#elseif user.roleId??&&user.roleId == 2>
+    				<a href="javascript:void(0)" >区县管理员</a>
+    			<#elseif user.roleId??&&user.roleId == 3>
+    				<a href="javascript:void(0)" >专家</a>
+    			<#elseif user.roleId??&&user.roleId == 4>
+    				<a href="javascript:void(0)" >活动管理员</a>    				    				
+    			</#if>
+    		</#if>	
+    	</dt>
     	<#if user??>
     		<#if user.roleId == 1>
         		<dt><a href="/enterprise/message">站内信息<#if message_num??&&message_num gt 0><b style="float:right;  color: darkorange; margin: 1px 12px 0 0;">${message_num!''}</b></#if></a></dt>
@@ -17,7 +29,7 @@
         </#if>
         <dd>
         	<div><img src="/client/images/user.png" /></div>
-        	<span>${username!''}</span>
+        	<span><a style="color:#fff;" href="javascript:void(0)" title="${username!''}">${username!''}</a></span>
         	<#--
        		<span style="width:70px;">
 	           <a style="width:70px;line-height: 60px; display: block;  color: white;  font-size: 14px;  " href="/user/password">修改密码</a>

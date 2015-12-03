@@ -128,7 +128,12 @@ public class TdRegionController {
 	TdActivityTypeService tdActivityTypeService;
 
     @RequestMapping(value = "/enterprise/list", method = RequestMethod.GET)
-    public String EnterpriseList(HttpServletRequest req, ModelMap map,Integer page) {
+    public String EnterpriseList(HttpServletRequest req, 
+    											ModelMap map,
+    											Integer page,
+    											String keywords,
+    											Long statusId,
+    											Long formType) {
         String username = (String) req.getSession().getAttribute("regionUsername");String manager =  (String) req.getSession().getAttribute("manager");
 
         if (null == username && null == manager) {
@@ -140,6 +145,132 @@ public class TdRegionController {
         	page = 0;
         }
 
+        //搜索
+        Page<TdEnterprise>enterprisePage = null;
+        if (null != keywords && !keywords.isEmpty())
+        {
+        	if(null != statusId )
+        	{
+        		if (null != formType )
+        		{
+        				//123
+        				enterprisePage = tdEnterpriseService.findByAreaAndTypeAndFormTypeAndStatusIdAndSearch(area, type, formType, 1L, keywords, page, ClientConstant.pageSize);
+        			}
+        			else
+        			{
+        				//12
+        				enterprisePage = tdEnterpriseService.findByAreaAndTypeAndStatusIdAndSearch(area, type,  1L, keywords, page, ClientConstant.pageSize);
+        			}
+        		}
+            	else
+            	{
+            		if(null != formType)
+            		{
+            			//13
+            			enterprisePage = tdEnterpriseService.findByAreaAndFormTypeAndStatusIdAndSearch(area,formType,  1L, keywords, page, ClientConstant.pageSize);
+            		}
+            		else
+            		{
+            			//1
+            			enterprisePage = tdEnterpriseService.findByAreaAndStatusIdAndSearch(area,  1L, keywords, page, ClientConstant.pageSize);
+            		}
+            	}
+        	}
+        	else
+        	{
+        		if(null != type && !type.isEmpty())
+            	{
+            		if(null != formType)
+            		{
+            			//23
+            			enterprisePage = tdEnterpriseService.findByTypeAndFormTypeAndStatusIdAndSearch(type,formType  ,1L, keywords, page, ClientConstant.pageSize);
+            		}
+            		else
+            		{
+            			//2
+            			enterprisePage = tdEnterpriseService.findByTypeAndStatusIdAndSearch(type,  1L,  keywords, page, ClientConstant.pageSize);
+            		}
+            	}
+        		else
+        		{
+        			if (null != formType )
+        			{
+        				//3
+        				enterprisePage = tdEnterpriseService.findByFormTypeAndStatusIdAndSearch(formType,   1L, keywords, page, ClientConstant.pageSize);
+        			}
+        			else
+        			{
+        				//0
+        				enterprisePage = tdEnterpriseService.findByStatusIdAndSearch( 1L, keywords,page, ClientConstant.pageSize);
+        			}
+        		}
+        	}
+        }
+        else
+        {
+        	if(null != area && !area.isEmpty())
+        	{
+        		if (null != type && !type.isEmpty())
+        		{
+        			if(null != formType)
+        			{
+        				//123
+        				enterprisePage = tdEnterpriseService.findByAreaAndTypeAndFormTypeAndStatusId(area, type, formType,   1L, page, ClientConstant.pageSize);
+        			}
+        			else
+        			{
+        				//12
+        				enterprisePage = tdEnterpriseService.findByAreaAndTypeAndStatusId(area, type, 1L,  page, ClientConstant.pageSize);
+        			}
+        		}
+            	else
+            	{
+            		if(null != formType)
+            		{
+            			//13
+            			enterprisePage = tdEnterpriseService.findByAreaAndFormTypeAndStatusId(area,formType,  1L, page, ClientConstant.pageSize);
+            		}
+            		else
+            		{
+            			//1
+            			enterprisePage = tdEnterpriseService.findByAreaAndStatusId(area, 1L,   page,  ClientConstant.pageSize);
+            		}
+            	}
+        	}
+        	else
+        	{
+        		if(null != type && !type.isEmpty())
+            	{
+            		if(null != formType)
+            		{
+            			//23
+            			enterprisePage = tdEnterpriseService.findByTypeAndFormTypeAndStatusId(type,formType,  1L, page, ClientConstant.pageSize);
+            		}
+            		else
+            		{
+            			//2
+            			enterprisePage = tdEnterpriseService.findByTypeAndStatusId(type,  1L,  page, ClientConstant.pageSize);
+            		}
+            	}
+        		else
+        		{
+        			if (null != formType )
+        			{
+        				//3
+        				enterprisePage = tdEnterpriseService.findByFormTypeAndStatusId(formType,  1L,  page, ClientConstant.pageSize);
+        			}
+        			else
+        			{
+        				//0
+        				enterprisePage = tdEnterpriseService.findByStatusId( 1L, page, ClientConstant.pageSize);
+        			}
+        		}
+        	}
+        }    	
+        
+        
+        
+        
         tdCommonService.setHeader(map, req);
 
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
@@ -1309,6 +1440,7 @@ public Map<String, Object>  candidateEnterprise(HttpServletRequest req,Long id,L
     		newEnter.setMobile(enterprise.getMobile());
     		newEnter.setQQ(enterprise.getChat());
     		newEnter.setProfile(enterprise.getProfile());
+    		newEnter.setEnterpriseFileUrl(enterprise.getFileUrl());   //额，怎么少了这项？？？？
     		newEnter.setDataBusiness(enterprise.getDataBusiness());
     		newEnter.setDataPossible(enterprise.getDataPossible());
     		newEnter.setDataOther(enterprise.getDataOther());
@@ -1349,6 +1481,7 @@ public Map<String, Object>  candidateEnterprise(HttpServletRequest req,Long id,L
     		activityEnterprise.setDataBusiness(enterprise.getDataBusiness());
     		activityEnterprise.setDataPossible(enterprise.getDataPossible());
     		activityEnterprise.setDataOther(enterprise.getDataOther());
+    		activityEnterprise.setEnterpriseFileUrl(enterprise.getFileUrl());
     		activityEnterprise.setPptUrl(activity.getPptUrl());
     		activityEnterprise.setFileUrl(activity.getFileUrl());
     		tdActivityEnterpriseService.save(activityEnterprise);
@@ -1680,7 +1813,7 @@ public String exportRecommend(
 //    	Long numwarn = 2L;
 //    	return "redirect:/region/recommendEnterprise"+"?id="+activityId+"&numwarn="+numwarn;
 //    }
-        	exportUrl = SiteMagConstant.backupPath;
+        	exportUrl = SiteMagConstant.imagePath;
     
 			if (null != exportUrl) {
 				List<TdActivityEnterprise> activityEnterpriseList = tdActivityEnterpriseService.findByActivityIdAndStatusId(activityId, 2L);
