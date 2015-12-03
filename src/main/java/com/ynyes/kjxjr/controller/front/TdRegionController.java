@@ -144,7 +144,12 @@ public class TdRegionController {
         {
         	page = 0;
         }
+        
+        tdCommonService.setHeader(map, req);
 
+        TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
+        TdRegionAdmin regionAdmin = tdRegionAdminService.findbyUsername(username);
+        
         //搜索
         Page<TdEnterprise>enterprisePage = null;
         if (null != keywords && !keywords.isEmpty())
@@ -153,42 +158,42 @@ public class TdRegionController {
         	{
         		if (null != formType )
         		{
-        				//123
-        				enterprisePage = tdEnterpriseService.findByAreaAndTypeAndFormTypeAndStatusIdAndSearch(area, type, formType, 1L, keywords, page, ClientConstant.pageSize);
+        				
+        				enterprisePage = tdEnterpriseService.findByFormTypeAndStatusIdAndSearch( formType, 1L, keywords, page, ClientConstant.pageSize);
         			}
         			else
         			{
-        				//12
-        				enterprisePage = tdEnterpriseService.findByAreaAndTypeAndStatusIdAndSearch(area, type,  1L, keywords, page, ClientConstant.pageSize);
+        				
+        				enterprisePage = tdEnterpriseService.findByStatusIdAndSearch( 1L, keywords, page, ClientConstant.pageSize);
         			}
         		}
             	else
             	{
             		if(null != formType)
             		{
-            			//13
-            			enterprisePage = tdEnterpriseService.findByAreaAndFormTypeAndStatusIdAndSearch(area,formType,  1L, keywords, page, ClientConstant.pageSize);
+            			
+            			enterprisePage = tdEnterpriseService.findByFormTypeAndSearch(formType,  1L, keywords, page, ClientConstant.pageSize);
             		}
             		else
             		{
-            			//1
-            			enterprisePage = tdEnterpriseService.findByAreaAndStatusIdAndSearch(area,  1L, keywords, page, ClientConstant.pageSize);
+            			
+            			enterprisePage = tdEnterpriseService.findBySearchOrderByIdDesc(keywords, page, ClientConstant.pageSize);
             		}
             	}
         	}
         	else
         	{
-        		if(null != type && !type.isEmpty())
+        		if(null != statusId )
             	{
             		if(null != formType)
             		{
             			//23
-            			enterprisePage = tdEnterpriseService.findByTypeAndFormTypeAndStatusIdAndSearch(type,formType  ,1L, keywords, page, ClientConstant.pageSize);
+            			enterprisePage = tdEnterpriseService.findByFormTypeAndStatusId(formType  ,statusId, page, ClientConstant.pageSize);
             		}
             		else
             		{
             			//2
-            			enterprisePage = tdEnterpriseService.findByTypeAndStatusIdAndSearch(type,  1L,  keywords, page, ClientConstant.pageSize);
+            			enterprisePage = tdEnterpriseService.findByStatusId( statusId, page, ClientConstant.pageSize);
             		}
             	}
         		else
@@ -196,86 +201,17 @@ public class TdRegionController {
         			if (null != formType )
         			{
         				//3
-        				enterprisePage = tdEnterpriseService.findByFormTypeAndStatusIdAndSearch(formType,   1L, keywords, page, ClientConstant.pageSize);
+        				enterprisePage = tdEnterpriseService.findByFormType(formType,  page, ClientConstant.pageSize);
         			}
         			else
         			{
         				//0
-        				enterprisePage = tdEnterpriseService.findByStatusIdAndSearch( 1L, keywords,page, ClientConstant.pageSize);
+        				enterprisePage = tdEnterpriseService.findByAreaOrderByNumberAsc(regionAdmin.getTitle(),page, ClientConstant.pageSize);
         			}
         		}
         	}
-        }
-        else
-        {
-        	if(null != area && !area.isEmpty())
-        	{
-        		if (null != type && !type.isEmpty())
-        		{
-        			if(null != formType)
-        			{
-        				//123
-        				enterprisePage = tdEnterpriseService.findByAreaAndTypeAndFormTypeAndStatusId(area, type, formType,   1L, page, ClientConstant.pageSize);
-        			}
-        			else
-        			{
-        				//12
-        				enterprisePage = tdEnterpriseService.findByAreaAndTypeAndStatusId(area, type, 1L,  page, ClientConstant.pageSize);
-        			}
-        		}
-            	else
-            	{
-            		if(null != formType)
-            		{
-            			//13
-            			enterprisePage = tdEnterpriseService.findByAreaAndFormTypeAndStatusId(area,formType,  1L, page, ClientConstant.pageSize);
-            		}
-            		else
-            		{
-            			//1
-            			enterprisePage = tdEnterpriseService.findByAreaAndStatusId(area, 1L,   page,  ClientConstant.pageSize);
-            		}
-            	}
-        	}
-        	else
-        	{
-        		if(null != type && !type.isEmpty())
-            	{
-            		if(null != formType)
-            		{
-            			//23
-            			enterprisePage = tdEnterpriseService.findByTypeAndFormTypeAndStatusId(type,formType,  1L, page, ClientConstant.pageSize);
-            		}
-            		else
-            		{
-            			//2
-            			enterprisePage = tdEnterpriseService.findByTypeAndStatusId(type,  1L,  page, ClientConstant.pageSize);
-            		}
-            	}
-        		else
-        		{
-        			if (null != formType )
-        			{
-        				//3
-        				enterprisePage = tdEnterpriseService.findByFormTypeAndStatusId(formType,  1L,  page, ClientConstant.pageSize);
-        			}
-        			else
-        			{
-        				//0
-        				enterprisePage = tdEnterpriseService.findByStatusId( 1L, page, ClientConstant.pageSize);
-        			}
-        		}
-        	}
-        }    	
         
-        
-        
-        
-        tdCommonService.setHeader(map, req);
 
-        TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
-        TdRegionAdmin regionAdmin = tdRegionAdminService.findbyUsername(username);
-        Page<TdEnterprise> enterprisePage = tdEnterpriseService.findByAreaOrderByNumberAsc(regionAdmin.getTitle(),page, ClientConstant.pageSize);
         
         
         map.addAttribute("enterprise_page", enterprisePage);

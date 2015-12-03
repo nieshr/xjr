@@ -251,6 +251,12 @@ public class TdEnterpriseService {
 	 * 审核筛选
 	 * @author Zhangji
 	 */
+	public Page<TdEnterprise> findBySearchOrderByIdDesc(String keywords, int page, int size) {
+		PageRequest pageRequest = new PageRequest(page, size);
+
+		return repository.findByTitleContainingOrderBySortIdAsc(keywords, pageRequest);
+	}
+	
 	//12
 	public Page<TdEnterprise> findByStatusIdAndFormTypeAndSearchOrderByIdDesc(Long statusId , Long formType ,String keywords, int page, int size) {
 		PageRequest pageRequest = new PageRequest(page, size);
