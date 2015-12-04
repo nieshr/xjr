@@ -30,6 +30,12 @@ var theForm = document.forms['form1'];
             theForm.submit();
         }
     }
+
+   document.onkeydown = function(event){
+	    if((event.keyCode || event.which) == 13){
+	        $("#lbtnSearch").click();
+	    }
+   }
 </script>
 <!--导航栏-->
 <div class="location" style="position: static; top: 0px;">
@@ -135,7 +141,8 @@ var theForm = document.forms['form1'];
                 <td align="center"><#if user.statusId??><#if user.statusId==0>待审核<#elseif user.statusId==1>正常</#if></#if></td>
                 <td align="center">
                     <a href="/Verwalter/user/edit?id=${user.id}&roleId=${roleId!""}">修改</a> | 
-                    <a href="/Verwalter/user/edit?id=${user.id}&roleId=${roleId!""}&action=view">查看</a></td>
+                    <#--<a href="/Verwalter/user/edit?id=${user.id}&roleId=${roleId!""}&action=view">查看</a></td>-->
+                    <a href="/Verwalter/user/role?id=${user.id}">进入</a></td>
               </tr>
         </#list>
     </#if>

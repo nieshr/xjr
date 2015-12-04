@@ -6,8 +6,10 @@
 	<link rel="shortcut icon" href="/client/images/icon.ico" />
 	<link href="/client/css/base.css" rel="stylesheet" type="text/css" />
 	<link href="/client/css/area.css" rel="stylesheet" type="text/css" />
-	
-	    
+	<link rel="stylesheet" href="/client/css/ios6alert.css">
+	<script src="/client/js/jquery-1.9.1.min.js"></script>
+	<script src="/client/js/main.js"></script>
+	<script src="/client/js/ios6alert.js"></script>
     <style type="text/css">
         .page{ width: 600px; float: right; margin-top: 30px;}
         .page *{ float: left;}
@@ -17,9 +19,60 @@
         .page .page_last{width: 40px;}
         .page p{  margin-left: 10px;}
     </style>
+    <script>
+		function searchSubmit()
+		{
+			$("#searchform").submit();
+		}
+		
+		   document.onkeydown = function(event){
+			    if((event.keyCode || event.which) == 13){
+			        $("#selectSubmit").click();
+			    }
+		   }    
+		   
+		function actionBtn(value)
+		{
+				$("body").ios6alert({
+			    content : "将批量发送短信通知，确认操作？",
+			    type : 1,
+			    buttonText : {
+					Yes : "确认",
+					No : "取消"
+				},
+		    	onClickYes : function(){
+					$("#actionValue").val(value);
+					$("#actionForm").submit();
+					 $("body").ios6alert({
+	                          content : "操作成功！"
+	                  });
+				}
+				});
+		}   
+		
+		//全选取消按钮函数-初选
+		function checkAll(chkobj) {
+		    if ($(chkobj).text() == "全选") {
+		        $(chkobj).children("span").text("取消");
+		        $(".checkall input:enabled").prop("checked", true);
+		    } else {
+		        $(chkobj).children("span").text("全选");
+		        $(".checkall input:enabled").prop("checked", false);
+		    }
+		}
+		
+		//全选取消按钮函数-取消
+		function checkAll2(chkobj) {
+		    if ($(chkobj).text() == "全选") {
+		        $(chkobj).children("span").text("取消");
+		        $(".checkall2 input:enabled").prop("checked", true);
+		    } else {
+		        $(chkobj).children("span").text("全选");
+		        $(".checkall2 input:enabled").prop("checked", false);
+		    }
+		}
+    </script>
 </head>
-<script src="/client/js/jquery-1.9.1.min.js"></script>
-<script src="/client/js/main.js"></script>
 <body>
 <!--main-->
 <div class="main">
@@ -54,11 +107,12 @@
         	<form action="/region/enterprise/list" id="searchform">
         		<span>关键字:</span>
         		<input style="margin:0 14px 0 0;" class="area_text" name="keywords" type="text" value="<#if keywords??&&keywords?length gt 0>${keywords}</#if>" />
-        		<select name="statusId" style="margin-left: 0px;"  disabled="">
+        		<select name="statusId" style="margin-left: 0px;"  onchange="javascript:searchSubmit(this);">>
         			<option value="">审核状态</option>
         			<option  value="0" <#if statusId??&&statusId?length gt 0&&statusId==0>selected="selected"</#if>>待审核</option>
-        			<option  value="1" <#if statusId??&&statusId?length gt 0&&statusId==1>selected="selected"</#if>>已审核</option>
-        			<option  value="3" <#if statusId??&&statusId?length gt 0&&statusId==3>selected="selected"</#if>>重新审核</option>
+        			<option  value="1" <#if statusId??&&statusId?length gt 0&&statusId==1>selected="selected"</#if>>已通过审核</option>
+        			<option  value="3" <#if statusId??&&statusId?length gt 0&&statusId==3>selected="selected"</#if>>未通过审核</option>
+        			<option  value="4" <#if statusId??&&statusId?length gt 0&&statusId==4>selected="selected"</#if>>未完善信息</option>
         		</select>
         		<select name="formType"  onchange="javascript:searchSubmit(this);">
         			<option value="" >类型</option>
@@ -103,8 +157,16 @@
 
         </div>
         -->
+        <form action="/region/enterprise/list" id="actionForm" method=POST>
+	        <input name="keywords" type="hidden" value="<#if keywords??&&keywords?length gt 0>${keywords}</#if>" />
+	        <input name="statusId" type="hidden" value="<#if statusId??>${statusId}</#if>" />
+	        <input name="formType" type="hidden" value="<#if formType??>${formType}</#if>" />
+	        <input name="page" type="hidden" value="<#if page??>${page}</#if>" />
+	        <input name="__ACTION" id="actionValue" type="hidden" value="" />
+        
 		<table class="new_list">
         	<tr class="list_title">
+        		<th></th>
         		<th width="10%">编号</th>
         		<th  style="text-align : left; padding-left:40px ;">名称<th>
         		<th width="13%">手机</th>
@@ -115,8 +177,14 @@
         <#if enterprise_page??>
         	<#list enterprise_page.content as item>
 	        	<tr>
+	        		<td>
+		        		<span class="checkall" style="vertical-align:middle;">
+			        		<input style="width:15px;height:15px;float:left; margin:0 0 0 10px ;"  id="listChkId" type="checkbox" name="listChkId" value="${item_index}"/>
+			        		<input type="hidden" name="listId" id="listId" value="${item.id}">
+			        	</span>	
+	        		</td>		        	
 	        		<td>${item.number!''}</td>
-	        		<td style="text-align : left; padding-left:40px ;">
+	        		<td style="text-align : left; padding-left:10px ;">
 	        		<#if item.formType??&&item.formType == 0>
 	        			<#if item.statusId ?? && item.statusId == 1>
 	        				<img src="/client/images/n0.png" alt="已过审企业"  title="已过审企业"/>
@@ -125,9 +193,9 @@
 	        			</#if>
 	        		<#elseif item.formType??&&item.formType == 1>
 	        			<#if item.statusId ?? && item.statusId == 1>
-	        				<img src="/client/images/n1.png" alt="已过审项目"   title="已过审项目"/>
+	        				<img src="/client/images/n1.png" alt="已过审项目"   title="已过审团队"/>
 	        			<#elseif item.statusId ?? && item.statusId == 0 >
-	        				<img src="/client/images/n11.gif" alt="待审核项目"   title="待审核项目"/>
+	        				<img src="/client/images/n11.gif" alt="待审核项目"   title="待审核团队"/>
 	        			</#if>	      
 	        		</#if>	  					
 	        		<a href="/region/enterprise/check/${item.id?c!''}">${item.title!''}</a>
@@ -145,6 +213,13 @@
         	</#list>
         </#if>	   
         </table>
+        </form>
+        	<div class="area_add_btn" style="display: block; float: left;">
+		        <a class="all" style="margin-left:0px;" href="javascript:;" onclick="checkAll(this);"><i></i><span>全选</span></a>
+				<input style=" margin-left: 10px; cursor:pointer;" class="area_batch" type="button" onclick="javascript:actionBtn('pass');" value="通过" />
+				<input style=" margin-left: 10px; cursor:pointer;" class="area_batch" type="button" onclick="javascript:actionBtn('cancel');" value="未通过" />
+				<input style=" margin-left: 10px; cursor:pointer;" class="area_batch" type="button" onclick="javascript:actionBtn('recall');" value="重新审核" />
+			</div>
     </div> 
     
         <div class="page">
@@ -154,7 +229,7 @@
                  <#if PAGE_DATA.number+1 == 1>
                       <a disabled="disabled"  class="page_next">上一页</a>               
                  <#else>
-                     <a href="/region/enterprise/list?page=${PAGE_DATA.number-1}"  class="page_next">上一页</a>                
+                     <a href="/region/enterprise/list?page=${PAGE_DATA.number-1}&statusId=${statusId!''}&formType=${formType!''}&keywords=${keywords!''}"  class="page_next">上一页</a>                
                  </#if>
                  
                  <#assign continueEnter=false>
@@ -165,7 +240,7 @@
                              <#if page == PAGE_DATA.number+1>
                                  <a  class ="current" style="color:#e67817;">${page }</a>
                              <#else>
-                                 <a href="/region/enterprise/list?page=${page-1}">${page}</a> 
+                                 <a href="/region/enterprise/list?page=${page-1}&statusId=${statusId!''}&formType=${formType!''}&keywords=${keywords!''}">${page}</a> 
                              </#if>
                              <#assign continueEnter=false>
                          <#else>
@@ -181,7 +256,7 @@
                  <#if PAGE_DATA.number+1 == PAGE_DATA.totalPages || PAGE_DATA.totalPages==0>
                      <a disabled="disabled" class="page_last">下一页</a> 
                  <#else>
-                     <a href="/region/enterprise/list?page=${PAGE_DATA.number+1}" class="page_last">下一页</a> 
+                     <a href="/region/enterprise/list?page=${PAGE_DATA.number+1}&statusId=${statusId!''}&formType=${formType!''}&keywords=${keywords!''}" class="page_last">下一页</a> 
                  </#if>
              </#if>
             <p>共${PAGE_DATA.totalPages!'1'}页  ${PAGE_DATA.totalElements!'1'}条</p>

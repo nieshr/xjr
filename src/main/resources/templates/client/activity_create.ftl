@@ -628,7 +628,7 @@ window.onload=done2;
 			    						<a style="display:block;  width:100px;"></a>
 					        			<#if activityType_list??>
 				    				        <#list activityType_list as type>
-				    				        	<#if (type_index == 0||type_index ==2)&&item.type??&&type.title == item.type>						
+				    				        	<#if (type_index == 0||type_index ==2)&& activity?? && type.title == activity.activityType>						
 				                                    <#if activity.statusId??&&activity.statusId==0 || !activity.statusId??>
 				                                   	    <a href="javascript:void(0)" title="评分尚未开始" style="color:#666;" target="_blank">评分情况</a>
 				                                    <#else>

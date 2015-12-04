@@ -532,6 +532,36 @@ public class TdManagerUserController {
         return "/site_mag/user_level_edit";
     }
     
+    
+    @RequestMapping(value = "/role" , method = RequestMethod.GET)
+    public String userAssumingControl(Long id,HttpServletRequest request , ModelMap map){
+        String username = (String) request.getSession().getAttribute("manager");
+        if (null == username) {
+            return "redirect:/Verwalter/login";
+        }
+    	
+        if (null != id )
+        {
+        	TdUser user = tdUserService.findOne(id);
+        	
+        	System.err.println(user);
+			Integer roleId = user.getRoleId().intValue();
+			request.getSession().setMaxInactiveInterval(60 * 60 * 2);
+			
+			if (null != roleId && roleId == 1)
+			{
+				request.getSession().setAttribute("enterpriseUsername", user.getUsername());
+				request.getSession().setAttribute("enterpriseUsermobile", user.getMobile());
+				request.getSession().setAttribute("username", user.getUsername());
+				return "redirect:/enterprise/check";
+			}
+			
+        }
+        
+    	return "redirect:/user/list";
+    }
+    
+    
     @RequestMapping(value="/level/save")
     public String levelSave(TdUserLevel tdUserLevel,
                         String __VIEWSTATE,

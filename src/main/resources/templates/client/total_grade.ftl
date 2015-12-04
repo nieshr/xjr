@@ -37,7 +37,7 @@ function tip()
  
  function gradeOrder(orderId)
  {
-	 location.href="/activity/getGrade?activityId=${activityId?c!''}&orderId="+orderId<#if mark??&&mark=="activity">+"&mark=activity"</#if>;
+	 location.href="/activity/getGrade?activityId=${activityId?c!''}&orderId="+orderId<#if mark??&&mark=="activity">+"&mark=a"</#if>;
 
  }
 </script>
@@ -112,14 +112,22 @@ function tip()
 	    				    <#list activityType_list as type>
 	    				        <#if type_index == 0 && type.title == activity.activityType>	 				        
 							        <#if item.win??&&item.win==activityId>
-							        	<a style="color:#BB4014;"  title="分配投资机构" href="/activity/invest?enterpriseId=${item.enterpriseId?c!''}&activityId=${item.activityId?c!''}">${item.enterpriseTitle!''}</a>
+							        	<#if mark??&&mark=="activity">
+							        		<a style="color:#BB4014;"  title="分配投资机构" href="/activity/invest?enterpriseId=${item.enterpriseId?c!''}&activityId=${item.activityId?c!''}">${item.enterpriseTitle!''}</a>
+							       		<#else>
+							       			<a style="color:#BB4014;" title="胜出项目">${item.enterpriseTitle!''}</a>
+							       		</#if>	
 							        <#else>
 							        	${item.enterpriseTitle!''}
 							        </#if>
 							    </#if>    
 	    				        <#if type_index == 2 && type.title == activity.activityType>	 				        
 							        <#if item.showWin??&&item.showWin==activityId>
-							        	<a style="color:#BB4014;"  title="分配投资机构" href="/activity/invest?enterpriseId=${item.enterpriseId?c!''}&activityId=${item.activityId?c!''}">${item.enterpriseTitle!''}</a>
+							        	<#if mark??&&mark=="activity">
+							        		<a style="color:#BB4014;"  title="分配投资机构" href="/activity/invest?enterpriseId=${item.enterpriseId?c!''}&activityId=${item.activityId?c!''}">${item.enterpriseTitle!''}</a>
+							        	<#else>
+							        		<a style="color:#BB4014;" title="胜出项目">${item.enterpriseTitle!''}</a>
+							        	</#if>
 							        <#else>
 							        	${item.enterpriseTitle!''}
 							        </#if>	

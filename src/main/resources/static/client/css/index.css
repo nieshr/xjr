@@ -76,7 +76,7 @@
 }
 
 
-/*banner*/
+/*banner
 .sect1 .banner1{
 	position:relative;
 	width:100%;
@@ -132,6 +132,78 @@
 	bottom:10%;
 	display:block;
 }  */
+
+/*banner*/
+.banner1 {
+	position: relative;
+	width: 100%;
+	height: 883px;
+	background: url(../images/banner1.jpg) no-repeat center;
+}
+.banner1 .bg1 {
+	position: absolute;
+	left: 50%;
+	top: 10%;
+	margin-left: -131px;
+	width: 262px;
+	height: 370px;
+	background: url(../images/kjxjr1.png) no-repeat scroll 0 0 transparent;
+}
+.banner1 .bg2 {
+	position: absolute;
+	left: 50%;
+	top: 60%;
+	margin-left: -329px;
+	width: 658px;
+	height: 149px;
+	background: url(../images/kjxjr.png) no-repeat scroll 0 0 transparent;
+}
+.banner1 a{
+	position:absolute;
+	left:50%;
+	top:80%;
+	display:block;
+	margin-left: -78px;
+	width:156px;
+	height: 40px;
+	line-height: 40px;
+	color:#ffffff;
+	font-size:1.8em;
+	text-align:center;
+	border:2px solid #9de3fd;
+	border-radius:6px;
+}
+@media screen and (max-width: 1366px) {
+	.banner1 {height: 500px}
+	.banner1 .bg1 {
+		top: 10%;
+		margin-left: -53px;
+		/*width: 262px;
+		height: 370px;*/
+		width: 106px;
+		height: 150px;
+		background: url(../images/kjxjr1_h150.png) no-repeat scroll 0 0 transparent;
+	}
+	.banner1 .bg2 {
+		top: 45%;
+		margin-left: -176px;
+		/*width: 658px;
+		height: 149px;*/
+		width: 353px;
+		height: 80px;
+		background: url(../images/kjxjr_h80.png) no-repeat scroll 0 0 transparent;
+	}
+	.banner1 a{
+		top:70%;
+		margin-left: -78px;
+		font-size:1.8em;
+	}
+}
+.banner1 a:hover{
+	background:#39a9e3;
+	border:2px solid #39a9e3;
+	color:#fff;
+}
 
 /*第二屏*/
 .sect2 {background: #fafafa;}
@@ -203,16 +275,18 @@
 	font-size:18px;
 	color:#999999;
 }
-.sect2 .section2 .div1 .p3{
-	text-align:center;
+.sect2 .section2 .p3{
+	margin:0 auto;
+	width:640px;
+	text-align:left;
 	margin-top:20px;
 	line-height:32px;
 	font-size:15px;
 }
-.sect2 .section2 .div1 .p4{
+.sect2 .section2 .p4{
 	margin-top:30px;
 }
-.sect2 .section2 .div1 .p4 a{
+.sect2 .section2 .p4 a{
 	display:block;
 	padding:2px;
 	margin:0 auto;
@@ -220,7 +294,7 @@
 	border:solid 1px #666666;
 	font-size:12px;
 }
-.sect2 .section2 .div1 .p4 a:hover{
+.sect2 .section2 .p4 a:hover{
 	border:none;
 	background:#666666;
 	color:#ffffff;

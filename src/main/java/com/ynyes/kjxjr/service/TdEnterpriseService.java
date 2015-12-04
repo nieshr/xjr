@@ -86,7 +86,7 @@ public class TdEnterpriseService {
 	public Page<TdEnterprise> findByStatusIdAndSearch(Long statusId, String keywords, int page, int size) {
 		PageRequest pageRequest = new PageRequest(page, size);
 
-		return repository.findByStatusIdAndTitleContainingOrderBySortIdAsc(statusId, keywords, pageRequest);
+		return repository.findByStatusIdAndTitleContainingOrderByIdDesc(statusId, keywords, pageRequest);
 	}
 
 	// 搜索1
@@ -94,7 +94,7 @@ public class TdEnterpriseService {
 			int size) {
 		PageRequest pageRequest = new PageRequest(page, size);
 
-		return repository.findByAreaAndStatusIdAndTitleContainingOrderBySortIdAsc(area, statusId, keywords,
+		return repository.findByAreaAndStatusIdAndTitleContainingOrderByIdDesc(area, statusId, keywords,
 				pageRequest);
 	}
 
@@ -103,7 +103,7 @@ public class TdEnterpriseService {
 			int size) {
 		PageRequest pageRequest = new PageRequest(page, size);
 
-		return repository.findByTypeContainingAndStatusIdAndTitleContainingOrderBySortIdAsc(Type, statusId, keywords,
+		return repository.findByTypeContainingAndStatusIdAndTitleContainingOrderByIdDesc(Type, statusId, keywords,
 				pageRequest);
 	}
 
@@ -112,7 +112,7 @@ public class TdEnterpriseService {
 			int page, int size) {
 		PageRequest pageRequest = new PageRequest(page, size);
 
-		return repository.findByFormTypeAndStatusIdAndTitleContainingOrderBySortIdAsc(formType, statusId, keywords,
+		return repository.findByFormTypeAndStatusIdAndTitleContainingOrderByIdDesc(formType, statusId, keywords,
 				pageRequest);
 	}
 
@@ -121,7 +121,7 @@ public class TdEnterpriseService {
 			String keywords, int page, int size) {
 		PageRequest pageRequest = new PageRequest(page, size);
 
-		return repository.findByAreaAndTypeContainingAndStatusIdAndTitleContainingOrderBySortIdAsc(area, type, statusId,
+		return repository.findByAreaAndTypeContainingAndStatusIdAndTitleContainingOrderByIdDesc(area, type, statusId,
 				keywords, pageRequest);
 	}
 
@@ -130,7 +130,7 @@ public class TdEnterpriseService {
 			String keywords, int page, int size) {
 		PageRequest pageRequest = new PageRequest(page, size);
 
-		return repository.findByAreaAndFormTypeAndStatusIdAndTitleContainingOrderBySortIdAsc(area, formType, statusId,
+		return repository.findByAreaAndFormTypeAndStatusIdAndTitleContainingOrderByIdDesc(area, formType, statusId,
 				keywords, pageRequest);
 	}
 
@@ -139,7 +139,7 @@ public class TdEnterpriseService {
 			String keywords, int page, int size) {
 		PageRequest pageRequest = new PageRequest(page, size);
 
-		return repository.findByTypeContainingAndFormTypeAndStatusIdAndTitleContainingOrderBySortIdAsc(type, formType,
+		return repository.findByTypeContainingAndFormTypeAndStatusIdAndTitleContainingOrderByIdDesc(type, formType,
 				statusId, keywords, pageRequest);
 	}
 
@@ -148,7 +148,7 @@ public class TdEnterpriseService {
 			Long statusId, String keywords, int page, int size) {
 		PageRequest pageRequest = new PageRequest(page, size);
 
-		return repository.findByAreaAndTypeContainingAndFormTypeAndStatusIdAndTitleContainingOrderBySortIdAsc(area,
+		return repository.findByAreaAndTypeContainingAndFormTypeAndStatusIdAndTitleContainingOrderByIdDesc(area,
 				type, formType, statusId, keywords, pageRequest);
 	}
 	/*
@@ -159,28 +159,28 @@ public class TdEnterpriseService {
 	public Page<TdEnterprise> findByStatusId(Long statusId, int page, int size) {
 		PageRequest pageRequest = new PageRequest(page, size);
 
-		return repository.findByStatusIdOrderBySortIdAsc(statusId, pageRequest);
+		return repository.findByStatusIdOrderByIdDesc(statusId, pageRequest);
 	}
 
 	// 搜索1
 	public Page<TdEnterprise> findByAreaAndStatusId(String area, Long statusId, int page, int size) {
 		PageRequest pageRequest = new PageRequest(page, size);
 
-		return repository.findByAreaAndStatusIdOrderBySortIdAsc(area, statusId, pageRequest);
+		return repository.findByAreaAndStatusIdOrderByIdDesc(area, statusId, pageRequest);
 	}
 
 	// 搜索2
 	public Page<TdEnterprise> findByTypeAndStatusId(String Type, Long statusId, int page, int size) {
 		PageRequest pageRequest = new PageRequest(page, size);
 
-		return repository.findByTypeContainingAndStatusIdOrderBySortIdAsc(Type, statusId, pageRequest);
+		return repository.findByTypeContainingAndStatusIdOrderByIdDesc(Type, statusId, pageRequest);
 	}
 
 	// 搜索3
 	public Page<TdEnterprise> findByFormTypeAndStatusId(Long formType, Long statusId, int page, int size) {
 		PageRequest pageRequest = new PageRequest(page, size);
 
-		return repository.findByFormTypeAndStatusIdOrderBySortIdAsc(formType, statusId, pageRequest);
+		return repository.findByFormTypeAndStatusIdOrderByIdDesc(formType, statusId, pageRequest);
 	}
 
 	// 搜索12
@@ -188,7 +188,7 @@ public class TdEnterpriseService {
 			int size) {
 		PageRequest pageRequest = new PageRequest(page, size);
 
-		return repository.findByAreaAndTypeContainingAndStatusIdOrderBySortIdAsc(area, type, statusId, pageRequest);
+		return repository.findByAreaAndTypeContainingAndStatusIdOrderByIdDesc(area, type, statusId, pageRequest);
 	}
 
 	// 搜索13
@@ -196,7 +196,7 @@ public class TdEnterpriseService {
 			int size) {
 		PageRequest pageRequest = new PageRequest(page, size);
 
-		return repository.findByAreaAndFormTypeAndStatusIdOrderBySortIdAsc(area, formType, statusId, pageRequest);
+		return repository.findByAreaAndFormTypeAndStatusIdOrderByIdDesc(area, formType, statusId, pageRequest);
 	}
 
 	// 搜索23
@@ -204,7 +204,7 @@ public class TdEnterpriseService {
 			int size) {
 		PageRequest pageRequest = new PageRequest(page, size);
 
-		return repository.findByTypeContainingAndFormTypeAndStatusIdOrderBySortIdAsc(type, formType, statusId,
+		return repository.findByTypeContainingAndFormTypeAndStatusIdOrderByIdDesc(type, formType, statusId,
 				pageRequest);
 	}
 
@@ -213,11 +213,11 @@ public class TdEnterpriseService {
 			Long statusId, int page, int size) {
 		PageRequest pageRequest = new PageRequest(page, size);
 
-		return repository.findByAreaAndTypeContainingAndFormTypeAndStatusIdOrderBySortIdAsc(area, type, formType,
+		return repository.findByAreaAndTypeContainingAndFormTypeAndStatusIdOrderByIdDesc(area, type, formType,
 				statusId, pageRequest);
 	}
 
-	public Page<TdEnterprise> findAllOrderBySortIdAsc(int page, int size) {
+	public Page<TdEnterprise> findAllOrderByIdDesc(int page, int size) {
 		PageRequest pageRequest = new PageRequest(page, size, new Sort(Direction.ASC, "sortId"));
 
 		return repository.findAll(pageRequest);
@@ -235,16 +235,16 @@ public class TdEnterpriseService {
 		return repository.findAll(pageRequest);
 	}
 
-	public Page<TdEnterprise> findByAreaOrderByNumberAsc(String area, int page, int size) {
+	public Page<TdEnterprise> findByAreaOrderByIdDesc(String area, int page, int size) {
 		PageRequest pageRequest = new PageRequest(page, size, new Sort(Direction.ASC, "number"));
 
-		return repository.findByAreaOrderByNumberAsc(area, pageRequest);
+		return repository.findByAreaOrderByIdDesc(area, pageRequest);
 	}
 
-	public Page<TdEnterprise> searchAllOrderBySortIdAsc(String keywords, int page, int size) {
+	public Page<TdEnterprise> searchAllOrderByIdDesc(String keywords, int page, int size) {
 		PageRequest pageRequest = new PageRequest(page, size);
 
-		return repository.findByTitleContainingOrderBySortIdAsc(keywords, pageRequest);
+		return repository.findByTitleContainingOrderByIdDesc(keywords, pageRequest);
 	}
 	
 	/**
@@ -254,7 +254,7 @@ public class TdEnterpriseService {
 	public Page<TdEnterprise> findBySearchOrderByIdDesc(String keywords, int page, int size) {
 		PageRequest pageRequest = new PageRequest(page, size);
 
-		return repository.findByTitleContainingOrderBySortIdAsc(keywords, pageRequest);
+		return repository.findByTitleContainingOrderByIdDesc(keywords, pageRequest);
 	}
 	
 	//12
@@ -262,6 +262,18 @@ public class TdEnterpriseService {
 		PageRequest pageRequest = new PageRequest(page, size);
 
 		return repository.findByStatusIdAndFormTypeAndTitleContainingOrderByIdDesc(statusId , formType , keywords, pageRequest);
+	}
+	
+	public Page<TdEnterprise> findByAreaAndFormTypeAndSearch(String area , Long formType ,String keywords, int page, int size) {
+		PageRequest pageRequest = new PageRequest(page, size);
+
+		return repository.findByAreaAndFormTypeAndTitleContainingOrderByIdDesc(area , formType , keywords, pageRequest);
+	}
+	
+	public Page<TdEnterprise> findByFormType(Long formType, int page, int size) {
+		PageRequest pageRequest = new PageRequest(page, size);
+
+		return repository.findByFormTypeOrderByIdDesc(formType,  pageRequest);
 	}
 
 	/**

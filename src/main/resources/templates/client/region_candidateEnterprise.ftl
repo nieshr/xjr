@@ -15,7 +15,9 @@
 	<link rel="shortcut icon" href="/client/images/icon.ico" />
 	<link href="/client/css/base.css" rel="stylesheet" type="text/css" />
 	<link href="/client/css/area.css" rel="stylesheet" type="text/css" />
-
+<style>
+.area_save_btn01:hover{background: #ff0f00;}
+</style>
 <script src="/client/js/jquery-1.9.1.min.js"></script>
 <script src="/client/js/main.js"></script>
 <script>
@@ -149,7 +151,7 @@ function selectSubmit()
 				        		<input type="hidden" name="listId" id="listId" value="${item.id}">
 				        	</span>	
 			        		</td>			        		
-			        		<td><a href="/region/enterprise/check/${item.id?c!''}" target=_blank >${item.title!''}</a></td>
+			        		<td style="text-align:left;padding-left:10px ;"><a href="/region/enterprise/check/${item.id?c!''}" target=_blank >${item.title!''}</a></td>
 			        		<td style="color:#0ab2cb;">${item.area!''}</td>
 			        		<td style="color:#e67817;">${item.type!''}</td>
 			        		<td>
@@ -163,14 +165,14 @@ function selectSubmit()
 		        	</#list>
 		        </#if>	   
 		        </table>
-	        </div>
 	        <div class="area_add_btn">
 	        <a class="all" style="margin-left:0px;" href="javascript:;" onclick="checkAll(this);"><i></i><span>全选</span></a>
 			<input style=" margin-left: 10px; cursor:pointer;" class="area_batch" type="submit" value="批量加入初选" />
+			</div>
 			</form>
 			</div>
 		
-		<div class="page">
+		<div class="page" >
 		<#if enterprise_page??>
 		<#assign PAGE_DATA = enterprise_page>
 		  	 <#if PAGE_DATA??>
@@ -211,10 +213,10 @@ function selectSubmit()
 		  	</#if>
 		  </div>
 		
-		<div class="list_base2" id="selectedEnterprise">			
         	<#include "/client/region_candidate_selected_enterprise.ftl" />
-        </div>  
-        <div class="area_add_btn">
+       
+        </div>
+        <div style="margin-bottom:12px;" class="area_add_btn">
 		<!--	<input style="cursor:pointer;"  type="button" value="批量取消初选" />-->
 		</div>
 		<input style="cursor:pointer;" class="area_save_btn" style="margin-left:45%;"type="button" onclick="location.href='/region/enterprise/finish?id=${activityId?c!''}&statusId=1'" value="完成" />

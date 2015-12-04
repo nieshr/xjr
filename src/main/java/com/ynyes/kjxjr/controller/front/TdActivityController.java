@@ -1457,6 +1457,7 @@ public class TdActivityController {
       
         
         TdActivity activity = tdActivityService.findOne(activityId);
+        map.addAttribute("user", tdUserService.findByUsername(username));
         map.addAttribute("keywords", keywords);
         map.addAttribute("area", area);
         map.addAttribute("type", type);

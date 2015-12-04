@@ -35,6 +35,8 @@ public interface TdUserRepo extends
     
     TdUser findByUsernameAndStatusIdOrUsernameAndStatusId(String username, Long statusId, String username1, Long statusId1);
     
+    TdUser findByUsernameAndStatusIdOrUsernameAndStatusIdOrUsernameAndStatusIdIsNull(String username, Long statusId, String username1, Long statusId1 , String username2); //企业忘了加这个，空值也算吧。zhangji
+    
     TdUser findByUsernameIgnoreCase(String username);
     
     TdUser findByUsernameAndIdNot(String username, Long id);

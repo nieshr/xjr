@@ -154,7 +154,7 @@ public class TdExpertController {
 
 
 		
-		
+		map.addAttribute("user", tdUserService.findByUsername(expertUsername));
 		map.addAttribute("expert", expert);
 		map.addAttribute("activities", activities_list);
 		return "/client/expert_activities";
@@ -347,7 +347,7 @@ public class TdExpertController {
 			}
 		}
         
-        
+		map.addAttribute("user", tdUserService.findByUsername(expertUsername));
 		map.addAttribute("grade_list", grade_list);
 		map.addAttribute("activity", activity);
 		map.addAttribute("activityId", activityId);
@@ -458,6 +458,8 @@ public class TdExpertController {
 		TdExpert expert = tdExpertService.findbyUsername(expertUsername);
 		List<TdActivityInvest> enterprise_list = tdActivityInvestService
 				.findByExpertId(expert.getId());
+		
+		map.addAttribute("user", tdUserService.findByUsername(expertUsername));
 		map.addAttribute("enterprise_list", enterprise_list);
 		return "/client/expert_enterprise_list";
 	}
@@ -492,6 +494,7 @@ public class TdExpertController {
         Date lastyear3 = calendar.getTime();
         map.addAttribute("lastyear3", lastyear3);
         
+        map.addAttribute("user", tdUserService.findByUsername(expertUsername));
 		map.addAttribute("content_list", content_list);
 		return "/client/coach_record";
 	}
@@ -532,6 +535,8 @@ public class TdExpertController {
 		TdExpert expert = tdExpertService.findbyUsername(expertUsername);
 		List<TdExpertCoachEnterprise> grade_false_list = tdExpertCoachEnterpriseService.findByExpertIdAndIsGradeIsFalse(expert.getId());
 		List<TdExpertCoachEnterprise> grade_true_list = tdExpertCoachEnterpriseService.findByExpertIdAndIsGradeIsTrue(expert.getId());
+		
+		map.addAttribute("user", tdUserService.findByUsername(expertUsername));
 		map.addAttribute("grade_false_list", grade_false_list);
 		map.addAttribute("grade_true_list", grade_true_list);
 		return "/client/lydf";
@@ -546,6 +551,8 @@ public class TdExpertController {
 		TdExpert expert = tdExpertService.findbyUsername(expertUsername);
 		List<TdCoachContent> content_list = tdCoachContentService
 				.findByExpertIdAndActivityIdOrderByCoachDateAsc(expert.getId(), activityId);
+		
+		map.addAttribute("user", tdUserService.findByUsername(expertUsername));
 		map.addAttribute("content_list", content_list);
 		return "/client/coach_log";
 	}

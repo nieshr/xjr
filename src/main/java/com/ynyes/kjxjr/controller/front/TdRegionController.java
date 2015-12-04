@@ -127,10 +127,14 @@ public class TdRegionController {
 	@Autowired
 	TdActivityTypeService tdActivityTypeService;
 
-    @RequestMapping(value = "/enterprise/list", method = RequestMethod.GET)
+    @RequestMapping(value = "/enterprise/list"/*, method = RequestMethod.GET*/)
     public String EnterpriseList(HttpServletRequest req, 
+    											HttpServletResponse res, 
     											ModelMap map,
     											Integer page,
+    											String __ACTION,
+    									        Long[] listId,
+    									        Integer[] listChkId,
     											String keywords,
     											Long statusId,
     											Long formType) {
@@ -138,6 +142,23 @@ public class TdRegionController {
 
         if (null == username && null == manager) {
             return "redirect:/login";
+        }
+        
+        //批量操作
+        if (null != __ACTION)
+        {
+        	if (__ACTION.equalsIgnoreCase("pass"))
+    		{
+    			passE(req , res ,username, listId, listChkId);
+    		}
+        	if (__ACTION.equalsIgnoreCase("cancel"))
+        	{
+        		cancelE(req , res ,username,listId, listChkId);
+        	}
+        	if (__ACTION.equalsIgnoreCase("recall"))
+        	{
+        		recallE(req , res ,username,listId, listChkId);
+        	}
         }
         
         if (null ==page)
@@ -149,6 +170,7 @@ public class TdRegionController {
 
         TdUser user = tdUserService.findByUsernameAndIsEnabled(username);
         TdRegionAdmin regionAdmin = tdRegionAdminService.findbyUsername(username);
+        String area = regionAdmin.getRegion();
         
         //搜索
         Page<TdEnterprise>enterprisePage = null;
@@ -159,12 +181,12 @@ public class TdRegionController {
         		if (null != formType )
         		{
         				
-        				enterprisePage = tdEnterpriseService.findByFormTypeAndStatusIdAndSearch( formType, 1L, keywords, page, ClientConstant.pageSize);
+        				enterprisePage = tdEnterpriseService.findByAreaAndFormTypeAndStatusIdAndSearch( area ,formType, statusId, keywords, page, ClientConstant.pageSize);
         			}
         			else
         			{
         				
-        				enterprisePage = tdEnterpriseService.findByStatusIdAndSearch( 1L, keywords, page, ClientConstant.pageSize);
+        				enterprisePage = tdEnterpriseService.findByAreaAndStatusIdAndSearch(area , statusId, keywords, page, ClientConstant.pageSize);
         			}
         		}
             	else
@@ -172,7 +194,7 @@ public class TdRegionController {
             		if(null != formType)
             		{
             			
-            			enterprisePage = tdEnterpriseService.findByFormTypeAndSearch(formType,  1L, keywords, page, ClientConstant.pageSize);
+            			enterprisePage = tdEnterpriseService.findByAreaAndFormTypeAndSearch(area , formType, keywords, page, ClientConstant.pageSize);
             		}
             		else
             		{
@@ -206,14 +228,15 @@ public class TdRegionController {
         			else
         			{
         				//0
-        				enterprisePage = tdEnterpriseService.findByAreaOrderByNumberAsc(regionAdmin.getTitle(),page, ClientConstant.pageSize);
+        				enterprisePage = tdEnterpriseService.findByAreaOrderByIdDesc(regionAdmin.getTitle(),page, ClientConstant.pageSize);
         			}
         		}
         	}
         
 
-        
-        
+        map.addAttribute("keywords", keywords);
+        map.addAttribute("statusId", statusId);
+        map.addAttribute("formType", formType);
         map.addAttribute("enterprise_page", enterprisePage);
         map.addAttribute("user", user);
 
@@ -1269,6 +1292,168 @@ private void removeE(Long activityId ,Long[] ids, Integer[] chkIds)
   }
 }
 
+//批量通过审核
+private void passE(HttpServletRequest req , HttpServletResponse res , String username ,Long[] ids, Integer[] chkIds)
+{
+  if (null == ids || null == chkIds || null == username
+          || ids.length < 1 || chkIds.length < 1)
+  {
+      return;
+  }
+  
+  for (int chkId : chkIds)
+  {
+      if (chkId >=0 && ids.length > chkId)
+      {
+        Long id = ids[chkId];
+       
+      	TdEnterprise enterprise = tdEnterpriseService.findOne(id);
+      	if (null != enterprise)
+      	{
+
+      		enterprise.setStatusId(1L);
+            tdEnterpriseService.save(enterprise);
+            
+            TdArticle article = tdArticleService.findByRecommendIdAndMenuId(enterprise.getId() , 11L);
+            if (null == article)
+            {
+            	TdArticle newArticle = new TdArticle();
+            	newArticle.setRecommendId(enterprise.getId());
+            	newArticle.setMenuId(11L);
+            	newArticle.setSortId(99L);
+            	newArticle.setSource("本站");
+            	newArticle.setViewCount(0L);
+            	if(enterprise.getFormType()==0)
+            	{
+            		newArticle.setCategoryId(16L);
+            	}
+            	else{
+            		newArticle.setCategoryId(17L);
+            	}
+            	newArticle.setStatusId(0L);
+            	if (null != enterprise.getTitle())
+            	{
+            		newArticle.setTitle(enterprise.getTitle());
+            	}
+            	if (null != enterprise.getProfile())
+            	{
+            		newArticle.setContent(enterprise.getProfile());
+            	}
+            	tdArticleService.save(newArticle);
+            }
+            
+            //短信提醒
+            if (null != enterprise.getMobile() && null != enterprise.getTitle())
+            {
+            	 smsPass(enterprise.getMobile(), 1L , enterprise.getTitle() , res,req);
+            }
+           
+            
+            //站内信
+            TdRegionAdmin admin = tdRegionAdminService.findbyUsername(username);
+            TdUserMessage message = new TdUserMessage();
+            message.setEnterpriseId(id);
+            message.setRegionAdminId(admin.getId());
+            message.setName(enterprise.getTitle());
+            message.setRegion(admin.getTitle());
+            message.setContent("【审核】恭喜您通过"+admin.getRegion()+"的审核，活动信息可以在【活动列表】查看。您也可以【申请展示】中编辑文章或上传资料，通过审核后可以在本站相关网页中展示。");
+            message.setTitle("通过审核");
+            message.setStatusE(0L);
+            message.setSpeaker(1L);
+            message.setTime(new Date());
+            tdUserMessageService.save(message);
+      	}
+      	
+      }
+  }
+}
+
+//批量未通过审核
+private void cancelE(HttpServletRequest req , HttpServletResponse res , String username ,Long[] ids, Integer[] chkIds)
+{
+if (null == ids || null == chkIds || null == username
+        || ids.length < 1 || chkIds.length < 1)
+{
+    return;
+}
+
+for (int chkId : chkIds)
+{
+    if (chkId >=0 && ids.length > chkId)
+    {
+      Long id = ids[chkId];
+     
+    	TdEnterprise enterprise = tdEnterpriseService.findOne(id);
+    	if (null != enterprise)
+    	{
+    		enterprise.setStatusId(3L);
+	        tdEnterpriseService.save(enterprise);
+	        
+            //短信提醒
+            smsPass(enterprise.getUsermobile(),3L , enterprise.getTitle() , res,req);
+	        
+            //站内信
+            TdRegionAdmin admin = tdRegionAdminService.findbyUsername(username);
+            TdUserMessage message = new TdUserMessage();
+            message.setEnterpriseId(id);
+            message.setRegionAdminId(admin.getId());
+            message.setName(enterprise.getTitle());
+            message.setRegion(admin.getTitle());
+            message.setContent("【审核】您未通过"+admin.getRegion()+"地区的审核，请登录个人中心重新填写资料申请！");
+            message.setTitle("未通过审核");
+            message.setStatusE(0L);
+            message.setSpeaker(1L);
+            message.setTime(new Date());
+            tdUserMessageService.save(message);
+        }
+    	
+    }
+}
+}
+
+
+//批量重新审核
+private void recallE(HttpServletRequest req , HttpServletResponse res , String username ,Long[] ids, Integer[] chkIds)
+{
+if (null == ids || null == chkIds || null == username
+      || ids.length < 1 || chkIds.length < 1)
+{
+  return;
+}
+
+for (int chkId : chkIds)
+{
+  if (chkId >=0 && ids.length > chkId)
+  {
+    Long id = ids[chkId];
+   
+  	TdEnterprise enterprise = tdEnterpriseService.findOne(id);
+  	if (null != enterprise)
+  	{
+  		enterprise.setStatusId(4L);
+        tdEnterpriseService.save(enterprise);
+        
+        //短信提醒
+        smsPass(enterprise.getUsermobile(),4L , enterprise.getTitle() , res,req);
+        
+        //站内信
+        TdRegionAdmin admin = tdRegionAdminService.findbyUsername(username);
+        TdUserMessage message = new TdUserMessage();
+        message.setEnterpriseId(id);
+        message.setRegionAdminId(admin.getId());
+        message.setContent("【审核】您在"+admin.getRegion()+"地区的审核已撤销，请登录个人中心修改资料并重新提交！");
+        message.setTitle("重新审核");
+        message.setStatusE(0L);
+        message.setSpeaker(1L);
+        message.setTime(new Date());
+        tdUserMessageService.save(message);
+      }
+  	
+  }
+}
+}
+
+
 //档案追踪
 @RequestMapping(value = "/record/{enterpriseId}")
 public String coach(@PathVariable Long enterpriseId, HttpServletRequest req, ModelMap map) {
@@ -1989,6 +2174,293 @@ public String exportRecommend(
             } 
  	return true;
  }
+ 
+ /*-------------------------初选导出----------------------------*/
+//区县科委初选项目汇总表
+@SuppressWarnings("deprecation")
+@RequestMapping(value="/export/candidate")
+public String exportCandidate(
+                          Long activityId,
+                          String area,
+                          ModelMap map,
+                          String exportUrl,
+                          HttpServletResponse resp,
+                          HttpServletRequest req){
+//  String username = (String) req.getSession().getAttribute("regionUsername");String manager =  (String) req.getSession().getAttribute("manager");
+// 
+//  
+//  if (null == username && null == manager) {
+//      return "redirect:/login";
+//  }
+
+      	exportUrl = SiteMagConstant.imagePath;
+  
+			if (null != exportUrl) {
+				List<TdActivityEnterprise> activityEnterpriseList = tdActivityEnterpriseService.findByActivityId(activityId);
+		
+				if (null ==activityEnterpriseList || activityEnterpriseList.size()==0)
+				{
+					Long numwarn = 1L;
+					return "redirect:/region/candidateEnterprise?id="+activityId+"area="+area+"&numwarn="+numwarn;
+				}
+  /**  
+		 * @author lc
+		 * @注释：根据不同条件导出excel文件
+		 */
+    // 第一步，创建一个webbook，对应一个Excel文件  
+    HSSFWorkbook wb = new HSSFWorkbook();  
+    // 第二步，在webbook中添加一个sheet,对应Excel文件中的sheet  
+    HSSFSheet sheet = wb.createSheet("activityEnterprise");  
+    
+    //打印设置
+    HSSFPrintSetup ps = sheet.getPrintSetup();
+    ps.setLandscape(true); //打印方向，true:横向，false:纵向
+    ps.setPaperSize(HSSFPrintSetup.A4_PAPERSIZE); //纸张
+    sheet.setMargin(HSSFSheet.BottomMargin, (double)0.3); //页边距（下）
+    sheet.setMargin(HSSFSheet.LeftMargin, (double)0.3); //页边距（左）
+    sheet.setMargin(HSSFSheet.RightMargin, (double)0.3); //页边距（右）
+    sheet.setMargin(HSSFSheet.TopMargin, (double)0.1); //页边距（上）
+    sheet.setHorizontallyCenter(true); //设置打印页面为水平居中
+    sheet.setVerticallyCenter(true); //设置打印页面为垂直居中
+    
+    //列宽
+    sheet.setColumnWidth((short) 0 , 6*256);
+    sheet.setColumnWidth((short) 1 , 46*256);
+    sheet.setColumnWidth((short) 2 , 6*256);
+    sheet.setColumnWidth((short) 3 , 8*256);
+    sheet.setColumnWidth((short) 4 , 14*256);
+    sheet.setColumnWidth((short) 5 , 14*256);
+    sheet.setColumnWidth((short) 6 , 14*256);
+    sheet.setColumnWidth((short) 7 , 14*256);
+//    sheet.setColumnWidth((short) 7 , 16*256);
+    
+    sheet.setDefaultRowHeightInPoints(20);  
+    
+    
+    // 第三步，在sheet中添加表头第0行,注意老版本poi对Excel的行数列数有限制short  
+    HSSFRow row = sheet.createRow((int) 0);  
+    
+    sheet.addMergedRegion(new Region((short) 0 , (short) 0 , (short) 1 , (short) 7));     //标题1行
+    sheet.addMergedRegion(new Region((short) 2 , (short) 0 , (short) 2 , (short) 7));     //标题2行
+    sheet.addMergedRegion(new Region((short) 3 , (short) 0 , (short) 4 , (short) 7));     //标题3行
+    sheet.addMergedRegion(new Region((short) 5 , (short) 0 , (short) 5, (short) 3));     //公章
+    // 第四步，创建单元格，并设置值表头 设置表头居中  
+    HSSFCellStyle style = wb.createCellStyle();  
+    style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+    style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
+    style.setBorderBottom(HSSFCellStyle.BORDER_THIN);    //设置边框样式
+    style.setBorderRight(HSSFCellStyle.BORDER_THIN);
+    style.setBorderLeft(HSSFCellStyle.BORDER_THIN);  
+    style.setBorderTop(HSSFCellStyle.BORDER_THIN);  
+    
+    
+    HSSFCellStyle style1 = wb.createCellStyle();  
+    style1.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
+    style1.setBorderBottom(HSSFCellStyle.BORDER_THIN);    //设置边框样式
+    style1.setBorderRight(HSSFCellStyle.BORDER_THIN);
+    style1.setBorderLeft(HSSFCellStyle.BORDER_THIN);  
+    style1.setBorderTop(HSSFCellStyle.BORDER_THIN);  
+    
+    
+    HSSFCellStyle style2 = wb.createCellStyle();  
+    style2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
+    style2.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+    style2.setBorderBottom(HSSFCellStyle.BORDER_THIN);    //设置边框样式
+    style2.setBorderRight(HSSFCellStyle.BORDER_THIN);
+    style2.setBorderLeft(HSSFCellStyle.BORDER_THIN);  
+    style2.setBorderTop(HSSFCellStyle.BORDER_THIN);  
+    
+    HSSFCellStyle title1 = wb.createCellStyle();  
+    title1.setBorderBottom(HSSFCellStyle.BORDER_NONE);    //设置边框样式
+    title1.setBorderRight(HSSFCellStyle.BORDER_NONE);
+    title1.setBorderLeft(HSSFCellStyle.BORDER_NONE);  
+    title1.setBorderTop(HSSFCellStyle.BORDER_NONE);  
+    title1.setVerticalAlignment(HSSFCellStyle.VERTICAL_BOTTOM);//垂直下
+    title1.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 居中格式
+    
+    HSSFCellStyle title = wb.createCellStyle();  
+    title.setBorderBottom(HSSFCellStyle.BORDER_NONE);    //设置边框样式
+    title.setBorderRight(HSSFCellStyle.BORDER_NONE);
+    title.setBorderLeft(HSSFCellStyle.BORDER_NONE);  
+    title.setBorderTop(HSSFCellStyle.BORDER_NONE);  
+    title.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
+    title.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 居中格式
+    
+    HSSFCellStyle title3 = wb.createCellStyle();  
+    title3.setBorderBottom(HSSFCellStyle.BORDER_NONE);    //设置边框样式
+    title3.setBorderRight(HSSFCellStyle.BORDER_NONE);
+    title3.setBorderLeft(HSSFCellStyle.BORDER_NONE);  
+    title3.setBorderTop(HSSFCellStyle.BORDER_NONE);  
+    title3.setVerticalAlignment(HSSFCellStyle.VERTICAL_TOP);//垂直上
+    title3.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 居中格式
+    
+    HSSFFont font = wb.createFont();
+    font.setFontName("黑体");
+    font.setFontHeightInPoints((short) 12);//设置字体大小
+    font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);//粗体显示
+    title1.setFont(font);//选择需要用到的字体格式
+    title.setFont(font);//选择需要用到的字体格式
+    title3.setFont(font);//选择需要用到的字体格式
+    
+    //盖章
+    HSSFCellStyle left = wb.createCellStyle();  
+    left.setBorderBottom(HSSFCellStyle.BORDER_THIN);    //设置边框样式
+    left.setAlignment(HSSFCellStyle.ALIGN_LEFT); // 居格式
+    left.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
+    
+    //日期
+    HSSFCellStyle right = wb.createCellStyle();  
+    right.setBorderBottom(HSSFCellStyle.BORDER_THIN);    //设置边框样式
+    right.setAlignment(HSSFCellStyle.ALIGN_RIGHT); // 格式
+    right.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
+    
+    
+    HSSFCell cell = row.createCell((short) 0);  
+    cell = row.createCell((short) 0);  
+    cell.setCellValue("重庆科技小巨人培育专项行动");  
+    cell.setCellStyle(title1);
+    
+    row =sheet.createRow((int) 2);
+    cell = row.createCell((short) 0);  
+    cell.setCellValue(activityEnterpriseList.get(0).getActivityTitle());  
+    cell.setCellStyle(title);
+    
+    row =sheet.createRow((int) 3);
+    cell = row.createCell((short) 0);  
+    cell.setCellValue("初选项目汇总表");  
+    cell.setCellStyle(title3);
+    
+    row =sheet.createRow((int) 5);
+    cell = row.createCell((short) 0);  
+    cell.setCellValue("初选单位（章）");  
+    cell.setCellStyle(left);
+    
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    String date = sdf.format(new Date());
+    cell = row.createCell((short) 7);  
+    cell.setCellValue("日期："+date);  
+    cell.setCellStyle(right);
+//    cell = row.createCell((short) 6);  
+//    cell.setCellValue(date);  
+//    cell.setCellStyle(left);
+    
+    
+    
+    row =sheet.createRow((int) 6);
+    row.setHeight((short) (20 * 20));  
+    
+    cell = row.createCell((short) 0);  
+    cell.setCellValue("序号");  
+    cell.setCellStyle(style);  
+    
+    cell = row.createCell((short) 1);  
+    cell.setCellValue("公司（团队）名称");  
+    cell.setCellStyle(style);  
+    
+    cell = row.createCell((short) 2);  
+    cell.setCellValue("类型");  
+    cell.setCellStyle(style);  
+    
+    cell = row.createCell((short) 3);  
+    cell.setCellValue("联系人");  
+    cell.setCellStyle(style);  
+  
+    cell = row.createCell((short) 4);  
+    cell.setCellValue("手机");  
+    cell.setCellStyle(style);  
+    
+//    cell = row.createCell((short) 6);  
+//    cell.setCellValue("项目简介");  
+//    cell.setCellStyle(style);  
+    
+    cell = row.createCell((short) 5);  
+    cell.setCellValue("QQ/MSN");  
+    cell.setCellStyle(style);  
+    
+    cell = row.createCell((short) 6);  
+    cell.setCellValue("账号");  
+    cell.setCellStyle(style); 
+    
+    cell = row.createCell((short) 7);  
+    cell.setCellValue("注册手机");  
+    cell.setCellStyle(style);  
+    
+			
+		if (null != exportUrl) {
+			if (ImportCandidate(activityEnterpriseList, row, cell, sheet,style)) {
+				download(wb, exportUrl, resp);
+			}         
+		}  
+			}
+			return "redirect:/region/candidateEnterprise?id="+activityId;
+}
+
+/**
+	 * @author lc
+	 * @注释：将page中的订单数据存入excel表格中
+	 */
+@SuppressWarnings("deprecation")
+	public boolean ImportCandidate(List<TdActivityEnterprise> activityEnterpriseList, HSSFRow row, HSSFCell cell, HSSFSheet sheet ,HSSFCellStyle style){
+	 	
+      	for (int i = 0; i < activityEnterpriseList.size(); i++)  
+          {  
+      	 				
+              row = sheet.createRow((int) i + 7);  
+              row.setHeight((short) (20 * 20));  
+              TdActivityEnterprise tdActivityEnterprise = activityEnterpriseList.get(i);  
+              //获取用户信息
+//              TdUser tdUser = tdUserService.findByUsername(tdOrder.getUsername());
+              // 第四步，创建单元格，并设置值  
+              
+              //取企业资料
+              TdEnterprise enterprise = tdEnterpriseService.findOne(tdActivityEnterprise.getEnterpriseId());
+              
+              cell = row.createCell((short) 0);
+              cell.setCellValue(tdActivityEnterprise.getNumber());
+              cell.setCellStyle(style);
+              cell = row.createCell((short) 1);
+              cell.setCellStyle(style);
+              cell.setCellValue(tdActivityEnterprise.getEnterpriseTitle()); 
+              cell = row.createCell((short) 2);
+              cell.setCellStyle(style);
+              if(null != enterprise.getFormType() && enterprise.getFormType() == 0)
+              {
+            	  cell.setCellValue("企业"); 
+              }
+              else if (null != enterprise.getFormType() && enterprise.getFormType() == 1)
+              {
+            	  cell.setCellValue("团队");
+              }
+              cell = row.createCell((short) 3);
+              cell.setCellStyle(style);
+              cell.setCellValue(tdActivityEnterprise.getContact()); 
+              cell = row.createCell((short) 4);
+              cell.setCellStyle(style);
+              cell.setCellValue(tdActivityEnterprise.getMobile());
+              cell = row.createCell((short) 5);
+              cell.setCellStyle(style);
+              if (null != tdActivityEnterprise.getQQ())
+              {
+            	  cell.setCellValue(tdActivityEnterprise.getQQ());
+              }
+
+              cell = row.createCell((short) 6);
+              if (null != enterprise.getUsername())
+              {
+            	  cell.setCellValue(enterprise.getUsername()); 
+              }
+              cell.setCellStyle(style);
+              cell = row.createCell((short) 7);
+              if (null != enterprise.getUsermobile())
+              {
+            	  cell.setCellValue(enterprise.getUsermobile()); 
+              }
+              cell.setCellStyle(style);
+           
+          } 
+	return true;
+}
+ /*---------------------初选导出 end ---------------------------*/
  /**
 	 * @author lc
 	 * @注释：文件写入和下载

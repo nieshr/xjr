@@ -183,11 +183,15 @@ function gotop()
                         <img src="${item.imgUrl!''}" width="195" height="128" alt="新闻图片" style="border: #666 1px solid;"/>
                       </a>
                       <div class="mess">
-                        <p class="p1"><#if item.title?length lt 20>
+                        <p class="p1">
+                        <a target="_blank"  href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c}?mid=${item.menuId?c}</#if>">
+                        	<#if item.title?length lt 20>
                                 ${item.title!''}
                             <#else>
                                 ${item.title[0..19]?default("")}...
-                            </#if></p>
+                            </#if>
+                       </a>    
+                            </p>
                         <p class="p2">${item.brief!''}</p>
                         <p class="p3">
                           <span class="span1">${item.source!''}</span>
@@ -233,11 +237,15 @@ function gotop()
                         <img src="${item.imgUrl!''}" width="195" height="128" alt="新闻图片" />
                       </a>
                       <div class="mess">
-                        <p class="p1"><#if item.title?length lt 20>
+                        <p class="p1">
+                        <a target="_blank"  href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c}?mid=${item.menuId?c}</#if>">	
+                        	<#if item.title?length lt 20>
                                 ${item.title!''}
                             <#else>
                                 ${item.title[0..19]?default("")}...
-                            </#if></p>
+                            </#if>
+                        </a>    
+                        </p>
                         <p class="p2">${item.brief!''}</p>
                         <p class="p3">
                           <span class="span1">${item.source!''}</span>

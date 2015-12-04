@@ -56,7 +56,8 @@
 	        	<tr class="list_title">
 	        		<th width="20%">活动类型</th>
 	        		<th width="30%">活动名称</th>
-	        		<th width="20%">日期</th>
+	        		<th width="15%">日期</th>
+	        		<th width="10%">进度</th>
 	        		<th width="30%">操作</th>
 	        	</tr>
 	        <#if activity_page??>
@@ -65,10 +66,15 @@
 		        		<td>${item.activityType!''}</td>
 		        		<td style="color:#0ab2cb;">${item.activityTitle!''}</td>
 		        		<td style="color:#e67817;"><#if item.date??>${item.date?string("yyyy-MM-dd")!''}</#if></td>
+		        		<#if item.statusId??&&item.statusId == 2>
+		        			<td style="color:purple">已结束</td>
+		        		<#else>
+		        			<td style="color:#0ab2cb;">筹备中</td>
+		        		</#if>
 		        		<td>
 		        		<a href="/enterprise/activity/check?id=${item.activityId?c!''}">详情查看</a>
 		        		  | <a <#if item.pptUrl??> href="/download/data?name=${item.pptUrl!''}" <#else> style="color:#999999;"</#if>>下载模板</a>
-                          | <a href="/enterprise/data">上传PPT</a> 
+                          | <a<#if item.statusId?? && item.statusId == 2>href="javascript:void(0)"  style="color:#999999; cursor:pointer;" title="活动已结束"<#else> href="/enterprise/data"</#if>>上传PPT</a> 
 		        		</td>
 		        	</tr>
 	        	</#list>

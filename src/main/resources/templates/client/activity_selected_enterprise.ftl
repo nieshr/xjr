@@ -24,7 +24,7 @@
 				        		<input type="hidden" name="listId" id="listId" value="${item.id}">
 				        	</span>	
 			        		</td>		
-			        		<td><a href="/activity/enterprise/check/${item.enterpriseId?c!''}" target=_blank ><b style="float:left;margin-left:10px;">${item_index+1!''}.</b>${item.enterpriseTitle!''}</a></td>
+			        		<td style="text-align:left;padding-left:10px ;"><a href="/activity/enterprise/check/${item.enterpriseId?c!''}" target=_blank ><b style="float:left;margin-left:10px;">${item_index+1!''}.</b>${item.enterpriseTitle!''}</a></td>
 			        		<td style="color:#0ab2cb;">${item.area!''}</td>
 			        		<td style="color:#e67817;">${item.type!''}</td>
 			        		<td><a href="javascript:removeEnterprise(${item.id?c!''},${activityId?c!''});">取消</a></td>
