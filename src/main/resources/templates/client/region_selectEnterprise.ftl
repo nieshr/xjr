@@ -15,7 +15,7 @@
     <link rel="shortcut icon" href="/client/images/icon.ico" />
     <link href="/client/css/base.css" rel="stylesheet" type="text/css" />
     <link href="/client/css/area.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="/client/css/ios6alert.css">
+    <link rel="stylesheet" href="/client/css/showBo.css">
 <style>
 .Validform_wrong {  background-position: -20px center;}
 .Validform_right {  background-position: -20px center;}
@@ -23,23 +23,16 @@
 <script src="/client/js/jquery-1.9.1.min.js"></script>
 <script src="/client/js/main.js"></script>
 <script type="text/javascript" src="/client/js/Validform_v5.3.2_min.js"></script>
-<script src="/client/js/ios6alert.js"></script>
+<script src="/client/js/showBo.js"></script>
 <script>
 function done()
 {
-            $("body").ios6alert({
-                content : "上传成功",
-             	onClose : function(){
-						       	    location.href="/region/activity/list";
-						        }
-            });
+    Showbo.Msg.alert("上传成功！");
+	setTimeout(function(){ location.href='/region/activity/list';} , 2000);				       	
 }
 function done2()
 {
-            $("body").ios6alert({
-            	title: "类型错误",
-                content : "请上传jpg或pdf格式的扫描件"
-            });
+       Showbo.Msg.alert("类型错误（限定为jpg,png,pdf或rar类型）！");
 }
 <#if done?? &&done == 1>
 window.onload=done;
@@ -49,12 +42,7 @@ window.onload=done2;
 
 function numwarn()
 {
-            $("body").ios6alert({
-                content : "推荐个数不能为0！",
-             	onClose : function(){
-						       	    location.href="/region/recommendEnterprise?id="+${activityId?c!''};
-						        }
-            });
+       Showbo.Msg.alert("推荐个数不能为0！");
 }
 <#if numwarn??&&numwarn == 1>
 window.onload=numwarn;
@@ -77,9 +65,7 @@ function recommendSubmitCheck()
 
     if (filedata == "")
     {
-            $("body").ios6alert({
-                content : "请添加文件"
-            });
+           Showbo.Msg.alert("请添加文件！");
     }
     else{
         $("#upload").submit();
@@ -93,9 +79,7 @@ function addEnterprise1(id,activityId,statusId)
 	var reasonlength = reason.length;
 	if (reasonlength >26)
 		{
-            $("body").ios6alert({
-                content : "推荐理由最多输入26个字"
-            });		
+            Showbo.Msg.alert("推荐理由最多输入26个字！");
 		}	
 	else{
 		  $.ajax({
@@ -105,9 +89,7 @@ function addEnterprise1(id,activityId,statusId)
 		      success:function(data){
 				if (data.code == 1)
 				{
-		            $("body").ios6alert({
-		                content : data.msg
-		            });		
+		            Showbo.Msg.alert(data.msg);
 				}
 				else{
 					location.reload();
@@ -269,6 +251,11 @@ function addEnterprise1(id,activityId,statusId)
 			        <span style="font-size: 14px; margin-left: 20px;">添加文件：</span>
 			        <input id="recommendfile" style="margin-left: 20px; margin-top: 20px;" name="Filedata" type="file" value="" />
 			    </dd>
+			    <#if activity??&&activity.fileUrl??>
+			    <dd style="margin: 10px 0 0 0; ">
+			    <span style="font-size: 14px; margin-left: 20px; color:#000;">已上传文件：<a href="/download/data?name=${activity.fileUrl!''}">${activity.fileUrl!''}</a></span>
+			    </dd>
+			    </#if>
 			    <dd><input onclick="javascript:recommendSubmitCheck();" style="margin-left:20px;" class="area_save_btn" type="button" value="上传" /></dd>
 			</dl>
 		  </form>	

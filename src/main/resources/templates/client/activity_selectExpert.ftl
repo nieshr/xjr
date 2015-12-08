@@ -15,19 +15,16 @@
 	<link rel="shortcut icon" href="/client/images/icon.ico" />
 	<link href="/client/css/base.css" rel="stylesheet" type="text/css" />
 	<link href="/client/css/area.css" rel="stylesheet" type="text/css" />
-	<link rel="stylesheet" href="/client/css/ios6alert.css">
+	<link rel="stylesheet" href="/client/css/showBo.css">
 
 <script src="/client/js/jquery-1.9.1.min.js"></script>
 <script src="/client/js/main.js"></script>
-<script src="/client/js/ios6alert.js"></script>
+<script src="/client/js/showBo.js"></script>
 <script>
 <#if errormsg??>
 function warnmsg()
 {
-    $("body").ios6alert({
-        content : ${errormsg}
-    });
-    
+    Showbo.Msg.alert(${errormsg});
 }
 
 window.onload=warnmsg;
@@ -48,11 +45,8 @@ function addExpert(id,activityId)
 			}
 			else
 			{
-                $("body").ios6alert({
-                    content : data.msg
-                });
+                Showbo.Msg.alert(data.msg);
 			}
-           
         }
     });
 }
@@ -70,9 +64,7 @@ function expertFinish(activityId)
 			}
 			else
 			{
-                $("body").ios6alert({
-                    content : data.msg
-                });
+                Showbo.Msg.alert(data.msg);
 			}
            
         }

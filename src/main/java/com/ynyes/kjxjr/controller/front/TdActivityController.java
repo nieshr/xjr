@@ -844,14 +844,42 @@ public class TdActivityController {
         	List<TdActivityEnterprise> activityEnterprise = tdActivityEnterpriseService.findByActivityId(activityId);
         	for(TdActivityEnterprise aen:activityEnterprise)
         	{
+        		TdEnterprise enterprise = tdEnterpriseService.findOne(aen.getEnterpriseId());
         		aen.setWin(null);
+        		aen.setCreateTime(new Date());
+        		aen.setEnterpriseTitle(enterprise.getTitle());
+        		aen.setActivityType(activity.getActivityType());
+        		aen.setDate(activity.getDate());
+        		aen.setPrepareOn(activity.getPrepareOn());
+        		aen.setPrepareOff(activity.getPrepareOff());
+        		aen.setActivityTitle(activity.getTitle());
+        		aen.setArea(enterprise.getArea());
+        		aen.setType(enterprise.getType());
+        		aen.setNumber(enterprise.getNumber());
+        		aen.setEnterpriseTitle(enterprise.getTitle());
+        		aen.setContact(enterprise.getContact());
+        		aen.setMobile(enterprise.getMobile());
+        		aen.setQQ(enterprise.getChat());
+        		aen.setProfile(enterprise.getProfile());
+        		aen.setDataBusiness(enterprise.getDataBusiness());
+        		aen.setDataPossible(enterprise.getDataPossible());
+        		aen.setDataOther(enterprise.getDataOther());
+        		aen.setPptUrl(enterprise.getPptUrl());
+        		aen.setDownload(activity.getPptUrl());
+        		aen.setFileUrl(activity.getFileUrl());
         		tdActivityEnterpriseService.save(aen);
         	}
         	
         	//重置路演状态
-            TdExpertCoachEnterprise coach = tdExpertCoachEnterpriseService.findByEnterpriseId(activityId);
-            coach.setIsGrade(false);
-            tdExpertCoachEnterpriseService.save(coach);
+            List<TdExpertCoachEnterprise> coachList = tdExpertCoachEnterpriseService.findByEnterpriseIdOrderByEnterpriseIdAsc(activityId);
+            if (null != coachList)
+            {
+          	  for (TdExpertCoachEnterprise coach : coachList)
+          	  {
+          	      coach.setIsGrade(false);
+          	      tdExpertCoachEnterpriseService.save(coach);
+          	  }
+            }
         	
         	
         	List<TdEnterpriseGrade> enterpriseGrade = tdEnterpriseGradeService.findByActivityIdOrderByIdAsc(activityId);
@@ -1523,7 +1551,8 @@ public class TdActivityController {
             		newEnter.setDataBusiness(enterprise.getDataBusiness());
             		newEnter.setDataPossible(enterprise.getDataPossible());
             		newEnter.setDataOther(enterprise.getDataOther());
-            		newEnter.setPptUrl(activity.getPptUrl());
+            		newEnter.setPptUrl(enterprise.getPptUrl());
+            		newEnter.setDownload(activity.getPptUrl());
             		newEnter.setFileUrl(activity.getFileUrl());
             		newEnter.setStatusId(0L);
                 	//3类活动区别对待
@@ -1560,7 +1589,8 @@ public class TdActivityController {
             		activityEnterprise.setDataPossible(enterprise.getDataPossible());
             		activityEnterprise.setDataOther(enterprise.getDataOther());
             		activityEnterprise.setEnterpriseFileUrl(enterprise.getFileUrl());
-            		activityEnterprise.setPptUrl(activity.getPptUrl());
+            		activityEnterprise.setPptUrl(enterprise.getPptUrl());
+            		activityEnterprise.setDownload(activity.getPptUrl());
             		activityEnterprise.setFileUrl(activity.getFileUrl());
             		tdActivityEnterpriseService.save(activityEnterprise);
             	}
@@ -1647,6 +1677,7 @@ public class TdActivityController {
         		newEnter.setDataOther(enterprise.getDataOther());
         		newEnter.setEnterpriseFileUrl(enterprise.getFileUrl());
         		newEnter.setPptUrl(enterprise.getPptUrl());
+        		newEnter.setDownload(activity.getPptUrl());
         		newEnter.setFileUrl(activity.getFileUrl());
         		newEnter.setStatusId(0L);
             	//3类活动区别对待
@@ -1684,6 +1715,7 @@ public class TdActivityController {
         		activityEnterprise.setDataOther(enterprise.getDataOther());
         		activityEnterprise.setEnterpriseFileUrl(enterprise.getFileUrl());
         		activityEnterprise.setPptUrl(enterprise.getPptUrl());
+        		activityEnterprise.setDownload(activity.getPptUrl());
         		activityEnterprise.setFileUrl(activity.getFileUrl());
         		tdActivityEnterpriseService.save(activityEnterprise);
         	}
@@ -1995,8 +2027,9 @@ public class TdActivityController {
     				aeitem.setDate(dateF);
     				aeitem.setPrepareOn(prepareOnF);
     				aeitem.setPrepareOff(prepareOffF);
-    				aeitem.setPptUrl(activity.getPptUrl());
+//    				aeitem.setPptUrl(activity.getPptUrl());
     				aeitem.setFileUrl(activity.getFileUrl());
+    				aeitem.setDownload(activity.getPptUrl());
     				tdActivityEnterpriseService.save(aeitem);
     			}
     		}
@@ -2156,8 +2189,9 @@ public class TdActivityController {
 				aeitem.setDate(date1);
 				aeitem.setPrepareOn(prepareOn1);
 				aeitem.setPrepareOff(prepareOff1);
-				aeitem.setPptUrl(tdActivity.getPptUrl());
+//				aeitem.setPptUrl(tdActivity.getPptUrl());
 				aeitem.setFileUrl(tdActivity.getFileUrl());
+				aeitem.setDownload(tdActivity.getPptUrl());
 				tdActivityEnterpriseService.save(aeitem);
 			}
 		}
@@ -2470,6 +2504,7 @@ public class TdActivityController {
         	map.addAttribute("expert", expert);
             map.addAttribute("enterprise", enterprise);
             map.addAttribute("activityId", activityId);
+            map.addAttribute("invest",tdActivityInvestService.findByEnterpriseIdAndActivityId(enterpriseId, activityId));
     	}
     	return "/client/activity_invest_edit";
     }
@@ -2602,11 +2637,14 @@ public class TdActivityController {
 	      tdArticleService.save(article);
       }
       //路演辅导状态
-      TdExpertCoachEnterprise coach = tdExpertCoachEnterpriseService.findByEnterpriseId(activityId);
-      if (null != coach)
+      List<TdExpertCoachEnterprise> coachList = tdExpertCoachEnterpriseService.findByEnterpriseIdOrderByEnterpriseIdAsc(activityId);
+      if (null != coachList)
       {
-	      coach.setIsGrade(true);
-	      tdExpertCoachEnterpriseService.save(coach);
+    	  for (TdExpertCoachEnterprise coach : coachList)
+    	  {
+    	      coach.setIsGrade(true);
+    	      tdExpertCoachEnterpriseService.save(coach);
+    	  }
       }
       
       for (int chkId : chkIds)

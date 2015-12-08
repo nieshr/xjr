@@ -11,7 +11,7 @@
 	<script src="/client/js/main.js"></script>
 	<script src="/client/js/ios6alert.js"></script>
     <style type="text/css">
-        .page{ width: 600px; float: right; margin-top: 30px;}
+        .page{ width: 600px; float: right; margin-top: 30px;   margin-bottom: 30px;}
         .page *{ float: left;}
         .page span{ color: #333333; line-height: 20px; display: block;}
         .page a{  width: 20px; height: 20px;}
@@ -166,12 +166,12 @@
         
 		<table class="new_list">
         	<tr class="list_title">
-        		<th></th>
+        		<th width="2%"></th>
         		<th width="10%">编号</th>
         		<th  style="text-align : left; padding-left:40px ;">名称<th>
-        		<th width="13%">手机</th>
-        		<th width="12%">注册资本</th>
-        		<th width="15%">法人代表</th>
+        		<th width="12%">手机</th>
+        		<th width="8%">注册资本</th>
+        		<th width="10%">法人代表</th>
         		<th width="20%">操作</th>
         	</tr>
         <#if enterprise_page??>
@@ -214,7 +214,7 @@
         </#if>	   
         </table>
         </form>
-        	<div class="area_add_btn" style="display: block; float: left;">
+        	<div class="area_add_btn" style="display: block; float: left;margin-left: 6px;">
 		        <a class="all" style="margin-left:0px;" href="javascript:;" onclick="checkAll(this);"><i></i><span>全选</span></a>
 				<input style=" margin-left: 10px; cursor:pointer;" class="area_batch" type="button" onclick="javascript:actionBtn('pass');" value="通过" />
 				<input style=" margin-left: 10px; cursor:pointer;" class="area_batch" type="button" onclick="javascript:actionBtn('cancel');" value="未通过" />

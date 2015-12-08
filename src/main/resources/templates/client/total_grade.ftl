@@ -7,10 +7,10 @@
     <link href="/client/css/form.css" rel="stylesheet" type="text/css" />
     <link href="/client/css/base.css" rel="stylesheet" type="text/css" />
     <link href="/client/css/area.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="/client/css/ios6alert.css">
+    <link rel="stylesheet" href="/client/css/showBo.css">
     <script src="/client/js/jquery-1.9.1.min.js"></script>
 	<script src="/client/js/main.js"></script>
-    <script src="/client/js/ios6alert.js"></script>
+    <script src="/client/js/showBo.js"></script>
 
 <script>    
  //全选取消按钮函数-入选
@@ -26,9 +26,7 @@ function checkAll(chkobj) {
 
 function tip()
 {
-    $("body").ios6alert({
-        content : "操作成功"
-    });
+    Showbo.Msg.alert("操作成功！");
 }
 <#if tip??&&tip == 1>
     window.onload=tip;
@@ -173,7 +171,7 @@ function tip()
         <input style="cursor:pointer;" class="area_batch" style="margin-left:5%;" type="submit"  value="路演胜出" />
         </#if>
         <#if mark??&&mark=="activity">
-        <input style="margin-left: 640px; margin-top: 20px; width:100px;height: 30px; font-size: 14px;" class="area_batch" onclick="location.href='/activity/export/totalGrade?activityId=<#if activityId??>${activityId?c!''}</#if>'"  type="button" value="打印评分表" />
+        <input style="margin-left: 640px; margin-top: 20px; width:100px;height: 30px; font-size: 14px;" class="area_batch" onclick="location.href='/activity/export/totalGrade?activityId=<#if activityId??>${activityId?c!''}</#if>'"  type="button" value="导出评分表" />
 		</#if>
 	</form>    
     

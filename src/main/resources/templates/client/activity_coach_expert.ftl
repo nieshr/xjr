@@ -16,11 +16,11 @@
 	<link rel="shortcut icon" href="/client/images/icon.ico" />
 	<link href="/client/css/base.css" rel="stylesheet" type="text/css" />
 	<link href="/client/css/area.css" rel="stylesheet" type="text/css" />
-	<link rel="stylesheet" href="/client/css/ios6alert.css">
+	<link rel="stylesheet" href="/client/css/showBo.css">
 
 <script src="/client/js/jquery-1.9.1.min.js"></script>
 <script src="/client/js/main.js"></script>
-=<script src="/client/js/ios6alert.js"></script>
+=<script src="/client/js/showBo.js"></script>
 <script type="text/javascript">
     function addCoachExpert(id , activityId)
 	{
@@ -35,9 +35,7 @@
 				}
 				else
 				{
-                    $("body").ios6alert({
-                        content : data.msg
-                    });
+                    Showbo.Msg.alert(data.msg);
 				}
 	           
 	        }
@@ -57,9 +55,7 @@ function removeCoachExpert(id , activityId)
 				}
 				else
 				{
-                    $("body").ios6alert({
-                        content : data.msg
-                    });
+                    Showbo.Msg.alert(data.msg);
 				}
 	           
 	        }

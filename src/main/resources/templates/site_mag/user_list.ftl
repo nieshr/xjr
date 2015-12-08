@@ -33,7 +33,7 @@ var theForm = document.forms['form1'];
 
    document.onkeydown = function(event){
 	    if((event.keyCode || event.which) == 13){
-	        $("#lbtnSearch").click();
+	        location.href="javascript:__doPostBack('btnSearch','')";
 	    }
    }
 </script>

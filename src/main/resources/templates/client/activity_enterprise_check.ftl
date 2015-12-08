@@ -42,9 +42,9 @@
         <div class="change_inform">
             <span>
             <#if enterprise.fileUrl??&&enterprise.fileUrl?length gt 0>  
-            	<a style="font-size:12px; color:#01458d;" title="${enterprise.fileUrl!''}" href="/download/data?name=${enterprise.fileUrl!''}">【申请表附件下载】</a>
+            	<a style="font-size:12px; color:#01458d;" title="${enterprise.fileUrl!''}" href="/download/data?name=${enterprise.fileUrl!''}">【申请表扫描件】</a>
             <#else>
-            	<a style="font-size:12px; color:#666;" title="无资料"   href="javascript:void(0)">【申请表附件下载】</a>
+            	<a style="font-size:12px; color:#666;" title="无资料"   href="javascript:void(0)">【申请表扫描件】</a>
             </#if>
             </span>
             <span>

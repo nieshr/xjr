@@ -7,14 +7,13 @@
 
 <link href="/client/css/base.css" rel="stylesheet" type="text/css" />
 <link href="/client/css/team.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" href="/client/css/ios6alert.css">
+<link rel="stylesheet" href="/client/css/showBo.css">
 
 </head>
 
 <script src="/client/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="/mag/js/Validform_v5.3.2_min.js"></script>
 <script src="/client/js/main.js"></script>
-<script src="/client/js/ios6alert.js"></script>
 
 <script type="text/javascript" src="/mag/js/WdatePicker.js"></script>
 <script type="text/javascript" src="/mag/js/swfupload.js"></script>
@@ -23,7 +22,7 @@
 <script type="text/javascript" charset="utf-8" src="/mag/js/kindeditor.js"></script>
 <script type="text/javascript" charset="utf-8" src="/mag/js/zh_CN.js"></script>
 <script type="text/javascript" src="/mag/js/layout.js"></script>
-
+<script src="/client/js/showBo.js"></script>
 
 <script type="text/javascript">
     var img;
@@ -84,9 +83,7 @@ function subActivity(){
 
 function done(msg)
 {
-    $("body").ios6alert({
-        content :msg
-    });
+     Showbo.Msg.alert(msg);
 }
 
 <#if msg?? >

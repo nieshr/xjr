@@ -1,14 +1,14 @@
 <!-- 导航 -->
 	<div class="wrapper">
 		<ul class="wrapper-nav" id="wrapper-nav">
-			<a href="/"><li>首页</li></a>
-			<a href="/info/aIn"><li>专项行动</li></a>
-			<a href="/info/activity/list"><li>培育活动</li></a>
-			<a href="/info/index"><li>新闻动态</li></a>
-			<a href="/info/projectshow"><li>企业项目</li></a>
-			<a href="/info/resource"><li>专家资源</li></a>
-			<a href="/info/host"><li>合作机构</li></a>
-			<a href="/info/contact"><li class="active">联系方式</li></a>
+			<li><a href="/">首页</a></li>
+			<li><a href="/info/aIn">专项行动</a></li>
+			<li><a href="/info/activity/list">培育活动</a></li>
+			<li><a href="/info/index">新闻动态</a></li>
+			<li ><a href="/info/projectshow">企业项目</a></li>
+			<li><a href="/info/resource">专家资源</a></li>
+			<li><a href="/info/host">合作机构</a></li>
+			<li class="active"><a href="/info/contact">联系方式</a></li>
 		</ul>
                 <#if username??>
                     <div class="logoin"><a href="/user" style="color:#ff4040;">${username}</a><span>|</span><a href="/logout">退出</a></div>

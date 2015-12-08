@@ -6,11 +6,11 @@
 	<link rel="shortcut icon" href="/client/images/icon.ico" />
 	<link rel="stylesheet" href="/client/css/news_base.css">
 	<link rel="stylesheet" href="/client/css/news_main.css">
-	<link rel="stylesheet" href="/client/css/ios6alert.css">
+	<link rel="stylesheet" href="/client/css/showBo.css">
 
 	<script src="/client/js/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript" src="/client/js/Validform_v5.3.2_min.js"></script>	
-	<script src="/client/js/ios6alert.js"></script>
+	<script src="/client/js/showBo.js"></script>
 	<style type="text/css">
 		#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
 	</style>
@@ -22,13 +22,10 @@ $(document).ready(function(){
 			  ajaxPost:true,
 	          callback: function (data) { 
 	   		  if (data.code == 0) {
-					$("body").ios6alert({
-						title : "科技小巨人-留言",
-						content : "提交成功！"
-					});
+					Showbo.Msg.alert("提交成功！");
               }
              else {
-                alert(data.msg);
+                Showbo.Msg.alert(data.msg);
              }
         }
 	});

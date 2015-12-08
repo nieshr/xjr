@@ -5,10 +5,10 @@
 	<title>评分</title>
 	<link rel="shortcut icon" href="/client/images/icon.ico" />
 	<link href="/client/css/form.css" rel="stylesheet" type="text/css" />
-	<link rel="stylesheet" href="/client/css/ios6alert.css">
+	<link rel="stylesheet" href="/client/css/showBo.css">
 	<script src="/client/js/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript"   src="/client/js/rollValue.js"></script>
-    <script src="/client/js/ios6alert.js"></script>
+    <script src="/client/js/showBo.js"></script>
 
 
 	<script type="text/javascript">
@@ -148,16 +148,10 @@
                 if(0 == res.status){
                 	if(typeof res.msg != "undefined")
                 	{
-                        $("body").ios6alert({
-                            content : res.msg
-                        });
+                        Showbo.Msg.alert(res.msg);
                 	}
-                        $("body").ios6alert({
-                            content : "修改成功！",
-                            onClose: function(){
-                            	 location.reload();
-                            }
-                        });                	
+                        Showbo.Msg.alert("修改成功！");
+                        setTimeout(function(){location.reload();},2000);             	
                    
                 }
             });

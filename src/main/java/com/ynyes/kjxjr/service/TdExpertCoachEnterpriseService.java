@@ -76,6 +76,13 @@ public class TdExpertCoachEnterpriseService {
 		return repository.findByExpertIdAndIsGradeIsTrue(expertId);
 	}
 	
+	public List<TdExpertCoachEnterprise> findByEnterpriseIdOrderByEnterpriseIdAsc(Long enterpriseId){
+		if(null == enterpriseId){
+			return null;
+		}
+		return repository.findByEnterpriseIdOrderByEnterpriseIdAsc(enterpriseId);
+	}
+	
 	/**
 	 * 路演辅导改成了专家和活动的多对一
 	 * @param expertId

@@ -7,7 +7,7 @@
 <link rel="shortcut icon" href="/client/images/icon.ico" />
 <link href="/client/css/base.css" rel="stylesheet" type="text/css" />
 <link href="/client/css/team.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" href="/client/css/ios6alert.css">
+<link rel="stylesheet" href="/client/css/showBo.css">
 
 <style>
 .apply_content dd div .Validform_wrong span{ text-align:left;}
@@ -17,21 +17,16 @@
 <script src="/client/js/main.js"></script>
 <script type="text/javascript" src="/mag/js/WdatePicker.js"></script>
 <script type="text/javascript" src="/client/js/Validform_v5.3.2_min.js"></script>
-<script src="/client/js/ios6alert.js"></script>
+<script src="/client/js/showBo.js"></script>
 <script>
 
 function done()
 {
-    $("body").ios6alert({
-        content : "上传资料成功"
-       
-    });
+    Showbo.Msg.alert("上传资料成功！");
 }
 function done2()
 {
-    $("body").ios6alert({
-        content :"类型错误（*.PPT ,*,pdf）！"
-    });
+    Showbo.Msg.alert("文件类型错误！");
 }
 <#if done?? &&done == 1>
 window.onload=done;
@@ -45,9 +40,7 @@ function submitCheck0()
 	var filedata = $("#file0").val();
 	if (filedata == "")
 	{
-	    $("body").ios6alert({
-   			 content :"请添加文件！"
-		});
+	    Showbo.Msg.alert("请添加文件！");
 		}else{
 		$("#upload0").submit();
 		}
@@ -58,9 +51,7 @@ function submitCheck1()
 	var filedata = $("#file1").val();
 	if (filedata == "")
 	{
-	    $("body").ios6alert({
-   			 content :"请添加文件！"
-		});
+	    Showbo.Msg.alert("请添加文件！");
 		}else{
 		$("#upload1").submit();
 		}
@@ -71,9 +62,7 @@ function submitCheck2()
 	var filedata = $("#file2").val();
 	if (filedata == "")
 	{
-	    $("body").ios6alert({
-   			 content :"请添加文件！"
-		});
+	    Showbo.Msg.alert("请添加文件！");
 		}else{
 		$("#upload2").submit();
 		}
@@ -84,9 +73,7 @@ function submitCheck3()
 	var filedata = $("#file3").val();
 	if (filedata == "")
 	{
-	    $("body").ios6alert({
-   			 content :"请添加文件！"
-		});
+	    Showbo.Msg.alert("请添加文件！");
 		}else{
 		$("#upload3").submit();
 		}

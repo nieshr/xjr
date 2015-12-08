@@ -54,7 +54,7 @@
         </dl>
         <dl class="apply_step2">
         	<dt>*点击按钮，生成当前填写的报名表进行打印盖章</dt>
-        	<dd><input style="display:block;"  type="button" value="生成表格并下载打印" onclick="location.href='/enterprise/export/enter'"/></dd>
+        	<dd><input style="display:block;"  type="button" value="导出表格并下载打印" onclick="location.href='/enterprise/export/enter'"/></dd>
         </dl>
         <dl class="apply_step2" style="margin-top:20px ; ">
         	<dd><input style="background:#529c15;" type="button" value="下一步" onclick="location.href='/enterprise/upload'"/></dd>

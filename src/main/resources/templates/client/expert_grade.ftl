@@ -5,18 +5,32 @@
 	<title>评分</title>
 	<link rel="shortcut icon" href="/client/images/icon.ico" />
 	<link href="/client/css/formGrade.css" rel="stylesheet" type="text/css" />
-	<link rel="stylesheet" href="/client/css/ios6alert.css">
+	<link type="text/css" rel="stylesheet" href="/client/css/showBo.css" />
+	<script type="text/javascript" src="/client/js/showBo.js"></script>
+	
 	<script src="/client/js/jquery-1.9.1.min.js"></script>
 
     <script type="text/javascript"   src="/client/js/jquery-1.11.2.min.js"></script>
 	<script type="text/javascript"   src="/client/js/jquery.barrating.js"></script>
 	<script type="text/javascript"   src="/client/js/examples.js"></script>	
-    <script src="/client/js/ios6alert.js"></script>
+    
 
 
 	<script type="text/javascript">
 	
         window.onload = function(){
+        
+		Showbo.Msg.alert(
+		<#if grade_list??>
+	     	<#list grade_list as item>
+	     		<#if item.gradeAble?? && item.gradeAble>
+	     			"当前评分项目：${item.enterpriseTitle!''}"
+	     		</#if>	
+	     	</#list>
+	    </#if> 	
+		);
+
+        
       /**
         	var canvas = document.getElementById('canvas');
         	var cxt=canvas.getContext("2d");
@@ -111,63 +125,71 @@
         }
         
         function submitPoint(code,number){
-            var totalExpressionValue = document.getElementById(code+"_totalExpression").innerHTML;
-            var totalFeasibilityValue = document.getElementById(code+"_totalFeasibility").innerHTML;
-            var totalMarketValue = document.getElementById(code+"_totalMarketValue").innerHTML;
-            var totalTechnologyValue = document.getElementById(code+"_totalTechnology").innerHTML;
-            var totalGroupValue = document.getElementById(code+"_totalGroup").innerHTML;
-            
-            var oneExpression = document.getElementById(code+"_oneExpression").value;
-            
-            var oneFeasibility = document.getElementById(code+"_oneFeasibility").value;
-            var twoFeasibility = document.getElementById(code+"_twoFeasibility").value;
-            
-            var oneMarket = document.getElementById(code+"_oneMarketValue").value;
-            var twoMarket = document.getElementById(code+"_twoMarketValue").value;
-            
-            var oneTechnology = document.getElementById(code+"_oneTechnology").value;
-            var twoTechnology = document.getElementById(code+"_twoTechnology").value;
-            var threeTechnology = document.getElementById(code+"_threeTechnology").value;
-            
-            var oneGroup = document.getElementById(code+"_oneGroup").value;
-            var twoGroup = document.getElementById(code+"_twoGroup").value;
-            
-            $.post("/expert/grade/sure",{
-                "totalExpression":totalExpressionValue,
-                "totalFeasibility":totalFeasibilityValue,
-                "totalMarketValue":totalMarketValue,
-                "totalTechnology":totalTechnologyValue,
-                "totalGroup":totalGroupValue,
-                "oneExpression":oneExpression,
-                "oneFeasibility":oneFeasibility,
-                "twoFeasibility":twoFeasibility,
-                "oneMarketValue":oneMarket,
-                "twoMarketValue":twoMarket,
-                "oneTechnology":oneTechnology,
-                "twoTechnology":twoTechnology,
-                "threeTechnology":threeTechnology,
-                "oneGroup":oneGroup,
-                "twoGroup":twoGroup,
-                "number":number,
-                "activityId":"${activityId?c}"
-            },function(res){
-                if(0 == res.status){
-                	if(typeof res.msg != "undefined")
-                	{
-                        $("body").ios6alert({
-                            content : res.msg,
-                            onClose:function(){
-                            	location.reload();
-                            }
-                        });
-                	}
-                	else{
-                		location.href='/expert/grade?activityId='+${activityId?c};
-                	}
-                  
-                }
-            });
+
+			Showbo.Msg.confirm("请确认评分结果，确认后不可更改",function(p){
+				if (p == "yes")
+				{
+
+		            var totalExpressionValue = document.getElementById(code+"_totalExpression").innerHTML;
+		            var totalFeasibilityValue = document.getElementById(code+"_totalFeasibility").innerHTML;
+		            var totalMarketValue = document.getElementById(code+"_totalMarketValue").innerHTML;
+		            var totalTechnologyValue = document.getElementById(code+"_totalTechnology").innerHTML;
+		            var totalGroupValue = document.getElementById(code+"_totalGroup").innerHTML;
+		            
+		            var oneExpression = document.getElementById(code+"_oneExpression").value;
+		            
+		            var oneFeasibility = document.getElementById(code+"_oneFeasibility").value;
+		            var twoFeasibility = document.getElementById(code+"_twoFeasibility").value;
+		            
+		            var oneMarket = document.getElementById(code+"_oneMarketValue").value;
+		            var twoMarket = document.getElementById(code+"_twoMarketValue").value;
+		            
+		            var oneTechnology = document.getElementById(code+"_oneTechnology").value;
+		            var twoTechnology = document.getElementById(code+"_twoTechnology").value;
+		            var threeTechnology = document.getElementById(code+"_threeTechnology").value;
+		            
+		            var oneGroup = document.getElementById(code+"_oneGroup").value;
+		            var twoGroup = document.getElementById(code+"_twoGroup").value;
+		            
+		            $.post("/expert/grade/sure",{
+		                "totalExpression":totalExpressionValue,
+		                "totalFeasibility":totalFeasibilityValue,
+		                "totalMarketValue":totalMarketValue,
+		                "totalTechnology":totalTechnologyValue,
+		                "totalGroup":totalGroupValue,
+		                "oneExpression":oneExpression,
+		                "oneFeasibility":oneFeasibility,
+		                "twoFeasibility":twoFeasibility,
+		                "oneMarketValue":oneMarket,
+		                "twoMarketValue":twoMarket,
+		                "oneTechnology":oneTechnology,
+		                "twoTechnology":twoTechnology,
+		                "threeTechnology":threeTechnology,
+		                "oneGroup":oneGroup,
+		                "twoGroup":twoGroup,
+		                "number":number,
+		                "activityId":"${activityId?c}"
+		            },function(res){
+		                if(0 == res.status){
+		                	if(typeof res.msg != "undefined")
+		                	{
+		                        $("body").ios6alert({
+		                            content : res.msg,
+		                            onClose:function(){
+		                            	location.reload();
+		                            }
+		                        });
+		                	}
+		                	else{
+		                		location.href='/expert/grade?activityId='+${activityId?c};
+		                	}
+		                  
+		                }
+		            });
+					}
+				});
         }
+    
 	</script>
 	<script>
 	$(document).ready(function(){
@@ -180,6 +202,7 @@
     });
     
 });
+
 
 	</script>
 	<style type="text/css">
@@ -207,7 +230,7 @@
 			<#if grade_list??>
 				<#list grade_list as item>
 					<li style=" display: block; margin: 8px 0; padding:0 10px;  text-align:center;background-color: <#if item.gradeAble??&&item.gradeAble>#e67817<#else>#999</#if>; ">
-					<a  href="/expert/grade?activityId=${activityId?c!''}&enterpriseId=${item.enterpriseId?c!''}" title="评分：${item.enterpriseTitle!''}" style="background-color: <#if item.gradeAble??&&item.gradeAble>#e67817<#else>#999</#if>; text-decoration:none; color: #fff; display:block; text-align:left;">
+					<a  href="/expert/grade?activityId=${activityId?c!''}&enterpriseId=${item.enterpriseId?c!''}" title="评分：${item.enterpriseTitle!''}" style="background-color: <#if item.gradeAble??&&item.gradeAble>#e67817<#else>#999</#if>; text-decoration:none; color: #fff; display:block; text-align:left; height:24px;">
 					${item_index+1}.${item.enterpriseTitle!''}
 					</a>
 					</li>
@@ -251,6 +274,17 @@
 				</#if>
 			</tr>
 			-->			
+			<tr class="tr02 "> 
+				<td colspan="2"  style="height: 50px; font-size:16px; ">
+					<#if grade_list??>
+				     	<#list grade_list as item>
+				     		<#if item.gradeAble?? && item.gradeAble>
+				     			<a target="_blank" title="查看当前企业详情" style="text-decoration:none;font-size:24px; color:#333;" href="/activity/enterprise/check/${item.enterpriseId?c!''}">${item.enterpriseTitle!''}</a>
+				     		</#if>	
+				     	</#list>
+				    </#if> 	
+				</td>
+			</tr>
 			<tr class="tr02 " style="background:#DFEBF7;">
 				<th>核心竞争力(小计)</th>
 				<#if grade_list??>
@@ -517,21 +551,6 @@
 			
 			<tr class="tr02 "style="background:#dfebf7;">
 				<th>合计</th>
-				<#if grade_list??>
-	    			<#list grade_list as item>
-	    			<#if item.gradeAble??&&item.gradeAble||item_index==0&&(!item.gradeAble??||item.gradeAble??&&item.gradeAble)>
-	    			     <#if item.totalPoint??>
-	    			         <td id="${item_index}_totalPoint">${item.totalPoint?string("0")}</td>
-	    			     <#else>
-	    			         <td id="${item_index}_totalPoint">0</td>
-	    			     </#if>
-	    			 </#if>    
-	    			</#list>
-				</#if>
-			</tr>
-			<#if !type??>
-				<tr class="tr02 mOn">
-					<th rowspan="2"></th>
 					<#if grade_list??>
 		    			<#list grade_list as item>
 		    			<#if item.gradeAble??&&item.gradeAble||item_index==0&&( !item.gradeAble?? || item.gradeAble?? && item.gradeAble )>
@@ -539,6 +558,20 @@
 		    			</#if>
 		    			</#list>
 				    </#if>
+			</tr>
+			<#if !type??>
+				<tr class="tr02 mOn" style="height:48px;">
+					<#if grade_list??>
+		    			<#list grade_list as item>
+		    			<#if item.gradeAble??&&item.gradeAble||item_index==0&&(!item.gradeAble??||item.gradeAble??&&item.gradeAble)>
+		    			     <#if item.totalPoint??>
+		    			         <th rolspan="2" ><b style="font-size:24px;" id="${item_index}_totalPoint">${item.totalPoint?string("0")}</b></th>
+		    			     <#else>
+		    			         <th rolspan="2" ><b style="font-size:24px;" id="${item_index}_totalPoint">0</b></th>
+		    			     </#if>
+		    			 </#if>    
+		    			</#list>
+					</#if>
 				</tr>
 				<tr  class="tr02 mOn">
 	

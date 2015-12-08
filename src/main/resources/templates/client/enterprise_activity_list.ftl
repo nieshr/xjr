@@ -73,7 +73,7 @@
 		        		</#if>
 		        		<td>
 		        		<a href="/enterprise/activity/check?id=${item.activityId?c!''}">详情查看</a>
-		        		  | <a <#if item.pptUrl??> href="/download/data?name=${item.pptUrl!''}" <#else> style="color:#999999;"</#if>>下载模板</a>
+		        		  | <a <#if item.pptUrl??> href="/download/data?name=${item.download!''}" <#else> style="color:#999999;"</#if>>下载模板</a>
                           | <a<#if item.statusId?? && item.statusId == 2>href="javascript:void(0)"  style="color:#999999; cursor:pointer;" title="活动已结束"<#else> href="/enterprise/data"</#if>>上传PPT</a> 
 		        		</td>
 		        	</tr>

@@ -593,7 +593,7 @@ public class TdEnterpriseController {
             return "redirect:/login";
         }
         
-
+        tdCommonService.setHeader(map, req);
         
         TdEnterprise enterprise = tdEnterpriseService.findbyUsername(username);
         map.addAttribute("enterprise",enterprise);
@@ -614,6 +614,7 @@ public class TdEnterpriseController {
          
          tdArticleService.save(article);
          map.addAttribute("article",article);
+         map.addAttribute("user",tdUserService.findByUsername(username));
 //         map.addAttribute("category_list", tdArticleCategoryService.findByMenuId(11L));
     	return "/client/activity_askshow";
     }
@@ -802,8 +803,8 @@ public class TdEnterpriseController {
               sheet1.addMergedRegion(new Region((short) 3 , (short) 1 , (short) 3 , (short) 2));		//注册资本
               sheet1.addMergedRegion(new Region((short) 4 , (short) 1 , (short) 6 , (short) 4));		//股东结构
               sheet1.addMergedRegion(new Region((short) 4 , (short) 0 , (short) 6 , (short) 0));		//股东结构
-              sheet1.addMergedRegion(new Region((short) 7 , (short) 1 , (short) 7 , (short) 2));		//地址
-              sheet1.addMergedRegion(new Region((short) 8 , (short) 1 , (short) 8 , (short) 4));		//行业归属
+              sheet1.addMergedRegion(new Region((short) 7 , (short) 1 , (short) 7 , (short) 4));		//地址
+              sheet1.addMergedRegion(new Region((short) 8 , (short) 1 , (short) 8 , (short) 2));		//行业归属
               sheet1.addMergedRegion(new Region((short) 8 , (short) 0 , (short) 8 , (short) 0));		//行业归属
               sheet1.addMergedRegion(new Region((short) 9 , (short) 1 , (short) 9 , (short) 2));		//邮箱
               sheet1.addMergedRegion(new Region((short) 10 , (short) 1 , (short) 10 , (short) 2));		//公司网站
@@ -817,8 +818,8 @@ public class TdEnterpriseController {
               sheet1.addMergedRegion(new Region((short) 30 , (short) 1 , (short) 35 , (short) 4));		//市场规模
               sheet1.addMergedRegion(new Region((short) 30 , (short) 0 , (short) 35 , (short) 0));		//市场规模
 	          sheet1.addMergedRegion(new Region((short) 36 , (short) 0 , (short) 36 , (short) 4));		//近三年财务
-	          sheet1.addMergedRegion(new Region((short) 41 , (short) 0 , (short) 41 , (short) 4));     //知识产权
-	          sheet1.addMergedRegion(new Region((short) 42 , (short) 0 , (short) 43 , (short) 4));     //知识产权
+	          sheet1.addMergedRegion(new Region((short) 41 , (short) 0 , (short) 42 , (short) 4));     //知识产权
+	          sheet1.addMergedRegion(new Region((short) 43 , (short) 0 , (short) 43 , (short) 4));     //知识产权
 	          sheet1.addMergedRegion(new Region((short) 44 , (short) 0 , (short) 45 , (short) 4));     //融资信息
 	          sheet1.addMergedRegion(new Region((short) 46 , (short) 3 , (short) 46 , (short) 4));     
 	          sheet1.addMergedRegion(new Region((short) 47 , (short) 3 , (short) 48 , (short) 4));     
@@ -842,8 +843,8 @@ public class TdEnterpriseController {
               sheet1.addMergedRegion(new Region((short) 3 , (short) 1 , (short) 3 , (short) 2));		//注册资本
               sheet1.addMergedRegion(new Region((short) 4 , (short) 1 , (short) 6 , (short) 4));		//股东结构
               sheet1.addMergedRegion(new Region((short) 4 , (short) 0 , (short) 6 , (short) 0));		//股东结构
-              sheet1.addMergedRegion(new Region((short) 7 , (short) 1 , (short) 7 , (short) 2));		//地址
-              sheet1.addMergedRegion(new Region((short) 8 , (short) 1 , (short) 8 , (short) 4));		//行业归属
+              sheet1.addMergedRegion(new Region((short) 7 , (short) 1 , (short) 7 , (short) 4));		//地址
+              sheet1.addMergedRegion(new Region((short) 8 , (short) 1 , (short) 8 , (short) 2));		//行业归属
               sheet1.addMergedRegion(new Region((short) 8 , (short) 0 , (short) 8 , (short) 0));		//行业归属
               sheet1.addMergedRegion(new Region((short) 9 , (short) 1 , (short) 9 , (short) 2));		//邮箱
               sheet1.addMergedRegion(new Region((short) 10 , (short) 1 , (short) 10 , (short) 2));		//公司网站
@@ -855,8 +856,8 @@ public class TdEnterpriseController {
               sheet1.addMergedRegion(new Region((short) 19 , (short) 0 , (short) 24 , (short) 0));		//技术特点
               sheet1.addMergedRegion(new Region((short) 25 , (short) 1 , (short) 30 , (short) 4));		//市场规模
               sheet1.addMergedRegion(new Region((short) 25 , (short) 0 , (short) 30 , (short) 0));		//市场规模
-              sheet1.addMergedRegion(new Region((short) 31 , (short) 0 , (short) 31 , (short) 4));     //知识产权
-              sheet1.addMergedRegion(new Region((short) 32 , (short) 0 , (short) 33 , (short) 4));     //知识产权
+              sheet1.addMergedRegion(new Region((short) 31 , (short) 0 , (short) 32 , (short) 4));     //知识产权
+              sheet1.addMergedRegion(new Region((short) 33 , (short) 0 , (short) 33 , (short) 4));     //知识产权
               sheet1.addMergedRegion(new Region((short) 34 , (short) 0 , (short) 35 , (short) 4));     //融资信息
               sheet1.addMergedRegion(new Region((short) 36 , (short) 3 , (short) 36 , (short) 4));    
               sheet1.addMergedRegion(new Region((short) 37 , (short) 0 , (short) 38 , (short) 0));     
@@ -1194,6 +1195,18 @@ public class TdEnterpriseController {
           {
         	  cell.setCellValue(enterprise.getAddress());     
           }
+          cell.setCellStyle(content);  
+         
+          
+          row= sheet1.createRow((int) 8); 
+          cell = row.createCell((short) 0);  
+          cell.setCellValue("行业归属");  
+          cell.setCellStyle(style2);  
+          cell = row.createCell((short) 1);
+          if (null != enterprise.getType())
+          {
+        	 cell.setCellValue(enterprise.getType()); 
+          }
           cell.setCellStyle(fillin);  
           cell = row.createCell((short) 2);
           cell.setCellStyle(style);  
@@ -1211,23 +1224,6 @@ public class TdEnterpriseController {
           }
           cell =row.createCell((short) 4);
           cell.setCellValue(enterprise.getStaffNumber()); 
-          cell.setCellStyle(fillin);  
-          
-          row= sheet1.createRow((int) 8); 
-          cell = row.createCell((short) 0);  
-          cell.setCellValue("行业归属");  
-          cell.setCellStyle(style2);  
-          cell = row.createCell((short) 1);
-          if (null != enterprise.getType())
-          {
-        	 cell.setCellValue(enterprise.getType()); 
-          }
-          cell.setCellStyle(fillin);  
-          cell = row.createCell((short) 2);
-          cell.setCellStyle(fillin);  
-          cell = row.createCell((short) 3);
-          cell.setCellStyle(fillin);  
-          cell = row.createCell((short) 4);
           cell.setCellStyle(fillin);  
           
           
@@ -1740,9 +1736,19 @@ public class TdEnterpriseController {
               cell = row.createCell((short) 4);  
               cell.setCellStyle(style1);
               
-
-              
               row = sheet1.createRow((int) 42);  
+              cell = row.createCell((short) 0);  
+              cell.setCellStyle(style1);
+              cell = row.createCell((short) 1);  
+              cell.setCellStyle(style1);
+              cell = row.createCell((short) 2);  
+              cell.setCellStyle(style1);
+              cell = row.createCell((short) 3);  
+              cell.setCellStyle(style1);
+              cell = row.createCell((short) 4);  
+              cell.setCellStyle(style1);
+              
+              row = sheet1.createRow((int) 43);  
               cell = row.createCell((short) 0);  
               if (null != enterprise.getInventiPatent() && null != enterprise.getNewPatent() && null != enterprise.getDesignPatent())
               {
@@ -1759,17 +1765,7 @@ public class TdEnterpriseController {
               cell.setCellStyle(fillin);
               
               
-              row = sheet1.createRow((int) 43);  
-              cell = row.createCell((short) 0);  
-              cell.setCellStyle(style2);
-              cell = row.createCell((short) 1);  
-              cell.setCellStyle(style2);
-              cell = row.createCell((short) 2);  
-              cell.setCellStyle(style2);
-              cell = row.createCell((short) 3);  
-              cell.setCellStyle(style2);
-              cell = row.createCell((short) 4);  
-              cell.setCellStyle(style2);
+             
               
               row = sheet1.createRow((int) 44);  
               cell = row.createCell((short) 0);  
@@ -2281,8 +2277,19 @@ public class TdEnterpriseController {
               cell = row.createCell((short) 4);  
               cell.setCellStyle(style1);
               
-              
               row = sheet1.createRow((int) 32);  
+              cell = row.createCell((short) 0);  
+              cell.setCellStyle(style1);
+              cell = row.createCell((short) 1);  
+              cell.setCellStyle(style1);
+              cell = row.createCell((short) 2);  
+              cell.setCellStyle(style1);
+              cell = row.createCell((short) 3);  
+              cell.setCellStyle(style1);
+              cell = row.createCell((short) 4);  
+              cell.setCellStyle(style1);
+              
+              row = sheet1.createRow((int) 33);  
               cell = row.createCell((short) 0);  
               if (null != enterprise.getInventiPatent() && null != enterprise.getNewPatent() && null != enterprise.getDesignPatent())
               {
@@ -2298,17 +2305,6 @@ public class TdEnterpriseController {
               cell = row.createCell((short) 4);  
               cell.setCellStyle(fillin);
               
-              row = sheet1.createRow((int) 33);  
-              cell = row.createCell((short) 0);  
-              cell.setCellStyle(style2);
-              cell = row.createCell((short) 1);  
-              cell.setCellStyle(style2);
-              cell = row.createCell((short) 2);  
-              cell.setCellStyle(style2);
-              cell = row.createCell((short) 3);  
-              cell.setCellStyle(style2);
-              cell = row.createCell((short) 4);  
-              cell.setCellStyle(style2);
               
               row = sheet1.createRow((int) 34);  
               cell = row.createCell((short) 0);  

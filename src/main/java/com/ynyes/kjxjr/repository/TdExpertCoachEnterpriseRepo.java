@@ -17,6 +17,8 @@ public interface TdExpertCoachEnterpriseRepo extends PagingAndSortingRepository<
 	List<TdExpertCoachEnterprise> findByExpertIdAndIsGradeIsTrue(Long expertId);
 	
 	List<TdExpertCoachEnterprise> findByEnterpriseIdOrderByExpertIdAsc(Long enterpriseId);
+	
+	List<TdExpertCoachEnterprise> findByEnterpriseIdOrderByEnterpriseIdAsc(Long enterpriseId);
 
 	TdExpertCoachEnterprise findByExpertIdAndEnterpriseId(Long expertId,Long enterpriseId);
 	

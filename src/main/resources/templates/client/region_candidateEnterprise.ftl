@@ -165,7 +165,7 @@ function selectSubmit()
 		        	</#list>
 		        </#if>	   
 		        </table>
-	        <div class="area_add_btn">
+	        <div class="area_add_btn" style="display: block; float: left;">
 	        <a class="all" style="margin-left:0px;" href="javascript:;" onclick="checkAll(this);"><i></i><span>全选</span></a>
 			<input style=" margin-left: 10px; cursor:pointer;" class="area_batch" type="submit" value="批量加入初选" />
 			</div>

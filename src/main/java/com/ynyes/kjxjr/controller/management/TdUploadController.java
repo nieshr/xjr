@@ -6,8 +6,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +24,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ynyes.kjxjr.entity.TdActivity;
+import com.ynyes.kjxjr.entity.TdActivityEnterprise;
 import com.ynyes.kjxjr.entity.TdEnterprise;
+import com.ynyes.kjxjr.service.TdActivityEnterpriseService;
+import com.ynyes.kjxjr.service.TdActivityService;
 import com.ynyes.kjxjr.service.TdArticleCategoryService;
 import com.ynyes.kjxjr.service.TdArticleService;
 import com.ynyes.kjxjr.service.TdEnterpriseService;
@@ -50,6 +56,12 @@ public class TdUploadController {
     
     @Autowired
     TdEnterpriseService tdEnterpriseService;
+    
+    @Autowired
+    TdActivityEnterpriseService tdActivityEnterpriseService;
+    
+    @Autowired
+    TdActivityService tdActivityService;
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ResponseBody
@@ -262,7 +274,21 @@ public class TdUploadController {
 
             Date dt = new Date(System.currentTimeMillis());
             SimpleDateFormat sdf = new SimpleDateFormat("HHmmssSSS");
-            String fileName ="Num"+tdEnterpriseService.findOne(enterpriseId).getNumber()+"_"+ sdf.format(dt) + ext;
+            TdEnterprise enterprise = tdEnterpriseService.findOne(id);
+            //找出改企业参加活动个数。
+            List<TdActivityEnterprise> aeList = tdActivityEnterpriseService.findByEnterpriseId(id);
+            List<TdActivity> activityList = new ArrayList<>();
+            for (TdActivityEnterprise ae : aeList)
+            {
+            	TdActivity activity = tdActivityService.findOne(ae.getActivityId()); 
+            	if (activity.getStatusId() == 2)
+            	{
+            		activityList.add(activity);
+            	}
+            }
+            	
+            Integer size = activityList.size();
+            String fileName ="Num_"+tdEnterpriseService.findbyUsername(username).getNumber()+"_"+ size + ext;
 
             String uri = ImageRoot + "/" + fileName;
 
@@ -273,7 +299,6 @@ public class TdUploadController {
             stream.write(bytes);
             stream.close();
             
-            TdEnterprise enterprise = tdEnterpriseService.findOne(enterpriseId);
             String fileUrl = enterprise.getFileUrl();
             		
             enterprise.setFileUrl(fileName);

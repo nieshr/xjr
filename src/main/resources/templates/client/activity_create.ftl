@@ -7,7 +7,7 @@
 <link href="/client/css/base.css" rel="stylesheet" type="text/css" />
 <link href="/client/css/active.css" rel="stylesheet" type="text/css" />
 <link href="/mag/style/WdatePicker.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="/client/css/ios6alert.css">
+<link rel="stylesheet" href="/client/css/showBo.css">
 
 <script src="/client/js/jquery-1.9.1.min.js"></script>
 <script src="/client/js/main.js"></script>
@@ -19,7 +19,7 @@
 <script type="text/javascript" charset="utf-8" src="/mag/js/zh_CN.js"></script>
 <script type="text/javascript" src="/client/js/Validform_v5.3.2_min.js"></script>
 <script type="text/javascript" src="/mag/js/layout.js"></script>
-<script src="/client/js/ios6alert.js"></script>
+<script src="/client/js/showBo.js"></script>
 <script>
 $(document).ready(function(){
 
@@ -33,9 +33,7 @@ $(document).ready(function(){
                 }
                 else 
                 {
-                    $("body").ios6alert({
-                        content : data.msg
-                    });
+                     Showbo.Msg.alert(data.msg);
                 }
              }
     });
@@ -54,9 +52,7 @@ $(function(){
     var  eventEnd  = $("#eventEnd").val()
     if (activitydate == ""||prepareOn == ""||prepareOff == "" || eventEnd == "")
     {
-    	$("body").ios6alert({
-    	    content : "请完整填写资料！"
-    	});
+    	 Showbo.Msg.alert("请填写完整资料");
     }
     else{    
          $.ajax({
@@ -82,7 +78,7 @@ $(function(){
 		                 }
 		                 else 
 		                 {
-		                     alert(data.msg);
+		                      Showbo.Msg.alert(data.msg);
 		                 }
                       }
          });
@@ -98,9 +94,7 @@ $(function(){
     var  eventEnd  = $("#eventEnd").val()
     if (activitydate == ""||prepareOn == ""||prepareOff == "" || eventEnd == "")
     {
-        $("body").ios6alert({
-            content : "请完整填写资料！"
-        });
+         Showbo.Msg.alert("请填写完整资料");
     }
     else{
          $.ajax({
@@ -126,7 +120,7 @@ $(function(){
                          }
                          else 
                          {
-                             alert(data.msg);
+                              Showbo.Msg.alert(data.msg);
                          }
                       }
          });
@@ -145,16 +139,11 @@ function activityPass(activityId)
              success: function(data){
                          if (data.code == 0)
                          {
-                             $("body").ios6alert({
-                                 content : "审核成功",
-                                 onClose : function(){
-                                               location.reload();
-                                            }
-                             });
+                              Showbo.Msg.alert("审核成功");
                          }
                          else 
                          {
-                             alert(data.msg);
+                              Showbo.Msg.alert(data.msg);
                          }
                       }
          });
@@ -171,11 +160,11 @@ function sendSms(id,activityId,roleId)
              success: function(data){
                          if (data.code == 0)
                          {
-                             alert("已发送！");
+                              Showbo.Msg.alert("发送成功！");
                          }
                          else 
                          {
-                             alert(data.msg);
+                              Showbo.Msg.alert(data.msg);
                          }
                       }
          });
@@ -277,9 +266,7 @@ function submitCheck()
 
     if (filedata == "")
     {
-        $("body").ios6alert({
-            content : "请添加文件！"
-        });
+         Showbo.Msg.alert("请添加文件！");
     }
     else{
         $("#upload").submit();
@@ -292,9 +279,7 @@ function pptSubmitCheck()
 
     if (filedata == "")
     {
-        $("body").ios6alert({
-            content : "请添加文件！"
-        });
+         Showbo.Msg.alert("请添加文件！");
     }
     else{
         $("#pptupload").submit();
@@ -308,9 +293,7 @@ function enterpptSubmitCheck()
 
     if (filedata == "")
     {
-        $("body").ios6alert({
-            content : "请添加文件！"
-        });
+        Showbo.Msg.alert("请添加文件！");
     }
     else{
         $("#enterpptupload").submit();
@@ -319,15 +302,11 @@ function enterpptSubmitCheck()
 
 function done()
 {
-    $("body").ios6alert({
-        content : "上传成功"
-    });
+    Showbo.Msg.alert("上传成功！");
 }
 function done2()
 {
-    $("body").ios6alert({
-        content : "请上传类型为ppt的文件！"
-    });
+    Showbo.Msg.alert("请添加类型为*.PPT文件！");
 }
 <#if done?? &&done == 1>
 window.onload=done;
@@ -663,7 +642,7 @@ window.onload=done2;
                 </#if>     	
                 <#-- 路演辅导列表  end -->		
             <!-- 评分汇总 -->
-            	<#if activity??&&activity.statusId??&&(activity.statusId==1||activity.statusId==2)>
+            	<#if activity??&&activity.statusId??&&activity.statusId==2>
                     <div>
                         <span style="margin-top: 6px;">路演结果：</span>
                         <ul class="active_project_text">

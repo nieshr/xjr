@@ -7,13 +7,13 @@
 <link href="/client/css/base.css" rel="stylesheet" type="text/css" />
 <link href="/client/css/active.css" rel="stylesheet" type="text/css" />
 <link href="/mag/style/WdatePicker.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="/client/css/ios6alert.css">
+<link rel="stylesheet" href="/client/css/showBo.css">
 
 <script src="/client/js/jquery-1.9.1.min.js"></script>
 <script src="/client/js/main.js"></script>
 <script type="text/javascript" src="/mag/js/WdatePicker.js"></script>
 <script type="text/javascript" src="/client/js/Validform_v5.3.2_min.js"></script>
-<script src="/client/js/ios6alert.js"></script>
+<script src="/client/js/showBo.js"></script>
 <script>
 function sortUp(id , activityId)
 {
@@ -29,19 +29,13 @@ function sortUp(id , activityId)
                          }
                          else 
                          {
-                             $("body").ios6alert({
-                                 content : data.msg
-                             });
+                             Showbo.Msg.alert(data.msg);
                          }
                       }
          });
 }
 function activityPass(activityId)
 {
-    $("body").ios6alert({
-        content :"请稍后...",
-        autoClose:3000
-    });
          $.ajax({
              type: "GET",
              url: "/activity/pass",
@@ -51,19 +45,12 @@ function activityPass(activityId)
              success: function(data){
                          if (data.code == 0)
                          {
-                             $("body").ios6alert({
-                                 content : "审核成功",
-	                          	 onClose : function(){
-	                          	               location.reload();
-	                          	            }
-                             });
-                            
+                           	 Showbo.Msg.alert("审核成功");
+	                         setTimeout(function(){ location.reload();} , 2000);
                          }
                          else 
                          {
-                             $("body").ios6alert({
-                                 content : data.msg
-                             });
+                            	Showbo.Msg.alert(data.msg);
                          }
                       }
          });
@@ -79,15 +66,11 @@ function sendSms(id,activityId,roleId)
              success: function(data){
                          if (data.code == 0)
                          {
-                             $("body").ios6alert({
-                                 content : "已发送"
-                             });
+                           	Showbo.Msg.alert("已发送");
                          }
                          else 
                          {
-                             $("body").ios6alert({
-                                 content : data.msg
-                             });
+                             Showbo.Msg.alert(data.msg);
                          }
                       }
          });
@@ -103,15 +86,11 @@ function smsSendAll(activityId,roleId)
              success: function(data){
                          if (data.code == 0)
                          {
-                             $("body").ios6alert({
-                                 content : "已发送"
-                             });
+                             Showbo.Msg.alert("已发送");
                          }
                          else 
                          {
-                             $("body").ios6alert({
-                                 content : data.msg
-                             });
+                              Showbo.Msg.alert(data.msg);
                          }
                       }
          });
@@ -119,15 +98,9 @@ function smsSendAll(activityId,roleId)
 
 function passCheck(activityId) {
     
-	$("body").ios6alert({
-	    title : "通过审核",
-	    content : "更新列表到评分表，确认吗？",
-	    type : 1,
-	    buttonText : {
-			Yes : "确认",
-			No : "取消"
-		},
-	    onClickYes : function(){
+	Showbo.Msg.confirm("通过审核并更新评分表，确认吗？",function(p){
+		if (p == "yes")
+		{
 	    	 $.ajax({
 	             type: "GET",
 	             url: "/activity/pass",
@@ -137,18 +110,12 @@ function passCheck(activityId) {
 	             success: function(data){
 	                         if (data.code == 0)
 	                         {
-	                             $("body").ios6alert({
-	                                 content : "更新成功",
-	                                 onClose : function(){
-                                         location.reload();
-                                      }
-	                             });
+	                         		Showbo.Msg.alert("审核成功");
+	                         		setTimeout(function(){ location.reload();} , 2000);
 	                         }
 	                         else 
 	                         {
-	                             $("body").ios6alert({
-	                                 content : data.msg
-	                             });
+	                             Showbo.Msg.alert(data.msg);
 	                         }
 	                      }
 	         });
@@ -158,15 +125,9 @@ function passCheck(activityId) {
 }
 
 function cancelCheck(activityId) {
-   $("body").ios6alert({
-        title : "取消审核",
-        content : "取消审核后可修改活动信息，确认吗？",
-        type : 1,
-        buttonText : {
-			Yes : "确认",
-			No : "取消"
-		},
-        onClickYes : function(){
+	Showbo.Msg.confirm("取消审核后可以修改名单信息，确认吗？",function(p){
+		if (p == "yes")
+		{
          $.ajax({
              type: "GET",
              url: "/activity/cancel",
@@ -176,18 +137,12 @@ function cancelCheck(activityId) {
              success: function(data){
                          if (data.code == 0)
                          {
-                             $("body").ios6alert({
-                                 content : "取消成功",
-                                 onClose : function(){
-                                     location.reload();
-                                  }
-                             });
+                                Showbo.Msg.alert("取消成功！");
+	                         	setTimeout(function(){ location.reload();} , 2000);
                          }
                          else 
                          {
-                             $("body").ios6alert({
-                                 content : data.msg
-                             });
+                             Showbo.Msg.alert(data.msg);
                          }
                       }
          });
@@ -196,15 +151,9 @@ function cancelCheck(activityId) {
 }
 
 function resetCheck(activityId) {
-  $("body").ios6alert({
-       title : "重置评分",
-       content : "重置评分后将删除之前的评分表，确认吗？",
-       type : 1,
-       buttonText : {
-			Yes : "确认",
-			No : "取消"
-		},
-       onClickYes : function(){	
+	Showbo.Msg.confirm("重置后将清空评分表，确定？",function(p){
+		if (p == "yes")
+		{
          $.ajax({
              type: "GET",
              url: "/activity/reset",
@@ -214,18 +163,11 @@ function resetCheck(activityId) {
              success: function(data){
                          if (data.code == 0)
                          {
-                             $("body").ios6alert({
-                                 content : "重置成功",
-                                 onClose : function(){
-                                     location.reload();
-                                  }
-                             });
+                              Showbo.Msg.alert("操作成功！");
                          }
                          else 
                          {
-                             $("body").ios6alert({
-                                 content : data.msg
-                             });
+                             Showbo.Msg.alert(data.msg);
                          }
                       }
          });
@@ -249,9 +191,7 @@ function sortDown(id , activityId)
                          }
                          else 
                          {
-                             $("body").ios6alert({
-                                 content : data.msg
-                             });
+                            Showbo.Msg.alert(data.msg);
                          }
                       }
          });

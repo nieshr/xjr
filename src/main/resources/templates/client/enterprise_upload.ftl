@@ -6,29 +6,23 @@
 <link rel="shortcut icon" href="/client/images/icon.ico" />
 <link href="/client/css/base.css" rel="stylesheet" type="text/css" />
 <link href="/client/css/team.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" href="/client/css/ios6alert.css">
+<link rel="stylesheet" href="/client/css/showBo.css">
 
 <script src="/client/js/jquery-1.9.1.min.js"></script>
 <script src="/client/js/main.js"></script>
 <script type="text/javascript" src="/client/js/Validform_v5.3.2_min.js"></script>
-<script src="/client/js/ios6alert.js"></script>
+<script src="/client/js/showBo.js"></script>
 <script>
 
 function done()
 {
-    $("body").ios6alert({
-        content : "上传资料成功",
-        onClose : function(){
-        	           location.href="/enterprise/check";
-                   }
-    });
+    Showbo.Msg.alert("上传成功！");
+    setTimeout(function(){ location.href="/enterprise/check";} , 2000);
+   
 }
 function done2()
 {
-    $("body").ios6alert({
-    	title: "类型错误",
-        content : "请上传jpg，pdf格式的扫描件"
-    });
+    Showbo.Msg.alert("文件类型错误（限定为jpg,png,pdf或rar）");
    
 }
 <#if done?? &&done == 1>
@@ -42,9 +36,7 @@ function submitCheck()
 	var filedata = $("#file").val();
 	if (filedata == "")
 	{
-	    $("body").ios6alert({
-	        content : "请添加文件"
-	    });
+	    Showbo.Msg.alert("请添加文件！");
 		}else{
 		$("#upload").submit();
 		}

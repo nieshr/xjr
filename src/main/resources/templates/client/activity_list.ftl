@@ -6,7 +6,7 @@
 	<link rel="shortcut icon" href="/client/images/icon.ico" />
 	<link href="/client/css/base.css" rel="stylesheet" type="text/css" />
 	<link href="/client/css/list_base.css" rel="stylesheet" type="text/css" />
-	<link rel="stylesheet" href="/client/css/ios6alert.css">
+	<link rel="stylesheet" href="/client/css/showBo.css">
 		<style type="text/css">
 		.page{ width: 600px; float: right; margin-top: 30px;}
 		.page *{ float: left;}
@@ -32,32 +32,25 @@
 
 <script src="/client/js/jquery-1.9.1.min.js"></script>
 <script src="/client/js/main.js"></script>
-<script src="/client/js/ios6alert.js"></script>
+<script src="/client/js/showBo.js"></script>
 <script>
 /*
 function unfinish()
 {
-	alert("有未完成创建的活动！");
+	Showbo.Msg.alert("有未完成创建的活动");
 }
 <#if alert?? &&alert == 1>
 window.onload=unfinish;
 </#if>
 */
 function deleteConfirm(id,title) {
-	
-		$("body").ios6alert({
-			title : title,
-			content : "确定要删除这个活动吗？",
-			type : 2,
-			onClickYes : function(){
-							 location.href="/activity/delete?id="+id;
-								  },
-			buttonText : {
-				Delete : "删除",
-				No : "取消"				
-			}		  
-		});
 
+	Showbo.Msg.confirm("删除活动及相关内容，确认吗？",function(p){
+		if (p == "yes")
+		{
+			 location.href="/activity/delete?id="+id;
+		}
+	});	
 }
 
 //筛选

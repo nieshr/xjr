@@ -7,6 +7,7 @@
 <link rel="shortcut icon" href="/client/images/icon.ico" />
 <link href="/client/css/base.css" rel="stylesheet" type="text/css" />
 <link href="/client/css/team.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="/client/css/showBo.css">
 
 <style>
 .apply_content dd div .Validform_wrong span{ text-align:left;}
@@ -16,6 +17,7 @@
 <script src="/client/js/main.js"></script>
 <script type="text/javascript" src="/mag/js/WdatePicker.js"></script>
 <script type="text/javascript" src="/client/js/Validform_v5.3.2_min.js"></script>
+<script src="/client/js/showBo.js"></script>
 
 <script>
 $(document).ready(function(){
@@ -31,7 +33,7 @@ $(document).ready(function(){
 				}
 	            else 
 	            {
-	                alert(data.msg);
+	                Showbo.Msg.alert(data.msg);
 	                if (data.check == 0)
 	                {
 	                	location.href='/login';
@@ -68,8 +70,7 @@ function allowsubmit()
 
 function checkstatus()
 {
-    alert("待审核或已通过审核，暂时无法修改信息！");	
-    location.href='/enterprise/check';
+	Showbo.Msg.alert("待审核或已通过审核，暂时无法修改信息！");
 }
 <#if enterprise?? &&enterprise.statusId??&&(enterprise.statusId == 1 ||enterprise.statusId== 0)>
 window.onload=checkstatus;

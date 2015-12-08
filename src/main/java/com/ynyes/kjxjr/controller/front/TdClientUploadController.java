@@ -59,7 +59,7 @@ public class TdClientUploadController {
 
         String ext = name.substring(name.lastIndexOf("."));
         //限制文件类型
-        if(!ext.equalsIgnoreCase(".jpg") && !ext.equalsIgnoreCase(".pdf"))
+        if(!ext.equalsIgnoreCase(".jpg") && !ext.equalsIgnoreCase(".pdf") && !ext.equalsIgnoreCase(".png") && !ext.equalsIgnoreCase(".rar"))
         {
             Long done = 2L;
             return "redirect:/region/recommendEnterprise?id="+activityId
@@ -113,7 +113,7 @@ public class TdClientUploadController {
         String ext = name.substring(name.lastIndexOf("."));
 
         //限制文件类型
-        if(!ext.equalsIgnoreCase(".jpg") && !ext.equalsIgnoreCase(".pdf") && !ext.equalsIgnoreCase(".png"))
+        if(!ext.equalsIgnoreCase(".jpg") && !ext.equalsIgnoreCase(".pdf") && !ext.equalsIgnoreCase(".png") && !ext.equalsIgnoreCase(".rar"))
         {
             Long done = 2L;
             return "redirect:/enterprise/upload?done="+done
@@ -132,7 +132,7 @@ public class TdClientUploadController {
             for (TdActivityEnterprise ae : aeList)
             {
             	TdActivity activity = tdActivityService.findOne(ae.getActivityId()); 
-            	if (activity.getStatusId() == 2)
+            	if (null != activity.getStatusId() && activity.getStatusId() == 2)
             	{
             		activityList.add(activity);
             	}
@@ -195,7 +195,7 @@ public class TdClientUploadController {
             for (TdActivityEnterprise ae : aeList)
             {
             	TdActivity activity = tdActivityService.findOne(ae.getActivityId()); 
-            	if (activity.getStatusId() == 2)
+            	if (null != activity.getStatusId() && activity.getStatusId() == 2)
             	{
             		activityList.add(activity);
             	}
@@ -216,6 +216,20 @@ public class TdClientUploadController {
             
             enterprise.setDataBusiness(fileName);
             tdEnterpriseService.save(enterprise);
+            
+            //同步数据到中间表
+            List<TdActivityEnterprise> aeList_0 = tdActivityEnterpriseService.findByEnterpriseIdAndStatusId(id, 0L);
+            for(TdActivityEnterprise item_0 : aeList_0)
+            {
+            	item_0.setDataBusiness(fileName);
+            	tdActivityEnterpriseService.save(item_0);
+            }
+            List<TdActivityEnterprise> aeList_1 = tdActivityEnterpriseService.findByEnterpriseIdAndStatusId(id, 1L);
+            for(TdActivityEnterprise item_1 : aeList_1)
+            {
+            	item_1.setDataBusiness(fileName);
+            	tdActivityEnterpriseService.save(item_1);
+            }
             
         } catch (Exception e) {
         	e.printStackTrace();
@@ -253,7 +267,7 @@ public class TdClientUploadController {
             for (TdActivityEnterprise ae : aeList)
             {
             	TdActivity activity = tdActivityService.findOne(ae.getActivityId()); 
-            	if (activity.getStatusId() == 2)
+            	if (null != activity.getStatusId() && activity.getStatusId() == 2)
             	{
             		activityList.add(activity);
             	}
@@ -273,6 +287,20 @@ public class TdClientUploadController {
             
             enterprise.setDataPossible(fileName);
             tdEnterpriseService.save(enterprise);
+            
+            //同步数据到中间表
+            List<TdActivityEnterprise> aeList_0 = tdActivityEnterpriseService.findByEnterpriseIdAndStatusId(id, 0L);
+            for(TdActivityEnterprise item_0 : aeList_0)
+            {
+            	item_0.setDataPossible(fileName);
+            	tdActivityEnterpriseService.save(item_0);
+            }
+            List<TdActivityEnterprise> aeList_1 = tdActivityEnterpriseService.findByEnterpriseIdAndStatusId(id, 1L);
+            for(TdActivityEnterprise item_1 : aeList_1)
+            {
+            	item_1.setDataPossible(fileName);
+            	tdActivityEnterpriseService.save(item_1);
+            }
             
         } catch (Exception e) {
         	e.printStackTrace();
@@ -310,7 +338,7 @@ public class TdClientUploadController {
             for (TdActivityEnterprise ae : aeList)
             {
             	TdActivity activity = tdActivityService.findOne(ae.getActivityId()); 
-            	if (activity.getStatusId() == 2)
+            	if (null != activity.getStatusId() && activity.getStatusId() == 2)
             	{
             		activityList.add(activity);
             	}
@@ -330,6 +358,21 @@ public class TdClientUploadController {
             
             enterprise.setDataOther(fileName);
             tdEnterpriseService.save(enterprise);
+            
+            
+            //同步数据到中间表
+            List<TdActivityEnterprise> aeList_0 = tdActivityEnterpriseService.findByEnterpriseIdAndStatusId(id, 0L);
+            for(TdActivityEnterprise item_0 : aeList_0)
+            {
+            	item_0.setDataOther(fileName);
+            	tdActivityEnterpriseService.save(item_0);
+            }
+            List<TdActivityEnterprise> aeList_1 = tdActivityEnterpriseService.findByEnterpriseIdAndStatusId(id, 1L);
+            for(TdActivityEnterprise item_1 : aeList_1)
+            {
+            	item_1.setDataOther(fileName);
+            	tdActivityEnterpriseService.save(item_1);
+            }
             
 //            TdActivityEnterprise ae = tdActivityEnterpriseService.findByActivityIdAndEnterpriseId(activityId, id);
 //            ae.setDataOther(fileName);
@@ -474,7 +517,7 @@ public class TdClientUploadController {
             for (TdActivityEnterprise ae : aeList)
             {
             	TdActivity activity = tdActivityService.findOne(ae.getActivityId()); 
-            	if (activity.getStatusId() == 2)
+            	if (null != activity.getStatusId() && activity.getStatusId() == 2)
             	{
             		activityList.add(activity);
             	}
@@ -500,7 +543,19 @@ public class TdClientUploadController {
                 tdEnterpriseService.save(enterprise);
 //            }
             
-
+                //同步数据到中间表
+                List<TdActivityEnterprise> aeList_0 = tdActivityEnterpriseService.findByEnterpriseIdAndStatusId(id, 0L);
+                for(TdActivityEnterprise item_0 : aeList_0)
+                {
+                	item_0.setPptUrl(fileName);
+                	tdActivityEnterpriseService.save(item_0);
+                }
+                List<TdActivityEnterprise> aeList_1 = tdActivityEnterpriseService.findByEnterpriseIdAndStatusId(id, 1L);
+                for(TdActivityEnterprise item_1 : aeList_1)
+                {
+                	item_1.setPptUrl(fileName);
+                	tdActivityEnterpriseService.save(item_1);
+                }
       
 
         } catch (Exception e) {

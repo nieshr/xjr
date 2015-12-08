@@ -148,7 +148,8 @@ public class TdActivityEnterpriseService {
 																					.and(new Sort(Direction.DESC , "totalGroup"))
 																					.and(new Sort(Direction.DESC , "totalFeasibility"))
 																					.and(new Sort(Direction.DESC , "totalMarketValue"))
-																					.and(new Sort(Direction.DESC , "totalExpression"))
+																					.and(new Sort(Direction.DESC , "totalExpression")
+																					.and(new Sort(Direction.ASC, "sortId")))
 																					);
     			break;
     		case 1:

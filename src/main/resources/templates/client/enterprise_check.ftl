@@ -69,7 +69,7 @@
     	<#if enterprise.fileUrl??>
 	    	<div class="change_inform">
 	        	<span>
-	        	【申请表附件下载】：<a style="font-size:12px;  text-decoration: underline;" href="/download/data?name=${enterprise.fileUrl!''}" title="${enterprise.fileUrl!''}">${enterprise.fileUrl!''}</a>
+	        	【申请表附件下载】：<a style="font-size:12px;  text-decoration: none;" href="/download/data?name=${enterprise.fileUrl!''}" title="${enterprise.fileUrl!''}">${enterprise.fileUrl!''}</a>
 	        	</span>
 	        </div>
         </#if>

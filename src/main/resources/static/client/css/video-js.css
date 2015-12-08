@@ -731,7 +731,8 @@ body.vjs-full-window {
   display: block;
   margin: 0 auto;
   max-height: 100%;
-  padding: 0;
+  
+  padding: 20% 0;
   width: 100%;
 }
 /* Hide the poster when native controls are used otherwise it covers them */

@@ -838,6 +838,13 @@ public String  recommendEnterprise(HttpServletRequest req,
 	    }    	
 	    
 	    TdActivity activity = tdActivityService.findOne(id);
+	    
+	    //防止强行url进入修改
+	    if (null != activity.getStatusId() && (activity.getStatusId() == 2 || activity.getStatusId() == 1))
+	    {
+	    	return "redirect:/region/activity/list";
+	    }
+	    
 	    Long activityId = activity.getId();
 	    Long statusId = 2L;
 	    
@@ -957,7 +964,8 @@ public  Map<String, Object> regionAddEnterprise(HttpServletRequest req,Long id,L
     		activityenterprise.setDataPossible(enterprise.getDataPossible());
     		activityenterprise.setDataOther(enterprise.getDataOther());
     		activityenterprise.setEnterpriseFileUrl(enterprise.getFileUrl());
-    		activityenterprise.setPptUrl(activity.getPptUrl());
+    		activityenterprise.setPptUrl(enterprise.getPptUrl());
+    		activityenterprise.setDownload(activity.getPptUrl());
     		activityenterprise.setFileUrl(activity.getFileUrl());
     		tdActivityEnterpriseService.save(activityenterprise);
     		
@@ -1229,6 +1237,7 @@ private void selectE(Long activityId ,Long[] ids, Integer[] chkIds)
         		newEnter.setDataPossible(enterprise.getDataPossible());
         		newEnter.setDataOther(enterprise.getDataOther());
         		newEnter.setPptUrl(enterprise.getPptUrl());
+        		newEnter.setDownload(activity.getPptUrl());
         		newEnter.setFileUrl(activity.getFileUrl());
         		newEnter.setStatusId(0L);
         		tdActivityEnterpriseService.save(newEnter);
@@ -1254,6 +1263,7 @@ private void selectE(Long activityId ,Long[] ids, Integer[] chkIds)
         		activityEnterprise.setDataPossible(enterprise.getDataPossible());
         		activityEnterprise.setDataOther(enterprise.getDataOther());
         		activityEnterprise.setPptUrl(enterprise.getPptUrl());
+        		activityEnterprise.setDownload(activity.getPptUrl());
         		activityEnterprise.setFileUrl(activity.getFileUrl());
         		tdActivityEnterpriseService.save(activityEnterprise);
         	}
@@ -1565,7 +1575,8 @@ public Map<String, Object>  candidateEnterprise(HttpServletRequest req,Long id,L
     		newEnter.setDataBusiness(enterprise.getDataBusiness());
     		newEnter.setDataPossible(enterprise.getDataPossible());
     		newEnter.setDataOther(enterprise.getDataOther());
-    		newEnter.setPptUrl(activity.getPptUrl());
+    		newEnter.setPptUrl(enterprise.getPptUrl());
+    		newEnter.setDownload(activity.getPptUrl());
     		newEnter.setFileUrl(activity.getFileUrl());
     		newEnter.setStatusId(0L);
         	//3类活动区别对待
@@ -1603,7 +1614,8 @@ public Map<String, Object>  candidateEnterprise(HttpServletRequest req,Long id,L
     		activityEnterprise.setDataPossible(enterprise.getDataPossible());
     		activityEnterprise.setDataOther(enterprise.getDataOther());
     		activityEnterprise.setEnterpriseFileUrl(enterprise.getFileUrl());
-    		activityEnterprise.setPptUrl(activity.getPptUrl());
+    		activityEnterprise.setPptUrl(enterprise.getPptUrl());
+    		activityEnterprise.setDownload(activity.getPptUrl());
     		activityEnterprise.setFileUrl(activity.getFileUrl());
     		tdActivityEnterpriseService.save(activityEnterprise);
     	}
@@ -2350,7 +2362,7 @@ public String exportCandidate(
     row.setHeight((short) (20 * 20));  
     
     cell = row.createCell((short) 0);  
-    cell.setCellValue("序号");  
+    cell.setCellValue("编号");  
     cell.setCellStyle(style);  
     
     cell = row.createCell((short) 1);  

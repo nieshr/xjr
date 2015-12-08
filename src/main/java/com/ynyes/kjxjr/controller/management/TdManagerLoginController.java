@@ -42,7 +42,7 @@ public class TdManagerLoginController {
         {
             request.getSession().setAttribute("manager", username);
             tdManagerLogService.addLog("login", "用户登录", request);
-            return "redirect:/Verwalter";
+            return "redirect:/Verwalter/center";
         }
         else
         {
@@ -73,7 +73,7 @@ public class TdManagerLoginController {
                     
                     request.getSession().setAttribute("manager", username);
                     tdManagerLogService.addLog("login", "用户登录", request);
-                    return "redirect:/Verwalter";
+                    return "redirect:/Verwalter/center";
                 }
             }
             
