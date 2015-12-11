@@ -477,9 +477,27 @@ public class TdActivityController {
         {
 	        activityEnterprise.setSortId(sortId - 1);
 	        tdActivityEnterpriseService.save(activityEnterprise);
-
+	        
+	        //同步到评分表
+	        List<TdEnterpriseGrade> gradeList = tdEnterpriseGradeService
+	        		.findByEnterpriseIdAndActivityId(activityEnterprise.getEnterpriseId(), activityEnterprise.getActivityId());
+	        for (TdEnterpriseGrade item : gradeList)
+	        {
+	        	item.setSordId(activityEnterprise.getSortId());
+	        	tdEnterpriseGradeService.save(item);
+	        }
+	        	
 	        lastActivityEnterprise.setSortId(sortId);
 	        tdActivityEnterpriseService.save(lastActivityEnterprise);
+	        
+	        //同步到评分表
+	        List<TdEnterpriseGrade> lastGradeList = tdEnterpriseGradeService
+	        		.findByEnterpriseIdAndActivityId(lastActivityEnterprise.getEnterpriseId(), lastActivityEnterprise.getActivityId());
+	        for (TdEnterpriseGrade item : lastGradeList)
+	        {
+	        	item.setSordId(lastActivityEnterprise.getSortId());
+	        	tdEnterpriseGradeService.save(item);
+	        }
         }
         
         return "redirect:/activity/check?id="+activityId;
@@ -503,9 +521,27 @@ public class TdActivityController {
 
         activityEnterprise.setSortId(sortId + 1);
         tdActivityEnterpriseService.save(activityEnterprise);
+        
+        //同步到评分表
+        List<TdEnterpriseGrade> gradeList = tdEnterpriseGradeService
+        		.findByEnterpriseIdAndActivityId(activityEnterprise.getEnterpriseId(), activityEnterprise.getActivityId());
+        for (TdEnterpriseGrade item : gradeList)
+        {
+        	item.setSordId(activityEnterprise.getSortId());
+        	tdEnterpriseGradeService.save(item);
+        }
 
         nextActivityEnterprise.setSortId(sortId);
         tdActivityEnterpriseService.save(nextActivityEnterprise);
+        
+        //同步到评分表
+        List<TdEnterpriseGrade> nextGradeList = tdEnterpriseGradeService
+        		.findByEnterpriseIdAndActivityId(nextActivityEnterprise.getEnterpriseId(), nextActivityEnterprise.getActivityId());
+        for (TdEnterpriseGrade item : nextGradeList)
+        {
+        	item.setSordId(nextActivityEnterprise.getSortId());
+        	tdEnterpriseGradeService.save(item);
+        }
 
         return "redirect:/activity/check?id="+activityId;
     }
@@ -885,6 +921,7 @@ public class TdActivityController {
         	List<TdEnterpriseGrade> enterpriseGrade = tdEnterpriseGradeService.findByActivityIdOrderByIdAsc(activityId);
         	for(TdEnterpriseGrade theGrade : enterpriseGrade)
         	{
+        		TdEnterprise enterprise = tdEnterpriseService.findOne(theGrade.getEnterpriseId());   //更新名字
         		theGrade.setTotalPoint(null);
 				theGrade.setTotalExpression(null);
 				theGrade.setOneExpression(null);
@@ -904,10 +941,17 @@ public class TdActivityController {
 				theGrade.setTotalGroup(null); //zhangji
 				theGrade.setIsGrade(null);
 				theGrade.setGradeAble(null);
+				theGrade.setEnterpriseTitle(enterprise.getTitle()); //更新名字
             	tdEnterpriseGradeService.save(theGrade);
         	}
         
-        	
+        	//专家中间表
+        	List<TdActivityExpert> aexList = tdActivityExpertService.findByActivityId(activity.getId());
+        	for (TdActivityExpert item : aexList)
+        	{
+        		item.setName(tdExpertService.findOne(item.getExpertId()).getInCharge());
+        		tdActivityExpertService.save(item);
+        	}
         }
 
         res.put("code", 0);

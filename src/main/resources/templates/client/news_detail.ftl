@@ -30,7 +30,6 @@
 	<script src="/client/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="/client/js/main.js"></script>
 
-
 </head>
 
 <body>
@@ -128,8 +127,32 @@ function gotop()
     <div class="words1">${info.content!''}</div>
   </div>
   <div class="news_last">
-    <div class="last2" style="float:right;margin: 0 100ox 20px 0 ;"><#if next_info??><a href="/info/list/content/${next_info.id?c}?mid=${next_info.menuId?c}" title="${next_info.title!''}">下一篇:<span>${next_info.title!''}</span></a></#if></div>
-    <div class="last1" style="float:left;margin: 0 0 20px 100px ;"><#if prev_info??><a href="/info/list/content/${prev_info.id?c}?mid=${prev_info.menuId?c}" title="${prev_info.title!''}">上一篇:<span>${prev_info.title!''}</span></a></#if></div>
+    <div class="last2" style="float:right;margin: 0 10px 20px 0 ;">
+	    <#if next_info??>
+		    <a href="/info/list/content/${next_info.id?c}?mid=${next_info.menuId?c}" title="${next_info.title!''}">
+		    	下一篇:<span>
+		    					<#if next_info.title?length lt 24>
+		    						${next_info.title!''}
+		    					<#else>
+		    						${next_info.title[0..23]}...
+		    					</#if>	
+		    				</span>
+		    </a>
+	    </#if>
+    </div>
+    <div class="last1" style="float:left;margin: 0 0 20px 10px ;">
+	    <#if prev_info??>
+		    <a href="/info/list/content/${prev_info.id?c}?mid=${prev_info.menuId?c}" title="${prev_info.title!''}">
+			    上一篇:<span>
+		    					<#if prev_info.title?length lt 24>
+		    						${prev_info.title!''}
+		    					<#else>
+		    						${prev_info.title[0..23]}...
+		    					</#if>							    	
+						    </span>
+		    </a>
+	    </#if>
+    </div>
   </div>
 </div>
 

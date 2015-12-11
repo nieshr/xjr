@@ -82,14 +82,14 @@ var theForm = document.forms['form1'];
 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="ltable">
   <tbody>
   <tr class="odd_bg">
-    <th width="8%">选择</th>
-    <th align="left" width="8%" colspan=2>用户名</th>
+    <th width="4%">选择</th>
+    <th width="6%">编号</th>
+    <th align="left" width="12%">用户名</th>
     <th  align="center" width="20%">名称</th>
     <th align="left" width="4%">用户组</th>
     <th align="center" width="8%">邮箱</th>
     <th width="8%">手机号</th>
     <th width="8%">最近登录</th>
-    <th width="6%">状态</th>
     <th width="6%">操作</th>
   </tr>
 
@@ -102,14 +102,15 @@ var theForm = document.forms['form1'];
                     </span>
                     <input type="hidden" name="listId" id="listId" value="${user.id}">
                 </td>
-                <td width="64">
+                <td align="center">${user.nickname!''}</td>
+                <#--<td width="64">
                   <a href="/Verwalter/user/edit?id=${user.id}">
                     <img width="64" height="64" src="${user.headImageUri!"/mag/style/user_avatar.png"}">
                   </a>
-                </td>
+                </td>-->
                 <td>
-                  <div class="user-box">
-                    <h4><b>${user.username!""}</b><#if user.inCharge??> (姓名：${user.inCharge!""}) </#if></h4>
+                  <div class="user-box" style="padding-left:0;">
+                    <h4><a href="/Verwalter/user/edit?id=${user.id}"><b>${user.username!""}</b></a><#if user.inCharge??> (姓名：${user.inCharge!""}) </#if></h4>
                     <i>注册时间：${user.registerTime!""}</i>
                     <#--
                     <span>
@@ -138,7 +139,7 @@ var theForm = document.forms['form1'];
                 <td align="center">${user.mobile!""}</td>
                 <td align="center">${user.lastLoginTime!""}</td>
 
-                <td align="center"><#if user.statusId??><#if user.statusId==0>待审核<#elseif user.statusId==1>正常</#if></#if></td>
+                <#--<td align="center"><#if user.statusId??><#if user.statusId==0>待审核<#elseif user.statusId==1>正常</#if></#if></td>-->
                 <td align="center">
                     <a href="/Verwalter/user/edit?id=${user.id}&roleId=${roleId!""}">修改</a> | 
                     <#--<a href="/Verwalter/user/edit?id=${user.id}&roleId=${roleId!""}&action=view">查看</a></td>-->

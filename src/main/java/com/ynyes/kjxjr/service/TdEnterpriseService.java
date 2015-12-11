@@ -270,6 +270,18 @@ public class TdEnterpriseService {
 		return repository.findByAreaAndFormTypeAndTitleContainingOrderByIdDesc(area , formType , keywords, pageRequest);
 	}
 	
+	//新加 2015年12月9日17:03:55 zhangji
+	public Page<TdEnterprise> findByAreaAndSearch(String area , String keywords, int page, int size) {
+		PageRequest pageRequest = new PageRequest(page, size);
+
+		return repository.findByAreaAndTitleContainingOrderByIdDesc(area ,  keywords, pageRequest);
+	}
+	public Page<TdEnterprise> findByAreaAndFormType(String area , Long formType, int page, int size) {
+		PageRequest pageRequest = new PageRequest(page, size);
+
+		return repository.findByAreaAndFormTypeOrderByIdDesc(area ,  formType, pageRequest);
+	}
+	
 	public Page<TdEnterprise> findByFormType(Long formType, int page, int size) {
 		PageRequest pageRequest = new PageRequest(page, size);
 

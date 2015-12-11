@@ -24,9 +24,15 @@
   <!-- Chang URLs to wherever Video.js files will be hosted -->
   <link href="/client/css/video-js.css" rel="stylesheet" type="text/css">
   <!-- video.js must be in the <head> for older IEs to work. -->
-  <script src="/client/js/video.js"></script>
+  <script type="text/javascript" src="/client/js/video.js"></script>
 
   <!-- Unless using the CDN hosted version, update the URL to the Flash SWF -->
+  
+  <#-- 手机网页播放器-->
+  <script type="text/javascript" src="/client/js/CuSunX1.min.js"></script>
+  <script type="text/javascript" src="/client/js/action.js"></script>
+  <script type="text/javascript" src="/client/js/jquery172.js"></script>
+  <#-- 手机网页播放器 end-->
   <script>
     videojs.options.flash.swf = "/client/js/video-js.swf";
   </script>
@@ -133,8 +139,8 @@
                                     <#if article_index < 1>
                                         <p class="current">
 	                                        <a title="${article.title!''}" target="_blank" href="<#if article.linkUrl??&&article.linkUrl?length gt 0>${article.linkUrl!''}<#else>/info/list/content/${article.id?c!''}?mid=${article.menuId!''}</#if>">
-	                                        	<#if article.title?length gt 9>
-	                                        		${article.title[0..8]}...
+	                                        	<#if article.title?length gt 10>
+	                                        		${article.title[0..9]}...
 	                                        	<#else>
 	                                        		${article.title!''}
 	                                        	</#if>
@@ -153,8 +159,8 @@
                                     <#if article_index < 2>
                                         <p class="current">
 	                                        <a title="${article.title!''}" target="_blank"  href="<#if article.linkUrl??&&article.linkUrl?length gt 0>${article.linkUrl!''}<#else>/info/list/content/${article.id?c!''}?mid=${article.menuId!''}</#if>">
-	                                        	<#if article.title?length gt 9>
-	                                        		${article.title[0..8]}...
+	                                        	<#if article.title?length gt 10>
+	                                        		${article.title[0..9]}...
 	                                        	<#else>
 	                                        		${article.title!''}
 	                                        	</#if>
@@ -172,8 +178,8 @@
                                     <#if article_index < 6>
                                         <p class="current">
 	                                        <a title="${article.title!''}"  target="_blank" href="<#if article.linkUrl??&&article.linkUrl?length gt 0>${article.linkUrl!''}<#else>/info/list/content/${article.id?c!''}?mid=${article.menuId!''}</#if>">
-	                                        	<#if article.title?length gt 9>
-	                                        		${article.title[0..8]}...
+	                                        	<#if article.title?length gt 10>
+	                                        		${article.title[0..9]}...
 	                                        	<#else>
 	                                        		${article.title!''}
 	                                        	</#if>
@@ -190,8 +196,8 @@
                                     <#if article_index gt 5 && article_index lt 12>
                                         <p class="current">
 	                                        <a title="${article.title!''}" target="_blank"  href="<#if article.linkUrl??&&article.linkUrl?length gt 0>${article.linkUrl!''}<#else>/info/list/content/${article.id?c!''}?mid=${article.menuId!''}</#if>">
-	                                        	<#if article.title?length gt 9>
-	                                        		${article.title[0..8]}...
+	                                        	<#if article.title?length gt 10>	
+	                                        		${article.title[0..9]}...
 	                                        	<#else>
 	                                        		${article.title!''}
 	                                        	</#if>
@@ -209,8 +215,8 @@
                                     <#if article_index < 5>
                                         <p class="current">
 	                                        <a title="${article.title!''}"  target="_blank" href="<#if article.linkUrl??&&article.linkUrl?length gt 0>${article.linkUrl!''}<#else>/info/list/content/${article.id?c!''}?mid=${article.menuId!''}</#if>">
-	                                        	<#if article.title?length gt 9>
-	                                        		${article.title[0..8]}...
+	                                        	<#if article.title?length gt 10>
+	                                        		${article.title[0..9]}...
 	                                        	<#else>
 	                                        		${article.title!''}
 	                                        	</#if>
@@ -228,8 +234,8 @@
                                     <#if article_index < 3>
                                         <p class="current">
 	                                        <a title="${article.title!''}" target="_blank"  href="<#if article.linkUrl??&&article.linkUrl?length gt 0>${article.linkUrl!''}<#else>/info/list/content/${article.id?c!''}?mid=${article.menuId!''}</#if>">
-	                                        	<#if article.title?length gt 9>
-	                                        		${article.title[0..8]}...
+	                                        	<#if article.title?length gt 10>
+	                                        		${article.title[0..9]}...
 	                                        	<#else>
 	                                        		${article.title!''}
 	                                        	</#if>
@@ -339,27 +345,35 @@
 	<div class="section sect4">
                 <div class="sect1">
                     <div class="div1">
-		                <img src="/client/images/xwdt1.png" alt="新闻动态" onclick="javascript:window.open("/info/index");" style="curser:pointer;"/>
+		                <img src="/client/images/xwdt1.png" title="查看更多" alt="新闻动态" onclick="javascript:window.open('/info/index');" style="cursor:pointer;"/>
 		                <br>
 		            	<img src="/client/images/xwdt2.png" alt="News" style=" border:0;"/>
                     </div>
                     <div class="div2">
-                    <#--
-                        <video style="background:#000;" width="480" height="400" src="<#if video??><#list video.content as item><#if item_index=0>${item.imgUrl!''}</#if></#list></#if>" controls="controls" id="video" >
-                                 您的浏览器不支持该视频播放               
-                        </video>
-                     -->
-					   <video id="example_video_1" class="video-js vjs-default-skin" controls preload="none" width="480" height="400"
-					      poster="/client/l_images/banner_bg1.png"
-					      data-setup="{}">
-					    <source src="<#if video??><#list video.content as item><#if item_index=0>${item.imgUrl!''}</#if></#list></#if>" type='video/mp4' />
-					    <#-->
-					    <source src="http://video-js.zencoder.com/oceans-clip.webm" type='video/webm' />
-					    <source src="http://video-js.zencoder.com/oceans-clip.ogv" type='video/ogg' />
-					    -->
-					    <track kind="captions" src="/client/js/demo.captions.vtt" srclang="en" label="English"></track><!-- Tracks need an ending tag thanks to IE9 -->
-					    <track kind="subtitles" src="/client/js/demo.captions.vtt" srclang="en" label="English"></track><!-- Tracks need an ending tag thanks to IE9 -->
-					  </video>   
+
+                    
+
+					
+					  
+					  <div class="video" id="CuPlayer" style="width:480px;height:400px;float:left;" >
+						<SCRIPT LANGUAGE=JavaScript>
+						
+						var vID        = ""; 
+						var vWidth     = 480;
+						var vHeight    = 400;
+						var vFile      = "/client/js/CuSunV2set.xml";
+						var vPlayer    = "/client/js/player.swf?v=2.5";
+						var vPic       = "images/start.jpg";
+						var vCssurl    = "images/mini.css";
+						
+						//PC,安卓,iOS
+						var vMp4url    = "<#if video??><#list video.content as item><#if item_index=0>${item.imgUrl!''}</#if></#list></#if>";
+						
+						
+						</SCRIPT> 
+						<script class="CuPlayerVideo" data-mce-role="CuPlayerVideo" type="text/javascript" src="/client/js/CuSunX1.min.js"></script>
+						</div>
+					  
 					  
                         <#-- 视频兼容调试-->
                         <ul>
@@ -419,7 +433,6 @@
                 <#include "/client/news_common_footer.ftl" />
                 <!-- 底部end -->
             </div>
-
 
 </body>
 </html>

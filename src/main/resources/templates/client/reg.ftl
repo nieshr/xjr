@@ -12,11 +12,11 @@
 <!--css-->
 <link href="/client/css/index_base.css" rel="stylesheet" type="text/css" />
 <link href="/client/css/index_main.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" href="/client/css/ios6alert.css">
+<link rel="stylesheet" href="/client/css/showBo.css">
 
 <script src="/client/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="/client/js/Validform_v5.3.2_min.js"></script>
- <script src="/client/js/ios6alert.js"></script>
+ <script src="/client/js/showBo.js"></script>
 <script>
 $(document).ready(function(){
 	$("#reg").Validform({
@@ -51,10 +51,7 @@ $(document).ready(function(){
         var re = /^1\d{10}$/;
         
         if (!re.test(mob)) {
-            $("body").ios6alert({
-                content : "请输入正确的手机号"
-            });
-            return;
+			Showbo.Msg.alert("请输入正确的手机号！");
         }
         
         $("#smsCodeBtn").attr("disabled","disabled"); 
@@ -78,22 +75,16 @@ $(document).ready(function(){
             data : {"mobile": mob},  
             success : function(res) {  
                 if(1==res.message||0==res.message){
-                    $("body").ios6alert({
-                        content : "验证码已发送，请耐心等待！"
-                    });
+                    Showbo.Msg.alert("验证码已发送，请耐心等待！");
                 }else{
-                    $("body").ios6alert({
-                        content : "验证码发送失败，请再次尝试！"
-                    });
+                    Showbo.Msg.alert("验证码发送失败，请再次尝试！");
                     $("#smsCodeBtn").removeAttr("disabled");
                 }
             },  
             error : function(XMLHttpRequest, textStatus,  
                     errorThrown) {  
-                $("body").ios6alert({
-                    content : "error！"
-                });
-                $("#smsCodeBtn").removeAttr("disabled");
+		                Showbo.Msg.alert( "error！");
+		                $("#smsCodeBtn").removeAttr("disabled");
             }  
         });
     }); 
@@ -108,9 +99,7 @@ $(document).ready(function(){
  <#if error??>
 function warnmsg()
 {
-    $("body").ios6alert({
-        content : "请填写完整资料！"
-    });
+    Showbo.Msg.alert("请填写完整资料！");
 }
 
 window.onload=warnmsg;

@@ -110,7 +110,7 @@ function gotop()
               <div class="swipe-wrap">
                 <#if activity_page??>
                     <#list activity_page.content as item>
-                        <#if item_index < 3>
+                        <#if item_index < 5>
                             <div><a target="_blank" href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c}?mid=${item.menuId?c}</#if>"><img class="img-responsive" src="${item.imgUrl!''}"/>
                             <span><#if item.title?length lt 36>
                                 ${item.title!''}
@@ -124,6 +124,8 @@ function gotop()
         </div>
         <ul id="position">
           <li class="cur"></li>
+          <li class=""></li>
+          <li class=""></li>
           <li class=""></li>
           <li class=""></li>
         </ul>
@@ -161,6 +163,18 @@ function gotop()
            </#list>
       </#if>      
       -->         
+      
+        <#if activity_page??>
+            <#list activity_page.content as item>
+                <#if item_index gt 4 && item_index lt 8>
+                     <div class="div1">
+	                     <a href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c}?mid=${item.menuId?c}</#if>">
+	                     	<img src="${item.imgUrl!''}" title="${item.title!''}"alt="新闻图片" width="122" height="92"/>
+	                     </a>
+                     </div>
+                </#if>  
+            </#list>            
+        </#if>
       </div>
 
     </div>

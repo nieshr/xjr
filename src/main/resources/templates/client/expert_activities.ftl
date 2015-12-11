@@ -81,7 +81,7 @@
 					    				        <#list activityType_list as type>
 					    				        	<#if (type_index == 0||type_index ==2)&&type.title == item.activityType>	                                    	 
 				                                    	&nbsp;|&nbsp;
-				                                    	<a target="_blank"  title="<#if item.gradetimeId??&&item.gradetimeId==0>活动未开始<#elseif item.gradetimeId??&&item.gradetimeId==1>开始评分<#elseif item.gradetimeId??&&item.gradetimeId==2>活动已结束</#if>" href="/expert/grade?activityId=${item.id?c}">评分</a>    
+				                                    	<a target="_blank"  <#if item.gradetimeId??&&item.gradetimeId==0>title="活动未开始" style="color:#999999;"<#elseif item.gradetimeId??&&item.gradetimeId==1>title="开始评分"<#elseif item.gradetimeId??&&item.gradetimeId==2>title="活动已结束" style="color:purple;"</#if> href="/expert/grade?activityId=${item.id?c}">评分</a>    
 				                                        &nbsp;|&nbsp;
 				                                        <#if item.statusId??&&(item.statusId==1||item.statusId==2)>
 				                                        	<a href="/expert/export/grade?activityId=${item.id?c!''}&expertId=${expert.id?c!''}&isModule=1" title="下载并打印模板">评分表模板</a>

@@ -78,22 +78,27 @@ function sendSms(id,activityId,roleId)
 
 function smsSendAll(activityId,roleId)
 {
-         $.ajax({
-             type: "GET",
-             url: "/activity/smsSendAll",
-             data: {"activityId" : activityId,"roleId":roleId},
-             dataType: "json",
-             success: function(data){
-                         if (data.code == 0)
-                         {
-                             Showbo.Msg.alert("已发送");
-                         }
-                         else 
-                         {
-                              Showbo.Msg.alert(data.msg);
-                         }
-                      }
-         });
+	Showbo.Msg.confirm("群发短信，确认吗？",function(p){
+		if (p == "yes")
+		{
+	         $.ajax({
+	             type: "GET",
+	             url: "/activity/smsSendAll",
+	             data: {"activityId" : activityId,"roleId":roleId},
+	             dataType: "json",
+	             success: function(data){
+	                         if (data.code == 0)
+	                         {
+	                             Showbo.Msg.alert("已发送");
+	                         }
+	                         else 
+	                         {
+	                              Showbo.Msg.alert(data.msg);
+	                         }
+	                      }
+	         });
+         }
+     });    
 }
 
 function passCheck(activityId) {
@@ -164,6 +169,7 @@ function resetCheck(activityId) {
                          if (data.code == 0)
                          {
                               Showbo.Msg.alert("操作成功！");
+                              setTimeout(function(){ location.reload();} , 2000);
                          }
                          else 
                          {
@@ -360,7 +366,7 @@ function sortDown(id , activityId)
                                     </#if>
                                     <#if activity??&&activity.statusId??&&activity.statusId==1&&mark??&&mark="activity">
                                         <a>丨</a> 
-                                        <a href="javascript:smsSendAll(${item.activityId?c!''},3);">短信通知</a>
+                                        <a href="javascript:sendSms(${item.expertId?c!''},${item.activityId?c!''},1);">短信通知</a>
                                     </#if>
                                 </li>
                             </#list>
@@ -370,7 +376,7 @@ function sortDown(id , activityId)
                            <input id="selectExpert" style="margin-top:10px;cursor:pointer;width:100px; height:30px; line-height: 30px; border: none;background:white url(images/active_add_project.png) no-repeat 10px; padding-left: 13px;" type="button"  value="添加评委" />
                         </#if>
                         <#if activity??&&activity.statusId??&&activity.statusId==1&&mark??&&mark="activity">
-                        <input  style="margin-top:10px;width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#1484E4;color:#fff; " type="button" onclick="javascript:smsExpert(${activity.id?c!''});"  value="群发短信" />
+                        <input  style="margin-top:10px;width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#1484E4;color:#fff; " type="button" onclick="javascript:smsSendAll(${activity.id?c},3);"  value="群发短信" />
                     	</#if>
                     </ul>
                 </div>

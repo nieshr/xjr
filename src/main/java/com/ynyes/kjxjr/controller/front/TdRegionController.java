@@ -198,8 +198,8 @@ public class TdRegionController {
             		}
             		else
             		{
-            			
-            			enterprisePage = tdEnterpriseService.findBySearchOrderByIdDesc(keywords, page, ClientConstant.pageSize);
+//            			enterprisePage = tdEnterpriseService.findBySearchOrderByIdDesc(keywords, page, ClientConstant.pageSize);
+            			enterprisePage = tdEnterpriseService.findByAreaAndSearch(area, keywords, page, ClientConstant.pageSize);
             		}
             	}
         	}
@@ -210,12 +210,13 @@ public class TdRegionController {
             		if(null != formType)
             		{
             			//23
-            			enterprisePage = tdEnterpriseService.findByFormTypeAndStatusId(formType  ,statusId, page, ClientConstant.pageSize);
+//            			enterprisePage = tdEnterpriseService.findByFormTypeAndStatusId(formType  ,statusId, page, ClientConstant.pageSize);
+            			enterprisePage = tdEnterpriseService.findByAreaAndFormTypeAndStatusId(area, formType, statusId, page, ClientConstant.pageSize);
             		}
             		else
             		{
             			//2
-            			enterprisePage = tdEnterpriseService.findByStatusId( statusId, page, ClientConstant.pageSize);
+            			enterprisePage = tdEnterpriseService.findByAreaAndStatusId(area, statusId, page, ClientConstant.pageSize);
             		}
             	}
         		else
@@ -223,7 +224,7 @@ public class TdRegionController {
         			if (null != formType )
         			{
         				//3
-        				enterprisePage = tdEnterpriseService.findByFormType(formType,  page, ClientConstant.pageSize);
+        				enterprisePage = tdEnterpriseService.findByAreaAndFormType(area ,formType,  page, ClientConstant.pageSize);
         			}
         			else
         			{

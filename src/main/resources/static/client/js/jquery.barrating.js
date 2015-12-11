@@ -61,16 +61,23 @@
             var removeDataOnElement = function() {
                 self.$elem.removeData('barrating');
             };
+            
+            
 
             // build widget and return jQuery element
             var buildWidget = function() {
                 var $w = $('<div />', { 'class': 'br-widget' });
 
+                // append .br-current-rating div to the widget
+                if (self.options.showSelectedRating) {
+                    $w.append($('<div />', { 'text': '', 'class': 'br-current-rating' }));
+                }
                 // create A elements that will replace OPTIONs
                 self.$elem.find('option').each(function() {
                     var val, text, html, $a, $span;
 
                     val = $(this).val();
+                    
 
                     // create ratings - but only if val is defined
                     if (val) {
@@ -86,10 +93,7 @@
 
                 });
 
-                // append .br-current-rating div to the widget
-                if (self.options.showSelectedRating) {
-                    $w.append($('<div />', { 'text': '', 'class': 'br-current-rating' }));
-                }
+
 
                 // additional classes for the widget
                 if (self.options.reverse) {

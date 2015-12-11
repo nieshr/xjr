@@ -14,6 +14,20 @@
 .area_batch:hover{background:#FF0F00;}
 
 
+.score2{width:100%;border-collapse:collapse;}
+.score2 caption{width:100%;height:60px; line-height:60px;}
+.score2 tr{border:#dddddd 1px solid;}
+.score2 th{border:#dddddd 1px solid; text-align: center; width:280px;}
+.score2 td{ border:#dddddd 1px solid; text-align: center; width:60%;}
+.score2,.tr01{height:40px;}
+.score2,.tr02{height:24px;}
+
+.score2 select{width:100%;height:100%; border: none;}
+.score2,.tr03{height:40px;}
+.score2,.tr03 th{font-weight: normal; width: 60%; margin: auto;} 
+.score2 input{width:100%; height:100%; border:none;}
+
+
 /*------------------------------------------grade-----------------------------------*/
 /******* EXAMPLE A *******/
 .br-wrapper .br-widget {
@@ -26,7 +40,7 @@
   height: 12px;
   float: left;
   background-color: #fbedd9;
-  margin: 1px;
+  margin-right: 1px;
   text-align: center;
 }
 .br-wrapper .br-widget a.br-active,
@@ -37,7 +51,8 @@
   font-size: 16px;
  /* line-height: 2;*/
   float: left;
-  padding: 4px 0 0 10px;
+  padding: 4px 10px 0 0;
+  width: 20px;
   color: #edb867;
   font-weight: 600;
 }

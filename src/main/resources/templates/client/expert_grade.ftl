@@ -1,12 +1,14 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<#--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 	<title>评分</title>
 	<link rel="shortcut icon" href="/client/images/icon.ico" />
 	<link href="/client/css/formGrade.css" rel="stylesheet" type="text/css" />
 	<link type="text/css" rel="stylesheet" href="/client/css/showBo.css" />
-	<script type="text/javascript" src="/client/js/showBo.js"></script>
+	<script type="text/javascript" src="/client/js/showBo_grade.js"></script>
 	
 	<script src="/client/js/jquery-1.9.1.min.js"></script>
 
@@ -14,9 +16,17 @@
 	<script type="text/javascript"   src="/client/js/jquery.barrating.js"></script>
 	<script type="text/javascript"   src="/client/js/examples.js"></script>	
     
-
+	<style>
+	#dvMsgBox .top{height:50px;}
+	#dvMsgBox .top .right .title{font-size:20px;}
+	#dvMsgBox .body .right .ct {line-height:32px;font-size:18px;}
+	input.btn{height: 42px;font-size: 18px;  width: 68px;}
+	input.btnfocus{height:42px; font-size:18px;	  width: 68px;}
+	#dvMsgBox .height{height:16px;}
+	</style>
 
 	<script type="text/javascript">
+
 	
         window.onload = function(){
         
@@ -24,7 +34,7 @@
 		<#if grade_list??>
 	     	<#list grade_list as item>
 	     		<#if item.gradeAble?? && item.gradeAble>
-	     			"当前评分项目：${item.enterpriseTitle!''}"
+	     			"${item.enterpriseTitle!''}"
 	     		</#if>	
 	     	</#list>
 	    </#if> 	
@@ -124,9 +134,10 @@
             document.getElementById(code+"_totalPoint").innerHTML = parseInt(totalExpressionValue)+parseInt(totalFeasibilityValue)+parseInt(totalMarketValue)+parseInt(totalTechnologyValue)+parseInt(totalGroupValue);
         }
         
-        function submitPoint(code,number){
-
-			Showbo.Msg.confirm("请确认评分结果，确认后不可更改",function(p){
+        function submitPoint(code,number,title){
+			 var totalPoint = document.getElementById(code+"_totalPoint").innerHTML;
+	
+			Showbo.Msg.confirm("<span style='font-size:24px;text-align:left;'>"+title+"<br><b style='color:red;'>"+totalPoint+"</b>分"+"</span>"+"<br>请确认评分结果，确认后不可更改",function(p){
 				if (p == "yes")
 				{
 
@@ -171,14 +182,11 @@
 		                "activityId":"${activityId?c}"
 		            },function(res){
 		                if(0 == res.status){
+		                
 		                	if(typeof res.msg != "undefined")
 		                	{
-		                        $("body").ios6alert({
-		                            content : res.msg,
-		                            onClose:function(){
-		                            	location.reload();
-		                            }
-		                        });
+			                      Showbo.Msg.alert(res.msg);
+			                      setTimeout("location.href='/expert/enterprise/list';",2000);
 		                	}
 		                	else{
 		                		location.href='/expert/grade?activityId='+${activityId?c};
@@ -225,12 +233,12 @@
 	</style>
 </head>
 <body>
-	<div style="width:38%;float:left;display:block;">
-		<ul style="margin:0 auto; padding:0; display: inline-block; text-align:center; list-style-type:none; width:100%; height: 30px;">
+	<div style="width:35%;float:left;display:block;">
+		<ul style="border-left:1px #dddddd solid;border-bottom:1px #dddddd solid;margin:0 auto; padding:0; display: inline-block; text-align:center; list-style-type:none; width:100%; height: 31px; font-size:14px;line-height:31px;">
 			<#if grade_list??>
 				<#list grade_list as item>
-					<li style=" display: block; margin: 8px 0; padding:0 10px;  text-align:center;background-color: <#if item.gradeAble??&&item.gradeAble>#e67817<#else>#999</#if>; ">
-					<a  href="/expert/grade?activityId=${activityId?c!''}&enterpriseId=${item.enterpriseId?c!''}" title="评分：${item.enterpriseTitle!''}" style="background-color: <#if item.gradeAble??&&item.gradeAble>#e67817<#else>#999</#if>; text-decoration:none; color: #fff; display:block; text-align:left; height:24px;">
+					<li style="border-top:1px #dddddd solid;border-right:1px #dddddd solid; display: block; padding:0 10px;  text-align:center;background-color: <#if item.gradeAble??&&item.gradeAble>#5CADE7<#elseif item.isGrade??&&item.isGrade>#C7C7C7<#else>#EAF4FF</#if>;color: <#if item.gradeAble??&&item.gradeAble>#ffffff<#else>#333333</#if>; ">
+					<a  href="/expert/grade?activityId=${activityId?c!''}&enterpriseId=${item.enterpriseId?c!''}" title="评分：${item.enterpriseTitle!''}" style="background-color: <#if item.gradeAble??&&item.gradeAble>#5CADE7<#elseif item.isGrade??&&item.isGrade>#C7C7C7<#else>#EAF4FF</#if>; color: <#if item.gradeAble??&&item.gradeAble>#ffffff<#else>#333333</#if>;text-decoration:none; display:block; text-align:left;">
 					${item_index+1}.${item.enterpriseTitle!''}
 					</a>
 					</li>
@@ -238,54 +246,26 @@
 		    </#if>				
 		</ul>		
 	</div>
+	<img src="/client/images/middle.png" style="float:left;margin:25% 1% 0 0;width:3%;" />
 	<div>
-		<table class="score" align=right style="width:60%;">
-		<#--
-			<caption>创投每周行路演评分表</caption>
-			<caption><#if activity??>${activity.title!''}</#if>（评委：${expert.name!''}）</caption>
-		-->	
+		<table class="score2" align=right style="width:60%; ">
+<#--
 			<#if msg??&&msg!="">
 			<caption>${msg!''}</caption>
 			</#if>
-			<#--
-			<tr class="tr01">
-				<th style="padding:0;margin:0;">
-					评分项
-				</th>
-				<#if grade_list??>
-				     <#list grade_list as item>
-				     	<#if item.gradeAble??&&item.gradeAble||item_index==0&&(!item.gradeAble??||item.gradeAble??&&item.gradeAble)>
-				          <td><a style="color:#333;text-decoration: none;" href="/activity/enterprise/check/${item.enterpriseId?c!''}" target="_blank" title="查看详细资料">（${item_index+1}）${item.number!''}<br/>${item.enterpriseTitle!''}</a></td>
-				     	</#if>
-				     </#list>
-				</#if>
-			</tr>
-		
-			<tr class="th01">
-				<th>
-					评分项
-				</th>
-				<#if grade_list??>
-				     <#list grade_list as item>
-				     	<#if item.gradeAble??&&item.gradeAble||item_index==0&&(!item.gradeAble??||item.gradeAble??&&item.gradeAble)>
-				          <td><a style="color:#333;text-decoration: none;" href="/activity/enterprise/check/${item.enterpriseId?c!''}" target="_blank" title="查看详细资料">（${item_index+1}）${item.number!''}<br/>${item.enterpriseTitle!''}</a></td>
-				     	</#if>
-				     </#list>
-				</#if>
-			</tr>
-			-->			
+	-->					
 			<tr class="tr02 "> 
-				<td colspan="2"  style="height: 50px; font-size:16px; ">
+				<td colspan="2"  style="font-size:16px; background:#5CADE7;">
 					<#if grade_list??>
 				     	<#list grade_list as item>
 				     		<#if item.gradeAble?? && item.gradeAble>
-				     			<a target="_blank" title="查看当前企业详情" style="text-decoration:none;font-size:24px; color:#333;" href="/activity/enterprise/check/${item.enterpriseId?c!''}">${item.enterpriseTitle!''}</a>
+				     			<a target="_blank" title="查看当前企业详情" style="text-decoration:none;font-size:24px; color:#ffffff;" href="/activity/enterprise/check/${item.enterpriseId?c!''}">${item.enterpriseTitle!''}</a>
 				     		</#if>	
 				     	</#list>
 				    </#if> 	
 				</td>
 			</tr>
-			<tr class="tr02 " style="background:#DFEBF7;">
+			<tr class="tr02 " style="background:#EAF4FF;">
 				<th>核心竞争力(小计)</th>
 				<#if grade_list??>
 				     <#list grade_list as item>
@@ -377,7 +357,7 @@
 				</#if>
 			</tr>				
 	
-			<tr class="tr02 " style="background:#DFEBF7;">
+			<tr class="tr02 " style="background:#EAF4FF;">
 				<th>团队能力(小计)</th>
 				<#if grade_list??>
 				     <#list grade_list as item>
@@ -424,7 +404,7 @@
 	            </#if>
 	        </tr>		
 				
-			<tr class="tr02 " style="background:#DFEBF7;">
+			<tr class="tr02 " style="background:#EAF4FF;">
 				<th>市场潜力(小计)</th>
 				<#if grade_list??>
 				     <#list grade_list as item>
@@ -471,7 +451,7 @@
 				</#if>
 			</tr>
 	
-			<tr class="tr02 " style="background:#DFEBF7;">
+			<tr class="tr02 " style="background:#EAF4FF;">
 				<th>投资价值(小计)</th>
 				<#if grade_list??>
 				     <#list grade_list as item>
@@ -518,7 +498,7 @@
 				</#if>
 			</tr>
 			
-			<tr class="tr02 " style="background:#DFEBF7;">
+			<tr class="tr02 " style="background:#EAF4FF;">
 				<th>现场表现力(小计)</th>
 				<#if grade_list??>
 				     <#list grade_list as item>
@@ -549,34 +529,31 @@
 				</#if>
 			</tr>		
 			
-			<tr class="tr02 "style="background:#dfebf7;">
+			<tr class="tr02 "style="background:#EAF4FF;">
 				<th>合计</th>
 					<#if grade_list??>
 		    			<#list grade_list as item>
 		    			<#if item.gradeAble??&&item.gradeAble||item_index==0&&( !item.gradeAble?? || item.gradeAble?? && item.gradeAble )>
-		    			     <td  rowspan="2"><input  class="setGrade${item_index}"  <#if item.isGrade??&&item.isGrade || type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;" value="已评分" <#else>style="cursor:pointer;border: none; background-color: #e67817;  color: #fff;" value="确定"</#if> type="button" onClick="submitPoint('${item_index}','${item.number!''}');"  /></td>
+		    			     <td  rowspan="2"><input  class="setGrade${item_index}"  <#if item.isGrade??&&item.isGrade || type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED; -webkit-appearance:none;" value="确定" <#else>style="cursor:pointer;border: none; background-color: #e67817; height:80%; color: #fff;-webkit-appearance:none;" value="确定"</#if> type="button" onClick="submitPoint('${item_index}','${item.number!''}','${item.enterpriseTitle!''}');"  /></td>
 		    			</#if>
 		    			</#list>
 				    </#if>
 			</tr>
-			<#if !type??>
+			<#--<#if !type??>-->
 				<tr class="tr02 mOn" style="height:48px;">
 					<#if grade_list??>
 		    			<#list grade_list as item>
 		    			<#if item.gradeAble??&&item.gradeAble||item_index==0&&(!item.gradeAble??||item.gradeAble??&&item.gradeAble)>
 		    			     <#if item.totalPoint??>
-		    			         <th rolspan="2" ><b style="font-size:24px;" id="${item_index}_totalPoint">${item.totalPoint?string("0")}</b></th>
+		    			         <th rolspan="2" ><b style="font-size: 36px;color: red;" id="${item_index}_totalPoint">${item.totalPoint?string("0")}</b></th>
 		    			     <#else>
-		    			         <th rolspan="2" ><b style="font-size:24px;" id="${item_index}_totalPoint">0</b></th>
+		    			         <th rolspan="2" ><b style="font-size: 36px;color: red;" id="${item_index}_totalPoint">0</b></th>
 		    			     </#if>
 		    			 </#if>    
 		    			</#list>
 					</#if>
 				</tr>
-				<tr  class="tr02 mOn">
-	
-		    	</tr>
-			</#if>	
+			<#--</#if>	-->
 				<script type="text/javascript"   src="/client/js/rollValue.js"></script>
 	<script type="text/javascript">
 		$("select").rollValue({minValue:0,maxValue:10,step:1});

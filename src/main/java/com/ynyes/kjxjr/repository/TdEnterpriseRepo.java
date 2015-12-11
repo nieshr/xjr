@@ -50,6 +50,10 @@ public interface TdEnterpriseRepo extends
     Page<TdEnterprise> findByStatusIdAndFormTypeAndTitleContainingOrderByIdDesc(Long statusId , Long formType,String keywords , Pageable page);
     Page<TdEnterprise> findByAreaAndFormTypeAndTitleContainingOrderByIdDesc(String area , Long formType,String keywords , Pageable page);
     Page<TdEnterprise> findByFormTypeOrderByIdDesc(Long formType, Pageable page);
+    
+    //新加 2015年12月9日17:08:33 zhangji
+    Page<TdEnterprise> findByAreaAndFormTypeOrderByIdDesc(String area ,Long formType, Pageable page);
+    Page<TdEnterprise> findByAreaAndTitleContainingOrderByIdDesc(String area , String keywords , Pageable page);
     /**
 	 * @author lc
 	 * @注释：

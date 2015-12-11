@@ -386,8 +386,6 @@ public class TdManagerUserController {
 //        }
         
         TdUser user = tdUserService.findByUsername(tdEnterprise.getUsername());
-    
-        
         
         Long id = tdEnterprise.getId();
         String number = String.format("%04d", id);
@@ -396,6 +394,11 @@ public class TdManagerUserController {
         tdEnterprise.setCreateTime(new Date());
         tdEnterprise.setPassword(user.getPassword());
        	tdEnterpriseService.save(tdEnterprise);
+       	
+       	//同步数据到user ，以便列表中显示
+       	user.setRealName(tdEnterprise.getTitle());
+       	user.setNickname(tdEnterprise.getNumber());
+       	tdUserService.save(user);
        
         res.put("code", 0);
         return res;
