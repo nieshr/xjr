@@ -140,8 +140,9 @@ function addEnterprise1(id,activityId,statusId)
                 <table class="new_list">
                     <tr class="list_title">
                         <th width="30%">备选企业列表</th>
+                        <th width="8%">编号</th>
                         <th width="10%">地区</th>
-                        <th width="20%">行业归属</th>
+                        <th width="12%">行业归属</th>
                         <#if statusId??&&statusId == 2>
                         	<th width="20%">推荐理由</th>
                         </#if>
@@ -156,7 +157,8 @@ function addEnterprise1(id,activityId,statusId)
                                 <input type="hidden" name="listId" id="listId" value="${item.id}">
                             </td>
                             -->
-                            <td><a href="/region/enterprise/check/${item.enterpriseId?c!''}" target=_blank>${item.enterpriseTitle!''}</a></td>
+                            <td style="text-align:left;"><a style="margin-left:5px;" href="/region/enterprise/check/${item.enterpriseId?c!''}" target=_blank>${item.enterpriseTitle!''}</a></td>
+                            <td style="color:#666666;">${item.number!''}</td>
                             <td style="color:#0ab2cb;">${item.area!''}</td>
                             <td style="color:#e67817;">${item.type!''}</td>
                             <#if statusId??&&statusId == 2>

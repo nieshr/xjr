@@ -30,6 +30,12 @@ function __doPostBack(eventTarget, eventArgument) {
         theForm.submit();
     }
 }
+
+   document.onkeydown = function(event){
+	    if((event.keyCode || event.which) == 13){
+	        location.href="javascript:__doPostBack('btnSearch','')";
+	    }
+   }
 </script>
 <!--导航栏-->
 <div class="location">
@@ -47,16 +53,16 @@ function __doPostBack(eventTarget, eventArgument) {
       <ul class="icon-list">
         <li><a class="add" href="/Verwalter/order/setting/diysite/edit"><i></i><span>新增</span></a></li>
         <li><a class="all" href="javascript:;" onclick="checkAll(this);"><i></i><span>全选</span></a></li>
-        <#--<li><a id="btnSave" class="save" href="javascript:__doPostBack('btnSave','')"><i></i><span>保存</span></a></li>-->
+        <li><a id="btnSave" class="save" href="javascript:__doPostBack('btnSave','')"><i></i><span>保存</span></a></li>
         <li><a onclick="return ExePostBack('btnDelete');" id="btnDelete" class="del" href="javascript:__doPostBack('btnDelete','')"><i></i><span>删除</span></a></li>
       </ul>
     </div>
-    <#--
+    
     <div class="r-list">
       <input name="keywords" type="text" class="keyword" value="${keywords!''}">
       <a id="lbtnSearch" class="btn-search" href="javascript:__doPostBack('btnSearch','')">查询</a>
     </div>
-    -->
+    
   </div>
 </div>
 <!--/工具栏-->
@@ -95,7 +101,7 @@ function __doPostBack(eventTarget, eventArgument) {
                 <td>${item.mobile!''}</td>
                 <#--><td>${item.city!""}</td>
                 <td>${item.address!""}</td>-->
-                <td><input name="listSortId" type="text" value="${item.sortId!""}" disabled="" class="sort" onkeydown="return checkNumber(event);"></td>
+                <td><input name="listSortId" type="text" value="${item.sortId!""}"  class="sort" onkeydown="return checkNumber(event);"></td>
 
                 <#--<td align="center"><#if item.statusId?? && item.statusId == 1>是<#else>否</#if></td>-->
                 <td align="center">

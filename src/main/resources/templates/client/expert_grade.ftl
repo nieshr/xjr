@@ -14,7 +14,6 @@
 
     <script type="text/javascript"   src="/client/js/jquery-1.11.2.min.js"></script>
 	<script type="text/javascript"   src="/client/js/jquery.barrating.js"></script>
-	<script type="text/javascript"   src="/client/js/examples.js"></script>	
     
 	<style>
 	#dvMsgBox .top{height:50px;}
@@ -49,7 +48,7 @@
         		cxt.lineTo(0,75);
         		cxt.stroke();
         **/		
-        		 $('select').barrating();
+        		
         	}
      
         function changeExpression(code){
@@ -137,7 +136,7 @@
         function submitPoint(code,number,title){
 			 var totalPoint = document.getElementById(code+"_totalPoint").innerHTML;
 	
-			Showbo.Msg.confirm("<span style='font-size:24px;text-align:left;'>"+title+"<br><b style='color:red;'>"+totalPoint+"</b>分"+"</span>"+"<br>请确认评分结果，确认后不可更改",function(p){
+			Showbo.Msg.confirm("<span style='font-size:24px;text-align:left;'>"+title+"<br><b style='color:red;'>"+totalPoint+"</b>分"+"</span>"+"<br>请确认评分结果",function(p){
 				if (p == "yes")
 				{
 
@@ -182,22 +181,47 @@
 		                "activityId":"${activityId?c}"
 		            },function(res){
 		                if(0 == res.status){
-		                
 		                	if(typeof res.msg != "undefined")
 		                	{
-			                      Showbo.Msg.alert(res.msg);
-			                      setTimeout("location.href='/expert/enterprise/list';",2000);
+								Showbo.Msg.confirm(res.msg,function(p){
+									if (p == "yes")
+									{
+			                      		gradeCheck(${activityId?c});
+			                     	}
+			                     });	
 		                	}
-		                	else{
+			           		else{
 		                		location.href='/expert/grade?activityId='+${activityId?c};
 		                	}
-		                  
+		                }
+		               else{
+			                	if(typeof res.msg != "undefined")
+			                	{
+			                		Showbo.Msg.alert(res.msg);
+			                		setTimeout(function(){ location.href='/login';} , 2000);
+			                	}
 		                }
 		            });
 					}
 				});
         }
-    
+    function gradeCheck(activityId)
+    {
+    	
+    	$.post("/expert/grade/check",
+    			{"activityId":activityId},
+    			function(res){
+    				if(0 == res.status)
+    				{
+    						Showbo.Msg.alert(res.msg);
+			                setTimeout(function(){ location.href='/expert/enterprise/list';} , 2000);
+    				}
+    				else{
+    						Showbo.Msg.alert(res.msg);
+			                setTimeout(function(){ location.href='/login';} , 2000);
+    				}
+    			});
+    }
 	</script>
 	<script>
 	$(document).ready(function(){
@@ -237,8 +261,8 @@
 		<ul style="border-left:1px #dddddd solid;border-bottom:1px #dddddd solid;margin:0 auto; padding:0; display: inline-block; text-align:center; list-style-type:none; width:100%; height: 31px; font-size:14px;line-height:31px;">
 			<#if grade_list??>
 				<#list grade_list as item>
-					<li style="border-top:1px #dddddd solid;border-right:1px #dddddd solid; display: block; padding:0 10px;  text-align:center;background-color: <#if item.gradeAble??&&item.gradeAble>#5CADE7<#elseif item.isGrade??&&item.isGrade>#C7C7C7<#else>#EAF4FF</#if>;color: <#if item.gradeAble??&&item.gradeAble>#ffffff<#else>#333333</#if>; ">
-					<a  href="/expert/grade?activityId=${activityId?c!''}&enterpriseId=${item.enterpriseId?c!''}" title="评分：${item.enterpriseTitle!''}" style="background-color: <#if item.gradeAble??&&item.gradeAble>#5CADE7<#elseif item.isGrade??&&item.isGrade>#C7C7C7<#else>#EAF4FF</#if>; color: <#if item.gradeAble??&&item.gradeAble>#ffffff<#else>#333333</#if>;text-decoration:none; display:block; text-align:left;">
+					<li style="border-top:1px #dddddd solid;border-right:1px #dddddd solid; display: block; padding:0 10px;  text-align:center;background-color: <#if item.gradeAble??&&item.gradeAble>#5CADE7<#elseif item.totalPoint??>#C7C7C7<#else>#EAF4FF</#if>;color: <#if item.gradeAble??&&item.gradeAble>#ffffff<#else>#333333</#if>; ">
+					<a  href="/expert/grade?activityId=${activityId?c!''}&enterpriseId=${item.enterpriseId?c!''}" title="评分：${item.enterpriseTitle!''}" style="background-color: <#if item.gradeAble??&&item.gradeAble>#5CADE7<#elseif item.totalPoint??>#C7C7C7<#else>#EAF4FF</#if>; color: <#if item.gradeAble??&&item.gradeAble>#ffffff<#else>#333333</#if>;text-decoration:none; display:block; text-align:left;">
 					${item_index+1}.${item.enterpriseTitle!''}
 					</a>
 					</li>
@@ -286,9 +310,9 @@
 				    <#if item.gradeAble??&&item.gradeAble||item_index==0&&(!item.gradeAble??||item.gradeAble??&&item.gradeAble)>
 	        			<td>
 	        			
-	        				<select class="setGrade${item_index}" onChange="changeTechnology('${item_index}');" id="${item_index}_oneTechnology" <#if item.isGrade??&&item.isGrade|| type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if>>
+	        				<select class="testClassMDJ setGrade${item_index}" onChange="changeTechnology('${item_index}');" id="${item_index}_oneTechnology" <#if item.isGrade??&&item.isGrade|| type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if>>
 	        				    <#list 0..10 as n>
-	        					   <option value="${n}" <#if item.oneTechnology??&&n==item.oneTechnology>selected=""</#if>>${n}</option>
+	        					   <option value="${n}" <#if item.oneTechnology??&&n==item.oneTechnology>selected="selected"</#if>>${n}</option>
 	        					</#list>
 	        				</select>
 	        		
@@ -332,7 +356,7 @@
 	        			<td>
 	        				<select class="setGrade${item_index}" onChange="changeTechnology('${item_index}');" id="${item_index}_twoTechnology" <#if item.isGrade??&&item.isGrade|| type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if>>
 	        				    <#list 0..10 as n>
-	        					   <option value="${n}" <#if item.twoTechnology??&&n==item.twoTechnology>selected=""</#if>>${n}</option>
+	        					   <option value="${n}" <#if item.twoTechnology??&&n==item.twoTechnology>selected="selected"</#if>>${n}</option>
 	        					</#list>
 	        				</select>
 	        			</td>
@@ -348,7 +372,7 @@
 	        			<td>
 	        				<select class="setGrade${item_index}"  onChange="changeTechnology('${item_index}');" id="${item_index}_threeTechnology" <#if item.isGrade??&&item.isGrade|| type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if>>
 	        				    <#list 0..10 as n>
-	        					   <option value="${n}" <#if item.threeTechnology??&&n==item.threeTechnology>selected=""</#if>>${n}</option>
+	        					   <option value="${n}" <#if item.threeTechnology??&&n==item.threeTechnology>selected="selected"</#if>>${n}</option>
 	        					</#list>
 	        				</select>
 	        			</td>
@@ -379,7 +403,7 @@
 	    			<td>
 	    				<select class="setGrade${item_index}"  onChange="changeGroup('${item_index}');" id="${item_index}_oneGroup" <#if item.isGrade??&&item.isGrade|| type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if>>
 	    				    <#list 0..10 as n>
-	    					   <option value="${n}" <#if item.oneGroup??&&n==item.oneGroup>selected=""</#if>>${n}</option>
+	    					   <option value="${n}" <#if item.oneGroup??&&n==item.oneGroup>selected="selected"</#if>>${n}</option>
 	    					</#list>
 	    				</select>
 	    			</td>
@@ -395,7 +419,7 @@
 	                <td>
 	                    <select class="setGrade${item_index}"  onChange="changeGroup('${item_index}');" id="${item_index}_twoGroup" <#if item.isGrade??&&item.isGrade|| type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if>>
 	                        <#list 0..10 as n>
-	                           <option value="${n}" <#if item.twoGroup??&& n==item.twoGroup>selected=""</#if>>${n}</option>
+	                           <option value="${n}" <#if item.twoGroup??&& n==item.twoGroup>selected="selected"</#if>>${n}</option>
 	                        </#list>
 	                    </select>
 	                </td>
@@ -426,7 +450,7 @@
 	        			<td>
 	        				<select  class="setGrade${item_index}" onChange="changeFeasibility('${item_index}');" id="${item_index}_oneFeasibility" <#if item.isGrade??&&item.isGrade|| type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if>>
 	        					<#list 0..10 as n>
-	        					   <option value="${n}" <#if item.oneFeasibility??&&n==item.oneFeasibility>selected=""</#if>>${n}</option>
+	        					   <option value="${n}" <#if item.oneFeasibility??&&n==item.oneFeasibility>selected="selected"</#if>>${n}</option>
 	        					</#list>
 	        				</select>
 	        			</td>
@@ -442,7 +466,7 @@
 	        			<td>
 	        				<select class="setGrade${item_index}"  onChange="changeFeasibility('${item_index}');" id="${item_index}_twoFeasibility" <#if item.isGrade??&&item.isGrade|| type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if>>
 	        				    <#list 0..10 as n>
-	        					   <option value="${n}" <#if item.twoFeasibility??&&n==item.twoFeasibility>selected=""</#if>>${n}</option>
+	        					   <option value="${n}" <#if item.twoFeasibility??&&n==item.twoFeasibility>selected="selected"</#if>>${n}</option>
 	        					</#list>
 	        				</select>
 	        			</td>
@@ -473,7 +497,7 @@
 	        			<td>
 	        				<select class="setGrade${item_index}"  onChange="changeMarketValue('${item_index}');" id="${item_index}_oneMarketValue" <#if item.isGrade??&&item.isGrade|| type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if>>
 	        				    <#list 0..10 as n>
-	        					   <option value="${n}" <#if item.oneMarketValue??&&n==item.oneMarketValue>selected=""</#if>>${n}</option>
+	        					   <option value="${n}" <#if item.oneMarketValue??&&n==item.oneMarketValue>selected="selected"</#if>>${n}</option>
 	        					</#list>
 	        				</select>
 	        			</td>
@@ -489,7 +513,7 @@
 	        			<td>
 	        				<select  class="setGrade${item_index}" onChange="changeMarketValue('${item_index}');" id="${item_index}_twoMarketValue" <#if item.isGrade??&&item.isGrade|| type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if>>
 	        				    <#list 0..10 as n>
-	        					   <option value="${n}" <#if item.twoMarketValue??&&n==item.twoMarketValue>selected=""</#if>>${n}</option>
+	        					   <option value="${n}" <#if item.twoMarketValue??&&n==item.twoMarketValue>selected="selected"</#if>>${n}</option>
 	        					</#list>
 	        				</select>
 	        			</td>
@@ -520,8 +544,10 @@
 	        			<td>
 	        				<select class="setGrade${item_index}"  onChange="changeExpression('${item_index}');" id="${item_index}_oneExpression" <#if item.isGrade??&&item.isGrade|| type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED;"</#if>>
 	        				    <#list 0..10 as n>
-	        					   <option value="${n}" <#if item.oneExpression??&&n==item.oneExpression>selected=""</#if>>${n}</option>
+	        					   <option value="${n}" <#if item.oneExpression??&&n==item.oneExpression>selected="selected"</#if>>${n}</option>
 	        					</#list>
+	        					
+	        					
 	        				</select>
 	        			</td>
 	        		</#if>	
@@ -534,7 +560,7 @@
 					<#if grade_list??>
 		    			<#list grade_list as item>
 		    			<#if item.gradeAble??&&item.gradeAble||item_index==0&&( !item.gradeAble?? || item.gradeAble?? && item.gradeAble )>
-		    			     <td  rowspan="2"><input  class="setGrade${item_index}"  <#if item.isGrade??&&item.isGrade || type??&&type=="check"|| (!item.gradeAble?? ||item.gradeAble??&& !item.gradeAble)&&item_index gt 0>disabled="" style="background : #EDEDED; -webkit-appearance:none;" value="确定" <#else>style="cursor:pointer;border: none; background-color: #e67817; height:80%; color: #fff;-webkit-appearance:none;" value="确定"</#if> type="button" onClick="submitPoint('${item_index}','${item.number!''}','${item.enterpriseTitle!''}');"  /></td>
+		    			     <td  rowspan="2" style="background-color: #fff;"><input  class="setGrade${item_index}"  <#if item.isGrade??&&item.isGrade || type??&&type=="check">disabled="" style="background : #EDEDED; -webkit-appearance:none;" value="确定" <#else>style="cursor:pointer;border: none; background-color: #e67817; height:80%; color: #fff;-webkit-appearance:none;" value="确定"</#if> type="button" onClick="submitPoint('${item_index}','${item.number!''}','${item.enterpriseTitle!''}');"  /></td>
 		    			</#if>
 		    			</#list>
 				    </#if>
@@ -554,13 +580,18 @@
 					</#if>
 				</tr>
 			<#--</#if>	-->
-				<script type="text/javascript"   src="/client/js/rollValue.js"></script>
+		<#--		<script type="text/javascript"   src="/client/js/rollValue.js"></script>
 	<script type="text/javascript">
 		$("select").rollValue({minValue:0,maxValue:10,step:1});
-	</script>
+	</script>-->
 		</table>
 </div>
 
+<script type="text/javascript">
+     $('select').barrating();
+     
+</script>
+<script src="/client/js/examples.js"></script>
 	<#if print??&&print=="print">
 	   <input style="margin-left: 640px; margin-top: 20px; width:100px;height: 30px; font-size: 14px;" type="button" class="area_batch" onclick="location.href='/expert/export/grade?activityId=${activityId?c!''}&expertId=${expertId?c!''}'"  value="打印评分表" />
 	</#if>

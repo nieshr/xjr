@@ -214,6 +214,7 @@ public class TdEnterpriseController {
        //同步信息到user表	
        user.setTotalCollectedGoods(tdEnterprise.getFormType());	
        user.setRealName(tdEnterprise.getTitle());
+       user.setNickname(number);
        tdUserService.save(user);
       
        	//同步信息到预选
@@ -222,13 +223,16 @@ public class TdEnterpriseController {
        	{
        		for (TdActivityEnterprise ae : aeList)
        		{
-       			ae.setEnterpriseTitle(tdEnterprise.getTitle());
-       			ae.setType(tdEnterprise.getType());
-       			ae.setQQ(tdEnterprise.getChat());
-       			ae.setArea(tdEnterprise.getArea());
-       			ae.setContact(tdEnterprise.getContact());
-       			ae.setMobile(tdEnterprise.getMobile());
-       			tdActivityEnterpriseService.save(ae);
+       			if(null == ae.getIsGrade() ||null !=ae.getIsGrade() && ae.getIsGrade()==false)
+       			{
+           			ae.setEnterpriseTitle(tdEnterprise.getTitle());
+           			ae.setType(tdEnterprise.getType());
+           			ae.setQQ(tdEnterprise.getChat());
+           			ae.setArea(tdEnterprise.getArea());
+           			ae.setContact(tdEnterprise.getContact());
+           			ae.setMobile(tdEnterprise.getMobile());
+           			tdActivityEnterpriseService.save(ae);
+       			}
        		}
        	}
         res.put("code", 0);
@@ -779,7 +783,7 @@ public class TdEnterpriseController {
             return "redirect:/login";
         }
 
-            	exportUrl = SiteMagConstant.backupPath;
+            	exportUrl = SiteMagConstant.imagePath;
         
     			if (null != exportUrl) {
     				TdEnterprise enterprise = tdEnterpriseService.findbyUsername(username);

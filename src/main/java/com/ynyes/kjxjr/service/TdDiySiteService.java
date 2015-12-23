@@ -158,7 +158,7 @@ public class TdDiySiteService {
     {
         PageRequest pageRequest = new PageRequest(page, size);
         
-        return repository.findByTitleContainingOrderBySortIdAsc(keywords, pageRequest);
+        return repository.findByUsernameContainingOrInChargeContainingOrMobileContainingOrderBySortIdAsc(keywords, keywords, keywords, pageRequest);
     }
     
     /**

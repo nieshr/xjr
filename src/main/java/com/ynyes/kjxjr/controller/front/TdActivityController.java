@@ -882,6 +882,15 @@ public class TdActivityController {
         	{
         		TdEnterprise enterprise = tdEnterpriseService.findOne(aen.getEnterpriseId());
         		aen.setWin(null);
+        		//12-22
+        		aen.setTotalPoint(null);
+        		aen.setTotalExpression(null);
+        		aen.setTotalFeasibility(null);
+        		aen.setTotalGroup(null);
+        		aen.setTotalMarketValue(null);
+        		aen.setTotalTechnology(null);
+        		//12-22
+        		aen.setIsGrade(false);
         		aen.setCreateTime(new Date());
         		aen.setEnterpriseTitle(enterprise.getTitle());
         		aen.setActivityType(activity.getActivityType());
@@ -993,6 +1002,14 @@ public class TdActivityController {
         	TdActivity activity = tdActivityService.findOne(activityId);
         	smsRecommend(expert.getUsermobile(),activity.getTitle() , expert.getName() , response , req);
         }
+        if (roleId == 2)
+        {
+        	TdExpert expert = tdExpertService.findOne(id);
+        	TdActivity activity = tdActivityService.findOne(activityId);
+        	smsCoach(expert.getUsermobile(),activity.getTitle() , expert.getName() , response , req);
+        }
+        
+        
         
         res.put("code", 0);
         return res;
@@ -1129,6 +1146,88 @@ public class TdActivityController {
 		return res;
 	}
     
+	//发短信 路演辅导
+		public Map<String, Object> smsCoach(String mobile,  String activityTitle ,String name ,HttpServletResponse response, HttpServletRequest request) {
+			Map<String, Object> res = new HashMap<>();
+			res.put("status", -1);
+
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH点mm分");
+			
+			HttpSession session = request.getSession();
+
+			String	 info = "尊敬的"+name +"，"+" ”"+activityTitle+"“"+"活动正在筹备中。系统已为您分配了路演企业，请登录网上平台查看详情。【科技小巨人】";
+
+			
+			System.err.println("errormsg");
+			String content = null;
+			try {
+				content = URLEncoder.encode(info, "GB2312");
+				System.err.println(content);
+			} catch (Exception e) {
+				e.printStackTrace();
+				res.put("message", "发送失败！");
+				return res;
+			}
+			
+			String url = "http://www.ht3g.com/htWS/BatchSend.aspx?CorpID=CQDL00059&Pwd=644705&Mobile=" + mobile
+					+ "&Content=" + content;
+			StringBuffer fanhui = null;
+			try {
+				URL u = new URL(url);
+				URLConnection connection = u.openConnection();
+				HttpURLConnection httpConn = (HttpURLConnection) connection;
+				httpConn.setRequestProperty("Content-type", "text/html");
+				httpConn.setRequestProperty("Accept-Charset", "utf-8");
+				httpConn.setRequestProperty("contentType", "utf-8");
+				InputStream inputStream = null;
+				InputStreamReader inputStreamReader = null;
+				BufferedReader reader = null;
+				StringBuffer resultBuffer = new StringBuffer();
+				String tempLine = null;
+
+				if (httpConn.getResponseCode() >= 300) {
+					res.put("message", "HTTP Request is not success, Response code is " + httpConn.getResponseCode());
+					return res;
+				}
+
+				try {
+					inputStream = httpConn.getInputStream();
+					inputStreamReader = new InputStreamReader(inputStream);
+					reader = new BufferedReader(inputStreamReader);
+
+					while ((tempLine = reader.readLine()) != null) {
+						resultBuffer.append(tempLine);
+					}
+
+					fanhui = resultBuffer;
+
+				} finally {
+
+					if (reader != null) {
+						reader.close();
+					}
+
+					if (inputStreamReader != null) {
+						inputStreamReader.close();
+					}
+
+					if (inputStream != null) {
+						inputStream.close();
+					}
+
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				res.put("message", "发送失败！");
+				return res;
+			}
+			
+			res.put("status", 0);
+			res.put("message", fanhui);
+
+			return res;
+		}
+	
     //管理活动
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public String activityEdit(HttpServletRequest req, ModelMap map,Long id , Long done) {
@@ -1951,6 +2050,9 @@ public class TdActivityController {
         		tdActivityExpertService.delete(ActivityExpert);
         	}
         	
+        	List<TdEnterpriseGrade> gradeList = tdEnterpriseGradeService.findByExpertIdAndActivityId(ActivityExpert.getExpertId(), activityId);
+        	tdEnterpriseGradeService.delete(gradeList);
+        	
         	TdExpert expert = tdExpertService.findOne(ActivityExpert.getExpertId());
         	expert.setSelectActivityId(null);
         	tdExpertService.save(expert);
@@ -2637,6 +2739,29 @@ public class TdActivityController {
     			selectSW(activityId , listId, listChkId);
     		}
         }
+        
+		//同步【活动-企业】中间表状态
+		List<TdEnterpriseGrade> isGradeList = tdEnterpriseGradeService.findByActivityIdOrderByIdAsc(activityId);
+		int i = 0;
+		for (TdEnterpriseGrade item : isGradeList)
+		{
+			if(null != item.getIsGrade() && item.getIsGrade() == true)
+			{
+				i++;
+			}
+			else{
+				break;
+			}
+		}
+		if (i == isGradeList.size())
+		{
+			List<TdActivityEnterprise> activityEnterpriseList = tdActivityEnterpriseService.findByActivityId(activityId);
+			for(TdActivityEnterprise ae : activityEnterpriseList)
+			{
+				ae.setIsGrade(true);
+				tdActivityEnterpriseService.save(ae);
+			}
+		}
         
         return "redirect:/activity/getGrade?activityId="+activityId+"&mark=a"+"&tip=1";
     }

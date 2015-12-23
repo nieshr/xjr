@@ -117,7 +117,7 @@ public class TdEnterpriseGradeService {
 	 * 
 	 * @author dengxiao
 	 */
-	public TdEnterpriseGrade findByExpertIdAndActivityId(Long expertId, Long activityId) {
+	public List<TdEnterpriseGrade> findByExpertIdAndActivityId(Long expertId, Long activityId) {
 		if (null == expertId || null == activityId) {
 			return null;
 		}

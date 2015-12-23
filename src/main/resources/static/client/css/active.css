@@ -9,14 +9,16 @@
 .active_content dt span{ color: white; font-size: 14px; margin-left: 30px;}
 .active_content dt p{ color: white; margin-left: 30px; }
 .active_content dd{ width:950px; height:auto; display: block; overflow: hidden;}
-.active_content dd div{ width:950px; margin-top: 10px; overflow: hidden;}
-.active_content dd div span{width:120px; display: block; float: left; text-align: right; font-size: 14px;}
-.active_content dd div p{width:auto; height:20px; display: block; float: left; text-align: right; margin-left: 10px;;}
-.active_content dd div input{ margin-left: 20px; float: left; height:26px; line-height:26px; width:170px;}
-.active_content dd div textarea{ margin-left: 20px; float: left; width:400px; height:200px;}
-.active_content dd div select{ margin-left: 20px; float: left; height: 30px;}
+.active_content dd .new_new{ width:950px; margin-top: 10px; overflow: hidden;}
+.active_content dd .new_new span{width:120px; display: block; float: left; text-align: right; font-size: 14px;}
+.active_content dd .new_new p{width:auto; height:20px; display: block; float: left; text-align: right; margin-left: 10px;;}
+.active_content dd .new_new input{ margin-left: 20px; float: left; height:26px; line-height:26px; width:170px;}
+.active_content dd .new_new textarea{ margin-left: 20px; float: left; width:400px; height:200px;}
+.active_content dd .new_new select{ margin-left: 20px; float: left; height: 30px;}
 .active_content .dt05{ width:100%; height:40px;margin-bottom: 30px;}
 .active_content .dt05 input{ display: block; height:40px; width:60px; border-radius: 8px; margin: 0 auto; line-height:40px; border: none; background: #e67817; color: white; font-size: 14px; }
+
+.editer div{display: block;float: left;}
 
 .active_add_file{width:800px; height:auto; display: block; overflow: hidden; margin-left: 128px;}
 .active_add_file li{ width:800px; height:40px; float: left;}

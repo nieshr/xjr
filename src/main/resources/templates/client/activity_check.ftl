@@ -263,11 +263,9 @@ function sortDown(id , activityId)
                                     <p class="p01" style="width:<#-- 380-->348px; float: left;text-align:left;"><b style="float:left;">${item_index+1}.${item.enterpriseTitle!''}</b><#if item.win??&&item.win==1><img src="/client/images/n0.png" style="width:12px; height:12px;margin-left:3px;" title="胜出项目" alt="胜出" /> </#if></p>
                                     <a href="/activity/enterprise/check/${item.enterpriseId?c!''}"   target=_blank>查看</a>
                                     <a>丨</a>
-                                    <#if item.isGrade??&&item.isGrade>
+                                    
                                         <a  href="/enterprise/grade/?activityId=${item.activityId?c!''}&enterpriseId=${item.enterpriseId?c!''}" title="查看该项目的得分"   target="_blank">得分</a>
-                                    <#else>
-                                        <a   href="javascript:void(0)" title="评分尚未开始"  style="color:#666; " >得分</a>
-                                    </#if>         
+             
                                         <#if activity??&&activity.statusId??&&activity.statusId==1>
                                         	  <a>丨</a> 
                                             <a href="javascript:sendSms(${item.enterpriseId?c!''},${item.activityId?c!''},1);">短信通知</a>
@@ -388,6 +386,11 @@ function sortDown(id , activityId)
                                 <li>
                                     <p class="p01" style="  width: 250px;float: left; text-align: left;">${item_index+1}.${item.expertName!''}</p>
                                     <a style="display:block;  width:100px;"></a>
+                                    <a style="display:block;  width:100px;"></a>
+
+                                    <#if activity??&&activity.statusId??&&activity.statusId==1&&mark??&&mark="activity">
+                                        <a href="javascript:sendSms(${item.expertId?c!''},${activity.id?c!''},2);">短信通知</a>
+                                    </#if>                               
                                 </li>
                             </#list>
                     </ul>

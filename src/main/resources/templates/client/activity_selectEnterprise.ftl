@@ -204,9 +204,9 @@ function checkAll2(chkobj) {
 		
 		
 		
-		
+		<div class="list_base2" id="selectedEnterprise">
         	<#include "/client/activity_selected_enterprise.ftl" />
-        
+        </div>
         <div class="area_add_btn">
 		<!--	<input style="cursor:pointer;"  type="button" value="批量取消预选" />-->
 		</div>

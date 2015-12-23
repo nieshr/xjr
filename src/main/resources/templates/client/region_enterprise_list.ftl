@@ -6,10 +6,10 @@
 	<link rel="shortcut icon" href="/client/images/icon.ico" />
 	<link href="/client/css/base.css" rel="stylesheet" type="text/css" />
 	<link href="/client/css/area.css" rel="stylesheet" type="text/css" />
-	<link rel="stylesheet" href="/client/css/ios6alert.css">
+	<link rel="stylesheet" href="/client/css/showBo.css">
 	<script src="/client/js/jquery-1.9.1.min.js"></script>
 	<script src="/client/js/main.js"></script>
-	<script src="/client/js/ios6alert.js"></script>
+	<script src="/client/js/showBo.js"></script>
     <style type="text/css">
         .page{ width: 600px; float: right; margin-top: 30px;   margin-bottom: 30px;}
         .page *{ float: left;}
@@ -33,19 +33,14 @@
 		   
 		function actionBtn(value)
 		{
-				$("body").ios6alert({
-			    content : "将批量发送短信通知，确认操作？",
-			    type : 1,
-			    buttonText : {
-					Yes : "确认",
-					No : "取消"
-				},
-		    	onClickYes : function(){
-					$("#actionValue").val(value);
-					$("#actionForm").submit();
-					 $("body").ios6alert({
-	                          content : "操作成功！"
-	                  });
+		    Showbo.Msg.confirm("将批量发送短信通知，确认吗？",function(p){
+				if (p == "yes")
+				{
+			    	
+						$("#actionValue").val(value);
+						$("#actionForm").submit();
+						 Showbo.Msg.alert("操作成功！");
+				
 				}
 				});
 		}   

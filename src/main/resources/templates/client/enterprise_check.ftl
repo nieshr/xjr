@@ -61,10 +61,14 @@
 	    		<span>审核状态：未通过</span>
 	    		<input style="cursor:pointer;" type="button" value="重新申请" onclick="location.href='/enterprise/info'"/>
 	    	</#if>	   		    	
-	    	<#if !enterprise.statusId?? || enterprise.statusId?? && enterprise.statusId == 4>
-	    		<span>状态：尚未完善资料</span>
+	    	<#if enterprise.statusId?? && enterprise.statusId == 4>
+	    		<span>请更新资料</span>
 	    		<input style="cursor:pointer;" type="button" value="填写报名资料" onclick="location.href='/enterprise/info'"/>	   
 	    	</#if>    			
+	    	<#if !enterprise.statusId?? >
+	    		<span>状态：尚未完善资料</span>
+	    		<input style="cursor:pointer;" type="button" value="填写报名资料" onclick="location.href='/enterprise/info'"/>	   
+	    	</#if>    	
     	</div>
     	<#if enterprise.fileUrl??>
 	    	<div class="change_inform">

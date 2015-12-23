@@ -8,6 +8,7 @@
 <link href="/client/css/active.css" rel="stylesheet" type="text/css" />
 <link href="/mag/style/WdatePicker.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="/client/css/showBo.css">
+<link rel="stylesheet" href="/client/css/ueditor.css">
 
 <script src="/client/js/jquery-1.9.1.min.js"></script>
 <script src="/client/js/main.js"></script>
@@ -20,6 +21,7 @@
 <script type="text/javascript" src="/client/js/Validform_v5.3.2_min.js"></script>
 <script type="text/javascript" src="/mag/js/layout.js"></script>
 <script src="/client/js/showBo.js"></script>
+
 <script>
 $(document).ready(function(){
 
@@ -321,6 +323,130 @@ window.onload=done2;
 </style>
 </head>
 <body>
+
+<#-- 百度编辑器 begin -->
+    <!-- 加载编辑器的容器 -->
+
+    <!-- 配置文件 -->
+    <script type="text/javascript" src="/client/js/ueditor.config.js"></script>
+    <!-- 编辑器源码文件 -->
+    <script type="text/javascript" src="/client/js/ueditor.all.js"></script>
+    <!-- 实例化编辑器 -->
+    <script type="text/javascript">
+		var ue = UE.getEditor('container', {
+			toolbars: 
+			[
+			    [
+			        'anchor', //锚点
+			        'undo', //撤销
+			        'redo', //重做
+			        'bold', //加粗
+			        'indent', //首行缩进
+			        'snapscreen', //截图
+			        'italic', //斜体
+			        'underline', //下划线
+			        'strikethrough', //删除线
+			        'subscript', //下标
+			        'fontborder', //字符边框
+			        'superscript', //上标
+			        'formatmatch', //格式刷
+			        'source', //源代码
+			        'blockquote', //引用
+			        'pasteplain', //纯文本粘贴模式
+			        'selectall', //全选
+			        'print', //打印
+			        'preview', //预览
+			        'horizontal', //分隔线
+			        'removeformat', //清除格式
+			        'time', //时间
+			        'date', //日期
+			        'unlink', //取消链接
+			        'insertrow', //前插入行
+			        'insertcol', //前插入列
+			        'mergeright', //右合并单元格
+			        'mergedown', //下合并单元格
+			        'deleterow', //删除行
+			        'deletecol', //删除列
+			        'splittorows', //拆分成行
+			        'splittocols', //拆分成列
+			        'splittocells', //完全拆分单元格
+			        'deletecaption', //删除表格标题
+			        'inserttitle', //插入标题
+			        'mergecells', //合并多个单元格
+			        'deletetable', //删除表格
+			        'cleardoc', //清空文档
+			        'insertparagraphbeforetable', //"表格前插入行"
+			        'insertcode', //代码语言
+			        'fontfamily', //字体
+			        'fontsize', //字号
+			        'paragraph', //段落格式
+			        'simpleupload', //单图上传
+			        'insertimage', //多图上传
+			        'edittable', //表格属性
+			        'edittd', //单元格属性
+			        'link', //超链接
+			        'emotion', //表情
+			        'spechars', //特殊字符
+			        'searchreplace', //查询替换
+			        'map', //Baidu地图
+			        'gmap', //Google地图
+			        'insertvideo', //视频
+			        'help', //帮助
+			        'justifyleft', //居左对齐
+			        'justifyright', //居右对齐
+			        'justifycenter', //居中对齐
+			        'justifyjustify', //两端对齐
+			        'forecolor', //字体颜色
+			        'backcolor', //背景色
+			        'insertorderedlist', //有序列表
+			        'insertunorderedlist', //无序列表
+			        <#--'fullscreen', //全屏-->
+			        'directionalityltr', //从左向右输入
+			        'directionalityrtl', //从右向左输入
+			        'rowspacingtop', //段前距
+			        'rowspacingbottom', //段后距
+			        'pagebreak', //分页
+			        'insertframe', //插入Iframe
+			        'imagenone', //默认
+			        'imageleft', //左浮动
+			        'imageright', //右浮动
+			        'attachment', //附件
+			        'imagecenter', //居中
+			        'wordimage', //图片转存
+			        'lineheight', //行间距
+			        'edittip ', //编辑提示
+			        'customstyle', //自定义标题
+			        'autotypeset', //自动排版
+			        'webapp', //百度应用
+			        'touppercase', //字母大写
+			        'tolowercase', //字母小写
+			        'background', //背景
+			        'template', //模板
+			        'scrawl', //涂鸦
+			        'music', //音乐
+			        'inserttable', //插入表格
+			        'drafts', // 从草稿箱加载
+			        'charts', // 图表
+			    ]
+			],
+		    autoHeightEnabled: true,
+		    autoFloatEnabled: true,
+		    initialFrameWidth: 750, 
+			initialFrameHeight: 300,
+			
+			//检验后端
+		    "imageUrl": "/Verwalter/baidu/upload?action=uploadimage",
+		    "imagePath": "src/main/resources/static/images/",
+		    "imageFieldName": "imgFile",
+		    "imageMaxSize": 2048,
+		    "imageAllowFiles": [".png", ".jpg", ".jpeg", ".gif", ".bmp"]
+		    
+		});
+    </script>
+
+<#-- 百度编辑器 end-->
+
+
 <!--main-->
 <div class="main">
 <!--header-->
@@ -358,6 +484,7 @@ window.onload=done2;
 	</div>
 <!--right-->
     <div class="right_content">
+
     <div class="right_box">
     	<dl class="crumb">
         	<dt><a href="#"></a></dt>
@@ -386,16 +513,16 @@ window.onload=done2;
             
                 <#if activity.statusId??>
                     <#if activity.statusId==1>
-                        <div><h3 style="margin:0 0 10px 50px;">活动状态：已审核</h3></div>
+                        <div class=" new_new"><h3 style="margin:0 0 10px 50px;">活动状态：已审核</h3></div>
                     <#elseif activity.statusId==2>
-                        <div><h3 style="margin:0 0 10px 50px;">活动状态：已结束</h3></div>
+                        <div class=" new_new"><h3 style="margin:0 0 10px 50px;">活动状态：已结束</h3></div>
                     <#elseif activity.statusId==0>
-                        <div><h3 style="margin:0 0 10px 50px;">活动状态：筹备中</h3></div>
+                        <div class=" new_new"><h3 style="margin:0 0 10px 50px;">活动状态：筹备中</h3></div>
                     </#if>       
                 </#if>    
             </#if>         
-    			<div><span>活动名称：</span><input <#if pagetype??&& pagetype == "check">disabled=""</#if> type="text" name="title" id="title" datatype="*"value="<#if activity??>${activity.title!''}</#if>" /></div>
-    			<div>
+    			<div class=" new_new"><span>活动名称：</span><input <#if pagetype??&& pagetype == "check">disabled=""</#if> type="text" name="title" id="title" datatype="*"value="<#if activity??>${activity.title!''}</#if>" /></div>
+    			<div class=" new_new">
     				<span>活动类型：</span>
     				<select name="activityType" id="activityType" <#if pagetype??&& pagetype == "check">disabled=""</#if>>
     				    <#if activityType_list??>
@@ -405,7 +532,7 @@ window.onload=done2;
     					</#if>        
     				</select>
     			</div>
-    			<div>
+    			<div class=" new_new">
     			    <span>地区 ：</span>
                     <select name="region" id="region" <#if pagetype??&& pagetype == "check">disabled=""</#if>>
                         <#if region_list??>
@@ -415,43 +542,43 @@ window.onload=done2;
                         </#if>        
                     </select>
     			</div>
-    			<div><span>时间：</span>
+    			<div class=" new_new"><span>时间：</span>
 	                    <input <#if pagetype??&& pagetype == "check" >disabled=""</#if> name="date" type="text" id="date" value="<#if activity??>${activity.date!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="填写正确格式" sucmsg=" " >
 	            </div>    
     			
-    			<div><span>地址：</span><input <#if pagetype??&& pagetype == "check" >disabled=""</#if> type="text" name="address" id="address" datatype="*" value="<#if activity??>${activity.address!''}</#if>" /></div>
-    			<div><span>主题：</span><textarea style="height: 56px;" cols="3" rows="3" <#if pagetype??&& pagetype == "check" >disabled=""</#if> type="text" name="theme" id="theme" datatype="*1-255" errormsg="最多255字！"><#if activity??>${activity.theme!''}</#if></textarea></div>
+    			<div class=" new_new"><span>地址：</span><input <#if pagetype??&& pagetype == "check" >disabled=""</#if> type="text" name="address" id="address" datatype="*" value="<#if activity??>${activity.address!''}</#if>" /></div>
+    			<div class=" new_new"><span>主题：</span><textarea style="height: 56px;" cols="3" rows="3" <#if pagetype??&& pagetype == "check" >disabled=""</#if> type="text" name="theme" id="theme" datatype="*1-255" errormsg="最多255字！"><#if activity??>${activity.theme!''}</#if></textarea></div>
 				<div class="editer">
-					<span>简介：</span>
+					
+					<#if mark??&&mark=="activity">
+					<span style="margin-left:78px;margin-top:20px;display:block;float:left;  font-size: 14px;">简介：</span>
+					<#--
 					<textarea  <#if pagetype??&& pagetype == "check" >disabled=""</#if> name="introduction" id="introduction" datatype="*" ><#if activity??>${activity.introduction!''}</#if></textarea>
+					-->
+    					    <script id="container" name="introduction" type="text/plain">
+				        这里写你的初始化内容
+				    </script>
+					<#else>
+					<span style="line-height:24px;">简介：</span>
+					<div style="float:left; display: 
+										block; width: 750px; 
+										margin-top: 0;  
+										font-size: 14px;
+										color: #666666;
+										text-indent: 32px;
+										line-height: 24px;">
+						${activity.introduction!''}
+					</div>
+					</#if>
 				</div>    		
-				<#-->	
-    			<div><span>摘要：</span><textarea cols="3" rows="3" <#if pagetype??&& pagetype == "check" >disabled=""</#if> type="text" name="brief" id="brief" datatype="*0-255" errormsg="最多255字！"><#if activity??>${activity.brief!''}</#if>"</textarea></div>
-    			<div>
-	                <span>文章：</span>
-	                    <textarea  name="content" class="editor" id="content" <#if article??&&article.imgUrl??&&(article.statusId==0 || article.statusId==1)>disabled=""</#if> style="visibility:hidden;"><#if article??&&article.content??>${article.content!''}</#if></textarea>
-				</div>
-			
-				<div>
-					<span>封面：</span>
-    			    <dd>
-	                    <textarea  name="imgUrl" class="editor" id="content" <#if article??&&article.imgUrl??&&(article.statusId==0 || article.statusId==1)>disabled=""</#if>  style="visibility:hidden;"><#if article??&&article.content??>${article.content!''}</#if></textarea>
-	                </dd>
-	            </div>    
-	            -->
-	                <#--
-				<div class="editer">
-					<span>简介：</span>
-					<textarea  <#if pagetype??&& pagetype == "check" >disabled=""</#if> name="introduction" id="introduction" datatype="*" ><#if activity??>${activity.introduction!''}</#if></textarea>
-				</div>
-				-->
-    			<div>
+				
+    			<div class=" new_new">
     				<span>筹备开始时刻：</span>
                         <input <#if pagetype??&& pagetype == "check">disabled=""</#if> name="prepareOn" id="prepareOn" type="text"  value="<#if activity??>${activity.prepareOn!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="填写正确格式" sucmsg=" ">
     				<span>筹备结束时刻：</span>
                         <input <#if pagetype??&& pagetype == "check" >disabled=""</#if> name="prepareOff" id="prepareOff" type="text" value="<#if activity??>${activity.prepareOff!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="填写正确格式" sucmsg=" ">
     			</div>
-    			<div>
+    			<div class=" new_new">
     			    <span>活动结束时刻：</span>
                     <input <#if pagetype??&& pagetype == "check" >disabled=""</#if> name="eventEnd" id="eventEnd" type="text" value="<#if activity??>${activity.eventEnd!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="填写正确格式" sucmsg=" ">
     			</div>
@@ -459,7 +586,7 @@ window.onload=done2;
                 <#if activityType_list??>
                     <#list activityType_list as type>
                         <#if (type_index == 0||type_index ==1)&&type.title == activity.activityType>    -->			
-		    			<div>
+		    			<div class=" new_new">
 		    				<span style="margin-top: 6px;">初选项目：</span>
 		    				<ul class="active_project_text">
 		    				    <#if selected_enterprise_list??>
@@ -527,18 +654,16 @@ window.onload=done2;
                     </#list>
                 </#if>     -->		
  				<#if recommend_list??&&recommend_list?size gt 0>
-    			<div>
+    			<div class=" new_new">
     				<span style="margin-top: 6px;">推荐项目：</span>
     				<ul class="active_project_text">
     				    <#if recommend_list??>
     				        <#list recommend_list as item>
 		    					<li>
 		    					    <p class="p01" style="width: 435px; float: left;text-align:left;"><b style="float:left;">${item_index+1}.${item.enterpriseTitle!''}</b><#if item.win??&&item.win==1><img src="/client/images/n0.png" style="width:12px; height:12px;margin-left:3px;" title="胜出项目" alt="胜出" /> </#if></p> 
-		                            <#if item.isGrade??&&item.isGrade>
+						            <#if mark??&&mark=="enterprise"&&activity.statusId??&&activity.statusId==2>
 		                           		<a  href="/enterprise/grade/?activityId=${item.activityId?c!''}&enterpriseId=${item.enterpriseId?c!''}" title="查看该项目的得分"    target="_blank">得分</a>
-		                            <#else>
-		                             	<a   href="javascript:void(0)" title="评分尚未开始"  style="color:#666; " >得分</a>
-		                            </#if>		 
+									</#if>
 		                            
 		    						<#if mark??&&(mark=="activity"||mark="region"||mark=="expert")>
 		    							<a>丨</a>
@@ -597,7 +722,7 @@ window.onload=done2;
     			</div> 
     			</#if>
     			<#if mark??&&(mark=="activity"||mark="region"||mark=="expert")||mark??&&mark=="enterprise"&&activity.statusId??&&activity.statusId==2>
-	    			<div style="margin-top:50px;">
+	    			<div style="margin-top:50px;" class=" new_new">
 	    				<span style="margin-top: 6px;">评委专家：</span>
 	    				<ul class="active_project_text">
 	    		    	    <#if selected_expert_list??>
@@ -628,7 +753,7 @@ window.onload=done2;
 	    		</#if>	
     			<#-- 路演辅导列表 -->
                <#if roadshow_list??>
-               <div style="margin-top:50px;">
+               <div style="margin-top:50px;" class=" new_new">
                     <span style="margin-top: 6px;">路演辅导：</span>
                     <ul class="active_project_text">
                             <#list roadshow_list as item>
@@ -643,7 +768,7 @@ window.onload=done2;
                 <#-- 路演辅导列表  end -->		
             <!-- 评分汇总 -->
             	<#if activity??&&activity.statusId??&&activity.statusId==2>
-                    <div>
+                    <div class=" new_new">
                         <span style="margin-top: 6px;">路演结果：</span>
                         <ul class="active_project_text">
                             <li>
@@ -671,7 +796,7 @@ window.onload=done2;
     	 <#else>
 		<form id="upload" enctype="multipart/form-data" action="/client/activity/upload" method="post">
 		<input type="hidden" id="id" name="id" <#if activity??>value="${activity.id?c}"</#if>></input>
-		<div>
+		<div class=" new_new">
 			<span>添加文件：</span>
 			<input name="Filedata" type="file" id="file" value="" />
 			<input  style="margin-left:20px;    border-radius: 8px;" class="area_save_btn" type="button" onclick="javascript:submitCheck();" value="上传" />
@@ -679,7 +804,7 @@ window.onload=done2;
 		</form>
 		</#if>
 		<#if activity?? && activity.download??>
-			<div>
+			<div class=" new_new">
 				<span style="margin-top: 10px;">相关下载：</span>
 				<ul class="active_add_file">
 					<li>
@@ -693,21 +818,23 @@ window.onload=done2;
 		</dl>
 		
 		<#if pagetype??&&pagetype == "check">
-    <dl class="active_content">
-        <dd>
-        <input type="button" value="PPT模板下载" onclick="location.href='/download/data?name=${activity.pptUrl!''}'"  style="margin:10px 0 30px 48px;    border-radius: 8px;
-                                                float: left;
-                                                height: 26px;
-                                                line-height: 26px;
-                                                width: 170px;"></input>
-        </dd>
-        </dl>
+			<#if activity.pptUrl??&&activity.pptUrl != "">
+			    <dl class="active_content">
+		        <dd>
+		        <input type="button" value="PPT模板下载" onclick="location.href='/download/data?name=${activity.pptUrl!''}'"  style="margin:10px 0 30px 48px;    border-radius: 8px;
+		                                                float: left;
+		                                                height: 26px;
+		                                                line-height: 26px;
+		                                                width: 170px;"></input>
+		        </dd>
+		        </dl>
+	        </#if>
 		<#else>
 		    <dl class="active_content" style="margin-top:50px;">
         <dd>
 		<form id="pptupload" enctype="multipart/form-data" action="/client/activity/pptupload" method="post">
         <input type="hidden" id="id" name="id" <#if activity??>value="${activity.id?c}"</#if>></input>
-        <div>
+        <div class=" new_new">
             <span>添加PPT模板：</span>
             <input name="Filedata" type="file" id="pptfile" value="" />
             <input type="button" value="PPT模板上传" onclick="javascript:pptSubmitCheck();"  style="margin:-5px 0 30px 48px;

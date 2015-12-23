@@ -363,6 +363,10 @@ public class TdExpertController {
 		Map<String, Object> res = new HashMap<>();
 		res.put("status", -1);
 		String expertUsername = (String) req.getSession().getAttribute("expertUsername");
+		if (null == expertUsername) {
+			res.put("msg", "请先登录！");
+			return res;
+		}
 		TdExpert expert = tdExpertService.findbyUsername(expertUsername);
 		TdEnterprise enterprise = tdEnterpriseService.findByNumber(number);
 		TdEnterpriseGrade theGrade = tdEnterpriseGradeService.findByExpertIdAndActivityIdAndNumber(expert.getId(),
@@ -390,13 +394,13 @@ public class TdExpertController {
 		theGrade.setOneGroup(grade.getOneGroup());
 		theGrade.setTwoGroup(grade.getTwoGroup());
 		theGrade.setTotalGroup(grade.getTotalGroup()); //zhangji
-		theGrade.setIsGrade(true);
+//		theGrade.setIsGrade(true);
 		tdEnterpriseGradeService.save(theGrade);
 		
 		//同步【活动-企业】中间表状态
-		TdActivityEnterprise activityEnterprise = tdActivityEnterpriseService.findByActivityIdAndEnterpriseId(activityId, enterprise.getId());
-		activityEnterprise.setIsGrade(true);
-		tdActivityEnterpriseService.save(activityEnterprise);
+//		TdActivityEnterprise activityEnterprise = tdActivityEnterpriseService.findByActivityIdAndEnterpriseId(activityId, enterprise.getId());
+//		activityEnterprise.setIsGrade(true);
+//		tdActivityEnterpriseService.save(activityEnterprise);
 		
 		//评分改为一个一个的评 zhangji
 		List<TdEnterpriseGrade> expertGradeList = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderBySordIdAsc(expert.getId(), activityId);
@@ -414,12 +418,12 @@ public class TdExpertController {
 				}
 				if (item.getId() == theGrade.getId())
 				{
-					if(index == (expertGradeList.size()-1))
-					{
-						res.put("msg", "评分完毕，谢谢！");
-						item.setGradeAble(false);
-						tdEnterpriseGradeService.save(item);
-					}
+//					if(index == (expertGradeList.size()-1))
+//					{
+//						res.put("msg", "全部评分完毕，确认结束评分？");
+//						item.setGradeAble(false);
+//						tdEnterpriseGradeService.save(item);
+//					}
 					i = 1;
 					item.setGradeAble(false);
 					tdEnterpriseGradeService.save(item);
@@ -431,8 +435,19 @@ public class TdExpertController {
 					tdEnterpriseGradeService.save(item);
 					index++;
 				}
-				
-				
+			}
+			
+			int finish = 0;
+			for (TdEnterpriseGrade item : expertGradeList)
+			{
+				if (null != item.getTotalPoint())
+				{
+					finish++;
+				}
+				if(finish == expertGradeList.size())
+				{
+					res.put("msg", "全部评分完毕，确认结束评分？");
+				}
 			}
 		}
 
@@ -448,6 +463,30 @@ public class TdExpertController {
 		res.put("status", 0);
 		return res;
 	}
+	
+	@RequestMapping(value = "/grade/check")
+	@ResponseBody
+	public Map<String, Object> gradeCheck(Long activityId,HttpServletRequest req) {
+		Map<String, Object> res = new HashMap<>();
+		res.put("status", -1);
+		String expertUsername = (String) req.getSession().getAttribute("expertUsername");
+		TdExpert expert = tdExpertService.findbyUsername(expertUsername);
+		if (null == expertUsername) {
+			res.put("msg", "请先登录！");
+			return res;
+		}
+		List<TdEnterpriseGrade> gradeList = tdEnterpriseGradeService.findByExpertIdAndActivityIdOrderBySordIdAsc(expert.getId(), activityId);
+		for(TdEnterpriseGrade grade: gradeList)
+		{
+			grade.setIsGrade(true);
+			tdEnterpriseGradeService.save(grade);
+		}
+
+		res.put("msg", "操作成功！");
+		res.put("status", 0);
+		return res;
+	}
+	
 
 	@RequestMapping(value = "/enterprises")
 	public String enterprises(HttpServletRequest req, ModelMap map) {

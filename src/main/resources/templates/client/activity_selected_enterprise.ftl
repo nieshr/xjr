@@ -1,4 +1,4 @@
-	<div class="list_base2" id="selectedEnterprise">			
+				
 	   <form name="removeEnterprise" action="/activity/selectEnterprise" method=post>
         <input type="hidden" name="keywords" value="<#if keywords??&&keywords?length gt 0>${keywords}</#if>">
     	<input type="hidden" name="area" value="<#if area??&&area?length gt 0>${area}</#if>">
@@ -37,4 +37,4 @@
 					<input style=" margin-left: 10px; cursor:pointer;" class="area_batch" type="submit" value="批量取消" />
 				</div>    
 			</form>		        
-    </div>
+

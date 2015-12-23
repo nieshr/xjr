@@ -323,6 +323,13 @@ public class TdRegController {
 			res.put("message","手机号不正确");
 			return res;
 		}
+		TdUser user = tdUserService.findByMobile(mobile);
+
+		if (null != user) {
+			res.put("msg", "该手机已经注册");
+			return res;
+		}
+		
 		Random random = new Random();
 		String smscode = random.nextInt(9000) + 1000 + "";
 		HttpSession session = request.getSession();

@@ -34,6 +34,7 @@ import com.ynyes.kjxjr.service.TdArticleService;
 import com.ynyes.kjxjr.service.TdEnterpriseService;
 import com.ynyes.kjxjr.util.SiteMagConstant;
 
+
 import net.sf.json.JSONObject;
 
 /**
@@ -126,7 +127,18 @@ public class TdUploadController {
         }
         response.reset();
         response.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html");
+        if(ext.equalsIgnoreCase(".mp4"))
+        {
+        	response.setContentType("application/octet-stream");
+        }
+        else{
+        	 response.setContentType("text/html");
+        }
+
+       
+        
+      
+//        response.setContentType("text/html");
         PrintWriter writer = null;
         try {
             writer = response.getWriter();
@@ -144,6 +156,8 @@ public class TdUploadController {
                 }
             }
         }
+        
+
 
         return null;
 
@@ -206,7 +220,7 @@ public class TdUploadController {
 
     @RequestMapping(value = "/editor/upload", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> editorUpload(String action, @RequestParam MultipartFile imgFile, HttpServletRequest req) {
+    public Map<String, Object> editorUpload(String action, @RequestParam MultipartFile imgFile, HttpServletRequest req,HttpServletResponse response) {
         Map<String, Object> res = new HashMap<String, Object>();
 
         res.put("error", 1);
@@ -249,10 +263,107 @@ public class TdUploadController {
             res.put("msg", "上传文件失败！");
         }
 
+        //马德敬改的
+        response.reset();
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html");
+      
+//        response.setContentType("text/html");
+        PrintWriter writer = null;
+        try {
+            writer = response.getWriter();
+            JSONObject jsonObject = JSONObject.fromObject(res);
+            writer.println(jsonObject);  //想办法把map转成json
+            writer.flush();
+        } catch (IOException e) {
+            System.err.println(e);
+        } finally {
+            if (writer != null) {
+                try {
+                    writer.close();
+                } catch (Exception e) {
+                    System.err.println(e);
+                }
+            }
+        }
         return res;
 
     }
     
+    /*===============测===============*/
+    @RequestMapping(value = "/baidu/upload", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> baiduUpload(String action, @RequestParam MultipartFile imgFile, HttpServletRequest req,HttpServletResponse response) {
+        Map<String, Object> res = new HashMap<String, Object>();
+
+        res.put("error", 1);
+
+        String username = (String) req.getSession().getAttribute("manager");
+        if (null == username) {
+            res.put("msg", "请重新登录！");
+            return res;
+        }
+
+        if (null == imgFile || imgFile.isEmpty() || null == imgFile.getName()) {
+            res.put("msg", "图片不存在");
+            return res;
+        }
+
+        String name = imgFile.getOriginalFilename();
+        String ext = name.substring(name.lastIndexOf("."));
+
+        try {
+            byte[] bytes = imgFile.getBytes();
+
+            Date dt = new Date(System.currentTimeMillis());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+            String fileName = sdf.format(dt) + ext;
+
+            String uri = ImageRoot + "/" + fileName;
+
+            File file = new File(uri);
+
+            BufferedOutputStream stream = new BufferedOutputStream(
+                    new FileOutputStream(file));
+            stream.write(bytes);
+            stream.close();
+
+            res.put("error", 0);
+            res.put("msg", "上传文件成功！");
+            res.put("url", "/images/" + fileName);
+
+        } catch (Exception e) {
+            res.put("msg", "上传文件失败！");
+        }
+
+        //马德敬改的
+        response.reset();
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html");
+      
+//        response.setContentType("text/html");
+        PrintWriter writer = null;
+        try {
+            writer = response.getWriter();
+            JSONObject jsonObject = JSONObject.fromObject(res);
+            writer.println(jsonObject);  //想办法把map转成json
+            writer.flush();
+        } catch (IOException e) {
+            System.err.println(e);
+        } finally {
+            if (writer != null) {
+                try {
+                    writer.close();
+                } catch (Exception e) {
+                    System.err.println(e);
+                }
+            }
+        }
+        return res;
+
+    }
+    
+    /*===============试===============*/
     
 	@RequestMapping(value = "/enterprise/upload", method = RequestMethod.POST)
     public String enterUpload(String action,Long enterpriseId, Long id,
@@ -273,22 +384,22 @@ public class TdUploadController {
             byte[] bytes = Filedata.getBytes();
 
             Date dt = new Date(System.currentTimeMillis());
-            SimpleDateFormat sdf = new SimpleDateFormat("HHmmssSSS");
-            TdEnterprise enterprise = tdEnterpriseService.findOne(id);
-            //找出改企业参加活动个数。
-            List<TdActivityEnterprise> aeList = tdActivityEnterpriseService.findByEnterpriseId(id);
-            List<TdActivity> activityList = new ArrayList<>();
-            for (TdActivityEnterprise ae : aeList)
-            {
-            	TdActivity activity = tdActivityService.findOne(ae.getActivityId()); 
-            	if (activity.getStatusId() == 2)
-            	{
-            		activityList.add(activity);
-            	}
-            }
-            	
-            Integer size = activityList.size();
-            String fileName ="Num_"+tdEnterpriseService.findbyUsername(username).getNumber()+"_"+ size + ext;
+//          SimpleDateFormat sdf = new SimpleDateFormat("HHmmssSSS");
+          TdEnterprise enterprise = tdEnterpriseService.findOne(enterpriseId);
+          //找出改企业参加活动个数。
+          List<TdActivityEnterprise> aeList = tdActivityEnterpriseService.findByEnterpriseId(enterpriseId);
+          List<TdActivity> activityList = new ArrayList<>();
+          for (TdActivityEnterprise ae : aeList)
+          {
+          	TdActivity activity = tdActivityService.findOne(ae.getActivityId()); 
+          	if (null != activity.getStatusId() && activity.getStatusId() == 2)
+          	{
+          		activityList.add(activity);
+          	}
+          }
+          	
+          Integer size = activityList.size();
+          String fileName ="Num_"+tdEnterpriseService.findbyUsername(tdEnterpriseService.findOne(enterpriseId).getUsername()).getNumber()+"_"+ size + ext;
 
             String uri = ImageRoot + "/" + fileName;
 

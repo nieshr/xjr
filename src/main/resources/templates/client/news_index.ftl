@@ -199,32 +199,21 @@ function gotop()
                       <div class="mess">
                         <p class="p1">
                         <a target="_blank"  href="<#if item.linkUrl??&&item.linkUrl?length gt 0>${item.linkUrl!''}<#else>/info/list/content/${item.id?c}?mid=${item.menuId?c}</#if>">
-                        	<#if item.title?length lt 20>
+                        	<#if item.title?length lt 40>
                                 ${item.title!''}
                             <#else>
-                                ${item.title[0..19]?default("")}...
+                                ${item.title[0..39]?default("")}...
                             </#if>
                        </a>    
                             </p>
                         <p class="p2">${item.brief!''}</p>
+                        
                         <p class="p3">
                           <span class="span1">${item.source!''}</span>
                           <span class="span2">${item.createTime?string("yyyy-MM-dd")}</span>
                           <span class="span3">阅读（<b>${item.viewCount!'0'}</b>）</span>
-                          <span class="span4">
-                            <!-- JiaThis Button BEGIN -->
-                            <div class="jiathis_style">
-                                <a class="jiathis_button_qzone"></a>
-                                <a class="jiathis_button_tsina"></a>
-                                <a class="jiathis_button_tqq"></a>
-                                <a class="jiathis_button_weixin"></a>
-                                <a class="jiathis_button_renren"></a>
-                                <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
-                            </div>
-                            <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
-                            <!-- JiaThis Button END -->
-                          </span>
                         </p>
+                       
                       </div>
                     </a></dd>
                 </#if>
@@ -265,19 +254,7 @@ function gotop()
                           <span class="span1">${item.source!''}</span>
                           <span class="span2">${item.createTime?string("yyyy-MM-dd")}</span>
                           <span class="span3">阅读（<b>${item.viewCount!'0'}</b>）</span>
-                          <span class="span4">
-                           <!-- JiaThis Button BEGIN -->
-                            <div class="jiathis_style">
-                                <a class="jiathis_button_qzone"></a>
-                                <a class="jiathis_button_tsina"></a>
-                                <a class="jiathis_button_tqq"></a>
-                                <a class="jiathis_button_weixin"></a>
-                                <a class="jiathis_button_renren"></a>
-                                <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
-                            </div>
-                            <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
-                            <!-- JiaThis Button END -->
-                          </span>
+
                         </p>
                       </div>
                     </a></dd>
@@ -295,19 +272,7 @@ function gotop()
                           <span class="span1">${item.source!''}</span>
                           <span class="span2">${item.createTime?string("yyyy-MM-dd")}</span>
                           <span class="span3">阅读（<b>${item.viewCount!'0'}</b>）</span>
-                          <span class="span4">
-                           <!-- JiaThis Button BEGIN -->
-                            <div class="jiathis_style">
-                                <a class="jiathis_button_qzone"></a>
-                                <a class="jiathis_button_tsina"></a>
-                                <a class="jiathis_button_tqq"></a>
-                                <a class="jiathis_button_weixin"></a>
-                                <a class="jiathis_button_renren"></a>
-                                <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
-                            </div>
-                            <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
-                            <!-- JiaThis Button END -->
-                          </span>
+
                         </p>
                         <p class="p2">${item.brief!''}</p>
                       </div>
@@ -403,6 +368,26 @@ function gotop()
 
   <!-- 热点追踪、创业风向 -->
   <!-- 热点追踪、创业风向 End-->
+<!-- JiaThis Button BEGIN -->
+<script type="text/javascript" >
+var jiathis_config={
+	url:"http://www.cqkjxjr.com/info/index",
+	summary:"关注成长，创领未来。重庆培育千家众创空间 千家科技型小巨人...",
+	title:"科技小巨人-新闻动态 ##",
+	marginTop:272,
+	showClose:true,
+	shortUrl:false,
+	hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jiathis_r.js?type=left&btn=l4.gif&move=0" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+
+
+
+
+  
 
 </div>
 <!--新闻动态 End-->
@@ -410,5 +395,6 @@ function gotop()
 <!-- 底部 -->
 <#include "/client/news_common_footer.ftl" />
 <!-- 底部end -->
+
 </body>
 </html>

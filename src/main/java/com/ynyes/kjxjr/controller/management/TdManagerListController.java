@@ -191,6 +191,7 @@ public class TdManagerListController {
                                 Long[] listId,
                                 Integer[] listChkId,
                                 Long[] listSortId,
+                                Long[] listStatusId,
 //                                Long statusId,
                                 ModelMap map,
                                 HttpServletRequest req){
@@ -220,7 +221,7 @@ public class TdManagerListController {
                 break;
             
             case "btnSave":
-                btnSave(cid, listId, listSortId, username);
+                btnSave(cid, listId, listSortId,listStatusId, username);
                 tdManagerLogService.addLog("edit", "用户修改文章", req);
                 break;
                 
@@ -340,6 +341,7 @@ public class TdManagerListController {
                               Long[] listId,
                               Integer[] listChkId,
                               Long[] listSortId,
+                              Long[] listStatusId,
                               ModelMap map,
                               HttpServletRequest req){
         String username = (String) req.getSession().getAttribute("manager");
@@ -367,7 +369,7 @@ public class TdManagerListController {
                 break;
             
             case "btnSave":
-                btnSave(cid, listId, listSortId, username);
+                btnSave(cid, listId, listSortId, listStatusId ,username);
                 tdManagerLogService.addLog("edit", "用户修改文章", req);
                 break;
                 
@@ -597,9 +599,9 @@ public class TdManagerListController {
      * @param chkIds
      * @param sortIds
      */
-    private void btnSave(Long cid, Long[] ids, Long[] sortIds, String username)
+    private void btnSave(Long cid, Long[] ids, Long[] sortIds, Long[] statusIds ,String username)
     {
-        if (null == ids || null == sortIds
+        if (null == ids || null == sortIds || null == statusIds
                 || ids.length < 1 || sortIds.length < 1)
         {
             return;
@@ -625,6 +627,7 @@ public class TdManagerListController {
                 if (sortIds.length > i)
                 {
                     article.setSortId(sortIds[i]);
+                    article.setStatusId(statusIds[i]);
                     tdArticleService.save(article);
                 }
             }

@@ -1,5 +1,7 @@
 $(function() {
     function ratingEnable() {
+    	$('select').barating();
+    	
         $('#example-a').barrating();
 
         $('#example-b').barrating('show', {

@@ -45,7 +45,7 @@
 		地址：${site.address!''}
 	</span>					
 	</h5>
-	<h5><#if site.copyright??&&site.copyright?length gt 0>${site.copyright!''}<#else>科技小巨人</#if></h5> 
+	<h5><#if site.copyright??&&site.copyright?length gt 0>${site.copyright!''}<#else>科技小巨人</#if>${site.icpNumber!''}</h5> 
 	<div class="footercode"> 
 	<img src="${site.wxQrCode!''}">
 	<p>微信公众号</p>

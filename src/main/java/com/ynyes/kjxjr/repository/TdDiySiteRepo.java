@@ -20,7 +20,7 @@ public interface TdDiySiteRepo extends
 		PagingAndSortingRepository<TdDiySite, Long>,
 		JpaSpecificationExecutor<TdDiySite> 
 {
-    Page<TdDiySite> findByTitleContainingOrderBySortIdAsc(String keywords, Pageable page);
+    Page<TdDiySite> findByUsernameContainingOrInChargeContainingOrMobileContainingOrderBySortIdAsc(String keywords1, String keywords2, String keywords3, Pageable page);
     Page<TdDiySite> findByRoleIdOrderBySortIdAsc(Long roleId, Pageable page);
     Page<TdDiySite> findByRoleIdAndStatusIdOrderBySortIdAsc(Long roleId, Long statusId ,Pageable page);
     

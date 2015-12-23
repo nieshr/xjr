@@ -17,7 +17,7 @@ public interface TdEnterpriseGradeRepo
 	
 	TdEnterpriseGrade findByExpertIdAndActivityIdAndNumber(Long expertId,Long activityId,String number);
 
-	TdEnterpriseGrade findByExpertIdAndActivityId(Long expertId,Long activityId);
+	List<TdEnterpriseGrade> findByExpertIdAndActivityId(Long expertId,Long activityId);
 	
 
 	

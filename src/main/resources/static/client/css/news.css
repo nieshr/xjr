@@ -56,6 +56,7 @@
 	color: #666666;
 	text-indent: 32px;
 	line-height: 30px;
+	min-height: 600px;
 }
 .news_detail .news_words .word1, .news .news_words .word2{
 	width:1000px;
@@ -551,9 +552,9 @@
 .newsBox .sect1 .div1 dl dd .mess .p1{
 overflow:hidden;
 	width:inherit;
-	height:30px;
+	height:54px;
 	font-size:18px;
-	line-height:30px;
+	line-height:27px;
 	color:#333333;
 }
 .newsBox .sect1 .div1 dl dd .mess .p2{
@@ -563,6 +564,7 @@ overflow:hidden;
 	font-size:14px;
 	line-height:24px;
 }
+
 .newsBox .sect1 .div1 dl dd .mess .p3{
 	overflow:hidden;
 	width:inherit;

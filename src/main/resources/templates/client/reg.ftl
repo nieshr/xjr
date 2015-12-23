@@ -18,6 +18,8 @@
 <script type="text/javascript" src="/client/js/Validform_v5.3.2_min.js"></script>
  <script src="/client/js/showBo.js"></script>
 <script>
+var seed=60;    //60秒  
+var t1=null; 
 $(document).ready(function(){
 	$("#reg").Validform({
 		tiptype:4
@@ -42,6 +44,7 @@ $(document).ready(function(){
             $("#btn_reg").css("background","#999999");
    	    }
    	 });
+
 
 //手机验证码
     $("#smsCodeBtn").bind("click", function() {  
@@ -76,19 +79,44 @@ $(document).ready(function(){
             success : function(res) {  
                 if(1==res.message||0==res.message){
                     Showbo.Msg.alert("验证码已发送，请耐心等待！");
-                }else{
+                     t1 = setInterval(tip, 1000);  
+                }
+                else if(null != res.msg)
+                {
+                	Showbo.Msg.alert(res.msg);
+                    $("#smsCodeBtn").removeAttr("disabled");
+                    $("#smsCodeBtn").css("background-color","#e77917");
+                }
+                else{
                     Showbo.Msg.alert("验证码发送失败，请再次尝试！");
                     $("#smsCodeBtn").removeAttr("disabled");
+                    $("#smsCodeBtn").css("background-color","#e77917");
                 }
             },  
             error : function(XMLHttpRequest, textStatus,  
                     errorThrown) {  
-		                Showbo.Msg.alert( "error！");
-		                $("#smsCodeBtn").removeAttr("disabled");
+		                //Showbo.Msg.alert( "error！");
+		                //$("#smsCodeBtn").removeAttr("disabled");
+		                 t1 = setInterval(tip, 1000);  
             }  
         });
     }); 
 });
+
+function tip() 
+{  
+    seed--;  
+    if (seed < 1) 
+    {  
+        $("#smsCodeBtn").removeAttr("disabled");   
+        $("#smsCodeBtn").css("background-color","#e77917");
+        seed = 60;  
+        $("#smsCodeBtn").val('获取验证码');  
+        var t2 = clearInterval(t1);  
+    } else {  
+        $("#smsCodeBtn").val(seed + "秒后重新获取");  
+    }  
+}
 
    document.onkeydown = function(event){
     if((event.keyCode || event.which) == 13){
@@ -173,7 +201,7 @@ function inputPwd()
         <div>
         	<i class="i5"></i>
         	<input class="inpt5" type="text" name="smsCode" ajaxUrl="/reg/check/smsCode" datatype="*" value="验证码（30分钟有效）" onfocus="if(this.value=='验证码（30分钟有效）'){this.value='';}" onblur="if(this.value==''){this.value='验证码（30分钟有效）'}"/>
-            <input class="inpt5_1"id="smsCodeBtn" style="background-color:#e77917;" onclick="javascript:;" readOnly="true"  type="submit" value="发送验证码" />
+            <input class="inpt5_1"id="smsCodeBtn" style="background-color:#e77917;cursor:pointer;" onclick="javascript:;" readOnly="true"  type="submit" value="发送验证码" />
             <span class="Validform_checktip Validform_wrong" style=""></span>
             
             <#--<span class="span5"><b></b><font style="float:left;">重庆市科技小巨人企业培育专项行动网上平台验证码【科技小巨人】</font></span>-->
@@ -194,7 +222,7 @@ function inputPwd()
         <div class="sure">
         	<!--<input style="margin-top:7px" class="check" id="isCheck" type="checkbox" />-->
         	<input type="checkbox" class="check" id="isCheck"/>
-            <span class="span6"> 我已阅读并接受<a href="#"> 版权声明 </a>和<a href="#"> 隐私保护 </a>条款</span>
+            <span class="span6"> 我已阅读并接受<a href="javascript:void(0)"> 版权声明 </a>和<a href="javascript:void(0)"> 隐私保护 </a>条款</span>
         </div>
         <div>
         	<input class="ipt8" id="btn_reg" type="submit" disabled="disabled" style="background-color:#999999" value="加入小巨人" />

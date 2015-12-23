@@ -3,7 +3,7 @@
 <head>
 <!--网页左上角小图标-->
 	
-<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<#--<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />-->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 <#if site??>
@@ -19,23 +19,13 @@
 <style>
 #example_video_1{float:left;*+text-align:left;}
 </style>
-	<script type="text/javascript" src="/client/js/jquery-1.9.1.min.js"></script>
+	
 
-  <!-- Chang URLs to wherever Video.js files will be hosted -->
-  <link href="/client/css/video-js.css" rel="stylesheet" type="text/css">
-  <!-- video.js must be in the <head> for older IEs to work. -->
-  <script type="text/javascript" src="/client/js/video.js"></script>
-
-  <!-- Unless using the CDN hosted version, update the URL to the Flash SWF -->
-  
   <#-- 手机网页播放器-->
-  <script type="text/javascript" src="/client/js/CuSunX1.min.js"></script>
-  <script type="text/javascript" src="/client/js/action.js"></script>
-  <script type="text/javascript" src="/client/js/jquery172.js"></script>
+
+
   <#-- 手机网页播放器 end-->
-  <script>
-    videojs.options.flash.swf = "/client/js/video-js.swf";
-  </script>
+
 </head>
 <body>
  
@@ -350,10 +340,49 @@
 		            	<img src="/client/images/xwdt2.png" alt="News" style=" border:0;"/>
                     </div>
                     <div class="div2">
+  
+		<#-- 验证浏览器版本-->
+<script type="text/javascript">
+  var browser={
+    versions:function(){
+            var u = navigator.userAgent, app = navigator.appVersion;
+            return {         //移动终端浏览器版本信息
+                 trident: u.indexOf('Trident') > -1, //IE内核
+                presto: u.indexOf('Presto') > -1, //opera内核
+                webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+                gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+                mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+                ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+                android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或uc浏览器
+                iPhone: u.indexOf('iPhone') > -1 , //是否为iPhone或者QQHD浏览器
+                iPad: u.indexOf('iPad') > -1, //是否iPad
+                webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
+            };
+         }(),
+         language:(navigator.browserLanguage || navigator.language).toLowerCase()
+}
+<#--
+ document.writeln("语言版本: "+browser.language);
+document.writeln(" 是否为移动终端: "+browser.versions.mobile);
+document.writeln(" ios终端: "+browser.versions.ios);
+document.writeln(" android终端: "+browser.versions.android);
+document.writeln(" 是否为iPhone: "+browser.versions.iPhone);
+document.writeln(" 是否iPad: "+browser.versions.iPad);
+document.writeln(navigator.userAgent);
 
-                    
+$(document).ready(function(){
+	if (browser.versions.ios)
+	{
+		$("#CuPlayer").css("display","none");
+	}
+	else{
+		$("#example_video_1").css("display","none");
+	}
+});-->
+  </script> 
+                    <#-- 验证浏览器版本 end-->
 
-					
+
 					  
 					  <div class="video" id="CuPlayer" style="width:480px;height:400px;float:left;" >
 						<SCRIPT LANGUAGE=JavaScript>
@@ -362,20 +391,21 @@
 						var vWidth     = 480;
 						var vHeight    = 400;
 						var vFile      = "/client/js/CuSunV2set.xml";
-						var vPlayer    = "/client/js/player.swf?v=2.5";
-						var vPic       = "images/start.jpg";
-						var vCssurl    = "images/mini.css";
+						var vPlayer    = "/client/js/player.swf?v=2.5";    
+						var vPic       = "/client/images/banner1.jpg";
+						
 						
 						//PC,安卓,iOS
 						var vMp4url    = "<#if video??><#list video.content as item><#if item_index=0>${item.imgUrl!''}</#if></#list></#if>";
-						
-						
+						<#--var vMp4url    = "/images/test.mp4";
+						var vIosurl  = "/images/test.mp4";-->
 						</SCRIPT> 
-						<script class="CuPlayerVideo" data-mce-role="CuPlayerVideo" type="text/javascript" src="/client/js/CuSunX1.min.js"></script>
+						<script class="CuPlayerVideo" data-mce-role="CuPlayerVideo" type="text/javascript" src="/client/js/AsComV3.js"></script>
 						</div>
 					  
-					  
-                        <#-- 视频兼容调试-->
+					    <script type="text/javascript" src="/client/js/jquery.js"></script>
+  						<script type="text/javascript" src="/client/js/action.js"></script>
+                        <#-- 视频兼容调试 end-->
                         <ul>
                         <#if news_list??>                   
                             <#list news_list as item>

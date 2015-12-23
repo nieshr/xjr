@@ -141,6 +141,21 @@ function gotop()
          <a href="/info/list/10?catId=${item.id?c}&page=${PAGE_DATA.number+1}" class="page-next">下一页</a> 
      </#if>
  </#if>
+  
+  <!-- JiaThis Button BEGIN -->
+<script type="text/javascript" >
+var jiathis_config={
+	url:"http://www.cqkjxjr.com/info/index",
+	summary:"关注成长，创领未来。重庆培育千家众创空间 千家科技型小巨人...",
+	title:"科技小巨人-新闻动态 ##",
+	marginTop:272,
+	showClose:true,
+	shortUrl:false,
+	hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jiathis_r.js?type=left&btn=l4.gif&move=0" charset="utf-8"></script>
+<!-- JiaThis Button END -->  
     
 </div>
 

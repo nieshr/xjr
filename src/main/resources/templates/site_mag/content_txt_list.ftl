@@ -122,7 +122,15 @@ function __doPostBack(eventTarget, eventArgument) {
             <td>
                 <input name="listSortId" type="text" value="${content.sortId!""}" id="listSortId" class="sort" onkeydown="return checkNumber(event);">
             </td>
-            <td align="center">
+            <td align="left">
+            <div class="rule-single-select single-select">
+            <select name="listStatusId"  id="listStatusId" style="display: none;">
+                <option value="0" <#if content.statusId?? && content.statusId == 0>selected="selected"</#if> >正常显示</option>
+                <option value="1" <#if content.statusId?? && content.statusId == 1>selected="selected"</#if> >待审核</option>
+                <option value="2" <#if content.statusId?? && content.statusId == 2>selected="selected"</#if> >不显示</option>
+            </select>
+            </div>
+            <#--
             <#if content.statusId??>
             	<#if content.statusId == 0>
             		正常显示
@@ -132,6 +140,7 @@ function __doPostBack(eventTarget, eventArgument) {
             		不显示
             	</#if>			
             </#if>
+            -->
             </td>
                   <#--
             <td>
