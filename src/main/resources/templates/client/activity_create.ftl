@@ -355,7 +355,6 @@ window.onload=done2;
 			        'pasteplain', //纯文本粘贴模式
 			        'selectall', //全选
 			        'print', //打印
-			        'preview', //预览
 			        'horizontal', //分隔线
 			        'removeformat', //清除格式
 			        'time', //时间
@@ -417,7 +416,7 @@ window.onload=done2;
 			        'edittip ', //编辑提示
 			        'customstyle', //自定义标题
 			        'autotypeset', //自动排版
-			        'webapp', //百度应用
+			        <#--'webapp', //百度应用-->
 			        'touppercase', //字母大写
 			        'tolowercase', //字母小写
 			        'background', //背景
@@ -427,6 +426,7 @@ window.onload=done2;
 			        'inserttable', //插入表格
 			        'drafts', // 从草稿箱加载
 			        'charts', // 图表
+			        'preview', //预览
 			    ]
 			],
 		    autoHeightEnabled: true,
