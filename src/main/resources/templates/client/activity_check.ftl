@@ -254,7 +254,7 @@ function sortDown(id , activityId)
                 </#if>         
                  
                 <#if recommend_list??&&recommend_list?size gt 0>
-                <div>
+                <div  class=" new_new">
                     <span style="margin-top: 6px;"><#if activity.statusId??&&activity.statusId==0||!activity.statusId??>推荐项目：<#else>路演项目：</#if></span>
                     <ul class="active_project_text">
                         <#if recommend_list??>
@@ -320,6 +320,7 @@ function sortDown(id , activityId)
                             </#list>
                         </#if>    
                         <#if pagetype??&& pagetype == "check">
+                        <input  style="margin-top:10px;width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#354052;color:#fff;" type="button" onclick="location.href='/activity/export/list?activityId=<#if activity??>${activity.id?c!''}</#if>'" value="下载列表" />
                             <#if activity??&&activity.fileUrl??>
                                 <input  style="margin-top:10px;width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#e67817;color:#fff;" type="button" onclick="location.href='/download/data?name=${activity.fileUrl!''}'" value="推荐表下载" />
                             <#else>
@@ -348,7 +349,7 @@ function sortDown(id , activityId)
                 </div> 
                 </#if>
  
-                <div style="margin-top:50px;">
+                <div  class=" new_new" style="margin-top:50px;">
                     <span style="margin-top: 6px;">评委专家：</span>
                     <ul class="active_project_text">
                         <#if selected_expert_list??>
@@ -379,7 +380,7 @@ function sortDown(id , activityId)
                     </ul>
                 </div>
                <#if roadshow_list??>
-               <div style="margin-top:50px;">
+               <div  class=" new_new" style="margin-top:50px;">
                     <span style="margin-top: 6px;">路演辅导：</span>
                     <ul class="active_project_text">
                             <#list roadshow_list as item>
@@ -398,7 +399,7 @@ function sortDown(id , activityId)
                 </#if> 
             <!-- 评分汇总 -->
                 <#if activity??&&activity.statusId??&&activity.statusId==1>
-                    <div style="margin-top:20px;">
+                    <div  class=" new_new" style="margin-top:20px;">
                         <span style="margin-top: 6px;">评分结果：</span>
                         <ul class="active_project_text">
                             <li>
@@ -408,7 +409,7 @@ function sortDown(id , activityId)
                         </ul>
                     </div>
                 <#elseif activity??&&activity.statusId??&&activity.statusId==2>
-                     <div style="margin-top:20px;">
+                     <div  class=" new_new" style="margin-top:20px;">
                         <span style="margin-top: 6px;">路演结果：</span>
                         <ul class="active_project_text">
                             <li>
@@ -430,7 +431,7 @@ function sortDown(id , activityId)
          <#else>
         <form id="upload" enctype="multipart/form-data" action="/client/activity/upload" method="post">
         <input type="hidden" id="id" name="id" <#if activity??>value="${activity.id?c}"</#if>></input>
-        <div>
+        <div  class=" new_new">
             <span>添加文件：</span>
             <input name="Filedata" type="file" id="file" value="" />
             <input  style="margin-left:20px;    border-radius: 8px;" class="area_save_btn" type="button" onclick="javascript:submitCheck();" value="上传" />
@@ -438,7 +439,7 @@ function sortDown(id , activityId)
         </form>
         </#if>
         <#if activity?? && activity.download??>
-            <div>
+            <div class=" new_new">
                 <span style="margin-top: 10px;">相关下载：</span>
                 <ul class="active_add_file">
                     <li>
@@ -466,7 +467,7 @@ function sortDown(id , activityId)
         <dd>
         <form id="pptupload" enctype="multipart/form-data" action="/client/activity/pptupload" method="post">
         <input type="hidden" id="id" name="id" <#if activity??>value="${activity.id?c}"</#if>></input>
-        <div>
+        <div  class=" new_new">
             <span>添加PPT模板：</span>
             <input name="Filedata" type="file" id="pptfile" value="" />
             <input type="button" value="PPT模板上传" onclick="javascript:pptSubmitCheck();"  style="margin:-5px 0 30px 48px;
@@ -479,7 +480,7 @@ function sortDown(id , activityId)
         </div>
         </form>
         <#if activity??&&activity.pptUrl??>
-             <div>
+             <div  class=" new_new">
                 <span style="margin-top: 10px;">已上传PPT模板：</span>
                 <ul class="active_add_file">
                     <li>

@@ -14,6 +14,7 @@
 <script type="text/javascript" src="/mag/js/layout.js"></script>
 <link href="/mag/style/style.css" rel="stylesheet" type="text/css">
 <link href="/mag/style/WdatePicker.css" rel="stylesheet" type="text/css">
+
 <!-- 企业资料样式 -->
 
 <link href="/client/css/team.css" rel="stylesheet" type="text/css" />
@@ -34,7 +35,7 @@ $(document).ready(function(){
             callback: function (data) { 
 	            if (data.code == 0)
 	            {
-					alert("提交成功");
+					$.dialog.alert("提交成功");
 				    $(".menu").removeClass("selected");
     				$(".menu").eq(1).addClass("selected");
 				    $(".tab-content").hide();
@@ -42,7 +43,30 @@ $(document).ready(function(){
 				}
 	            else 
 	            {
-	                alert(data.msg);
+	                $.dialog.alert(data.msg);
+	                if (data.check == 0)
+	                {
+	                	location.href='/Verwalter/login';
+	                }
+	                else if (data.check ==1)
+	                {
+	                	location.href='/enterprise/check';
+	                }
+	            }
+       		 }
+	});
+	
+	$("#dataUpload").Validform({
+			tiptype:4,
+	  	    ajaxPost:true,
+            callback: function (data) { 
+	            if (data.code == 0)
+	            {
+					$.dialog.alert("提交成功");
+				}
+	            else 
+	            {
+	                $.dialog.alert(data.msg);
 	                if (data.check == 0)
 	                {
 	                	location.href='/Verwalter/login';
@@ -99,22 +123,12 @@ function setStatusId(id , statusId)
 
 function done()
 {
-    alert("上传资料成功！");	
+    $.dialog.alert("上传资料成功！");	
 }
 <#if done?? &&done == 1>
 window.onload=done;
 </#if>
 
-function submitCheck()
-{
-	var filedata = $("#file").val();
-	if (filedata == "")
-	{
-		alert("请添加文件！")
-		}else{
-		$("#upload").submit();
-		}
-}
 </script>
 <script type="text/javascript">
 $(function () {
@@ -124,29 +138,110 @@ $(function () {
     //初始化上传控件
     $(".upload-img").each(function () {
         $(this).InitSWFUpload({ 
-            sendurl: "/Verwalter/upload", 
+            sendurl: "/Verwalter/dataUpload", 
             flashurl: "/mag/js/swfupload.swf"
         });
     });
 
-        //（缩略图）
-    var txtPic = $("#txtImgUrl").val();
+        //（缩略图1）
+    var txtPic = $("#txtImgUrl1").val();
     if (txtPic == "" || txtPic == null) {
-        $(".thumb_ImgUrl_show").hide();
+        $(".thumb_ImgUrl_show1").hide();
     }
     else {
-        $(".thumb_ImgUrl_show").html("<ul><li><div class='img-box1'><img src='" + txtPic + "' bigsrc='" + txtPic + "' /></div></li></ul>");
-        $(".thumb_ImgUrl_show").show();
+        $(".thumb_ImgUrl_show1").html("<ul><li><div class='img-box1'><img src='/images/" + txtPic + "' bigsrc='" + txtPic + "' /></div></li></ul>");
+        $(".thumb_ImgUrl_show1").show();
+    }
+            //（缩略图2）
+    var txtPic = $("#txtImgUrl2").val();
+    if (txtPic == "" || txtPic == null) {
+        $(".thumb_ImgUrl_show2").hide();
+    }
+    else {
+        $(".thumb_ImgUrl_show2").html("<ul><li><div class='img-box1'><img src='/images/" + txtPic + "' bigsrc='" + txtPic + "' /></div></li></ul>");
+        $(".thumb_ImgUrl_show2").show();
+    }
+            //（缩略图3）
+    var txtPic = $("#txtImgUrl3").val();
+    if (txtPic == "" || txtPic == null) {
+        $(".thumb_ImgUrl_show3").hide();
+    }
+    else {
+        $(".thumb_ImgUrl_show3").html("<ul><li><div class='img-box1'><img src='/images/" + txtPic + "' bigsrc='" + txtPic + "' /></div></li></ul>");
+        $(".thumb_ImgUrl_show3").show();
+    }
+            //（缩略图4）
+    var txtPic = $("#txtImgUrl4").val();
+    if (txtPic == "" || txtPic == null) {
+        $(".thumb_ImgUrl_show4").hide();
+    }
+    else {
+        $(".thumb_ImgUrl_show4").html("<ul><li><div class='img-box1'><img src='/images/" + txtPic + "' bigsrc='" + txtPic + "' /></div></li></ul>");
+        $(".thumb_ImgUrl_show4").show();
+    }
+            //（缩略图5）
+    var txtPic = $("#txtImgUrl5").val();
+    if (txtPic == "" || txtPic == null) {
+        $(".thumb_ImgUrl_show5").hide();
+    }
+    else {
+        $(".thumb_ImgUrl_show5").html("<ul><li><div class='img-box1'><img src='/images/" + txtPic + "' bigsrc='" + txtPic + "' /></div></li></ul>");
+        $(".thumb_ImgUrl_show5").show();
     }
 
-    $("#txtImgUrl").blur(function () {
-        var txtPic = $("#txtImgUrl").val();
+	  //(刷新图1)
+    $("#txtImgUrl1").blur(function () {
+        var txtPic = $("#txtImgUrl1").val();
         if (txtPic == "" || txtPic == null) {
             $(".thumb_ImgUrl_show").hide();
         }
         else {
-            $(".thumb_ImgUrl_show").html("<ul><li><div class='img-box1'><img src='" + txtPic + "' bigsrc='" + txtPic + "' /></div></li></ul>");
+            $(".thumb_ImgUrl_show").html("<ul><li><div class='img-box1'><img src='/images/" + txtPic + "' bigsrc='" + txtPic + "' /></div></li></ul>");
             $(".thumb_ImgUrl_show").show();
+        }
+    });  
+    	  //(刷新图2)
+    $("#txtImgUrl2").blur(function () {
+        var txtPic = $("#txtImgUrl2").val();
+        if (txtPic == "" || txtPic == null) {
+            $(".thumb_ImgUrl_show2").hide();
+        }
+        else {
+            $(".thumb_ImgUrl_show2").html("<ul><li><div class='img-box1'><img src='/images/" + txtPic + "' bigsrc='" + txtPic + "' /></div></li></ul>");
+            $(".thumb_ImgUrl_show2").show();
+        }
+    });  
+    	  //(刷新图3)
+    $("#txtImgUrl3").blur(function () {
+        var txtPic = $("#txtImgUrl3").val();
+        if (txtPic == "" || txtPic == null) {
+            $(".thumb_ImgUrl_show3").hide();
+        }
+        else {
+            $(".thumb_ImgUrl_show3").html("<ul><li><div class='img-box1'><img src='/images/" + txtPic + "' bigsrc='" + txtPic + "' /></div></li></ul>");
+            $(".thumb_ImgUrl_show3").show();
+        }
+    });  
+    	  //(刷新图4)
+    $("#txtImgUrl4").blur(function () {
+        var txtPic = $("#txtImgUrl4").val();
+        if (txtPic == "" || txtPic == null) {
+            $(".thumb_ImgUrl_show4").hide();
+        }
+        else {
+            $(".thumb_ImgUrl_show4").html("<ul><li><div class='img-box1'><img src='/images/" + txtPic + "' bigsrc='" + txtPic + "' /></div></li></ul>");
+            $(".thumb_ImgUrl_show4").show();
+        }
+    });  
+    	  //(刷新图5)
+    $("#txtImgUrl5").blur(function () {
+        var txtPic = $("#txtImgUrl5").val();
+        if (txtPic == "" || txtPic == null) {
+            $(".thumb_ImgUrl_show5").hide();
+        }
+        else {
+            $(".thumb_ImgUrl_show5").html("<ul><li><div class='img-box1'><img src='/images/" + txtPic + "' bigsrc='" + txtPic + "' /></div></li></ul>");
+            $(".thumb_ImgUrl_show5").show();
         }
     });  
     
@@ -184,8 +279,11 @@ $(function () {
   <div id="floatHead" class="content-tab" style="position: static; top: 52px;">
     <div class="content-tab-ul-wrap">
       <ul>
-      <#if enterprise??>  <li><a href="javascript:;" onclick="tabs(this);" class="selected menu">基本资料</a></li> </#if>
-        <li><a href="javascript:;" onclick="tabs(this);" class="menu">安全设置</a></li>
+	      <#if enterprise??>  
+	      	<li><a href="javascript:;" onclick="tabs(this);" class="selected menu">基本资料</a></li>
+	      	<li><a href="javascript:;" onclick="tabs(this);" class="menu">文件管理</a></li>
+	      </#if>
+          <li><a href="javascript:;" onclick="tabs(this);" class="menu">安全设置</a></li>
         <#--
         <li><a href="javascript:;" onclick="tabs(this);">账户信息</a></li>
         -->
@@ -208,13 +306,13 @@ $(function () {
       <dl>
   		<dt>
         <#if enterprise??&&enterprise.statusId??&&enterprise.statusId == 0>
-        审核状态： 待审核
+        审核状态： 
         <#elseif enterprise??&&enterprise.statusId??&&enterprise.statusId == 1>
-        审核状态：已通过
+        审核状态：
         <#elseif enterprise??&&enterprise.statusId??&&enterprise.statusId == 2>
-       审核状态： 用户申请了重新审核
+       审核状态： 
          <#elseif enterprise??&&enterprise.statusId??&&enterprise.statusId == 3>
-       审核状态：未通过
+       审核状态：
          <#else>
          用户未完善资料                    
         </#if>
@@ -232,31 +330,12 @@ $(function () {
 	    </dd>
 	</dl>        
     </div>
-    <#--   上传-->
         <div style="float:left;	">
-       		<#if enterprise??&&enterprise.fileUrl??&&enterprise.fileUrl?length gt 0>	
-	        	<dl>
-		        	<dt>
-		        		已上传资料：
-		        	</dt>
-		        	<dd>
-		        		<a style="font-size:12px;  text-decoration: none;" href="/download/data?name=${enterprise.fileUrl!''}" title="点击下载">${enterprise.fileUrl!''}</a>
-		        	</dd>	
-	        	</dl>
-        	</#if>
-	        <form id="upload" enctype="multipart/form-data" action="/Verwalter/enterprise/upload" method="post">
-	        <dl class="apply_step2" >
-	        	<dt>上传资料</dt>
-	            <input type="hidden" name="enterpriseId" value="<#if enterpriseId??>${enterpriseId?c!''}</#if>"></input>
-	            <input type="hidden"  name="id" value="<#if id??>${id?c!''}</#if>"></input>
-					<dd ><input id="file" style="margin-top:10px ; background : #fff;color:#333;float:left;" name="Filedata" type="file" value="" /></dd>
-			</dl>	
 			<dl class="apply_step2" style="margin-top:20px ; ">
-					
-					<dd><input  style="background:#529c15;float:left;"  class="area_save_btn" type="button" value="上传报名表" onclick="javascript:submitCheck();"/></dd>
+				<dd><input  style="background:#529c15;float:left;"  class="area_save_btn" type="button" value="导出报名表" onclick="location.href='/enterprise/export/enter?id='<#if enterprise??>+${enterprise.id?c}</#if>;"/></dd>
 			</dl>		
-	        </form>
-        </div>
+        </div>  
+        
     </div>  
         <dl class="apply_content">
              <form action="/Verwalter/user/info/submit" id="step1" method="post">
@@ -488,7 +567,144 @@ $(function () {
 </div><!--content_end-->
 </div>
 <!--/基本资料-->
+<!--文件管理-->
+<div class="tab-content"  style="display:none;">  
+<div class="right_content">
+	<form id="dataUpload"  action="/Verwalter/user/data/submit" method="post">
+	<input type="hidden" name="id" value="${enterprise.id?c!''}" />
+	  	<dl>
+	    	<dt>
+	    	资料扫描件：
+	    	</dt>
+	    	<dd>
+			     <input  name="fileUrl" type="text" id="txtImgUrl1" value="<#if enterprise??>${enterprise.fileUrl!''}</#if>" class="input normal upload-path" >
+				<div class="upload-box upload-img"></div>
+                <div class="photo-list thumb_ImgUrl_show1" style="display: none;">
+                    <ul>
+                        <li>
+                            <div class="img-box1"></div>
+                        </li>
+                    </ul>
+                </div>						   
+				<#if enterprise.fileUrl??&&enterprise.fileUrl != "">
+			    		<dd>已上传资料：<a href="/download/data?name=${enterprise.fileUrl!''}" title="点击下载">${enterprise.fileUrl!''}</a></dd>
+		    	</#if>	
+	    	</dd>
+	    </dl>		   
+
+	  	<dl>
+	    	<dt>项目展示PPT：</dt>
+	    	<dd>
+			     <input  name="pptUrl" type="text" id="txtImgUrl2" value="<#if enterprise??>${enterprise.pptUrl!''}</#if>" class="input normal upload-path" >
+				<div class="upload-box upload-img"></div>
+                <div class="photo-list thumb_ImgUrl_show2" style="display: none;">
+                    <ul>
+                        <li>
+                            <div class="img-box1"></div>
+                        </li>
+                    </ul>
+                </div>	
+			 <#if enterprise.pptUrl??&&enterprise.pptUrl != "">
+		    		<dd>已上传资料：<a href="/download/data?name=${enterprise.pptUrl!''}" title="点击下载">${enterprise.pptUrl!''}</a></dd>
+	    	</#if>
+	    	</dd>
+	    </dl>		   
+    
+		<dl>
+	    	<dt>
+	    	<#if enterprise.dataAble??>
+				<#list enterprise.dataAble?split(",") as data>
+					<#if data == "商业计划书">
+						<img src="/client/images/n0.png" title="已选此项" alt="+"  />   
+					</#if>
+				</#list>
+			</#if>
+			商业计划书：
+	    	</dt>
+	    	<dd>
+			     <input  name="dataBusiness" type="text" id="txtImgUrl3" value="<#if enterprise??>${enterprise.dataBusiness!''}</#if>" class="input normal upload-path" >
+				<div class="upload-box upload-img"></div>
+                <div class="photo-list thumb_ImgUrl_show3" style="display: none;">
+                    <ul>
+                        <li>
+                            <div class="img-box1"></div>
+                        </li>
+                    </ul>
+                </div>	
+					<#if enterprise.dataBusiness??&&enterprise.dataBusiness != "">
+					    	<dd>已上传资料：<a href="/download/data?name=${enterprise.dataBusiness!''}" title="点击下载">${enterprise.dataBusiness!''}</a></dd>
+				    </#if>					  
+			</dd>
+		</dl>										   
+
+		<dl>	  
+	    	<dt>
+	    	<#if enterprise.dataAble??>
+				<#list enterprise.dataAble?split(",") as data>
+					<#if data == "可行性报告">
+						<img src="/client/images/n0.png" title="已选此项" alt="+"  />   
+					</#if>
+				</#list>
+			</#if>		    	
+	    	可行性报告：
+	    	</dt>
+	    	<dd>
+			     <input  name="dataPossible" type="text" id="txtImgUrl4" value="<#if enterprise??>${enterprise.dataPossible!''}</#if>" class="input normal upload-path" >
+				<div class="upload-box upload-img"></div>
+                <div class="photo-list thumb_ImgUrl_show4" style="display: none;">
+                    <ul>
+                        <li>
+                            <div class="img-box1"></div>
+                        </li>
+                    </ul>
+                </div>	
+				    <#if enterprise.dataPossible??&&enterprise.dataPossible != "">
+			    		     <dd>已上传资料：<a href="/download/data?name=${enterprise.dataPossible!''}" title="点击下载">${enterprise.dataPossible!''}</a></dd>
+				    </#if>	    	
+	    	</dd>
+	    </dl>			     
+
+		<dl>      	
+	    	<dt>
+	    	<#if enterprise.dataAble??>
+				<#list enterprise.dataAble?split(",") as data>
+					<#if data == "其他说明资料">
+						<img src="/client/images/n0.png" title="已选此项" alt="+"  />   
+					</#if>
+				</#list>
+			</#if>		    	
+	    	其他说明资料：
+	    	</dt>
+	    	<dd>
+			     <input  name="dataOther" type="text" id="txtImgUrl5" value="<#if enterprise??>${enterprise.dataOther!''}</#if>" class="input normal upload-path" >
+				<div class="upload-box upload-img"></div>
+                <div class="photo-list thumb_ImgUrl_show5" style="display: none;">
+                    <ul>
+                        <li>
+                            <div class="img-box1"></div>
+                        </li>
+                    </ul>
+                </div>	
+				    <#if enterprise.dataOther??&&enterprise.dataOther != "">
+					    	<dd>已上传资料：<a href="/download/data?name=${enterprise.dataOther!''}" title="点击下载">${enterprise.dataOther!''}</a></dd>
+				    </#if>	    	
+	    	</dd>
+	    </dl>
+	<div class="page-footer">
+	  <div class="btn-list">
+	    <input type="submit" value="提交保存"  class="btn">
+	    <input name="btnReturn" type="button" value="返回上一页" class="btn yellow" onclick="javascript:history.back(-1);">
+	  </div>
+	  <div class="clear"></div>
+	</form>	
+
+    </div>
+
+</div><!--content_end-->
+</div>
+<!--/文件管理-->
 </#if>
+
 <!--安全设置-->
 <form name="form_user" method="post" action="/Verwalter/user/save" id="form_user">
 <div class="tab-content" <#if enterprise??> style="display:none;"</#if>>  

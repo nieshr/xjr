@@ -11,6 +11,7 @@
 .active_content dd{ width:950px; height:auto; display: block; overflow: hidden;}
 .active_content dd .new_new{ width:950px; margin-top: 10px; overflow: hidden;}
 .active_content dd .new_new span{width:120px; display: block; float: left; text-align: right; font-size: 14px;}
+.active_content dd .new_new em{ margin-left: 20px; float: left; height: 30px;}  /*by zhangji*/
 .active_content dd .new_new p{width:auto; height:20px; display: block; float: left; text-align: right; margin-left: 10px;;}
 .active_content dd .new_new input{ margin-left: 20px; float: left; height:26px; line-height:26px; width:170px;}
 .active_content dd .new_new textarea{ margin-left: 20px; float: left; width:400px; height:200px;}

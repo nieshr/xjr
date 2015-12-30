@@ -329,6 +329,10 @@ window.onload=done2;
 
     <!-- 配置文件 -->
     <script type="text/javascript" src="/client/js/ueditor.config.js"></script>
+    <!-- 路径设置-->
+    <script type="text/javascript" >
+	   window.UEDITOR_HOME_URL = "/ueditor/"; //编辑器项目路径
+	</script>
     <!-- 编辑器源码文件 -->
     <script type="text/javascript" src="/client/js/ueditor.all.js"></script>
     <!-- 实例化编辑器 -->
@@ -342,7 +346,7 @@ window.onload=done2;
 			        'redo', //重做
 			        'bold', //加粗
 			        'indent', //首行缩进
-			        'snapscreen', //截图
+			        <#--'snapscreen', //截图-->
 			        'italic', //斜体
 			        'underline', //下划线
 			        'strikethrough', //删除线
@@ -442,6 +446,8 @@ window.onload=done2;
 		    "imageAllowFiles": [".png", ".jpg", ".jpeg", ".gif", ".bmp"]
 		    
 		});
+		
+		var lang = ue.getOpt('lang'); //默认返回：zh-cn
     </script>
 
 <#-- 百度编辑器 end-->
@@ -521,66 +527,104 @@ window.onload=done2;
                     </#if>       
                 </#if>    
             </#if>         
-    			<div class=" new_new"><span>活动名称：</span><input <#if pagetype??&& pagetype == "check">disabled=""</#if> type="text" name="title" id="title" datatype="*"value="<#if activity??>${activity.title!''}</#if>" /></div>
+    			<div class=" new_new"><span>活动名称：</span><#if pagetype??&& pagetype == "check"><b style="margin-left: 20px;float:left; "><#if activity??>${activity.title!''}</#if></b>	<#else><input  type="text" name="title" id="title" datatype="*"value="<#if activity??>${activity.title!''}</#if>" /></#if></div>
     			<div class=" new_new">
     				<span>活动类型：</span>
-    				<select name="activityType" id="activityType" <#if pagetype??&& pagetype == "check">disabled=""</#if>>
-    				    <#if activityType_list??>
-    				        <#list activityType_list as item>
-    					        <option value="${item.title!''}" <#if activity??&&activity.activityType?? &&activity.activityType == item.title>selected="selected"</#if> <#if pagetype??&& pagetype == "check">disabled=""</#if>>${item.title!''}</option>
-    					    </#list>
-    					</#if>        
-    				</select>
+    				<#if pagetype??&& pagetype == "check">
+    					<b style="margin-left: 20px;float:left; "><#if activity??>${activity.activityType!''}</#if></b>
+    				<#else>
+	    				<select name="activityType" id="activityType" >
+	    				    <#if activityType_list??>
+	    				        <#list activityType_list as item>
+	    					        <option value="${item.title!''}" <#if activity??&&activity.activityType?? &&activity.activityType == item.title>selected="selected"</#if> <#if pagetype??&& pagetype == "check">disabled=""</#if>>${item.title!''}</option>
+	    					    </#list>
+	    					</#if>        
+	    				</select>
+    				</#if>
     			</div>
     			<div class=" new_new">
     			    <span>地区 ：</span>
-                    <select name="region" id="region" <#if pagetype??&& pagetype == "check">disabled=""</#if>>
-                        <#if region_list??>
-                            <#list region_list as item>
-                                <option value="${item.title!''}" <#if activity?? &&activity.region == item.title>selected="selected"</#if>  <#if pagetype??&& pagetype == "check">disabled=""</#if>>${item.title!''}</option>
-                            </#list>
-                        </#if>        
-                    </select>
+    			    <#if pagetype??&& pagetype == "check">
+    			    	<b style="margin-left: 20px;float:left; "><#if activity??>${activity.region!''}</#if></b>
+    			    <#else>
+	                    <select name="region" id="region" >
+	                        <#if region_list??>
+	                            <#list region_list as item>
+	                                <option value="${item.title!''}" <#if activity?? &&activity.region == item.title>selected="selected"</#if>  <#if pagetype??&& pagetype == "check">disabled=""</#if>>${item.title!''}</option>
+	                            </#list>
+	                        </#if>        
+	                    </select>
+                    </#if>
     			</div>
     			<div class=" new_new"><span>时间：</span>
-	                    <input <#if pagetype??&& pagetype == "check" >disabled=""</#if> name="date" type="text" id="date" value="<#if activity??>${activity.date!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="填写正确格式" sucmsg=" " >
+    				<#if pagetype??&& pagetype == "check" >
+    					<b style="margin-left: 20px;float:left; "><#if activity??>${activity.date!''}</#if></b>
+    				<#else>
+	                    <input  name="date" type="text" id="date" value="<#if activity??>${activity.date!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="填写正确格式" sucmsg=" " >
+	            	</#if>
 	            </div>    
     			
-    			<div class=" new_new"><span>地址：</span><input <#if pagetype??&& pagetype == "check" >disabled=""</#if> type="text" name="address" id="address" datatype="*" value="<#if activity??>${activity.address!''}</#if>" /></div>
-    			<div class=" new_new"><span>主题：</span><textarea style="height: 56px;" cols="3" rows="3" <#if pagetype??&& pagetype == "check" >disabled=""</#if> type="text" name="theme" id="theme" datatype="*1-255" errormsg="最多255字！"><#if activity??>${activity.theme!''}</#if></textarea></div>
-				<div class="editer">
-					
-					<#if mark??&&mark=="activity">
+    			<div class=" new_new">
+    				<span>地址：</span>
+    				<#if pagetype??&& pagetype == "check" >
+    					<p style="margin-left: 20px;float:left; "><#if activity??>${activity.address!''}</#if></p>
+    				<#else>
+    					<input  type="text" name="address" id="address" datatype="*" value="<#if activity??>${activity.address!''}</#if>" />
+    				</#if>
+				</div>
+    			<div class=" new_new">
+    				<span>主题：</span>
+    				<#if pagetype??&& pagetype == "check" >
+    					<p style="margin-left: 20px;float:left; "><#if activity??>${activity.theme!''}</#if></p>
+    				<#else>
+    				<textarea style="height: 56px;" cols="3" rows="3"  type="text" name="theme" id="theme" datatype="*1-255" errormsg="最多255字！"><#if activity??>${activity.theme!''}</#if></textarea>
+					</#if>
+				</div>	
+				<#if mark??&&mark=="activity">
+					<div class="editer">
 					<span style="margin-left:78px;margin-top:20px;display:block;float:left;  font-size: 14px;">简介：</span>
 					<#--
 					<textarea  <#if pagetype??&& pagetype == "check" >disabled=""</#if> name="introduction" id="introduction" datatype="*" ><#if activity??>${activity.introduction!''}</#if></textarea>
 					-->
-    					    <script id="container" name="introduction" type="text/plain">
-				        这里写你的初始化内容
-				    </script>
-					<#else>
-					<span style="line-height:24px;">简介：</span>
-					<div style="float:left; display: 
-										block; width: 750px; 
-										margin-top: 0;  
-										font-size: 14px;
-										color: #666666;
-										text-indent: 32px;
-										line-height: 24px;">
-						${activity.introduction!''}
+    					    <script id="container" name="introduction" type="text/plain"><#if activity??>${activity.introduction!''}</#if></script>
+    				</div>  
+				<#else>
+					<div>
+						<span style="margin:20px 0 20px 0; width: 120px; display: block; float: left; text-align: right;font-size: 14px;">简介：</span>
+						<div style="float:left; display: 
+											block; width: 750px; 
+											margin:20px 0 20px 0;
+											font-size: 14px;
+											color: #666666;
+											text-indent: 32px;
+											line-height: 24px;">
+							${activity.introduction!''}
+						</div>
 					</div>
-					</#if>
-				</div>    		
+				</#if>
+				  		
 				
     			<div class=" new_new">
     				<span>筹备开始时刻：</span>
-                        <input <#if pagetype??&& pagetype == "check">disabled=""</#if> name="prepareOn" id="prepareOn" type="text"  value="<#if activity??>${activity.prepareOn!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="填写正确格式" sucmsg=" ">
+    					<#if pagetype??&& pagetype == "check">
+    						<b style="margin-left: 20px;  float:left;"><#if activity??>${activity.prepareOn!''}</#if></b>
+    					<#else>
+                        	<input  name="prepareOn" id="prepareOn" type="text"  value="<#if activity??>${activity.prepareOn!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="填写正确格式" sucmsg=" ">
+    					</#if>
     				<span>筹备结束时刻：</span>
-                        <input <#if pagetype??&& pagetype == "check" >disabled=""</#if> name="prepareOff" id="prepareOff" type="text" value="<#if activity??>${activity.prepareOff!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="填写正确格式" sucmsg=" ">
+    					<#if pagetype??&& pagetype == "check" >
+    						<b style="margin-left: 20px; float:left;"><#if activity??>${activity.prepareOff!''}</#if></b>
+    					<#else>
+                        	<input  name="prepareOff" id="prepareOff" type="text" value="<#if activity??>${activity.prepareOff!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="填写正确格式" sucmsg=" ">
+    					</#if>
     			</div>
     			<div class=" new_new">
     			    <span>活动结束时刻：</span>
-                    <input <#if pagetype??&& pagetype == "check" >disabled=""</#if> name="eventEnd" id="eventEnd" type="text" value="<#if activity??>${activity.eventEnd!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="填写正确格式" sucmsg=" ">
+    			    <#if pagetype??&& pagetype == "check" >
+    			    	<b style="margin-left: 20px;  float:left;"><#if activity??>${activity.eventEnd!''}</#if></b>
+    			    <#else>
+                    	<input  name="eventEnd" id="eventEnd" type="text" value="<#if activity??>${activity.eventEnd!""}</#if>" class="input date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})" datatype="/^\s*$|^\d{4}\-\d{1,2}\-\d{1,2}\s{1}(\d{1,2}:){2}\d{1,2}$/" errormsg="填写正确格式" sucmsg=" ">
+    				</#if>
     			</div>
     			<#--
                 <#if activityType_list??>

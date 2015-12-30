@@ -3024,18 +3024,22 @@ public class TdActivityController {
        
        //列宽
        sheet.setDefaultColumnWidth(6*256);
-       sheet.setColumnWidth((short) 0 , 6*256);
-       sheet.setColumnWidth((short) 1 , 6*256);
-       sheet.setColumnWidth((short) 2 , 6*256);
-       sheet.setColumnWidth((short) 3 , 46*256);
-       sheet.setColumnWidth((short) 4 , 6*256);
+       sheet.setColumnWidth((short) 0 , 5*256);
+       sheet.setColumnWidth((short) 1 , 5*256);
+       sheet.setColumnWidth((short) 2 , 36*256);
+       sheet.setColumnWidth((short) 3 , 5*256);
+       sheet.setColumnWidth((short) 4 , 11*256);
+       sheet.setColumnWidth((short) 5 , 9*256);
+       sheet.setColumnWidth((short) 6 , 9*256);
+       sheet.setColumnWidth((short) 7 , 9*256);
+       sheet.setColumnWidth((short) 8 , 11*256);
        
        
        // 第三步，在sheet中添加表头第0行,注意老版本poi对Excel的行数列数有限制short  
        HSSFRow row = sheet.createRow((int) 0);  
        
-       sheet.addMergedRegion(new Region((short) 0 , (short) 0 , (short) 1 , (short) (4+expertSize)));     //标题
-       sheet.addMergedRegion(new Region((short) 2 , (short) 0 , (short) 2 , (short) (4+expertSize)));     //标题
+       sheet.addMergedRegion(new Region((short) 0 , (short) 0 , (short) 1 , (short) (8+expertSize)));     //标题
+       sheet.addMergedRegion(new Region((short) 2 , (short) 0 , (short) 2 , (short) (8+expertSize)));     //标题
        // 第四步，创建单元格，并设置值表头 设置表头居中  
        HSSFCellStyle style = wb.createCellStyle();  
        style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
@@ -3080,9 +3084,10 @@ public class TdActivityController {
        
        HSSFFont font = wb.createFont();
        font.setFontName("黑体");
-       font.setFontHeightInPoints((short) 12);//设置字体大小
+       font.setFontHeightInPoints((short) 14);//设置字体大小
        font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);//粗体显示
        title.setFont(font);//选择需要用到的字体格式
+       font.setFontHeightInPoints((short) 12);//设置字体大小
        title2.setFont(font);
        font.setFontHeightInPoints((short) 10);//设置字体大小
        style2.setFont(font);
@@ -3109,28 +3114,46 @@ public class TdActivityController {
        
        row =sheet.createRow((int) 3);
        row.setHeight((short) (20 * 20));  
-       cell = row.createCell((short) 0);  
-       cell.setCellValue("胜出");
-       cell.setCellStyle(style2);
-       cell = row.createCell((short) 1);
+//       cell = row.createCell((short) 0);  
+//       cell.setCellValue("胜出");
+//       cell.setCellStyle(style2);
+       cell = row.createCell((short) 0);
        cell.setCellValue("排名");
        cell.setCellStyle(style2);
-       cell = row.createCell((short) 2);
+       cell = row.createCell((short) 1);
        cell.setCellValue("编号");
        cell.setCellStyle(style2);
-       cell = row.createCell((short) 3);
+       cell = row.createCell((short) 2);
        cell.setCellValue("名称");
        cell.setCellStyle(style2);
-       cell = row.createCell((short) 4);
+       cell = row.createCell((short) 3);
        cell.setCellValue("总分");
        cell.setCellStyle(style2);
+       //新增显示项，2015-12-30 14:17:38
+       cell = row.createCell((short) 4);
+       cell.setCellValue("核心竞争力");
+       cell.setCellStyle(style2);
+       cell = row.createCell((short) 5);
+       cell.setCellValue("团队能力");
+       cell.setCellStyle(style2);
+       cell = row.createCell((short) 6);
+       cell.setCellValue("市场潜力");
+       cell.setCellStyle(style2);
+       cell = row.createCell((short) 7);
+       cell.setCellValue("投资价值");
+       cell.setCellStyle(style2);
+       cell = row.createCell((short) 8);
+       cell.setCellValue("现场表现力");
+       cell.setCellStyle(style2);
+       
+       
        if (null != expertList || expertList.size() > 0)
        {
     	   int i = 0;
     	   for (TdActivityExpert ae : expertList)
            {
-               cell = row.createCell((short) 5+i);
-               sheet.setColumnWidth((short) 5+i , 10*256);
+               cell = row.createCell((short) 9+i);
+               sheet.setColumnWidth((short) 9+i , 7*256);
                cell.setCellValue(ae.getName());
                cell.setCellStyle(style2);
                i++;
@@ -3138,7 +3161,7 @@ public class TdActivityController {
        }
  			
  		if (null != exportUrl) {
- 			if (ImportData(expertGradeList , expertSize ,gradeList , row, cell, sheet,style)) {
+ 			if (ImportData(expertGradeList , expertSize ,gradeList , row, cell, sheet,style , right)) {
  				download(wb, exportUrl, resp);
  			}         
  		}  
@@ -3152,45 +3175,356 @@ public class TdActivityController {
  	 * @注释：将page中的订单数据存入excel表格中
  	 */
   @SuppressWarnings("deprecation")
- 	public boolean ImportData(List<List<TdEnterpriseGrade>> expertGradeList, int expertSize ,Page<TdActivityEnterprise> gradeList , HSSFRow row, HSSFCell cell, HSSFSheet sheet ,HSSFCellStyle style){
+ 	public boolean ImportData(List<List<TdEnterpriseGrade>> expertGradeList, 
+ 			int expertSize ,
+ 			Page<TdActivityEnterprise> gradeList , 
+ 			HSSFRow row, 
+ 			HSSFCell cell, 
+ 			HSSFSheet sheet ,
+ 			HSSFCellStyle style,
+ 			HSSFCellStyle right){
  	 	
 	  		int i = 0 ; 
          	for (TdActivityEnterprise grade : gradeList )  
              {  
                  row = sheet.createRow((int) i + 4);  
                  row.setHeight((short) (20 * 20));  
-                 cell = row.createCell((short) 0);
-                 if (null != grade.getWin() && grade.getWin() == grade.getActivityId())
-                 {
-                	 cell.setCellValue("入选");
-                 }
+//                 cell = row.createCell((short) 0);
+//                 if (null != grade.getWin() && grade.getWin() == grade.getActivityId())
+//                 {
+//                	 cell.setCellValue("入选");
+//                 }
                  cell.setCellStyle(style); 
-                 cell = row.createCell((short) 1);
+                 cell = row.createCell((short) 0);
                  cell.setCellValue(i+1);
                  cell.setCellStyle(style);
-                 cell = row.createCell((short) 2);
+                 cell = row.createCell((short) 1);
                  cell.setCellValue(grade.getNumber()); 
                  cell.setCellStyle(style);
-                 cell = row.createCell((short) 3);
+                 cell = row.createCell((short) 2);
                  cell.setCellValue(grade.getEnterpriseTitle()); 
                  cell.setCellStyle(style);
-                 cell = row.createCell((short) 4);
+                 cell = row.createCell((short) 3);
                  cell.setCellValue(grade.getTotalPoint());
+                 cell.setCellStyle(style);
+                 
+                 //新增显示项 2015-12-30 14:20:14
+                 cell = row.createCell((short) 4);
+                 cell.setCellValue(grade.getTotalTechnology()); //核心竞争力
+                 cell.setCellStyle(style);
+                 cell = row.createCell((short) 5);
+                 cell.setCellValue(grade.getTotalGroup());  //团队能力
+                 cell.setCellStyle(style);
+                 cell = row.createCell((short) 6);
+                 cell.setCellValue(grade.getTotalFeasibility());  //市场潜力
+                 cell.setCellStyle(style);
+                 cell = row.createCell((short) 7);
+                 cell.setCellValue(grade.getTotalMarketValue());//投资价值
+                 cell.setCellStyle(style);
+                 cell = row.createCell((short) 8);
+                 cell.setCellValue(grade.getTotalExpression());  //现场表现力
                  cell.setCellStyle(style);
                 
                 for (int j = 0 ; j<expertSize ; j++)
                 {
-                    cell = row.createCell((short) j+5);
-                    if (null != expertGradeList.get(i).get(j).getTotalPoint())
+                    cell = row.createCell((short) j+9);
+                    if (null != expertGradeList && null != expertGradeList.get(i).get(j).getTotalPoint())
                     {
                     	cell.setCellValue(expertGradeList.get(i).get(j).getTotalPoint());
                     }
                     cell.setCellStyle(style);
                 }
               i++;
-             } 
+             }
+         	
+         	  //最后一行加签字栏	
+         	int Nrow = gradeList.getSize() + 3 + 1;
+           	sheet.addMergedRegion(new Region((short) (Nrow+4) , (short) 0 , (short) (Nrow+4) , (short) 8));     //合并单元格
+         	
+         	row = sheet.createRow((int) (Nrow + 4));  
+            cell = row.createCell((short) 0);
+            cell.setCellValue("评委签字");  //签字
+            cell.setCellStyle(right);
+            
+            for (int j = 0 ; j<expertSize ; j++)
+            {
+                cell = row.createCell((short) j+9);
+                cell.setCellStyle(style);
+            }
+          
+         	
   	return true;
   }
+  
+  /*-----------------------路演项目表导出/----------------------------------*/
+//导出
+//区县科委推荐项目汇总表
+@SuppressWarnings("deprecation")
+@RequestMapping(value="/export/list")
+public String exportRecommend(
+                           Long activityId,
+                           ModelMap map,
+                           String exportUrl,
+                           HttpServletResponse resp,
+                           HttpServletRequest req){
+   String username = (String) req.getSession().getAttribute("activityUsername");String manager =  (String) req.getSession().getAttribute("manager");
+  
+   
+   if (null == username && null == manager) {
+       return "redirect:/login";
+   }
+
+//   List<TdActivityEnterprise> selectedEnter = tdActivityEnterpriseService.findByActivityIdAndStatusId(activityId, 2L);
+//   if (selectedEnter.size() != 20)
+//   {
+//   	Long numwarn = 2L;
+//   	return "redirect:/region/recommendEnterprise"+"?id="+activityId+"&numwarn="+numwarn;
+//   }
+       	exportUrl = SiteMagConstant.imagePath;
+   
+			if (null != exportUrl) {
+				List<TdActivityEnterprise> activityEnterpriseList = tdActivityEnterpriseService.findByActivityIdAndStatusIdOrderBySortIdAsc(activityId, 2L);
+		
+				if (null ==activityEnterpriseList || activityEnterpriseList.size()==0)
+				{
+					Long numwarn = 1L;
+					return "redirect:/activity/check?id="+activityId+"&numwarn="+numwarn;
+				}
+   /**  
+		 * @author lc
+		 * @注释：根据不同条件导出excel文件
+		 */
+     // 第一步，创建一个webbook，对应一个Excel文件  
+     HSSFWorkbook wb = new HSSFWorkbook();  
+     // 第二步，在webbook中添加一个sheet,对应Excel文件中的sheet  
+     HSSFSheet sheet = wb.createSheet("activityEnterprise");  
+     
+     //打印设置
+     HSSFPrintSetup ps = sheet.getPrintSetup();
+     ps.setLandscape(true); //打印方向，true:横向，false:纵向
+     ps.setPaperSize(HSSFPrintSetup.A4_PAPERSIZE); //纸张
+     sheet.setMargin(HSSFSheet.BottomMargin, (double)0.3); //页边距（下）
+     sheet.setMargin(HSSFSheet.LeftMargin, (double)0.3); //页边距（左）
+     sheet.setMargin(HSSFSheet.RightMargin, (double)0.3); //页边距（右）
+     sheet.setMargin(HSSFSheet.TopMargin, (double)0.1); //页边距（上）
+     sheet.setHorizontallyCenter(true); //设置打印页面为水平居中
+     sheet.setVerticallyCenter(true); //设置打印页面为垂直居中
+     
+     //列宽
+     sheet.setColumnWidth((short) 0 , 8*256);
+     sheet.setColumnWidth((short) 1 , 12*256);
+     sheet.setColumnWidth((short) 2 , 69*256);
+     sheet.setColumnWidth((short) 3 , 12*256);
+     sheet.setColumnWidth((short) 4 , 20*256);
+     sheet.setColumnWidth((short) 5 , 20*256);
+//     sheet.setColumnWidth((short) 6 , 50*256);
+//     sheet.setColumnWidth((short) 7 , 16*256);
+     
+     sheet.setDefaultRowHeightInPoints(20);  
+     
+     
+     // 第三步，在sheet中添加表头第0行,注意老版本poi对Excel的行数列数有限制short  
+     HSSFRow row = sheet.createRow((int) 0);  
+     
+     sheet.addMergedRegion(new Region((short) 0 , (short) 0 , (short) 1 , (short) 5));     //标题1行
+     sheet.addMergedRegion(new Region((short) 2 , (short) 0 , (short) 2 , (short) 5));     //标题2行
+     sheet.addMergedRegion(new Region((short) 3 , (short) 0 , (short) 4 , (short) 5));     //标题3行
+     sheet.addMergedRegion(new Region((short) 5 , (short) 0 , (short) 5, (short) 2));     //公章
+     // 第四步，创建单元格，并设置值表头 设置表头居中  
+     HSSFCellStyle style = wb.createCellStyle();  
+     style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+     style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
+     style.setBorderBottom(HSSFCellStyle.BORDER_THIN);    //设置边框样式
+     style.setBorderRight(HSSFCellStyle.BORDER_THIN);
+     style.setBorderLeft(HSSFCellStyle.BORDER_THIN);  
+     style.setBorderTop(HSSFCellStyle.BORDER_THIN);  
+     
+     
+     HSSFCellStyle style1 = wb.createCellStyle();  
+     style1.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
+     style1.setBorderBottom(HSSFCellStyle.BORDER_THIN);    //设置边框样式
+     style1.setBorderRight(HSSFCellStyle.BORDER_THIN);
+     style1.setBorderLeft(HSSFCellStyle.BORDER_THIN);  
+     style1.setBorderTop(HSSFCellStyle.BORDER_THIN);  
+     
+     
+     HSSFCellStyle style2 = wb.createCellStyle();  
+     style2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
+     style2.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+     style2.setBorderBottom(HSSFCellStyle.BORDER_THIN);    //设置边框样式
+     style2.setBorderRight(HSSFCellStyle.BORDER_THIN);
+     style2.setBorderLeft(HSSFCellStyle.BORDER_THIN);  
+     style2.setBorderTop(HSSFCellStyle.BORDER_THIN);  
+     
+     HSSFCellStyle title1 = wb.createCellStyle();  
+     title1.setBorderBottom(HSSFCellStyle.BORDER_NONE);    //设置边框样式
+     title1.setBorderRight(HSSFCellStyle.BORDER_NONE);
+     title1.setBorderLeft(HSSFCellStyle.BORDER_NONE);  
+     title1.setBorderTop(HSSFCellStyle.BORDER_NONE);  
+     title1.setVerticalAlignment(HSSFCellStyle.VERTICAL_BOTTOM);//垂直下
+     title1.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 居中格式
+     
+     HSSFCellStyle title = wb.createCellStyle();  
+     title.setBorderBottom(HSSFCellStyle.BORDER_NONE);    //设置边框样式
+     title.setBorderRight(HSSFCellStyle.BORDER_NONE);
+     title.setBorderLeft(HSSFCellStyle.BORDER_NONE);  
+     title.setBorderTop(HSSFCellStyle.BORDER_NONE);  
+     title.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
+     title.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 居中格式
+     
+     HSSFCellStyle title3 = wb.createCellStyle();  
+     title3.setBorderBottom(HSSFCellStyle.BORDER_NONE);    //设置边框样式
+     title3.setBorderRight(HSSFCellStyle.BORDER_NONE);
+     title3.setBorderLeft(HSSFCellStyle.BORDER_NONE);  
+     title3.setBorderTop(HSSFCellStyle.BORDER_NONE);  
+     title3.setVerticalAlignment(HSSFCellStyle.VERTICAL_TOP);//垂直上
+     title3.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 居中格式
+     
+     HSSFFont font = wb.createFont();
+     font.setFontName("黑体");
+     font.setFontHeightInPoints((short) 12);//设置字体大小
+     font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);//粗体显示
+     title1.setFont(font);//选择需要用到的字体格式
+     title.setFont(font);//选择需要用到的字体格式
+     title3.setFont(font);//选择需要用到的字体格式
+     
+     //盖章
+     HSSFCellStyle left = wb.createCellStyle();  
+     left.setBorderBottom(HSSFCellStyle.BORDER_THIN);    //设置边框样式
+     left.setAlignment(HSSFCellStyle.ALIGN_LEFT); // 居格式
+     left.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
+     
+     //日期
+     HSSFCellStyle right = wb.createCellStyle();  
+     right.setBorderBottom(HSSFCellStyle.BORDER_THIN);    //设置边框样式
+     right.setAlignment(HSSFCellStyle.ALIGN_RIGHT); // 格式
+     right.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
+     
+     
+     HSSFCell cell = row.createCell((short) 0);  
+     cell = row.createCell((short) 0);  
+     cell.setCellValue("重庆科技小巨人培育专项行动");  
+     cell.setCellStyle(title1);
+     
+     row =sheet.createRow((int) 2);
+     cell = row.createCell((short) 0);  
+     cell.setCellValue(activityEnterpriseList.get(0).getActivityTitle());  
+     cell.setCellStyle(title);
+     
+     row =sheet.createRow((int) 3);
+     cell = row.createCell((short) 0);  
+     cell.setCellValue("区县科委推荐参赛路演项目汇总表");  
+     cell.setCellStyle(title3);
+     
+     row =sheet.createRow((int) 5);
+     cell = row.createCell((short) 0);  
+     cell.setCellValue("推荐单位（章）");  
+     cell.setCellStyle(left);
+     
+     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+     String date = sdf.format(new Date());
+     cell = row.createCell((short) 5);  
+     cell.setCellValue("日期："+date);  
+     cell.setCellStyle(right);
+//     cell = row.createCell((short) 6);  
+//     cell.setCellValue(date);  
+//     cell.setCellStyle(left);
+     
+     
+     
+     row =sheet.createRow((int) 6);
+     row.setHeight((short) (20 * 20));  
+     cell = row.createCell((short) 0);  
+     cell.setCellValue("序号");  
+     cell.setCellStyle(style);
+     
+     cell = row.createCell((short) 1);  
+     cell.setCellValue("编号");  
+     cell.setCellStyle(style);  
+     
+     cell = row.createCell((short) 2);  
+     cell.setCellValue("公司（团队）名称");  
+     cell.setCellStyle(style);  
+     
+     cell = row.createCell((short) 3);  
+     cell.setCellValue("联系人");  
+     cell.setCellStyle(style);  
+     
+     cell = row.createCell((short) 4);  
+     cell.setCellValue("手机");  
+     cell.setCellStyle(style);  
+   
+     cell = row.createCell((short) 5);  
+     cell.setCellValue("QQ/MSN");  
+     cell.setCellStyle(style);  
+     
+//     cell = row.createCell((short) 6);  
+//     cell.setCellValue("项目简介");  
+//     cell.setCellStyle(style);  
+//     
+//     cell = row.createCell((short) 6);  
+//     cell.setCellValue("推荐理由");  
+//     cell.setCellStyle(style);  
+//     
+			
+		if (null != exportUrl) {
+			if (ImportRecommendData(activityEnterpriseList, row, cell, sheet,style)) {
+				download(wb, exportUrl, resp);
+			}         
+		}  
+			}
+			return "redirect:/region/recommendEnterprise?id="+activityId;
+}
+
+/**
+	 * @author lc
+	 * @注释：将page中的订单数据存入excel表格中
+	 */
+@SuppressWarnings("deprecation")
+	public boolean ImportRecommendData(List<TdActivityEnterprise> activityEnterpriseList, HSSFRow row, HSSFCell cell, HSSFSheet sheet ,HSSFCellStyle style){
+	 	
+       	for (int i = 0; i < activityEnterpriseList.size(); i++)  
+           {  
+       	 				
+               row = sheet.createRow((int) i + 7);  
+               row.setHeight((short) (20 * 20));  
+               TdActivityEnterprise tdActivityEnterprise = activityEnterpriseList.get(i);  
+               //获取用户信息
+//               TdUser tdUser = tdUserService.findByUsername(tdOrder.getUsername());
+               // 第四步，创建单元格，并设置值  
+               cell = row.createCell((short) 0);
+               cell.setCellValue(i+1);
+               cell.setCellStyle(style); 
+               cell = row.createCell((short) 1);
+               cell.setCellValue(tdActivityEnterprise.getNumber());
+               cell.setCellStyle(style);
+               cell = row.createCell((short) 2);
+               cell.setCellStyle(style);
+               cell.setCellValue(tdActivityEnterprise.getEnterpriseTitle()); 
+               cell = row.createCell((short) 3);
+               cell.setCellStyle(style);
+               cell.setCellValue(tdActivityEnterprise.getContact()); 
+               cell = row.createCell((short) 4);
+               cell.setCellStyle(style);
+               cell.setCellValue(tdActivityEnterprise.getMobile());
+               cell = row.createCell((short) 5);
+               cell.setCellStyle(style);
+               cell.setCellValue(tdActivityEnterprise.getQQ());
+//               cell = row.createCell((short) 6);
+//               cell.setCellStyle(style);
+//               cell.setCellValue(tdActivityEnterprise.getProfile());
+//               cell = row.createCell((short) 6);
+//               cell.setCellValue(tdActivityEnterprise.getReason()); 
+//               cell.setCellStyle(style);
+            
+           } 
+	return true;
+}
+
+
+/*----------------------------/路演项目表导出--------------------------*/
+  
+  
   
   
   /**
