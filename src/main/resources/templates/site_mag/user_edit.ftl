@@ -142,7 +142,9 @@ $(function () {
             flashurl: "/mag/js/swfupload.swf"
         });
     });
+
 <#--
+
         //（缩略图1）
     var txtPic = $("#txtImgUrl1").val();
     if (txtPic == "" || txtPic == null) {
@@ -198,6 +200,50 @@ $(function () {
         else {
             $(".thumb_ImgUrl_show").html("<ul><li><div class='img-box1'><img src='/images/" + txtPic + "' bigsrc='" + txtPic + "' /></div></li></ul>");
             $(".thumb_ImgUrl_show").show();
+        }
+    });  
+    	  //(刷新图2)
+    $("#txtImgUrl2").blur(function () {
+        var txtPic = $("#txtImgUrl2").val();
+        if (txtPic == "" || txtPic == null) {
+            $(".thumb_ImgUrl_show2").hide();
+        }
+        else {
+            $(".thumb_ImgUrl_show2").html("<ul><li><div class='img-box1'><img src='/images/" + txtPic + "' bigsrc='" + txtPic + "' /></div></li></ul>");
+            $(".thumb_ImgUrl_show2").show();
+        }
+    });  
+    	  //(刷新图3)
+    $("#txtImgUrl3").blur(function () {
+        var txtPic = $("#txtImgUrl3").val();
+        if (txtPic == "" || txtPic == null) {
+            $(".thumb_ImgUrl_show3").hide();
+        }
+        else {
+            $(".thumb_ImgUrl_show3").html("<ul><li><div class='img-box1'><img src='/images/" + txtPic + "' bigsrc='" + txtPic + "' /></div></li></ul>");
+            $(".thumb_ImgUrl_show3").show();
+        }
+    });  
+    	  //(刷新图4)
+    $("#txtImgUrl4").blur(function () {
+        var txtPic = $("#txtImgUrl4").val();
+        if (txtPic == "" || txtPic == null) {
+            $(".thumb_ImgUrl_show4").hide();
+        }
+        else {
+            $(".thumb_ImgUrl_show4").html("<ul><li><div class='img-box1'><img src='/images/" + txtPic + "' bigsrc='" + txtPic + "' /></div></li></ul>");
+            $(".thumb_ImgUrl_show4").show();
+        }
+    });  
+    	  //(刷新图5)
+    $("#txtImgUrl5").blur(function () {
+        var txtPic = $("#txtImgUrl5").val();
+        if (txtPic == "" || txtPic == null) {
+            $(".thumb_ImgUrl_show5").hide();
+        }
+        else {
+            $(".thumb_ImgUrl_show5").html("<ul><li><div class='img-box1'><img src='/images/" + txtPic + "' bigsrc='" + txtPic + "' /></div></li></ul>");
+            $(".thumb_ImgUrl_show5").show();
         }
     });  
     	  //(刷新图2)
