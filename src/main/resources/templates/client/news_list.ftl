@@ -111,7 +111,7 @@ function gotop()
      <#if PAGE_DATA.number+1 == 1>
           <a disabled="disabled"  class="page-prev">上一页"</a>               
      <#else>
-         <a href="/info/list/10?catId=${item.id?c}&page=${PAGE_DATA.number-1}"  class="page-prev">上一页"</a>                
+         <a href="/info/list/10?catId=<#if catId??>${catId?c}</#if>&page=${PAGE_DATA.number-1}"  class="page-prev">上一页"</a>                
      </#if>
      
      <#assign continueEnter=false>
@@ -122,7 +122,7 @@ function gotop()
                  <#if page == PAGE_DATA.number+1>
                      <a  class ="current">${page }</a>
                  <#else>
-                     <a href="/info/list/10?catId=${item.id?c}&page=${page-1}">${page}</a> 
+                     <a href="/info/list/10?catId=<#if catId??>${catId?c}</#if>&page=${page-1}">${page}</a> 
                  </#if>
                  <#assign continueEnter=false>
              <#else>
@@ -138,7 +138,7 @@ function gotop()
      <#if PAGE_DATA.number+1 == PAGE_DATA.totalPages || PAGE_DATA.totalPages==0>
          <a disabled="disabled" class="page-next">下一页</a> 
      <#else>
-         <a href="/info/list/10?catId=${item.id?c}&page=${PAGE_DATA.number+1}" class="page-next">下一页</a> 
+         <a href="/info/list/10?catId=<#if catId??>${catId?c}</#if>&page=${PAGE_DATA.number+1}" class="page-next">下一页</a> 
      </#if>
  </#if>
   

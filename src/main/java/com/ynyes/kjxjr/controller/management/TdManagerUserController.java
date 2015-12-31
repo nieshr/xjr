@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ynyes.kjxjr.entity.TdActivityEnterprise;
 import com.ynyes.kjxjr.entity.TdActivityType;
 import com.ynyes.kjxjr.entity.TdDemand;
 import com.ynyes.kjxjr.entity.TdDiySite;
@@ -32,6 +33,7 @@ import com.ynyes.kjxjr.entity.TdUserConsult;
 import com.ynyes.kjxjr.entity.TdUserLevel;
 import com.ynyes.kjxjr.entity.TdUserPoint;
 import com.ynyes.kjxjr.entity.TdUserReturn;
+import com.ynyes.kjxjr.service.TdActivityEnterpriseService;
 import com.ynyes.kjxjr.service.TdDemandService;
 import com.ynyes.kjxjr.service.TdEnterpriseService;
 import com.ynyes.kjxjr.service.TdEnterpriseTypeService;
@@ -104,6 +106,9 @@ public class TdManagerUserController {
     
     @Autowired
     TdEnterpriseTypeService tdEnterpriseTypeService;
+    
+    @Autowired
+    TdActivityEnterpriseService tdActivityEnterpriseService;   //zhangji 2015年12月24日13:07:47
     
     @RequestMapping(value="/check", method = RequestMethod.POST)
     @ResponseBody
@@ -399,6 +404,25 @@ public class TdManagerUserController {
        	user.setRealName(tdEnterprise.getTitle());
        	user.setNickname(tdEnterprise.getNumber());
        	tdUserService.save(user);
+       	
+      //同步信息到预选
+       	List<TdActivityEnterprise> aeList = tdActivityEnterpriseService.findByEnterpriseId(tdEnterprise.getId());
+       	if (null != aeList)
+       	{
+       		for (TdActivityEnterprise ae : aeList)
+       		{
+       			if(null == ae.getIsGrade() ||null !=ae.getIsGrade() && ae.getIsGrade()==false)
+       			{
+           			ae.setEnterpriseTitle(tdEnterprise.getTitle());
+           			ae.setType(tdEnterprise.getType());
+           			ae.setQQ(tdEnterprise.getChat());
+           			ae.setArea(tdEnterprise.getArea());
+           			ae.setContact(tdEnterprise.getContact());
+           			ae.setMobile(tdEnterprise.getMobile());
+           			tdActivityEnterpriseService.save(ae);
+       			}
+       		}
+       	}
        
         res.put("code", 0);
         return res;
@@ -989,6 +1013,77 @@ public class TdManagerUserController {
         }
         
         return "/site_mag/error_404";
+    }
+    
+    //新增功能：超级管理员上传资料 2015-12-29 17:03:51
+    @RequestMapping(value = "/data/submit", method = RequestMethod.POST)
+    @ResponseBody
+    public  Map<String, Object> enterpriseDataSubmit(HttpServletRequest req , 
+						    		Long id,
+						    		String fileUrl,
+						    		String pptUrl,
+						    		String dataBusiness,
+						    		String dataPossible,
+						    		String dataOther,
+						    		ModelMap map) {
+        Map<String, Object> res = new HashMap<String, Object>();
+        res.put("code", 1);
+    	
+        String username = (String) req.getSession().getAttribute("manager");
+
+        if (null == username) {
+        	res.put("msg", "请先登录！");
+        	res.put("check", 0);
+            return res;
+        }
+        
+        TdEnterprise tdEnterprise = tdEnterpriseService.findOne(id);
+        
+        TdUser user = tdUserService.findByUsername(tdEnterprise.getUsername());
+        
+        if(null != fileUrl && !fileUrl.equalsIgnoreCase(""))
+        {
+        	tdEnterprise.setFileUrl(fileUrl);
+        }
+        if(null != pptUrl && !pptUrl.equalsIgnoreCase(""))
+        {
+        	tdEnterprise.setPptUrl(pptUrl);
+        }
+        if(null != dataBusiness && !dataBusiness.equalsIgnoreCase(""))
+        {
+        	tdEnterprise.setDataBusiness(dataBusiness);
+        }
+        if(null != dataPossible && !dataPossible.equalsIgnoreCase(""))
+        {
+        	tdEnterprise.setDataPossible(dataPossible);
+        }
+        if(null != dataOther && !dataOther.equalsIgnoreCase(""))
+        {
+        	tdEnterprise.setDataOther(dataOther);
+        }
+        
+       	tdEnterpriseService.save(tdEnterprise);
+       
+      //同步信息到预选
+       	List<TdActivityEnterprise> aeList = tdActivityEnterpriseService.findByEnterpriseId(id);
+       	if (null != aeList)
+       	{
+       		for (TdActivityEnterprise ae : aeList)
+       		{
+       			if(null == ae.getIsGrade() ||null !=ae.getIsGrade() && ae.getIsGrade()==false)
+       			{
+           			ae.setEnterpriseFileUrl(fileUrl);
+           			ae.setPptUrl(pptUrl);
+           			ae.setDataBusiness(dataBusiness);
+           			ae.setDataPossible(dataPossible);
+           			ae.setDataOther(dataOther);
+           			tdActivityEnterpriseService.save(ae);
+       			}
+       		}
+       	}
+       
+        res.put("code", 0);
+        return res;
     }
     
     @ModelAttribute

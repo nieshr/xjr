@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>活动管理员-项目详情</title>
+<title>活动-项目详情</title>
 <link rel="shortcut icon" href="/client/images/icon.ico" />
 <link href="/client/css/base.css" rel="stylesheet" type="text/css" />
 <link href="/client/css/team.css" rel="stylesheet" type="text/css" />
@@ -68,7 +68,7 @@
             	<a style="font-size:12px; color:#666;"  title="无资料" href="javascript:void(0)">【其他资料】</a>           
             </#if>
             </span>
-                        
+      	<input  style="margin-top:10px;width:100px; height:30px;cursor:pointer; line-height: 30px; border: none;background-color:#e67817;color:#fff;" type="button" onclick="location.href='/enterprise/export/enter?id=<#if enterprise??>${enterprise.id?c!''}</#if>'" value="导出表格" />                  
         </div>
     </div>  
  

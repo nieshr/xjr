@@ -263,7 +263,7 @@
 				<#list grade_list as item>
 					<li style="border-top:1px #dddddd solid;border-right:1px #dddddd solid; display: block; padding:0 10px;  text-align:center;background-color: <#if item.gradeAble??&&item.gradeAble>#5CADE7<#elseif item.totalPoint??>#C7C7C7<#else>#EAF4FF</#if>;color: <#if item.gradeAble??&&item.gradeAble>#ffffff<#else>#333333</#if>; ">
 					<a  href="/expert/grade?activityId=${activityId?c!''}&enterpriseId=${item.enterpriseId?c!''}" title="评分：${item.enterpriseTitle!''}" style="background-color: <#if item.gradeAble??&&item.gradeAble>#5CADE7<#elseif item.totalPoint??>#C7C7C7<#else>#EAF4FF</#if>; color: <#if item.gradeAble??&&item.gradeAble>#ffffff<#else>#333333</#if>;text-decoration:none; display:block; text-align:left;">
-					${item_index+1}.${item.enterpriseTitle!''}
+					${item_index+1}.${item.enterpriseTitle!''}<#if item.totalPoint??>&nbsp;（<b style="font-weight:normal;" >${item.totalPoint?string("0")}</b>）&nbsp;</#if>
 					</a>
 					</li>
 				</#list>

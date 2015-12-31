@@ -22,6 +22,9 @@ public class SiteMagConstant {
     	{
     		 backupPath = "/mnt/root/backup/";
     		 imagePath = "/mnt/root/images/goods";
+    		
+//   		 backupPath = "/mnt/root/test/backup/";
+//   		 imagePath = "/mnt/root/test/images";
     	}
     	else
     	{
